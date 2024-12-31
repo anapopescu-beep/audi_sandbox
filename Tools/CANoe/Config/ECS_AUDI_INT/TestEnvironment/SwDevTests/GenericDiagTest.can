@@ -1,0 +1,379 @@
+/*@!Encoding:1252*/
+includes
+{
+  #pragma library("..\..\Includes\AER_SA.dll")
+}
+
+
+variables
+{
+  msTimer P2ExtendedTimeout;
+  
+  diagRequest eCS.Supplier_Diagnostic_Session_Start Req_Supplier_Diagnostic_Session_Start;
+  
+  diagRequest eCS.Supplier_RequestSeed_Request Req_Supplier_Application_Request;
+  diagResponse eCS.Supplier_RequestSeed_Request Resp_Supplier_Application_Request;
+  diagRequest eCS.Supplier_SendKey_Send Req_Supplier_Application_Send;
+  diagResponse eCS.Supplier_SendKey_Send Resp_Supplier_Application_Send;
+  
+  diagRequest eCS.EcuUnlock_Start Req_EcuUnlock_Start;
+  diagRequest eCS.EcuUnlock_Stop Req_EcuUnlock_Stop; 
+  diagRequest eCS.EcuUnlock_RequestResults Req_EcuUnlock_RequestResults;
+  
+  diagRequest eCS.Hard_Reset_Reset Req_Hard_Reset;
+  diagRequest eCS.Soft_Reset_Reset Req_Soft_Reset;
+  
+  diagRequest eCS.FaultMemory_Clear Req_FaultMemory_Clear; 
+  
+  // F187
+  diagRequest eCS_OEM.VW_Spare_Part_Number_Write Req_VW_Spare_Part_Number_Write;
+  diagResponse eCS_OEM.VW_Spare_Part_Number_Write Resp_VW_Spare_Part_Number_Write;
+  
+  // F191
+  diagRequest eCS_OEM.VW_ECU_Hardware_Number_Write Req_VW_ECU_Hardware_Number_Write;
+  diagResponse eCS_OEM.VW_ECU_Hardware_Number_Write Resp_VW_ECU_Hardware_Number_Write;
+  
+   // F18C
+  diagRequest eCS_OEM.ECU_Serial_Number_Write Req_ECU_Serial_Number_Write;
+  diagResponse eCS_OEM.ECU_Serial_Number_Write Resp_ECU_Serial_Number_Write;
+  
+  // F197
+  diagRequest eCS_OEM.VW_System_Name_Or_Engine_Type_Write Req_VW_System_Name_Or_Engine_Type_Write;
+  diagResponse eCS_OEM.VW_System_Name_Or_Engine_Type_Write Resp_VW_System_Name_Or_Engine_Type_Write;
+  
+   // F1A3
+  diagRequest eCS_OEM.VW_ECU_Hardware_Version_Number_Write Req_VW_ECU_Hardware_Version_Number_Write;
+  diagResponse eCS_OEM.VW_ECU_Hardware_Version_Number_Write Resp_VW_ECU_Hardware_Version_Number_Write;
+  
+  // F19E
+  diagRequest eCS_OEM.ASAM_ODX_File_Identifier_Write Req_ASAM_ODX_File_Identifier_Write;
+  diagResponse eCS_OEM.ASAM_ODX_File_Identifier_Write Resp_ASAM_ODX_File_Identifier_Write;
+  
+   // F1A2
+  diagRequest eCS_OEM.ASAM_ODX_File_Version_Write Req_ASAM_ODX_File_Version_Write;
+  diagResponse eCS_OEM.ASAM_ODX_File_Version_Write Resp_ASAM_ODX_File_Version_Write;
+  
+  // F189
+  diagRequest eCS_OEM.VW_Application_Software_Version_Number_Write Req_VW_Application_Software_Version_Number_Write;
+  diagResponse eCS_OEM.VW_Application_Software_Version_Number_Write Resp_VW_Application_Software_Version_Number_Write;
+  
+}
+
+on timer P2ExtendedTimeout
+{
+  // do nothing, just wait for diag response, go for a walk outside and enjoy life
+  testStepFail("STEP","Timeout received for diagnostic request");
+}
+
+on diagResponse eCS.Supplier_RequestSeed_Request
+{
+  byte seedArray[8];
+  int idx;
+  byte SAkey[8];
+  char byteChar[8];
+  char out[300];
+  char out2[300];
+  char tempOut[300];  
+
+  DiagGetParameterRaw(this, "SecuritySeed", seedArray, elcount(seedArray));
+  
+  //contsruct frame
+  getALVkey(elcount(seedArray),seedArray,SAkey);
+  
+  Req_Supplier_Application_Send.SetParameterRaw("SecurityKey", SAkey, 8);
+  Req_Supplier_Application_Send.SendRequest();
+}
+
+on diagRequest *
+{
+  cancelTimer(P2ExtendedTimeout);
+  setTimer(P2ExtendedTimeout, diagGetP2Extended ("eCS",1,0)); // wait for response
+}
+
+on diagResponse *
+{
+  char cTestStepDescription[500];
+  
+  cancelTimer(P2ExtendedTimeout);
+  
+  // Handle the ambiguity of neg responses by treating them as '*'
+  if( diagIsNegativeResponse ( this ) )
+  {
+    snprintf(cTestStepDescription,elcount(cTestStepDescription),"Received negative response for service 0x%x, code 0x%x",
+    this.GetPrimitiveByte(1),
+    this.GetPrimitiveByte(2) );
+    testStepFail("STEP",cTestStepDescription);
+  }
+  else
+  {
+    snprintf(cTestStepDescription,elcount(cTestStepDescription),"Positive response received for service 0x%x, DID 0x%x 0x%x",
+    this.GetPrimitiveByte(0),
+    this.GetPrimitiveByte(1),
+    this.GetPrimitiveByte(2));
+    testStepPass("STEP",cTestStepDescription);
+  }
+}
+
+void waitForDiagResponse()
+{
+  setTimer(P2ExtendedTimeout, diagGetP2Extended ("eCS",1,0)); // wait for response
+  
+  while(isTimerActive(P2ExtendedTimeout) != 0)
+  {
+    /* timer is active, wait */
+      testWaitForTimeout(50);
+  }
+}
+
+testcase GenericDiagTc()
+{ 
+  testCaseComment("Enter supplier session");
+  Req_Supplier_Diagnostic_Session_Start.SendRequest();
+  
+  waitForDiagResponse();
+  
+  testCaseComment("Issue supplier security access");
+  Req_Supplier_Application_Request.SendRequest();
+  
+  waitForDiagResponse();
+  
+  testCaseComment("Issue factory unlock routine");
+  Req_EcuUnlock_Start.SendRequest();
+  
+  waitForDiagResponse();
+}
+
+testcase WriteDids()
+{ 
+  char cTestStepDescription[500];
+  char cParamName[100];
+  int idx, jdx;
+  int didLen;
+  int idxContent;
+  int idxAscii;
+  char writeData[256]; 
+  char bF1A2DefaultContent[6] = {'0', '0', '1', '0', '0', '1'};
+  char bF187DefaultContent[11] = {'8', '5', 'E', '9', '8', '0', '3', '4', '0', ' ', ' '};
+  char bF191DefaultContent[11] = {'8', '5', 'E', '9', '8', '0', '3', '4', '0', ' ', ' '};
+  char bF18CDefaultContent[20] = {'0', '0', '0', '0', '0','0', '0', '0', '0', '0', '0','0', '0', '0', '0', '0', '0','0', '0', '0'};
+  char bF197DefaultContent[13] = {'0', '0', '0', '0', '0','0', '0', '0', '0', '0', '0','0', '0'};
+  char bF1A3DefaultContent[3] = {'E', '0', '1'};
+  char bF19EDefaultContent[24] = {'E', 'V', '_', 'B', 'e', 'l', 't', 'P', 'r', 'e', 't', 'e', 'L', 'e', 'f', 't', 'G', '1', 'A', 'U', '4', '1', '6', ' '};
+  char bF189DefaultContent[4] = {'E', '0', '1', '2'};
+  char bF1A2UpdateContent[6];
+  char bF1A3UpdateContent[3];
+  char bF189UpdateContent[4];
+  char bF191UpdateContent[11];
+  char bF187UpdateContent[11];
+  char bF197UpdateContent[13];
+  char bF18CUpdateContent[20];
+  char bF19EUpdateContent[24];
+  
+  testCaseComment("Enter supplier session");
+  Req_Supplier_Diagnostic_Session_Start.SendRequest();
+  
+  waitForDiagResponse();
+  
+  testCaseComment("Issue supplier security access");
+  Req_Supplier_Application_Request.SendRequest();
+  
+  waitForDiagResponse();
+  
+  testCaseComment("Issue factory unlock routine");
+  Req_EcuUnlock_Start.SendRequest();
+  
+  waitForDiagResponse();
+  
+  for (idxAscii = 0; idxAscii < 256; idxAscii++)
+  {
+    writeData[idxAscii] = idxAscii;
+  }
+  
+  for (idxContent = 0; idxContent < 24; idxContent++)
+  {
+          for (idx = 0; idx < 256; idx++)
+          { 
+            
+            didLen = 6; // f1a2
+            if (idxContent < didLen)
+            {
+              snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send DID Request for byte %d with ascii character %c", idxContent, idx);
+              testCaseComment(cTestStepDescription);
+              
+              for(jdx = 0; jdx < didLen; jdx++)
+              {
+                bF1A2UpdateContent[jdx] = bF1A2DefaultContent[jdx];  
+              
+                bF1A2UpdateContent[idxContent] = writeData[idx];
+                
+                snprintf(cParamName,elcount(cParamName),"ASAM_ODX_File_Version_Byte_%d", jdx);
+                
+                Req_ASAM_ODX_File_Version_Write.SetParameter(cParamName, bF1A2UpdateContent[jdx]);
+              }
+              
+              Req_ASAM_ODX_File_Version_Write.SendRequest();
+              waitForDiagResponse();
+            }
+            
+            didLen = 3; // f1a3
+            if (idxContent < didLen)
+            {
+              //snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send DID Request for byte 0 with ascii character  %c", idx);
+              snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send DID Request for byte %d with ascii character %c", idxContent, idx);
+              testCaseComment(cTestStepDescription);
+              
+              for(jdx = 0; jdx < didLen; jdx++)
+              {
+                bF1A3UpdateContent[jdx] = bF1A3DefaultContent[jdx];  
+              
+                bF1A3UpdateContent[idxContent] = writeData[idx];
+                
+                snprintf(cParamName,elcount(cParamName),"ECU_Hardware_Version_Number_Byte_%d", jdx);
+                
+                Req_VW_ECU_Hardware_Version_Number_Write.SetParameter(cParamName, bF1A3UpdateContent[jdx]);
+              }
+              
+              Req_VW_ECU_Hardware_Version_Number_Write.SendRequest();
+              waitForDiagResponse();
+            }
+            
+            didLen = 4; // f189
+            if (idxContent < didLen)
+            {
+              snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send DID Request for byte %d with ascii character %c", idxContent, idx);
+              testCaseComment(cTestStepDescription);
+              
+              for(jdx = 0; jdx < didLen; jdx++)
+              {
+                bF189UpdateContent[jdx] = bF189DefaultContent[jdx];  
+              
+                bF189UpdateContent[idxContent] = writeData[idx];
+                
+                snprintf(cParamName,elcount(cParamName),"Application_Software_Version_Number_Byte_%d", jdx);
+                
+                Req_VW_Application_Software_Version_Number_Write.SetParameter(cParamName, bF189UpdateContent[jdx]);
+              }
+              
+              Req_VW_Application_Software_Version_Number_Write.SendRequest();
+              waitForDiagResponse();
+            }
+            
+            didLen = 11; // f187 
+            if (idxContent < didLen)
+            {
+              snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send DID Request for byte %d with ascii character %c", idxContent, idx);
+              testCaseComment(cTestStepDescription);
+              
+              for(jdx = 0; jdx < didLen; jdx++)
+              {
+                bF187UpdateContent[jdx] = bF187DefaultContent[jdx];  
+              
+                bF187UpdateContent[idxContent] = writeData[idx];
+                
+                snprintf(cParamName,elcount(cParamName),"Spare_Part_Number_Byte_%d", jdx);
+                
+                Req_VW_Spare_Part_Number_Write.SetParameter(cParamName, bF187UpdateContent[jdx]);
+              }
+              
+              Req_VW_Spare_Part_Number_Write.SendRequest();
+              waitForDiagResponse();
+            }
+            
+            didLen = 11; // f191 
+            if (idxContent < didLen)
+            {
+              snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send DID Request for byte %d with ascii character %c", idxContent, idx);
+              testCaseComment(cTestStepDescription);
+              
+              for(jdx = 0; jdx < didLen; jdx++)
+              {
+                bF191UpdateContent[jdx] = bF191DefaultContent[jdx];  
+              
+                bF191UpdateContent[idxContent] = writeData[idx];
+                
+                snprintf(cParamName,elcount(cParamName),"ECU_Hardware_Number_Byte_%d", jdx);
+                
+                Req_VW_ECU_Hardware_Number_Write.SetParameter(cParamName, bF191UpdateContent[jdx]);
+              }
+              
+              Req_VW_ECU_Hardware_Number_Write.SendRequest();
+              waitForDiagResponse();
+            }
+            
+            didLen = 13; // f197
+            if (idxContent < didLen)
+            {
+              snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send DID Request for byte %d with ascii character %c", idxContent, idx);
+              testCaseComment(cTestStepDescription);
+              
+              for(jdx = 0; jdx < didLen; jdx++)
+              {
+                bF197UpdateContent[jdx] = bF197DefaultContent[jdx];  
+              
+                bF197UpdateContent[idxContent] = writeData[idx];
+                
+                snprintf(cParamName,elcount(cParamName),"System_Name_Or_Engine_Type_Byte_%d", jdx);
+                
+                Req_VW_System_Name_Or_Engine_Type_Write.SetParameter(cParamName, bF197UpdateContent[jdx]);
+              }
+              
+              Req_VW_System_Name_Or_Engine_Type_Write.SendRequest();
+              waitForDiagResponse();
+            }
+            
+            didLen = 20; // f18C
+            if (idxContent < didLen)
+            {
+              snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send DID Request for byte %d with ascii character %c", idxContent, idx);
+              testCaseComment(cTestStepDescription);
+              
+              for(jdx = 0; jdx < didLen; jdx++)
+              {
+                bF18CUpdateContent[jdx] = bF18CDefaultContent[jdx];  
+              
+                bF18CUpdateContent[idxContent] = writeData[idx];
+                
+                snprintf(cParamName,elcount(cParamName),"ECU_Serial_Number_Byte_%d", jdx);
+                
+                Req_ECU_Serial_Number_Write.SetParameter(cParamName, bF18CUpdateContent[jdx]);
+              }
+              
+              Req_ECU_Serial_Number_Write.SendRequest();
+              waitForDiagResponse();
+            }
+            
+            didLen = 24; // f19e
+            if (idxContent < didLen)
+            {
+              snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send DID Request for byte %d with ascii character %c", idxContent, idx);
+              testCaseComment(cTestStepDescription);
+              
+              for(jdx = 0; jdx < didLen; jdx++)
+              {
+                bF19EUpdateContent[jdx] = bF19EDefaultContent[jdx];  
+              
+                bF19EUpdateContent[idxContent] = writeData[idx];
+                
+                snprintf(cParamName,elcount(cParamName),"ASAM_ODX_File_Identifier_Byte_%d", jdx);
+                
+                Req_ASAM_ODX_File_Identifier_Write.SetParameter(cParamName, bF19EUpdateContent[jdx]);
+              }
+              
+              Req_ASAM_ODX_File_Identifier_Write.SendRequest();
+              waitForDiagResponse();
+            }
+            
+          }     
+     }    
+}
+
+
+void MainTest ()
+{
+  // Send Diag requests
+  // GenericDiagTc();
+  WriteDids();
+  
+  /* wait test close-out */
+  testWaitForTimeout(250);
+}

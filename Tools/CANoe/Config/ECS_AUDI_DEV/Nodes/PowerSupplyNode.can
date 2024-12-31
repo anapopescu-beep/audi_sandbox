@@ -1,0 +1,85 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+  #include "..\Includes\PowerSupplyControl.cin"
+}
+
+variables
+{
+  char sysLiveUpdateStatusBuffer[5]="";
+  double lastCurrentValue = 0;
+  double lastVoltageValue = 0;
+  int powerPerformed = 0;
+  int flagActionPerformed = 0;
+}
+
+
+void MainTest()
+{
+  @sysvar::PowerSupply::triggerCanBeMade = 1;
+  
+  if(@sysvar::PowerSupply::lastPowerState != @sysvar::PowerSupply::sysPowerButton)
+  {
+    if (@sysvar::PowerSupply::sysPowerButton == 1)
+    {
+      PowerOn();
+      ReadPowerSupplyState();
+      ReadVoltage();
+      ReadCurrent();
+      @sysvar::PowerSupply::sysPowerSupplyState = 1;
+      @sysvar::PowerSupply::lastPowerState = 1;
+    }
+  
+    if (@sysvar::PowerSupply::sysPowerButton == 0)
+    {
+      PowerOff();
+      @sysvar::PowerSupply::sysCurrentDisplay = 0;
+      @sysvar::PowerSupply::sysVoltageDisplay = 0;
+      ReadPowerSupplyState();
+      @sysvar::PowerSupply::sysPowerSupplyState = 0;
+      @sysvar::PowerSupply::lastPowerState = 0;
+    }
+  }
+  
+  if(@sysvar::PowerSupply::parametersUpdateRequested == 1)
+  {
+    if(lastVoltageValue != @sysvar::PowerSupply::sysSetVoltageInput)
+    {
+      SetVoltage(@sysvar::PowerSupply::sysSetVoltageInput);
+      lastVoltageValue = @sysvar::PowerSupply::sysSetVoltageInput;
+    }
+    
+    if(lastCurrentValue != @sysvar::PowerSupply::sysSetCurrentInput)
+    {
+      SetCurrent(@sysvar::PowerSupply::sysSetCurrentInput);
+      lastCurrentValue = @sysvar::PowerSupply::sysSetCurrentInput;
+    }
+      
+    TestWaitForTimeout(50);  
+    ReadVoltage();
+    TestWaitForTimeout(50);  
+    ReadCurrent();
+    
+    @sysvar::PowerSupply::parametersUpdateRequested = 0;
+  }
+
+  if(@sysvar::PowerSupply::sysLiveUpdateStartStopButton == 1)
+  {
+    sysSetVariableString(sysvar::PowerSupply::sysLiveUpdateStatus,"ON");
+    @sysvar::PowerSupply::sysPowerStatusState = 1;
+    TestWaitForTimeout(50);  
+    ReadVoltage();
+    TestWaitForTimeout(50);  
+    ReadCurrent();
+    TestWaitForTimeout(50);
+  }
+  else
+  {
+    sysSetVariableString(sysvar::PowerSupply::sysLiveUpdateStatus,"OFF");
+    @sysvar::PowerSupply::sysPowerStatusState = 0;
+  }
+  
+  @sysvar::PowerSupply::triggerCanBeMade = 0;
+   
+}

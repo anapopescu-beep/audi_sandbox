@@ -1,0 +1,39 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_CIL_SP_IF_eCS_Gurtschloss_Status_Reihe2_BF_XIX_Grundumfang_XIX_eCS
+ARCH_SW_CIL_SP_IF_eCS_Gurtschloss_Status_Reihe2_BF_XIX_Grundumfang_XIX_eCS: The runnable shall read the buckle sensor status from the IoHwAb module - The runnable shall write the buckle sensor status for the second row on the CAN bus.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_CIL_SP_IF_eCS_Gurtschloss_Status_Reihe2_BF_XIX_Grundumfang_XIX_eCS
+
+	Step 2: Set a breakpoint in function IoHwAb_DetectSeatOccupancy at the switch statement 
+		Expected result:  BP reached.
+
+	Step 3: Set a breakpoint in function IoHwAb_DetectSeatOccupancy at the case KU8_IOHWAB_BELT_PLUG 
+		Expected result:  BP reached.
+
+	Step 4: Set a breakpoint in function IoHwAb_DetectSeatOccupancy at the RTE Write for SeatOccupancySensorStatus 
+		Expected result:  BP reached.
+
+	Step 5: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot01 at the switch statement 
+		Expected result:  BP reached.
+
+	Step 6: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot01 at the case KU8_BUCKLE_LATCHED 
+		Expected result:  BP reached.
+
+	Step 7: Read the signal eCS_Gurtschloss_Status_Reihe2_BF.
+
+Postcondition
+
+	Step 8: Return ECU to default values

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="b7bb2a9b-d9b5-456e-bd47-f7c25df94824">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="771eba22-3de1-4d4e-a450-ba8f78835e12">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2022-08-26T16:56:15+03:00" UUID="c9af83f2-5d9e-46b2-9d12-4d22b7ecc616">
+              <SHORT-NAME>EFX</SHORT-NAME>
+              <ELEMENTS>
+                <ECU-ABSTRACTION-SW-COMPONENT-TYPE T="2022-09-20T15:02:34+03:00" UUID="1b5a699c-1c07-48b6-837e-fa96d6150e2f">
+                  <SHORT-NAME>EFX</SHORT-NAME>
+                  <CATEGORY>ECU_HW_Abstraction</CATEGORY>
+                  <PORTS>
+                    <P-PORT-PROTOTYPE T="2023-02-21T19:44:41+02:00" UUID="4554abb0-65a6-444c-a639-0c1b75e46656">
+                      <SHORT-NAME>pseEfxServices</SHORT-NAME>
+                      <DESC T="2023-02-21T13:29:45+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_EFX_pseEfxServices_EFX_LPF_Filter_u16_u16&#xD;
+&#xD;
+# Description&#xD;
+	- The interface shall read the {Current value} and filter it via a first order low pass filter&#xD;
+	- The interface shall output the result via the  {Filtered value} output parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Current value}&#xD;
+		- Has to conform to uint16 range&#xD;
+## Outputs&#xD;
+	- {Filtered value}&#xD;
+		- Has to conform to uint16 range for EFX_LPF_Filter_u16_u16&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- EFX_LPF_Filter_u16_u16&#xD;
+&#xD;
+#Traceability &#xD;
+&#xD;
+--------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_EFX_pseEfxServices_Efx_HystCenterHalfDelta_u16_u8&#xD;
+&#xD;
+# Description&#xD;
+	- The interface shall read the {Current value} and filter it via a first order low pass filter&#xD;
+	- The interface shall output the result via the  {Filtered value} output parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Current value}&#xD;
+		- Has to conform to uint16 range&#xD;
+## Outputs&#xD;
+	- {Filtered value}&#xD;
+              - Has to conform to uint8 range for Efx_HystCenterHalfDelta_u16_u8&#xD;
+&#xD;
+# Linked Runnable&#xD;
+       - Efx_HystCenterHalfDelta_u16_u8&#xD;
+&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:44:49+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T11:29:51+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T19:44:32.647+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">change for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">updated functionality</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:44:49+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T11:29:51+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/EFX_DataDictionary/ClientServerInterfaces/icsEfxServices/LPF_Filter</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/EFX_DataDictionary/ClientServerInterfaces/icsEfxServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                </ECU-ABSTRACTION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

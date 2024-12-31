@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2016-05-30T16:03:21+02:00">
+              <SHORT-NAME>LPM</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2017-09-21T09:07:02+02:00">
+                  <SHORT-NAME>LPM</SHORT-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <INTERNAL-BEHAVIORS>
+                    <SWC-INTERNAL-BEHAVIOR T="2017-09-21T09:05:58+02:00">
+                      <SHORT-NAME>LPM_IB</SHORT-NAME>
+                      <DATA-TYPE-MAPPING-REFS>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/LPM_DataDictionary/DataTypeMappingSet/DataTypeMappingSet_LPM</DATA-TYPE-MAPPING-REF>
+                      </DATA-TYPE-MAPPING-REFS>
+                      <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                      <RUNNABLES>
+                        <RUNNABLE-ENTITY T="2023-02-22T11:11:22+02:00" UUID="DCE:e1b053b9-fc7b-4832-9979-f1ab0b803a49">
+                          <SHORT-NAME>LPM_sleepInit</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/ptrpLpmServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/LPM_DataDictionary/TriggerInterfaces/itrLpmServices/LPM_sleepInit</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-02-22T11:11:22+02:00" UUID="9c21b46d-0055-4e28-b0af-d2efba79300a">
+                              <SHORT-NAME>scp_SBC_SetToLowPower</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/pclSbcServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_SetToLowPower</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-02-22T11:11:06+02:00" UUID="50de8b3a-351d-47c3-bd02-6ee258b7dbbb">
+                              <SHORT-NAME>scp_SBC_sleepTriggerWatchdog</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/pclSbcServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_sleepTriggerWatchdog</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>LPM_sleepInit</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-06-20T09:30:59+03:00" UUID="DCE:30066e67-2493-4bf0-9024-a7e5fde7a0ce">
+                          <SHORT-NAME>LPM_sleepMainLoop</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/ptrpLpmServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/LPM_DataDictionary/TriggerInterfaces/itrLpmServices/LPM_sleepMainLoop</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="1d5fc835-2cc6-4f86-a39a-4b77db52ca14">
+                              <SHORT-NAME>scp_DetectSeatOccupancy</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/pclLowPowerWakeUp</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsLowPowerWakeUp/HandleSeatVariants</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-06-20T09:30:59+03:00" UUID="8e372cfc-e737-4edf-b961-de74a202d5ec">
+                              <SHORT-NAME>scp_IoHwAb_HandleSeatCurrent</SHORT-NAME>
+                              <OPERATION-IREF T="2023-06-20T13:52:53+03:00">
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/pclHandleSeatCurrentCircuit</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsHandleSeatCurrentCircuit/IoHwAb_HandleSeatCurrentCircuit</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-02-16T13:14:13+02:00" UUID="68d858c2-d13e-4cf2-a283-3d0a68440911">
+                              <SHORT-NAME>scp_StartConversion</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/pclAdcIfServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsAdcIfServices/StartConversion</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-02-16T13:14:13+02:00" UUID="e78e601d-198b-4a78-ad90-06bfe71476da">
+                              <SHORT-NAME>scp_StopConversion</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/pclAdcIfServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsAdcIfServices/StopConversion</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-02-16T13:14:13+02:00" UUID="b6329f0e-a1bb-4c0b-88b1-6e573497f75f">
+                              <SHORT-NAME>scp_WaitForConversion</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/pclAdcIfServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsAdcIfServices/WaitForConversion</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>LPM_sleepMainLoop</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-22T11:11:38+02:00" UUID="DCE:bc163dcc-65ce-4bbe-9d5e-96d45c9e4e6e">
+                          <SHORT-NAME>LPM_sleepRestore</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/ptrpLpmServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/LPM_DataDictionary/TriggerInterfaces/itrLpmServices/LPM_sleepRestore</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-02-09T15:54:40+02:00" UUID="091612d1-c5ba-4087-a36c-60d7ae91d3a6">
+                              <SHORT-NAME>scp_RestartInitialization</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/pclAccRestartInit</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ACC_DataDictionary/ClientServerInterfaces/icsAccRestartInit/RestartInitialization</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-02-22T11:11:38+02:00" UUID="fa24b1d9-9f8c-4d92-852c-488039cefb6a">
+                              <SHORT-NAME>scp_SBC_SetToNormal</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/pclSbcServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_SetToNormal</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>LPM_sleepRestore</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-16T15:52:14+02:00" UUID="DCE:0cab87c6-7437-4da9-90b6-3c3138ee497e">
+                          <SHORT-NAME>LPTMR_ISR</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/ptrpLpmServicesAsrOs</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/LPTMR_ISR</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>LPM_LPTMR_ISR</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-16T15:52:41+02:00" UUID="DCE:e453fea2-2238-4a6d-9cc5-f33e7913aa93">
+                          <SHORT-NAME>PORTD_ISR</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/LPM/LPM/ptrpLpmServicesAsrOs</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/PORTD_ISR</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>LPM_PORTD_ISR</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                      </RUNNABLES>
+                      <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                    </SWC-INTERNAL-BEHAVIOR>
+                  </INTERNAL-BEHAVIORS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+                <SWC-IMPLEMENTATION T="2015-10-21T09:49:22+02:00">
+                  <SHORT-NAME>LPM_imp</SHORT-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <CODE-DESCRIPTORS>
+                    <CODE T="2015-10-12T16:44:00+02:00">
+                      <SHORT-NAME>LPM_Impl_Code</SHORT-NAME>
+                      <ARTIFACT-DESCRIPTORS>
+                        <AUTOSAR-ENGINEERING-OBJECT>
+                          <SHORT-LABEL>LPM_Impl_Code_CodeDesc</SHORT-LABEL>
+                          <CATEGORY>SWSRC</CATEGORY>
+                        </AUTOSAR-ENGINEERING-OBJECT>
+                      </ARTIFACT-DESCRIPTORS>
+                    </CODE>
+                  </CODE-DESCRIPTORS>
+                  <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+                  <RESOURCE-CONSUMPTION T="2016-05-27T17:04:30+02:00">
+                    <SHORT-NAME>LPM_Impl_ResCons</SHORT-NAME>
+                    <MEMORY-SECTIONS>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00" UUID="db2dc7b0-8f39-474b-9cdb-79ca97636315">
+                        <SHORT-NAME>CODE</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00">
+                        <SHORT-NAME>CODE_ASIL_A</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:41+02:00" UUID="6f1f20a8-c740-4e8e-9213-e03bf78f1b41">
+                        <SHORT-NAME>CONST_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:37+02:00">
+                        <SHORT-NAME>CONST_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:44+02:00" UUID="a3778ce3-ec68-49cd-a58d-38975b00fe63">
+                        <SHORT-NAME>CONST_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:46+02:00">
+                        <SHORT-NAME>CONST_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="72fdf20b-ae66-41b3-9d9e-641bf0eb28bb">
+                        <SHORT-NAME>CONST_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:35+02:00">
+                        <SHORT-NAME>CONST_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:48+02:00" UUID="ae2addde-87f0-4b1d-83dd-b300fffe0581">
+                        <SHORT-NAME>CONST_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:50+02:00">
+                        <SHORT-NAME>CONST_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:52+02:00" UUID="7919d363-e7cf-4e6a-a9b6-729d2b92f0eb">
+                        <SHORT-NAME>CONST_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:54+02:00">
+                        <SHORT-NAME>CONST_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="693257a6-6fb2-4753-906c-1aa7e3302e06">
+                        <SHORT-NAME>VAR_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="bde14b71-5fef-4468-a414-da4f03bab3d8">
+                        <SHORT-NAME>VAR_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:41:59+02:00" UUID="f20dc1a0-0e42-4ebc-91eb-10953ec49dba">
+                        <SHORT-NAME>VAR_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:42:01+02:00">
+                        <SHORT-NAME>VAR_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:53:16+02:00" UUID="03bda0ed-a757-432d-ac1a-7468b1734136">
+                        <SHORT-NAME>VAR_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:42:10+02:00" UUID="8cca306c-d9bd-43e0-827f-7ba00a9639f4">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:42:12+02:00">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="20369927-a771-43f4-a324-889eec0d2d50">
+                        <SHORT-NAME>VAR_NO_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="1c074d97-092d-44e6-8c60-2974567ceef7">
+                        <SHORT-NAME>VAR_NO_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="18dcbe8f-e06e-4900-95f3-303caeed91b8">
+                        <SHORT-NAME>VAR_NO_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="a7a0d121-ccde-4470-b671-ba3bff6950f7">
+                        <SHORT-NAME>VAR_NO_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2017-02-07T16:23:34+01:00" UUID="b605b4e8-0362-461a-82b9-0a3599283c60">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_POWER_ON_CLEARED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/VAR_POWER_ON_CLEARED</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                    </MEMORY-SECTIONS>
+                  </RESOURCE-CONSUMPTION>
+                  <SW-VERSION>1.0.0</SW-VERSION>
+                  <VENDOR-ID>0</VENDOR-ID>
+                  <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/AUTOLIV/SoftwareComponents/LPM/LPM/LPM_IB</BEHAVIOR-REF>
+                </SWC-IMPLEMENTATION>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

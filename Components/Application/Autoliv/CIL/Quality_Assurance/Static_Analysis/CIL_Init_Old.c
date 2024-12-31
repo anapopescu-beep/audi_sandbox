@@ -1,0 +1,150 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/**
+ *    $Revision: 1.2.1.2 $
+ *    $ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/CIL/Quality_Assurance/Static_Analysis/project.pj $
+ */
+
+/**
+ * \brief
+ *    Communication Interface Layer (CIL) oversees extracting data from the 
+ *    network frames (e.g. CAN) and providing the data to the application, and 
+ *    packing the outgoing data to the network frames.
+ *    The aim of the CIL component is to interpret all received signals on the
+ *    communication component and to provide the right information to the application.
+ *    Also, it’s purpose is to gather information from the Application and
+ *    compute the status signals and sent them to the CAN bus.
+ *    CIL oversees:
+ *       - Unpacking received data frames from the network (CAN), and providing 
+ *         the data to the application
+ *       - Packing the outgoing data to data frames for the network (CAN)
+ */
+
+/*!****************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Rte_CIL.h"
+#include "Nvp_Generated_NvmDefault.h"
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+#define CIL_START_SEC_CODE
+#include "CIL_MemMap.h"
+
+/**
+* \brief
+*       This function represents the CIL service that is called during initialization to reset all exported variables.
+* \inputparam
+*       Name: N.A.;
+*       Type: N.A.;
+*       Description: N.A.;
+*       Range: N.A.;
+* \outputparam
+*       Name: N.A.;
+*       Type: N.A.;
+*       Description: N.A.;
+*       Range: N.A.;
+* \constrains
+*       None.
+* \dynamicaspectcaller
+*       Scheduler.
+* \dynamicaspectdescription
+*       Called on system initialization.
+* \ddesignrequirement
+*		DSG_CIL_runInit
+* \archrequirement
+*       TBD
+**/
+EXPORTED void CIL_runInit(void)
+{
+	 /* nothing to do */
+} 
+
+#define CIL_STOP_SEC_CODE
+#include "CIL_MemMap.h"
+
+/******************************************************************************
+Evolution of the component
+
+Created by : F.GILBERT
+
+$Log: CIL_Init_Old.c  $
+Revision 1.2.1.2 2023/04/18 12:37:18CEST Dan Dustinta (dan.dustinta) 
+Initial revision
+Member added to project e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/CIL/Quality_Assurance/Static_Analysis/project.pj
+Revision 1.3.1.4 2023/01/16 11:38:46EET Septimiu Vintila (septimiu.vintila) 
+Fixes after review.
+Revision 1.3.1.3 2022/11/24 10:13:14EET Septimiu Vintila (septimiu.vintila) 
+CIL implemantation.
+Revision 1.1 2021/08/26 09:16:54EEST Pierre-Olivier Pilot (pierre-olivier.pilot) 
+Initial revision
+Member added to project e:/MKSProjects/SBE/Innovation/ECS/Phase_01/Components/Application/Autoliv/CIL/Implementation/src/project.pj
+Revision 1.2 2021/06/24 10:50:20CEST Sabrine Bouazizi (sabrine.bouazizi) 
+AT/DTC MNGT Add ROE Management
+Revision 1.1 2020/12/08 13:59:49CET Gaetan Lievre (gaetan.lievre) 
+Initial revision
+Member added to project e:/MKSProjects/AEM/Frame_Platforms/S32K144/Phase_01/View_Development/Components/Application/Autoliv/CIL/Implementation/src/project.pj
+Revision 1.3 2020/08/14 16:22:09CEST Pierre-Olivier Pilot (pierre-olivier.pilot) 
+Use Autosar shortname field for the Module Trigram and the long name for the full component name (XXX_AC_TrigramExplained)
+Revision 1.2 2019/10/09 16:14:29CEST Gaetan Lievre (gaetan.lievre) 
+Update for Nvm
+Revision 1.1 2019/06/25 16:17:49CEST Nicolas Bianchi (nicolas.bianchi) 
+Initial revision
+
+*****************************************************************************/
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

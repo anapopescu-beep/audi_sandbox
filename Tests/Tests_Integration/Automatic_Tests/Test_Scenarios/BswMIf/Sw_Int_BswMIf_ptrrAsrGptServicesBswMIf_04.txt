@@ -1,0 +1,45 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrGptServicesBswMIf_Gpt_StopTimer_BswM_Cyclic_10msTimer
+ARCH_SW_BswMIf_ptrrGptServicesBswMIf_Gpt_StopTimer_BswM_Cyclic_10msTimer: The Gpt_StopTimer runnable shall be called in the BswM_Cyclic_10msTimer runnable in order to stop function of timer if: - Current ECU State is POST RUN AND Pasager occupancy is detected - Current ECU State is POST RUN AND Passenger occupancy OR CAN Activity is not detected - Current ECU State is AUTONOMOUS RUN {Passenger detected - valid transition from POST RUN} AND CAN Activity was detected on bus - Current ECU State is AUTONOMOUS RUN {Passenger detected - valid transition from POST RUN} AND CAN Activity was not detected on bus - Current ECU State is AUTONOMOUS RUN {Passenger detected - valid transition from LOW POWER} AND CAN Activity was detected on bus - Current ECU State is AUTONOMOUS RUN {Passenger detected - valid transition from LOW POWER} AND CAN Activity was not detected on bus
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrGptServicesBswMIf_Gpt_StopTimer_BswM_Cyclic_10msTimer
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to change post run timer value 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_Cyclic_10msTimer in order to change  Passenger Occupancy Status 
+		Expected result:  BP was set
+
+	Step 6: Change value for Passenger Occupancy Status with pasager occupancy is detected
+		Expected result:  Succesfully changed
+
+	Step 7: Set a BP in function BswM_Cyclic_10msTimer in order to call Gpt_StopTimer 
+		Expected result:  BP was set
+
+	Step 8: Set a BP in function Gpt_StopTimer in order to stop function of timer 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function BswM_Cyclic_10msTimer in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 10: Return ECU to default values

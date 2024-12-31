@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE>
+              <SHORT-NAME>EIM</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2017-09-21T09:07:02+02:00">
+                  <SHORT-NAME>EIM</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 T="2023-03-21T10:44:09+02:00" L="FOR-ALL">EIM_AC_ErrorInjectionFault</L-4>
+                  </LONG-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <INTERNAL-BEHAVIORS>
+                    <SWC-INTERNAL-BEHAVIOR T="2023-04-06T11:05:30+03:00">
+                      <SHORT-NAME>EIM_IB_0</SHORT-NAME>
+                      <DATA-TYPE-MAPPING-REFS>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/FSM_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_FSM</DATA-TYPE-MAPPING-REF>
+                      </DATA-TYPE-MAPPING-REFS>
+                      <EVENTS>
+                        <OPERATION-INVOKED-EVENT T="2023-03-23T15:01:46+02:00" UUID="247e3e82-a16c-4118-80df-4509486a8834">
+                          <SHORT-NAME>oie_pseInjectError_EIM_ManageAecStatus</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EIM/EIM/EIM_IB_0/EIM_ManageAecStatus</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2023-03-23T15:01:46+02:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EIM/EIM/pseInjectError</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/EIM_DataDictionary/ClientServerInterfaces/icsInjectError/EIM_ManageAecStatus</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                      </EVENTS>
+                      <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                      <RUNNABLES>
+                        <RUNNABLE-ENTITY UUID="DCE:4f062a4b-595e-462e-9645-84dab10b35c2">
+                          <SHORT-NAME>EIM_AppHandler</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>EIM_AppHandler</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-04-06T11:07:45+03:00" UUID="DCE:e8294474-b57f-4b40-ba07-2657ac206ced">
+                          <SHORT-NAME>EIM_ManageAecStatus</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                            <VARIABLE-ACCESS UUID="8aa26b84-a4d2-45ca-bde0-b41b0b9ea62a">
+                              <SHORT-NAME>drparg_au8SelectedProfile</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EIM/EIM/prrFSMSolenoidProfile</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidProfile/au8SelectedProfile</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="ca8a870d-ab88-4fd5-bbea-794237758e1f">
+                              <SHORT-NAME>scp_SetEventStatus</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EIM/EIM/pclDemDiagMonitor</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>EIM_ManageAecStatus</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                      </RUNNABLES>
+                      <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                    </SWC-INTERNAL-BEHAVIOR>
+                  </INTERNAL-BEHAVIORS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+                <SWC-IMPLEMENTATION T="2023-03-21T13:28:11+02:00">
+                  <SHORT-NAME>EIM_imp</SHORT-NAME>
+                  <CODE-DESCRIPTORS>
+                    <CODE>
+                      <SHORT-NAME>EIM_Impl_Code</SHORT-NAME>
+                      <ARTIFACT-DESCRIPTORS>
+                        <AUTOSAR-ENGINEERING-OBJECT>
+                          <SHORT-LABEL>EIM_Impl_Code_CodeDesc</SHORT-LABEL>
+                          <CATEGORY>SWSRC</CATEGORY>
+                        </AUTOSAR-ENGINEERING-OBJECT>
+                      </ARTIFACT-DESCRIPTORS>
+                    </CODE>
+                  </CODE-DESCRIPTORS>
+                  <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+                  <RESOURCE-CONSUMPTION T="2023-03-21T13:28:38+02:00" UUID="e3b45566-7887-4e07-a6a7-e862ae51d506">
+                    <SHORT-NAME>EIM_Impl_ResCons</SHORT-NAME>
+                    <MEMORY-SECTIONS>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="fd7c4890-b076-4753-a69d-0c6966bc5888">
+                        <SHORT-NAME>CODE</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="730b43d6-bcf5-49b2-b3d8-99af5a55b83d">
+                        <SHORT-NAME>CODE_ASIL_A</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="7ea6fb0a-6cab-4309-ab50-62bcf5b87200">
+                        <SHORT-NAME>CONST_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="47545c11-553b-47d1-b3a4-da9523bf4596">
+                        <SHORT-NAME>CONST_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="4733362e-b165-42c9-8fae-da50dbba25ac">
+                        <SHORT-NAME>CONST_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="ecd502be-f199-4603-b66b-4d10be65d51f">
+                        <SHORT-NAME>CONST_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="506c3ff1-8274-404a-80e5-bb9f97874af6">
+                        <SHORT-NAME>CONST_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="255b1543-5e2e-44b2-9585-15513c00cc23">
+                        <SHORT-NAME>CONST_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="cfcd86df-afa8-407d-b693-3313755e82b3">
+                        <SHORT-NAME>CONST_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="d27b972d-5286-4411-be6c-b088cf84c033">
+                        <SHORT-NAME>CONST_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="890c8d7a-25f5-4286-b303-57e1653d14bc">
+                        <SHORT-NAME>CONST_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="68479a65-e8e7-4a52-8a1b-a9beaf9aa622">
+                        <SHORT-NAME>CONST_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="0ff5221b-bca2-4b6a-a15e-86d9181b1e58">
+                        <SHORT-NAME>VAR_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="3bdb8a5a-9186-4c28-8f7e-9e75cc246851">
+                        <SHORT-NAME>VAR_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="0e59a728-45bb-4bd8-8534-fe84995cf486">
+                        <SHORT-NAME>VAR_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="b839a23a-91c0-4a29-ac40-0833d304bd96">
+                        <SHORT-NAME>VAR_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="e0185307-2019-4b42-80a7-30ef505c33bf">
+                        <SHORT-NAME>VAR_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="37547818-2360-4ac1-80d6-86afe201f938">
+                        <SHORT-NAME>VAR_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="70038c38-a920-4781-88f3-445b6a71a4d9">
+                        <SHORT-NAME>VAR_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="ed7fa5f7-ed16-4626-bdd9-d6b75a5e3918">
+                        <SHORT-NAME>VAR_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="80d0d455-ee34-4e09-9074-93d1b63b3af6">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="e6f0673f-fa4b-4fd6-bd84-744c54c3c38d">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="6dc26a03-26c7-4c67-aa71-ff7dc8949a0d">
+                        <SHORT-NAME>VAR_NO_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="cfd7a563-b366-4503-8247-466333ecdfa1">
+                        <SHORT-NAME>VAR_NO_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="623678cd-22bd-45f8-b922-69622a51bac5">
+                        <SHORT-NAME>VAR_NO_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="1201011e-ca93-44f2-8019-4dca41e3296c">
+                        <SHORT-NAME>VAR_NO_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="8bc776eb-e557-4384-b8b5-5e90561c318d">
+                        <SHORT-NAME>VAR_NO_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="1c79b5b1-5127-40e3-be0a-50d86c904984">
+                        <SHORT-NAME>VAR_NO_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="efc5e9e0-28b6-4bc0-89a0-6e79c7c0a37f">
+                        <SHORT-NAME>VAR_NO_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="e9232cca-56c0-4a63-8ddc-dce4bfd877b4">
+                        <SHORT-NAME>VAR_NO_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="b1549142-9f87-4092-8cea-40c4dcae86af">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="42d73768-4d9d-47f0-808c-860eeb6c1af4">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-03-21T13:28:11+02:00" UUID="1d40a17a-8212-457a-985a-e88be137db34">
+                        <SHORT-NAME>VAR_POWER_ON_CLEARED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/VAR_POWER_ON_CLEARED</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                    </MEMORY-SECTIONS>
+                  </RESOURCE-CONSUMPTION>
+                  <SW-VERSION>1.0.0</SW-VERSION>
+                  <VENDOR-ID>0</VENDOR-ID>
+                  <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/AUTOLIV/SoftwareComponents/EIM/EIM/EIM_IB_0</BEHAVIOR-REF>
+                </SWC-IMPLEMENTATION>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

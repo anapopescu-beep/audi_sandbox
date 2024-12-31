@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd" T="2022-08-26T12:36:25+03:00">
+  <AR-PACKAGES>
+    <AR-PACKAGE T="2022-08-26T12:36:41+03:00" UUID="fa1482be-89d9-4301-b258-af546d4bc79b">
+      <SHORT-NAME>EB</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2022-08-26T12:36:41+03:00">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <ELEMENTS>
+            <SERVICE-SW-COMPONENT-TYPE T="2023-02-27T13:31:02+02:00" UUID="DCE:20eecf4e-ebe8-4917-9aff-b1dc92c7c5b5">
+              <SHORT-NAME>Spi</SHORT-NAME>
+              <CATEGORY>ASR_Interfaces</CATEGORY>
+              <PORTS>
+                <P-PORT-PROTOTYPE T="2023-02-27T13:31:08+02:00" UUID="57b9e096-cfdf-4f8d-857e-de258331c58d">
+                  <SHORT-NAME>ptrpAsrSpiServicesEcuMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrSpiServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE T="2022-08-26T14:33:31+03:00">
+                  <SHORT-NAME>ptrpAsrSpiServicesSpiIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrSpiServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR T="2022-08-26T14:31:01+03:00" UUID="56a21459-cba6-440a-9Spi-0d5b62a594bd">
+                  <SHORT-NAME>Spi_IB</SHORT-NAME>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY T="2022-08-26T14:33:52+03:00" UUID="DCE:eea140e5-fc2f-4e8d-819a-b38f87adbd8e">
+                      <SHORT-NAME>Spi_GetStatus</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Spi/ptrpAsrSpiServicesSpiIf</CONTEXT-P-PORT-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Spi_GetStatus</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T14:33:59+03:00" UUID="DCE:1d959c53-ba48-4d4f-b569-d17c54031c38">
+                      <SHORT-NAME>Spi_ReadIB</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Spi/ptrpAsrSpiServicesSpiIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrSpiServices/Spi_ReadIB</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Spi_ReadIB</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T14:34:09+03:00" UUID="DCE:5cf19a90-6b2a-42d1-96cb-440cb9c8d83a">
+                      <SHORT-NAME>Spi_SetAsyncMode</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Spi/ptrpAsrSpiServicesSpiIf</CONTEXT-P-PORT-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Spi_SetAsyncMode</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2023-02-21T13:13:37+02:00" UUID="DCE:fba38bd9-4531-4f5c-951a-b1fa50728f8f">
+                      <SHORT-NAME>Spi_SyncTransmit</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Spi/ptrpAsrSpiServicesSpiIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrSpiServices/Spi_SyncTransmit</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Spi_SyncTransmit</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T14:34:15+03:00" UUID="DCE:b81a37b4-a8c3-4f6a-baf1-7b27bc7cc7f6">
+                      <SHORT-NAME>Spi_WriteIB</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Spi/ptrpAsrSpiServicesSpiIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrSpiServices/Spi_WriteIB</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Spi_WriteIB</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </SERVICE-SW-COMPONENT-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <AR-PACKAGE T="2022-08-26T12:36:48+03:00" UUID="83dbf1d3-fd69-4d31-99ba-2a110ed331f7">
+          <SHORT-NAME>TriggerInterfaces</SHORT-NAME>
+          <ELEMENTS>
+            <TRIGGER-INTERFACE T="2023-02-21T13:46:59+02:00">
+              <SHORT-NAME>itrAsrSpiServices</SHORT-NAME>
+              <TRIGGERS>
+                <TRIGGER T="2023-02-21T13:46:59+02:00" UUID="e5b1f462-7740-417d-a93f-aea6f822bc52">
+                  <SHORT-NAME>Spi_Init</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-26T14:32:31+03:00" UUID="45ff5594-7fc5-42a8-b6bc-1e2a31c1824f">
+                  <SHORT-NAME>Spi_ReadIB</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2023-02-15T16:10:59+02:00" UUID="0b57b594-591a-4362-8667-71355e70b946">
+                  <SHORT-NAME>Spi_SyncTransmit</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-26T14:32:23+03:00" UUID="41ad5baa-4260-49d4-bb99-78fe516d1d4f">
+                  <SHORT-NAME>Spi_WriteIB</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+              </TRIGGERS>
+            </TRIGGER-INTERFACE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd" T="2022-08-26T12:28:26+03:00">
+  <AR-PACKAGES>
+    <AR-PACKAGE T="2022-08-26T12:28:18+03:00" UUID="fa1482be-89d9-4301-b258-af546d4bc79b">
+      <SHORT-NAME>EB</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2022-08-26T12:29:02+03:00">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <ELEMENTS>
+            <SERVICE-SW-COMPONENT-TYPE T="2022-08-26T12:28:18+03:00" UUID="DCE:20eecf4e-ebe8-4917-9aff-b1dc92c7c5b5">
+              <SHORT-NAME>Gpt</SHORT-NAME>
+              <CATEGORY>ASR_Interfaces</CATEGORY>
+              <PORTS>
+                <P-PORT-PROTOTYPE T="2022-08-26T12:14:15+03:00" UUID="06a20180-7188-4eaa-b944-6705e28c9aea">
+                  <SHORT-NAME>ptrpAsrGptServicesAdcIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrGptServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE T="2022-08-26T12:14:15+03:00" UUID="d63db3f6-f5a7-4ac7-8b15-165966303987">
+                  <SHORT-NAME>ptrpAsrGptServicesBswMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrGptServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE T="2022-08-26T12:14:21+03:00" UUID="406e8e1f-e3bf-4e2c-bfda-245300f7da4e">
+                  <SHORT-NAME>ptrrAsrGptServicesAdcIf</SHORT-NAME>
+                  <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrGptServices</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE T="2022-08-26T12:14:21+03:00" UUID="d555a6cb-d102-4efe-8a5b-5dd7584799f0">
+                  <SHORT-NAME>ptrrAsrGptServicesBswMIf</SHORT-NAME>
+                  <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrGptServices</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR T="2022-08-26T12:23:20+03:00" UUID="56a21459-cba6-440a-9Gpt-0d5b62a594bd">
+                  <SHORT-NAME>Gpt_IB</SHORT-NAME>
+                  <EVENTS>
+                    <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-26T12:21:37+03:00" UUID="b64e1e5b-549a-4932-87cc-32cc31a35c77">
+                      <SHORT-NAME>trAdcIf_GPTOnTimer_Expiration</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/EB/SoftwareComponents/Gpt/Gpt_IB/Gpt_InitChannel</START-ON-EVENT-REF>
+                      <TRIGGER-IREF T="2022-08-26T12:21:37+03:00">
+                        <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/EB/SoftwareComponents/Gpt/ptrrAsrGptServicesAdcIf</CONTEXT-R-PORT-REF>
+                        <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/AdcIf_GPTOnTimer_Expiration</TARGET-TRIGGER-REF>
+                      </TRIGGER-IREF>
+                    </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                  </EVENTS>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY UUID="DCE:987e8e9a-8e79-4902-905a-cd879d5c338f">
+                      <SHORT-NAME>Gpt_DisableNotification</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Gpt_DisableNotification</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T12:23:29+03:00" UUID="DCE:63da42e2-6ed9-4cdb-a93f-f8502f91fb8c">
+                      <SHORT-NAME>Gpt_EnableNotification</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Gpt/ptrpAsrGptServicesAdcIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_EnableNotification</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Gpt_EnableNotification</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T12:23:35+03:00" UUID="DCE:318bc97b-c535-4a2b-8e90-4cf705fe68ff">
+                      <SHORT-NAME>Gpt_Init</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Gpt/ptrpAsrGptServicesAdcIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_Init</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Gpt_Init</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T12:21:58+03:00" UUID="DCE:b81a37b4-a8c3-4f6a-baf1-7b27bc7cc7f6">
+                      <SHORT-NAME>Gpt_InitChannel</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Gpt_InitChannel</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T12:23:43+03:00" UUID="DCE:196e3503-c40a-491f-8071-b6fa6b7962c4">
+                      <SHORT-NAME>Gpt_StartTimer</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Gpt/ptrpAsrGptServicesAdcIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_StartTimer</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Gpt_StartTimer</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:77d18a69-17ff-487f-a268-9069386c45d5">
+                      <SHORT-NAME>Gpt_StopTimer</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Gpt_StopTimer</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </SERVICE-SW-COMPONENT-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <AR-PACKAGE T="2022-08-26T12:10:00+03:00" UUID="83dbf1d3-fd69-4d31-99ba-2a110ed331f7">
+          <SHORT-NAME>TriggerInterfaces</SHORT-NAME>
+          <ELEMENTS>
+            <TRIGGER-INTERFACE T="2022-08-26T16:47:21+03:00" UUID="c7ca9409-272c-41cd-b945-1b8d146f9e95">
+              <SHORT-NAME>itrAsrGptServices</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <TRIGGERS>
+                <TRIGGER T="2022-08-26T11:40:27+03:00" UUID="20aadb0c-f440-4c1c-9130-e90acfd72ddd">
+                  <SHORT-NAME>AdcIf_GPTOnTimer_Expiration</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="7765a5ed-39fe-479a-a795-6ca79fb1f62d">
+                  <SHORT-NAME>BswM_Cyclic_10msTimer</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="30eed839-229d-4a75-9b23-f408ea02d689">
+                  <SHORT-NAME>Gpt_DisableNotification</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-26T11:43:36+03:00" UUID="3ed220ef-f29f-4662-bb7d-9f9da23907b0">
+                  <SHORT-NAME>Gpt_EnableNotification</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-26T11:44:00+03:00" UUID="0c594c50-f1f5-4a6b-b180-039aea369f91">
+                  <SHORT-NAME>Gpt_Init</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-26T11:43:52+03:00" UUID="37abfd22-2545-4caf-9916-342abd51d605">
+                  <SHORT-NAME>Gpt_StartTimer</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="7df9cfb3-b3d0-43d8-bcdd-c8c74792bb1f">
+                  <SHORT-NAME>Gpt_StopTimer</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+              </TRIGGERS>
+            </TRIGGER-INTERFACE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

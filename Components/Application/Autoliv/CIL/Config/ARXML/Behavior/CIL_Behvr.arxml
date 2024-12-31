@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2017-01-04T08:25:38+01:00" UUID="b54f390c-1794-42e2-97e0-1b298d4907e8">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2017-01-04T08:25:38+01:00" UUID="8c84da77-d1c3-400b-8d3b-0e354c26e512">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2017-01-04T08:25:38+01:00" UUID="ce2c950d-f682-4b6b-ba28-d3482aa3d8b0">
+              <SHORT-NAME>CIL</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2020-08-13T13:51:04+02:00" UUID="ca635eaf-9f96-41db-b122-8fd318cb6791">
+                  <SHORT-NAME>CIL</SHORT-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <INTERNAL-BEHAVIORS>
+                    <SWC-INTERNAL-BEHAVIOR T="2023-03-30T10:48:54+03:00" UUID="e1b64992-31de-4db5-b563-b4bfd66dd88f">
+                      <SHORT-NAME>CIL_IB_CommunicationInteractionLayer</SHORT-NAME>
+                      <CONSTANT-VALUE-MAPPING-REFS>
+                        <CONSTANT-VALUE-MAPPING-REF DEST="CONSTANT-SPECIFICATION-MAPPING-SET">/AUTOLIV/CIL_DataDictionnary/ConstantsMappingSet/ConstantsMappingSet_CIL</CONSTANT-VALUE-MAPPING-REF>
+                        <CONSTANT-VALUE-MAPPING-REF DEST="CONSTANT-SPECIFICATION-MAPPING-SET">/Constants/ConstantsMappingSet_EcuExtract</CONSTANT-VALUE-MAPPING-REF>
+                      </CONSTANT-VALUE-MAPPING-REFS>
+                      <DATA-TYPE-MAPPING-REFS>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/ACC_DataDictionary/DataTypeMappingSet/DataTypeMappingSet_ACC</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/AdcIf_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_AdcIf</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/CIL_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_CIL</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/FSM_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_FSM</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/IoHwAb_DataDictionary/DataTypeMappingSet/DataTypeMappingSet_IoHwAb</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/SAD_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_SAD</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/SBC_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_SBC</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/SpiIf_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_SpiIf</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/DataTypeMappingSets/DataTypeMappingSet_SystemExtract</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/eCS_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_eCS</DATA-TYPE-MAPPING-REF>
+                      </DATA-TYPE-MAPPING-REFS>
+                      <EVENTS>
+                        <TIMING-EVENT T="2023-01-25T09:15:19+02:00" UUID="97680ce6-8973-42e7-a4e4-32c65519c6dc">
+                          <SHORT-NAME>CIL_evAppliToCAN</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/CIL/CIL/CIL_IB_CommunicationInteractionLayer/CIL_runAppliToCAN</START-ON-EVENT-REF>
+                          <PERIOD>0.002</PERIOD>
+                        </TIMING-EVENT>
+                        <TIMING-EVENT T="2023-02-28T08:59:29+02:00" UUID="2391ef8b-85b7-4ec4-98fd-be033c3c59c9">
+                          <SHORT-NAME>CIL_evCANToAppli</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/CIL/CIL/CIL_IB_CommunicationInteractionLayer/CIL_runCANToAppli</START-ON-EVENT-REF>
+                          <PERIOD>0.01</PERIOD>
+                        </TIMING-EVENT>
+                        <TIMING-EVENT T="2023-02-28T09:01:40+02:00" UUID="01146996-e5dd-4992-b57d-d2913695bdaa">
+                          <SHORT-NAME>ev_CIL_runCANToSafetyAppli</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/CIL/CIL/CIL_IB_CommunicationInteractionLayer/CIL_runCANToSafetyAppli</START-ON-EVENT-REF>
+                          <PERIOD>0.01</PERIOD>
+                        </TIMING-EVENT>
+                        <TIMING-EVENT T="2023-03-03T10:41:56+02:00" UUID="f1e7f32d-2051-45ba-8a53-45ecb3db8463">
+                          <SHORT-NAME>ev_MFPeriod</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/CIL/CIL/CIL_IB_CommunicationInteractionLayer/CIL_runManageMF</START-ON-EVENT-REF>
+                          <PERIOD>0.002</PERIOD>
+                        </TIMING-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2023-03-30T10:48:54+03:00" UUID="80d91735-e827-45d8-ad84-c6c7474c9e31">
+                          <SHORT-NAME>oie_pclSetEcuStateSignal_updateCurrentEcuState</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/CIL/CIL/CIL_IB_CommunicationInteractionLayer/CIL_updateCurrentEcuState</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2023-03-30T10:48:54+03:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pseSetEcuStateSignal</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/CIL_DataDictionnary/ClientServerInterfaces/icsEcuStateServices/updateCurrentEcuState</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                      </EVENTS>
+                      <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                      <RUNNABLES>
+                        <RUNNABLE-ENTITY T="2023-03-30T10:35:12+03:00" UUID="fb87bd74-4818-4b01-ad6c-5ef3695cd81c">
+                          <SHORT-NAME>CIL_runAppliToCAN</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                            <VARIABLE-ACCESS UUID="91584df9-b6f0-4d9c-82e2-9d81d6765a35">
+                              <SHORT-NAME>drparg_au8BuckleStatus</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrBuckleStatus</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/IoHwAb_DataDictionary/SenderReceiverInterfaces/isrBuckleStatus/au8BuckleStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="88a8ae9d-5cac-42d3-9b95-9081540fdfa9">
+                              <SHORT-NAME>drparg_au8SeatOccupancySenso</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrSeatOccupancySensorStatus</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/IoHwAb_DataDictionary/SenderReceiverInterfaces/isrSeatOccupancySensor/au8SeatOccupancySensorStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="3bd2ba03-9a8e-46e0-a27f-1594b8815bdb">
+                              <SHORT-NAME>drparg_st3DAccel</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prr3DAcceleration</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SpiIf_DataDictionnary/SenderReceiverInterfaces/isr3DAcceleration/st3DAccel</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="2afc32c3-b74f-4426-9ecc-4e570f5c5d53">
+                              <SHORT-NAME>drparg_stAccelMtrPerSecSqd</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrAccelMtrPerSecSqd</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrAccelMtrPerSecSqd/stAccelMtrPerSecSqd</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="bb434ea4-235a-494a-b75a-5dd1cf010b49">
+                              <SHORT-NAME>drparg_u16BallPosition</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrEcsAlgoData</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsAlgoOutputs/u16BallPosition</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS T="2023-05-16T11:26:18+03:00" UUID="5224277a-3a97-46a1-bad2-0a4c1ab4598b">
+                              <SHORT-NAME>drparg_u8EcsFlag</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrEcsAlgoData</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsAlgoOutputs/u8EcsFlag</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                          <DATA-SEND-POINTS>
+                            <VARIABLE-ACCESS UUID="6e1b5263-51b0-4f3c-bddb-c1d1dae48dec">
+                              <SHORT-NAME>dsp_DE_eCS_Error_Reihe1_BFS_1</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Error_Reihe1_BFS_1</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Error_Reihe1_BFS_1/DE_eCS_Error_Reihe1_BFS_1</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="75694c2a-4fdf-402d-b64e-2cfd63c2b53e">
+                              <SHORT-NAME>dsp_DE_eCS_Error_Reihe1_BFS_2</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Error_Reihe1_BFS_2</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Error_Reihe1_BFS_2/DE_eCS_Error_Reihe1_BFS_2</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="2b728854-5755-4478-9406-1142f5c0e993">
+                              <SHORT-NAME>dsp_DE_eCS_Error_Reihe1_FS_1</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Error_Reihe1_FS_1</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Error_Reihe1_FS_1/DE_eCS_Error_Reihe1_FS_1</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="ceeddc34-733f-4217-94ba-d7b32c50e885">
+                              <SHORT-NAME>dsp_DE_eCS_Error_Reihe1_FS_2</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Error_Reihe1_FS_2</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Error_Reihe1_FS_2/DE_eCS_Error_Reihe1_FS_2</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="f468d76b-2f09-4f66-8ce1-2a71c24e3645">
+                              <SHORT-NAME>dsp_DE_eCS_Error_Reihe2_BFS</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Error_Reihe2_BFS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Error_Reihe2_BFS/DE_eCS_Error_Reihe2_BFS</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="f41bb014-d370-4c6f-8a25-4c92b944ba70">
+                              <SHORT-NAME>dsp_DE_eCS_Error_Reihe2_FS</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Error_Reihe2_FS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Error_Reihe2_FS/DE_eCS_Error_Reihe2_FS</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="bd66f97c-370e-4115-97da-cbbc182699ac">
+                              <SHORT-NAME>dsp_DE_eCS_Gurtschloss_Statu</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Gurtschloss_Status_Reihe2_BF_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Gurtschloss_Status_Reihe2_BF/DE_eCS_Gurtschloss_Status_Reihe2_BF</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="748bdb39-a932-4e49-ab61-2b16d8d0464b">
+                              <SHORT-NAME>dsp_DE_eCS_Gurtschloss_Statu1</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Gurtschloss_Status_Reihe2_FA_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Gurtschloss_Status_Reihe2_FA/DE_eCS_Gurtschloss_Status_Reihe2_FA</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="e656031d-7a4f-43a0-a3ef-3722d0e064a6">
+                              <SHORT-NAME>dsp_DE_eCS_HW_defekt</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_HW_defekt_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_HW_defekt/DE_eCS_HW_defekt</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="f5accaf3-2c43-4b97-ac64-ea16c337e694">
+                              <SHORT-NAME>dsp_DE_eCS_SBS_Belegung_Reih</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_SBS_Belegung_Reihe2_BF_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_SBS_Belegung_Reihe2_BF/DE_eCS_SBS_Belegung_Reihe2_BF</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="82879e31-c452-4178-981f-e4ccacc00837">
+                              <SHORT-NAME>dsp_DE_eCS_SBS_Belegung_Reih1</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_SBS_Belegung_Reihe2_FA_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_SBS_Belegung_Reihe2_FA/DE_eCS_SBS_Belegung_Reihe2_FA</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="5ec1bb84-2b50-4254-8507-cac17528e0ac">
+                              <SHORT-NAME>dsp_DE_eCS_SBS_LastState_Rei</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_SBS_LastState_Reihe2_BFS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_SBS_LastState_Reihe2_BFS/DE_eCS_SBS_LastState_Reihe2_BFS</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="8575aef6-4b63-4ff9-a846-0eae7e7dfa84">
+                              <SHORT-NAME>dsp_DE_eCS_SBS_LastState_Rei1</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_SBS_LastState_Reihe2_FS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_SBS_LastState_Reihe2_FS/DE_eCS_SBS_LastState_Reihe2_FS</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="94d6588d-07e7-4752-826a-1cab981eed93">
+                              <SHORT-NAME>dsp_DE_eCS_Status</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Status_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Status/DE_eCS_Status</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="f9a19db2-70f1-404d-8a4e-f1b636638115">
+                              <SHORT-NAME>dsp_DE_eCS_Status_Verr_Reihe</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Status_Verr_Reihe1_BFS_1</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Status_Verr_Reihe1_BFS_1/DE_eCS_Status_Verr_Reihe1_BFS_1</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="1e4a0931-2be5-41b3-a2bd-042af1adb1c1">
+                              <SHORT-NAME>dsp_DE_eCS_Status_Verr_Reihe1</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Status_Verr_Reihe1_BFS_2</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Status_Verr_Reihe1_BFS_2/DE_eCS_Status_Verr_Reihe1_BFS_2</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="6ff0dd9e-dc12-4f60-94ed-a05b292f3a0b">
+                              <SHORT-NAME>dsp_DE_eCS_Status_Verr_Reihe2</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Status_Verr_Reihe1_FS_1</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Status_Verr_Reihe1_FS_1/DE_eCS_Status_Verr_Reihe1_FS_1</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="49178595-1426-4484-b68e-947c5d057911">
+                              <SHORT-NAME>dsp_DE_eCS_Status_Verr_Reihe3</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Status_Verr_Reihe1_FS_2</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Status_Verr_Reihe1_FS_2/DE_eCS_Status_Verr_Reihe1_FS_2</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="1bb3bfb0-c5fb-488f-ac3c-bcd9db2afe5b">
+                              <SHORT-NAME>dsp_DE_eCS_Status_Verr_Reihe4</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Status_Verr_Reihe2_BFS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Status_Verr_Reihe2_BFS/DE_eCS_Status_Verr_Reihe2_BFS</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="3ef6e388-cc73-4989-bfd8-9fcf7f77d46e">
+                              <SHORT-NAME>dsp_DE_eCS_Status_Verr_Reihe5</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Status_Verr_Reihe2_FS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Status_Verr_Reihe2_FS/DE_eCS_Status_Verr_Reihe2_FS</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="e64cdbf7-cd3b-44b8-80b0-719731f137b2">
+                              <SHORT-NAME>dsp_DE_eCS_Stoerung</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/SP_IF_eCS_Stoerung_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_eCS_Stoerung/DE_eCS_Stoerung</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="811837c4-18f6-4212-a5bc-a4b791fc1333">
+                              <SHORT-NAME>dsp_EcuCanDataOut</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/P_CAN_CanDataOut_Frame_0</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/isrCanDataOut/EcuCanDataOut</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="2fbdc4d6-5980-4337-b3bb-b77e03c6910e">
+                              <SHORT-NAME>dsp_GliwaCanDataOut</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/P_CAN_GliwaDataOut_Frame</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/isrGliwaDataOut/GliwaCanDataOut</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="95c7b9ec-c80c-4a88-b1fc-f679e23ada71">
+                              <SHORT-NAME>dsp_MfLogger</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/P_CAN_MF_Logger_Frame</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/isrMfLoggerCanData/MfLogger</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-SEND-POINTS>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/ptrpAsrOsServicesCIL</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/CIL_runAppliToCAN</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-09-12T14:55:21+03:00" UUID="1e05b946-7d28-4a7c-be39-c431ffc9180a">
+                              <SHORT-NAME>scp_CheckModeStatus</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pclModeManagement</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/FSM_DataDictionnary/ClientServerInterfaces/icsModeManagementServices/CheckModeStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>CIL_runAppliToCAN</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-28T16:55:41+02:00" UUID="05ef3ba0-b098-4121-a01f-7ba6457a040c">
+                          <SHORT-NAME>CIL_runCANToAppli</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                            <VARIABLE-ACCESS UUID="5f9a9737-2c7b-4f62-8cd2-b9df419949a0">
+                              <SHORT-NAME>drparg_DE_AB_Gurtschloss_BF</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_Gurtschloss_BF_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_Gurtschloss_BF/DE_AB_Gurtschloss_BF</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="e43b403d-f7d6-41ae-ba1e-7222f528c73c">
+                              <SHORT-NAME>drparg_DE_AB_Gurtschloss_FA</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_Gurtschloss_FA_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_Gurtschloss_FA/DE_AB_Gurtschloss_FA</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="83d9911c-0caa-4c5e-9c65-36313bea293b">
+                              <SHORT-NAME>drparg_DE_AB_Gurtschloss_Rei</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_Gurtschloss_Reihe2_BF_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_Gurtschloss_Reihe2_BF/DE_AB_Gurtschloss_Reihe2_BF</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="f8ef1dc9-6e1c-4381-bdbe-81ac1d4cdefd">
+                              <SHORT-NAME>drparg_DE_AB_Gurtschloss_Rei1</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_Gurtschloss_Reihe2_FA_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_Gurtschloss_Reihe2_FA/DE_AB_Gurtschloss_Reihe2_FA</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="5741cbe8-8457-467b-982b-5e41de2124f7">
+                              <SHORT-NAME>drparg_DE_AB_Gurtschloss_Rei2</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_Gurtschloss_Reihe3_BF_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_Gurtschloss_Reihe3_BF/DE_AB_Gurtschloss_Reihe3_BF</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="1ae713c9-b3ad-4412-b102-dc99393cde25">
+                              <SHORT-NAME>drparg_DE_AB_Gurtschloss_Rei3</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_Gurtschloss_Reihe3_FA_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_Gurtschloss_Reihe3_FA/DE_AB_Gurtschloss_Reihe3_FA</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="82b06263-5f85-4074-a0d4-371845f3247c">
+                              <SHORT-NAME>drparg_GliwaCanDataIn</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/P_CAN_GliwaDataIn_Frame</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/isrGliwaDataIn/GliwaCanDataIn</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                          <DATA-SEND-POINTS>
+                            <VARIABLE-ACCESS UUID="53e246d4-850a-474e-b93b-d8ee38589e44">
+                              <SHORT-NAME>dsp_au8MergedBuckleStatus</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/psrCILData</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/isrCILServices/au8MergedBuckleStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="328fe971-0c64-410a-93e2-505a53fb98c9">
+                              <SHORT-NAME>dsp_u8IsCrashActive</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/psrCrashStatus</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/isrCrashStatus/u8IsCrashActive</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-SEND-POINTS>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/ptrpAsrOsServicesCIL</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/CIL_runCANToAppli</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>CIL_runCANToAppli</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-28T21:02:22+02:00" UUID="DCE:1e60d4fb-df43-415c-9983-f71b8376bf27">
+                          <SHORT-NAME>CIL_runCANToSafetyAppli</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                            <VARIABLE-ACCESS UUID="5cb06e94-ee58-4ea6-b2f7-bb7df63ff875">
+                              <SHORT-NAME>drparg_DE_AB_Crash_Int</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_Crash_Int_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_Crash_Int/DE_AB_Crash_Int</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="0576dfa1-334a-4003-9cf8-865000462937">
+                              <SHORT-NAME>drparg_DE_AB_eCS_Aktuatortes</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_eCS_Aktuatortest_BF_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_eCS_Aktuatortest_BF/DE_AB_eCS_Aktuatortest_BF</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="d571f644-b163-4725-aa23-a5e10ab34472">
+                              <SHORT-NAME>drparg_DE_AB_eCS_Aktuatortes1</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_eCS_Aktuatortest_FA_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_eCS_Aktuatortest_FA/DE_AB_eCS_Aktuatortest_FA</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="4bcba4ff-de60-490f-b209-90078bc994d0">
+                              <SHORT-NAME>drparg_DE_AB_eCS_Aktuatortes2</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_eCS_Aktuatortest_Reihe2_BF_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_eCS_Aktuatortest_Reihe2_BF/DE_AB_eCS_Aktuatortest_Reihe2_BF</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="fdfff6e5-adea-4bc7-ba96-6dfd9b442f6c">
+                              <SHORT-NAME>drparg_DE_AB_eCS_Aktuatortes3</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_eCS_Aktuatortest_Reihe2_FA_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_eCS_Aktuatortest_Reihe2_FA/DE_AB_eCS_Aktuatortest_Reihe2_FA</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="f9caa449-bee8-49de-b072-679bda7edddc">
+                              <SHORT-NAME>drparg_DE_AB_eCS_Aktuatortes4</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_eCS_Aktuatortest_Reihe3_BF_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_eCS_Aktuatortest_Reihe3_BF/DE_AB_eCS_Aktuatortest_Reihe3_BF</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="47311a2e-6b6b-407d-927b-e204ef8f1ac4">
+                              <SHORT-NAME>drparg_DE_AB_eCS_Aktuatortes5</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/RP_IF_AB_eCS_Aktuatortest_Reihe3_FA_XIX_Grundumfang_XIX_eCS</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/IF_AB_eCS_Aktuatortest_Reihe3_FA/DE_AB_eCS_Aktuatortest_Reihe3_FA</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                          <DATA-SEND-POINTS>
+                            <VARIABLE-ACCESS T="2023-05-16T11:26:21+03:00" UUID="d8b524cd-e782-47d7-9e11-d9cb867510db">
+                              <SHORT-NAME>dsp_au8DiagReq</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/psrEcsDiagRequest</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsDiagRequest/au8DiagReq</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS T="2023-05-16T11:26:27+03:00" UUID="a0ddc089-d061-4fc6-ba1e-7360244036b2">
+                              <SHORT-NAME>dsp_au8DiagReqComplement</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/psrEcsDiagRequest</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsDiagRequest/au8DiagReqComplement</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-SEND-POINTS>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/ptrpAsrOsServicesCIL</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/CIL_runCANToSafetyAppli</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>CIL_runCANToSafetyAppli</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-28T16:56:00+02:00" UUID="637dea69-fd38-4ee5-9dce-dfb705b3ccc9">
+                          <SHORT-NAME>CIL_runInit</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/ptrpCilServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/CIL_DataDictionnary/TriggerInterfaces/itrCilServices/CIL_runInit</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>CIL_runInit</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-04-28T09:40:28+03:00" UUID="DCE:ebe8c30a-0424-43b0-ba74-611a7d78fa75">
+                          <SHORT-NAME>CIL_runManageMF</SHORT-NAME>
+                          <LONG-NAME T="2021-10-11T13:53:06+02:00">
+                            <L-4 T="2021-10-11T13:53:06+02:00" L="FOR-ALL">CIL_runManageMeasurementFrame</L-4>
+                          </LONG-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                            <VARIABLE-ACCESS UUID="18a79ec3-eab9-442d-8e51-a8943adde7fe">
+                              <SHORT-NAME>drparg_au16Pwm</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrSolenoidPWM</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidPwm/au16Pwm</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="38a5b5cf-1025-4cc2-a802-564a902b6339">
+                              <SHORT-NAME>drparg_au8CurrentStep</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pclSolenoidStep</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidStep/au8CurrentStep</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="6cd3253a-7e7f-45e7-9573-b794b75b3d25">
+                              <SHORT-NAME>drparg_au8SelectedProfile</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pclSolenoidProfile</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidProfile/au8SelectedProfile</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="c4e0cd3a-2cb0-47e7-add2-8838fb71978e">
+                              <SHORT-NAME>drparg_au8SolenoidAutotestSt</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrSolenoidShortToVccStatus</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidShortToVccStatus/au8SolenoidAutotestStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="c16ec4b0-954a-49af-99cf-acfc47b59fdf">
+                              <SHORT-NAME>drparg_au8SolenoidAutotestSt1</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrSolenoidShortToGndStatus</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidShortToGndStatus/au8SolenoidAutotestStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="bd882018-4b2c-4e01-9332-4c1bce8295be">
+                              <SHORT-NAME>drparg_au8SolenoidAutotestSt2</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrSolenoidOCStatus</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidOCStatus/au8SolenoidAutotestStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="05f31899-5bce-444c-a438-aa3464659347">
+                              <SHORT-NAME>drparg_au8SolenoidNbOfBackups</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrSolenoidStuckStatus</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidBackups/au8SolenoidIsStuck</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="c84fa866-bb43-4a9c-adb0-58ebf3282968">
+                              <SHORT-NAME>drparg_au8SolenoidOvervoltag</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrSolenoidOvervoltageStatus</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidOvervoltageStatus/au8SolenoidOvervoltageStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="d50c0467-e043-4239-8be2-8c4f878e8228">
+                              <SHORT-NAME>drparg_au8SolenoidState</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrSolenoidState</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrFsmSolenoidsState/au8SolenoidState</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="6050fb01-6452-455c-a218-87e8153b13d5">
+                              <SHORT-NAME>drparg_st3DAccel</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prr3DAcceleration</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SpiIf_DataDictionnary/SenderReceiverInterfaces/isr3DAcceleration/st3DAccel</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="02d0e8d6-501f-40fb-9c6a-eb29baf831ba">
+                              <SHORT-NAME>drparg_u16BallPosition</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrEcsAlgoData</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsAlgoOutputs/u16BallPosition</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="7d130ae8-def6-41e1-b0c1-fdb1cc3a8403">
+                              <SHORT-NAME>drparg_u32AccReg1Status</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrAccStatusFailiureSource</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/ACC_DataDictionary/SenderReceiverInterfaces/isrAccFailiureSource/u32AccAlarmRegStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="57de05fe-437d-463b-8cc7-be076ffb9b0f">
+                              <SHORT-NAME>drparg_u32AccReg2Status</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrAccStatusFailiureSource</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/ACC_DataDictionary/SenderReceiverInterfaces/isrAccFailiureSource/u8AccReturnStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="b568a38a-f0c8-4882-9f03-15b562b42cb7">
+                              <SHORT-NAME>drparg_u32AccReg3Status</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrAccStatusFailiureSource</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/ACC_DataDictionary/SenderReceiverInterfaces/isrAccFailiureSource/u8AccCRCStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="798dca56-b395-427a-bdb4-6176b25321b8">
+                              <SHORT-NAME>drparg_u32SbcReg1Status</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrSbcStatusFailiureSource</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/isrSbcFailiureSource/u32SbcReg1Status</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="6b452f77-4263-4c3d-9f08-4048773433b4">
+                              <SHORT-NAME>drparg_u8AccAlarmbPreinitSeq</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrAccStatusFailiureSource</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/ACC_DataDictionary/SenderReceiverInterfaces/isrAccFailiureSource/u8AccAlarmbPreinitSeqStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS UUID="8096592c-b8b2-4e49-9136-0c29c34e7859">
+                              <SHORT-NAME>drparg_u8AccelAxisBroken</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrAccStatusFailiureSource</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/ACC_DataDictionary/SenderReceiverInterfaces/isrAccFailiureSource/u8AccelAxisBroken</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS T="2023-05-16T11:26:31+03:00" UUID="e2f24ce5-c6e9-4676-ad4b-87de44c85855">
+                              <SHORT-NAME>drparg_u8EcsFlag</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/prrEcsAlgoData</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsAlgoOutputs/u8EcsFlag</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                          <DATA-SEND-POINTS>
+                            <VARIABLE-ACCESS UUID="7643d992-153c-4844-b6f9-1c5e7023b7c9">
+                              <SHORT-NAME>dsp_stMFData</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/P_CAN_MF_Frame</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/isrMFCanData/stMFData</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-SEND-POINTS>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/ptrpAsrOsServicesCIL</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/CIL_runManageMF</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-26T21:52:42+03:00" UUID="710a2e73-ec21-4f03-95b7-e6a4b797495a">
+                              <SHORT-NAME>scp_GetTemperature</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pclMcuCharacteristics</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsIoHwAbMcu/GetTemperature</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-26T21:52:42+03:00" UUID="7a55a704-7abd-4f19-8280-e76e5be56f27">
+                              <SHORT-NAME>scp_GetTemperature1</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pclPtcSensor</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsIoHwAbPtc/GetTemperature</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-26T21:52:42+03:00" UUID="bdda2086-18de-42b4-b0db-618320126fff">
+                              <SHORT-NAME>scp_GetTemperature2</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pclAccSensor</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsIoHwAbAcc/GetTemperature</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-28T09:45:44+03:00" UUID="1040d2b2-89cc-4e94-a040-5fd434f72ad2">
+                              <SHORT-NAME>scp_GetTemperature3</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pclEcuCharacterstics</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsIoHwAbEcuTemp/GetTemperature</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-09-06T12:36:02+03:00" UUID="44aa415d-0306-428a-9a3c-41d2e2801222">
+                              <SHORT-NAME>scp_GetTemperature4</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pclSolenoidCharacteristics</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces0/isrSolenoidCharacteristics/GetTemperature</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="deeba5b6-10c9-453d-bcce-c3fb4dce4dfe">
+                              <SHORT-NAME>scp_getMeasure</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/CIL/pclConvAdcService</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsConvertedAdcService/getMeasure</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>CIL_runManageMF</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-03-30T10:48:54+03:00" UUID="DCE:6a6f94f9-e404-49be-91e7-44d2a5b67ef2">
+                          <SHORT-NAME>CIL_updateCurrentEcuState</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>CIL_updateCurrentEcuState</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                      </RUNNABLES>
+                      <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                    </SWC-INTERNAL-BEHAVIOR>
+                  </INTERNAL-BEHAVIORS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+                <SWC-IMPLEMENTATION T="2019-08-08T15:45:01+02:00" UUID="5180b3cc-f379-488b-916f-3ac3889fff88">
+                  <SHORT-NAME>CIL_impCommunicationInteractionLayer</SHORT-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <CODE-DESCRIPTORS>
+                    <CODE T="2017-01-04T08:25:38+01:00" UUID="03b76dfa-8ce5-4f0d-8036-4279ede3a728">
+                      <SHORT-NAME>CIL_Impl_Code</SHORT-NAME>
+                      <ARTIFACT-DESCRIPTORS>
+                        <AUTOSAR-ENGINEERING-OBJECT>
+                          <SHORT-LABEL>CIL_Impl_Code_CodeDesc</SHORT-LABEL>
+                          <CATEGORY>SWSRC</CATEGORY>
+                        </AUTOSAR-ENGINEERING-OBJECT>
+                      </ARTIFACT-DESCRIPTORS>
+                    </CODE>
+                  </CODE-DESCRIPTORS>
+                  <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+                  <RESOURCE-CONSUMPTION T="2016-09-26T18:56:11+02:00" UUID="DCE:bdb99e25-184a-414c-a281-8845635207a0">
+                    <SHORT-NAME>CIL_Impl_ResCons</SHORT-NAME>
+                    <MEMORY-SECTIONS>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00" UUID="4eeac2b4-a568-45d3-85ca-acbc3a797629">
+                        <SHORT-NAME>CODE</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-02-28T08:14:11+02:00">
+                        <SHORT-NAME>CODE_ASIL_A</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:08+02:00" UUID="7524b2bd-97e9-4d00-9e45-de196db4befe">
+                        <SHORT-NAME>CONST_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:14+02:00">
+                        <SHORT-NAME>CONST_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:12+02:00" UUID="3ea65bfb-173b-425f-bf89-2230aaa0ebfc">
+                        <SHORT-NAME>CONST_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:16+02:00">
+                        <SHORT-NAME>CONST_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="6b0a5789-84b6-455f-ac91-429a6d1267d8">
+                        <SHORT-NAME>CONST_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:06+02:00">
+                        <SHORT-NAME>CONST_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:18+02:00" UUID="21a9a4a7-f9e3-4a60-9f8e-4b1a97480d25">
+                        <SHORT-NAME>CONST_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:20+02:00">
+                        <SHORT-NAME>CONST_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:25+02:00" UUID="e207052b-c2bb-4662-81db-808b1410fdf6">
+                        <SHORT-NAME>CONST_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:28+02:00">
+                        <SHORT-NAME>CONST_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="68560e6d-3176-4943-9bd2-677a0320b24b">
+                        <SHORT-NAME>VAR_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="94901976-5162-402d-b37f-19098d17f81f">
+                        <SHORT-NAME>VAR_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:38+02:00" UUID="ad456815-5fad-46c9-b61e-a2ceb60e9c44">
+                        <SHORT-NAME>VAR_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:40+02:00">
+                        <SHORT-NAME>VAR_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:53:16+02:00" UUID="f7a625c6-525f-48ad-adfb-ee965df5a4f9">
+                        <SHORT-NAME>VAR_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:37:49+02:00" UUID="43303673-cc85-49bd-96e1-cf77cfc776e6">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:55:14+02:00">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="9c15a352-4353-48a8-9643-1d5d2488efcf">
+                        <SHORT-NAME>VAR_NO_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="f9adf96a-d248-48c5-8736-e91eb2d581cf">
+                        <SHORT-NAME>VAR_NO_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="6d554a20-21a0-4a36-b23e-fe963f148440">
+                        <SHORT-NAME>VAR_NO_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="91c717af-93ed-40e1-81bf-887d03bed225">
+                        <SHORT-NAME>VAR_NO_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:38:03+02:00" UUID="3a296191-e459-421b-9839-4542a2fbff5a">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:38:10+02:00">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_POWER_ON_CLEARED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/VAR_POWER_ON_CLEARED</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                    </MEMORY-SECTIONS>
+                  </RESOURCE-CONSUMPTION>
+                  <SW-VERSION>1.0.0</SW-VERSION>
+                  <VENDOR-ID>0</VENDOR-ID>
+                  <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/AUTOLIV/SoftwareComponents/CIL/CIL/CIL_IB_CommunicationInteractionLayer</BEHAVIOR-REF>
+                </SWC-IMPLEMENTATION>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

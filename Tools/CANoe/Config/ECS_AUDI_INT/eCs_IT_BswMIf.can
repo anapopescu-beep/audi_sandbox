@@ -1,0 +1,159 @@
+/*@!Encoding:1252*/
+/*------------------------------------------------------------------------------
+                                IMPORT LIBRARY
+ ------------------------------------------------------------------------------*/
+/* To include all the libraries used by the .capl script. */
+/* WARNING: Some things such as diagnostic functions are different from project
+to project, change those according to your project requirements */
+includes
+{
+  #include "c:\\Projects\\eCS_Platform_Git\\Tools\\Canoe_int\\Config\\Includes\\Helper_Functions.cin"
+  #include "c:\\Projects\\eCS_Platform_Git\\Tools\\Canoe_int\\Config\\Includes\\Debugger_Functions.cin"
+  #include "c:\\Projects\\eCS_Platform_Git\\Tools\\Canoe_int\\Config\\Includes\\Diagnostic_Functions.cin"
+  #include "c:\\Projects\\eCS_Platform_Git\\Tools\\Canoe_int\\Config\\Includes\\Project_Functions.cin"
+}
+
+/*------------------------------------------------------------------------------
+                                    GLOBALS
+ ------------------------------------------------------------------------------*/
+/* To declare the constants used throurough the entire module, and global variables */
+variables
+{
+/*-------------------------------Constants-------------------------------------*/
+
+/*----------------------------Global Variables---------------------------------*/
+  int actual_result = 0;
+  char expected_result=0;
+  
+}
+
+/*------------------------------------------------------------------------------
+                                REPORT INFO
+ ------------------------------------------------------------------------------*/
+/* Information to be added in the report. Mostly module specific */
+void addGeneralReportInfo()
+{
+testReportAddEngineerInfo("Test Engineer: " ,"Vlad Chioveanu");
+testReportAddSetupInfo("Debugger: " , "IC5000");
+testReportAddSetupInfo("Power Supply: " , "EX355P-USB");
+testReportAddSetupInfo("Mock-up: " , "eCS HW3");
+}
+
+/*------------------------------------------------------------------------------
+                           ENVIROMENT INITIALIZATION
+------------------------------------------------------------------------------*/
+/* To prepare the test enviroment for the test execution. */
+/* The following checks will take place before executing the TC's:
+  - Identification of SW Version (ALV and customer)
+  - Identification of HW Version
+  - Check correct state of the SW.
+
+
+/*------------------------------------------------------------------------------
+                                TEST FUNCTIONS
+------------------------------------------------------------------------------*/
+/*------------------------- Test Preconditions ------------------------------*/
+/* For operations to ensure the correct execution of the test case, such as IGN_ON,
+checking that CAN communication is present, etc.
+/* Varies from module to module, use from Helper_Functions.cin only the ones you need */
+testfunction Precondtions()
+{
+  Check_ECU_ON();
+}
+
+/*------------------------- Test Postconditions ------------------------------*/
+/* For operations to ensure that after the test case was executed, the enviroment
+would go back to a blank state, to be ready for the next test step in queue. Call it a Cleanup phase. */
+testfunction Postconditions()
+{
+  Check_ECU_ON();
+}
+
+/*------------------------------------------------------------------------------
+                                TEST EXECUTION
+------------------------------------------------------------------------------*/
+
+testCase Sw_Int_XYZ_0001()
+{
+    /*-------------------------Test specific report info------------------------------*/
+  testCaseTitle("Sw_Int_BswMIf_0001", "Test case title");
+  testCaseDescription ("Purpose of test: Check if functions from Gpt_Init was called\n");
+  testCaseDescription ("Requirement Under Test: ARCH_SW_AdcIf_ptrrAsrGptServices, ARCH_SW_AdcIf_ptrpAsrGptServices \n");
+  testCaseDescription ("Test Type: Requirement-Based \n");
+  testCaseDescription ("Fault injection method used: No \n");
+  testCaseDescription ("Resource usage evaluation: Yes/No \n");
+  testCaseDescription ("Priority: Yes \n");
+  testCaseDescription ("Safety relevant: No \n");
+  
+  /*------------------------- Test scenario start ------------------------------*/
+  
+  testCaseComment("Requirement Under Test: ARCH_SW_AdcIf_ptrrAsrGptServices");
+  debugger_setRelativeFunctionBpAtLine(2, "AdcIf_runInit");
+  debugger_reset();
+  debugger_run();
+  run_py_script();
+  testWaitForTimeout(500);
+  ExpectedTestResult("1","Set a breakpoint in function AdcIf_runInit at called Gpt_Init function", "True\n",3);
+//  
+//  run_py_script();
+//  debugger_setRelativeFunctionBpAtLine(0, "Gpt_Init");
+//  debugger_run();
+//  ExpectedTestResult("2", "Set a breakpoint in function Gpt_Init at first line", "True\n",1);
+  
+//  testStepBegin("3", "Set a breakpoint in function AdcIf_runInit at called Gpt_StartTimer function");
+//  debugger_run();
+//  debugger_setRelativeFunctionBpAtLine(8, "AdcIf_runInit");
+//  run_py_script();
+//  testWaitForTimeout(900);
+//  ExpectedTestResult("3", "Set a breakpoint in function AdcIf_runInit at called Gpt_StartTimer function", "True\n",7);
+//
+//  testStepBegin("4", "Set a breakpoint in function Gpt_StartTimer at first line");
+//  debugger_run();
+//  debugger_setRelativeFunctionBpAtLine(0, "Gpt_StartTimer");
+//  run_py_script();
+//  testWaitForTimeout(1200);
+//  ExpectedTestResult("4", "Set a breakpoint in function Gpt_StartTimer at first line", "True\n",9);
+//    
+//  testStepBegin("5", "Set a breakpoint in function AdcIf_runInit at called Gpt_EnableNotification function");
+//  debugger_run();
+//  debugger_setRelativeFunctionBpAtLine(5, "AdcIf_runInit");
+//  run_py_script();
+//  testWaitForTimeout(1500);
+//  ExpectedTestResult("5", "Set a breakpoint in function AdcIf_runInit at called Gpt_EnableNotification function", "True\n",11);
+//    
+//  testStepBegin("6", "Set a breakpoint in function Gpt_EnableNotification at first line");
+//  debugger_run();
+//  debugger_setRelativeFunctionBpAtLine(0, "Gpt_EnableNotification");
+//  run_py_script();
+//  testWaitForTimeout(1800);
+//  ExpectedTestResult("6", "Set a breakpoint in function Gpt_EnableNotification at first line", "True\n",13);
+//  debugger_deleteAllBreakpoints();  
+//    
+//  testCaseComment("Requirement Under Test: ARCH_SW_AdcIf_ptrpAsrGptServices");
+//  testStepBegin("7", "Set a breakpoint in function AdcIf_runInit at called Gpt_Init function");
+//  debugger_reset();
+//  debugger_run();
+//  debugger_setRelativeFunctionBpAtLine(2, "AdcIf_runInit");
+//  run_py_script();
+//  testWaitForTimeout(2100);
+//  ExpectedTestResult("7", "Set a breakpoint in function AdcIf_runInit at called Gpt_Init function", "True\n",17);
+//
+//  testStepBegin("8", "Set a breakpoint in function AdcIf_GPTOnTimer_Expiration at called ADCIF_EndOfConvGroup0 function");
+//  debugger_run();
+//  debugger_setRelativeFunctionBpAtLine(2, "AdcIf_GPTOnTimer_Expiration");
+//  run_py_script();
+//  testWaitForTimeout(2400);
+//  ExpectedTestResult("8", "Set a breakpoint in function AdcIf_GPTOnTimer_Expiration at called ADCIF_EndOfConvGroup0 function", "True\n",19); 
+//  debugger_deleteAllBreakpoints();  
+//  run_py_script();
+}
+
+/*------------------------------------------------------------------------------
+                                TEST SEQUENCE
+------------------------------------------------------------------------------*/
+void MainTest()
+{
+  addGeneralReportInfo();
+  SetFilePath();
+  Sw_Int_AdcIf_ptrrAsrGptServices_0001();
+}

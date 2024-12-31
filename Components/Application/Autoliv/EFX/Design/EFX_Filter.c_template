@@ -1,0 +1,156 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.22.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-04
+*******************************************************************************
+
+Overview of the interfaces:
+This file defines the information (interfaces, definitions and data) provided
+   by the module EFX, part of the component EFX.
+
+******************************************************************************/
+
+/*****************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "EFX_Filter.h"
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+ * \brief
+ *       This function is used to implement a first order Low Pass Filter.
+ *       Value of computed LPF value. Formula,
+ *       Y[n] = b * Y[n-1] + (1-b)X[n], with X = sample and Y = filtered value
+ *       b = k/(k+1). After some simplification,
+ *       Y[n] = (X[n] + k * Y[n-1]) / (k + 1).
+ * \inputparam
+ *       Name: u16LastSample;
+ *       Type: uint16;
+ *       Description: Value of last sample;
+ *       Range: 0..unit16;
+ * \inputparam
+ *       Name: u16CurrentSample;
+ *       Type: uint16;
+ *       Description: Value of the current sample;
+ *       Range: 0..unit16;
+ * \dynamicaspectcaller
+ *       AdcIf, IoHwAb SW Component.
+ * \dynamicaspectdescription
+ *       Called for filtering solenoid current values.
+ * \ddesignrequirement
+ *		   DSG_EFX_LPF_Filter
+ * \archrequirement
+ *       ARCH_SW_EFX_pseEfxServices_EFX_LPF_Filter_u16_u16
+ */
+EXPORTED uint16 EFX_LPF_Filter (uint16 u16LastSample, uint16 u16CurrentSample)
+{
+   return (u16CurrentSample + (KU16_EFX_LPF_K_COEFF * u16LastSample )) / (KU16_EFX_LPF_K_COEFF + 1);
+}
+
+/**
+ * \brief
+ *       Hysteresis with center and left and right side halfDelta switching point.
+ *       Return value = TRUE, if X > center + halfDelta. Return value = FALSE, if X < center - halfDelta. 
+ *       Return value is former state value if (center - halfDelta) = X = (center + halfDelta ).
+ *       Parameters X, center and halfDelta should have the same data type.
+ *       State variable shall store the old boolean result.
+ * \inputparam
+ *       Name: X;
+ *       Type: uint16;
+ *       Description: Input value;
+ *       Range: 0..unit16;
+ * \inputparam
+ *       Name: center;
+ *       Type: uint16;
+ *       Description: Center of hysteresis range;
+ *       Range: 0..unit16;
+ * \inputparam
+ *       Name: halfDelta;
+ *       Type: uint16;
+ *       Description: Half width of hysteresis range;
+ *       Range: 0..unit16;
+ * \inputparam
+ *       Name: State;
+ *       Type: boolean *;
+ *       Description: State Pointer to state value;
+ *       Range: True or False;
+ * \return
+ *       Returns TRUE or FALSE depending of input value and state value.
+ * \dynamicaspectcaller
+ *       IoHwAb SW Component.
+ * \dynamicaspectdescription
+ *       Called for filtering Seat input.
+ * \ddesignrequirement
+ *       DSG_Efx_HystCenterHalfDelta_u16_u8
+ * \archrequirement
+ *       ARCH_SW_EFX_pseEfxServices_Efx_HystCenterHalfDelta_u16_u8
+ */
+boolean Efx_HystCenterHalfDelta_u16u8(uint16 X, uint16 center, uint16 halfDelta, boolean * State)
+{
+   if (X > (center + halfDelta))
+   {
+      return True;
+   }
+   else
+   {      
+      if(X < (center -halfDelta))
+      {
+         return False;
+      }
+      else
+      {
+         return *State;
+      }
+   }
+}
+/******************************************************************************
+End Of File
+*****************************************************************************/

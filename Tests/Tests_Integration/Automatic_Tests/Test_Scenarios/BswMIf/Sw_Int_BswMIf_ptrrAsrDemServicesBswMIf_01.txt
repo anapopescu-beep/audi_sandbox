@@ -1,0 +1,44 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrDemServicesBswMIf_Dem_Init_BswM_OnStartupTwoB, ARCH_SW_BswMIf_ptrrDemServicesBswMIf_Dem_Shutdown_BswM_On_Prep_Shutdown
+ARCH_SW_BswMIf_ptrrDemServicesBswMIf_Dem_Init_BswM_OnStartupTwoB: The Dem_Init runnable shall be called in the BswM_OnStartupTwoB runnable in order to initialize DEM module
+ARCH_SW_BswMIf_ptrrDemServicesBswMIf_Dem_Shutdown_BswM_On_Prep_Shutdown: The Dem_Shutdown runnable shall be called in the BswM_On_Prep_Shutdown runnable in order to shutdown the DEM module
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrDemServicesBswMIf_Dem_Init_BswM_OnStartupTwoB
+
+	Step 2: Set a BP in function BswM_OnStartupTwoB in order call Dem_Init 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function Dem_Init in order to initialize DEM module 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_OnStartupTwoB for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrDemServicesBswMIf_Dem_Shutdown_BswM_On_Prep_Shutdown
+
+	Step 5: Send diagnostic request in order to do soft Reset
+
+	Step 6: Set a BP in function BswM_ProceedReset in order to call BswM_On_Prep_Shutdown function 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in Dem_Shutdown in order to shutdown the DEM module 
+		Expected result:  BP was set
+
+	Step 8: Set a BP in function BswM_CB_NfyNvMJobEnd for check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 9: Return ECU to default values

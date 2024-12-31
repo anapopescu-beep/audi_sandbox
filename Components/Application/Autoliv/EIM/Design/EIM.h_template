@@ -1,0 +1,202 @@
+
+#ifndef EIM_H_
+#define EIM_H_ 1
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+H-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+*******************************************************************************
+details
+Overview of the interfaces:
+   This file defines the information (interfaces, definitions and data) provided
+   by the module EIM, part of the component EIM.
+
+******************************************************************************/
+/*
+$Revision: 1.2 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/EIM/Design/project.pj $
+*/
+/*****************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "common.h"
+/******************************************************************************
+DEFINITION OF CONSTANTS
+******************************************************************************/
+/**
+ * \brief
+ *    This macro is used to define if EIM is not configured
+ */
+#define EIM_NOT_CONFIGURED                          0
+/**
+ * \brief
+ *    This macro is used to define if EIM is configured
+ */
+#define EIM_CONFIGURED                              1
+
+
+#ifndef ALV_RELEASE_BUILD
+
+#ifndef CAL_KU8_ERROR_INJECTION_MANAGER_ACTIVE
+/**
+ * \brief
+ *   This macro is used to define error injection manager active
+ */
+#define CAL_KU8_ERROR_INJECTION_MANAGER_ACTIVE      EIM_CONFIGURED
+
+#endif
+#else
+/**
+ * \brief
+ * This macro is used to define error injection manager active
+ */
+#define CAL_KU8_ERROR_INJECTION_MANAGER_ACTIVE      EIM_NOT_CONFIGURED
+
+#endif
+
+#if (EIM_CONFIGURED == CAL_KU8_ERROR_INJECTION_MANAGER_ACTIVE)
+/**
+ * \brief
+ *    This macro is used to define EIM initialization status
+ */
+#define KU32_EIM_INIT_STATUS         (KU32_MAX)
+/**
+ * \brief
+ *    This macro is used to define EIM maximum number of errors
+ */
+#define KU8_EIM_MAXIMUM_NUMBER_OF_ERRORS        ((uint8)0x05)
+/**
+ * \brief
+ *    This macro is used to define EIM profile none
+ */
+#define KU8_EIM_PROFILE_NONE                    ((uint8)0xFF)
+/**
+ * \brief
+ *    This macro is used to define EIM shift on 8 bits
+ */
+#define KU8_EIM_SHIFT_8_BITES                   ((uint8)0x08)
+/**
+ * \brief
+ *    This macro is used to define EIM shift on 16 bits
+ */
+#define KU8_EIM_SHIFT_16_BITES                  ((uint8)0x10)
+/**
+ * \brief
+ *    This macro is used to define EIM AEC maximum number of bits
+ */
+#define KU32_EIM_AEC_MAX_BITS                    ((uint32)0x3F)
+/**
+ * \brief
+ *    This macro is used to define EIM AEC status maximum number of bits
+ */
+#define KU32_EIM_AEC_STATUS_MAX_BITS            ((uint32)0x0F)
+/**
+ * \brief
+ *    This macro is used to define EIM qualification maximum number of bits
+ */
+#define KU32_EIM_QUALIFICATION_MAX_BITS         ((uint32)0xF0)
+/**
+ * \brief
+ *    This macro is used to define EIM AEC status qualified
+ */
+#define KU32_EIM_AEC_STATUS_QUALIFIED           ((uint32)0x0A)
+/**
+ * \brief
+ *    This macro is used to define EIM AEC status disqualified
+ */
+#define KU32_EIM_AEC_STATUS_DISQUALIFIED        ((uint32)0x00)
+/**
+ * \brief
+ *    This macro is used to define EIM qualification type instant
+ */
+#define KU32_EIM_QUALIF_TYPE_INSTANT            ((uint32)0x10)
+/**
+ * \brief
+ *    This macro is used to define EIM qualification type after x time
+ */
+#define KU32_EIM_QUALIF_TYPE_AFTER_X_TIME       ((uint32)0x20)
+/**
+ * \brief
+ *    This macro is used to define EIM qualification type after x time after started cycle
+ */
+#define KU32_EIM_QUALIF_TYPE_AFTER_X_TIME_AFTER_STARTED_CYCLE       ((uint32)0x30)
+/**
+ * \brief
+ *    This macro is used to define EIM qualification time maximum number of bits
+ */
+#define KU32_EIM_QUALIFICATION_TIME_MAX_BITS          ((uint32)0x1FFFu)
+
+#endif
+
+/******************************************************************************
+DECLARATION OF TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF VARIABLES
+******************************************************************************/
+#if (EIM_CONFIGURED == CAL_KU8_ERROR_INJECTION_MANAGER_ACTIVE)
+extern volatile uint32 EIM_u32ChangeEventStatus[KU8_EIM_MAXIMUM_NUMBER_OF_ERRORS];
+extern volatile uint32 EIM_u32ChangeEventStatusXOR[KU8_EIM_MAXIMUM_NUMBER_OF_ERRORS];
+#endif
+
+
+/******************************************************************************
+DECLARATION OF CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTIONS
+******************************************************************************/
+#if (EIM_CONFIGURED == CAL_KU8_ERROR_INJECTION_MANAGER_ACTIVE)
+extern void EIM_ManageAecStatus(void);
+extern void EIM_Init(void);
+
+#endif
+/******************************************************************************
+DECLARATION OF FUNCTION-LIKE MACROS
+******************************************************************************/
+/**
+ * \brief
+ *    This function-like macros is used to define EIM mask selection of AEC event
+ */
+#define KU8_EIM_MASK_SELECTED_AEC(AEC_NUMBER)       ((uint8)((AEC_NUMBER) & KU32_EIM_AEC_MAX_BITS))
+/**
+ * \brief
+ *    This function-like macros is used to define EIM mask selection of AEC event
+ */
+#define KU32_EIM_MASK_AEC_STATUS(AEC_STATUS)         ((uint32)(((AEC_STATUS) >> KU8_EIM_SHIFT_8_BITES) & KU32_EIM_AEC_STATUS_MAX_BITS))
+/**
+ * \brief
+ *    This function-like macros is used to define EIM mask of AEC status
+ */
+#define KU8_EIM_MASK_QUALIFICATION_TYPE(TYPE)       ((uint8)(((TYPE) >> KU8_EIM_SHIFT_8_BITES) & KU32_EIM_QUALIFICATION_MAX_BITS))
+/**
+ * \brief
+ *    This function-like macros is used to define EIM mask qualification time
+ */
+#define KU32_EIM_MASK_QUALIFICATION_TIME(TIME)       ((uint32)(((TIME) >> KU8_EIM_SHIFT_16_BITES) & KU32_EIM_QUALIFICATION_TIME_MAX_BITS))
+#ifdef __cplusplus
+}
+#endif
+/******************************************************************************
+End Of File
+*****************************************************************************/
+
+#endif /* _EIM_H_ */

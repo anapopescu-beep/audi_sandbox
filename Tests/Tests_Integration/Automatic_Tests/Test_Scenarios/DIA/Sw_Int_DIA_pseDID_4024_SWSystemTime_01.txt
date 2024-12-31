@@ -1,0 +1,43 @@
+					Autoliv Electronics Document
+
+Preconditions
+
+	Step 0: Bench Initialization
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_DIA_pseDID_4024_SWSystemTime
+ARCH_SW_DIA_pseDID_4024_SWSystemTime: Interface used to read the absolute system time ( 4 bytes of data + 1 byte reserved).
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_DIA_pseDID_4024_SWSystemTime
+
+	Step 2: Send diagnostic request in order to go in Supplier Session
+
+	Step 3: Send request for press Supplier Security Access button
+
+	Step 4: Send diagnostic request in order to do SW System Time Read
+
+	Step 5: Set a BP in function BswM_OnPostRunFromRun in order to call STM_runReadAbsoluteSystemTime function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromPostRunBusAvailable in order to read the absolute system time 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function DIA_runDid4024_SWSystemTimeRead in order to check the interface 
+		Expected result:  BP was set
+
+	Step 8: Read the system time value 
+		Expected result:  system time value is 4 bytes of data + 1 byte reserved
+
+Postcondition
+
+	Step 9: Return ECU to default values

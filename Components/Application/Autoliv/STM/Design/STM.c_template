@@ -1,0 +1,231 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+ * Explanation:
+ *    Disabled for MKS keywords
+ */
+/*
+$Revision: 1.4 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/STM/Design/project.pj $
+*/
+/*!****************************************************************************
+
+Overview of the component :
+   The aim of the STM component is to handle the System Time Management of microcontroller.
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "common.h"
+#include "Rte_STM.h"
+#include "STM_cfg.h"
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+/**
+ * \brief
+ *       Relative System time.
+ * \initialization 
+ *       ZERO.
+ * \range
+ *       NA.
+ */
+LOCAL uint32 stm_u32RelativeSystemTime = KU32_ZERO;
+
+/**
+ * \brief
+ *       A structure with absolute system time.
+ * \initialization 
+ *       ZERO.
+ * \range
+ *       NA.
+ */
+LOCAL stAbsoluteSystemTimeType stm_stAbsoluteSystemTimeStruct = {KU32_ZERO, KU8_ZERO};
+
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+* \brief
+*     Function used to increase system time every secound.
+* \return
+*     This function has no return.
+* \dynamicaspectcaller
+*     Rte Os.
+* \dynamicaspectdescription
+*     Function called in OsTask_Alv_Com Rte Task via direct call.
+* \ddesignrequirement
+*     DSG_STM_runIncreaseSystemTime
+* \archrequirement
+*     ARCH_SW_STM_ptrpAsrOsServices
+**/
+EXPORTED void STM_runIncreaseSystemTime(void)
+{
+
+   /* If less than 1s separate two call of this function, the OffsetTime is updated*/
+   if (System Time Offset is greater than 10)
+   {
+     Increment System Time Offset;
+   }
+   /* If the OffsetTime represent 1s and if the RelativeTime counter value is less
+    * than the Max possible value)
+    * => The Relativ and absolute time counters are updated */
+   else if (System Time In Sec is less than U32_MAX)
+   {
+      Increment System Time In Sec;
+      Increment Relative System Time;
+
+      Restart the offset timer;
+   
+   }
+   else
+   {
+      /* Do nothing */
+      /* Counter have the max value */
+   }
+}
+
+#if ( KU8_STM_ENABLE_READ_ABS_SYS_TIME_API == STD_ON )
+/**
+* \brief
+*     Function used to read Absolute System Time.
+* \outputparam
+*     Name: pstAbsoluteSystemTime;
+*     Type: stAbsoluteSystemTimeType * (struct[uint32, uint8]);
+*     Description: Pointer to struct where Absolute System time are writen;
+*     Range: NA.;
+* \return
+*     This function has no return.
+* \dynamicaspectcaller
+*     DIA module.
+* \dynamicaspectdescription
+*     Called in DIA_runDid4024_SWSystemTimeRead and DIA_runSecurityAccessGetSeed through Rte_Call_pclSystemTime_ReadAbsoluteSystemTime interface.
+* \ddesignrequirement
+*     DSG_STM_runReadAbsoluteSystemTime
+* \archrequirement
+*     ARCH_SW_STM_pseSystemTime_ReadAbsoluteSystemTime
+**/
+EXPORTED void STM_runReadAbsoluteSystemTime(stAbsoluteSystemTimeType * pstAbsoluteSystemTime)
+{
+   Get system time in seconds;
+   Get system time offset;
+}
+#endif
+
+#if (KU8_STM_ENABLE_READ_REL_SYS_TIME_API == STD_ON)
+/**
+* \brief
+*     Function used to read Relative System Time.
+* \outputparam
+*     Name: pu32RelativeSystemTime;
+*     Type: u32RelativeSystemTimeType *;
+*     Description: Pointer to struct where Relative System time are writen;
+*     Range: NA;
+* \return
+*     This function has no return.
+* \dynamicaspectcaller
+*     This function is not called.
+* \dynamicaspectdescription
+*     NA.
+**/
+EXPORTED void STM_runReadRelativeSystemTime(u32RelativeSystemTimeType * pu32RelativeSystemTime)
+{
+   Get relative system time;
+}
+#endif
+
+#if (KU8_STM_ENABLE_WRITE_REL_SYS_TIME_API == STD_ON)
+/**
+* \brief
+*     Function used to write Absolute System Time.
+* \inputparam
+*     Name: stAbsoluteSystemTime;
+*     Type: const stAbsoluteSystemTimeType * (struct[uint32, uint8]);
+*     Description: pointer to struct from which Absolute System time are read;
+*     Range: NA.;
+* \return
+*     This function has no return.
+* \dynamicaspectcaller
+*     This function is not called.
+* \dynamicaspectdescription
+*     NA.
+**/
+EXPORTED void STM_runWriteAbsoluteSystemTime(const stAbsoluteSystemTimeType * stAbsoluteSystemTime)
+{
+   Write system time in seconds;
+   Write system time offset;
+}
+#endif
+
+#if (KU8_STM_ENABLE_WRITE_ABS_SYS_TIME_API == STD_ON)
+/**
+* \brief
+*     Function used to write Relative System Time.
+* \inputparam
+*     Name: u32RelativeSystemTime;
+*     Type: u32RelativeSystemTimeType;
+*     Description: variable from which Relative System time are read;
+*     Range: NA.;
+* \return
+*     This function has no return.
+* \dynamicaspectcaller
+*     This function is not called.
+* \dynamicaspectdescription
+*     NA.
+**/
+EXPORTED void STM_runWriteRelativeSystemTime(u32RelativeSystemTimeType u32RelativeSystemTime)
+{
+   Write relative system time;
+}
+#endif
+
+
+/******************************************************************************
+End Of File
+******************************************************************************/

@@ -1,0 +1,686 @@
+<?xml version='1.0'?>
+<datamodel version="6.0" 
+           xmlns="http://www.tresos.de/_projects/DataModel2/14/root.xsd" 
+           xmlns:a="http://www.tresos.de/_projects/DataModel2/14/attribute.xsd" 
+           xmlns:v="http://www.tresos.de/_projects/DataModel2/06/schema.xsd" 
+           xmlns:d="http://www.tresos.de/_projects/DataModel2/06/data.xsd">
+
+  <d:ctr type="AUTOSAR" factory="autosar" 
+         xmlns:ad="http://www.tresos.de/_projects/DataModel2/08/admindata.xsd" 
+         xmlns:cd="http://www.tresos.de/_projects/DataModel2/08/customdata.xsd" 
+         xmlns:f="http://www.tresos.de/_projects/DataModel2/14/formulaexpr.xsd" 
+         xmlns:icc="http://www.tresos.de/_projects/DataModel2/08/implconfigclass.xsd" 
+         xmlns:mt="http://www.tresos.de/_projects/DataModel2/11/multitest.xsd"  
+         xmlns:variant="http://www.tresos.de/_projects/DataModel2/11/variant.xsd">
+    <d:lst type="TOP-LEVEL-PACKAGES">
+      <d:ctr name="EcuC" type="AR-PACKAGE">
+        <d:lst type="ELEMENTS">
+          <d:chc name="EcuC" type="AR-ELEMENT" value="MODULE-CONFIGURATION">
+            <d:ctr type="MODULE-CONFIGURATION">
+              <a:a name="DEF" value="ASPath:/TS_TxDxM5I0R0/EcuC"/>
+              <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+              <d:ctr name="CommonPublishedInformation" type="IDENTIFIABLE">
+                <d:var name="ArMajorVersion" type="INTEGER" value="4"/>
+                <d:var name="ArMinorVersion" type="INTEGER" value="0"/>
+                <d:var name="ArPatchVersion" type="INTEGER" value="3"/>
+                <d:var name="SwMajorVersion" type="INTEGER" value="5"/>
+                <d:var name="SwMinorVersion" type="INTEGER" value="0"/>
+                <d:var name="SwPatchVersion" type="INTEGER" value="12"/>
+                <d:var name="ModuleId" type="INTEGER" value="10">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="VendorId" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="Release" type="STRING" value="">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+              <d:var name="IMPLEMENTATION_CONFIG_VARIANT" type="ENUMERATION" 
+                     value="VariantPostBuild">
+                <a:a name="IMPORTER_INFO" value="@DEF"/>
+              </d:var>
+              <d:ctr name="EcucGeneral" type="IDENTIFIABLE">
+                <d:var name="EcucDevErrorDetect" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="EcucMetaDataHandlingEnabled" type="BOOLEAN" 
+                       value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+              <d:ctr name="EcucHardware" type="IDENTIFIABLE">
+                <a:a name="ENABLE" value="false"/>
+                <d:lst name="EcucCoreDefinition" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="EcucPartitionCollection" type="IDENTIFIABLE">
+                <a:a name="ENABLE" value="true"/>
+                <d:lst name="EcucPartition" type="MAP">
+                  <d:ctr name="EcucPartition_0" type="IDENTIFIABLE">
+                    <d:var name="EcucPartitionBswModuleExecution" 
+                           type="BOOLEAN" value="true"/>
+                    <d:var name="EcucPartitionQmBswModuleExecution" 
+                           type="BOOLEAN" value="true">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="PartitionCanBeRestarted" type="BOOLEAN" 
+                           value="true"/>
+                    <d:lst name="EcucPartitionBswModuleDistinguishedPartition"/>
+                    <d:lst name="EcucPartitionSoftwareComponentInstanceRef"/>
+                  </d:ctr>
+                </d:lst>
+              </d:ctr>
+              <d:ctr name="EcucPduCollection" type="IDENTIFIABLE">
+                <a:a name="ENABLE" value="true"/>
+                <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                <d:var name="PduIdTypeEnum" type="ENUMERATION" value="UINT16">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="PduLengthTypeEnum" type="ENUMERATION" 
+                       value="UINT16">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="MetaDataType" type="MAP"/>
+                <d:lst name="Pdu" type="MAP">
+                  <d:ctr name="Airbag_01_XIX_Airbag_SUBCANFD_64R" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="8">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/Airbag_01_XIX_Airbag_SUBCANFD/PTF_Airbag_01_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="Airbag_02_XIX_Airbag_SUBCANFD_1312R" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="8">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/Airbag_02_XIX_Airbag_SUBCANFD/PTF_Airbag_02_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="Airbag_eCS_01_XIX_Airbag_SUBCANFD_184112401R" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="8">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/FramePackage/Airbag_eCS_01/pfm_Airbag_eCS_01">
+                      <a:a name="ENABLE" value="true"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="DIA_eCS_Req_XIX_Airbag_SUBCANFD_402407942R" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="8">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/DIA_eCS_Req_XIX_Airbag_SUBCANFD/PTF_DIA_eCS_Req_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="DIA_eCS_Req_FD_XIX_Airbag_SUBCANFD_473973254R" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/DIA_eCS_Req_FD_XIX_Airbag_SUBCANFD/PTF_DIA_eCS_Req_FD_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="DIA_eCS_Resp_XIX_Airbag_SUBCANFD_402539014T" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="8">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/DIA_eCS_Resp_XIX_Airbag_SUBCANFD/PTF_DIA_eCS_Resp_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="DIA_eCS_Resp_XIX_Airbag_SUBCANFD_D_402539014T" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="8">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/DIA_eCS_Resp_XIX_Airbag_SUBCANFD/PTF_DIA_eCS_Resp_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="DIA_eCS_Resp_FD_XIX_Airbag_SUBCANFD_474104326T" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/DIA_eCS_Resp_FD_XIX_Airbag_SUBCANFD/PTF_DIA_eCS_Resp_FD_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr 
+                         name="DIA_eCS_Resp_FD_XIX_Airbag_SUBCANFD_D_474104326T" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/DIA_eCS_Resp_FD_XIX_Airbag_SUBCANFD/PTF_DIA_eCS_Resp_FD_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="Diag_eCS_Req_FD_XIX_Airbag_SUBCANFD_473977350R" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/Diag_eCS_Req_FD_XIX_Airbag_SUBCANFD/PTF_Diag_eCS_Req_FD_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="Diag_eCS_Resp_FD_XIX_Airbag_SUBCANFD_474108422T" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/Diag_eCS_Resp_FD_XIX_Airbag_SUBCANFD/PTF_Diag_eCS_Resp_FD_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr 
+                         name="Diag_eCS_Resp_FD_XIX_Airbag_SUBCANFD_D_474108422T" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/Diag_eCS_Resp_FD_XIX_Airbag_SUBCANFD/PTF_Diag_eCS_Resp_FD_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr 
+                         name="OBDC_SSN_eCS_Req_FD_XIX_Airbag_SUBCANFD_473985542R" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/OBDC_SSN_eCS_Req_FD_XIX_Airbag_SUBCANFD/PTF_OBDC_SSN_eCS_Req_FD_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr 
+                         name="OBDC_SSN_eCS_Resp_FD_XIX_Airbag_SUBCANFD_474116614T" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/OBDC_SSN_eCS_Resp_FD_XIX_Airbag_SUBCANFD/PTF_OBDC_SSN_eCS_Resp_FD_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr 
+                         name="OBDC_SSN_eCS_Resp_FD_XIX_Airbag_SUBCANFD_D_474116614T" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frame/OBDC_SSN_eCS_Resp_FD_XIX_Airbag_SUBCANFD/PTF_OBDC_SSN_eCS_Resp_FD_XIX_Airbag_SUBCANFD">
+                      <a:a name="ENABLE" value="true"/>
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="eCS_01_XIX_Airbag_SUBCANFD_184112400T" 
+                         type="IDENTIFIABLE">
+                    <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    <d:var name="PduLength" type="INTEGER" value="8">
+                      <a:a name="IMPORTER_INFO" value="ImportEcuConfig"/>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/FramePackage/eCS_01/pfm_eCS_01">
+                      <a:a name="ENABLE" value="true"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="Diag_FD_Request" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="4095"/>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="DIA_FD_Request" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="4095"/>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="OBDC_SSN_Request" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="4095"/>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="DIA_Request" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="4095"/>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="Diag_FD_Response" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="4095"/>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="DIA_FD_Response" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="4095"/>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="OBDC_SSN_Response" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="4095"/>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="DIA_Response" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="4095"/>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="IPdu_MFData_1988T" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="VARIANTS" type="Variant">
+                        <variant:pbvcond>
+                          <variant:criterion 
+                                             value="ASPath:/EB/PostBuildLoadable/Criterions/DummyCrit"/>
+                          <variant:cond>
+                            <variant:tst expr="0"/>
+                          </variant:cond>
+                        </variant:pbvcond>
+                      </a:a>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frames/G_CAN/PKG_G_CAN/Can_Frame_MF/IPdu_MFData">
+                      <a:a name="ENABLE" value="true"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="IPdu_Dev_Out_0_256T" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="VARIANTS" type="Variant">
+                        <variant:pbvcond>
+                          <variant:criterion 
+                                             value="ASPath:/EB/PostBuildLoadable/Criterions/DummyCrit"/>
+                          <variant:cond>
+                            <variant:tst expr="0"/>
+                          </variant:cond>
+                        </variant:pbvcond>
+                      </a:a>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frames/G_CAN/PKG_G_CAN/Can_Frame_CanDataOut_0/IPdu_DevByte_Out_0">
+                      <a:a name="ENABLE" value="true"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="IPdu_Gliwa_In_300R" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="8">
+                      <a:a name="VARIANTS" type="Variant">
+                        <variant:pbvcond>
+                          <variant:criterion 
+                                             value="ASPath:/EB/PostBuildLoadable/Criterions/DummyCrit"/>
+                          <variant:cond>
+                            <variant:tst expr="0"/>
+                          </variant:cond>
+                        </variant:pbvcond>
+                      </a:a>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frames/G_CAN/PKG_G_CAN/Can_Frame_GliwaIn/PduToFrameMapping_0">
+                      <a:a name="ENABLE" value="true"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="IPdu_Gliwa_Out_200T" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="64">
+                      <a:a name="VARIANTS" type="Variant">
+                        <variant:pbvcond>
+                          <variant:criterion 
+                                             value="ASPath:/EB/PostBuildLoadable/Criterions/DummyCrit"/>
+                          <variant:cond>
+                            <variant:tst expr="0"/>
+                          </variant:cond>
+                        </variant:pbvcond>
+                      </a:a>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frames/G_CAN/PKG_G_CAN/Can_Frame_GliwaOut/IPdu_Gliwa_Out">
+                      <a:a name="ENABLE" value="true"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ctr name="IPdu_MFData_Logger_1989T" type="IDENTIFIABLE">
+                    <d:var name="PduLength" type="INTEGER" value="8">
+                      <a:a name="VARIANTS" type="Variant">
+                        <variant:pbvcond>
+                          <variant:criterion 
+                                             value="ASPath:/EB/PostBuildLoadable/Criterions/DummyCrit"/>
+                          <variant:cond>
+                            <variant:tst expr="0"/>
+                          </variant:cond>
+                        </variant:pbvcond>
+                      </a:a>
+                    </d:var>
+                    <d:ref name="MetaDataTypeRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ref name="SysTPduToFrameMappingRef" type="REFERENCE" 
+                           value="ASPath:/Frames/G_CAN/PKG_G_CAN/Can_Frame_MF_Logger/PduToFrameMapping_1">
+                      <a:a name="ENABLE" value="true"/>
+                    </d:ref>
+                    <d:var name="PduId" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                </d:lst>
+              </d:ctr>
+              <d:ctr name="EcucPostBuildVariants" type="IDENTIFIABLE">
+                <a:a name="ENABLE" value="true"/>
+                <d:ref name="ActiveLoadableVariantRef" type="REFERENCE" 
+                       value="ASPath:/EB/PostBuildLoadable/DummyLoad"/>
+                <d:ref name="ActiveSelectableVariantRef" type="REFERENCE" 
+                       value="ASPath:/EB/PostBuildSelectable/TDK_4G"/>
+                <d:lst name="EcucPostBuildVariantRef">
+                  <d:ref type="REFERENCE" 
+                         value="ASPath:/EB/PostBuildSelectable/TDK_4G"/>
+                </d:lst>
+              </d:ctr>
+              <d:ctr name="EcucVariationResolver" type="IDENTIFIABLE">
+                <a:a name="ENABLE" value="false"/>
+                <d:lst name="PredefinedVariantRef">
+                  <d:ref type="REFERENCE" >
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                </d:lst>
+              </d:ctr>
+              <d:ctr name="PublishedInformation" type="IDENTIFIABLE">
+                <d:var name="PbcfgMSupport" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+            </d:ctr>
+          </d:chc>
+        </d:lst>
+      </d:ctr>
+    </d:lst>
+  </d:ctr>
+
+</datamodel>

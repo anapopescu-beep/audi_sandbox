@@ -1,0 +1,280 @@
+/*@!Encoding:1252*/
+includes
+{
+  //#include "DigitalPotentiometerControl.cin"
+  #include "C:\MKS\AUDI_MCC\Phase_01\View_Test\Tools\CANoe\Config\ECS_AUDI_VERIF\Includes\SW_Modules\SW_Modules_Project\Project_Includes_Configuration.cin"
+  //#include "DigiPotTrigger.can"
+}
+
+variables
+{
+ 
+}
+
+void MainTest()
+{
+   anyfunction();
+}
+
+
+testcase anyfunction()
+{
+//  char sss[7] = "blabla";
+//  write("%s something",sss);
+
+  //*******SET VARIANT AND OPTION******
+  //stack byte bExpectedResultRDBI_Variant1_RemovableSeats[7] = {0x62, 0xFD, 0xE0, 0x00, 0x06, 0x1F, 0xE2};
+  stack byte bRequestWDBI_Variant1_RemovableSeats[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x06, 0x1F, 0xE2}; 
+  //stack byte bExpectedResultRDBI_Variant1_NonRemovableSeats[7] = {0x62, 0xFD, 0xE0, 0x00, 0x00, 0x1F, 0xE2};
+  stack byte bRequestWDBI_Variant1_NonRemovableSeats[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x00, 0x1F, 0xE2}; 
+  //stack byte bExpectedResultRDBI_Variant2[7] = {0x62, 0xFD, 0xE0, 0x00, 0x00, 0x1F, 0xFA};
+  stack byte bRequestWDBI_Variant2[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x00, 0x1F, 0xFA};   
+  
+  
+  //********DISABLE/ENABLE BUCKLE/SEAT - VARIANT1 DEFAULT NONREMOVABLE
+  //BETTER TO READ CURRENT BIT STATUS AND APPLY MASK FOR BITS INSTEAD OF THIS!!!!!!!!!!!!!
+  stack byte bRequestWDBI_EnableAll[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x00, 0x1F, 0xE2};//all enabled 
+  //*****DISABLE/ENABLE FA***********
+  //stack byte bExpectedResultRDBI_BuckleDisabled_FA[7] = {0x62, 0xFD, 0xE0, 0x00, 0x00, 0x0F, 0xE2};
+  stack byte bRequestWDBI_DisableBuckle_FA[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x00, 0x1F, 0x62};//buckle1 disabled, all the rest are enabled
+  stack byte bRequestWDBI_EnableBuckle_FA[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x00, 0x1F, 0x42};//buckle1+seat1 disabled 
+  //stack byte bExpectedResultRDBI_SeatDisabled_FA[7] = {0x62, 0xFD, 0xE0, 0x00, 0x00, 0x0F, 0xE2};
+  stack byte bRequestWDBI_DisableSeat_FA[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x00, 0x1F, 0xC2};//seat1 disabled, all the rest are enabled
+  //*****DISABLE/ENABLE BF***********
+  //stack byte bExpectedResultRDBI_BuckleDisabled_BF[7] = {0x62, 0xFD, 0xE0, 0x00, 0x00, 0x0F, 0xE2};
+  stack byte bRequestWDBI_DisableBuckle_BF[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x00, 0x1E, 0xE2};//buckle2 disabled, all the rest are enabled
+  stack byte bRequestWDBI_EnableBuckle_BF[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x00, 0x1E, 0xA2};//buckle2+seat2 disabled 
+  //stack byte bExpectedResultRDBI_SeatDisabled_BF[7] = {0x62, 0xFD, 0xE0, 0x00, 0x00, 0x0F, 0xE2};
+  stack byte bRequestWDBI_DisableSeat_BF[7] = {0x2E, 0xFD, 0xE0, 0x00, 0x00, 0x1F, 0xA2};//seat2 disabled, all the rest are enabled
+  
+  //****************VARIANT AND OPTION DROPDOWN****************************************************
+  if (@sysvar::DPOT::DPOTControlStatus == 1){
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 1, "");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 2, "");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 3, "");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 4, "iVariant2_SeatOccupiedBeltNotPlugged_0_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 5, "");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 6, "iVariant2_SeatNotOccupied_500_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 7, "");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 8, "iVariant2_SeatOccupiedBeltPlugged_2500_Ohms");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 1, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 2, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 3, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 4, "0");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 5, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 6, "500");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 7, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 8, "2500");    
+    GetSecurityAccess("supplier");
+    SetECUMode("unlock");
+    SendDiagnosticRequest(Req_EcsVariant_Write, Resp_EcsVariant_Write, bRequestWDBI_Variant2);
+    CheckPositiveResponse("Check positive response for writing memory by address.", Req_EcsVariant_Write, Resp_EcsVariant_Write);
+    SetECUMode("lock");    
+    EvalManStepEqual("Check if the Solenoid Variant is as expected", Resp_EcsVariant_Write, "0x6E 0xFD 0xE0");
+    ResetECU("Soft");
+    Wait(2000);
+  } 
+  else if (@sysvar::DPOT::DPOTControlStatus == 2){
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 1, "iVariant1_SeatRemoved_or_ShortToGND_0_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 2, "iVariant1_Implausibile_200_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 3, "iVariant1_SeatOccupiedBeltNotPlugged_100_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 4, "");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 5, "iVariant1_SeatNotOccupied_400_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 6, "");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 7, "iVariant1_SeatOccupiedBeltPlugged_1000_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 8, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 1, "0");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 2, "200");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 3, "100");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 4, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 5, "400");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 6, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 7, "1000");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 8, "");
+    GetSecurityAccess("supplier");
+    SetECUMode("unlock");
+    SendDiagnosticRequest(Req_EcsVariant_Write, Resp_EcsVariant_Write, bRequestWDBI_Variant1_NonRemovableSeats);
+    CheckPositiveResponse("Check positive response for writing memory by address.", Req_EcsVariant_Write, Resp_EcsVariant_Write);
+    SetECUMode("lock");    
+    EvalManStepEqual("Check if the Solenoid Variant is as expected", Resp_EcsVariant_Write, "0x6E 0xFD 0xE0");
+    ResetECU("Soft");
+    Wait(2000);
+  }  
+  else if (@sysvar::DPOT::DPOTControlStatus == 3){
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 1, "iVariant1_SeatRemoved_or_ShortToGND_0_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 2, "iVariant1_Implausibile_200_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 3, "iVariant1_SeatOccupiedBeltNotPlugged_100_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 4, "");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 5, "iVariant1_SeatNotOccupied_400_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 6, "");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 7, "iVariant1_SeatOccupiedBeltPlugged_1000_Ohms");
+    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 8, "");  
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 1, "0");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 2, "200");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 3, "100");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 4, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 5, "400");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 6, "");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 7, "1000");
+//    sysSetVariableDescriptionForValue("DPOT", "SetResDropDown_FA", 8, "");   
+    GetSecurityAccess("supplier");
+    SetECUMode("unlock");
+    SendDiagnosticRequest(Req_EcsVariant_Write, Resp_EcsVariant_Write, bRequestWDBI_Variant1_RemovableSeats);
+    CheckPositiveResponse("Check positive response for writing memory by address.", Req_EcsVariant_Write, Resp_EcsVariant_Write);
+    SetECUMode("lock");    
+    EvalManStepEqual("Check if the Solenoid Variant is as expected", Resp_EcsVariant_Write, "0x6E 0xFD 0xE0");
+    ResetECU("Soft");
+    Wait(2000);
+  }    
+  //*****************BUCKLE AND OCCUPANCY RADIO BUTTONS********************************************************************
+  if (@sysvar::DPOT::DPOTControlStatus == 4){
+    Wait(500);
+    if (getSignal(eCS_SBS_Belegung_Reihe2_FA) == 2){
+      SetRearSeatStatus(iLeft, iRemovableSeats, iSeatNotOccupied);
+      @sysvar::DPOT::RearSeatStatusDropDown_FA = 3;
+    }  
+    else{
+      SetRearSeatStatus(iLeft, iRemovableSeats, iSeatOccupiedBeltNotPlugged);
+      @sysvar::DPOT::RearSeatStatusDropDown_FA = 2;
+    }
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 5){
+    Wait(500);
+    if (getSignal(eCS_SBS_Belegung_Reihe2_FA) == 2){
+      @sysvar::DPOT::ChangeOccupancyRadioOption_FA = 3; //keep the same value because plugged plus nonoccupied is not a valid scenario
+      SetRearSeatStatus(iLeft, iRemovableSeats, iSeatOccupiedBeltPlugged);
+      @sysvar::DPOT::RearSeatStatusDropDown_FA = 4;
+    }
+    else{
+      SetRearSeatStatus(iLeft, iRemovableSeats, iSeatOccupiedBeltPlugged);
+      @sysvar::DPOT::RearSeatStatusDropDown_FA = 4;
+    }    
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 6){
+    Wait(500);
+    if (getSignal(eCS_Gurtschloss_Status_Reihe2_FA) == 2){
+      SetRearSeatStatus(iLeft, iRemovableSeats, iSeatNotOccupied);
+      @sysvar::DPOT::RearSeatStatusDropDown_FA = 3;
+    }        
+    else{
+      @sysvar::DPOT::ChangeOccupancyRadioOption_FA = 2; //keep the same value because plugged plus nonoccupied is not a valid scenario
+      SetRearSeatStatus(iLeft, iRemovableSeats, iSeatNotOccupied);
+      @sysvar::DPOT::RearSeatStatusDropDown_FA = 3;      
+    }  
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 7){
+    Wait(500);
+    if (getSignal(eCS_Gurtschloss_Status_Reihe2_FA) == 2){
+      SetRearSeatStatus(iLeft, iRemovableSeats, iSeatOccupiedBeltNotPlugged);
+      @sysvar::DPOT::RearSeatStatusDropDown_FA = 2;
+    }    
+    else{
+      SetRearSeatStatus(iLeft, iRemovableSeats, iSeatOccupiedBeltPlugged);
+      @sysvar::DPOT::RearSeatStatusDropDown_FA = 4;
+    }  
+  }
+  //**********************REAR SEAT STATUS DROPDOWN*****************************************************
+  else if(@sysvar::DPOT::DPOTControlStatus == 10){
+    SetRearSeatStatus(iLeft, iRemovableSeats, iSeatOccupiedBeltNotPlugged);
+    @sysvar::DPOT::ChangeBuckleRadioOption_FA == 2;
+    @sysvar::DPOT::ChangeOccupancyRadioOption_FA = 3;
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 11){
+    SetRearSeatStatus(iLeft, iRemovableSeats, iSeatNotOccupied);
+    @sysvar::DPOT::ChangeOccupancyRadioOption_FA = 2;
+    @sysvar::DPOT::ChangeBuckleRadioOption_FA == 2;
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 12){
+    SetRearSeatStatus(iLeft, iRemovableSeats, iSeatOccupiedBeltPlugged);
+    @sysvar::DPOT::ChangeOccupancyRadioOption_FA = 3;
+    @sysvar::DPOT::ChangeBuckleRadioOption_FA == 3;
+  }
+  //*********************ENABLE/DISABLE BUCKLE SWITCH***************************************************
+  else if (@sysvar::DPOT::DPOTControlStatus == 13){
+    GetSecurityAccess("supplier");
+    SetECUMode("unlock");
+    SendDiagnosticRequest(Req_EcsVariant_Write, Resp_EcsVariant_Write, bRequestWDBI_DisableBuckle_FA);
+    CheckPositiveResponse("Check positive response for writing memory by address.", Req_EcsVariant_Write, Resp_EcsVariant_Write);
+    SetECUMode("lock");    
+    EvalManStepEqual("Check if the Solenoid Variant is as expected", Resp_EcsVariant_Write, "0x6E 0xFD 0xE0");
+    ResetECU("Soft");
+    Wait(2000);
+  } 
+  else if (@sysvar::DPOT::DPOTControlStatus == 14){
+    GetSecurityAccess("supplier");
+    SetECUMode("unlock");
+    SendDiagnosticRequest(Req_EcsVariant_Write, Resp_EcsVariant_Write, bRequestWDBI_EnableBuckle_FA);
+    CheckPositiveResponse("Check positive response for writing memory by address.", Req_EcsVariant_Write, Resp_EcsVariant_Write);
+    SetECUMode("lock");    
+    EvalManStepEqual("Check if the Solenoid Variant is as expected", Resp_EcsVariant_Write, "0x6E 0xFD 0xE0");
+    ResetECU("Soft");
+    Wait(2000);
+  }    
+  //*********************ENABLE/DISABLE SEAT SWITCH*****************************************************  
+  else if (@sysvar::DPOT::DPOTControlStatus == 15){
+    GetSecurityAccess("supplier");
+    SetECUMode("unlock");
+    SendDiagnosticRequest(Req_EcsVariant_Write, Resp_EcsVariant_Write, bRequestWDBI_DisableSeat_FA);
+    CheckPositiveResponse("Check positive response for writing memory by address.", Req_EcsVariant_Write, Resp_EcsVariant_Write);
+    SetECUMode("lock");    
+    EvalManStepEqual("Check if the Solenoid Variant is as expected", Resp_EcsVariant_Write, "0x6E 0xFD 0xE0");
+    ResetECU("Soft");
+    Wait(2000);
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 16){
+    GetSecurityAccess("supplier");
+    SetECUMode("unlock");
+    SendDiagnosticRequest(Req_EcsVariant_Write, Resp_EcsVariant_Write, bRequestWDBI_EnableAll);
+    CheckPositiveResponse("Check positive response for writing memory by address.", Req_EcsVariant_Write, Resp_EcsVariant_Write);
+    SetECUMode("lock");    
+    EvalManStepEqual("Check if the Solenoid Variant is as expected", Resp_EcsVariant_Write, "0x6E 0xFD 0xE0");
+    ResetECU("Soft");
+    Wait(2000);
+  }
+  //*******************SET RESISTANCE DROPDOWN**********************************************************
+  else if (@sysvar::DPOT::DPOTControlStatus == 17){
+    SetDigitalPotentiometertSide(iLeft);
+    SetDigitalResistance(0);
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 18){
+    SetDigitalPotentiometertSide(iLeft);
+    SetDigitalResistance(200);
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 19){
+    SetDigitalPotentiometertSide(iLeft);
+    SetDigitalResistance(100);
+  }  
+  else if (@sysvar::DPOT::DPOTControlStatus == 20){
+    SetDigitalPotentiometertSide(iLeft);
+    SetDigitalResistance(0);
+  }   
+  else if (@sysvar::DPOT::DPOTControlStatus == 21){
+    SetDigitalPotentiometertSide(iLeft);
+    SetDigitalResistance(400);
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 22){
+    SetDigitalPotentiometertSide(iLeft);
+    SetDigitalResistance(500);
+  }
+  else if (@sysvar::DPOT::DPOTControlStatus == 23){
+    SetDigitalPotentiometertSide(iLeft);
+    SetDigitalResistance(1000);
+  }  
+  else if (@sysvar::DPOT::DPOTControlStatus == 24){
+    SetDigitalPotentiometertSide(iLeft);
+    SetDigitalResistance(2500);
+  }  
+  
+  //*******************SET RESISTANCE MANUALLY**********************************************************
+  else if (@sysvar::DPOT::DPOTControlStatus == 25){
+    SetDigitalPotentiometertSide(iLeft);
+    SetDigitalResistance(@sysvar::DPOT::SetResistanceInputBox_FA);//the function has a mechanism to round the number, for example rnd(123) = 100
+  }  
+  
+  //*********************RESET DIGIPOT******************************************************************
+  else if (@sysvar::DPOT::DPOTControlStatus == 26){
+    SetDigitalPotentiometertSide(iLeft);
+    ResetDigitalPotentiometer();
+  }  
+
+}

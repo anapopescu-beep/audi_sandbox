@@ -1,0 +1,407 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/**
+ *    $Revision: 1.3.1.7 $
+ *    $ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/CIL/Design/project.pj $
+ */
+
+/**
+ * Overview of the component :
+ *    Communication Interface Layer (CIL) oversees extracting data from the 
+ *    network frames (e.g. CAN) and providing the data to the application, and 
+ *    packing the outgoing data to the network frames.
+ *    The aim of the CIL component is to interpret all received signals on the
+ *    communication component and to provide the right information to the application.
+ *    Also, it’s purpose is to gather information from the Application and
+ *    compute the status signals and sent them to the CAN bus.
+ *    CIL oversees:
+ *       - Unpacking received data frames from the network (CAN), and providing 
+ *         the data to the application
+ *       - Packing the outgoing data to data frames for the network (CAN)
+ */
+
+/*!****************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Rte_CIL.h"
+#include "Nvp_Cfg.h"
+#include "CIL.h"
+#include "RteIf.h"
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+
+/**
+ * \brief
+ *      This variable is used to retain if a diagnostic request has been received on
+ *      the CAN bus on the AktuatorTest signal
+ * \initialization KU8_FALSE for each solenoid
+ */
+LOCAL uint8 cil_u8DiagReqPresent[sizeof(au8eCSDiagReqType)] = {KU8_FALSE};
+
+
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+
+/**
+ * \brief
+ *      This variable is used to retain the status of buckle that should be send on CAN.
+ * \initialization 
+ *      NA.
+ * \range
+ *      NA.
+ */
+EXPORTED uint8 CIL_u8BuckleStatusTx[CIL_NO_OF_BUCKLES];
+
+/**
+ * \brief
+ *      This variable is used to retain the status of seat occupancy that should be send on CAN.
+ * \initialization
+ *      NA.
+ * \range
+ *      NA.
+ */
+EXPORTED uint8 CIL_u8SeatOccupancySensorTx[CIL_NO_OF_SEATS];
+
+
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+
+/**
+* \brief
+*       Function is used to handle functional safety part of communication(handling
+*       of diagnostic requests received on the CAN bus)
+* \return
+*       This function must not have a return value.
+* \constrains
+*       This function is called cyclically
+* \dynamicaspectcaller
+*       OsTask_Alv_ComServices
+* \dynamicaspectdescription
+*       Called by Operating System
+* \ddesignrequirement
+*       DSG_CIL_runCANToSafetyAppli
+* \archrequirement
+*     ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_Reihe2_BF_XIX_Grundumfang_XIX_eCS;
+*     ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_FA_XIX_Grundumfang_XIX_eCS;
+*     ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_BF_XIX_Grundumfang_XIX_eCS;
+*     ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_FA_XIX_Grundumfang_XIX_eCS;
+*     ARCH_SW_CIL_RP_IF_AB_Crash_Int_XIX_Grundumfang_XIX_eCS;
+*     ARCH_SW_CIL_ptrpAsrOsServicesCIL_CIL_runCANToSafetyAppli;
+*     ARCH_SW_CIL_psrEcsDiagRequest;
+*     ARCH_SW_CIL_psrCrashStatus_u8IsCrashActive;
+**/
+EXPORTED void CIL_runCANToSafetyAppli(void)
+{
+   /* get initial diagnositc request */
+   Rte_Read_CIL_SAD_prrEcsDiagRequest_au8DiagReq();
+   Rte_Read_CIL_SAD_prrEcsDiagRequest_au8DiagReqComplement();
+
+   /* Check the command recieved on CAN */
+   Rte_Read_RP_IF_AB_eCS_Aktuatortest_FA_XIX_Grundumfang_XIX_eCS_DE_AB_eCS_Aktuatortest_FA();
+   Rte_Read_RP_IF_AB_eCS_Aktuatortest_BF_XIX_Grundumfang_XIX_eCS_DE_AB_eCS_Aktuatortest_BF();
+   Rte_Read_RP_IF_AB_eCS_Aktuatortest_Reihe2_FA_XIX_Grundumfang_XIX_eCS_DE_AB_eCS_Aktuatortest_Reihe2_FA();
+   Rte_Read_RP_IF_AB_eCS_Aktuatortest_Reihe2_BF_XIX_Grundumfang_XIX_eCS_DE_AB_eCS_Aktuatortest_Reihe2_BF();
+
+   /* Actuator 1 & 2 handling */
+   if (AktuatorTest signal is set to LOCK for front row FA seat)
+   {
+      LOCK Actuator 1;
+      LOCK Actuator 2;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 1 as active;
+      Mark diagnostic request for Actuator 2 as active;
+   }
+   else if(AktuatorTest signal is set to UNLOCK for front row FA seat)
+   {
+      UNLOCK Actuator 1;
+      UNLOCK Actuator 2;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 1 as active;
+      Mark diagnostic request for Actuator 2 as active;
+   }
+   else if ((Diagnostic request for Actuator 1 is active) && (Diagnostic request for Actuator 2 is active))
+   {
+      Clear diagnostic request for Actuator 1;
+      Clear diagnostic request for Actuator 2;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 1 as inactive;
+      Mark diagnostic request for Actuator 2 as inactive;
+   }
+   else
+   {
+      /* Do nothing */
+   }
+
+   /* Actuator 3 & 4 handling */
+   if (AktuatorTest signal is set to LOCK for front row BF seat)
+   {
+      LOCK Actuator 3;
+      LOCK Actuator 4;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 3 as active;
+      Mark diagnostic request for Actuator 4 as active;
+   }
+   else if(AktuatorTest signal is set to UNLOCK for front row BF seat)
+   {
+      UNLOCK Actuator 3;
+      UNLOCK Actuator 4;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 3 as active;
+      Mark diagnostic request for Actuator 4 as active;
+   }
+   else if ((Diagnostic request for Actuator 3 is active) && (Diagnostic request for Actuator 4 is active))
+   {
+      Clear diagnostic request for Actuator 3;
+      Clear diagnostic request for Actuator 4;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 3 as inactive;
+      Mark diagnostic request for Actuator 4 as inactive;
+   }
+   else
+   {
+      /* Do nothing */
+   }
+
+    if (AktuatorTest signal is set to LOCK for second row FA seat)
+   {
+      LOCK Actuator 5;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 5 as active;
+   }
+   else if(AktuatorTest signal is set to UNLOCK for second row FA seat)
+   {
+      UNLOCK Actuator 5;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 5 as active;
+   }
+   else if (Diagnostic request for Actuator 5 is active)
+   {
+      Clear diagnostic request for Actuator 5;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 5 as inactive;
+   }
+   else
+   {
+      /* Do nothing */
+   }
+
+   /* Actuator 6 handling */
+    if (AktuatorTest signal is set to LOCK for second row BF seat)
+   {
+      LOCK Actuator 6;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 6 as active;
+   }
+   else if(AktuatorTest signal is set to UNLOCK for second row FA seat)
+   {
+      UNLOCK Actuator 6;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 6 as active;
+   }
+   else if (Diagnostic request for Actuator 6 is active)
+   {
+      Clear diagnostic request for Actuator 6;
+
+      Rte_Write_psrEcsDiagRequest_ab8DiagReq();
+      Rte_Write_psrEcsDiagRequest_ab8DiagReqComplement();
+
+      Mark diagnostic request for Actuator 6 as inactive;
+   }
+   else
+   {
+      /* Do nothing */
+   }
+
+   /* Read the Crash Status sent via CAN message */
+   Rte_Read_RP_IF_AB_Crash_Int_XIX_Grundumfang_XIX_eCS_DE_AB_Crash_Int(&u8Crash_Int_Status);
+
+   /* Make the result visible for other modules */
+   Rte_Write_psrCrashStatus_u8IsCrashActive(u8Crash_Int_Status);      
+}
+
+
+
+/**
+* \brief
+*        This function is the CIL periodic main function that is used to get data from the CAN bus.
+* \dynamicaspectcaller
+*        Scheduler.
+* \dynamicaspectdescription
+*        Called at 10 ms.
+* \ddesignrequirement
+*        DSG_CIL_runCANToAppli
+* \archrequirement
+*        ARCH_SW_CIL_RP_IF_AB_Gurtschloss_BF_XIX_Grundumfang_XIX_eCS;
+*        ARCH_SW_CIL_RP_IF_AB_Gurtschloss_FA_XIX_Grundumfang_XIX_eCS;
+*        ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_Reihe2_FA_XIX_Grundumfang_XIX_eCS;
+*        ARCH_SW_CIL_ptrpAsrOsServicesCIL_CIL_runCANToAppli;
+**/
+EXPORTED void CIL_runCANToAppli(void)
+{
+   /* Read Buckle Status from Airbag_02 */
+   Rte_Read_RP_IF_AB_Gurtschloss_FA_XIX_Grundumfang_XIX_eCS_DE_AB_Gurtschloss_FA();
+   Rte_Read_RP_IF_AB_Gurtschloss_FA_XIX_Grundumfang_XIX_eCS_DE_AB_Gurtschloss_FA();
+   Rte_Read_RP_IF_AB_Gurtschloss_BF_XIX_Grundumfang_XIX_eCS_DE_AB_Gurtschloss_BF();
+   Rte_Read_RP_IF_AB_Gurtschloss_BF_XIX_Grundumfang_XIX_eCS_DE_AB_Gurtschloss_BF();
+   
+   Read and store buckle status for front row in CIL_u8BuckleStatusTx;
+} 
+
+
+
+/******************************************************************************
+Evolution of the component
+
+Created by : F.GILBERT
+
+$Log: CIL_CANToAppli.c_template  $
+Revision 1.3.1.7 2023/07/20 08:28:51CEST David Puscasu (david.puscasu) 
+Update Traceability
+Revision 1.3.1.6 2023/07/18 09:30:01EEST David Puscasu (david.puscasu) 
+Update Traceability on CIL
+Revision 1.3.1.5 2023/06/19 09:48:23EEST Lucian Ardeleanu (lucian.ardeleanu) 
+[DSG] Detailed Design Documents to be fixed
+Revision 1.3.1.4 2023/05/17 08:59:13EEST Dan Dustinta (dan.dustinta) 
+updat ddesign
+Revision 1.3.1.3 2023/04/21 13:01:06EEST Gabriel Brasoveanu (gabriel.brasoveanu) 
+Update template after modifications
+Revision 1.6.3.17 2023/04/19 09:23:30EEST Dan Dustinta (dan.dustinta) 
+update traceability
+Revision 1.6.3.16 2023/04/18 16:59:51EEST Dan Dustinta (dan.dustinta) 
+update comments in CIL
+Revision 1.6.3.15 2023/04/18 15:24:57EEST Dan Dustinta (dan.dustinta) 
+add local functions
+Revision 1.6.3.14 2023/03/01 14:08:20EET Septimiu Vintila (septimiu.vintila) 
+Crash reading function made ASIL.
+Revision 1.6.3.13 2023/03/01 11:51:54EET Septimiu Vintila (septimiu.vintila) 
+ASIL function moved to FuSa section.
+Revision 1.6.3.12 2023/02/28 09:17:54EET Dan Dustinta (dan.dustinta) 
+add stub function
+Revision 1.6.3.11 2023/02/15 10:07:34EET Septimiu Vintila (septimiu.vintila) 
+QAC related code changes.
+Revision 1.6.3.10 2023/02/01 14:48:46EET Ioan Repede (ioan.repede) 
+Replace internal RTE connection with implementation from the RteIf module.
+Revision 1.6.3.9 2023/01/31 14:16:09EET Ioan Repede (ioan.repede) 
+Solving compiler warnings.
+Revision 1.6.3.8 2023/01/31 13:11:22EET Ioan Repede (ioan.repede) 
+Update the read method for the RTE variables regarding the diagnostic requests.
+Revision 1.6.3.7 2023/01/16 13:35:03EET Septimiu Vintila (septimiu.vintila) 
+Variables name changed.
+Revision 1.6.3.6 2023/01/16 11:38:47EET Septimiu Vintila (septimiu.vintila) 
+Fixes after review.
+Revision 1.6.3.5 2023/01/12 16:12:14EET Razvan Badiu (razvan.badiu) 
+add gliwa
+Revision 1.6.3.4 2022/12/14 11:35:55EET Septimiu Vintila (septimiu.vintila) 
+Integration for Gliwa related Tx/Rx frames.
+Revision 1.6.3.3 2022/11/24 10:13:15EET Septimiu Vintila (septimiu.vintila) 
+CIL implemantation.
+Revision 1.2 2022/03/09 15:27:32EET Pierre-Olivier Pilot (pierre-olivier.pilot)
+eCS_ECUV.005:
+ Fix DIO index for Boost
+ Add Enable for boost 2
+
+eCS_ECUV.004:
+ Fix ADCIF "getMeasure" value for KL30
+ Fix Az offset value for +/-16g calibration
+Revision 1.1 2021/08/26 08:16:53CEST Pierre-Olivier Pilot (pierre-olivier.pilot)
+Initial revision
+Member added to project e:/MKSProjects/SBE/Innovation/ECS/Phase_01/Components/Application/Autoliv/CIL/Implementation/src/project.pj
+Revision 1.1 2020/12/08 13:59:49CET Gaetan Lievre (gaetan.lievre)
+Initial revision
+Member added to project e:/MKSProjects/AEM/Frame_Platforms/S32K144/Phase_01/View_Development/Components/Application/Autoliv/CIL/Implementation/src/project.pj
+Revision 1.3 2020/08/14 16:22:09CEST Pierre-Olivier Pilot (pierre-olivier.pilot)
+Use Autosar shortname field for the Module Trigram and the long name for the full component name (XXX_AC_TrigramExplained)
+Revision 1.2 2019/10/09 16:14:29CEST Gaetan Lievre (gaetan.lievre)
+Update for Nvm
+Revision 1.1 2019/08/21 09:23:26CEST Nicolas Bianchi (nicolas.bianchi)
+Initial revision
+
+*****************************************************************************/
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

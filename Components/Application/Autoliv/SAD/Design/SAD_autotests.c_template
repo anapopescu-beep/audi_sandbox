@@ -1,0 +1,1251 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version:
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.9 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/SAD/Design/project.pj $
+*/
+/*!****************************************************************************
+
+details
+   The purpose of this module is to handle the auto-tests related to the
+   solenoids.
+   ○ Actuator stuck;
+   ○ Open circuit;
+   ○ Short circuit to ground;
+   ○ Short circuit to supply voltage;
+
+******************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "common.h"
+#include "SAD.h"
+#include "Rte_Sad.h"
+#include "Dem_IntEvtId.h"
+#include "Math.h"
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/**
+ *\brief
+ *      None of the solenoids are stuck.
+ */
+#define KU8_SAD_NO_STUCK_SOLENOID                     ((uint8) 0)
+
+/**
+ *\brief
+ *      Number of entries in interpolation table for voltage threshold
+ *
+ */
+#define KU8_SAD_NB_OF_INTERPOLATION_POINTS            ((uint8) 8)
+
+/**
+ *\brief
+ *      Coefficient used in division to convert units from micro-volts to milli-volts.
+ *
+ */
+#define KU32_SAD_CONVERSION_UNIT                      ((uint32)1000)
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+LOCAL u8TestResultType sad_ExecuteOpenCircuitCheck(const uint8 ku8SolenoidId);
+LOCAL u8TestResultType sad_ExecuteShortToGNDCheck(const uint8 ku8SolenoidId);
+LOCAL u8TestResultType sad_ExecuteShortToVBATCheck(const uint8 ku8SolenoidId);
+LOCAL u8TestResultType sad_ExecuteOvervoltageCheck(const uint8 ku8SolenoidId);
+LOCAL u8TestResultType sad_ExecutePinStateCheck(const uint8 ku8SolenoidId);
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/**
+ * \brief
+ *    The variable is used to store in each bit the stuck status flag of each
+ *    solenoid.
+ *
+ * \initialization
+ *       KU8_SAD_NO_STUCK_SOLENOID (uint8 0)
+ *
+ * \range
+ *       0...KU8_MAX.
+ *
+ */
+LOCAL uint8 sad_u8StuckActuatorsStatus = KU8_SAD_NO_STUCK_SOLENOID;
+
+/**
+ * \brief
+ *    This array will hold errors of Open Circuit per every solenoid.
+ *
+ * \initialization
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *
+ * \range
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *       KU8_SOLENOID_ELECTRICAL_AT_FAILED;
+ *
+ */
+LOCAL uint8 sad_au8SolErrorPresentOpenCircuit[KU8_MAX_SOLENOID_NB] = {
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED
+};
+
+/**
+ * \brief
+ *    This array will hold errors of Short To GND per every solenoid.
+ *
+ * \initialization
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *
+ * \range
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *       KU8_SOLENOID_ELECTRICAL_AT_FAILED;
+ *
+ */
+LOCAL uint8 sad_au8SolErrorPresentShortToGND[KU8_MAX_SOLENOID_NB] = {
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED
+};
+
+/**
+ * \brief
+ *    This array will hold errors of Short To VBAT per every solenoid.
+ *
+ * \initialization
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *
+ * \range
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *       KU8_SOLENOID_ELECTRICAL_AT_FAILED;
+ *
+ */
+LOCAL uint8 sad_au8SolErrorPresentShortToVBAT[KU8_MAX_SOLENOID_NB] = {
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED
+};
+
+/**
+ * \brief
+ *    This array will hold errors of overvoltage per every solenoid.
+ *
+ * \initialization
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *
+ * \range
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *       KU8_SOLENOID_ELECTRICAL_AT_FAILED;
+ *
+ */
+LOCAL uint8 sad_au8SolErrorPresentOvervoltage[KU8_MAX_SOLENOID_NB] = {
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED
+};
+
+/**
+ * \brief
+ *    This array will hold errors of en_cs pin check per every solenoid.
+ *
+ * \initialization
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *
+ * \range
+ *       KU8_SOLENOID_ELECTRICAL_AT_PASSED
+ *       KU8_SOLENOID_ELECTRICAL_AT_FAILED;
+ *
+ */
+LOCAL uint8 sad_au8SolErrorPresentEnCSPin[KU8_MAX_SOLENOID_NB] = {
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED,
+      KU8_SOLENOID_ELECTRICAL_AT_PASSED
+};
+
+
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+
+
+/**
+ * \brief
+ *       This array holds the buckle latch confirmation mask of each solenoid based on what
+ *       flag to check.
+ * \initialization
+ *       {KU64_SOLENOID_X_BUCKLE_LATCHED}
+ *       where X - the solenoid number
+ *
+ * \range
+ *       0..KU64_MAX.
+ */
+LOCAL const uint64 sad_kau64SolenoidBuckleStatusMask[KU8_MAX_SOLENOID_NB] =
+{
+   /* Solenoid 1 */ (KU64_SOLENOID_1_BUCKLE_LATCHED),
+   /* Solenoid 2 */ (KU64_SOLENOID_2_BUCKLE_LATCHED),
+   /* Solenoid 3 */ (KU64_SOLENOID_3_BUCKLE_LATCHED),
+   /* Solenoid 4 */ (KU64_SOLENOID_4_BUCKLE_LATCHED),
+   /* Solenoid 5 */ (KU64_SOLENOID_5_BUCKLE_LATCHED),
+   /* Solenoid 6 */ (KU64_SOLENOID_6_BUCKLE_LATCHED)
+};
+
+/**
+ *\brief
+ *      Interpolation table for solenoid resistance.
+ *      USED IN CALCULATION OF SOLENOID VOLTAGE THRSH BASED ON A SPECIFIC RESISTANCE.
+ *      INPUT: RESISTANCE, OUTPUT: VOLTAGE
+ */
+LOCAL const stInterpolationParam_Type sad_kstLookUpTableREStoOVDiagThrsh = {
+   (const uint8*)(&NVP_as16SolenoidRes[KU8_ZERO]), /* x_table: vector with axis values */
+   (const uint8*)(&NVP_au16SolenoidDiagOvervoltageThrs[KU8_ZERO]), /* y_table: vector with axis values */
+   KU8_SAD_NB_OF_INTERPOLATION_POINTS,
+   KU8_X16_LIndian | KU8_Y16_LIndian,
+   KU8_IN_RANGE_LINEAR_INTER | KU8_BELOW_RANGE_UPPER_INTER | KU8_OVER_RANGE_LOWER_INTER
+};
+
+/**
+ *\brief
+ *      Interpolation table for solenoid resistance.
+ *      USED IN CALCULATION OF SOLENOID VOLTAGE THRSH BASED ON A SPECIFIC RESISTANCE.
+ *      INPUT: RESISTANCE, OUTPUT: VOLTAGE
+ */
+LOCAL const stInterpolationParam_Type sad_kstLookUpTableREStoOVUnlockThrsh = {
+   (const uint8*)(&NVP_as16SolenoidRes[KU8_ZERO]), /* x_table: vector with axis values */
+   (const uint8*)(&NVP_au16SolenoidUnlockOvervoltageThrs[KU8_ZERO]), /* y_table: vector with axis values */
+   KU8_SAD_NB_OF_INTERPOLATION_POINTS,
+   KU8_X16_LIndian | KU8_Y16_LIndian,
+   KU8_IN_RANGE_LINEAR_INTER | KU8_BELOW_RANGE_UPPER_INTER | KU8_OVER_RANGE_LOWER_INTER
+};
+
+#define SAD_STOP_SEC_CONST_UNSPECIFIED_ASIL_A
+#include "SAD_MemMap.h"
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/**
+* \brief
+*        Auto-test to check an open circuit fault on the required solenoid.
+* \inputparam
+*        Name: ku8SolenoidId;
+*        Type: const uint8;
+*        Description: The ID of the solenoid;
+*        Range: KU8_SOLENOID_1..KU8_SOLENOID_6;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        The result of auto-test.
+* \dynamicaspectcaller
+*        SAD_CheckSolenoidOpenCircuitAutotest
+* \dynamicaspectdescription
+*        API called by SAD_CheckSolenoidOpenCircuitAutotest.
+* \constraints
+*        It is called just for enabled solenoids and just if the ADC auto-test
+*        is OK.
+* \ddesignrequirement
+*        DSG_sad_ExecuteOpenCircuitCheck
+* \archrequirement
+*        ARCH_SW_SAD_pclAutotestServices
+*        ARCH_SW_SAD_prrSolenoidProfile
+*        ARCH_SW_SAD_pclConvAdcService
+**/
+LOCAL u8TestResultType sad_ExecuteOpenCircuitCheck(const uint8 ku8SolenoidId)
+{
+   Read the selected profiles;
+
+   Set the coresponding bit of the curent solenoid to logic '1' in SolenoidUsedBitMask;
+
+   if ((The selected profile is UNLOCK or BACKUP) AND (The infinite step was NOT reached for this profiles) AND
+       (The curent executed step is not Step_FIVE or UNDEFINED))
+   {
+      Measure voltage across solenoid;
+      Mesure the BOOST voltage;
+
+      Compute the Voltage threshold;
+
+      if (The Solenoid voltage is grater than threshold)
+      {
+         Set the result of auto-test as NOK;
+         Set the result of Open Circuit error for current solenoid to FAILED;
+      }
+      else
+      {
+         Set the result of auto-test as OK;
+         Set the result of Open Circuit error for current solenoid to FAILED;
+      }
+   }   
+   else if ((The selected profile is UNLOCK or BACKUP) AND (The infinite step was reached for current solenoid))
+   {
+      Measure voltage across solenoid;
+      Measure battery voltage;
+
+      Compute plateau for checking voltage;
+
+      if (The Solenoid voltage is greater than the specific threshold)
+      {
+         Set the result of auto-test as NOK;
+         Set the result of Open Circuit error for current solenoid to FAILED;
+      }
+      else
+      {
+         Set the result of auto-test as OK;
+         Set the result of Open Circuit error for current solenoid to PASSED;
+      }
+   }
+   else if ((The profile is DIAGNOSTIC) AND (The current step is not UNDEFINED))
+   {
+      Measure voltage across solenoid;
+      Mesure the BOOST voltage;
+
+      Compute plateau for checking voltage;
+
+      if (The Solenoid voltage is greater than the specific threshold)
+      {
+         Set the result of auto-test as ONK;
+         Set the result of Open Circuit error for current solenoid to FAILED;
+      }
+      else
+      {
+         Set the result of auto-test as OK;
+         Set the result of Open Circuit error for current solenoid to PASSED;
+      }
+   }
+   else
+   {
+      Read last state of auto-test;
+   }
+
+   return the auto-test status;
+}
+
+/**
+* \brief
+*        Auto-test to check a short-to-ground fault on the required solenoid.
+* \inputparam
+*        Name: ku8SolenoidId;
+*        Type: const uint8;
+*        Description: The ID of the solenoid;
+*        Range: KU8_SOLENOID_1..KU8_SOLENOID_6;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        The result of auto-test.
+* \dynamicaspectcaller
+*        SAD_CheckSolenoidShortToGNDAutotest
+* \dynamicaspectdescription
+*        API called by SAD_CheckSolenoidShortToGNDAutotest.
+* \constraints
+*        It is called just for enabled solenoids and just if the ADC auto-test
+*        is OK.
+* \ddesignrequirement
+*        DSG_sad_ExecuteShortToGNDCheck
+* \archrequirement
+*        ARCH_SW_SAD_pclAutotestServices
+*        ARCH_SW_SAD_prrSolenoidProfile
+*        ARCH_SW_SAD_pclConvAdcService
+**/
+LOCAL u8TestResultType sad_ExecuteShortToGNDCheck(const uint8 ku8SolenoidId)
+{
+   Read the selected profiles;
+
+   if ((If the selected profile is UNLOCK or BACKUP) AND (The current step is NOT Step 5 or UNDEFINED))
+   {
+      Measure voltage across solenoid;
+
+      if (The voltage is above a threshold)
+      {
+        Set the result of auto-test as OK;
+        Set the result of Short to GND error for current solenoid to PASSED;
+      }
+      else
+      {
+        Set the result of auto-test as NOK;
+         Set the result of Short to GND error for current solenoid to FAILED;
+      }
+   }   
+   else if (The profile is DIAGNOSTIC)
+   {
+      Measure voltage across solenoid;
+
+      if (The voltage is equal or above a specific threshold)
+      {
+        Set the result of auto-test as OK;
+        Set the result of Short to GND error for current solenoid to PASSED;
+      }
+      else
+      {
+        Set the result of auto-test as NOK;
+        Set the result of Short to GND error for current solenoid to FAILED;
+      }
+   }
+   else
+   {
+      Read last state of auto-test;
+   }
+
+   return the auto-test status;
+}
+
+/**
+* \brief
+*        Auto-test to check a short to VBAT fault on the required solenoid.
+* \inputparam
+*        Name: ku8SolenoidId;
+*        Type: const uint8;
+*        Description: The ID of the solenoid;
+*        Range: KU8_SOLENOID_1..KU8_SOLENOID_6;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        The result of auto-test.
+* \dynamicaspectcaller
+*        SAD_CheckSolenoidShortToVBATAutotest
+* \dynamicaspectdescription
+*        API called by SAD_CheckSolenoidShortToVBATAutotest.
+* \constraints
+*        It is called just for enabled solenoids and just if the ADC auto-test
+*        is OK.
+* \ddesignrequirement
+*        DSG_sad_ExecuteShortToVBATCheck
+* \archrequirement
+*        ARCH_SW_SAD_pclAutotestServices
+*        ARCH_SW_SAD_prrSolenoidProfile
+*        ARCH_SW_SAD_pclConvAdcService
+**/
+LOCAL u8TestResultType sad_ExecuteShortToVBATCheck(const uint8 ku8SolenoidId)
+{
+   Read the selected profiles;
+
+   if (LOCK profile is running)
+   {
+      if((The solenoid is not in open circuit) AND (The soleonoid is not in over-voltage))
+      {
+         Measure voltage across VBAT;
+         Compute plateau for checking voltage;
+         Measure voltage across solenoid;
+
+         if (The solenoid voltage is between the specific thresholds)
+         {
+            Set the result of auto-test as NOK;
+            Set the result of Short to VBAT error for current solenoid to FAILED;
+         }
+         else
+         {
+            Set the result of auto-test as OK;
+            Set the result of Short to VBAT error for current solenoid to PASSED;
+         }
+      }
+      else
+      {
+         Read last state of auto-test;
+      }
+   }
+   else
+   {
+      Read last state of auto-test;
+   }
+
+   return the auto-test status;
+}
+
+/**
+* \brief
+*        Auto-test to check an pin state fault on the required solenoid.
+* \inputparam
+*        Name: ku8SolenoidId;
+*        Type: const uint8;
+*        Description: The ID of the solenoid;
+*        Range: KU8_SOLENOID_1..KU8_SOLENOID_6;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        The result of auto-test.
+* \dynamicaspectcaller
+*        SAD_CheckPowerStage
+* \dynamicaspectdescription
+*        API called by SAD_CheckPowerStage.
+* \constraints
+*        It is called just for enabled solenoids and just if the ADC auto-test
+*        is OK.
+* \ddesignrequirement
+*        DSG_sad_ExecutePinStateCheck
+* \archrequirement
+*        ARCH_SW_SAD_prrSolenoidProfile
+*        ARCH_SW_SAD_pclAutotestServices
+*        ARCH_SW_SAD_pclDioIfServices
+**/
+
+LOCAL u8TestResultType sad_ExecutePinStateCheck(const uint8 ku8SolenoidId)
+{
+   Read the selected profiles;
+   Read the states of solenoids; 
+
+   for(Each solenoid)
+   {
+      if((Active profile is LOCK) AND (The solenoid is configured))
+      {
+         Set to logic '1' in profile mask variable at the position of the corresponding solenoid number;
+      }
+      if((Solenoid state is DISABLED) AND (The solenoid is configured))
+      {
+         Set to logic '1' in Solenoid disabled mask variable at the position of the corresponding solenoid number;
+      }
+   }
+   if ((The selected profile is UNLOCK or BACKUP) AND (The infinite step was reached for all Configured and not disabled solenoids))
+   {
+      Read state of the ON_OFF_POWER pin;
+      Read state of the EN_BOOST pin;
+      Read state of the EN_CS pin of current solenoid;
+
+      if ((The solenoid control circuit is activated (HIGH)) AND (The boost is turned off(LOW)) AND (The hardware solenoid circuit is enabled(LOW)))
+      {
+         Set the result of auto-test as OK;
+         Set the result of Solenoid eroor on Pin for current solenoid to PASSED;
+      }
+      else
+      {
+         Set the result of auto-test as NOK;
+         Set the result of Solenoid eroor on Pin for current solenoid to FAILED;
+      }
+   }
+
+   else if((The profile is DIAGNOSTIC) AND (The current executed step is not UNDEFINED))
+   {
+      Read state of the ON_OFF_POWER pin;
+      Read state of the EN_BOOST pin;
+      Read state of the EN_CS pin;
+
+      if ((The solenoid control circuit is activated (HIGH)) AND (The boost is turned on(HIGH)) AND (The hardware solenoid circuit is enabled(LOW)))
+      {
+         Set the result of auto-test as OK;
+         Set the result of Solenoid eroor on Pin for current solenoid to PASSED;
+      }
+      else
+      {
+         Set the result of auto-test as NOK;
+         Set the result of Solenoid eroor on Pin for current solenoid to FAILED;
+      }
+   }
+
+   else if(Profile is lock for all configured solenoids)
+   {
+      Read state of the ON_OFF_POWER pin;
+      Read state of the EN_BOOST pin;
+      Read state of the EN_CS pin;
+
+      if ((The solenoid control circuit is disabled (LOW)) AND (The boost is turned on(HIGH)) AND (The hardware solenoid circuit is disabled(HIGH)))
+      {
+         Set the result of auto-test as OK;
+         Set the result of Solenoid eroor on Pin for current solenoid to PASSED;
+      }
+      else 
+      {
+         Set the result of auto-test as NOK;
+         Set the result of Solenoid eroor on Pin for current solenoid to FAILED;
+      }
+   }
+   else
+   {
+      Read last state of auto-test;
+   }
+
+   return the auto-test status;
+}
+
+/**
+* \brief
+*        Auto-test to check an overvoltage fault on the required solenoid.
+* \inputparam
+*        Name: ku8SolenoidId;
+*        Type: const uint8;
+*        Description: The ID of the solenoid;
+*        Range: KU8_SOLENOID_1..KU8_SOLENOID_6;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        The result of auto-test.
+* \dynamicaspectcaller
+*        SAD_CheckSolenoidOvervoltage
+* \dynamicaspectdescription
+*        API called by SAD_CheckSolenoidOvervoltage.
+* \constraints
+*        It is called just for enabled solenoids and just if the ADC auto-test
+*        is OK.
+* \ddesignrequirement
+*        DSG_sad_ExecuteOvervoltageCheck
+* \archrequirement
+*        ARCH_SW_SAD_pclAutotestServices
+*        ARCH_SW_SAD_prrSolenoidProfile
+*        ARCH_SW_SAD_pclConvAdcService
+**/
+
+LOCAL u8TestResultType sad_ExecuteOvervoltageCheck(const uint8 ku8SolenoidId)
+{
+   Read the selected profiles;
+
+   Set the coresponding bit of the curent solenoid to logic '1' in SolenoidUsedBitMask;
+
+   if (The soleloid passed the short to GND autotest)
+   {
+      if((The selected profile is UNLOCK or BACKUP) AND (The current solenoid reached infinite step))
+      {
+         Read solenoid voltate;
+         Read solenoid current;
+
+         Compute Solenoid Resistance in milliohms;
+         Compute Solenoid Voltage treshold;
+
+         if(The solenoid voltage is below the specific trehhold)
+         {
+            Set the reult of the auto-test to OK;
+            Set the result of Overvoltage present errror to PASSED;
+         }
+         else
+         {
+            Set the result of the auto-test to NOK;
+            Set the result of Overvoltage present error to FAILED;
+         }
+      }
+      else if((The profile is DIAGNOSTIC) AND (The current executed step is not UNDEFINED))
+      {
+         Read solenoid voltate;
+         Read solenoid current;
+
+         Compute Solenoid Resistance in milliohms;
+         Compute Solenoid Voltage treshold;
+
+         if(the solenoid voltage is below the specific trehhold)
+         {
+            Set the reult of the auto-test to OK;
+            Set the result of Overvoltage present errror to PASSED;
+         }
+         else
+         {
+            Set the result of the auto-test to NOK;
+            Set the result of Overvoltage present error to FAILED;
+         }
+      }
+      else
+      {
+         Read the last state of the auto-test;
+      }
+   }
+   else
+   {
+      Read the last state of the auto-test;
+   }
+   return the auto-test status;
+}
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+/**
+* \brief
+*        The function used to check each enabled solenoid if the maximum number
+*        of retries was reached as an effect of trying to perform unlock profile
+*        without unlock confirmation.
+* \outputparam
+*        Name: pu8TestResult;
+*        Type: u8TestResultType *;
+*        Description: The result of the auto-test;
+*        Range:
+*            KU8_ATM_TEST_OK
+*            KU8_ATM_TEST_NOK
+*            KU8_ATM_TEST_NOT_DECIDED;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM_runMainFunction
+* \dynamicaspectdescription
+*        API called by ATM_runMainFunction.
+* \constraints
+*        Called from ATM_runMainFunction at each 10ms based on how is set in
+*        RunningCyclicList.
+* \ddesignrequirement
+*        DSG_SAD_checkActuatorState
+* \archrequirement
+*        ARCH_SW_SAD_pseCheckActuatorState_SAD_checkActuatorState
+*        ARCH_SW_SAD_prrSolenoidStuckStatus_SAD_checkActuatorState
+*        ARCH_SW_SAD_pclModeManagement
+**/
+EXPORTED void SAD_checkActuatorState(u8TestResultType * pu8TestResult)
+{
+   Read solenoid stuck status;
+
+   for (Each solenoid)
+   {
+      Read the buckle status;
+      
+      if ((The current solenoid is stuck) AND (The buckle is latched) AND (Solenoid is configured))
+      {
+         Set the coresponding bit of the curent solenoid to logic '1' in ActuatorStuck bitmask variable
+         representing the solenoid is stuck;
+      }
+      else
+      {
+         Clear the coresponding bit of the curent solenoid to logic '0' in ActuatorStuck bitmask variable
+         representing the solenoid is not stuck;
+      }
+   }
+
+   if(All solenoids are not stuck)
+   {
+      Set the result of auto-test to OK;
+   }
+   else
+   {
+      Set the result of auto-test to NOK;
+   }
+}
+
+
+/**
+* \brief
+*        Auto-test to check an open circuit fault on each solenoid circuit.
+* \outputparam
+*        Name: pu8TestResult;
+*        Type: u8TestResultType * (uint8 *);
+*        Description: The result of the auto-test;
+*        Range:
+*           KU8_ATM_TEST_OK
+*           KU8_ATM_TEST_NOK
+*           KU8_ATM_TEST_NOT_DECIDED;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM_runMainFunction
+* \dynamicaspectdescription
+*        API called by ATM_runMainFunction.
+* \constraints
+*        ADC peripheral must be initialized.
+*        Called from ATM_runMainFunction at each 100ms based on how is set in
+*        RunningCyclicList.
+* \ddesignrequirement
+*        DSG_SAD_CheckSolenoidOpenCircuitAutotest
+* \archrequirement
+*        ARCH_SW_SAD_psrSolenoidOpenCircutStatus
+*        ARCH_SW_SAD_pclAutotestServices
+*        ARCH_SW_SAD_pclModeManagement
+*        ARCH_SW_SAD_pclEvtActuatorOpenCircuit
+*        ARCH_SW_SAD_pseCheckSolenoidOpenCircuit_SAD_CheckSolenoidOpenCircuitAutotest
+*        ARCH_SW_SAD_psrSolenoidOpenCircutStatus_SAD_CheckSolenoidOpenCircuitAutotest
+**/
+EXPORTED void SAD_CheckSolenoidOpenCircuitAutotest(u8TestResultType * pu8TestResult)
+{
+   Get ADC auto-test result;
+
+   if (If ADC auto-test is OK)
+   {
+      for(Each solenoid)
+      {
+         if(The solenoid is configured)
+         {
+            Increment the number of configured solenoids;
+            Solenoid_OC_Result = sad_ExecuteOpenCircuitCheck(u8SolenoidIdx);
+
+            if(The current solenoid is not in open circuit)
+            {
+               Increment auto-test pass counter;
+            }
+            else if(The current solenoid auto-test is NOT_DECIDED)
+            {
+               Increment auto-test not decided counter;
+            }
+            else
+            {
+               The counters will not be incremented;
+            }
+         }
+      }
+
+      if(All configured solenoids have passed the auto-test)
+      {
+        Set the result of auto-test to OK;
+        Write Open Circuit error status per every solenoid;
+      }
+      else if(All configured solenoids returned NOT_DECIDED)
+      {
+        Set the result of auto-test to NOT_DECIDED;
+        Write Open Circuit error status per every solenoid;
+      }
+      else if(All configured solenoids were tested)
+      {
+        Set the result of auto-test to NOT_DECIDED;
+        Write Open Circuit error status per every solenoid;
+      }
+      else
+      {
+         Get the Open Circuit DTC;
+
+         if (The open circuit Event has been qualified)
+         {
+            Write Open Circuit error status per every solenoid;
+         }
+         Set the result of auto-test to NOK;
+      }
+   }
+   else
+   {
+      Set the result of auto-test to NOT_DECIDED;
+   }
+}
+
+/**
+* \brief
+*        Auto-test to check a short-to-ground fault on each solenoid circuit.
+* \outputparam
+*        Name: pu8TestResult;
+*        Type: u8TestResultType * (uint8 *);
+*        Description: The result of the auto-test;
+*        Range: 
+*           KU8_ATM_TEST_OK
+*           KU8_ATM_TEST_NOK
+*           KU8_ATM_TEST_NOT_DECIDED;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM_runMainFunction
+* \dynamicaspectdescription
+*        API called by ATM_runMainFunction.
+* \constraints
+*        ADC peripheral must be initialized.
+*        Called from ATM_runMainFunction at each 100ms based on how is set in
+*        RunningCyclicList.
+* \ddesignrequirement
+*        DSG_SAD_CheckSolenoidShortToGNDAutotest
+* \archrequirement
+*        ARCH_SW_SAD_psrSolenoidShortToGndStatus
+*        ARCH_SW_SAD_pclAutotestServices
+*        ARCH_SW_SAD_pclModeManagement
+*        ARCH_SW_SAD_pclEvtActuatorShortToGround
+*        ARCH_SW_SAD_pseCheckSolenoidShortToGND_SAD_CheckSolenoidShortToGNDAutotest
+*        ARCH_SW_SAD_psrSolenoidShortToGndStatus
+**/
+EXPORTED void SAD_CheckSolenoidShortToGNDAutotest(u8TestResultType * pu8TestResult)
+{
+   Get ADC auto-test result;
+
+   if (If ADC auto-test is OK)
+   {
+      for(Each solenoid)
+      {
+         if(The solenoid is configured)
+         {
+            Increment the number of configured solenoids;
+            Solenoid_Short_to_GND_Result = sad_ExecuteShortToGNDCheck(u8SolenoidIdx);
+
+            if(The current solenoid is not shorted to GND)
+            {
+               Increment auto-test pass counter;
+            }
+            else if(The current solenoid auto-test is NOT_DECIDED)
+            {
+               Increment auto-test not decided counter;
+            }
+            else
+            {
+               The counters will not be incremented;
+            }
+         }
+         else
+         {
+            Set the auto-test as OK if the solenoid is not configured;
+         }
+      }
+
+      if(All configured solenoids have passed the auto-test)
+      {
+        Set the result of auto-test to OK;
+        Write Short to GND error status per every solenoid;
+      }
+      else if(All configured solenoids returned NOT_DECIDED )
+      {
+        Set the result of auto-test to NOT_DECIDED;
+        Write Short to GND error status per every solenoid;
+      }
+      else if(All configured solenoids were tested)
+      {
+        Set the result of auto-test to NOT_DECIDED;
+        Write Short to GND error status per every solenoid;
+      }
+      else
+      {
+         Get the Short to GND DTC;
+
+        if (The Short to GND Event has been qualified)
+        {
+           Write Short to GND error status per every solenoid;
+        }
+        
+        Set the result of auto-test to NOK;
+      }
+   }
+   else
+   {
+      Set the result of auto-test to NOT_DECIDED;
+   }
+}
+
+/**
+* \brief
+*        Auto-test to check a short to VBAT fault on each solenoid circuit.
+* \inputparam
+*        None;
+* \outputparam
+*        Name: pu8TestResult;
+*        Type: u8TestResultType * (uint8 *);
+*        Description: The result of the auto-test;
+*        Range:
+*            KU8_ATM_TEST_OK
+*            KU8_ATM_TEST_NOK
+*            KU8_ATM_TEST_NOT_DECIDED;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM_runMainFunction
+* \dynamicaspectdescription
+*        API called by ATM_runMainFunction.
+* \constraints
+*        ADC peripheral must be initialized.
+*        Called from ATM_runMainFunction at each 100ms based on how is set in
+*        RunningCyclicList.
+* \ddesignrequirement
+*        DSG_SAD_CheckSolenoidShortToGNDAutotest
+* \archrequirement
+*        ARCH_SW_SAD_psrSolenoidShortToVccStatus
+*        ARCH_SW_SAD_pclAutotestServices
+*        ARCH_SW_SAD_pclModeManagement
+*        ARCH_SW_SAD_pclEvtActuatorShortToVbat
+*        ARCH_SW_SAD_pseCheckSolenoidShortToVBAT_SAD_CheckSolenoidShortToVBATAutotest
+**/
+EXPORTED void SAD_CheckSolenoidShortToVBATAutotest(u8TestResultType * pu8TestResult)
+{
+   Get ADC auto-test result;
+
+   if (If ADC auto-test is OK)
+   {
+      for(Each solenoid)
+      {
+         if(The solenoid is configured)
+         {
+            Increment the number of configured solenoids;
+            Solenoid_Short_to_VBAT_Result = sad_ExecuteShortToVBATCheck(u8SolenoidIdx);
+
+            if(The current solenoid is not shorted to VBAT)
+            {
+               Increment auto-test pass counter;
+            }
+            else if(The current solenoid auto-test is NOT_DECIDED)
+            {
+               Increment auto-test not decided counter;
+            }
+            else
+            {
+               The counters will not be incremented;
+            }
+         }
+      }
+
+      if(All configured solenoids have passed the auto-test)
+      {
+         Set the result of auto-test to OK;
+         Write Short to VBAT error status per every solenoid;
+      }
+      else if(All configured solenoids returned NOT_DECIDED)
+      {
+         Set the result of auto-test to NOT_DECIDED;
+         Write Short to VBAT error status per every solenoid;
+      }
+      else if(All configured solenoids were tested)
+      {
+         Set the result of auto-test to NOT_DECIDED;
+         Write Short to VBAT error status per every solenoid;
+      }
+      else
+      {
+         Get the Short to VBAT DTC;
+
+         if (The Short to VBAT Event has been qualified)
+         {
+            Write Short to VBAT error status per every solenoid;
+         }
+         Set the result of auto-test to NOK;
+      }
+   }
+   else
+   {
+      Set the result of auto-test to NOT_DECIDED;
+   }
+}
+
+/**
+* \brief
+*        Auto-test to check that the power stage is functioning correctly.
+* \outputparam
+*        Name: pu8TestResult;
+*        Type: u8TestResultType * (uint8 *);
+*        Description: The result of the auto-test;
+*        Range:
+*           KU8_ATM_TEST_OK
+*           KU8_ATM_TEST_NOK
+*           KU8_ATM_TEST_NOT_DECIDED;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM_runMainFunction
+* \dynamicaspectdescription
+*        API called by ATM_runMainFunction.
+* \constraints
+*        ADC peripheral must be initialized.
+*        Called from ATM_runMainFunction at each 100ms based on how is set in
+*        RunningCyclicList.
+* \ddesignrequirement
+*        DSG_SAD_CheckPowerStage
+* \archrequirement
+*        ARCH_SW_SAD_pseCheckPowerStage_SAD_CheckPowerStage
+*        ARCH_SW_SAD_pclModeManagement
+*        ARCH_SW_SAD_pclDioIfServices
+**/
+EXPORTED void SAD_CheckPowerStage (u8TestResultType *pu8TestResult)
+{
+   for(Each solenoid)
+   {
+      if(Solenoid is configured)
+      {
+         Increment the number of configured solenoids;
+         u8IndividualSolenoidAutotestResult = sad_ExecutePinStateCheck(u8SolenoidIdx);
+
+         if(The power stage of the current solenoid is OK)
+         {
+            Increment the auto-test pass counter;
+         }
+         else if (The power stage of the current solenoid is NOT_DECIDED)
+         {
+            Increment the auto-test not decided counter;
+         }
+         else
+         {
+            If the auto-test has failed, the counters will not be incremented;
+         }
+      }
+   }
+
+      if(All configured solenoids have passed the auto-test)
+      {
+         Set the result of the auto-test to OK;
+      }
+
+      else if(All configured solenoids have returned NOT_DECIDED)
+      {
+         Set the result of the auto-test to NOT_DECIDED;
+      }
+      else if(All configured solenoids were tested and the result was PASS or NOT_DECIDED)
+      {
+         Set the result of the auto-test to NOT_DECIDED;
+      }
+      else
+      {
+         Set the result of the auto-test to NOK;
+      }
+}
+
+/**
+* \brief
+*        Auto-test to check that no overvoltage condition is present on the solenoids.
+* \outputparam
+*        Name: pu8TestResult;
+*        Type: u8TestResultType * (uint8 *);
+*        Description: The result of the auto-test;
+*        Range: 
+*           KU8_ATM_TEST_OK
+*           KU8_ATM_TEST_NOK
+*           KU8_ATM_TEST_NOT_DECIDED;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM_runMainFunction
+* \dynamicaspectdescription
+*        API called by ATM_runMainFunction.
+* \constraints
+*        ADC peripheral must be initialized.
+*        Called from ATM_runMainFunction at each 100ms based on how is set in
+*        RunningCyclicList.
+* \ddesignrequirement
+*        DSG_SAD_CheckSolenoidOvervoltage
+* \archrequirement
+*        ARCH_SW_SAD_pseCheckSolenoidOvervoltage_SAD_CheckSolenoidOvervoltage
+*        ARCH_SW_SAD_psrSolenoidOvervoltageStatus
+*        ARCH_SW_SAD_pclEvtSolenoidOvervoltage
+*        ARCH_SW_SAD_pclAutotestServices
+*        ARCH_SW_SAD_pclModeManagement
+**/
+EXPORTED void SAD_CheckSolenoidOvervoltage (u8TestResultType *pu8TestResult)
+{
+
+   Get ADC auto-test result;
+  
+   if(If ADC autotest is OK)
+   {
+      for(Each solenoid)
+      {
+         if(The solenoid is configured)
+         {
+            Increment number of configured solenoids;
+            u8IndividualSolenoidAutotestResult = sad_ExecuteOvervoltageCheck(u8SolenoidIdx);
+
+            if(The over-voltage status of the current solenoid is OK)
+            {
+               Increment auto-test pass counter;
+            }
+            else if(The over-voltage status of the current solenoid is NOT_DECIDED)
+            {
+               Increment auto-test not decided counter;
+            }
+            else
+            {
+               The counters will not be incremented;
+            }
+         }
+      }
+
+      if(All configured solenoids have passed the auto-test)
+      {
+         Set the result of auto-test to OK;
+         Write Solenoid Overvoltage error status per every solenoid;
+      }
+      else if(All configured solenoids were returned NOT_DECIDED)
+      {
+         Set the result of auto-test to NOT_DECIDED;
+         Write Solenoid Overvoltage error status per every solenoid;
+      }
+      else if(All configured solenoids were tested)
+      {
+         Set the result of auto-test to NOT_DECIDED;
+         Write Solenoid Overvoltage error status per every solenoid;
+      }
+      else
+      {
+         Read overvoltage status;
+
+         if(The over-voltage event has been qualified)
+         {
+            Write Solenoid Overvoltage error status per every solenoid;
+         }
+         
+         Set the result of auto-test to NOK;
+      }
+   }
+   else
+   {
+      Set the result of auto-test to NOT_DECIDED;
+   }
+}
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

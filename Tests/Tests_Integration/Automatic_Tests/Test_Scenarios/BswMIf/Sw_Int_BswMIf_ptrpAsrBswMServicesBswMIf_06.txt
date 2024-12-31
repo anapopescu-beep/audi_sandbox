@@ -1,0 +1,48 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromLowPwrPassengerDetected
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromLowPwrPassengerDetected: The BswM_OnRunFromLowPwrPassengerDetected runnable shall be called by the Autosar BswM in case of: - The current state of ECU is LOW POWER AND an Active wakeup is detected {passenger occupancy detected}.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromLowPwrPassengerDetected
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to change post run timer value 
+		Expected result:  BP was set
+
+	Step 5: Change value for Post Run Timer in order to go in LPM_sleepMainLoop function 
+		Expected result:  Succesfully changed
+
+	Step 6: Set a BP in function LPM_sleepMainLoop in order to change Adc Wakeup value 
+		Expected result:  BP was set
+
+	Step 7: Change value for Adc wakeup in True 
+		Expected result:  Succesfully changed
+
+	Step 8: Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromLowPwr_ActiveWake in order to call BswM_OnRunFromLowPwrPassengerDetected function 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function BswM_OnRunFromLowPwrPassengerDetected in order to check Bus if Current state of ECU is RUN AND Bus communication timeout was received 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromLowPwr_ActiveWake in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 11: Return ECU to default values

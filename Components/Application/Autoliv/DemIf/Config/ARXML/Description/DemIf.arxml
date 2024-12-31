@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2023-04-28T09:37:53+03:00">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2015-09-29T16:42:13+02:00">
+              <SHORT-NAME>DemIf</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2023-05-11T10:28:21+03:00">
+                  <SHORT-NAME>DemIf</SHORT-NAME>
+                  <CATEGORY>BSW_System_Services</CATEGORY>
+                  <PORTS>
+                    <P-PORT-PROTOTYPE T="2023-05-11T10:29:31+03:00" UUID="659007e6-136a-41a6-8a39-2b88fd39ef61">
+                      <SHORT-NAME>pseDemIfEventServices</SHORT-NAME>
+                      <DESC T="2023-05-11T10:29:13+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_Dem_GetEventDebounceTime&#xD;
+&#xD;
+&#xD;
+# Description&#xD;
+- Interface is used to read the counter value which should be reached in order to set the event as PASSED;&#xD;
+- Interface will provide the {Event_ID} as input and will retrieve the {Counter_Value} of the corresponding event;&#xD;
+&#xD;
+&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+	-  {Event_ID}: The ID of event;&#xD;
+## Outputs:&#xD;
+	- {Counter_Value}: value of the Pass confirmation counter;&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- Dem_GetEventDebounceTime&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-05-11T10:30:03+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T10:54:51+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-05-11T10:29:14.965+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION T="2023-05-11T10:30:03+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Add new port interface</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:41:04+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T10:54:51+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2023-05-11T10:28:21+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/DemIf_DataDictionary/ClientServerInterfaces/icsDemIfEventServices/GetCounterPassedThreshold</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/DemIf_DataDictionary/ClientServerInterfaces/icsDemIfEventServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-21T20:28:55+02:00" UUID="e37e4f55-6c81-4de8-a406-4cb82f7d1f7e">
+                      <SHORT-NAME>ptrpAsrDemServicesDemIf</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_DemIf_ptrpAsrDemServices&#xD;
+&#xD;
+# Description&#xD;
+	- The callback shall be called by Dem in order to signal the fact that an event status has changed&#xD;
+	- The runnable shall report the {New Event Status} and {Old Event Status} for the Dem {Event Id}&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Event Id}&#xD;
+	- {Old Event Status}&#xD;
+	- {New Event Status}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- Dem_Callback_EventStatusChanged&#xD;
+&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:41:03+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T10:55:47+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T20:28:45.920+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">change for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">_InReviewByDesignTeam</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:41:03+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T10:55:47+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrDemServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

@@ -1,0 +1,49 @@
+1. Example Description
+    This application demonstrates the usage of a subset of Real Time Drivers that are included in this code drop. It is not part of the production code deliverables.
+    The application includes a Design Studio project, that uses predefined configurations for the FTFC IP layer and uses the its APIs to erase, write, read, compare the external flash.
+    1.1 The application software functionality
+            - sys_init
+                    Initialize the clock sources, the clock tree and to configure the clock gating of the peripherals.
+            - Ftfc_Fls_Ip_Init
+                    Initializes the flashFtfc_Fls driver.
+            - Ftfc_Fls_Ip_SectorErase,Ftfc_Fls_Ip_SectorEraseStatus
+                    Erase flash memory and check status of erase operation.
+            - Ftfc_Fls_Ip_Write,Ftfc_Fls_Ip_WriteStatus
+                    Write to internal flash memory and check status of write operation.
+            - Ftfc_Fls_Ip_Read, Ftfc_Fls_Ip_Compare
+                    Read and compare data in internal flash.
+
+2. Installation steps
+    2.1 Hardware installation
+        2.1.1 Supported boards
+            - S32K144EVB-Q100 PCB 29248 RevA SCH RevC
+        2.1.2 Connections
+            - Power Adapter 12V (J107.2 - J107.3) or micro-USB (J107.1 - J107.2)
+        2.1.3 Debugger
+            - PnE debugger on board is used. The micro-USB must be connected to J7 (USB port)
+    2.2 Software installation
+        2.2.1 Importing the S32 Design Studio project
+            - After opening S32 Design Studio, go to "File -> New -> S32DS Project From Example" select this example. Then click on "Finish".
+            - The project should now be copied into your current workspace.
+
+3. Generating, building and running the example application
+    3.1 Generating the S32 configuration
+        - Before running the example, a configuration needs to be generated.
+        - First go to Project Explorer View in S32 DS and select the current project.
+        - Select the "S32 Configuration Tool" menu then click on the desired configuration tool (Pins, Clocks, Peripherals, etc).
+        - Clicking on any one of those will generate all the components.
+        - Make the desired changes (if any) then click on the "S32 Configuration Tool -> Update Code" button.
+    3.2 Compiling the application
+        - Select the configuration to be built: Debug_FLASH by left clicking on the downward arrow corresponding to the build button in eclipse.
+        - Use Project > Build to build the project.
+        - Wait for the build action to be completed before continuing to the next step.
+        - Check the compiler console for error messages; upon completion, the *.elf binary file should be created.
+    3.2 Running the application on the board
+        - Go to Run and select Debug Configurations. There will be a debug configuration for this project:
+
+            Configuration Name                              Description
+            -------------------------------                 -----------------------
+            Ftfc_Ip_Example_S32K144_Debug_FLASH_PNE         Debug the FLASH configuration using S32Debugger
+
+        - Select the desired debug configuration and click on Launch. Now the perspective will change to the Debug Perspective.
+        - Use the controls to control the program flow.

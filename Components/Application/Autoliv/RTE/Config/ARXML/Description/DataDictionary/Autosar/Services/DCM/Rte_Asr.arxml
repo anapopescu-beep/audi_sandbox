@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd" T="2022-08-26T12:36:25+03:00">
+  <AR-PACKAGES>
+    <AR-PACKAGE T="2022-08-26T12:36:41+03:00" UUID="fa1482be-89d9-4301-b258-af546d4bc79b">
+      <SHORT-NAME>EB</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2022-08-26T12:36:41+03:00">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <ELEMENTS>
+            <SERVICE-SW-COMPONENT-TYPE T="2022-08-26T12:36:41+03:00" UUID="DCE:20eecf4e-ebe8-4917-9aff-b1dc92c7c5b5">
+              <SHORT-NAME>Rte</SHORT-NAME>
+              <CATEGORY>ASR_Interfaces</CATEGORY>
+              <PORTS>
+                <P-PORT-PROTOTYPE T="2022-08-28T09:58:01+03:00" UUID="210fb270-1bc5-40d0-9968-a57f4ffb8aec">
+                  <SHORT-NAME>ptrpAsrRteServicesBswMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrRteServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR T="2022-08-26T11:48:07+03:00" UUID="56a21459-cba6-440a-9Rte-0d5b62a594bd">
+                  <SHORT-NAME>Rte_IB</SHORT-NAME>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY T="2022-08-26T11:48:12+03:00" UUID="DCE:b81a37b4-a8c3-4f6a-baf1-7b27bc7cc7f6">
+                      <SHORT-NAME>Rte_Start</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Rte_Start</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:25941025-f5d2-4dae-90d9-e7c62b9865d1">
+                      <SHORT-NAME>Rte_Stop</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Rte_Stop</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </SERVICE-SW-COMPONENT-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <AR-PACKAGE T="2022-08-26T12:36:48+03:00" UUID="83dbf1d3-fd69-4d31-99ba-2a110ed331f7">
+          <SHORT-NAME>TriggerInterfaces</SHORT-NAME>
+          <ELEMENTS>
+            <TRIGGER-INTERFACE T="2022-08-26T12:36:57+03:00">
+              <SHORT-NAME>itrAsrRteServices</SHORT-NAME>
+              <TRIGGERS>
+                <TRIGGER UUID="c88e772a-a976-446f-b79a-0094157abab0">
+                  <SHORT-NAME>Rte_Start</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="25bcafbb-a51d-4def-adc1-af3201b25a39">
+                  <SHORT-NAME>Rte_Stop</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+              </TRIGGERS>
+            </TRIGGER-INTERFACE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

@@ -1,0 +1,2581 @@
+<?xml version='1.0'?>
+<datamodel version="7.0" 
+           xmlns="http://www.tresos.de/_projects/DataModel2/16/root.xsd" 
+           xmlns:a="http://www.tresos.de/_projects/DataModel2/16/attribute.xsd" 
+           xmlns:v="http://www.tresos.de/_projects/DataModel2/06/schema.xsd" 
+           xmlns:d="http://www.tresos.de/_projects/DataModel2/06/data.xsd">
+
+  <d:ctr type="AUTOSAR" factory="autosar" 
+         xmlns:ad="http://www.tresos.de/_projects/DataModel2/08/admindata.xsd" 
+         xmlns:ce="http://www.tresos.de/_projects/DataModel2/18/childenable.xsd" 
+         xmlns:cd="http://www.tresos.de/_projects/DataModel2/08/customdata.xsd" 
+         xmlns:f="http://www.tresos.de/_projects/DataModel2/14/formulaexpr.xsd" 
+         xmlns:icc="http://www.tresos.de/_projects/DataModel2/08/implconfigclass.xsd" 
+         xmlns:mt="http://www.tresos.de/_projects/DataModel2/11/multitest.xsd"  
+         xmlns:variant="http://www.tresos.de/_projects/DataModel2/11/variant.xsd">
+    <d:lst type="TOP-LEVEL-PACKAGES">
+      <d:ctr name="Os" type="AR-PACKAGE">
+        <d:lst type="ELEMENTS">
+          <d:chc name="Os" type="AR-ELEMENT" value="MODULE-CONFIGURATION">
+            <d:ctr type="MODULE-CONFIGURATION">
+              <a:a name="DEF" value="ASPath:/TS_T40D2M6I1R0_AS45/Os"/>
+              <d:ctr name="CommonPublishedInformation" type="IDENTIFIABLE">
+                <d:var name="ArMajorVersion" type="INTEGER" value="4">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="ArMinorVersion" type="INTEGER" value="5">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="ArPatchVersion" type="INTEGER" value="0">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="SwMajorVersion" type="INTEGER" value="6">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="SwMinorVersion" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="SwPatchVersion" type="INTEGER" value="144">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="ModuleId" type="INTEGER" value="0">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="VendorId" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="Release" type="STRING" value="">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+              <d:var name="POST_BUILD_VARIANT_USED" type="BOOLEAN" value="false">
+                <a:a name="IMPORTER_INFO" value="@DEF"/>
+              </d:var>
+              <d:var name="IMPLEMENTATION_CONFIG_VARIANT" type="ENUMERATION" 
+                     value="VariantPreCompile">
+                <a:a name="IMPORTER_INFO" value="@DEF"/>
+              </d:var>
+              <d:lst name="OsAlarm" type="MAP"/>
+              <d:lst name="OsAppMode" type="MAP">
+                <d:ctr name="OSDEFAULTAPPMODE" type="IDENTIFIABLE"/>
+              </d:lst>
+              <d:lst name="OsApplication" type="MAP">
+                <d:ctr name="OsApplication_0" type="IDENTIFIABLE">
+                  <d:var name="OsTrusted" type="BOOLEAN" value="true"/>
+                  <d:ref name="OsApplicationCoreRef" type="REFERENCE" >
+                    <a:a name="IMPORTER_INFO" value="0"/>
+                  </d:ref>
+                  <d:lst name="OsAppAlarmRef"/>
+                  <d:lst name="OsAppCounterRef">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsCounter_HARDWARE"/>
+                  </d:lst>
+                  <d:lst name="OsAppIsrRef">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/CAN0_ORED_IRQHandler"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/CAN0_Error_IRQHandler"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/CAN0_ORED_0_15_MB_IRQHandler"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/CAN0_ORED_16_31_MB_IRQHandler"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/LPIT_0_CH_1_ISR"/>
+                    <d:ref type="REFERENCE" value="ASPath:/Os/Os/LPTMR_ISR"/>
+                    <d:ref type="REFERENCE" value="ASPath:/Os/Os/PORTD_ISR"/>
+                    <d:ref type="REFERENCE" value="ASPath:/Os/Os/PORTE_ISR"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/LPIT_0_CH_2_ISR"/>
+                  </d:lst>
+                  <d:lst name="OsAppScheduleTableRef">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/Rte_DefaultScheduleTable"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/SchM_DefaultScheduleTable"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/Rte_PostRunScheduleTable"/>
+                  </d:lst>
+                  <d:lst name="OsAppTaskRef">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Bsw_ComServices"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Bsw_MemServices"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Bsw_SysServices"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Bsw_Init"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Bsw_Events"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Alv_ComHwAbs"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Bsw_ReadWrite_AllProcess"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Alv_ComServices"/>
+                    <d:ref type="REFERENCE" value="ASPath:/Os/Os/OsTask_AppIdle"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Alv_EcuHwAbs"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Alv_ModeMngmt"/>
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsTask_Bsw_ComEvents"/>
+                  </d:lst>
+                  <d:ref name="OsRestartTask" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                  </d:ref>
+                  <d:ctr name="OsApplicationHooks" type="IDENTIFIABLE">
+                    <d:var name="OsAppErrorHook" type="BOOLEAN" value="false">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsAppShutdownHook" type="BOOLEAN" value="false">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsAppStartupHook" type="BOOLEAN" value="false">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:ref name="OsMemoryMappingCodeLocationRef" 
+                           type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:var name="OsAppErrorHookStack" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsAppShutdownHookStack" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsAppStartupHookStack" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:lst name="OsApplicationTrustedFunction" type="MAP"/>
+                  <d:ref name="OsAppEcucPartitionRef" type="REFERENCE" 
+                         value="ASPath:/EcuC/EcuC/EcucPartitionCollection/EcucPartition_0">
+                    <a:a name="ENABLE" value="false"/>
+                  </d:ref>
+                  <d:var name="OsApplicationCoreAssignment" type="INTEGER" 
+                         value="0">
+                    <a:a name="ENABLE" value="false"/>
+                  </d:var>
+                  <d:var name="OsTrustedApplicationWithProtection" 
+                         type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTrustedApplicationDelayTimingViolationCall" 
+                         type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsAppResourceRef"/>
+                </d:ctr>
+              </d:lst>
+              <d:lst name="OsCounter" type="MAP">
+                <d:ctr name="OsCounter_HARDWARE" type="IDENTIFIABLE">
+                  <d:var name="OsCounterMaxAllowedValue" type="INTEGER" 
+                         value="65535"/>
+                  <d:var name="OsCounterMinCycle" type="INTEGER" value="1"/>
+                  <d:var name="OsCounterTicksPerBase" type="INTEGER" value="1"/>
+                  <d:var name="OsCounterType" type="ENUMERATION" 
+                         value="HARDWARE"/>
+                  <d:var name="OsSecondsPerTick" type="FLOAT" value="2.0E-7">
+                    <a:a name="ENABLE" value="true"/>
+                  </d:var>
+                  <d:lst name="OsCounterAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:ctr name="OsDriver" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:ref name="OsGptChannelRef" type="REFERENCE" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:ref>
+                    <d:ctr name="OsHwIncrementer" type="IDENTIFIABLE">
+                      <a:a name="ENABLE" value="false"/>
+                      <d:var name="OsHwModule" type="ENUMERATION" >
+                        <a:a name="IMPORTER_INFO" value="@DEF"/>
+                      </d:var>
+                      <d:var name="OsIncrementerIrqLevel" type="INTEGER" >
+                        <a:a name="IMPORTER_INFO" value="@DEF"/>
+                      </d:var>
+                    </d:ctr>
+                  </d:ctr>
+                  <d:lst name="OsTimeConstant" type="MAP"/>
+                  <d:var name="OsCounterCORTEXMTimer" type="ENUMERATION" 
+                         value="FTM0_0"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="4"/>
+                </d:ctr>
+              </d:lst>
+              <d:lst name="OsEvent" type="MAP">
+                <d:ctr name="SchM_OSShutdownEvent" type="IDENTIFIABLE">
+                  <d:var name="OsEventMask" type="INTEGER" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                </d:ctr>
+                <d:ctr name="OsEvent_ReadWriteAllProcess" type="IDENTIFIABLE">
+                  <d:var name="OsEventMask" type="INTEGER" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                </d:ctr>
+              </d:lst>
+              <d:lst name="OsSpinlock" type="MAP"/>
+              <d:lst name="OsIsr" type="MAP">
+                <d:ctr name="CAN0_ORED_IRQHandler" type="IDENTIFIABLE">
+                  <d:var name="OsIsrCategory" type="ENUMERATION" 
+                         value="CATEGORY_2"/>
+                  <d:var name="OsIsrPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsIsrResourceRef"/>
+                  <d:ctr name="OsIsrTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsIsrAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsIsrResourceLock" type="MAP"/>
+                    <d:var name="OsIsrCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsEnable_On_Startup" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="256"/>
+                  <d:lst name="OsIsrAccessingApplication"/>
+                  <d:var name="OsCORTEXMVector" type="ENUMERATION" 
+                         value="I078_CAN0_OFF_WARN"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="7">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                </d:ctr>
+                <d:ctr name="CAN0_Error_IRQHandler" type="IDENTIFIABLE">
+                  <d:var name="OsIsrCategory" type="ENUMERATION" 
+                         value="CATEGORY_2"/>
+                  <d:var name="OsIsrPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsIsrResourceRef"/>
+                  <d:ctr name="OsIsrTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsIsrAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsIsrResourceLock" type="MAP"/>
+                    <d:var name="OsIsrCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsEnable_On_Startup" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="256"/>
+                  <d:lst name="OsIsrAccessingApplication"/>
+                  <d:var name="OsCORTEXMVector" type="ENUMERATION" 
+                         value="I079_CAN0_ERR"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="7">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                </d:ctr>
+                <d:ctr name="CAN0_ORED_0_15_MB_IRQHandler" type="IDENTIFIABLE">
+                  <d:var name="OsIsrCategory" type="ENUMERATION" 
+                         value="CATEGORY_2"/>
+                  <d:var name="OsIsrPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsIsrResourceRef"/>
+                  <d:ctr name="OsIsrTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsIsrAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsIsrResourceLock" type="MAP"/>
+                    <d:var name="OsIsrCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsEnable_On_Startup" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="256"/>
+                  <d:lst name="OsIsrAccessingApplication"/>
+                  <d:var name="OsCORTEXMVector" type="ENUMERATION" 
+                         value="I081_CAN0_MSGBUF_0_15"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="7">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                </d:ctr>
+                <d:ctr name="CAN0_ORED_16_31_MB_IRQHandler" type="IDENTIFIABLE">
+                  <d:var name="OsIsrCategory" type="ENUMERATION" 
+                         value="CATEGORY_2"/>
+                  <d:var name="OsIsrPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsIsrResourceRef"/>
+                  <d:ctr name="OsIsrTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsIsrAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsIsrResourceLock" type="MAP"/>
+                    <d:var name="OsIsrCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsEnable_On_Startup" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="256"/>
+                  <d:lst name="OsIsrAccessingApplication"/>
+                  <d:var name="OsCORTEXMVector" type="ENUMERATION" 
+                         value="I082_CAN0_MSGBUF_16_31"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="7">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                </d:ctr>
+                <d:ctr name="LPIT_0_CH_1_ISR" type="IDENTIFIABLE">
+                  <d:var name="OsIsrCategory" type="ENUMERATION" 
+                         value="CATEGORY_2"/>
+                  <d:var name="OsIsrPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsIsrResourceRef"/>
+                  <d:ctr name="OsIsrTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsIsrAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsIsrResourceLock" type="MAP"/>
+                    <d:var name="OsIsrCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsEnable_On_Startup" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="128"/>
+                  <d:lst name="OsIsrAccessingApplication"/>
+                  <d:var name="OsCORTEXMVector" type="ENUMERATION" 
+                         value="I049_LPIT_C1"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="6"/>
+                </d:ctr>
+                <d:ctr name="LPTMR_ISR" type="IDENTIFIABLE">
+                  <d:var name="OsIsrCategory" type="ENUMERATION" 
+                         value="CATEGORY_1"/>
+                  <d:var name="OsIsrPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsIsrResourceRef"/>
+                  <d:ctr name="OsIsrTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsIsrAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsIsrResourceLock" type="MAP"/>
+                    <d:var name="OsIsrCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsEnable_On_Startup" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="128"/>
+                  <d:lst name="OsIsrAccessingApplication"/>
+                  <d:var name="OsCORTEXMVector" type="ENUMERATION" 
+                         value="I058_LPTIMER"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="3"/>
+                </d:ctr>
+                <d:ctr name="PORTD_ISR" type="IDENTIFIABLE">
+                  <d:var name="OsIsrCategory" type="ENUMERATION" 
+                         value="CATEGORY_1"/>
+                  <d:var name="OsIsrPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsIsrResourceRef"/>
+                  <d:ctr name="OsIsrTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsIsrAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsIsrResourceLock" type="MAP"/>
+                    <d:var name="OsIsrCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsEnable_On_Startup" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="128"/>
+                  <d:lst name="OsIsrAccessingApplication"/>
+                  <d:var name="OsCORTEXMVector" type="ENUMERATION" 
+                         value="I062_PCM_PIN_PD"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="2"/>
+                </d:ctr>
+                <d:ctr name="PORTE_ISR" type="IDENTIFIABLE">
+                  <d:var name="OsIsrCategory" type="ENUMERATION" 
+                         value="CATEGORY_2"/>
+                  <d:var name="OsIsrPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsIsrResourceRef"/>
+                  <d:ctr name="OsIsrTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsIsrAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsIsrResourceLock" type="MAP"/>
+                    <d:var name="OsIsrCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsEnable_On_Startup" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="128"/>
+                  <d:lst name="OsIsrAccessingApplication"/>
+                  <d:var name="OsCORTEXMVector" type="ENUMERATION" 
+                         value="I063_PCM_PIN_PE"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="5"/>
+                </d:ctr>
+                <d:ctr name="LPIT_0_CH_2_ISR" type="IDENTIFIABLE">
+                  <d:var name="OsIsrCategory" type="ENUMERATION" 
+                         value="CATEGORY_2"/>
+                  <d:var name="OsIsrPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:lst name="OsIsrResourceRef"/>
+                  <d:ctr name="OsIsrTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsIsrAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsIsrTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsIsrResourceLock" type="MAP"/>
+                    <d:var name="OsIsrCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsEnable_On_Startup" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="128"/>
+                  <d:lst name="OsIsrAccessingApplication"/>
+                  <d:var name="OsCORTEXMVector" type="ENUMERATION" 
+                         value="I050_LPIT_C2"/>
+                  <d:var name="OsCORTEXMIrqLevel" type="INTEGER" value="5"/>
+                </d:ctr>
+              </d:lst>
+              <d:ctr name="OsOS" type="IDENTIFIABLE">
+                <d:var name="OsScalabilityClass" type="ENUMERATION" >
+                  <a:a name="ENABLE" value="false"/>
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsNumberOfCores" type="INTEGER" value="1">
+                  <a:a name="ENABLE" value="true"/>
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsStackMonitoring" type="BOOLEAN" value="true"/>
+                <d:var name="OsStatus" type="ENUMERATION" value="EXTENDED"/>
+                <d:var name="OsUseGetServiceId" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsUseParameterAccess" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsUseResScheduler" type="BOOLEAN" value="true">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:ctr name="OsHooks" type="IDENTIFIABLE">
+                  <d:var name="OsErrorHook" type="BOOLEAN" value="true">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsPostTaskHook" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsPreTaskHook" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsProtectionHook" type="BOOLEAN" value="true">
+                    <a:a name="ENABLE" value="true"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsShutdownHook" type="BOOLEAN" value="true">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStartupHook" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:var name="OsPreISRHook" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsPostISRHook" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                </d:ctr>
+                <d:var name="OsUseArti" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsCC" type="ENUMERATION" >
+                  <a:a name="ENABLE" value="false"/>
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsTrace" type="BOOLEAN" value="true"/>
+                <d:var name="OsExtra_Runtime_Checks" type="BOOLEAN" 
+                       value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsStartupChecks" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsServiceTrace" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsSourceOptimization" type="BOOLEAN" value="true"/>
+                <d:var name="OsStackOptimization" type="ENUMERATION" value="NO"/>
+                <d:var name="OsProtection" type="ENUMERATION" value="ON">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsUseLastError" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsTracebuffer" type="INTEGER" value="100"/>
+                <d:var name="OsSchedule" type="ENUMERATION" value="MIXED">
+                  <a:a name="ENABLE" value="false"/>
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsTrappingKernel" type="BOOLEAN" value="true">
+                  <a:a name="ENABLE" value="false"/>
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsGenerateSWCD" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:ctr name="OsAutosarCustomization" type="IDENTIFIABLE">
+                  <a:a name="ENABLE" value="true"/>
+                  <d:var name="OsExceptionHandling" type="BOOLEAN" value="true">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsErrorHandling" type="ENUMERATION" value="FULL"/>
+                  <d:var name="OsStrictServiceProtection" type="BOOLEAN" 
+                         value="true">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsCat1DirectCall" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsInterruptLockingChecks" type="ENUMERATION" 
+                         value="AUTOSAR">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsCallIsr" type="ENUMERATION" value="VIA_WRAPPER">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsCallAppErrorHook" type="ENUMERATION" 
+                         value="VIA_WRAPPER">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsCallAppStartupShutdownHook" type="ENUMERATION" 
+                         value="VIA_WRAPPER">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsPermitSystemObjects" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsUserTaskReturn" type="ENUMERATION" 
+                         value="KILL_TASK">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                </d:ctr>
+                <d:var name="OsUseLogicalCoreIDs" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="OsCoreConfig" type="MAP">
+                  <d:ctr name="OsCoreConfig_0" type="IDENTIFIABLE">
+                    <d:var name="OsCoreId" type="INTEGER" value="0">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsLogicalCoreId" type="INTEGER" value="-1">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsCORTEXMExecutionTimer" type="ENUMERATION" 
+                           value="FTM0_0">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                </d:lst>
+                <d:var name="OsInitCoreId" type="INTEGER" >
+                  <a:a name="ENABLE" value="false"/>
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsMaxNumberOfCores" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsMicrocontroller" type="ENUMERATION" 
+                       value="S32K14X">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="OsTimestampTimer" type="ENUMERATION" value="FTM0_0">
+                  <a:a name="ENABLE" value="false"/>
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+              <d:lst name="OsPeripheralArea" type="MAP"/>
+              <d:lst name="OsResource" type="MAP"/>
+              <d:lst name="OsScheduleTable" type="MAP">
+                <d:ctr name="SchM_DefaultScheduleTable" type="IDENTIFIABLE">
+                  <d:var name="OsScheduleTableDuration" type="INTEGER" 
+                         value="50000"/>
+                  <d:var name="OsScheduleTableRepeating" type="BOOLEAN" 
+                         value="true"/>
+                  <d:lst name="OsSchTblAccessingApplication"/>
+                  <d:ref name="OsScheduleTableCounterRef" type="REFERENCE" 
+                         value="ASPath:/Os/Os/OsCounter_HARDWARE"/>
+                  <d:ctr name="OsScheduleTableAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsScheduleTableAutostartType" 
+                           type="ENUMERATION" value="RELATIVE">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsScheduleTableAppModeRef"/>
+                    <d:var name="OsScheduleTableStartValue" type="INTEGER" 
+                           value="0">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:lst name="OsScheduleTableExpiryPoint" type="MAP">
+                    <d:ctr name="OsScheduleTableExpiryPoint_1000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="5000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_SysServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_3000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="15000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_ComServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_8000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="40000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_ComServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_9000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="45000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_ComHwAbs"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                  </d:lst>
+                  <d:ctr name="OsScheduleTableSync" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsScheduleTblExplicitPrecision" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsScheduleTblSyncStrategy" type="ENUMERATION" 
+                           value="NONE">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsTimeUnit" type="ENUMERATION" value="TICKS">
+                    <a:a name="ENABLE" value="true"/>
+                  </d:var>
+                </d:ctr>
+                <d:ctr name="Rte_DefaultScheduleTable" type="IDENTIFIABLE">
+                  <d:var name="OsScheduleTableDuration" type="INTEGER" 
+                         value="50000"/>
+                  <d:var name="OsScheduleTableRepeating" type="BOOLEAN" 
+                         value="true"/>
+                  <d:lst name="OsSchTblAccessingApplication"/>
+                  <d:ref name="OsScheduleTableCounterRef" type="REFERENCE" 
+                         value="ASPath:/Os/Os/OsCounter_HARDWARE"/>
+                  <d:ctr name="OsScheduleTableAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsScheduleTableAutostartType" 
+                           type="ENUMERATION" value="RELATIVE">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsScheduleTableAppModeRef"/>
+                    <d:var name="OsScheduleTableStartValue" type="INTEGER" 
+                           value="0">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:lst name="OsScheduleTableExpiryPoint" type="MAP">
+                    <d:ctr name="OsScheduleTableExpiryPoint_0000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="0"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_EcuHwAbs"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_1000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="5000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_ComServices"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_3" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_SysServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_2000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="10000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_EcuHwAbs"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_3000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="15000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_ComServices"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_3" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_ComServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_4000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="20000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_EcuHwAbs"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_3" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_ModeMngmt"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_5000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="25000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_ComServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_6000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="30000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_EcuHwAbs"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_3" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_MemServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_7000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="35000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_ComServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_8000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="40000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_EcuHwAbs"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_3" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_ComServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_9000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="45000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_Autotests"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_eCSApp"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_2" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_ComServices"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_3" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_ComHwAbs"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                  </d:lst>
+                  <d:ctr name="OsScheduleTableSync" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsScheduleTblExplicitPrecision" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsScheduleTblSyncStrategy" type="ENUMERATION" 
+                           value="NONE">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsTimeUnit" type="ENUMERATION" value="TICKS">
+                    <a:a name="ENABLE" value="true"/>
+                  </d:var>
+                </d:ctr>
+                <d:ctr name="Rte_PostRunScheduleTable" type="IDENTIFIABLE">
+                  <d:var name="OsScheduleTableDuration" type="INTEGER" 
+                         value="50000"/>
+                  <d:var name="OsScheduleTableRepeating" type="BOOLEAN" 
+                         value="true"/>
+                  <d:lst name="OsSchTblAccessingApplication"/>
+                  <d:ref name="OsScheduleTableCounterRef" type="REFERENCE" 
+                         value="ASPath:/Os/Os/OsCounter_HARDWARE"/>
+                  <d:ctr name="OsScheduleTableAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsScheduleTableAutostartType" 
+                           type="ENUMERATION" value="RELATIVE">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsScheduleTableAppModeRef"/>
+                    <d:var name="OsScheduleTableStartValue" type="INTEGER" 
+                           value="0">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:lst name="OsScheduleTableExpiryPoint" type="MAP">
+                    <d:ctr name="OsScheduleTableExpiryPoint_0000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="0"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_SysServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_2000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="10000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_ComServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_7000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="35000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_ComServices"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                    <d:ctr name="OsScheduleTableExpiryPoint_9000" 
+                           type="IDENTIFIABLE">
+                      <d:var name="OsScheduleTblExpPointOffset" type="INTEGER" 
+                             value="45000"/>
+                      <d:lst name="OsScheduleTableEventSetting" type="MAP"/>
+                      <d:lst name="OsScheduleTableTaskActivation" type="MAP">
+                        <d:ctr name="OsScheduleTableTaskActivation_0" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Alv_ComHwAbs"/>
+                        </d:ctr>
+                        <d:ctr name="OsScheduleTableTaskActivation_1" 
+                               type="IDENTIFIABLE">
+                          <d:ref name="OsScheduleTableActivateTaskRef" 
+                                 type="REFERENCE" 
+                                 value="ASPath:/Os/Os/OsTask_Bsw_ReadWrite_AllProcess"/>
+                        </d:ctr>
+                      </d:lst>
+                      <d:ctr name="OsScheduleTblAdjustableExpPoint" 
+                             type="IDENTIFIABLE">
+                        <a:a name="ENABLE" value="false"/>
+                        <d:var name="OsScheduleTableMaxLengthen" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                        <d:var name="OsScheduleTableMaxShorten" type="INTEGER" 
+                               value="0">
+                          <a:a name="IMPORTER_INFO" value="@DEF"/>
+                        </d:var>
+                      </d:ctr>
+                    </d:ctr>
+                  </d:lst>
+                  <d:ctr name="OsScheduleTableSync" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsScheduleTblExplicitPrecision" type="INTEGER" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsScheduleTblSyncStrategy" type="ENUMERATION" 
+                           value="NONE">
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsTimeUnit" type="ENUMERATION" value="TICKS">
+                    <a:a name="ENABLE" value="true"/>
+                  </d:var>
+                </d:ctr>
+              </d:lst>
+              <d:lst name="OsTask" type="MAP">
+                <d:ctr name="OsTask_Bsw_ComServices" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1"/>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="40"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" value="BASIC">
+                    <a:a name="ENABLE" value="true"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="768"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Bsw_SysServices" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="30"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" value="BASIC">
+                    <a:a name="ENABLE" value="true"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="512"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Bsw_MemServices" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="20"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="NON"/>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="768"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Alv_ComHwAbs" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="35"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="512"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Bsw_Init" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="15"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="true"/>
+                    <d:lst name="OsTaskAppModeRef">
+                      <d:ref type="REFERENCE" 
+                             value="ASPath:/Os/Os/OSDEFAULTAPPMODE"/>
+                    </d:lst>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="128"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Bsw_Events" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="10"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="512"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Bsw_ReadWrite_AllProcess" 
+                       type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1"/>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="5"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsEvent_ReadWriteAllProcess"/>
+                  </d:lst>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" value="EXTENDED">
+                    <a:a name="ENABLE" value="true"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="512"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Alv_eCSApp" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="55"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="512"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Alv_Autotests" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="50"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="1024"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Alv_ComServices" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="45"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="1024"/>
+                </d:ctr>
+                <d:ctr name="OsTask_AppIdle" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="0"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" value="EXTENDED">
+                    <a:a name="ENABLE" value="true"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="512"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Alv_EcuHwAbs" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="60"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="256"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Alv_ModeMngmt" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="25"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="256"/>
+                </d:ctr>
+                <d:ctr name="OsTask_Bsw_ComEvents" type="IDENTIFIABLE">
+                  <d:var name="OsTaskActivation" type="INTEGER" value="1">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskPriority" type="INTEGER" value="10"/>
+                  <d:var name="OsTaskPeriod" type="FLOAT" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskSchedule" type="ENUMERATION" value="FULL">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="OsMemoryMappingCodeLocationRef" type="REFERENCE" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                  <d:lst name="OsTaskAccessingApplication">
+                    <d:ref type="REFERENCE" 
+                           value="ASPath:/Os/Os/OsApplication_0"/>
+                  </d:lst>
+                  <d:lst name="OsTaskEventRef"/>
+                  <d:lst name="OsTaskResourceRef"/>
+                  <d:ctr name="OsTaskAutostart" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:lst name="OsTaskAppModeRef"/>
+                  </d:ctr>
+                  <d:ctr name="OsTaskTimingProtection" type="IDENTIFIABLE">
+                    <a:a name="ENABLE" value="false"/>
+                    <d:var name="OsTaskAllInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskExecutionBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskOsInterruptLockBudget" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:var name="OsTaskTimeFrame" type="FLOAT" >
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                    <d:lst name="OsTaskResourceLock" type="MAP"/>
+                    <d:var name="OsTaskCountLimit" type="INTEGER" value="1">
+                      <a:a name="ENABLE" value="false"/>
+                      <a:a name="IMPORTER_INFO" value="@DEF"/>
+                    </d:var>
+                  </d:ctr>
+                  <d:var name="OsMeasure_Max_Runtime" type="BOOLEAN" 
+                         value="false">
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskUse_Hw_Fp" type="BOOLEAN" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskCallScheduler" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsTaskType" type="ENUMERATION" >
+                    <a:a name="ENABLE" value="false"/>
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="OsStacksize" type="INTEGER" value="512"/>
+                </d:ctr>
+              </d:lst>
+              <d:ctr name="PublishedInformation" type="IDENTIFIABLE">
+                <d:var name="PbcfgMSupport" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+            </d:ctr>
+          </d:chc>
+        </d:lst>
+      </d:ctr>
+    </d:lst>
+  </d:ctr>
+
+</datamodel>

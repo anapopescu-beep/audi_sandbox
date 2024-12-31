@@ -1,0 +1,43 @@
+					Autoliv Electronics Document
+
+Preconditions
+
+	Step 0: Bench Initialization
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepInit
+ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepInit: The LPM_sleepInit runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to initialize LPM module
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepInit
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_OnLowPwrFromPostRun in order to go in LPM_sleepInit function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function LPM_sleepInit in order to initialize LPM module 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_OnLowPwrFromPostRun in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 8: Return ECU to default values

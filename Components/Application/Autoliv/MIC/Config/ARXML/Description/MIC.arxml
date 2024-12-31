@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2017-01-04T08:25:38+01:00" UUID="1cb24c87-622c-4f8e-bac7-8ae398cdf967">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2017-01-04T08:25:38+01:00" UUID="a31a6eed-31c3-4dae-986f-52477bd1c5d3">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2022-09-21T09:01:06+03:00" UUID="7fc69e80-6e15-4fd7-aad3-d7060ee3d61d">
+              <SHORT-NAME>MIC</SHORT-NAME>
+              <ELEMENTS>
+                <COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE T="2023-02-22T16:53:37+02:00" UUID="d0b94dd7-fe12-4b09-825a-65d1dfef63ef">
+                  <SHORT-NAME>MIC</SHORT-NAME>
+                  <CATEGORY>BSW_Complex_Device_Drivers</CATEGORY>
+                  <PORTS>
+                    <P-PORT-PROTOTYPE T="2022-11-14T14:54:45+02:00" UUID="a3093c0c-0aca-400b-8d4a-a78090df7815">
+                      <SHORT-NAME>p_ptrrMicServicesBswMIf</SHORT-NAME>
+                      <DESC T="2023-06-07T14:55:46+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_MIC_p_ptrrMicServicesBswMIf_MIC_Init&#xD;
+	&#xD;
+# Description&#xD;
+	- The interface will call the MIC_Init runnable during initialization sequence&#xD;
+	- The runnable will control the MMC peripheral and RAM_NO_INIT data and apply (if possible) a backup strategy in order to restore the memory usage.&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	 - MIC_Init&#xD;
+	&#xD;
+#Traceability &#xD;
+FUSA_SM_S32K1XXSM_227, FUSA_SM_S32K1XXSM_235</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T15:25:34+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:21:13+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T17:51:40.055+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:25:34+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:21:13+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/MIC_DataDictionnary/TriggerInterfaces/itrMicServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2022-11-14T14:54:34+02:00" UUID="d97be9eb-40b4-4404-947d-4613acffabb5">
+                      <SHORT-NAME>p_ptrrMicServicesOsIf</SHORT-NAME>
+                      <DESC T="2023-06-20T21:07:27+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_MIC_p_ptrrMicServicesOsIf_MIC_HardFaultException&#xD;
+	&#xD;
+# Description&#xD;
+	- The interface will call the  MIC_HardFaultException runnable  in case of CPU Hard Fault.&#xD;
+	- The runnable will manage ECC errors if pressent.&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	 - MIC_HardFaultException&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+----------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_MIC_p_ptrrMicServicesOsIf_MIC_MIC_BusFaultException&#xD;
+	&#xD;
+# Description&#xD;
+	- The interface will call the  MIC_BusFaultException runnable  in case of CPU Bus Fault.&#xD;
+	- The runnable will manage ECC errors if pressent.&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	 - MIC_BusFaultException&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+----------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_MIC_p_ptrrMicServicesOsIf_MIC_MIC_HardFaultHandlerHll&#xD;
+	&#xD;
+# Description&#xD;
+	- The interface will call the  MIC_BusFaultException runnable  in case of CPU HardFault.&#xD;
+	- The runnable will manage ECC errors if pressent.&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	{Instruction address}&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	 - MIC_BusFaultException&#xD;
+	&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T15:26:46+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:20:33+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T17:52:12.565+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:26:46+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:20:33+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/MIC_DataDictionnary/TriggerInterfaces/itrMicServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-11-14T13:59:39+02:00" UUID="9842ec47-8ffa-42c0-bf5c-87fb59c86ddd">
+                      <SHORT-NAME>pclNvmIfServices</SHORT-NAME>
+                      <DESC T="2023-06-20T21:09:50+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_MIC_pclNvmIfServices_SetRamBlockStatus&#xD;
+	&#xD;
+# Description&#xD;
+	- The NvmIfServices_SetRamBlockStatus interface will set a flag, flag used to notify that the ECC Counters Block has to be recorded in the EEPROM during the shutdown. (The writhing procces will be done in NvM_WriteAll();)&#xD;
+    	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+    - {ECC Counter}&#xD;
+## Outputs&#xD;
+    - {Value of flag}&#xD;
+&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- MIC_Autotest_RunRamMemoryCorruption&#xD;
+	- MIC_Autotest_RunPFlashMemoryCorruption&#xD;
+	- MIC_Autotest_RunEepromMemoryCorruption&#xD;
+	&#xD;
+#Traceability&#xD;
+DOM_eCS_TF_H_183, DOM_eCS_TF_H_184, DOM_eCS_TF_H_188</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T15:31:19+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:15:03+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T17:54:25.945+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:31:19+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:15:03+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/GetNvmBlockLength</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/GetNvmBlockStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/ReadBlockByAddress</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/RestorePRAMBlockDefaults</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/SetRamBlockStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/WriteBlockByAddress</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/WriteNvmBlock</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-04-24T23:54:55+03:00" UUID="d1a4cb28-e856-4048-8e7b-7493a95b1731">
+                      <SHORT-NAME>pclResetCause</SHORT-NAME>
+                      <DESC T="2023-06-12T15:16:18+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_MIC_pclResetCause_GetResetCause&#xD;
+	&#xD;
+# Description&#xD;
+	- The GetResetCause interface will set the active reset cause. &#xD;
+            - In case of an ECC Error in RAM, {Reset Cause} will be KU32_ECC_RAM_NOTIFICATION;&#xD;
+            - In case of an ECC error in Flex RAM, {Reset Cause} will be KU32_ECC_RAM_NOTIFICATION;&#xD;
+            - In case of an ECC in Stack RAM, {Reset Cause} will be KU32_ECC_RAM_NOTIFICATION;&#xD;
+            - In case of an ECC in Default EEPROM, {Reset Cause} will be KU32_ECC_PFLASH_NOTIFICATION;&#xD;
+            - In case of an ECC in Calibration FLASH , {Reset Cause} will be KU32_ECC_PFLASH_NOTIFICATION;&#xD;
+            - In case of an ECC in Program FLASH, {Reset Cause} will be KU32_ECC_PFLASH_NOTIFICATION;&#xD;
+            - In case of an ECC in Emulated EEPROM that the FLS did not recognize, {Reset Cause} will be KU32_ECC_E2P_NOTIFICATION;&#xD;
+            - In case of an ECC error in an unknown location, {Reset Cause} will be KU32_ECC_UNIDENTIFIED_NOTIFICATION;&#xD;
+            - In case of a machine exception occurs, {Reset Cause} will be KU32_MACHINE_EXCEPTION_NOTIFICATION;&#xD;
+            - In case of a OS exception occurs, {Reset Cause} will be KU32_OS_EXCEPTION_NOTIFICATION;   &#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+ - {Reset Cause} can be:&#xD;
+   		 - KU32_ECC_RAM_NOTIFICATION&#xD;
+ 		 - KU32_MACHINE_EXCEPTION_NOTIFICATION&#xD;
+  		 - KU32_OS_EXCEPTION_NOTIFICATION&#xD;
+		 - KU32_ECC_PFLASH_NOTIFICATION&#xD;
+   		 - KU32_ECC_E2P_NOTIFICATION&#xD;
+    		 - KU32_ECC_UNIDENTIFIED_NOTIFICATION&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	MIC_Autotest_RunRamMemoryCorruption&#xD;
+       MIC_Autotest_RunPFlashMemoryCorruption&#xD;
+       MIC_Autotest_RunEepromMemoryCorruption&#xD;
+	&#xD;
+#Traceability &#xD;
+FUSA_SM_S32K1XXSM_237; FUSA_SM_S32K1XXSM_404; FUSA_SM_S32K1XXSM_423&#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T15:31:45+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:16:02+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T17:54:52.560+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:31:45+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:16:02+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2021-01-18T12:01:36+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCause/DetermineResetCause</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2021-01-18T12:01:36+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCause/GetResetCause</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCause</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-11-14T14:22:38+02:00" UUID="048af867-1da5-44a0-b71e-9712ef268960">
+                      <SHORT-NAME>pclResetCauseNotification</SHORT-NAME>
+                      <DESC T="2023-06-20T21:14:54+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_MIC_pclResetCauseNotification_NotifyResetCause&#xD;
+	&#xD;
+# Description&#xD;
+	- The ResetCauseNotification_NotifyResetCause interface will notify active reset cause.    &#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs &#xD;
+	- {Reset Cause} can be :&#xD;
+   		 - KU32_ECC_RAM_NOTIFICATION&#xD;
+ 		 - KU32_MACHINE_EXCEPTION_NOTIFICATION&#xD;
+  		 - KU32_OS_EXCEPTION_NOTIFICATION&#xD;
+		 - KU32_ECC_PFLASH_NOTIFICATION&#xD;
+   		 - KU32_ECC_E2P_NOTIFICATION&#xD;
+    		 - KU32_ECC_UNIDENTIFIED_NOTIFICATION&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- MIC_Init&#xD;
+	- MIC_HardFaultException&#xD;
+	- MIC_BusFaultException&#xD;
+	&#xD;
+#Traceability &#xD;
+FUSA_SM_S32K1XXSM_237&#xD;
+&#xD;
+&#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T15:32:16+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:09:38+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T17:55:16.755+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:32:16+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:09:38+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2021-01-18T12:01:42+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification/NotifyResetCause</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE UUID="9468193b-49aa-4b29-926d-1551e22f5388">
+                      <SHORT-NAME>pclSbcServices</SHORT-NAME>
+                      <DESC T="2023-06-20T21:17:49+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_MIC_pclSbcServices_SBC_Reset&#xD;
+	&#xD;
+# Description&#xD;
+	-  The SBC_Reset runnable shall be called in the MIC_HardFaultException runnable in order to reset the ECU&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs &#xD;
+&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- MIC_BusFaultException&#xD;
+	- MIC_HardFaultException&#xD;
+&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T15:32:37+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T08:59:09+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T17:55:47.765+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:32:37+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T08:59:09+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/SBC_Reset</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/SBC_Shutdown</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/GetSbcStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2022-11-14T13:32:29+02:00" UUID="517fde88-3d9c-40bf-b4e0-0acb04fa9b2d">
+                      <SHORT-NAME>pseRunEepromMemoryCorruption</SHORT-NAME>
+                      <DESC T="2023-02-23T10:10:05+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_MIC_pseRunEepromMemoryCorruption_MIC_Autotest_RunEepromMemoryCorruption&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall be called to provide the result of Eeprom Memory Corruption Autotest. &#xD;
+	- Eeprom Memory Corruption Autotest will check if an ECC was detected in Eeprom memory area. &#xD;
+                - If an ECC is detected in Eeprom memory area the {Test Result} will be TEST_NOK. &#xD;
+                - If an ECC is NOT detected in Eeprom memory area the {Test Result} will be TEST_OK. &#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+    - {Test Result} can be:&#xD;
+			 - TEST_NOT_DECIDED&#xD;
+			 - TEST_NOK&#xD;
+			 - TEST_OK&#xD;
+&#xD;
+OK/nok/not_decided&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- MIC_Autotest_RunEepromMemoryCorruption&#xD;
+	&#xD;
+#Traceability&#xD;
+DOM_eCS_TF_H_199, DOM_eCS_TF_H_205, DOM_eCS_TF_H_206, DOM_eCS_TF_H_207</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T15:30:23+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:24:10+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T17:52:51.395+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:30:23+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:24:10+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2021-01-18T12:01:57+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2022-11-14T13:33:19+02:00" UUID="113cd412-9a2e-4040-923e-27522a3d13ec">
+                      <SHORT-NAME>pseRunPFlashMemoryCorruption</SHORT-NAME>
+                      <DESC T="2023-02-23T10:08:43+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_MIC_pseRunPFlashMemoryCorruption_MIC_Autotest_RunPFlashMemoryCorruption&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall be called to provide the result of PFlash Memory Corruption Autotest. &#xD;
+       - PFlash Memory Corruption Autotestcheck if an ECC was detected in PFLASH memory area.&#xD;
+                - If an ECC is detected in PFLASH memory area the {Test Result} will be TEST_NOK. &#xD;
+                - If an ECC is NOT detected in PFLASH memory area the {Test Result} will be TEST_OK. &#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+    - {Test Result} can be:&#xD;
+			 - TEST_NOT_DECIDED&#xD;
+			 - TEST_NOK&#xD;
+			 - TEST_OK&#xD;
+# Linked Runnable&#xD;
+	- MIC_Autotest_RunPFlashMemoryCorruption&#xD;
+	&#xD;
+#Traceability &#xD;
+DOM_eCS_TF_H_164, DOM_eCS_TF_H_171, DOM_eCS_TF_H_173, DOM_eCS_TF_H_172, DOM_eCS_TF_H_177</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T15:30:04+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:23:30+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T17:53:28.636+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:30:04+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:23:30+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2021-01-18T12:02:00+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2022-11-14T13:33:57+02:00" UUID="63506f5d-d229-46c4-b414-0905c32a850a">
+                      <SHORT-NAME>pseRunRamMemoryCorruption</SHORT-NAME>
+                      <DESC T="2023-06-07T15:01:35+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_MIC_pseRunRamMemoryCorruption_MIC_Autotest_RunRamMemoryCorruption&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall be called to provide the result of Ram Memory Corruption Autotest. &#xD;
+	- Ram Memory Corruption Autotest check if an ECC was detected in RAM memory area.&#xD;
+                - If an ECC is detected in RAM memory area the {Test Result} will be TEST_NOK. &#xD;
+                - If an ECC is NOT detected in RAM memory area the {Test Result} will be TEST_OK. &#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+    - {Test Result} can be:&#xD;
+			 - TEST_NOT_DECIDED&#xD;
+			 - TEST_NOK&#xD;
+			 - TEST_OK&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- MIC_Autotest_RunRamMemoryCorruption&#xD;
+	&#xD;
+#Traceability &#xD;
+DOM_eCS_TF_H_194, DOM_eCS_TF_H_195, DOM_eCS_TF_H_196, FUSA_SM_S32K1XXSM_235, FUSA_SM_S32K1XXSM_237</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T15:30:30+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:22:42+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T17:53:55.981+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T15:30:46+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:22:42+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2019-08-20T10:33:59+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                </COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE>
+                <TRIGGER-INTERFACE T="2022-08-27T18:10:42+03:00" UUID="DCE:07c75d56-5fef-45ca-90ee-3b06e6c88726">
+                  <SHORT-NAME>itrMicServices</SHORT-NAME>
+                  <IS-SERVICE>false</IS-SERVICE>
+                  <TRIGGERS>
+                    <TRIGGER T="2022-08-27T18:10:42+03:00" UUID="d9802346-34ac-402d-a07f-23f288dfc442">
+                      <SHORT-NAME>MIC_BusFaultException</SHORT-NAME>
+                      <TRIGGER-PERIOD>
+                        <CSE-CODE>1000</CSE-CODE>
+                        <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                      </TRIGGER-PERIOD>
+                    </TRIGGER>
+                    <TRIGGER T="2022-08-27T18:10:34+03:00" UUID="14d6fb77-18a6-4698-afd8-2091445e1ce0">
+                      <SHORT-NAME>MIC_HardFaultException</SHORT-NAME>
+                      <TRIGGER-PERIOD>
+                        <CSE-CODE>1000</CSE-CODE>
+                        <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                      </TRIGGER-PERIOD>
+                    </TRIGGER>
+                    <TRIGGER T="2022-08-27T17:56:16+03:00" UUID="c2e21293-222e-4574-8d8d-b6a87e8f7c1e">
+                      <SHORT-NAME>MIC_Init</SHORT-NAME>
+                      <TRIGGER-PERIOD>
+                        <CSE-CODE>1000</CSE-CODE>
+                        <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                      </TRIGGER-PERIOD>
+                    </TRIGGER>
+                  </TRIGGERS>
+                </TRIGGER-INTERFACE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

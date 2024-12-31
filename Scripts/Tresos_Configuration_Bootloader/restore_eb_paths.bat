@@ -1,0 +1,3 @@
+python update_eb_paths.py -f="%~dp0\..\..\Tools\Tresos_Configuration_Bootloader\Workspace\demoBoot_VAG_SigCompCRC_can_asr\.prefs\pref_general.xdm" -s="S:\Components\Bootloader\Supplier\Tresos_Configuration_Bootloader" -o="%~dp0..\..\Components\Bootloader\Supplier\Tresos_Configuration_Bootloader"
+
+python update_eb_paths.py -f="%~dp0\..\..\Tools\Tresos_Configuration_Bootloader\Workspace\demoBoot_VAG_SigCompCRC_can_asr\.prefs\pref_imp_exp_E3_1_2_Premium_V12.02.00F_AR430_20191009_RGS_VL_AL_Patched.xdm" -s="S:\Components\Bootloader\Supplier\Tresos_Configuration_Bootloader" -o="%~dp0..\..\Components\Bootloader\Supplier\Tresos_Configuration_Bootloader" 

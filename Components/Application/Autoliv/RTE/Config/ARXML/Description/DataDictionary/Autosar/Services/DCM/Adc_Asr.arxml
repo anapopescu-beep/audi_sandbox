@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd" T="2022-08-26T12:29:37+03:00">
+  <AR-PACKAGES>
+    <AR-PACKAGE T="2022-08-26T12:29:55+03:00" UUID="fa1482be-89d9-4301-b258-af546d4bc79b">
+      <SHORT-NAME>EB</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2022-08-26T12:29:52+03:00">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <ELEMENTS>
+            <SERVICE-SW-COMPONENT-TYPE T="2023-02-27T13:23:53+02:00" UUID="DCE:20eecf4e-ebe8-4917-9aff-b1dc92c7c5b5">
+              <SHORT-NAME>Adc</SHORT-NAME>
+              <CATEGORY>ASR_Interfaces</CATEGORY>
+              <PORTS>
+                <P-PORT-PROTOTYPE T="2022-08-26T12:14:57+03:00" UUID="5e84ce5d-18bc-48e9-b33a-4b43d54667ea">
+                  <SHORT-NAME>ptrpAsrAdcServicesAdcIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrAdcServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE T="2023-02-27T13:24:02+02:00" UUID="32899e95-dcff-4dd8-8d1f-e503285a7b3a">
+                  <SHORT-NAME>ptrpAsrAdcServicesEcuMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrAdcServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR T="2022-08-26T12:17:48+03:00" UUID="56a21459-cba6-440a-9adc-0d5b62a594bd">
+                  <SHORT-NAME>Adc_IB</SHORT-NAME>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY T="2022-08-26T12:16:45+03:00" UUID="DCE:b81a37b4-a8c3-4f6a-baf1-7b27bc7cc7f6">
+                      <SHORT-NAME>Adc_Calibrate</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Adc/ptrpAsrAdcServicesAdcIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrAdcServices/Adc_Calibrate</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Adc_DummyRunnable</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T12:17:16+03:00" UUID="DCE:5f48d61b-fdd4-4876-820c-69bbbd76291f">
+                      <SHORT-NAME>Adc_ReadGroup</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Adc/ptrpAsrAdcServicesAdcIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrAdcServices/Adc_ReadGroup</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Adc_ReadGroup</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T12:17:35+03:00" UUID="DCE:1aa6195b-a0cd-44bb-8435-be7d908e52d8">
+                      <SHORT-NAME>Adc_StartGroupConversion</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Adc/ptrpAsrAdcServicesAdcIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrAdcServices/Adc_StartGroupConversion</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Adc_StartGroupConversion</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-26T12:17:53+03:00" UUID="DCE:72ad07cb-0b06-4fa3-8349-40cbfdea7e61">
+                      <SHORT-NAME>Adc_StopGroupConversion</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/Adc/ptrpAsrAdcServicesAdcIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrAdcServices/Adc_StopGroupConversion</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>Adc_StopGroupConversion</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </SERVICE-SW-COMPONENT-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <AR-PACKAGE T="2022-08-26T12:29:55+03:00" UUID="83dbf1d3-fd69-4d31-99ba-2a110ed331f7">
+          <SHORT-NAME>TriggerInterfaces</SHORT-NAME>
+          <ELEMENTS>
+            <TRIGGER-INTERFACE T="2023-02-21T13:45:27+02:00" UUID="47c551fe-29fa-4251-a02b-e2d817c5622b">
+              <SHORT-NAME>itrAsrAdcServices</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <TRIGGERS>
+                <TRIGGER T="2022-08-26T11:32:29+03:00" UUID="b129a56e-d09b-4d93-bf95-e8ea03e1a527">
+                  <SHORT-NAME>Adc_Calibrate</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2023-02-21T13:45:27+02:00" UUID="9da9f073-369e-46a4-aa4f-25eddf886329">
+                  <SHORT-NAME>Adc_Init</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-26T11:36:22+03:00" UUID="b5df4abc-37ac-42e7-bc0f-1f18fec1f471">
+                  <SHORT-NAME>Adc_ReadGroup</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-26T11:36:34+03:00" UUID="7d814a8e-93e8-46b4-9285-8ce35b37d0b0">
+                  <SHORT-NAME>Adc_StartGroupConversion</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-26T11:37:05+03:00" UUID="4f737a4d-99ea-4f76-9420-a2f78845c502">
+                  <SHORT-NAME>Adc_StopGroupConversion</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+              </TRIGGERS>
+            </TRIGGER-INTERFACE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

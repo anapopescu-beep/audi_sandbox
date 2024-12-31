@@ -1,0 +1,184 @@
+/*@!Encoding:1252*/
+variables
+{
+  char        gTestIdStr[10];     // Identifier generated for each test step shown in the test report
+  word        gTestCaseIndex=0;
+  word        gTestStepIndex=0;
+  enum        bool {TRUE=1, FALSE=0};
+  const int   cApplicationTimeoutMs = 400;
+  char        gResultString[200];                // String for temporary test step result outputs
+  char        gDebuggerPath[200] = "c:\\Projects\\eCS_Platform_Git\\Tools\\WinIDEA\\Workspace\\eCS_winIDEA.xjrf";
+  char        gManualScript[200] = "C:\\Temp\\GUI.exe";
+  char        dataArray[10][50];          // for split_string function
+}
+
+// Test Report and external programs execution functions //
+fctSetTestId(word tcIndex, word tsIndex)
+{
+  gTestCaseIndex=tcIndex;
+  gTestStepIndex=tsIndex;
+  fctUpdateTestIdStr();
+}
+
+fctIncrementTestStepId()
+{
+  gTestStepIndex++;
+  fctUpdateTestIdStr();
+}
+
+fctUpdateTestIdStr()
+{
+  snprintf(gTestIdStr, elcount(gTestIdStr), "%d.%d", gTestCaseIndex, gTestStepIndex);
+}
+
+fctStartDebugger()
+{
+  sysExec(gDebuggerPath, "");
+}
+
+fctStartManual()
+{
+  sysExec(gManualScript, "");
+}
+
+// Test Report and external programs execution functions //
+
+void Check_KL15_ON()
+{
+   @sysvar::eCS::eCSVariant == @sysvar::eCS::eCSVariant::LOCK_PROFILE_v1_BACKUP_PROFILE_ACTIVE;
+   @sysvar::eCS::FDE0_Write == 1;
+ if (@sysvar::eCS::eCSVariant == @sysvar::eCS::eCSVariant::LOCK_PROFILE_v1_BACKUP_PROFILE_ACTIVE) {
+    snprintf(gResultString, elcount(gResultString), "Ignition set to ON");
+    testStepPass(gTestIdStr, gResultString);
+  }
+  else {
+    testStepPass(gTestIdStr, gResultString);
+    testStepFail("","No answer from ECU!");
+  }
+}
+
+void Check_ECU_ON()
+{
+  long ret;
+  ret = testWaitForSignalsAvailable (eCS, 2000);
+  if (1 == ret) {
+    snprintf(gResultString, elcount(gResultString), "ECU is responsive", ret);
+    testStepPass(gTestIdStr, gResultString);
+  }
+  else { 
+    snprintf(gResultString, elcount(gResultString), "ECU is NOT responsive (Return code=%d)!", ret);
+    testStepFail(gTestIdStr, gResultString);
+  }
+}
+
+void ResetECU(char reset[])
+{
+  diagRequest eCS.Soft_Reset_Reset dSoftResetRequest;
+  diagRequest eCS.Hard_Reset_Reset dHardResetRequest;
+  
+  toUpper(reset, reset, elcount(reset));
+  if(strncmp(reset, "SOFT", strlen(reset)) == 0)
+  {    
+    testFctSendRequestAndWaitForFirstResponse(dSoftResetRequest, TRUE, FALSE);
+  }
+  else
+  {
+    if(strncmp(reset, "HARD", strlen(reset)) == 0)
+    {
+      testFctSendRequestAndWaitForFirstResponse(dHardResetRequest, TRUE, FALSE);
+    }
+    else
+    {
+      testStepFail("Error", "Invalid parameter for ResetECU function: %s", reset);
+    }
+  }
+}
+
+void ReadFromFile(char response[], int line)
+{ 
+  char fin[255];
+  dword getFile;
+  int iterator;
+  getFile = openFileRead("isystem_response.INI", 0);
+  write("getFile: %d", getFile);
+  for (iterator = 0; iterator <= line; iterator++)
+  {
+    if (getFile != 0)
+    {
+      fileGetString(fin, elcount(fin), getFile);
+    } 
+    else
+    {
+      write("End of file");
+    }
+  }
+  
+  snprintf(response, elcount(response), "%s", fin);
+  write("Result: %s", response);
+  fileClose(getFile);
+}
+
+
+void ExpectedTestResult(char stepNo[], char description[], char expected_result[], int line)
+{
+  char result[10];
+  ReadFromFile(result, line);
+  testStepBegin (stepNo, description);
+  
+  if (strncmp(result, expected_result, elcount(result)) == 0)
+    testStepPass();
+  else
+    testStepFail();
+  write("Response: %s Expected: %s", result, expected_result);
+  write("Response: %d", strncmp(result, expected_result, elcount(result)));
+}
+
+// Splits a line into an array of strings
+int split_string(char string[], char delim[])
+{
+  int start_pos, end_pos;
+  int i, j;
+  int num_strings;
+  
+  start_pos = 0;
+  end_pos = 0;
+  num_strings = 0;
+  
+  while (start_pos < strlen(string))
+  {
+    j = 0;
+    end_pos = strstr_off(string, start_pos, delim);
+    if (end_pos == -1)
+    {
+      end_pos = strlen(string);
+    }
+    for (i=start_pos; i<end_pos; i++)
+    {
+      dataArray[num_strings][j++] = string[i];
+    }
+    dataArray[num_strings][j] = '\0';
+    num_strings++;
+    start_pos = end_pos+strlen(delim);
+  }
+  
+  return num_strings;
+}
+
+long Init_BenchEnviroment()
+{
+  // Start Dev Session
+//  dDevelopmentSessionRequest.SendRequest();
+//  testWaitForTimeout(500);
+//  
+//  ret = dDevelopmentSessionResponse.GetLastResponse();
+//  if (ret != 0) return ret;
+  
+//  ret = debugger_download();
+//  if (ret != 0) return ret;
+  
+//  ret = debugger_reset(); // uncomment debugger reset from debugger_control.cin file
+//  if (ret != 0) return ret;
+
+//  Check if power supply should be managed 
+  return 0;
+}

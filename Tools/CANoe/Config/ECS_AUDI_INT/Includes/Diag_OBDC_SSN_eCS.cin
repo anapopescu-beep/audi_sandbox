@@ -1,0 +1,145 @@
+/*@!Encoding:1252*/
+
+variables
+{
+/***************************************************************
+/ eCS PANEL  
+****************************************************************/
+  diagRequest eCS_OBDC_FD.HW_Version_Write eCS_OBDC_FD_Req_HWVersion_Write;
+  diagResponse eCS_OBDC_FD.HW_Version_Write eCS_OBDC_FD_Resp_HWVersion_Write;
+  diagRequest eCS_OBDC_FD.HW_Version_Read eCS_OBDC_FD_Req_HWVersion_Read;
+  diagResponse eCS_OBDC_FD.HW_Version_Read eCS_OBDC_FD_Resp_HWVersion_Read;
+			   
+  diagRequest eCS_OBDC_FD.eCS_Sensitivity_Optimization_Write eCS_OBDC_FD_Req_EcsSensitivityOpt_Write;
+  diagResponse eCS_OBDC_FD.eCS_Sensitivity_Optimization_Write eCS_OBDC_FD_Resp_EcsSensitivityOpt_Write;
+  diagRequest eCS_OBDC_FD.eCS_Sensitivity_Optimization_Read eCS_OBDC_FD_Req_EcsSensitivityOpt_Read;
+  diagResponse eCS_OBDC_FD.eCS_Sensitivity_Optimization_Read eCS_OBDC_FD_Resp_EcsSensitivityOpt_Read;
+			   
+  diagRequest eCS_OBDC_FD.eCS_Sensitivity_LuT_Write eCS_OBDC_FD_Req_EcsSensitivityLut_Write;
+  diagResponse eCS_OBDC_FD.eCS_Sensitivity_LuT_Write eCS_OBDC_FD_Resp_EcsSensitivityLut_Write;
+  diagRequest eCS_OBDC_FD.eCS_Sensitivity_LuT_Read eCS_OBDC_FD_Req_EcsSensitivityLut_Read;
+  diagResponse eCS_OBDC_FD.eCS_Sensitivity_LuT_Read eCS_OBDC_FD_Resp_EcsSensitivityLut_Read;
+			   
+  diagRequest eCS_OBDC_FD.eCS_Algo_Output_Delay_Write eCS_OBDC_FD_Req_EcsAlgoOutputDelay_Write;
+  diagResponse eCS_OBDC_FD.eCS_Algo_Output_Delay_Write eCS_OBDC_FD_Resp_EcsAlgoOutputDelay_Write;
+  diagRequest eCS_OBDC_FD.eCS_Algo_Output_Delay_Read eCS_OBDC_FD_Req_EcsAlgoOutputDelay_Read;
+  diagResponse eCS_OBDC_FD.eCS_Algo_Output_Delay_Read eCS_OBDC_FD_Resp_EcsAlgoOutputDelay_Read;
+			   
+  diagRequest eCS_OBDC_FD.eCS_PI_Parameters_Write eCS_OBDC_FD_Req_EcsPiParam_Write;
+  diagResponse eCS_OBDC_FD.eCS_PI_Parameters_Write eCS_OBDC_FD_Resp_EcsPiParam_Write;
+  diagRequest eCS_OBDC_FD.eCS_PI_Parameters_Read eCS_OBDC_FD_Req_EcsPiParam_Read;
+  diagResponse eCS_OBDC_FD.eCS_PI_Parameters_Read eCS_OBDC_FD_Resp_EcsPiParam_Read;
+			   
+  diagRequest eCS_OBDC_FD.eCS_Acc_Low_Pass_Write eCS_OBDC_FD_Req_EcsAccLowPass_Write;
+  diagResponse eCS_OBDC_FD.eCS_Acc_Low_Pass_Write eCS_OBDC_FD_Resp_EcsAccLowPass_Write;
+  diagRequest eCS_OBDC_FD.eCS_Acc_Low_Pass_Read eCS_OBDC_FD_Req_EcsAccLowPass_Read;
+  diagResponse eCS_OBDC_FD.eCS_Acc_Low_Pass_Read eCS_OBDC_FD_Resp_EcsAccLowPass_Read;
+			   
+  diagRequest eCS_OBDC_FD.eCS_Steps_Write eCS_OBDC_FD_Req_EcsSteps_Write;
+  diagResponse eCS_OBDC_FD.eCS_Steps_Write eCS_OBDC_FD_Resp_EcsSteps_Write;
+  diagRequest eCS_OBDC_FD.eCS_Steps_Read eCS_OBDC_FD_Req_EcsSteps_Read;
+  diagResponse eCS_OBDC_FD.eCS_Steps_Read eCS_OBDC_FD_Resp_EcsSteps_Read;
+			   
+  diagRequest eCS_OBDC_FD.AccCalibStart_Start eCS_OBDC_FD_Req_AccCalibStart;
+  diagResponse eCS_OBDC_FD.AccCalibStart_Start eCS_OBDC_FD_Resp_AccCalibStart;
+			   
+  diagRequest eCS_OBDC_FD.eCS_Acc_Offsets_Write eCS_OBDC_FD_Req_EcsAccOffsets_Write;
+  diagResponse eCS_OBDC_FD.eCS_Acc_Offsets_Write eCS_OBDC_FD_Resp_EcsAccOffsets_Write;
+  diagRequest eCS_OBDC_FD.eCS_Acc_Offsets_Read eCS_OBDC_FD_Req_EcsAccOffsets_Read;
+  diagResponse eCS_OBDC_FD.eCS_Acc_Offsets_Read eCS_OBDC_FD_Resp_EcsAccOffsets_Read;
+			   
+  diagRequest eCS_OBDC_FD.eCS_Profiles_Write eCS_OBDC_FD_Req_EcsProfiles_Write;
+  diagResponse eCS_OBDC_FD.eCS_Profiles_Write  eCS_OBDC_FD_Resp_EcsProfiles_Write;
+  diagRequest eCS_OBDC_FD.eCS_Profiles_Read eCS_OBDC_FD_Req_EcsProfiles_Read;
+  diagResponse eCS_OBDC_FD.eCS_Profiles_Read eCS_OBDC_FD_Resp_EcsProfiles_Read;
+			   
+  diagRequest eCS_OBDC_FD.eCS_Parameters_Write eCS_OBDC_FD_Req_EcsParameters_Write;
+  diagResponse eCS_OBDC_FD.eCS_Parameters_Write  eCS_OBDC_FD_Resp_EcsParameters_Write;
+  diagRequest  eCS_OBDC_FD.eCS_Parameters_Read eCS_OBDC_FD_Req_EcsParameters_Read;
+  diagResponse eCS_OBDC_FD.eCS_Parameters_Read eCS_OBDC_FD_Resp_EcsParameters_Read;
+			   
+  diagRequest eCS_OBDC_FD.eCS_Variant_Write eCS_OBDC_FD_Req_EcsVariant_Write;
+  diagResponse eCS_OBDC_FD.eCS_Variant_Write eCS_OBDC_FD_Resp_EcsVariant_Write;
+  diagRequest eCS_OBDC_FD.eCS_Variant_Read eCS_OBDC_FD_Req_EcsVariant_Read;
+  diagResponse eCS_OBDC_FD.eCS_Variant_Read eCS_OBDC_FD_Resp_EcsVariant_Read;
+			   
+  diagRequest eCS_OBDC_FD.MCU_Temperature_Read eCS_OBDC_FD_Req_MCUTemperature_Read;
+  diagResponse eCS_OBDC_FD.MCU_Temperature_Read eCS_OBDC_FD_Resp_MCUTemperature_Read;
+			   
+  diagRequest eCS_OBDC_FD.Last_Warm_Reset_Parameters_Read eCS_OBDC_FD_Req_LastWarmResetParam_Read;
+  diagResponse eCS_OBDC_FD.Last_Warm_Reset_Parameters_Read eCS_OBDC_FD_Resp_LastWarmResetParam_Read;
+			   
+  diagRequest eCS_OBDC_FD.Battery_Measurement_Read eCS_OBDC_FD_Req_BatteryMeasure_Read;
+  diagResponse eCS_OBDC_FD.Battery_Measurement_Read eCS_OBDC_FD_Resp_BatteryMeasure_Read;
+			   
+  diagRequest eCS_OBDC_FD.Reset_Cause_Read eCS_OBDC_FD_Req_ResetCause_Read;
+  diagResponse eCS_OBDC_FD.Reset_Cause_Read eCS_OBDC_FD_Resp_ResetCause_Read;
+			   
+  diagRequest eCS_OBDC_FD.ECC_Occurence_Number_Read eCS_OBDC_FD_Req_EccOccurenceNb_Read;
+  diagResponse eCS_OBDC_FD.ECC_Occurence_Number_Read eCS_OBDC_FD_Resp_EccOccurenceNb_Read;
+			   
+  diagRequest eCS_OBDC_FD.All_Event_Statuses_Read eCS_OBDC_FD_Req_AllEventStatuses_Read;
+  diagResponse eCS_OBDC_FD.All_Event_Statuses_Read eCS_OBDC_FD_Resp_AllEventStatuses_Read;
+			   
+  diagRequest eCS_OBDC_FD.ECU_Manufacturing_Date_Read eCS_OBDC_FD_Req_ECUManufacturingDate_Read;
+  diagResponse eCS_OBDC_FD.ECU_Manufacturing_Date_Read eCS_OBDC_FD_Resp_ECUManufacturingDate_Read;
+			   
+  diagRequest eCS_OBDC_FD.System_Time_Read eCS_OBDC_FD_Req_SWSystemTimeRead_Read;
+  diagResponse eCS_OBDC_FD.System_Time_Read eCS_OBDC_FD_Resp_SWSystemTimeRead_Read;
+			   
+  diagRequest eCS_OBDC_FD.AEE_Traceability_Number_Read eCS_OBDC_FD_Req_AEETraceabilityNumber_Read;
+  diagResponse eCS_OBDC_FD.AEE_Traceability_Number_Read eCS_OBDC_FD_Resp_AEETraceabilityNumber_Read;
+			   
+  diagRequest eCS_OBDC_FD.Measurement_Frames_Configuration_Write eCS_OBDC_FD_Req_MeasurementFramesConf_Write;
+  diagResponse eCS_OBDC_FD.Measurement_Frames_Configuration_Write eCS_OBDC_FD_Resp_MeasurementFramesConf_Write;
+  diagRequest eCS_OBDC_FD.Measurement_Frames_Configuration_Read eCS_OBDC_FD_Req_MeasurementFramesConf_Read;
+  diagResponse eCS_OBDC_FD.Measurement_Frames_Configuration_Read eCS_OBDC_FD_Resp_MeasurementFramesConf_Read;
+			   
+  diagRequest eCS_OBDC_FD.SW_Version_Read eCS_OBDC_FD_Req_SWVersion_Read;
+  diagResponse eCS_OBDC_FD.SW_Version_Read eCS_OBDC_FD_Resp_SWVersion_Read;
+			   
+  diagRequest eCS_OBDC_FD.EcuTempCalibration_Start eCS_OBDC_FD_Req_EcuTempCalibration_Start;
+  diagResponse eCS_OBDC_FD.EcuTempCalibration_Start eCS_OBDC_FD_Resp_EcuTempCalibration_Start;
+  
+  
+  
+/***************************************************************
+/ DIAG PANEL  
+****************************************************************/
+  
+  diagRequest eCS_OBDC_FD.DefaultSession_Start eCS_OBDC_FD_Req_DefaultSession_Start;
+  diagRequest eCS_OBDC_FD.ProgrammingSession_Start eCS_OBDC_FD_Req_ProgrammingSession_Start;
+  diagRequest eCS_OBDC_FD.ExtendedDiagnosticSession_Start eCS_OBDC_FD_Req_ExtendedDiagnosticSession_Start;
+  diagRequest eCS_OBDC_FD.Supplier_Diagnostic_Session_Start eCS_OBDC_FD_Req_Supplier_Diagnostic_Session_Start;
+			   
+  diagRequest eCS_OBDC_FD.Supplier_RequestSeed_Request eCS_OBDC_FD_Req_Supplier_Application_Request;
+  diagResponse eCS_OBDC_FD.Supplier_RequestSeed_Request eCS_OBDC_FD_Resp_Supplier_Application_Request;
+  diagRequest eCS_OBDC_FD.Supplier_SendKey_Send eCS_OBDC_FD_Req_Supplier_Application_Send;
+  diagResponse eCS_OBDC_FD.Supplier_SendKey_Send eCS_OBDC_FD_Resp_Supplier_Application_Send;
+			   
+  diagRequest eCS_OBDC_FD.Programming_RequestSeed_Request eCS_OBDC_FD_Req_Programming_Bootloader_Request;
+  diagResponse eCS_OBDC_FD.Programming_RequestSeed_Request eCS_OBDC_FD_Resp_Programming_Bootloader_Request;
+  diagRequest eCS_OBDC_FD.Programming_SendKey_Send eCS_OBDC_FD_Req_Programming_Bootloader_Send;
+  diagResponse eCS_OBDC_FD.Programming_SendKey_Send eCS_OBDC_FD_Resp_Programming_Bootloader_Send;
+			   
+  diagRequest eCS_OBDC_FD.LockSolenoid_Start eCS_OBDC_FD_Req_LockSolenoid_Start;
+  diagRequest eCS_OBDC_FD.LockSolenoid_Stop eCS_OBDC_FD_Req_LockSolenoid_Stop; // Unlock Solenoid
+  diagRequest eCS_OBDC_FD.EcuUnlock_Start eCS_OBDC_FD_Req_EcuUnlock_Start;
+  diagRequest eCS_OBDC_FD.EcuUnlock_Stop eCS_OBDC_FD_Req_EcuUnlock_Stop; // Lock ECU
+  diagRequest eCS_OBDC_FD.EcuUnlock_RequestResults eCS_OBDC_FD_Req_EcuUnlock_RequestResults;
+			   
+  diagRequest eCS_OBDC_FD.Hard_Reset_Reset eCS_OBDC_FD_Req_Hard_Reset;
+  diagRequest eCS_OBDC_FD.Soft_Reset_Reset eCS_OBDC_FD_Req_Soft_Reset;
+			   
+  diagRequest eCS_OBDC_FD.FaultMemory_Clear eCS_OBDC_FD_Req_FaultMemory_Clear; // Clear DTC 14 FF FF FF
+			   
+  diagRequest eCS_OBDC_FD.TesterPresent_Send eCS_OBDC_FD_Req_TesterPresent_Send;
+
+  diagRequest eCS_OBDC_FD.ControlDTCSetting_Off eCS_OBDC_FD_DTC_Control_OFF;
+  diagRequest eCS_OBDC_FD.ControlDTCSetting_On eCS_OBDC_FD_DTC_Control_ON;
+  
+  diagRequest eCS_OBDC_FD.EnableTxEnableRx_Control eCS_OBDC_FD_EnableTX_EnableRX;
+  diagRequest eCS_OBDC_FD.DisableTxEnableRx_Control eCS_OBDC_FD_DisableTX_EnableRX;
+  
+/****************************************************************/
+}

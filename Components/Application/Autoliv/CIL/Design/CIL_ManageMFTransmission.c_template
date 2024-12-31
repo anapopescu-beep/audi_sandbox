@@ -1,0 +1,1328 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version:
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/**
+ *    $Revision: 1.3.1.9 $
+ *    $ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/CIL/Design/project.pj $
+ */
+
+/**
+ * Overview of the component:
+ *    Communication Interface Layer (CIL) oversees extracting data from the
+ *    network frames (e.g. CAN) and providing the data to the application, and
+ *    packing the outgoing data to the network frames.
+ *    The aim of the CIL component is to interpret all received signals on the
+ *    communication component and to provide the right information to the application.
+ *    Also, it’s purpose is to gather information from the Application and
+ *    compute the status signals and sent them to the CAN bus.
+ *    CIL oversees:
+ *       - Unpacking received data frames from the network (CAN), and providing
+ *         the data to the application
+ *       - Packing the outgoing data to data frames for the network (CAN)
+ */
+
+/*!****************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Rte_CIL.h"
+#include "common.h"
+#include "Nvp_Cfg.h"
+#include "FSM.h"
+#include "CIL.h"
+#include "Dem_Cfg.h"
+#include "Dcm_Dsp_MemoryServices.h"
+#include "Dcm_Callouts.h"
+#include "ComM.h"
+#include "T1_AppInterface.h"
+#endif
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/**
+ * \brief
+ *       Id constant for measurement frame Block 1
+ */
+#define KU8_CIL_BLOCK_ID_01 (KU8_ONE)
+
+/**
+ * \brief
+ *       Id constant for measurement frame Block 2
+ */
+#define KU8_CIL_BLOCK_ID_02 (KU8_TWO)
+
+/**
+ * \brief
+ *       Id constant for measurement frame Block 3
+ */
+
+#define KU8_CIL_BLOCK_ID_03 (KU8_THREE)
+
+
+/**
+ * \brief
+ *       Constant timeslot identifier
+ */
+
+#define KU8_CIL_TIME_SLOT_0 (KU8_ZERO)
+
+/**
+ * \brief
+ *       Constant timeslot identifier
+ */
+
+#define KU8_CIL_TIME_SLOT_1 (KU8_ONE)
+
+/**
+ * \brief
+ *       Constant timeslot identifier
+ */
+
+#define KU8_CIL_TIME_SLOT_2 (KU8_TWO)
+
+/**
+ * \brief
+ *       Constant timeslot identifier
+ */
+
+#define KU8_CIL_TIME_SLOT_3 (KU8_THREE)
+
+/**
+ * \brief
+ *       Constant timeslot identifier
+ */
+
+#define KU8_CIL_TIME_SLOT_4 (KU8_FOUR)
+
+/**
+ * \brief
+ *       Constant with the number of support blocks
+ */
+#define KU8_CIL_MF_NB_OF_BLOCKS (KU8_THREE)
+
+
+/**
+ * \brief
+ *       Constant of the invalid block ID
+ */
+#define KU8_CIL_MF_INVALID_BLOCK_ID (KU8_ZERO)
+
+/**
+ * \brief
+ *       Constant for addressing byte 0 of the NVP_au8MeasFrameBlockConfig array
+ */
+#define KU8_CIL_INDEX_0_IN_SELECTED_BLOCKS_ARRAY KU8_ZERO
+
+/**
+ * \brief
+ *       Constant for addressing byte 1 of the NVP_au8MeasFrameBlockConfig array
+ */
+#define KU8_CIL_INDEX_1_IN_SELECTED_BLOCKS_ARRAY KU8_ONE
+
+/**
+ * \brief
+ *       Constant for addressing byte 2 of the NVP_au8MeasFrameBlockConfig array
+ */
+#define KU8_CIL_INDEX_2_IN_SELECTED_BLOCKS_ARRAY KU8_TWO
+
+/**
+ * \brief
+ *       Number of solenoid in the project
+ */
+#define KU8_CIL_NB_SOLENOID ((uint8) KU8_GLOBAL_NUMBER_OF_SOLENOIDS)
+
+/**
+ * \brief
+ *       Temperature offset
+ */
+#define KU8_CIL_TEMPERATURE_OFFSET ((uint8) 0u)
+
+/**
+ * \brief
+ *       Temperature offset
+ */
+#define KU8_CIL_TIME_SLOTS ((uint8)5u)
+
+/**
+ * \brief
+ *       Temperature offset
+ */
+#define KU8_FIFTY ((uint8)50u)
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+/**
+ * \brief
+ *       Function pointer for addressing measurement frame callbacks
+ */
+typedef void (*cil_pfBlockFunction_Type)(uint8 u8TimeSlot);
+
+/**
+ * \brief
+ *       This enum contains helper defines for checking which block is currently active
+ * \remark
+ *       No unit has been defined for this enumeration.
+ */
+typedef enum CIL_Block_Mask_Type
+{
+   CIL_BLOCK_MASK_1 = 0x01u,
+   CIL_BLOCK_MASK_2,
+   CIL_BLOCK_MASK_12,
+   CIL_BLOCK_MASK_3,
+   CIL_BLOCK_MASK_13,
+   CIL_BLOCK_MASK_23,
+   CIL_BLOCK_MASK_123
+}CIL_Block_Mask_Type;
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/**
+ * \brief
+ *       Macro which computes a bit mask from a measurement frames block number
+ */
+#define U32_CIL_BLOCK_MASK(u8u8BlockId) ((uint32)(((uint32)(0x00000001uL)) << ((uint8)((u8u8BlockId)-1u))))
+
+/**
+ * \brief
+ *       Macro which computes a bit mask to select the next measurement frames block number
+ */
+#define U32_CIL_NEXT_BLOCK(u32BlockMask) ((uint32)((u32BlockMask) << 1u))
+
+/**
+ * \brief
+ *       Ecu state initial condition
+ */
+#define KU8_CIL_INIT_STATE_ACTIVE            ((uint8) 40)
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot0_InfosToSend(void);
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot1_InfosToSend(void);
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot2_InfosToSend(void);
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot3_InfosToSend(void);
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot4_InfosToSend(void);
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot0_InfosToSend(uint32 *u32DataToDisplay);
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot1_InfosToSend(uint32 *u32DataToDisplay);
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot2_InfosToSend(uint32 *u32DataToDisplay);
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot3_InfosToSend(uint32 *u32DataToDisplay);
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot4_InfosToSend(uint32 *u32DataToDisplay);
+LOCAL boolean cil_Update_07Cx_InfosToSend(uint8 u8TimeSlot);
+LOCAL void cil_Update_07Cx_Block01_InfosToSend(uint8 u8TimeSlot);
+LOCAL void cil_Update_07Cx_Block02_InfosToSend(uint8 u8TimeSlot);
+LOCAL void cil_Update_07Cx_Block03_InfosToSend(uint8 u8TimeSlot);
+LOCAL void cil_Update_07Cx_IncorrectBlock_InfosToSend(uint8 u8BlockIndex);
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+
+/**
+ * \brief
+ *       Variable used to determine if the next block is active
+ *       Initialized to M_U32_BLOCK_MASK(M_CU8_BLOCK_ID_23) - last block
+ */
+LOCAL uint32 cil_u32MeasureNextBlockToSendMask = U32_CIL_BLOCK_MASK(KU8_CIL_BLOCK_ID_03);
+
+
+
+/**
+ * \brief
+ *       This variable is used to store the current ECU State.
+ * \initialization
+ *       INIT_STATE_ACTIVE        - 40
+ * \range
+ *       INIT_STATE_ACTIVE        - 40;
+ *       STARTUP_TWO_A            - 0;
+ *       STARTUP_TWO_B            - 1;
+ *       RUN_MODE_ACTIVE          - 8;
+ *       POST_RUN_MODE_ACTIVE     - 9;
+ *       RUN_MODE_NO_COM_ACTIVE   - 22;
+ *       LOW_PWR_MODE_ACTIVE      - 10;
+ *       SHUTDOWN_MODE_ACTIVE     - 11;
+ *       PROCESS_MODE_ACTIVE      - 26;
+ *       RUN_MODE_FROM_LOW_PWR    - 23;
+ */
+LOCAL uint8 cil_u8LastEcuState = KU8_CIL_INIT_STATE_ACTIVE;
+
+/**
+ * \brief
+ *    Variable used to control periodicity of TX Frame
+ */
+LOCAL uint8 cil_u8MFPeriodCounter = KU8_ZERO;
+/**
+ * \brief
+ *       Variable used to determine what block shall be sent next on the CAN bus
+ *       Initialized to M_CU8_BLOCK_ID_23 - last block
+ */
+LOCAL uint8 cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_03;
+
+/**
+ * \brief
+ *       Variable used to determine when a Rx frame was received
+ */
+LOCAL uint8 cil_u8GliwaRxFlag = KU8_ZERO;
+
+/**
+ * \brief
+ *       Variable used to hold the content of the Gliwa Rx frame
+ */
+LOCAL REC_GliwaDataIn_Type cil_tGliwaRxFrameContent = {KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO};
+
+/**
+ * \brief
+ *       Variable used to hold the time slot counter
+ */
+LOCAL uint8 cil_u8TimeSlotCnt = KU8_ZERO;
+
+/**
+ * \brief
+ *       Variable used to determine the number of the next measurement frame
+ *       block that must be sent on the CAN bus
+ */
+LOCAL uint8 cil_u8MeasureNextBlockSent = KU8_MAX;
+
+
+/**
+ * \brief
+ *       Variable used to determine if a time slot has expired
+ */
+LOCAL boolean cil_bTimeSlotExpired = KB_FALSE;
+
+
+
+/**
+ * \brief
+ *       Variable used to hold the content of the measurement frame that will be
+ *       sent on the CAN bus
+ */
+LOCAL CIL_stFrameDataBytes cil_tMeasurementFrameContent[KU8_CIL_MF_NB_OF_BLOCKS];
+
+/**
+ * \brief
+ *       Variable used to hold the content of the measurement frame that will be
+ *       sent on the CAN bus
+ */
+LOCAL REC_CanDataOut64_Type cil_tMeasurementFrameContentOnBus[KU8_CIL_MF_NB_OF_BLOCKS];
+
+/**
+ * \brief
+ *       The actual content of the measurement frame that will be sent on the CAN bus (8 Byte Chunks)
+ */
+LOCAL REC_CanDataOut64_Type cil_u8EcuCanDataOut_Gliwa_Tx_OnBus;
+
+
+
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/**
+ * \brief
+ *       Array of function pointers that hold the callbacks for each measurement
+ *       frame block. Block 01 is position 01 of the function pointer array.
+ */
+LOCAL const cil_pfBlockFunction_Type cil_kapfBlocksEncodFunc[KU8_CIL_MF_NB_OF_BLOCKS];
+
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 01. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block01_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block01_Timeslot0_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_prrSolenoidPWM;
+*        ARCH_SW_CIL_pclEcuCharacterstics;
+*        ARCH_SW_CIL_pclMcuCharacteristics;
+*        ARCH_SW_CIL_pclPtcSensor;
+*        ARCH_SW_CIL_pclAccSensor;
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot0_InfosToSend(void)
+{
+   /* Get MCU, Accelerometer, PTC Sensor and ECU temperature */
+   Rte_Call_pclMcuCharacteristics_GetTemperature();
+   Rte_Call_pclAccSensor_GetTemperature();
+   Rte_Call_pclPtcSensor_GetTemperature();
+   Rte_Call_pclEcuCharacterstics_GetTemperature();
+
+   /* Get all solenoid PWM in high resolution */
+   Rte_Read_prrSolenoidPWM_au16Pwm();
+
+   /* Lower PWM resolution. 1 byte per solenoid. Resolution: 2^-1 <> 1 lsb = 0.5% */
+   Compute low resolution PWM (0-100%) for each solenoid;
+
+   Send Accelerometer temperature on the CAN bus;
+
+   Send uC temperature on the CAN bus;
+
+   Send PTC resistor sensor temperature on the CAN bus;
+
+   Send computed ECU temperature on the CAN bus;
+
+   Send PWM at 0-100% resolution on the CAN bus for each solenoid;
+}
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 01. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block01_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block01_Timeslot1_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_pclConvAdcService
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot1_InfosToSend(void)
+{
+   /* Parse all solenoids to get their voltage value */
+   Read the solenoid voltage for each solenoid with the Rte_Call_pclConvAdcService_getMeasure interface;
+
+   /* Fill the frame with aquired data */
+   Send the solenoid voltage in mV on the CAN bus;
+}
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 01. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block01_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block01_Timeslot2_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_pclConvAdcService
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot2_InfosToSend(void)
+{
+   /* Parse all solenoids to get their voltage value */
+   Read the solenoid current for each solenoid with the Rte_Call_pclConvAdcService_getMeasure interface;
+
+   /* Fill the frame with aquired data */
+   Send the solenoid current in mA on the CAN bus;
+}
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 01. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block01_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block02_Timeslot3_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_pclConvAdcService;
+*        ARCH_SW_CIL_prrSolenoidShortToGndStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToVccStatus;
+*        ARCH_SW_CIL_prrSolenoidOCStatus;
+*        ARCH_SW_CIL_pclSolenoidCharacteristics;
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot3_InfosToSend(void)
+{
+   /* KL30 */
+   Rte_Call_pclConvAdcService_getMeasure(KU8_ADC_CH_ID_V_BATT);
+
+   /* Get all solenoid error status */
+   Rte_Read_prrSolenoidOCStatus_au8SolenoidAutotestStatus();
+   Rte_Read_prrSolenoidShortToGndStatus_au8SolenoidAutotestStatus();
+   Rte_Read_prrSolenoidShortToVccStatus_au8SolenoidAutotestStatus();
+
+   Read the solenoid temperature in *C for each solenoid with the Rte_Call_pclSolenoidCharacteristics_GetTemperature interface;
+
+   Store the Open Circuit error status for each solenoid in a single byte(CAN signal);
+
+   Store the Short to GND error status for each solenoid in a single byte(CAN signal);
+
+   Store the Short to VBAT status for each solenoid in a single byte(CAN signal);
+
+   /* Fill the frame with aquired data */
+   Send the solenoid temperature in *C for each solenoid on the CAN bus;
+
+   Send the KL30 voltage in mV on the CAN bus;
+   
+   Send the Open Circuit error status for each solenoid on the CAN bus;
+
+   Send the Short to GND error status for each solenoid on the CAN bus;
+
+   Send the Short to VBAT status for each solenoid on the CAN bus;
+}
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 01. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block01_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block02_Timeslot4_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_prrSolenoidStuckStatus;
+*        ARCH_SW_CIL_prrSbcStatusFailiureSource;
+*        ARCH_SW_CIL_prrAccStatusFailiureSource;
+*        ARCH_SW_CIL_prrSolenoidOvervoltageStatus;
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block01_Timeslot4_InfosToSend(void)
+{
+   /* Get TDK Accelerometer Alarms data */
+   Rte_Read_prrAccStatusFailiureSource_u32AccAlarmRegStatus();
+
+   /* Get Crc error flag and Return Status error flag */
+   Rte_Read_prrAccStatusFailiureSource_u8AccCRCStatus();
+   Rte_Read_prrAccStatusFailiureSource_u8AccReturnStatus();
+
+   /* Get SBC status registers data */
+   Rte_Read_prrSbcStatusFailiureSource_u32SbcReg1Status();
+
+   Rte_Read_prrSolenoidStuckStatus_au8SolenoidIsStuck();
+   
+   Rte_Read_prrSolenoidOvervoltageStatus_au8SolenoidOvervoltageStatus();
+
+   Store the Actuator Blocked status for each solenoid in a single byte(CAN signal);
+   
+   Store the Actuator overvoltage status for each solenoid in a single byte(CAN signal);
+
+   /* Fill the frame with aquired data */
+   Send the content returned by the Rte_Read_prrAccStatusFailiureSource_u32AccAlarmRegStatus interface on the CAN bus;
+   
+   Send the content returned by the Rte_Read_prrAccStatusFailiureSource_u8AccCRCStatus interface on the CAN bus;
+   
+   Send the content returned by the Rte_Read_prrAccStatusFailiureSource_u8AccReturnStatus interface on the CAN bus;
+   
+   Send the content returned by the Rte_Read_prrSbcStatusFailiureSource_u32SbcReg1Status interface on the CAN bus;
+
+   Send the Actuator Blocked status for each solenoid on the CAN bus;
+   
+   Send the Actuator Overvoltage status for each solenoid on the CAN bus;
+
+}
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 03. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \inputparam
+*        Name: u32DataToDisplay;
+*        Type: uint32 *;
+*        Description: Data pointer to data that should be displayed on the CAN bus;
+*        Range: 0..5;
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block03_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block03_Timeslot0_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot0_InfosToSend(uint32 *u32DataToDisplay)
+{
+   /* Reserved for 1st RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 1st array index; 
+
+   /* Reserved for 2nd RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 2nd array index; 
+
+   /* Reserved for 3rd RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 3rd array index; 
+}
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 03. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \inputparam
+*        Name: u32DataToDisplay;
+*        Type: uint32 *;
+*        Description: Data pointer to data that should be displayed on the CAN bus;
+*        Range: 0..5;
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block03_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block03_Timeslot1_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot1_InfosToSend(uint32 *u32DataToDisplay)
+{
+   /* Reserved for 4th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 1st array index; 
+
+   /* Reserved for 5th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 2nd array index; 
+
+   /* Reserved for 6th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 3rd array index; 
+}
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 03. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \inputparam
+*        Name: u32DataToDisplay;
+*        Type: uint32 *;
+*        Description: Data pointer to data that should be displayed on the CAN bus;
+*        Range: 0..5;
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block03_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block03_Timeslot2_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot2_InfosToSend(uint32 *u32DataToDisplay)
+{
+   /* Reserved for 7th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 1st array index; 
+
+   /* Reserved for 8th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 2nd array index; 
+
+   /* Reserved for 9th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 3rd array index; 
+}
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 03. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \inputparam
+*        Name: u32DataToDisplay;
+*        Type: uint32 *;
+*        Description: Data pointer to data that should be displayed on the CAN bus;
+*        Range: 0..5;
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block03_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block03_Timeslot3_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot3_InfosToSend(uint32 *u32DataToDisplay)
+{
+   /* Reserved for 10th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 1st array index; 
+
+   /* Reserved for 11th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 2nd array index; 
+
+   /* Reserved for 12th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 3rd array index; 
+}
+
+
+/**
+* \brief
+*        This function gather the relevant data that will be sent on the CAN bus on
+*        Measurement Frame Block 03. Function is split into 5 timeslots for offsetting
+*        cpu load intensive function calls
+* \inputparam
+*        Name: u32DataToDisplay;
+*        Type: uint32 *;
+*        Description: Data pointer to data that should be displayed on the CAN bus;
+*        Range: 0..5;
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        cil_Update_07Cx_Block03_InfosToSend
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block03_Timeslot4_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block03_Timeslot4_InfosToSend(uint32 *u32DataToDisplay)
+{
+   /* Reserved for 13th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 1st array index; 
+
+   /* Reserved for 14th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 2nd array index; 
+
+   /* Reserved for 15th RAM address */
+   Send the data to display as received in the u32DataToDisplay parameter on the CAN bus for the 3rd array index; 
+}
+
+/**
+* \brief
+*        This function fill the CAN buffer for the measurement frame sent
+*        when the block number to send is 01. Content of Block 01 on the CAN bus
+*        will be various physical measurements internal to the uC
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 01.
+* \dynamicaspectcaller
+*        CIL_runManageMF
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block01_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block01_InfosToSend(uint8 u8TimeSlot)
+{
+   /******************************************/
+   /* Read infos from application components */
+   /******************************************/
+   switch(u8TimeSlot)
+   {
+   case KU8_CIL_TIME_SLOT_0:
+
+      /* function call for block 0 timeslot 0 */
+      cil_Update_07Cx_Block01_Timeslot0_InfosToSend();
+      
+      break;
+   case KU8_CIL_TIME_SLOT_1:
+
+      /* function call for block 0 timeslot 1 */
+      cil_Update_07Cx_Block01_Timeslot1_InfosToSend();
+      
+      break;
+   case KU8_CIL_TIME_SLOT_2:
+
+      /* function call for block 0 timeslot 2 */
+      cil_Update_07Cx_Block01_Timeslot2_InfosToSend();
+
+      break;
+   case KU8_CIL_TIME_SLOT_3:
+      
+      /* function call for block 0 timeslot 3 */
+      cil_Update_07Cx_Block01_Timeslot3_InfosToSend();
+
+      break;
+   case KU8_CIL_TIME_SLOT_4:
+
+      /* function call for block 0 timeslot 4 */
+      cil_Update_07Cx_Block01_Timeslot4_InfosToSend();
+
+      break;
+   default:
+      /* function called with wrong argument */
+      cil_Update_07Cx_IncorrectBlock_InfosToSend(KU8_CIL_MF_INVALID_BLOCK_ID);
+      break;
+   }
+}
+
+/**
+* \brief
+*        This function fill the CAN buffer for the measurement frame sent
+*        when the block number to send is 02. Content of Block 02 on the CAN bus
+*        will reflect the current Dem Event status for all Events.
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 02.
+* \dynamicaspectcaller
+*        CIL_runManageMF
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block02_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block02_InfosToSend(uint8 u8TimeSlot)
+{
+   Read the Dem event status for each event via the Dem_GetEventStatus interface;
+
+   Store the Dem event id and status in the buffer that will be sent on the CAN bus;
+
+   /* Fill ID and the rest of the frame on the last timeslot */
+   if (KU8_CIL_TIME_SLOT_4 == u8TimeSlot)
+   {
+      Fill the unused bytes with 0xFF;
+
+      Send the Block 02 frame content on the CAN bus in 8 byte chunks;
+   }
+}
+
+/**
+* \brief
+*        This function fill the CAN buffer for the measurement frame sent
+*        when the block number to send is 03. Content of block 3 on the CAN bus
+*        will be values present at certain RAM addresses as configured in
+*        NVP_au32RequestedRamAddressArray and NVP_au8RequestedRamSizeArray
+* \constrains
+*        NVP_au8MeasFrameBlockConfig is configured for Block 03.
+* \dynamicaspectcaller
+*        CIL_runManageMF
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_Block03_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE void cil_Update_07Cx_Block03_InfosToSend(uint8 u8TimeSlot)
+{
+
+
+
+   Check the validity of the NVP_au32RequestedRamAddressArray address configuration with the ranges configured in the Autosar Dcm module for all 15 possible blocks;
+
+   if(Address is valid)
+   {
+      Extract data that needs to be displayed according to the requested size(NVP_au8RequestedRamSizeArray);
+   }
+   else
+   {
+      /* No valid RAM address was requested, go to the next address */
+   }
+
+   /* Fill frame with information aqquried (time slot based) */
+   switch(u8TimeSlot)
+   {
+   case KU8_CIL_TIME_SLOT_0:
+
+      /* function call measurement block 3 for timeslot 0 */
+      cil_Update_07Cx_Block03_Timeslot0_InfosToSend(Data to display);
+
+      break;
+   case KU8_CIL_TIME_SLOT_1:
+
+      /* function call measurement block 3 for timeslot 1 */
+      cil_Update_07Cx_Block03_Timeslot1_InfosToSend(Data to display);
+
+      break;
+   case KU8_CIL_TIME_SLOT_2:
+
+      /* function call measurement block 3 for timeslot 2 */
+      cil_Update_07Cx_Block03_Timeslot2_InfosToSend(Data to display);
+
+      break;
+   case KU8_CIL_TIME_SLOT_3:
+
+      /* function call measurement block 3 for timeslot 3 */
+      cil_Update_07Cx_Block03_Timeslot3_InfosToSend(Data to display);
+
+      break;
+   case KU8_CIL_TIME_SLOT_4:
+
+      /* function call measurement block 3 for timeslot 4 */
+      cil_Update_07Cx_Block03_Timeslot4_InfosToSend(Data to display);
+
+      break;
+   default:
+      /* Function called with wrong argument */
+      cil_Update_07Cx_IncorrectBlock_InfosToSend(KU8_CIL_MF_INVALID_BLOCK_ID);
+      break;
+   }
+}
+
+/**
+* \brief
+*        This function fill the CAN buffer with 0 in case incorrect measurement
+*        frame block is requested.
+* \dynamicaspectcaller
+*        CIL_runManageMF
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_IncorrectBlock_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE void cil_Update_07Cx_IncorrectBlock_InfosToSend(uint8 u8BlockIndex)
+{
+   Send the CAN frame filled with 0x00 on the CAN bus;
+}
+
+/**
+* \brief
+*        This function will fill the CAN buffer for measurement frames.
+*        Function shall check if there are measurement block activated in NVM.
+* \dynamicaspectcaller
+*        CIL_runManageMF
+* \dynamicaspectdescription
+*        Internally called by CIL component.
+* \ddesignrequirement
+*        DSG_cil_Update_07Cx_InfosToSend
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame
+**/
+LOCAL_INLINE boolean cil_Update_07Cx_InfosToSend(uint8 u8TimeSlot)
+{
+
+   Check if there are activated blocks;
+   
+   if (KU32_ZERO != u32CILMFSelectedBlocks)
+   {
+      do
+      {
+         Update the block to send for next frame transmission;
+         Set the next bit position to check if the associated block is activated;
+         if (cil_u32MeasureNextBlockToSendMask >= U32_CIL_BLOCK_MASK(KU8_CIL_BLOCK_ID_03))
+         {
+            Previous tested bit was the last implemented block, go back to bit 0 (corresponding to block 01);
+         }
+         else
+         {
+            Increment the bit position to test (right to left bit search);
+         }
+      } while ((cil_u32MeasureNextBlockToSendMask & u32CILMFSelectedBlocks) == (uint32)KU8_ZERO);
+
+      Check if block encoding function is implemented;
+      if (KU8_CIL_MF_NB_OF_BLOCKS >= cil_u8MeasureNextBlockToSend)
+      {
+         Call function corresponding to requested block;
+      }
+   }
+   else
+   {
+      Nothing to do, no block activated;
+   }
+}
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+/**
+* \brief
+*        This function is used to notify the reception of a GLIWA frame
+* \dynamicaspectcaller
+*        Called by BswMIf module
+* \dynamicaspectdescription
+*        Called in BswMIf module when ECU state is changed
+* \ddesignrequirement
+*        DSG_CIL_Rx_Gliwa_Ind
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_GliwaDataIn_Framez
+**/
+void CIL_Rx_Gliwa_Ind(void)
+{
+   Rte_COMCbk_GRGliwaInGroup_300R();
+   cil_u8GliwaRxFlag = KU8_ONE;
+}
+
+/**
+* \brief
+*       This function is used to update the current
+*       ECU state signal on MF_Logger frame.
+* \inputparam
+*       Name: u8CurrentEcuState;
+*       Type: uint8;
+*       Description: Current ECU state to set on signal;
+*       Range: NA.;
+* \dynamicaspectcaller
+*       Called by BswMIf module
+* \dynamicaspectdescription
+*       Called in BswMIf module when ECU state is changed
+* \ddesignrequirement
+*     DSG_CIL_updateCurrentEcuState
+* \archrequirement
+*     ARCH_SW_CIL_pseSetEcuStateSignal;
+*     ARCH_SW_CIL_P_CAN_MF_Logger_Frame;
+**/
+EXPORTED void CIL_updateCurrentEcuState(uint8 u8CurrentEcuState)
+{
+   if(cil_u8LastEcuState != u8CurrentEcuState)
+   {
+      if (NVP_u8MeasFrameTiming is configured)
+      {
+         /* Update frame signal */
+         Rte_Write_CIL_P_CAN_MF_Logger_Frame_MfLogger(u8CurrentEcuState);
+      }
+      cil_u8LastEcuState = u8CurrentEcuState;
+   }
+}
+
+/**
+* \brief
+*        The CIL_runManageMF service transmits data periodically on the CAN bus
+*        based on the NVP_u8MeasFrameTiming and NVP_au8MeasFrameBlockConfig
+*        variables that are store in NvM.
+* \constrains
+*        NVP_u8MeasFrameTiming and NVP_au8MeasFrameBlockConfig is correctly configured.
+* \dynamicaspectcaller
+*        Scheduler.
+* \dynamicaspectdescription
+*        Called at 10 ms.
+* \ddesignrequirement
+*        DSG_CIL_runManageMF
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_MF_Frame;
+*        ARCH_SW_CIL_P_CAN_GliwaDataIn_Frame;
+**/
+EXPORTED void CIL_runManageMF(void)
+{
+   if(cil_u8GliwaRxFlag == KU8_ONE)
+   {
+      if(B_TRUE == NVP_Gliwa_Enable)
+      {
+         Call GLIWA notification;
+      }
+   }
+   if (KU8_ZERO != NVP_u8MeasFrameTiming)
+   {
+      Check if is it time for a new block;
+
+      Prepare next time slot;
+
+      if (cil_u8TimeSlotCnt >= KU8_CIL_TIME_SLOTS)
+      {
+         Reset time slot;
+      }
+      else
+      {
+         Intermediary time slot;
+      }
+
+      if (KU8_ZERO == cil_u8MFPeriodCounter)
+      {
+         Info was updated and at least 1 time slot full cycle was executed;
+         if ((B_TRUE == bInfoUpdated) && (B_TRUE == cil_bTimeSlotExpired))
+         {
+            if (cil_u8MeasureNextBlockToSend == cil_u8MeasureNextBlockSent)
+            {
+               This block was sent last cycle, check number of blocks activated;
+               switch(cil_u8MeasureNextBlockToSend)
+               {
+               case KU8_CIL_BLOCK_ID_01:
+                  Check if more than one block is activated
+                  if ((au8MaskToCheck != (uint8)CIL_BLOCK_MASK_12) && (au8MaskToCheck != (uint8)CIL_BLOCK_MASK_13))
+                  {
+                     cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_01;
+                  }
+                  else if (au8MaskToCheck == (uint8)CIL_BLOCK_MASK_12)
+                  {
+                     cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_02;
+                  }
+                  else
+                  {
+                     cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_03;
+                  }
+
+                  break;
+               case KU8_CIL_BLOCK_ID_02:
+                  Check if more than one block is activated
+                  if ((au8MaskToCheck != (uint8)CIL_BLOCK_MASK_12) && (au8MaskToCheck != (uint8)CIL_BLOCK_MASK_23))
+                  {
+                     cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_02;
+                  }
+                  else if (au8MaskToCheck == (uint8)CIL_BLOCK_MASK_12)
+                  {
+                     cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_01;
+                  }
+                  else
+                  {
+                     cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_03;
+                  }
+
+                  break;
+               case KU8_CIL_BLOCK_ID_03:
+                  Check if more than one block is activated
+                  if ((au8MaskToCheck != (uint8)CIL_BLOCK_MASK_13) && (au8MaskToCheck != (uint8)CIL_BLOCK_MASK_23))
+                  {
+                     cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_03;
+                  }
+                  else if (au8MaskToCheck == (uint8)CIL_BLOCK_MASK_13)
+                  {
+                     cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_01;
+                  }
+                  else
+                  {
+                     cil_u8MeasureNextBlockToSend = KU8_CIL_BLOCK_ID_02;
+                  }
+
+                  break;
+               default:
+                  This should not be possible;
+                  break;
+               }
+            }
+            else
+            {
+               Nothing to do;
+            }
+
+            Write data to sent;
+            
+            Remember block sent;
+            
+            Reset time slot mechanism;
+         }
+         else
+         {
+            if (B_TRUE != bInfoUpdated)
+            {
+               Suspend measurement frame sending since there are no blocks activated;
+            }
+            else
+            {
+               No operation; wait for the time slot mechanism;
+            }
+         }
+
+         Reload period counter;
+      }
+      else
+      {
+         Nothing to do;
+      }
+   }
+   else
+   {
+      MF Disabled;
+   }
+}
+
+/**
+* \brief
+*        The runnable shall transmit the data received on the CAN bus to the rest
+*        of the T1 Gliwa library
+* \inputparam
+*        Name: data;
+*        Type: REC_GliwaDataIn_Type *;
+*        Description: Content of frame received on the CAN bus;
+* \constrains
+*        NVP_Gliwa_Enable must be enabled in the Calibration block
+* \dynamicaspectcaller
+*        CIL_runManageMF
+* \dynamicaspectdescription
+*        Called internally in CIL
+* \ddesignrequirement
+*        DSG_CIL_Gliwa_RxNotification
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_GliwaDataIn_Frame
+**/
+EXPORTED void CIL_Gliwa_RxNotification(REC_GliwaDataIn_Type *data)
+{
+   Pass the frame content to the T1_AppReceiveFrame interface;
+}
+
+/**
+* \brief
+*       The runnable shall transmit the data received from the T1 Gliwa library
+*       on the CAN bus
+* \inputparam
+*       Name: data;
+*       Type: CIL_stFrameDataBytes *;
+*       Description: Content received from the T1 Gliwa library;
+* \outputparam
+*       None;
+* \constrains
+*       NVP_Gliwa_Enable must be enabled in the Calibration block
+* \dynamicaspectcaller
+*       T1_TransmitFrame
+* \dynamicaspectdescription
+*       Called by the T1 Gliwa library
+* \ddesignrequirement
+*       DSG_CIL_Gliwa_TXNotification
+* \archrequirement
+*       ARCH_SW_CIL_P_CAN_GliwaDataOut_Frame
+**/
+EXPORTED void CIL_Gliwa_TXNotification(CIL_stFrameDataBytes *data)
+{
+   Prepare data that will be sent on the CAN bus in 8 byte chunks;
+
+   /* Sent information to CAN */
+   Rte_Write_P_CAN_GliwaDataOut_Frame_GliwaCanDataOut();
+}
+
+
+
+/******************************************************************************
+Evolution of the component
+
+Created by : F.GILBERT
+
+$Log: CIL_ManageMFTransmission.c_template  $
+Revision 1.3.1.9 2023/07/18 08:30:01CEST David Puscasu (david.puscasu) 
+Update Traceability on CIL
+Revision 1.3.1.8 2023/06/26 14:24:35EEST Mihai Motoc (mihai.motoc) 
+Update Detailed Design Documents
+Revision 1.3.1.7 2023/06/21 15:39:40EEST Mihai Motoc (mihai.motoc) 
+Update Detailed Design Documents
+Revision 1.3.1.6 2023/06/19 09:48:23EEST Lucian Ardeleanu (lucian.ardeleanu) 
+[DSG] Detailed Design Documents to be fixed
+Revision 1.3.1.5 2023/05/17 08:59:13EEST Dan Dustinta (dan.dustinta) 
+updat ddesign
+Revision 1.3.3.45 2023/05/16 15:01:22EEST Dan Dustinta (dan.dustinta) 
+update findings after PRWB
+Revision 1.3.3.44 2023/05/15 16:20:26EEST Ioan Repede (ioan.repede) 
+Update RTE connection for SolenoidStuckStatus prot from FSM.
+Revision 1.3.3.43 2023/05/10 14:10:37EEST Mihai Motoc (mihai.motoc) 
+Code Fixes for QAC
+Revision 1.3.3.42 2023/04/28 10:28:48EEST Dan Dustinta (dan.dustinta) 
+add stub implementation for sol overvoltage/ power stage auto-tests
+Revision 1.3.3.41 2023/04/25 11:13:42EEST Lucian Ardeleanu (lucian.ardeleanu) 
+[SRC] Current measurement bugfix
+Revision 1.3.3.40 2023/04/20 17:26:47EEST Gabriel Brasoveanu (gabriel.brasoveanu) 
+Handle new signals imported from K-matrix
+Revision 1.3.3.39 2023/04/20 13:59:44EEST Dan Dustinta (dan.dustinta) 
+update traceability and comments
+Revision 1.3.3.38 2023/04/19 15:12:44EEST Dan Dustinta (dan.dustinta) 
+add define for CIL nb of backups
+Revision 1.3.3.37 2023/04/19 09:23:22EEST Dan Dustinta (dan.dustinta) 
+split into local functions
+Revision 1.3.3.36 2023/04/18 16:59:51EEST Dan Dustinta (dan.dustinta) 
+update comments in CIL
+Revision 1.3.3.35 2023/04/18 15:24:57EEST Dan Dustinta (dan.dustinta) 
+add local functions
+Revision 1.3.3.34 2023/04/03 11:11:05EEST Gabriel Brasoveanu (gabriel.brasoveanu) 
+Update block 3 implementation
+Revision 1.3.3.33 2023/03/24 08:46:25EET Septimiu Vintila (septimiu.vintila) 
+Changes after review.
+Revision 1.3.3.32 2023/03/15 15:15:43EET Septimiu Vintila (septimiu.vintila) 
+QAC related code changes.
+Revision 1.3.3.31 2023/03/14 11:39:45EET Gabriel Brasoveanu (gabriel.brasoveanu) 
+Measurement frame, Gliwa Out frame and DevKit frame changed from 64 signals of 1 byte to 8 signals of 8 bytes
+Revision 1.3.3.28 2023/03/10 11:25:32EET Septimiu Vintila (septimiu.vintila) 
+MF redesign; cast corrected in CanToAppli
+Revision 1.3.3.27 2023/03/08 12:16:53EET Septimiu Vintila (septimiu.vintila) 
+High limit formula fixed.
+Revision 1.3.3.26 2023/03/07 14:28:10EET Septimiu Vintila (septimiu.vintila) 
+Rework on sync mechanism; solenoid error reporting fixed.
+Revision 1.3.3.25 2023/03/07 12:14:38EET Septimiu Vintila (septimiu.vintila) 
+Syncronization mechanism (time-slot mechanism with transmision mechanism) fixed.
+Revision 1.3.3.24 2023/03/06 15:03:25EET Septimiu Vintila (septimiu.vintila) 
+Cast to uint8 changed to cast to uint16 to avoid data lost.
+Revision 1.3.3.23 2023/03/06 10:47:33EET Septimiu Vintila (septimiu.vintila) 
+Changes due to QAC warnings.
+Revision 1.3.3.22 2023/03/03 12:35:24EET Dan Dustinta (dan.dustinta) 
+update MF handling
+Revision 1.3.3.21 2023/03/02 18:19:00EET Dan Dustinta (dan.dustinta) 
+remove duplicate for loops
+Revision 1.3.3.20 2023/03/02 15:23:05EET David Puscasu (david.puscasu) 
+Add QAC preporcessor
+Revision 1.3.3.19 2023/03/02 14:45:29EET David Puscasu (david.puscasu) 
+Add ACC and SBC Alarm registers data on Measurement Frames
+Revision 1.3.3.18 2023/03/02 13:33:38EET Lucian Ardeleanu (lucian.ardeleanu) 
+[eCS][SRC] Add in CIL capability to detect which solenoid is faulty
+Revision 1.3.3.17 2023/03/01 13:54:35EET Dan Dustinta (dan.dustinta) 
+fix memory section
+Revision 1.3.3.16 2023/02/15 10:07:34EET Septimiu Vintila (septimiu.vintila) 
+QAC related code changes.
+Revision 1.3.3.15 2023/01/30 09:31:47EET Dan Dustinta (dan.dustinta) 
+add CIL callback
+Revision 1.3.3.14 2023/01/16 15:00:23EET Septimiu Vintila (septimiu.vintila) 
+Maximum number of solenoids macro replaced.
+Revision 1.3.3.13 2023/01/16 14:12:34EET Septimiu Vintila (septimiu.vintila) 
+Double protection removed.
+Revision 1.3.3.12 2023/01/16 13:35:05EET Septimiu Vintila (septimiu.vintila) 
+Variables name changed.
+Revision 1.3.3.11 2023/01/16 11:38:46EET Septimiu Vintila (septimiu.vintila) 
+Fixes after review.
+Revision 1.3.3.10 2023/01/13 12:10:26EET Dan Dustinta (dan.dustinta) 
+enable all solenoid measurements
+Revision 1.3.3.8 2023/01/13 09:06:47EET Dan Dustinta (dan.dustinta) 
+revet Gliwa frame NVP var
+Revision 1.3.3.7 2023/01/12 16:44:20EET Dan Dustinta (dan.dustinta) 
+add event on MF
+Revision 1.3.3.5 2023/01/09 10:13:17EET Septimiu Vintila (septimiu.vintila) 
+Gliwa TX Frame protected with NVP variable.
+Revision 1.3.3.4 2022/12/14 11:35:54EET Septimiu Vintila (septimiu.vintila) 
+Integration for Gliwa related Tx/Rx frames.
+Revision 1.3.3.3 2022/11/24 10:13:15EET Septimiu Vintila (septimiu.vintila) 
+CIL implemantation.
+Revision 1.6 2022/03/22 14:37:47EET Pierre-Olivier Pilot (pierre-olivier.pilot)
+eCS_ECUV.007:
+* SPIIF: update Accel init sequence: remove filter configuration (we select bank 6 but we configure register from bank 0 => drift issue). Only the full scale register is written
+   * Implements a test function to get accelerometer temperautre. Output in MF block 4
+* Remove 2g variant configuration. Force accelerometer to use 4g
+* Fix SAD following cycle management. A bug was found when going grom lock to unlock, the holding profile was run for 1ms then the unlocking one was triggered.
+* DIA RC: update calibration
+Revision 1.5 2022/03/09 14:27:32CET Pierre-Olivier Pilot (pierre-olivier.pilot)
+eCS_ECUV.005:
+ Fix DIO index for Boost
+ Add Enable for boost 2
+
+eCS_ECUV.004:
+ Fix ADCIF "getMeasure" value for KL30
+ Fix Az offset value for +/-16g calibration
+Revision 1.4 2021/12/23 14:30:18CET Pierre-Olivier Pilot (pierre-olivier.pilot)
+DID FDE7
+Revision 1.3 2021/12/23 09:25:35CET Pierre-Olivier Pilot (pierre-olivier.pilot)
+Add IIR filter for solenoids current, RID to lock/unlock solenoid and some fixes
+Revision 1.2 2021/10/27 08:52:23CEST Pierre-Olivier Pilot (pierre-olivier.pilot)
+Intermediate release.
+- Update MCU Pinout
+- Configure ADC
+- Add LuT for NTC temperature
+- Add Measurement frame. (Id to be changed)
+- Add current regulation in SAD (PI controller)
+- Add solenoid discrete model in targetlink
+Revision 1.1 2021/08/26 08:16:54CEST Pierre-Olivier Pilot (pierre-olivier.pilot)
+Initial revision
+
+*****************************************************************************/
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

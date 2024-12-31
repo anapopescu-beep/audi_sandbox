@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd" T="2022-08-26T12:36:25+03:00">
+  <AR-PACKAGES>
+    <AR-PACKAGE T="2022-08-26T12:36:41+03:00" UUID="fa1482be-89d9-4301-b258-af546d4bc79b">
+      <SHORT-NAME>EB</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2022-08-26T12:36:41+03:00">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <ELEMENTS>
+            <SERVICE-SW-COMPONENT-TYPE T="2022-08-26T12:36:41+03:00" UUID="DCE:20eecf4e-ebe8-4917-9aff-b1dc92c7c5b5">
+              <SHORT-NAME>NvM</SHORT-NAME>
+              <CATEGORY>ASR_Interfaces</CATEGORY>
+              <PORTS>
+                <P-PORT-PROTOTYPE T="2022-08-28T09:58:01+03:00" UUID="ed8793b1-b9f8-48ce-bcc2-426f603a1cc6">
+                  <SHORT-NAME>ptrpAsrNvMServicesBswMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrNvMServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE T="2022-08-26T12:14:21+03:00" UUID="06cfb54d-9df0-4456-be39-b16e7bfacfc1">
+                  <SHORT-NAME>ptrrNvMServicesBswMIf</SHORT-NAME>
+                  <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrNvMServices</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR T="2022-08-26T11:48:07+03:00" UUID="56a21459-cba6-440a-9NvM-0d5b62a594bd">
+                  <SHORT-NAME>NvM_IB</SHORT-NAME>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY T="2022-08-26T11:48:12+03:00" UUID="DCE:b81a37b4-a8c3-4f6a-baf1-7b27bc7cc7f6">
+                      <SHORT-NAME>NvM_Init</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>NvM_Init</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:ec526d2a-8eee-4f6c-a71a-ee9b56f6d8fa">
+                      <SHORT-NAME>NvM_MainFunction</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>NvM_MainFunction</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:0de804b6-c093-426c-af9c-fae30de931dd">
+                      <SHORT-NAME>NvM_ReadAll</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>NvM_ReadAll</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:c46b5157-42b0-41fe-b196-594d5800c520">
+                      <SHORT-NAME>NvM_WriteAll</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>NvM_WriteAll</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </SERVICE-SW-COMPONENT-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <AR-PACKAGE T="2022-08-26T12:36:48+03:00" UUID="83dbf1d3-fd69-4d31-99ba-2a110ed331f7">
+          <SHORT-NAME>TriggerInterfaces</SHORT-NAME>
+          <ELEMENTS>
+            <TRIGGER-INTERFACE T="2022-08-26T12:36:57+03:00">
+              <SHORT-NAME>itrAsrNvMServices</SHORT-NAME>
+              <TRIGGERS>
+                <TRIGGER UUID="879276bc-2256-4875-beb5-20201ae06826">
+                  <SHORT-NAME>BswM_CB_NfyNvMJobEnd</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="67a5e2dc-d654-4852-8b2c-4e8c35447ba7">
+                  <SHORT-NAME>NvM_Init</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="a398b612-18bf-4ca4-9914-b0dfff17025f">
+                  <SHORT-NAME>NvM_MainFunction</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="ec50dc97-a05c-4137-9b4b-a19679b09546">
+                  <SHORT-NAME>NvM_ReadAll</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="0b5543d0-be10-4072-93d2-7378fe96fbb8">
+                  <SHORT-NAME>NvM_WriteAll</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+              </TRIGGERS>
+            </TRIGGER-INTERFACE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

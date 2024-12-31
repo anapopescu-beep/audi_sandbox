@@ -1,0 +1,1630 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version:
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.8 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/FSM/Design/project.pj $
+*/
+
+/*!****************************************************************************
+
+details
+   The purpose of this module is to handle the state of the solenoids based on
+   signals, events and diagnostic requests.
+
+******************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "FSM.h"
+#include "Rte_FSM.h"
+#include "Nvp_Cfg.h"
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+/**
+ *\brief
+ *      Specify that the self-test for solenoid not blocked is not requested
+ */
+#define KU8_FSM_NO_SELF_TEST_REQ                ((uint8)  0)
+
+/**
+ *\brief
+ *      Specify that the self-test for solenoid not blocked is requested
+ */
+#define KU8_FSM_SELF_TEST_REQ                   ((uint8)  1)
+
+/**
+ *\brief
+ *      Specify that the self-test for solenoid not blocked is completed
+ */
+#define KU8_FSM_SELF_TEST_COMPLETED             ((uint8)  1)
+
+/**
+ *\brief
+ *      Specify that the self-test for solenoid not blocked is not completed
+ */
+#define KU8_FSM_SELF_TEST_NOT_COMPLETED         ((uint8)  0xFF)
+
+/**
+ *\brief
+ *      The value indicates the solenoid has no error confirmed
+ */
+#define KU8_FSM_NO_ERROR                        ((uint8)  0x00)
+
+/**
+ *\brief
+ *      The value indicates the solenoid has qualified an error which
+ *      disables the functionality of the solenoid while is present
+ */
+#define KU8_FSM_ABORTION_ERROR                  ((uint8)  0x01)
+
+/**
+ *\brief
+ *      The value indicates the solenoid has qualified an error which
+ *      inhibits the functionality of the solenoid but allow the profile to run
+ *      in order to check again the error condition
+ */
+#define KU8_FSM_INHIBITION_ERROR                ((uint8)  0x02)
+
+/**
+ *\brief
+ *      The value indicates the solenoid is disabled
+ */
+#define KU8_FSM_SOLENOID_DISABLE                ((uint8)  0x03)
+
+/**
+ *\brief
+ *      Indicates the position of the option byte from the step description
+ */
+#define KU8_FSM_INDEX_OF_OPTION_BYTE            ((uint8) 6)
+
+/**
+ *\brief
+ *      Indicate the byte index of the first step of a profile
+ */
+#define KU8_FSM_INDEX_OF_FIRST_STEP             ((uint8)  4)
+
+/**
+ *\brief
+ *      Indicate the size in bytes of a seat belt profile
+ */
+#define KU8_FSM_PROFILE_SIZE                    ((uint8) 12)
+
+/**
+ *\brief
+ *      Indicate the size in bytes of a step
+ */
+#define KU8_FSM_STEP_SIZE                       ((uint8)  7)
+
+/**
+ *\brief
+ *      Indicate there is no used step for the profile
+ */
+#define KU8_FSM_NO_STEP                         ((uint8) 0xFF)
+
+/**
+ *\brief
+ *      Sub-System state used in Backup profile management
+ *      for locking state
+ */
+#define KU8_FSM_BACKUP_LOCK_SUBSTATE            ((uint8) KU8_LOCK_STATE)
+
+/**
+ *\brief
+ *      Sub-System state used in Backup profile management for the backup state
+ */
+#define KU8_FSM_BACKUP_SUBSTATE                 ((uint8) KU8_BACKUP_STATE)
+
+/**
+ *\brief
+ *      Sub-System state used in Backup profile management if solenoid unlock was confirmed
+ */
+#define KU8_FSM_BACKUP_CONFIRMED_SUBSTATE       ((uint8) 0x03)
+
+/**
+ *\brief
+ *      Indicate the number of repeated backups that can
+ *      be done before qualifying the error
+ */
+#define KU8_FSM_NB_OF_BACKUPS                   ((uint8) NVP_u8NbOfBackups)
+
+/**
+ *\brief
+ *      Time value in milli-seconds representing the duration of executing Step 5
+ *      which is the first step of any profile
+ */
+#define KU16_FSM_STEP_5_DURATION                   ((uint16) 50)
+
+/**
+ *\brief
+ *      Time value in milli-seconds representing the duration of reaching
+ *      the infinite step profile
+ */
+#define KU16_FSM_REACH_INFINITE_STEP_DURATION      ((uint16) 300)
+
+/**
+ *\brief
+ *      Indicate the duration expressed in milliseconds(multiple of 1ms) used to
+ *      execute the Lock profile before running the startup sequence
+ */
+#define KU16_FSM_STARTUP_LOCK_TIMEOUT_OFFSET    ((uint16) NVP_u16StartupLockTimeout)
+
+/**
+ *\brief
+ *      Timeout offset expressed in milliseconds (multiple of 1ms) used to
+ *      confirm the unlock action
+ */
+#define KU16_FSM_UNLOCK_CONFIRMATION_TIMEOUT_OFFSET                  ((uint16) NVP_u16UnlockConfirmationTimeout)
+
+/**
+ *\brief
+ *      Timeout offset expressed in milliseconds (multiple of 1ms) applied
+ *      on detecting unlocking action time
+ */
+#define KU16_FSM_UNLOCK_DETECTION_TIMEOUT_OFFSET                     ((uint16) NVP_u16UnlockDetectionTimeout)
+
+/**
+ *\brief
+ *      Timing OFFSET (multiple of 1ms) used in
+ *      repeating cyclic  backup profile
+ */
+#define KU16_FSM_REPEAT_PROFILE_TIMEOUT                              ((uint16) NVP_u16RepeatProfileTimeout)
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+LOCAL uint8 fsm_GetDiagRequest(const uint8 ku8SolenoidId);
+LOCAL uint8 fsm_CheckStartupSelfTest(const uint8 ku8SolenoidId);
+LOCAL uint8 fsm_ManageSolenoidErrors(const uint8 ku8SolenoidId);
+LOCAL void fsm_ProcessingInputSignals(void);
+LOCAL void fsm_RunSolenoidStateManagement(const uint8 ku8SolenoidId);
+LOCAL void fsm_RunStartupSequence(const uint8 ku8SolenoidId);
+LOCAL void fsm_RunBackupProfile(const uint8 ku8SolenoidId);
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/**
+ * \brief
+ *       Used to store the Rte return status that signals that the corresponding
+ *       sender receiver interface has been previously written before read.
+ * \initialization
+ *       FALSE (boolean 0).
+ * \range
+ *       KB_FALSE
+ *       KB_TRUE;
+ */
+LOCAL boolean fsm_bRteIsu8EcsFlagUpdated = KB_FALSE;
+
+/**
+ * \brief
+ *       Used to indicate if an Unlock request was read for the first time after
+ *       a lock state.
+ *
+ * \initialization
+ *       KB_FALSE ((boolean) 0x00).
+ * \range
+ *       ;
+ */
+LOCAL boolean fsm_bFirstUnlock = KB_FALSE;
+
+/**
+ * \brief
+ *       Used to store each solenoid's state flag, which represents if the
+ *       timeout interval for detecting unlock was reached.
+ * \initialization
+ *       KB_FALSE (boolean 0).
+ * \range
+ *       KB_FALSE
+ *       KB_TRUE;
+ */
+LOCAL boolean fsm_abUnlockTimeout[KU8_MAX_SOLENOID_NB] =
+{
+   KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE
+};
+
+/**
+ * \brief
+ *       Used to indicate if a transition from a LOCK to UNLOCK request was made
+ *       while inhibition errors are present.
+ * \initialization
+ *       KB_FALSE (boolean 0).
+ * \range
+ *       KB_FALSE
+ *       KB_TRUE;
+ */
+LOCAL boolean fsm_abNewUnlockRequestUnderError[KU8_MAX_SOLENOID_NB] =
+{
+   KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE
+};
+
+/**
+ * \brief
+ *       The variable is used to store the index of the last controlled solenoid
+ *       in order to start the new cycle with the next one.
+ *
+ * \initialization
+ *       KU8_SOLENOID_1 ((uint8) 0).
+ * \range
+ *       KU8_SOLENOID_1...KU8_SOLENOID_6;
+ */
+LOCAL uint8 fsm_u8SolenoidLastIndex = KU8_SOLENOID_1;
+
+/**
+ * \brief
+ *       The variable is used to store the counter value used to determine how
+ *       many cycles all solenoids will be controlled in the same function call.
+ *
+ * \initialization
+ *       KU8_ZERO ((uint8) 0x00).
+ * \range
+ *       KU8_ZERO..KU8_MAX;
+ */
+LOCAL uint8 fsm_u8LockAllSolCnt = KU8_ZERO;
+
+/**
+ * \brief
+ *       Used to store the command request for solenoids read from ECS component
+ *       as output of the eCS Algorithm.
+ * \initialization
+ *       KU8_ECS_ALGO_LOCK (1U).
+ * \range
+ *       KU8_ECS_ALGO_LOCK
+ *       KU8_ECS_ALGO_UNLOCK;
+ */
+LOCAL u8EcsTriggerType fsm_u8AlgoRequest = KU8_ECS_ALGO_LOCK;
+
+/**
+ * \brief
+ *       Used to store the request state based on the values of input signals for
+ *       solenoid control.
+ * \initialization
+ *       KU8_UNLOCK_STATE (0U).
+ * \range
+ *       KU8_LOCK_STATE
+ *       KU8_UNLOCK_STATE;
+ */
+LOCAL u8EcsTriggerType fsm_u8ActiveSignalRequest = KU8_LOCK_STATE;
+
+/**
+* \brief
+*       Used to store each solenoid's LOCK/UNLOCK request form different sources.
+* \initialization
+*       KU8_LOCK_STATE (0).
+* \range
+*       KU8_LOCK_STATE
+*       KU8_UNLOCK_STATE
+*       KU8_DISABLED_STATE;
+*/
+LOCAL uint8 fsm_au8Request[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_LOCK_STATE, KU8_LOCK_STATE, KU8_LOCK_STATE,
+      KU8_LOCK_STATE, KU8_LOCK_STATE, KU8_LOCK_STATE
+};
+
+/**
+* \brief
+*       Used to store each solenoid's LOCK/UNLOCK request form different sources
+*       from the last iteration.
+* \initialization
+*       KU8_DISABLED_STATE (3).
+* \range
+*       KU8_LOCK_STATE
+*       KU8_UNLOCK_STATE
+*       KU8_DISABLED_STATE;
+*/
+LOCAL uint8 fsm_au8LastRequest[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_DISABLED_STATE, KU8_DISABLED_STATE, KU8_DISABLED_STATE,
+      KU8_DISABLED_STATE, KU8_DISABLED_STATE, KU8_DISABLED_STATE
+};
+
+/**
+ * \brief
+ *       Used to store each solenoid's unlock confirmation status.
+ * \initialization
+ *       KU8_FALSE (uint8 0x55).
+ * \range
+ *       KU8_FALSE
+ *       KU8_TRUE;
+ */
+LOCAL uint8 fsm_au8SolenoidConfirmationModeStatus[KU8_MAX_SOLENOID_NB] =
+{
+   KU8_FALSE, KU8_FALSE, KU8_FALSE, KU8_FALSE, KU8_FALSE, KU8_FALSE
+};
+
+/**
+ * \brief
+ *       Used to store each solenoids startup state.
+ * \initialization
+ *       FSM_KU8_SELF_TEST_NOT_COMPLETED (uint8 0xFF).
+ * \range
+ *       FSM_KU8_SELF_TEST_NOT_COMPLETED
+ *       FSM_KU8_SELF_TEST_COMPLETED;
+ */
+LOCAL uint8 fsm_au8StartupCompleted[KU8_MAX_SOLENOID_NB] =
+{
+   KU8_FSM_SELF_TEST_NOT_COMPLETED, KU8_FSM_SELF_TEST_NOT_COMPLETED, KU8_FSM_SELF_TEST_NOT_COMPLETED, 
+   KU8_FSM_SELF_TEST_NOT_COMPLETED, KU8_FSM_SELF_TEST_NOT_COMPLETED, KU8_FSM_SELF_TEST_NOT_COMPLETED
+};
+
+/**
+ * \brief
+ *       The array is used to store the state machine of the backup profile
+ *       logic execution of each solenoid.
+ * \initialization
+ *       FSM_KU8_BACKUP_LOCK_SUBSTATE (uint8 0x00).
+ * \range
+ *       FSM_KU8_BACKUP_LOCK_SUBSTATE
+ *       FSM_KU8_BACKUP_SUBSTATE;
+ */
+LOCAL uint8 fsm_au8BackupStateSM[KU8_MAX_SOLENOID_NB] =
+{
+   KU8_FSM_BACKUP_LOCK_SUBSTATE, KU8_FSM_BACKUP_LOCK_SUBSTATE, KU8_FSM_BACKUP_LOCK_SUBSTATE,
+   KU8_FSM_BACKUP_LOCK_SUBSTATE, KU8_FSM_BACKUP_LOCK_SUBSTATE, KU8_FSM_BACKUP_LOCK_SUBSTATE
+};
+
+/**
+* \brief
+*       Used to store each solenoid's number of backups in case unlock is
+*       not detected.
+* \initialization
+*       KU8_ZERO (0).
+* \range
+*       0..255.
+*/
+LOCAL uint8 fsm_au8NbOfBackups[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_ZERO, KU8_ZERO, KU8_ZERO,
+      KU8_ZERO, KU8_ZERO, KU8_ZERO
+};
+
+/**
+ * \brief
+ *       The array is used to store the state machine of each solenoid.
+ * \initialization
+ *       KU8_PROFILE_NONE (255U).
+ * \range
+ *       KU8_PROFILE_UNLOCK
+ *       KU8_PROFILE_BACKUP
+ *       KU8_PROFILE_NONE;
+ */
+LOCAL uint8 fsm_au8FsmSelectedProfiles[KU8_MAX_SOLENOID_NB] =
+{
+   KU8_PROFILE_NONE, KU8_PROFILE_NONE, KU8_PROFILE_NONE,
+   KU8_PROFILE_NONE, KU8_PROFILE_NONE, KU8_PROFILE_NONE
+};
+
+/**
+ * \brief
+ *       The array is used to store the Error type of each solenoid.
+ * \initialization
+ *       KU8_FSM_NO_ERROR (uint8 0x00).
+ * \range
+ *        KU8_FSM_NO_ERROR
+ *        KU8_FSM_ABORTION_ERROR
+ *        KU8_FSM_INHIBITION_ERROR
+ *        KU8_FSM_SOLENOID_DISABLE;
+ */
+LOCAL uint8 fsm_au8SolenoidErrorState[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_FSM_NO_ERROR, KU8_FSM_NO_ERROR, KU8_FSM_NO_ERROR,
+      KU8_FSM_NO_ERROR, KU8_FSM_NO_ERROR, KU8_FSM_NO_ERROR
+};
+
+/**
+ * \brief
+ *       The array is used to store the Diagnostic request.
+ * \initialization
+ *       KU8_NO_DIAG_REQUEST (0U).
+ * \range
+ *        KU8_NO_DIAG_REQUEST
+ *        KU8_UNLOCK_DIAG_REQUEST
+ *        KU8_LOCK_DIAG_REQUEST
+ *        KU8_DIAG_PROFILE_REQUEST_ON
+ *        KU8_DIAG_PROFILE_REQUEST_OFF;
+ */
+LOCAL uint8 fsm_au8DiagReq[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_NO_DIAG_REQUEST, KU8_NO_DIAG_REQUEST, KU8_NO_DIAG_REQUEST,
+      KU8_NO_DIAG_REQUEST, KU8_NO_DIAG_REQUEST, KU8_NO_DIAG_REQUEST
+};
+
+/**
+ * \brief
+ *       The array is used to store the last diagnostic request.
+ * \initialization
+ *       KU8_NO_DIAG_REQUEST_COMPLEMENT (255U).
+ * \range
+ *       KU8_NO_DIAG_REQUEST
+ *       KU8_UNLOCK_DIAG_REQUEST
+ *       KU8_LOCK_DIAG_REQUEST
+ *       KU8_DIAG_PROFILE_REQUEST_ON
+ *       KU8_DIAG_PROFILE_REQUEST_OFF;
+ */
+LOCAL uint8 fsm_au8LastDiagRequest[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_NO_DIAG_REQUEST_COMPLEMENT, KU8_NO_DIAG_REQUEST_COMPLEMENT, KU8_NO_DIAG_REQUEST_COMPLEMENT,
+      KU8_NO_DIAG_REQUEST_COMPLEMENT, KU8_NO_DIAG_REQUEST_COMPLEMENT, KU8_NO_DIAG_REQUEST_COMPLEMENT
+};
+
+/**
+ * \brief
+ *       The array is used to store the complement value of diagnostic request.
+ * \initialization
+ *       KU8_NO_DIAG_REQUEST_COMPLEMENT (255U).
+ * \range
+ *       ~KU8_NO_DIAG_REQUEST
+ *       ~KU8_UNLOCK_DIAG_REQUEST
+ *       ~KU8_LOCK_DIAG_REQUEST
+ *       ~KU8_DIAG_PROFILE_REQUEST_ON
+ *       ~KU8_DIAG_PROFILE_REQUEST_OFF;
+ */
+LOCAL uint8 fsm_au8DiagReqComplement[KU8_MAX_SOLENOID_NB]=
+{
+      KU8_NO_DIAG_REQUEST_COMPLEMENT, KU8_NO_DIAG_REQUEST_COMPLEMENT, KU8_NO_DIAG_REQUEST_COMPLEMENT,
+      KU8_NO_DIAG_REQUEST_COMPLEMENT, KU8_NO_DIAG_REQUEST_COMPLEMENT, KU8_NO_DIAG_REQUEST_COMPLEMENT
+};
+
+/**
+ * \brief
+ *       This variable is used to compute the timeout period in milli-seconds
+ *       for solenoids when a specific Inhibition error is detected.
+ * \initialization
+ *       KU16_ZERO (uint16 0).
+ * \range
+ *       0..KU16_MAX
+ */
+LOCAL uint16 fsm_au16InhibitionTimeoutPeriod[KU8_MAX_SOLENOID_NB] =
+{
+   KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ * \brief
+ *       The array is used to store the counter value of solenoids before
+ *       qualifying the unlock confirmation timeout flag. One unit expressed
+ *       in milliseconds (multiple of 1ms).
+ * \initialization
+ *       KU16_ZERO (uint16 0).
+ * \range
+ *       0..KU16_MAX
+ */
+LOCAL uint16 fsm_au16UnlockConfirmTimeout[KU8_MAX_SOLENOID_NB] =
+{
+   KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ * \brief
+ *       The array is used to store the counter value of solenoids before
+ *       qualifying the unlock confirmation timeout flag. One unit expressed
+ *       in milliseconds (multiple of 1ms).
+ * \initialization
+ *       KU16_ZERO (uint16 0).
+ * \range
+ *       0..KU16_MAX
+ */
+LOCAL uint16 fsm_au16ErrorConfirmationTimeout[KU8_MAX_SOLENOID_NB] =
+{
+      KU16_ZERO, KU16_ZERO, KU16_ZERO,
+      KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ * \brief
+ *       The array is used to store the value of the counter which represents
+ *       the time delay between two consecutive backup profiles of each solenoid.
+ *       One unit expressed in milliseconds (multiple of 1ms).
+ *
+ * \initialization
+ *       KU16_ZERO (uint16 0).
+ *
+ * \range
+ *       0..KU16_MAX
+ */
+LOCAL uint16 fsm_au16RepeatProfileDelay[KU8_MAX_SOLENOID_NB] =
+{
+   KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ * \brief
+ *       The array is used to store the value of the counter which represents
+ *       the time value (multiple of 1ms) of the execution LOCK profile before
+ *       starting the startup sequence.
+ * \initialization
+ *       KU16_ZERO (uint16 0).
+ * \range
+ *       0..KU16_MAX
+ */
+LOCAL uint16 fsm_au16StartupLockTimeout[KU8_MAX_SOLENOID_NB] =
+{
+   KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ * \brief
+ *       This variable is used to compute unlock timeout period for solenoids.
+ * \initialization
+ *       KU16_ZERO (uint16 0).
+ * \range
+ *       0..KU16_MAX
+ */
+LOCAL uint16 fsm_au16ProfileTimeoutPeriod[KU8_NB_OF_PROFILES] =
+{
+      KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/**
+ * \brief
+ *       Used to store on each bit the initialization state of the corresponding solenoid:
+ *        o 0 - Not initialized;
+ *        o 1 - Initialized;
+ * \initialization
+ *       KU8_ZERO (uint8 0x00).
+ * \range
+ *       0x00..0x3F
+ */
+EXPORTED uint8 FSM_u8SolenoidInitState = KU8_ZERO;
+
+/**
+ * \brief
+ *       Used to store the state of each solenoid:
+ *        o 0x00 - Lock state;
+ *        o 0x01 - Unlock state;
+ *        o 0x02 - Backup state;
+ *        o 0x03 - Disable state;
+ *        o 0x04 - Startup state;
+ *        o 0x05 - Diagnostic state;
+ * \initialization
+ *       KU8_LOCK_STATE (uint8 0x00).
+ * \range
+ *       0x00..0x05
+ */
+EXPORTED uint8 FSM_au8SolenoidStates[KU8_MAX_SOLENOID_NB] =
+{
+   KU8_LOCK_STATE, KU8_LOCK_STATE, KU8_LOCK_STATE,
+   KU8_LOCK_STATE, KU8_LOCK_STATE, KU8_LOCK_STATE
+};
+
+/**
+ * \brief
+ *       Used to store the information about the stuck situation of each solenoid:
+ *        o 0x55 - (KU8_FALSE) Solenoid is NOT stuck;
+ *        o 0xAA - (KU8_TRUE) Solenoid is stuck;
+ * \initialization
+ *       KU8_FALSE (uint8 0x55).
+ * \range
+ *       0x55..0xAA
+ */
+EXPORTED uint8 FSM_au8SolenoidIsStuck[KU8_MAX_SOLENOID_NB] =
+{
+   KU8_FALSE, KU8_FALSE, KU8_FALSE, KU8_FALSE, KU8_FALSE, KU8_FALSE
+};
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/**
+ * \brief
+ *       This array holds the Abortion error masks of each solenoid based on what
+ *       flag to check.
+ * \initialization
+ *       {KU64_SOLENOID_X_ABORTION_ERROR | KU64_SOLENOID_X_CAN_INHIB_STATUS}
+ *       where X - the solenoid number.
+ * \range
+ *       0..KU64_MAX
+ */
+LOCAL const uint64 fsm_kau64SolenoidErrorAbortionMask[KU8_MAX_SOLENOID_NB] =
+{
+   /* Solenoid 1 */ (KU64_SOLENOID_1_ABORTION_ERROR | KU64_ECU_CAN_INHIB_STATUS),
+   /* Solenoid 2 */ (KU64_SOLENOID_2_ABORTION_ERROR | KU64_ECU_CAN_INHIB_STATUS),
+   /* Solenoid 3 */ (KU64_SOLENOID_3_ABORTION_ERROR | KU64_ECU_CAN_INHIB_STATUS),
+   /* Solenoid 4 */ (KU64_SOLENOID_4_ABORTION_ERROR | KU64_ECU_CAN_INHIB_STATUS),
+   /* Solenoid 5 */ (KU64_SOLENOID_5_ABORTION_ERROR | KU64_ECU_CAN_INHIB_STATUS),
+   /* Solenoid 6 */ (KU64_SOLENOID_6_ABORTION_ERROR | KU64_ECU_CAN_INHIB_STATUS)
+};
+
+/**
+ * \brief
+ *       This array holds the inhibit error mask of each solenoid based on what
+ *       flag to check.
+ * \initialization
+ *       KU64_SOLENOID_X_INHIB_ERROR
+ *       where X - the solenoid number.
+ * \range
+ *       0..KU64_MAX
+ */
+LOCAL const uint64 fsm_kau64SolenoidErrorInhibMask[KU8_MAX_SOLENOID_NB] =
+{
+   /* Solenoid 1 */ (KU64_SOLENOID_1_INHIB_ERROR),
+   /* Solenoid 2 */ (KU64_SOLENOID_2_INHIB_ERROR),
+   /* Solenoid 3 */ (KU64_SOLENOID_3_INHIB_ERROR),
+   /* Solenoid 4 */ (KU64_SOLENOID_4_INHIB_ERROR),
+   /* Solenoid 5 */ (KU64_SOLENOID_5_INHIB_ERROR),
+   /* Solenoid 6 */ (KU64_SOLENOID_6_INHIB_ERROR)
+};
+
+/**
+ * \brief
+ *       This array holds the configuration mask of each solenoid based on what
+ *       flag to check.
+ * \initialization
+ *       {KU64_SOLENOID_X_CONFIGURED}
+ *       where X - the solenoid number.
+ * \range
+ *       0..KU64_MAX
+ */
+LOCAL const uint64 fsm_kau64SolenoidConfigMask[KU8_MAX_SOLENOID_NB] =
+{
+   /* Solenoid 1 */ (KU64_SOLENOID_1_CONFIGURED),
+   /* Solenoid 2 */ (KU64_SOLENOID_2_CONFIGURED),
+   /* Solenoid 3 */ (KU64_SOLENOID_3_CONFIGURED),
+   /* Solenoid 4 */ (KU64_SOLENOID_4_CONFIGURED),
+   /* Solenoid 5 */ (KU64_SOLENOID_5_CONFIGURED),
+   /* Solenoid 6 */ (KU64_SOLENOID_6_CONFIGURED)
+};
+
+/**
+ * \brief
+ *       This array holds the unlock confirmation mask of each solenoid based on what
+ *       flag to check.
+ * \initialization
+ *       {KU64_SOLENOID_X_UNLOCK_CONFIRMED}
+ *       where X - the solenoid number.
+ * \range
+ *       0..KU64_MAX
+ */
+LOCAL const uint64 fsm_kau64SolenoidUnlockConfirmedMask[KU8_MAX_SOLENOID_NB] =
+{
+   /* Solenoid 1 */ (KU64_SOLENOID_1_UNLOCK_CONFIRMED),
+   /* Solenoid 2 */ (KU64_SOLENOID_2_UNLOCK_CONFIRMED),
+   /* Solenoid 3 */ (KU64_SOLENOID_3_UNLOCK_CONFIRMED),
+   /* Solenoid 4 */ (KU64_SOLENOID_4_UNLOCK_CONFIRMED),
+   /* Solenoid 5 */ (KU64_SOLENOID_5_UNLOCK_CONFIRMED),
+   /* Solenoid 6 */ (KU64_SOLENOID_6_UNLOCK_CONFIRMED)
+};
+
+/**
+ * \brief
+ *       This array holds the buckle latch confirmation mask of each solenoid based on what
+ *       flag to check.
+ * \initialization
+ *       {KU64_SOLENOID_X_BUCKLE_LATCHED}
+ *       where X - the solenoid number.
+ * \range
+ *       0..KU64_MAX
+ */
+LOCAL const uint64 fsm_kau64SolenoidBuckleStatusMask[KU8_MAX_SOLENOID_NB] =
+{
+   /* Solenoid 1 */ (KU64_SOLENOID_1_BUCKLE_LATCHED),
+   /* Solenoid 2 */ (KU64_SOLENOID_2_BUCKLE_LATCHED),
+   /* Solenoid 3 */ (KU64_SOLENOID_3_BUCKLE_LATCHED),
+   /* Solenoid 4 */ (KU64_SOLENOID_4_BUCKLE_LATCHED),
+   /* Solenoid 5 */ (KU64_SOLENOID_5_BUCKLE_LATCHED),
+   /* Solenoid 6 */ (KU64_SOLENOID_6_BUCKLE_LATCHED)
+};
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+/**
+ * \brief
+ *      This bit shall indicate the result of the most recently performed test.
+ *      A logical ‘1’ shall indicate that the last test failed meaning that the
+ *      failure is completely matured.
+ *      Reset to logical '0' if the result of the most recently performed test
+ *      returns a “pass” result meaning that all de-mature criteria have been fulfilled.
+ *      Additional reset conditions may be defined by the vehicle manufacturer / implementation
+ */
+#define KU8_FSM_EVENT_FAILED(EventStatus) \
+         ((KU8_ONE == ((EventStatus) & (DEM_UDS_STATUS_TF))) ? KB_TRUE : KB_FALSE)
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/**
+* \brief
+*        Used to read the signals from CAN , eCS and diagnostic in order to update the
+*        local variables which are used in solenoids state management.
+*        Also, based on the signals, the way controlling the solenoids is handled here:
+*           - control solenoids with offset or all in one iteration.
+* \inputparam
+*        Name: None.
+* \outputparam
+*        None.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        FSM_runMainFunction
+* \dynamicaspectdescription
+*        The local function is called by the function FSM_runMainFunction.
+* \constrains
+*        This function has no constraints.
+* \ddesignrequirement
+*        DSG_fsm_ProcessingInputSignals
+* \archrequirement
+*        ARCH_SW_FSM_prrEcsDiagRequest
+*/
+LOCAL void fsm_ProcessingInputSignals(void)
+{
+   Read the state of the EcsAlgo request updated status;
+
+   Read the diagnostic and its complementary value via RTE.
+
+   if(The EcsAlgo request was updated)
+   {
+      Read the EcsAlgo reques;
+   }
+   else
+   {
+      Set the EcsAlgo request as LOCK;
+   }
+
+   for(Each solenoid while the solenoids are in LOCK profile)
+   {
+      if((The EcsAlgo request is UNLOCK) OR
+         ((Ther is an active diagnostic request) AND (The existing diagnostic is not a LOCK request)))
+      {
+         Mark that at least one solenoid has an active UNLOCK request;
+         Set the general solenoid request to UNLOCK;
+      }
+      else
+      {
+         Set the general solenoid request to LOCK;
+      }
+   }
+}
+
+/**
+* \brief
+*        Used to check if a diagnostic request was made and what profile should
+*        be activated.
+* \inputparam
+*        Name: ku8SolenoidId;
+*        Type: const uint8;
+*        Description: The id of the solenoid;
+*        Range: 0..5;
+* \outputparam
+*        None.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        Return the solenoid profile based on the diag request.
+* \dynamicaspectcaller
+*        FSM_runMainFunction
+* \dynamicaspectdescription
+*        The local function is called by the function FSM_runMainFunction.
+* \constrains
+*        This function has no constraints.
+* \ddesignrequirement
+*        DSG_fsm_GetDiagRequest
+* \archrequirement
+*        ARCH_SW_FSM_prrEcsDiagRequest
+*/
+LOCAL INLINE uint8 fsm_GetDiagRequest(const uint8 ku8SolenoidId)
+{
+   if (Diagnostic request not corrupted)
+   {
+      Save the Diagnstic Profile Request;
+
+      if (The diag request was changed from Diag_Profile)
+      {
+         Set to logic '1' the coresponding bit for 
+         the coresponding solenoid in initState variable;
+      }
+
+      Save the curent diag request for next callback;
+   }
+
+   return Diagnostic Profile Request;
+}
+
+/**
+* \brief
+*       Based on the buckle status for each seatbelt, returns the startup
+*       sequence request of the corresponding solenoid.
+* \inputparam
+*       Name: ku8SolenoidId;
+*       Type: const uint8;
+*       Description: The id of the solenoid;
+*       Range: 0..5;
+* \outputparam
+*       None.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*      Returns the startup sequence request of the corresponding solenoid.
+* \dynamicaspectcaller
+*       FSM_runMainFunction
+* \dynamicaspectdescription
+*       API called by function FSM_runMainFunction.
+* \constrains
+*       None.
+* \ddesignrequirement
+*       DSG_fsm_CheckStartupSelfTest
+* \archrequirement
+*       ARCH_SW_FSM_prrEcsAlgoFlag
+*/
+LOCAL INLINE uint8 fsm_CheckStartupSelfTest(const uint8 ku8SolenoidId)
+{
+
+   if (The buckle is not taken into account)
+   {
+      Prepare to return a self-test request;
+   }
+   else
+   {
+      Read buckle status for solenoid;
+      Read status of the Init phase;
+      
+      if(The buckle was latched for current solenoid AND 
+         The self-test procedure was not completed AND
+         The Init Phase was finished AND
+         No error are present)
+      {
+         Prepare to return a self - test request;
+      }
+      else if (The buckle is not latched)
+      {
+         Set startup status of the current solenoid as NOT COMPLETED;
+         Prepare to return a no self - test request;
+      }
+      else
+      {
+         if(There is an inhibition error on current solenoid)
+         {
+            Marck the self-test is completed for current solenoid;
+         }
+         Prepare to return a no self-test request;
+      }
+   }
+   return the self - test decision;
+}
+
+/**
+* \brief
+*       Based on the error source, the error type will be set and a timeout period
+*       will be calculated in order to activate profiles for a short time to
+*       pass the event status.
+* \inputparam
+*       Name: ku8SolenoidId;
+*       Type: const uint8;
+*       Description: The id of the solenoid;
+*       Range: 0..5;
+* \outputparam
+*       None.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       Return the type of error.
+* \dynamicaspectcaller
+*       FSM_runMainFunction;
+* \dynamicaspectdescription
+*       API called by function FSM_runMainFunction.
+* \constrains
+*       None.
+* \ddesignrequirement
+*       DSG_fsm_ManageSolenoidErrors
+* \archrequirement
+*       ARCH_SW_FSM_pclDemServices
+*       ARCH_SW_FSM_pclDemIfEventSerices
+*/
+
+LOCAL uint8 fsm_ManageSolenoidErrors(const uint8 ku8SolenoidId)
+{
+   Read the Configuration status of solenoids;
+   Read the Abortion error status of solenoids;
+   Read the Inhibition error status of solenoids;
+
+   if (The solenoid is not configured)
+   {
+      Set the error status as DISABLED;
+   }
+   else
+   {
+      if (The solenoid has an abortion error)
+      {
+         Set the error status as ABORTION_ERROR;
+      }
+      else if (The solenoid has an inhibition error)
+      {
+         Set the error status as INHIBITION_ERROR;
+         Read the status of all events related to the inhibition error;
+
+         if (The open circuit error has qualified)
+         {
+            Read the Counter pass value for open circuit event;
+            The timeout period = Counter pass * auto - test periodicity[ms];
+
+            if (The Open circuit timeout value is smaller than the longest period of all inhibition error)
+            {
+               Update the timeout period with the longest one;
+            }
+         }
+
+         if (The Actuator blocked error has qualified)
+         {
+            Read the Counter pass value for Actuator blocked event;
+            The timeout period = The Counter pass value * (Backup profile duration + pause time between two consecutive backups * Number of retries[ms]);
+
+            if (The Actuator blocked timeout value is smaller than the longest period of all inhibition error)
+            {
+               Update the timeout period with the longest one;
+            }
+         }
+
+         if (The Short to GND error has qualified)
+         {
+            Read the Counter pass value for Short to GND event;
+            The timeout period = (Counter pass value * auto - test periodicity[ms]) + Step 5 duration fom NVP;
+
+            if (The Short to GND timeout value is smaller than the longest period of all inhibition error)
+            {
+               Update the timeout period with the longest one;
+            }
+         }
+
+         if (The Over - Voltage error has qualified)
+         {
+            Read the Counter pass value for Over-Voltage event;
+            The timeout period = (Counter pass value * auto - test periodicity[ms]) + Time in milli - seconds until the infinite step is reached;
+
+            if (The Over - Voltage timeout value is smaller than the longest period of all inhibition error)
+            {
+               Update the timeout period with the longest one;
+            }
+         }
+      }
+      else
+      {
+         Set the error status as NO_ERROR;
+         Reset the flag for LOCK - UNLOCK transition under error;
+         Set the timeout period as KU16_ZERO;
+      }
+   }
+   return error status;
+}
+
+/**
+* \brief
+*       The function used to determine the next profile of the solenoid.
+* \inputparam
+*       Name: ku8SolenoidId;
+*       Type: const uint8;
+*       Description: The id of the solenoid;
+*       Range: 0..5;
+* \outputparam
+*       None.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       FSM_runMainFunction
+* \dynamicaspectdescription
+*       The function is called by FSM_runMainFunction.
+* \constrains
+*       Called from FSM_runMainFunction at each 1ms.
+* \ddesignrequirement
+*       DSG_fsm_RunSolenoidStateManagement
+* \archrequirement
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction
+*       ARCH_SW_FSM_prrEcsAlgoFlag
+*/
+LOCAL INLINE void fsm_RunSolenoidStateManagement(const uint8 ku8SolenoidId)
+{
+
+   Read the unlock confirmation status of the current solenoid;
+
+   Error_Status = fsm_ManageSolenoidErrors(ku8SolenoidId);
+
+   if (Current solenoid is inhibited OR disabled)
+   {
+      Update the solenoid state to DISABLED;
+      Reset the backup state machine to LOCK_SUBSTATE;
+      Reset the counters;
+      Set the general request variable for the current solenoid to DISABLE;
+   }
+   else
+   {
+      Update the Diagnostic request;
+      if (There is a diagnostic request for Diagnostic Profile)
+      {
+         Set the solenoid state to DIAGNOSTIC_STATE;
+      }
+      else
+      {
+         Update the selt - test requ est;
+         if ((eCS_Algo set to LOCK)OR(The diagnostic request is LOCK or it does not exist) OR(No buckle was perform))
+         {
+            Set the general request variable for the current solenoid to LOCK_STATE;
+            Update the solenoid state to LOCK_STATE;
+            Reset the backup state machine to LOCK_SUBSTATE;
+            Reset the counters;
+         }
+         else
+         {
+            Set the general request variable for the current solenoid to UNLOCK_STATE;
+
+            if (The Backup profile variant is enabled from NVP)
+            {
+               if ((A diagnostic request was received) AND
+                  (The timeout for unlock detection was not reached) AND
+                  (No backup or self-test was required))
+               {
+                  Update the solenoid state to UNLOCK_STATE;
+                  Reset counters and states;
+               }
+
+               else if ((The self - test is required) AND(There is self-test or backup state running))
+               {
+                  Update the solenoid state to STARTUP_STATE;
+                  Reset counters and state machines;
+               }
+
+               else if ((The unlock was not confirmed) AND
+                        ((The timeout for unlock detection expired) OR (Backup state was requested)))
+               {
+                  Update the solenoid state to BACKUP_STATE;
+               }
+
+               else
+               {
+                  if (The self - test was requested)
+                  {
+                     Update the solenoid state to STARTUP_STATE;
+                  }
+                  else if (The last state of the solenoid was the BAKUP_STATE)
+                  {
+                     Keep the BACKUP_STATE active;
+                  }
+                  else
+                  {
+                     Update the solenoid state to UNLOCK_STATE;
+                     Reset counters and state machines;
+
+                     if (The UNLOCK was confirmed on the solenoid)
+                     {
+                        Mark the solenoid stuck flag as FALSE for the current solenoid;
+                     }
+                  }
+               }
+            }
+            else
+            {
+               Update the solenoid state to UNLOCK_STATE;
+
+               if (The self - test is requested)
+               {
+                  Update the solenoid startup state as SELF_TEST_COMPLETED;
+               }
+            }
+         }
+      }
+   }
+
+   if (The current solenoid presents an inhibition error)
+   {
+      switch (General_request)
+      {
+         case LOCK_STATE:
+         {
+            Reset LOCK - UNLOCK transition flag;
+            Reset the unlock detrection timeout;
+            Set the solenoid state to DISABLE;
+            break;
+         }
+
+         case UNLOCK_STATE:
+         {
+            if (The last request was LOCK)
+            {
+               Set the Unlock request under error to TRUE;
+               Reset Unlock detection under error timeout;
+            }
+
+            if (The LOCK - UNLOCK transition under error occurred)
+            {
+               if ((The transition just started)AND(The solenoid is stuck))
+               {
+                  Set the solenoid state to BACKUP;
+                  Set the backup substate machine to LOCK_SUBSTATE;
+                  Prepare the bakup to jump over the waiting time;
+               }
+               else if (The solenoid is stuck)
+               {
+                  Set the solenoid state to BACKUP;
+               }
+               else
+               {
+                  Do nothing;
+               }
+            }
+            else
+            {
+               Set the solenoid state to DISABLE;
+            }
+
+            break;
+         }
+         default:
+            break;
+      }
+   }
+
+   Update the last general request with the current one;
+}
+
+/**
+* \brief
+*       The function used to control the Startup logic of each solenoid.
+* \inputparam
+*       Name: ku8SolenoidId;
+*       Type: const uint8;
+*       Description: The id of the solenoid;
+*       Range: 0..5;
+* \outputparam
+*       None.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       FSM_runMainFunction
+* \dynamicaspectdescription
+*       The function is called by FSM_runMainFunction.
+* \constrains
+*       Called when the ECU detects the buckle action.
+* \ddesignrequirement
+*       DSG_fsm_RunStartupSequence
+* \archrequirement
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction
+*/
+LOCAL INLINE void fsm_RunStartupSequence(const uint8 ku8SolenoidId)
+{
+
+   if (The LOCK timeout has not expired)
+   {
+      Keep the solenoid locked;
+      Reset timers and flags;
+   }
+   else if ((The unlock was not confirmed)AND(The unlock detection timeout not expired))
+   {
+      Set the solenoid profile to UNLOCK;
+   }
+   else
+   {
+      Set the startup state of the solenoid to SELF_TEST_COMPLETED;
+   }
+}
+
+/**
+* \brief
+*       The function used to control the Backup logic of each solenoid.
+* \inputparam
+*       Name: ku8SolenoidId;
+*       Type: const uint8;
+*       Description: The id of the solenoid;
+*       Range: 0..5;
+* \outputparam
+*       None.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       FSM_runMainFunction
+* \dynamicaspectdescription
+*       The function is called by FSM_runMainFunction.
+* \constrains
+*       Called when the unlock action is not detected.
+* \ddesignrequirement
+*       DSG_fsm_RunBackupProfile
+* \archrequirement
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction
+*/
+LOCAL INLINE void fsm_RunBackupProfile(const uint8 ku8SolenoidId)
+{
+   switch (Backup_state_machine)
+   {
+      case KU8_FSM_BACKUP_LOCK_SUBSTATE:
+      {
+         if (The number of retries was not reached)
+         {
+            if (The delay between the two executed profiles was not expired)
+            {
+               Keep the LOCK profile;
+               Reset flags and counters;
+               Increment the profile delay counter between two executed profiles;
+            }
+            else
+            {
+               Set the backup state machine to BACKUP_SUBSTATE;
+               Reset deley between two executed profiles to ZERO;
+            }
+         }
+         else
+         {
+            Mark the current solenoid as STUCK;
+            Set solenoid profile to BACKUP;
+            Set startup state to SELF_TEST_COMPLETED;
+         }
+         break;
+      }
+      case KU8_FSM_BACKUP_SUBSTATE:
+      {
+         Set solenoid profile to BACKUP;
+
+         if (Unlock detection timeout was reached)
+         {
+            Reset backup state machine to BACKUP_LOCK_SUBSTATE;
+            Increment number of retries;
+         }
+         else if (The unlock was confirmed)
+         {
+            Set the backup state machine to BACKUP_CONFIRMED_SUBSTATE;
+         }
+         else
+         {
+            /* Do nothing */
+         }
+         break;
+      }
+      case KU8_FSM_BACKUP_CONFIRMED_SUBSTATE:
+         Keep the backup state active;
+         break;
+
+      default:
+         Set LOCK profile;
+         break;
+   }
+}
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+/**
+* \brief
+*       The function is used to calculate the unlocking timeout period
+*       and initialize variables.
+* \inputparam
+*       None.
+* \outputparam
+*       None.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       EcuM_DefaultInitListOne
+* \dynamicaspectdescription
+*       API called in EcuM_DefaultInitListOne at the initialization phase.
+* \constrains
+*       Called during the initialization phase.
+* \ddesignrequirement
+*       DSG_FSM_Init
+* \archrequirement
+*       ARCH_SW_Fsm_ptrpFsmServicesBswMIf_FSM_Init
+*/
+EXPORTED void FSM_Init(void)
+{
+   Calculate profiles timeout from NVP profile description;
+   for (each solenoid)
+   {
+      Initialize for all solenoids the counters, flags and state machines;
+   }
+}
+
+/**
+* \brief
+*       The function used to control the state machine of each used solenoid.
+* \inputparam
+*       None.
+* \outputparam
+*       None.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       OsTask_Alv_eCS_App
+* \dynamicaspectdescription
+*       API called in OsTask_Alv_eCS_App.
+* \constraints
+*       Called from OsTask_Alv_eCS_App at each 1ms.
+* \ddesignrequirement
+*       DSG_FSM_runMainFunction
+* \archrequirement
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Start
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_DIagnostic
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Startup
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Lock
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Unlock
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Backup
+*       ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Disable
+*       ARCH_SW_FSM_psrSolenoidProfile_FSM_runMainFunction
+*       ARCH_SW_FSM_psrSolenoidState_FSM_runMainFunction
+*       ARCH_SW_FSM_psrSolenoidNbOfBackups_FSM_runMainFunction
+*       ARCH_SW_FSM_psrSolenoidStuckStatus_FSM_runMainFunction
+*/
+EXPORTED void FSM_runMainFunction(void)
+{
+   Check if the RTE variables related to eCS request and diagnostics were updated;
+   fsm_ProcessingInputSignals();
+
+   if(The general request is not a LOCK command)
+   {
+      if(Is the first time after a lock request)
+      {
+         Set the starting index for the for loop to be solenoid 1;
+         Mark that the first call after a lock request was processed;
+      }
+   
+      Set the limit of the For loop to the value of the starting index plus an offset based on the 
+      number of solenoids controled in one cycle;
+      
+      Reset the counter for locking  all solenoids at once;
+   }
+   else
+   {
+      if(The counter for locking all solenoids at once has not reached the limit)
+      {
+         Set the starting index for the for loop to be solenoid 1;
+         Set the limit of the For loop as the solenoid 6;
+         Increment the counter ofr locking all solenoids;
+      }
+      else
+      {
+         Set the limit of the For loop to the value of the starting index plus an offset based on the 
+         number of solenoids controled in one cycle;
+      }
+      Prepare to process the for loop limits for the next transition from LOCK to UNLOCK request;
+   }
+
+   for (Each solenoid)
+   {
+      fsm_RunSolenoidStateManagement(Solenoid index);
+
+      switch (Solenoid state)
+      {
+      case KU8_LOCK_STATE:
+      {
+         Set solenoid profile to NONE;
+         Reset unlock timeout flag;
+         Reset unlock timeout counter;
+         break;
+      }
+      case KU8_UNLOCK_STATE:
+      {
+         Set solenoid profile to UNLOCK;
+         break;
+      }
+      case KU8_BACKUP_STATE:
+      {
+         fsm_RunBackupProfile(Solenoid index);
+         break;
+      }
+      case KU8_STARTUP_STATE:
+      {
+         fsm_RunStartupSequence(Solenoid index);
+         break;
+      }
+      case KU8_DIAGNOSTIC_STATE:
+      {
+         Set solenoid profile to DIAGNOSTIC;
+         break;
+      }
+      default:
+         Set solenoid profile to NONE;
+         break;
+      }
+
+      if (Profile is running other than LOCK or DIAGNOSTIC)
+      {
+         if((The Unlock confirmation timeout for the coresponding solenoid is smaller than the timout period of the profile) AND
+            (The solenoid unlock detection was not confirmed))
+         {
+            Increment the unlock confirmation timeout timer;
+         }
+         else if (The timeout was reached)
+         {
+            Set the unlock confirmation timeout flag as TRUE;
+         }
+         else
+         {
+            Do nothing;
+         }
+      }
+
+      if (A new LOCK - UNLOCK transition was detected under Inhibition error)
+      {
+         if(The timeout for running the profile under inhibition error was not reached)
+         {
+            Incremet the error confirmation timer;
+         }
+         else
+         {
+            Reset the LOCK - UNLOCK transition as false;
+         }
+      }
+   }
+
+   Increment the index of the last executed solenoid ID for the next cycle;
+
+   Update the RTE variable for Selected profile;
+   Update the RTE variable for Solenoid state;
+   Update the RTE variable for Number of backups;
+
+   FSM_manageSolenoidCounters();
+}
+
+/**
+* \brief
+*       The function is used to return the value of the calculated unlocking
+*       timeout period.
+* \inputparam
+*       None.
+* \outputparam
+*       Name: pu16UnlockDetectionTimeoutPeriod;
+*       Type: uint16 *;
+*       Description: Outputs the unlock detection timeout period;
+*       Range: 0..KU16_MAX;
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       Called from IoHwAb_DetectVoltageFluctuation.
+* \dynamicaspectdescription
+*       API called by function IoHwAb_DetectVoltageFluctuation.
+* \constrains
+*       Write here if you have any constrains.
+* \ddesignrequirement
+*       DSG_FSM_getUnlockDetectionTimeoutPeriod
+* \archrequirement
+*       ARCH_SW_FSM_pseFsmServices_FSM_getUnlockDetectionTimeoutPeriod
+*/
+EXPORTED void FSM_getUnlockDetectionTimeoutPeriod(uint16 *pu16UnlockDetectionTimeoutPeriod )
+{
+   if (Unlock detection Offset value < profileTimeoutPeriod)
+   {
+      Subtract an offset from detection timeout;
+   }
+   else
+   {
+      Keep the profileTimeoutPeriod unmodified;
+   }
+}
+
+/**
+* \brief
+*       The function is used to calculate and return the unlocking timeout period.
+* \outputparam
+*       Name: pu8Response;
+*       Type: uint8 *;
+*       Description: Outputs the status of profile timeout computation;
+*       Range: 0x55..0xAA;
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       FSM_Init;
+*       DIA_runDidFDE3_EcsProfilesWrite;
+*       DIA_runDidFDE4_EcsStepsWrite;
+* \dynamicaspectdescription
+*       API called by FSM_Init at the initialization phase or by
+*       diagnostic request.
+* \constrains
+*       Called in the initialization phase or by diagnostic request.
+* \ddesignrequirement
+*       DSG_FSM_getProfileTimeout
+* \archrequirement
+*       ARCH_SW_FSM_pseFsmServices_FSM_runCalculateProfileTimeout
+*/
+EXPORTED void FSM_runCalculateProfileTimeout(uint8 * pu8Response)
+{
+   for (Each profile)
+   {
+      Save the profile starting address;
+
+      for (Each step from profile)
+      {
+         if (The current step is configured)
+         {
+            Save the step starting address;
+            Seve the bit flag of the infinite mode;
+
+            if (The infinte mode is not set)
+            {
+               Add to timeout period the duration of the step;
+            }
+         }
+      }
+
+      if (Unlock confirmation offset < profileTimeoutPeriod)
+      {
+         Subtract the offset from confirmation timeout;
+      }
+   }
+   Update output variable as TRUE to confirm the operation was finished;
+}
+
+/*----------------------------------------------------------------------------*\
+  END OF FILE
+\*----------------------------------------------------------------------------*/

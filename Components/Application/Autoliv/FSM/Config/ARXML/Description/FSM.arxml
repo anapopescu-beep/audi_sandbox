@@ -1,0 +1,2728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2022-09-21T08:58:40+03:00">
+              <SHORT-NAME>FSM</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2023-05-22T08:50:35+03:00">
+                  <SHORT-NAME>FSM</SHORT-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <PORTS>
+                    <R-PORT-PROTOTYPE T="2023-03-02T10:47:45+02:00" UUID="f7ca1c19-180e-4dc6-8f44-a4eb1b6aa418">
+                      <SHORT-NAME>pclAutotestServices</SHORT-NAME>
+                      <DESC T="2023-03-02T10:26:15+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_pclAutotestServices&#xD;
+&#xD;
+# Description&#xD;
+	- The interface shall be used to read if the last critical auto-test has been run&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Last Critical Auto-test Status}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:49:05+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:49:05+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustionta</ISSUED-BY>
+                            <DATE>2023-03-02T10:26:25.439+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:49:05+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-03-02T10:47:45+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestServices/GetCriticalAutoTestsReachedFlag</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-03-02T10:47:45+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestServices/GetTestResult</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-20T13:23:27+03:00" UUID="1dd56902-ec98-4ae0-ba48-1722e39f0752">
+                      <SHORT-NAME>pclConvAdcService</SHORT-NAME>
+                      <DESC T="2023-05-11T10:21:45+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_pclConvAdcService&#xD;
+&#xD;
+&#xD;
+# Description&#xD;
+- Interface is used to read physical measurements in SI units&#xD;
+- Interface will be used to read the voltage (mV) for the KL30 supply&#xD;
+&#xD;
+&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+&#xD;
+## Outputs:&#xD;
+	- {SI Measurement}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- FSM_runMainFunction&#xD;
+&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:54:31+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:46:05+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-06-20T13:23:15.750+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:54:31+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:46:05+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to ToBeClarified</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Cannot be tested</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-04-25T09:19:28+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsConvertedAdcService/getMeasure</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsConvertedAdcService</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-05-11T10:23:21+03:00" UUID="1f565b72-4512-4fa4-bcad-c7a32046934e">
+                      <SHORT-NAME>pclDemIfEventSerices</SHORT-NAME>
+                      <DESC T="2023-05-11T10:21:35+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_pclDemIfEventSerices&#xD;
+&#xD;
+&#xD;
+# Description&#xD;
+- Interface is used to read the counter value which should be reached in order to set the event as PASSED;&#xD;
+- Interface will provide the {Event_ID} as input and will retrieve the {Counter_Value} of the corresponding event;&#xD;
+&#xD;
+&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+	-  {Event_ID}: The ID of event;&#xD;
+## Outputs:&#xD;
+	- {Counter_Value}: value of the Pass confirmation counter;&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:55:05+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:15:19+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-05-11T10:21:57.602+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Create port interface</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:55:05+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:15:19+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-05-11T10:13:52+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/DemIf_DataDictionary/ClientServerInterfaces/icsDemIfEventServices/GetCounterPassedThreshold</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/DemIf_DataDictionary/ClientServerInterfaces/icsDemIfEventServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:30:07+02:00" UUID="ac60679b-74c3-4042-81d3-db917dbd2afc">
+                      <SHORT-NAME>pclDemServices</SHORT-NAME>
+                      <DESC T="2023-07-13T09:13:31+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_pclDemServices&#xD;
+&#xD;
+# Description&#xD;
+	- The interface shall be used to read the {Event Status} of a Dem event for the selected {Event Id}&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Event Id}&#xD;
+## Outputs&#xD;
+	- {Event Status}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+DOM_eCS_TF_R_12, DOM_eCS_TF_R_13, DOM_eCS_TF_R_49, DOM_eCS_TF_R_48, DOM_eCS_TF_R_50, DOM_eCS_TF_R_51, DOM_eCS_TF_R_52, DOM_eCS_TF_R_56, DOM_eCS_TF_R_54</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:40:18+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T11:04:21+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:29:52.221+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:40:18+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set ToBeClarified</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Outdated functionality</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T11:04:21+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_13.07.2023] Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Traceability updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DPU_21.07.2023] Reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">No findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetEventFailed</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetEventTested</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetDTCOfEvent</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetFaultDetectionCounter</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetEventFreezeFrameData</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetEventExtendedDataRecord</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetDebouncingOfEvent</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetEventExtendedDataRecordEx</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-09-10T16:40:20+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo/GetEventFreezeFrameDataEx</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/PortInterfaces/GeneralDiagnosticInfo</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-20T13:34:49+03:00" UUID="5744644b-9f58-45ad-88a6-668f11a295d6">
+                      <SHORT-NAME>pclNvmIfServices</SHORT-NAME>
+                      <DESC T="2023-06-20T13:40:52+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_pseNvmIfServices_FSM_manageSolenoidCounters&#xD;
+# Description&#xD;
+	- The runnable will pass the {Block Status} from the input parameter for the selected {Block Id}&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Block Id}&#xD;
+- {Block Status}&#xD;
+	- Can be TRUE, FALSE&#xD;
+&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:55:40+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:13:08+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-06-20T13:24:01.142+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:55:40+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:13:08+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-05-22T08:50:35+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/GetNvmBlockLength</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-05-22T08:50:35+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/GetNvmBlockStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-05-22T08:50:35+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/ReadBlockByAddress</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-05-22T08:50:35+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/RestorePRAMBlockDefaults</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-05-22T08:50:35+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/SetRamBlockStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-05-22T08:50:35+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/WriteBlockByAddress</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-05-22T08:50:35+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/WriteNvmBlock</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-20T13:23:03+03:00" UUID="991ecb61-6f18-4613-bfd0-da809bc59527">
+                      <SHORT-NAME>prrACCServices</SHORT-NAME>
+                      <DESC T="2023-03-06T15:48:24+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_prrACCServices&#xD;
+&#xD;
+# Description&#xD;
+	- The interface shall be used to read the initialization phase status of the accelerometer by saving the value in {Block Restore Status} output variable.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Block Restore Status}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:56:00+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:15:36+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-06-20T13:22:47.481+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:56:00+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:15:36+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC>
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SoftwareComponents/ACC/isrACCServices/u8AccInitStateMachine</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION>false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <APPLICATION-VALUE-SPECIFICATION>
+                              <CATEGORY>VALUE</CATEGORY>
+                              <SW-VALUE-CONT>
+                                <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                <SW-VALUES-PHYS>
+                                  <V>0</V>
+                                </SW-VALUES-PHYS>
+                              </SW-VALUE-CONT>
+                            </APPLICATION-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/SoftwareComponents/ACC/isrACCServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:30:51+02:00" UUID="d4a1ce4a-6be2-4e59-b25e-d8f0d71ed1fc">
+                      <SHORT-NAME>prrBswMIfServices</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_prrBswMIfServices&#xD;
+&#xD;
+# Description&#xD;
+	- The interface shall be used to read the NvM block restore status from the BswMIf module&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Block Restore Status}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:48:45+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:48:45+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:30:31.533+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:48:45+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2022-09-10T19:33:34+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/isrNvmBlockRestoreFinished/u8BlockRestoreStatus</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION T="2022-09-10T19:27:21+03:00">false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <NUMERICAL-VALUE-SPECIFICATION T="2022-09-10T19:33:33+03:00">
+                              <SHORT-LABEL>B_FALSE</SHORT-LABEL>
+                              <VALUE T="2022-09-10T19:33:33+03:00">85</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PortInterfaces/isrNvmBlockRestoreFinished</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:31:05+02:00" UUID="72fae8dc-c178-46d3-bcfa-93f16e110932">
+                      <SHORT-NAME>prrCILData</SHORT-NAME>
+                      <DESC T="2023-01-18T15:04:41+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_Fsm_prrCILData_FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to read the buckle status&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+## Outputs&#xD;
+	- data (unsigned char *)&#xD;
+		- Can be KU8_BUCKLE_LATCHED/KU8_BUCKLE_NOT_LATCHED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:07:14+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:07:14+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:30:56.400+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:07:14+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC>
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/isrCILServices/au8MergedBuckleStatus</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION>false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8MergedBuckleStatusType_Appl_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS T="2022-11-15T14:27:05+02:00">
+                                      <V>1</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION T="2022-11-15T14:27:05+02:00">
+                                  <SHORT-LABEL>au8MergedBuckleStatusType_Appl_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>1</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION T="2022-11-15T14:27:05+02:00">
+                                  <SHORT-LABEL>au8MergedBuckleStatusType_Appl_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>1</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION T="2022-11-15T14:27:05+02:00">
+                                  <SHORT-LABEL>au8MergedBuckleStatusType_Appl_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>1</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION T="2022-11-15T14:27:05+02:00">
+                                  <SHORT-LABEL>au8MergedBuckleStatusType_Appl_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>1</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION T="2022-11-15T14:27:05+02:00">
+                                  <SHORT-LABEL>au8MergedBuckleStatusType_Appl_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>1</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/SoftwareComponents/CIL/isrCILServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:31:22+02:00" UUID="9135e9ef-ce25-441d-9b19-94e92d733c22">
+                      <SHORT-NAME>prrCrashStatus</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_prrCrashStatus&#xD;
+&#xD;
+# Description&#xD;
+	- The interface shall be used to read the the crash status that is reported on the CAN bus&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Crash Status}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:12:46+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:12:46+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:31:16.334+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:12:46+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2023-05-23T08:40:21+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SoftwareComponents/CIL/isrCrashStatus/u8IsCrashActive</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION>false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <ENABLE-UPDATE>true</ENABLE-UPDATE>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <APPLICATION-VALUE-SPECIFICATION>
+                              <CATEGORY>VALUE</CATEGORY>
+                              <SW-VALUE-CONT>
+                                <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                <SW-VALUES-PHYS>
+                                  <VT>CM_AB_Crash_Int_Cx0_kein_Crash</VT>
+                                </SW-VALUES-PHYS>
+                              </SW-VALUE-CONT>
+                            </APPLICATION-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/SoftwareComponents/CIL/isrCrashStatus</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:31:31+02:00" UUID="31d9871e-6664-4047-b8d2-8b940957bf9a">
+                      <SHORT-NAME>prrEcsAlgoFlag</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_prrEcsAlgoFlag&#xD;
+&#xD;
+# Description&#xD;
+	- The interface shall be used to read the virtual ball algorithm output that will be used to compute the solenoid command&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Ball Algorithm Output}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:48:08+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:48:08+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:31:24.973+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:48:08+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2023-05-23T08:40:18+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsAlgoOutputs/u8EcsFlag</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION T="2021-05-26T14:51:48+02:00">false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <ENABLE-UPDATE>true</ENABLE-UPDATE>
+                          <HANDLE-NEVER-RECEIVED>false</HANDLE-NEVER-RECEIVED>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <APPLICATION-VALUE-SPECIFICATION>
+                              <CATEGORY>VALUE</CATEGORY>
+                              <SW-VALUE-CONT>
+                                <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                <SW-VALUES-PHYS>
+                                  <VT>KU8_ECS_ALGO_LOCK</VT>
+                                </SW-VALUES-PHYS>
+                              </SW-VALUE-CONT>
+                            </APPLICATION-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2021-05-26T14:53:53+02:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsAlgoOutputs/u16BallPosition</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION T="2021-05-26T14:51:56+02:00">false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <ENABLE-UPDATE>false</ENABLE-UPDATE>
+                          <HANDLE-NEVER-RECEIVED>false</HANDLE-NEVER-RECEIVED>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <APPLICATION-VALUE-SPECIFICATION>
+                              <CATEGORY>VALUE</CATEGORY>
+                              <SW-VALUE-CONT>
+                                <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                <SW-VALUES-PHYS>
+                                  <V>0</V>
+                                </SW-VALUES-PHYS>
+                              </SW-VALUE-CONT>
+                            </APPLICATION-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsAlgoOutputs</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:31:40+02:00" UUID="8fa86659-92ee-4a2b-955d-14a282994efc">
+                      <SHORT-NAME>prrEcsDiagRequest</SHORT-NAME>
+                      <LONG-NAME T="2021-12-02T10:10:58+01:00">
+                        <L-4 T="2021-12-02T10:10:58+01:00" L="FOR-ALL">prrEcsDiagnosticRequest</L-4>
+                      </LONG-NAME>
+                      <DESC T="2023-02-24T11:23:34+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_prrEcsDiagRequest&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall read the diagnostic request for the {Solenoid Command}&#xD;
+	- The runnable shall read the diagnostic request complement(mirror) for the {Solenoid Command}&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Solenoid Command}&#xD;
+		• Can take the values:&#xD;
+			- NO_DIAG_REQUEST&#xD;
+			- UNLOCK_DIAG_REQUES&#xD;
+			- LOCK_DIAG_REQUES;&#xD;
+			- PROFILE_REQUEST_ON;&#xD;
+			- PROFILE_REQUEST_OFF&#xD;
+	&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:56:18+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:31:32.989+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION T="2023-07-06T14:50:58+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-02-24T11:23:34.408+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:56:18+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:50:58+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2023-05-23T08:29:29+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsDiagRequest/au8DiagReq</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION>false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <ENABLE-UPDATE>true</ENABLE-UPDATE>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_NO_DIAG_REQUEST</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_NO_DIAG_REQUEST</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_NO_DIAG_REQUEST</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_NO_DIAG_REQUEST</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_NO_DIAG_REQUEST</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_NO_DIAG_REQUEST</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2023-05-23T08:29:32+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsDiagRequest/au8DiagReqComplement</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION>false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <ENABLE-UPDATE>true</ENABLE-UPDATE>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>255</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>255</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>255</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>255</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>255</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>ab8eCSDiagReqType_Appl_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>255</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsDiagRequest</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:31:54+02:00" UUID="c9722083-0345-487e-90b6-2779b7943c16">
+                      <SHORT-NAME>prrSolenoidConfirmation</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_prrSolenoidConfirmation&#xD;
+&#xD;
+# Description&#xD;
+	- The interface shall be used to read if the solenoid lever has reached the unlock position&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Solenoid Confirmation 1}&#xD;
+	- {Solenoid Confirmation 2}&#xD;
+	- {Solenoid Confirmation 3}&#xD;
+	- {Solenoid Confirmation 4}&#xD;
+	- {Solenoid Confirmation 5}&#xD;
+	- {Solenoid Confirmation 6}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:33:52+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:33:52+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:31:46.631+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:33:52+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2023-05-23T08:41:07+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/IoHwAb_DataDictionary/SenderReceiverInterfaces/isrSolenoidConfirmation/au8SolenoidStatus</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION T="2022-09-12T15:40:48+03:00">false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <ENABLE-UPDATE>false</ENABLE-UPDATE>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidUnlockConfirmation_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_UNLOCK_NOT_CONFIRMED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidUnlockConfirmation_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_UNLOCK_NOT_CONFIRMED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidUnlockConfirmation_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_UNLOCK_NOT_CONFIRMED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidUnlockConfirmation_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_UNLOCK_NOT_CONFIRMED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidUnlockConfirmation_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_UNLOCK_NOT_CONFIRMED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidUnlockConfirmation_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_UNLOCK_NOT_CONFIRMED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/IoHwAb_DataDictionary/SenderReceiverInterfaces/isrSolenoidConfirmation</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-05-11T11:01:05+03:00" UUID="c70feb24-5a78-4ca9-b93c-3684e09874f5">
+                      <SHORT-NAME>prrSolenoidOpenCircuitStatus</SHORT-NAME>
+                      <DESC T="2023-05-11T11:00:14+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_prrSolenoidOpenCircuitStatus&#xD;
+&#xD;
+# Description&#xD;
+	- Interface used to read the open circuit status for individual solenoids;&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Solenoid 1 Open Circuit status}&#xD;
+	- {Solenoid 2 Open Circuit status}&#xD;
+	- {Solenoid 3 Open Circuit status}&#xD;
+	- {Solenoid 4 Open Circuit status}&#xD;
+	- {Solenoid 5 Open Circuit status}&#xD;
+	- {Solenoid 6 Open Circuit status}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:56:33+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:33:32+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-05-11T11:00:24.861+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Create new port</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:56:33+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:33:32+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2023-05-23T08:40:49+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidOCStatus/au8SolenoidAutotestStatus</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION T="2023-05-11T10:54:51+03:00">false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <ENABLE-UPDATE>true</ENABLE-UPDATE>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOCStatus_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOCStatus_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOCStatus_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOCStatus_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOCStatus_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOCStatus_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidOCStatus</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-20T13:21:58+03:00" UUID="656a3553-cc6d-4f1f-922f-8e6921125ae8">
+                      <SHORT-NAME>prrSolenoidOverVoltageStatus</SHORT-NAME>
+                      <DESC T="2023-05-12T09:23:48+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_prrSolenoidOverVoltageStatus&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall read the array of {Status of solenoids} representing the error status regarding a Over Voltage fault for each solenoid.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Status of solenoids} (valid for all solenoids)&#xD;
+		- Can be :&#xD;
+			- 00h - KU8_SOLENOID_ELECTRICAL_AT_PASSED&#xD;
+			- 01h - KU8_SOLENOID_ELECTRICAL_AT_FAILED&#xD;
+			&#xD;
+## Outputs&#xD;
+	- None&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:56:57+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:48:30+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-06-20T13:21:31.211+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:56:57+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:48:30+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2023-05-23T08:40:51+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidOvervoltageStatus/au8SolenoidOvervoltageStatus</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION T="2023-05-12T09:11:04+03:00">false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <ENABLE-UPDATE>true</ENABLE-UPDATE>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOvervoltageStatusType_Appl_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOvervoltageStatusType_Appl_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOvervoltageStatusType_Appl_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOvervoltageStatusType_Appl_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOvervoltageStatusType_Appl_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidOvervoltageStatusType_Appl_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidOvervoltageStatus</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-05-11T11:02:47+03:00" UUID="e6d35cd7-2177-4f01-996a-dfd15cd466f8">
+                      <SHORT-NAME>prrSolenoidShortToGndStatus</SHORT-NAME>
+                      <DESC T="2023-05-11T11:02:20+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_prrSolenoidShortToGndStatus&#xD;
+&#xD;
+# Description&#xD;
+	- Interface used to read the Short to Ground status for individual solenoids;&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Solenoid 1 Short to ground status}&#xD;
+	- {Solenoid 2 Short to ground status}&#xD;
+	- {Solenoid 3 Short to ground status}&#xD;
+	- {Solenoid 4 Short to ground status}&#xD;
+	- {Solenoid 5 Short to ground status}&#xD;
+	- {Solenoid 6 Short to ground status}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:57:08+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:47:47+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-05-11T11:02:23.285+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Add new port</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:57:08+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:47:47+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2023-05-23T08:40:53+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidShortToGndStatus/au8SolenoidAutotestStatus</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION T="2023-05-11T10:56:11+03:00">false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <ENABLE-UPDATE>true</ENABLE-UPDATE>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidShortToGndStatus_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidShortToGndStatus_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidShortToGndStatus_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidShortToGndStatus_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidShortToGndStatus_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidShortToGndStatus_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_SOLENOID_ELECTRICAL_AT_PASSED</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/SAD_DataDictionnary/SenderReceiverInterfaces/isrSolenoidShortToGndStatus</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-23T08:28:29+02:00" UUID="4a05089f-5fa6-4331-8ef8-54684a89a7f7">
+                      <SHORT-NAME>pseFsmServices</SHORT-NAME>
+                      <DESC T="2023-01-18T14:51:21+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_pseFsmServices_FSM_getUnlockDetectionTimeoutPeriod&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called by the function IoHwAb_DetectVoltageFluctuation&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- pu16UnlockDetectionTimeoutPeriod: Outputs the unlock detection timeout period.&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_getUnlockDetectionTimeoutPeriod&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_pseFsmServices_FSM_runCalculateProfileTimeout&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called by the function DIDs FDE3 FDE4&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- pu8Response: Outputs the status of profile timeout computation.&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runCalculateProfileTimeout&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------------------</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:53:23+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:53:23+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:28:16.041+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:53:23+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2023-01-10T14:38:34+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SoftwareComponents/FSM/icsFsmServices/calculateProfileTimeout</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                        <SERVER-COM-SPEC T="2023-01-10T14:38:34+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SoftwareComponents/FSM/icsFsmServices/getUnlockTimeoutPeriod</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/SoftwareComponents/FSM/icsFsmServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-23T08:28:38+02:00" UUID="88632503-6f97-47bc-a376-4a0952d59ca3">
+                      <SHORT-NAME>pseModeManagement</SHORT-NAME>
+                      <DESC T="2023-02-24T09:24:33+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_pseModeManagement_CriticalAutotests&#xD;
+&#xD;
+# Description&#xD;
+	- The FSM_runUpdateModeStatus runnable shall set the mode status to TRUE for:&#xD;
+		   The CRITICAL_AUTOTESTS_IN_PROGRESS flag if the last autotest has not beem run&#xD;
+	- The FSM_runCheckModeStatus shall report the {Mode Status} on the output parameter if the CRITICAL_AUTOTESTS_IN_PROGRESS is specified in the {Mode Flag} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Mode Flag}&#xD;
+## Outputs&#xD;
+	- {Mode Status}&#xD;
+		- Can be TRUE, FALSE&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+	- FSM_runCheckModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+&#xD;
+-------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_pseModeManagement_NvmBlockRestore&#xD;
+&#xD;
+# Description&#xD;
+	- The FSM_runUpdateModeStatus runnable shall set the mode status to TRUE for:&#xD;
+		- The NVM_BLOCK_RESTORE_IN_PROGRESS flag if during the initialization a restore has been triggered&#xD;
+	- The FSM_runCheckModeStatus shall report the {Mode Status} on the output parameter if the NVM_BLOCK_RESTORE_IN_PROGRESS  is specified in the {Mode Flag} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Mode Flag}&#xD;
+## Outputs&#xD;
+	- {Mode Status}&#xD;
+		- Can be TRUE, FALSE&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+	- FSM_runCheckModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+-------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_pseModeManagement_SolenoidDisabled&#xD;
+&#xD;
+# Description&#xD;
+	- The FSM_runUpdateModeStatus runnable shall set the mode status to TRUE for:&#xD;
+		- The SOLENOID_x_DISABLED  (for each solenoid) if the UV/OV/NVM_NOT_PROG/ADC_OUT_OF_ORDER events are qualified&#xD;
+	- The FSM_runCheckModeStatus shall report the {Mode Status} on the output parameter if the SOLENOID_x_DISABLED  is specified in the {Mode Flag} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Mode Flag}&#xD;
+## Outputs&#xD;
+	- {Mode Status}&#xD;
+		- Can be TRUE, FALSE&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+	- FSM_runCheckModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+-------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_pseModeManagement_CanInhibStatus&#xD;
+&#xD;
+# Description&#xD;
+	- The FSM_runUpdateModeStatus runnable shall set the mode status to TRUE for:&#xD;
+		- The SOLENOID_x_CAN_INHIB_STATUS (for each solenoid) ifthe crash status received from the CAN bus is active&#xD;
+	- The FSM_runCheckModeStatus shall report the {Mode Status} on the output parameter if the SOLENOID_x_CAN_INHIB_STATUS  is specified in the {Mode Flag} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Mode Flag}&#xD;
+## Outputs&#xD;
+	- {Mode Status}&#xD;
+		- Can be TRUE, FALSE&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+	- FSM_runCheckModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+-------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_pseModeManagement_SolenoidUnlockConfirmation&#xD;
+&#xD;
+# Description&#xD;
+	- The FSM_runUpdateModeStatus runnable shall set the mode status to TRUE for:&#xD;
+		- The SOLENOID_x_UNLOCK_CONFIRMED  (for each solenoid) ifthe solenoid lever has reached the unlock position&#xD;
+	- The FSM_runCheckModeStatus shall report the {Mode Status} on the output parameter if the SOLENOID_x_UNLOCK_CONFIRMED  is specified in the {Mode Flag} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Mode Flag}&#xD;
+## Outputs&#xD;
+	- {Mode Status}&#xD;
+		- Can be TRUE, FALSE&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+	- FSM_runCheckModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+-------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_pseModeManagement_EcuPermanentHwError&#xD;
+&#xD;
+# Description&#xD;
+	- The FSM_runUpdateModeStatus runnable shall set the mode status to TRUE for:&#xD;
+		- The ECU_PERMANENT_HW_ERROR if the RAM_ECC/NVM_ECC/FLS_ECC/ADC_OUT_OF_ORDER events are qualified&#xD;
+	- The FSM_runCheckModeStatus shall report the {Mode Status} on the output parameter if the ECU_PERMANENT_HW_ERROR is specified in the {Mode Flag} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Mode Flag}&#xD;
+## Outputs&#xD;
+	- {Mode Status}&#xD;
+		- Can be TRUE, FALSE&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+	- FSM_runCheckModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+-------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_pseModeManagement_EcuSporadicError&#xD;
+&#xD;
+# Description&#xD;
+	- The FSM_runUpdateModeStatus runnable shall set the mode status to TRUE for:&#xD;
+		- The ECU_SPORADIC_ERROR if the UV/OV/NVM_NOT_PROG events are qualified&#xD;
+	- The FSM_runCheckModeStatus shall report the {Mode Status} on the output parameter if the ECU_SPORADIC_ERROR is specified in the {Mode Flag} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Mode Flag}&#xD;
+## Outputs&#xD;
+	- {Mode Status}&#xD;
+		- Can be TRUE, FALSE&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+	- FSM_runCheckModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+-------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_pseModeManagement_BuckleStatus&#xD;
+&#xD;
+# Description&#xD;
+	- The FSM_runUpdateModeStatus runnable shall set the mode status to TRUE for:&#xD;
+		- The SOLENOID_BUCKLE_LATCHED if the seatbelt corresponding to an individual solenoid is connected to the bucke.&#xD;
+	- The FSM_runCheckModeStatus shall report the {Mode Status} on the output parameter if the SOLENOID_BUCKLE_LATCHED is specified in the {Mode Flag} input parameter.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Mode Flag}&#xD;
+## Outputs&#xD;
+	- {Mode Status}&#xD;
+		- Can be TRUE, FALSE&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+	- FSM_runCheckModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:53:08+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:53:08+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:28:31.740+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:53:08+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2022-09-10T15:41:31+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/FSM_DataDictionnary/ClientServerInterfaces/icsModeManagementServices/CheckModeStatus</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/FSM_DataDictionnary/ClientServerInterfaces/icsModeManagementServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-23T08:28:55+02:00" UUID="3400baa3-43c3-4f7b-b868-bf4edceefb6f">
+                      <SHORT-NAME>psrSolenoidProfile</SHORT-NAME>
+                      <DESC T="2023-01-18T15:16:52+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_psrSolenoidProfile_FSM_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall output the profile(collection of steps) nb. that should be executed by the SAD module for each solenoid.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Profile for Solenoid x} (valid for all solenoids)&#xD;
+		- Can be - 00h - UNLOCK,&#xD;
+			         - 01h - BACKUP&#xD;
+				  - FFh - NO_PROFILE&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:51:47+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:51:47+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:28:49.644+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:51:47+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <NONQUEUED-SENDER-COM-SPEC T="2022-09-10T16:09:10+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidProfile/au8SelectedProfile</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION>0</USES-END-TO-END-PROTECTION>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-SENDER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidProfile</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-23T08:29:06+02:00" UUID="a704801c-8067-44f7-bec4-b017c4adb6d3">
+                      <SHORT-NAME>psrSolenoidState</SHORT-NAME>
+                      <DESC T="2023-02-09T11:35:52+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_psrSolenoidState_FSM_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall output the current solenoid actuator state&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {State for Solenoid x} (valid for all solenoids)&#xD;
+		- Can be - 00h - LOCK&#xD;
+			         - 01h - UNLOCK&#xD;
+				  - 02h - BACKUP &#xD;
+				  - 03h - DISABLED&#xD;
+				  - 04h - ERROR&#xD;
+				  - 04h - STARTUP&#xD;
+				  - 06h - DIAGNOSTIC&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:53:54+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:53:54+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:28:58.174+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:53:54+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <NONQUEUED-SENDER-COM-SPEC T="2022-09-10T16:09:02+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrFsmSolenoidsState/au8SolenoidState</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION>0</USES-END-TO-END-PROTECTION>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8FsmStateType_Appl_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_LOCK_STATE</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8FsmStateType_Appl_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_LOCK_STATE</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8FsmStateType_Appl_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_LOCK_STATE</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8FsmStateType_Appl_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_LOCK_STATE</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8FsmStateType_Appl_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_LOCK_STATE</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8FsmStateType_Appl_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_LOCK_STATE</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-SENDER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrFsmSolenoidsState</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-05-15T15:20:54+03:00" UUID="6177bfcd-50bd-4f19-90ea-30643e1952aa">
+                      <SHORT-NAME>psrSolenoidStuckStatus</SHORT-NAME>
+                      <DESC T="2023-07-21T08:51:08+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_psrSolenoidStuckStatus_FSM_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall output on {Solenoid Stuck Status} the current state of each solenoid, based on the number of retries when the backup profile is active.&#xD;
+	- When the retry counter is equal to NVP_u8NbOfBackups then the auto-test shall be failed&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	&#xD;
+## Outputs&#xD;
+	- {Solenoid Stuck Status}&#xD;
+		-  Can be KU8_FALSE - if the solenoid is NOT stuck;&#xD;
+		-  Can be KU8_TRUE - if the solenoid is stuck;&#xD;
+&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+ DOM_eCS_TF_H_234, DOM_eCS_TF_H_235</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:53:50+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:28:40.620+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION T="2023-07-06T14:54:21+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-05-15T15:25:35.888+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Rename port and update status</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:53:50+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:54:21+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <NONQUEUED-SENDER-COM-SPEC T="2023-02-28T08:57:47+02:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidBackups/au8SolenoidIsStuck</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION>0</USES-END-TO-END-PROTECTION>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION T="2022-11-09T10:44:35+02:00">
+                              <SHORT-LABEL>Init_Values</SHORT-LABEL>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidBackupsType_Appl_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>0</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidBackupsType_Appl_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>0</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidBackupsType_Appl_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>0</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidBackupsType_Appl_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>0</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidBackupsType_Appl_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>0</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8SolenoidBackupsType_Appl_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <V>0</V>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-SENDER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidBackups</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-23T08:29:14+02:00" UUID="bc2a7703-6075-4803-b678-331588deaf34">
+                      <SHORT-NAME>ptrpAsrOsServicesFSM</SHORT-NAME>
+                      <DESC T="2023-07-21T08:50:47+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called by the Autosar OS each 1mS;	&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+FUSA_SM_S32K1XXSM_59, FUSA_SM_S32K1XXSM_128, FUSA_SM_S32K1XXSM_132, FUSA_SM_S32K1XXSM_148, DOM_eCS_TF_R_159, DOM_eCS_TF_R_160, DOM_eCS_TF_R_83, DOM_eCS_TF_R_85, DOM_eCS_TF_R_177, DOM_eCS_TF_R_79, DOM_eCS_TF_R_172, DOM_eCS_TF_R_81, DOM_eCS_TF_R_91, DOM_eCS_TF_R_92, DOM_eCS_TF_R_93, DOM_eCS_TF_R_108, DOM_eCS_TF_R_107, DOM_eCS_TF_R_106, DOM_eCS_TF_R_105, DOM_eCS_TF_R_104, DOM_eCS_TF_R_103, DOM_eCS_TF_R_102, DOM_eCS_TF_R_101, DOM_eCS_TF_R_100, DOM_eCS_TF_R_99, DOM_eCS_TF_R_98, DOM_eCS_TF_R_97, DOM_eCS_TF_R_96, DOM_eCS_TF_R_95, DOM_eCS_TF_R_94, DOM_eCS_TF_R_200, DOM_eCS_TF_R_204&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Start&#xD;
+&#xD;
+# Description&#xD;
+	- At the START (before calling the runnable the first time) the interlocking  mechanism of the solenoids will not be accessible;&#xD;
+	- After START, if the INIT phase is not finished, the solenoids will be put in LOCK state;&#xD;
+	- After START, solenoids that are unconfigured in NVP, will be put in DISABLED state;&#xD;
+	- After START, if a FAIL condition appears, the solenoids will be put in DISABLED state ;&#xD;
+	- After START, if the command is LOCK and no fails are detected the solenoids will be put in LOCK state;&#xD;
+	- After START, if the command is UNLOCK and no fails are detected the solenoids will be put in UNLOCK state;&#xD;
+&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+DOM_eCS_TF_R_78; DOM_eCS_TF_R_185; DOM_eCS_TF_R_183; DOM_eCS_TF_R_184; DOM_eCS_TF_R_185;&#xD;
+---------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_DIagnostic&#xD;
+&#xD;
+# Description&#xD;
+	- When DIAGNOSTIC state is active for a solenoid, no INTERLOCKING will be possible;&#xD;
+	- Transition DIAGNOSTIC - LOCK will be done after DIAGNOSTIC is finished and if the command is LOCK and no FAILS are detected;&#xD;
+	- Transition DIAGNOSTIC - UNLOCK will be done after DIAGNOSTIC is finished and if the command is UNLOCK and no FAILS are detected;&#xD;
+	- Transition DIAGNOSTIC - DISABLE will be done if at least one relevant auto-test is FAIL;&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+DOM_eCS_TF_R_168; DOM_eCS_TF_R_170; DOM_eCS_TF_R_180;  DOM_eCS_TF_R_192; DOM_eCS_TF_R_193; &#xD;
+---------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Startup&#xD;
+&#xD;
+# Description&#xD;
+	- Transition STARTUP - LOCK will be done after STURTUP is finished and if the command is LOCK and no FAILS are detected;&#xD;
+	- Transition STARTUP - UNLOCK will be done after STURTUP is finished and if the command is UNLOCK and no FAILS are detected;&#xD;
+	- Transition STARTUP - UNLOCK - BACKUP will be done after STURTUP is finished and if the command is UNLOCK can't be confirmed and no FAILS are detected;&#xD;
+	- Transition STARTUP - DISABLE will be done if at least one relevant auto-test is FAIL;&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+DOM_eCS_TF_R_171; DOM_eCS_TF_R_179; DOM_eCS_TF_R_187; DOM_eCS_TF_R_188; DOM_eCS_TF_R_189; &#xD;
+---------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Lock&#xD;
+&#xD;
+# Description&#xD;
+	- LOCK state will be maintained for as long as the command is LOCK and no FAILS are detected;&#xD;
+	- Transition LOCK - UNLOCK will be done if the command is UNLOCK and no FAILS are detected;&#xD;
+	- Transition LOCK - DIAGNOSTIC will be done after critical  auto-tests are finished;&#xD;
+	- Transition LOCK - DISABLE will be done if at least one relevant auto-test is FAIL;&#xD;
+	&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+DOM_eCS_TF_R_78; DOM_eCS_TF_R_80; DOM_eCS_TF_R_178; DOM_eCS_TF_R_186; &#xD;
+FUSA_SM_S32K1XXSM_148, FUSA_SM_S32K1XXSM_59, FUSA_SM_S32K1XXSM_128;&#xD;
+---------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Unlock&#xD;
+&#xD;
+# Description&#xD;
+	- When DISABLE state is active for a solenoid, INTERLOCKING will be possible;&#xD;
+	- Transition UNLOCK - LOCK will be done if the command is LOCK and no FAILS are detected;&#xD;
+	- UNLOCK state will remain if the command is UNLOCK and be confirmed and no FAILS are detected;&#xD;
+	- Transition UNLOCK - BACKUP will be done if the command is UNLOCK can't be confirmed and no FAILS are detected;&#xD;
+	- Transition UNLOCK - DISABLE will be done if at least one relevant auto-test is FAIL;	&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+DOM_eCS_TF_R_82; DOM_eCS_TF_R_82; DOM_eCS_TF_R_86; DOM_eCS_TF_R_88; DOM_eCS_TF_R_190; DOM_eCS_TF_R_191; &#xD;
+---------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Backup&#xD;
+&#xD;
+# Description&#xD;
+	- When BACKUP state is active for a solenoid, INTERLOCKING will be possible;&#xD;
+	- BACKUP state will remain if the command is BACKUP and unlock can't be confirmed and no FAILS are detected;&#xD;
+	- Transition BACKUP - LOCK will be done if the command is LOCK and no FAILS are detected;&#xD;
+	- Transition BACKUP - DISABLE will be done if at least one relevant auto-test is FAIL;&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+DOM_eCS_TF_R_169; DOM_eCS_TF_R_181; DOM_eCS_TF_R_182; DOM_eCS_TF_R_194; DOM_eCS_TF_R_195; &#xD;
+---------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_ptrpAsrOsServices_FSM_runMainFunction_Disable&#xD;
+&#xD;
+# Description&#xD;
+	- When DISABLE state is active for a solenoid, no INTERLOCKING will be possible;&#xD;
+	- Transition DISABLE - LOCK will be done after all relevant auto-tests are PASSED and if the command is LOCK;&#xD;
+	- Transition DISABLE - UNLOCK will be done after all relevant auto-tests are PASSED and if the command is UNLOCK;	&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+DOM_eCS_TF_R_89; DOM_eCS_TF_R_196; DOM_eCS_TF_R_197; &#xD;
+---------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called by the Autosar OS each 10ms&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- FSM_runUpdateModeStatus&#xD;
+&#xD;
+# Traceability&#xD;
+FUSA_SM_S32K1XXSM_59, FUSA_SM_S32K1XXSM_128, FUSA_SM_S32K1XXSM_132, FUSA_SM_S32K1XXSM_148&#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-13T10:36:52+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:29:07.913+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION T="2023-07-06T15:36:02+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.2</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-04-05T09:43:17.319+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R1.2</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Add DES_Requirements</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:54:07+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T15:36:02+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-07-13T10:36:17.583+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_13.07.2023] Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Traceability updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DPU_21.07.2023] Reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">No findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrOsServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-23T08:29:41+02:00" UUID="4a33fde1-5781-41aa-b72e-79ebd7de4ecc">
+                      <SHORT-NAME>ptrpFsmServicesBswMIf</SHORT-NAME>
+                      <DESC T="2023-06-07T17:55:10+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_Fsm_ptrpFsmServicesBswMIf_FSM_Init&#xD;
+&#xD;
+# Description&#xD;
+- The FSM_Init runnable shall be called during the initialization in the BswM_OnStartupTwoB runnable&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- FSM_Init&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+----------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_Fsm_ptrpFsmServicesBswMIf_FSM_ModesInit&#xD;
+&#xD;
+# Description&#xD;
+- The FSM_ModesInit runnable shall be called during the initialization in the BswM_OnStartComEffective runnable&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- FSM_ModesInit&#xD;
+&#xD;
+# Traceability&#xD;
+FUSA_SM_S32K1XXSM_452</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-06T14:53:39+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T14:53:39+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:29:28.969+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T14:53:39+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/FSM_DataDictionnary/TriggerInterfaces/itrFsmServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+                <CLIENT-SERVER-INTERFACE T="2023-01-10T14:35:58+02:00" UUID="d8bb69f5-9f15-45cc-8b86-4a5553346dff">
+                  <SHORT-NAME>icsFsmServices</SHORT-NAME>
+                  <IS-SERVICE>false</IS-SERVICE>
+                  <OPERATIONS>
+                    <CLIENT-SERVER-OPERATION T="2023-01-10T14:35:58+02:00" UUID="d758303f-fd7e-4c0f-a086-71269914509e">
+                      <SHORT-NAME>calculateProfileTimeout</SHORT-NAME>
+                      <ARGUMENTS>
+                        <ARGUMENT-DATA-PROTOTYPE T="2023-01-10T14:35:58+02:00" UUID="57125658-c5fd-4530-b20d-0ebeacc8eed3">
+                          <SHORT-NAME>pu8Response</SHORT-NAME>
+                          <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_Platform/ImplementationDataTypes/uint8</TYPE-TREF>
+                          <DIRECTION>OUT</DIRECTION>
+                          <SERVER-ARGUMENT-IMPL-POLICY>USE-ARGUMENT-TYPE</SERVER-ARGUMENT-IMPL-POLICY>
+                        </ARGUMENT-DATA-PROTOTYPE>
+                      </ARGUMENTS>
+                    </CLIENT-SERVER-OPERATION>
+                    <CLIENT-SERVER-OPERATION UUID="ecf67bd5-ff87-4e0a-b601-1b4fb4d5c71d">
+                      <SHORT-NAME>getUnlockTimeoutPeriod</SHORT-NAME>
+                      <ARGUMENTS>
+                        <ARGUMENT-DATA-PROTOTYPE UUID="ab187839-c1ec-4d8c-8ba1-3b37fd896eee">
+                          <SHORT-NAME>pu16UnlockDetectionTimeoutPeriod</SHORT-NAME>
+                          <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_Platform/ImplementationDataTypes/uint16</TYPE-TREF>
+                          <DIRECTION>OUT</DIRECTION>
+                          <SERVER-ARGUMENT-IMPL-POLICY>USE-ARGUMENT-TYPE</SERVER-ARGUMENT-IMPL-POLICY>
+                        </ARGUMENT-DATA-PROTOTYPE>
+                      </ARGUMENTS>
+                    </CLIENT-SERVER-OPERATION>
+                  </OPERATIONS>
+                </CLIENT-SERVER-INTERFACE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

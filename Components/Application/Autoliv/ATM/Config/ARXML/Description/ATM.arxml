@@ -1,0 +1,2284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2017-01-04T08:25:38+01:00" UUID="ff3b633a-7945-4e58-8200-005db30506a8">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2017-01-04T08:25:38+01:00" UUID="c9f037e1-224e-47b8-a7bc-ff4e3a42b32d">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2017-01-04T08:25:38+01:00" UUID="8fc4ff3f-1469-4b7b-82c5-6b576650f090">
+              <SHORT-NAME>ATM</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2023-05-16T14:36:08+03:00" UUID="f8d238ad-181c-4f3a-b7b2-df71c4c57602">
+                  <SHORT-NAME>ATM</SHORT-NAME>
+                  <LONG-NAME T="2019-08-20T10:31:57+02:00">
+                    <L-4 L="FOR-ALL">ATM_AC_AutoTestManager</L-4>
+                  </LONG-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <PORTS>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:50:22+02:00" UUID="9e8798ca-d6dd-4d27-971a-dfd34457fda4">
+                      <SHORT-NAME>pclCheckAccAlarmbPin</SHORT-NAME>
+                      <DESC T="2023-02-22T09:18:37+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckAccAlarmbPin&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if the ALARMB pin of the TDK accelerometer chip has been activated.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:56:14+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T11:19:44+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:50:07.896+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:56:14+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T11:19:44+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-01-27T09:53:05+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-22T08:55:16+03:00" UUID="fdfa0de2-df5e-40cc-817d-eb8f2f8ca9f4">
+                      <SHORT-NAME>pclCheckActuatorState</SHORT-NAME>
+                      <DESC T="2023-06-19T11:09:45+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckActuatorState&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if solenoids has been activated successfully. &#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T13:40:27+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T11:38:54+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>lucian.ardeleanu</ISSUED-BY>
+                            <DATE>2023-06-22T08:54:47.645+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:40:27+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T11:38:42+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2022-11-04T14:43:50+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:50:38+02:00" UUID="DCE:01ebe409-492c-4b69-ba0b-46bf470bf306">
+                      <SHORT-NAME>pclCheckAdc</SHORT-NAME>
+                      <DESC T="2023-06-07T17:47:28+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckAdc&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if the two reference voltages measured on the dedicated ADC channels do not drift.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+FUSA_SM_S32K1XXSM_302</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:56:51+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:37:28+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:50:27.578+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:56:51+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:37:28+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-08-20T10:36:06+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:50:49+02:00" UUID="e9db2e23-2a85-4fd5-a960-be05c868717e">
+                      <SHORT-NAME>pclCheckAdcCalib</SHORT-NAME>
+                      <DESC T="2023-06-19T11:12:43+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckAdcCalib&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if the ADC calibration is OK&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:57:15+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:39:07+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:50:40.329+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:57:15+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:39:07+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-08-20T10:36:15+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-21T14:09:02+03:00" UUID="9a3c161d-b358-4e58-b03a-cc4cebc4d367">
+                      <SHORT-NAME>pclCheckCrcOnMcuRegisters</SHORT-NAME>
+                      <DESC T="2023-06-21T14:09:32+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckCrcOnMcuRegisters&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check CRC on PORT, ADC and FTM MCU registers.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T11:01:43+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:39:21+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-06-21T14:08:32.950+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality added</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T11:01:43+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[IRe_22.06.2023] Reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">No findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:39:21+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-06-15T16:04:37+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-05-16T14:36:08+03:00" UUID="a70e2679-66a2-4095-8ab2-5ad289845ccf">
+                      <SHORT-NAME>pclCheckMcuSelfTest</SHORT-NAME>
+                      <DESC T="2023-06-19T11:09:54+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckMcuSelfTest&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check internal hardware logic of the MCU.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:17:28+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:39:40+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-06-20T22:14:47.333+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:17:28+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:39:40+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-05-16T14:36:08+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-19T11:05:47+03:00" UUID="600fa7fc-e6aa-4eb1-80ab-e06a7fddccf5">
+                      <SHORT-NAME>pclCheckOpenCircuit</SHORT-NAME>
+                      <DESC T="2023-06-19T11:09:56+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckOpenCircuit&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check an open circuit fault on each solenoid circuit.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T13:40:47+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:40:57+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>lucian.ardeleanu</ISSUED-BY>
+                            <DATE>2023-06-22T08:56:01.117+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:40:47+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:40:57+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2022-12-19T14:45:07+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-22T08:55:51+03:00" UUID="dcb35735-67ed-45ed-865f-1c69f741f0ce">
+                      <SHORT-NAME>pclCheckPowerStage</SHORT-NAME>
+                      <DESC T="2023-06-19T11:09:59+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckPowerStage&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if power stage is functioning correctly.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T13:41:01+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:43:56+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>lucian.ardeleanu</ISSUED-BY>
+                            <DATE>2023-06-22T08:55:29.726+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:41:01+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:43:56+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:29:24+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:51:14+02:00" UUID="49cd368c-965b-4736-ac43-04cf9c43669f">
+                      <SHORT-NAME>pclCheckPowerSupplyOV</SHORT-NAME>
+                      <DESC T="2023-06-19T11:10:02+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckPowerSupplyOV&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check for overvoltage on the Power stage battery voltage.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:57:30+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:44:50+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:51:02.483+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:57:30+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:44:50+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2021-06-15T15:04:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:51:24+02:00" UUID="f0156100-fc90-435c-983e-3267de792940">
+                      <SHORT-NAME>pclCheckPowerSupplyUV</SHORT-NAME>
+                      <DESC T="2023-06-19T11:10:07+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckPowerSupplyUV&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check for undervoltage on the Power stage battery voltage.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:57:39+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:45:40+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:51:15.797+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:57:39+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:45:40+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2021-06-15T15:04:10+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:51:50+02:00" UUID="f43e6e3b-b47a-4adb-bc39-ba5a3f531078">
+                      <SHORT-NAME>pclCheckSbcStatusInfo</SHORT-NAME>
+                      <DESC T="2023-02-22T09:28:46+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckSbcStatusInfo&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if the the Status information section of a Spi response from the SBC chip.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:57:49+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:47:36+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:51:42.364+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:57:49+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:47:36+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-01-27T09:53:40+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-22T08:57:13+03:00" UUID="16a9de90-3f31-404d-b1cb-d09cdf23e016">
+                      <SHORT-NAME>pclCheckShortToGND</SHORT-NAME>
+                      <DESC T="2023-06-19T11:11:27+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckShortToGND&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check a short-to-ground fault on each solenoid circuit.&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T13:41:19+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:51:03+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>lucian.ardeleanu</ISSUED-BY>
+                            <DATE>2023-06-22T08:56:57.190+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:41:19+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:51:03+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2022-12-19T14:45:24+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-22T08:57:34+03:00" UUID="2a222cda-1d33-470e-a5b9-a008c25513a2">
+                      <SHORT-NAME>pclCheckShortToVBAT</SHORT-NAME>
+                      <DESC T="2023-06-19T11:11:44+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckShortToVBAT&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check a short-to-VBAT fault on each solenoid circuit.&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T13:41:31+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T12:55:38+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>lucian.ardeleanu</ISSUED-BY>
+                            <DATE>2023-06-22T08:57:22.224+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:41:31+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T12:55:38+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2022-12-19T14:45:34+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-22T08:58:01+03:00" UUID="475fe022-9226-4617-8d49-e87be4e9ec88">
+                      <SHORT-NAME>pclCheckSolenoidOvervoltage</SHORT-NAME>
+                      <DESC T="2023-06-19T11:12:14+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclCheckSolenoidOvervoltage&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check that no overvoltage condition is present on the solenoids.&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T13:41:46+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:03:40+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>lucian.ardeleanu</ISSUED-BY>
+                            <DATE>2023-06-22T08:57:44.325+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:41:46+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:03:40+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:29:04+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:52:04+02:00" UUID="13b8107f-0b53-4e93-9ea3-b7d38352158c">
+                      <SHORT-NAME>pclEcuOverTemperature</SHORT-NAME>
+                      <DESC T="2023-02-22T09:29:40+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclEcuOverTemperature&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check over temperature of MCU.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:58:03+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:04:48+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:51:55.472+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:58:03+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:04:48+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-09-17T17:59:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-01-27T17:02:13+02:00" UUID="387cc550-f64b-4306-ba6b-441c1dc55a20">
+                      <SHORT-NAME>pclEvtAccStatusFailure</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:02:13+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:02:13+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:02:13+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:02:13+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:02:13+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-01-25T14:59:55+02:00" UUID="f46e1ccd-5ca0-45cb-9a40-dff7af5014e8">
+                      <SHORT-NAME>pclEvtActuatorOpenCircuit</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:55+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:55+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:55+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:55+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:55+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-01-25T14:59:31+02:00" UUID="fe591589-6d02-47f8-9ad6-63cf98579d4a">
+                      <SHORT-NAME>pclEvtActuatorShortToGND</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:31+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:31+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:31+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:31+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:31+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-01-25T14:59:07+02:00" UUID="1940aa50-902a-4625-a117-dedd71782c4d">
+                      <SHORT-NAME>pclEvtActuatorShortToVBAT</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:07+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:07+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:07+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:07+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-25T14:59:07+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-11-04T16:17:49+02:00" UUID="f4d13176-5715-4643-a41d-2c251a7b8fb6">
+                      <SHORT-NAME>pclEvtActuatorState</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2022-11-04T16:17:49+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-11-04T16:17:49+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-11-04T16:17:49+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-11-04T16:17:49+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2022-11-04T16:17:49+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T10:38:17+03:00" UUID="32159fc4-baa2-4a6f-8bfa-87ded377a2ed">
+                      <SHORT-NAME>pclEvtAdcCalibration</SHORT-NAME>
+                      <DESC T="2023-02-22T09:47:30+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:13+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:13+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:13+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:13+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:13+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T10:44:31+03:00" UUID="fcea1fc6-09da-4c8a-805e-4ba1b6f46f9a">
+                      <SHORT-NAME>pclEvtAdcOutOfOrder</SHORT-NAME>
+                      <DESC T="2023-02-22T09:47:33+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:14:01+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:14:01+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:14:01+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:14:01+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T10:50:49+03:00" UUID="bd1ca394-3e1d-47af-aed5-36775578bcf4">
+                      <SHORT-NAME>pclEvtEcuoverTemperature</SHORT-NAME>
+                      <DESC T="2023-02-22T09:47:42+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-09-18T14:14:01+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-09-18T14:14:01+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-09-18T14:14:01+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-09-18T14:14:01+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-09-18T14:14:01+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T10:56:00+03:00" UUID="3710a4aa-347d-40a7-bc37-f20b7e7ea131">
+                      <SHORT-NAME>pclEvtExtWdgOutOfOrder</SHORT-NAME>
+                      <DESC T="2023-02-22T09:47:45+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:33:41+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:33:41+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:33:41+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:33:41+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T10:59:57+03:00" UUID="10fb954c-ba14-41d0-9670-92e45d911685">
+                      <SHORT-NAME>pclEvtFlsEcc</SHORT-NAME>
+                      <DESC T="2023-02-22T09:47:48+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:37+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:37+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:37+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:37+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2019-11-05T13:59:37+01:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-15T14:20:21+03:00" UUID="eb911b64-451e-46ba-8f98-72a57fc55516">
+                      <SHORT-NAME>pclEvtMcuCrcRegisters</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-06-15T14:20:21+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-06-15T14:20:21+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-06-15T14:20:21+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-06-15T14:20:21+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-06-15T14:20:21+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-01-20T14:09:53+02:00" UUID="a19057aa-0c7e-42e6-8bb5-c1fb6dd85a79">
+                      <SHORT-NAME>pclEvtMcuSelftest</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-01-20T14:09:53+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-20T14:09:53+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-20T14:09:53+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-20T14:09:53+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-20T14:09:53+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T11:02:07+03:00" UUID="68dada27-efa8-450d-bbc1-260f04bf2e4f">
+                      <SHORT-NAME>pclEvtNvmEcc</SHORT-NAME>
+                      <DESC T="2023-02-22T09:47:52+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2017-05-03T13:34:46+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-05-03T13:34:46+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-05-03T13:34:46+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-05-03T13:34:46+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T11:04:47+03:00" UUID="11944e39-e18b-40da-b46b-a45b4731f4f9">
+                      <SHORT-NAME>pclEvtNvmNotPrg</SHORT-NAME>
+                      <DESC T="2023-02-22T09:47:55+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:30:25+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:30:25+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:30:25+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:30:25+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-04-28T08:48:27+03:00" UUID="4a00a696-b441-4271-9ba1-f772df71f757">
+                      <SHORT-NAME>pclEvtPowerStageFailiure</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:27+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:27+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:27+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:27+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:27+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T11:06:08+03:00" UUID="0dd0088f-7204-4147-9119-e17e71bf2d82">
+                      <SHORT-NAME>pclEvtPowerSupllyOV</SHORT-NAME>
+                      <DESC T="2023-02-22T09:47:57+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2021-06-15T23:27:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2021-06-15T23:27:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2021-06-15T23:27:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2021-06-15T23:27:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2021-06-15T23:27:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T11:06:50+03:00" UUID="586e2a79-63f7-4e59-a270-f400699aed38">
+                      <SHORT-NAME>pclEvtPowerSupllyUV</SHORT-NAME>
+                      <DESC T="2023-02-22T09:48:01+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T12:10:08+03:00" UUID="ec0a484a-1777-48f5-95ab-3d92daeb80c1">
+                      <SHORT-NAME>pclEvtRamEcc</SHORT-NAME>
+                      <DESC T="2023-02-22T09:48:03+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2017-05-03T13:34:34+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-05-03T13:34:34+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-05-03T13:34:34+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-05-03T13:34:34+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-01-27T17:01:44+02:00" UUID="f0edd3a1-c760-43c8-80ba-498ec04f2c9d">
+                      <SHORT-NAME>pclEvtSbcStatusFailiure</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:01:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:01:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:01:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:01:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-01-27T17:01:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-04-28T08:48:11+03:00" UUID="5f037454-5de7-4576-9467-b135c356ada6">
+                      <SHORT-NAME>pclEvtSolenoidOvervoltage</SHORT-NAME>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:11+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:11+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:11+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:11+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-04-28T08:48:11+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-19T12:11:01+03:00" UUID="fe1316ea-8de3-43b2-99f0-b4d003a4cdf2">
+                      <SHORT-NAME>pclEvtWarmReset</SHORT-NAME>
+                      <DESC T="2023-02-22T09:48:08+02:00">
+                        <L-2 L="FOR-ALL"></L-2>
+                      </DESC>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:39:58+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:39:58+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:39:58+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2017-04-20T18:39:58+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-21T09:52:18+03:00" UUID="33d6a0bb-a4bc-449e-8706-8577259d7463">
+                      <SHORT-NAME>pclInjectError</SHORT-NAME>
+                      <DESC T="2023-06-19T11:16:10+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclInjectError&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to handle error event status for the EIM module if is enabled.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: B_TRUE, B_FALSE&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: B_TRUE, B_FALSE&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T08:58:32+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:36:18+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1 xsi:nil="true"></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2 xsi:nil="true"></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>lucian.ardeleanu</ISSUED-BY>
+                            <DATE>2023-06-21T09:51:46.901+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION T="2023-06-22T08:58:32+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:42:03+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:36:18+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-03-23T15:03:19+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/EIM_DataDictionary/ClientServerInterfaces/icsInjectError/EIM_ManageAecStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/EIM_DataDictionary/ClientServerInterfaces/icsInjectError</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:52:24+02:00" UUID="65b05dcb-52f1-4902-b44b-1a7af8ec5e0f">
+                      <SHORT-NAME>pclModeManagement</SHORT-NAME>
+                      <DESC T="2023-02-22T09:42:20+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_ATM_pclModeManagement&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check running context service. It indicates whether all the required contextes are OK. (atm_executeAutoTest)&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: B_TRUE, B_FALSE&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: B_TRUE, B_FALSE&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:58:14+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:50:31+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:52:15.002+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:58:14+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:50:31+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2022-09-10T19:19:35+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/FSM_DataDictionnary/ClientServerInterfaces/icsModeManagementServices/CheckModeStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/FSM_DataDictionnary/ClientServerInterfaces/icsModeManagementServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:52:34+02:00" UUID="DCE:1e0a3595-41d7-4120-b1ae-aa4250e2dd18">
+                      <SHORT-NAME>pclRunEepromMemoryCorruption</SHORT-NAME>
+                      <DESC T="2023-02-22T09:43:19+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclRunEepromMemoryCorruption&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if an ECC was detected in DFLASH memory area.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:58:22+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:05:27+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:52:26.393+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:58:22+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:05:27+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-08-20T10:38:22+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:52:48+02:00" UUID="DCE:2429a7ea-e4d2-4509-9031-921b243771f1">
+                      <SHORT-NAME>pclRunEepromMemoryNotProgrammed</SHORT-NAME>
+                      <DESC T="2023-02-22T09:43:40+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclRunEepromMemoryNotProgrammed&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if one or more EEPROM blocks are not programmed (Manufacture)&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:58:31+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:05:48+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:52:37.217+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:58:31+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:05:48+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-08-20T10:38:25+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:53:03+02:00" UUID="7a995427-ac1a-42cc-8da7-271113c03fe5">
+                      <SHORT-NAME>pclRunExtWDTest</SHORT-NAME>
+                      <DESC T="2023-06-07T18:26:27+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclEvtExtWdgOutOfOrder&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check the external WDG status&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+FUSA_SM_S32K1XXSM_539, FUSA_SM_S32K1XXSM_541</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:58:41+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:06:45+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:52:50.883+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:58:41+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:06:45+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2021-06-14T01:13:10+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:53:13+02:00" UUID="DCE:adde2ebb-ae2b-4e8b-a254-78ab9486725b">
+                      <SHORT-NAME>pclRunPFlashMemoryCorruption</SHORT-NAME>
+                      <DESC T="2023-02-22T09:44:53+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclRunPFlashMemoryCorruption&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if an ECC was detected in PFLASH memory area.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:58:50+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:07:54+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:53:05.762+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:58:50+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:07:54+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-08-20T10:38:29+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:53:25+02:00" UUID="DCE:5c48cf06-dff0-42a7-bf57-b99e0f179156">
+                      <SHORT-NAME>pclRunRamMemoryCorruption</SHORT-NAME>
+                      <DESC T="2023-02-22T09:45:21+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclRunRamMemoryCorruption&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if an ECC was detected in RAM memory area.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:58:58+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:09:47+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:53:15.929+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:58:58+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:09:47+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-08-20T10:38:33+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T09:53:36+02:00" UUID="DCE:094a1c03-44a5-4a45-b76c-59d52eb4c4ca">
+                      <SHORT-NAME>pclRunResetCause</SHORT-NAME>
+                      <DESC T="2023-02-22T09:46:02+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pclRunResetCause&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to check if an unexpected reset cause has been detected.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+    - Can be one of the following values: OK,NOK,NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:59:06+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T13:12:36+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:53:27.403+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:59:06+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T13:12:36+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2019-08-20T10:38:44+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-03-02T10:49:42+02:00" UUID="336b3760-354f-4aa9-902e-1868a050e504">
+                      <SHORT-NAME>pseAutotestServices</SHORT-NAME>
+                      <DESC T="2023-03-02T09:45:27+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_pseAutotestServices_GetTestResult&#xD;
+&#xD;
+# Description&#xD;
+- Get ADC auto-test result&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+    - Test result from ATM_runGetTestResult&#xD;
+&#xD;
+&#xD;
+## Outputs&#xD;
+    - u8TestResult&#xD;
+&#xD;
+# Linked Runnable&#xD;
+    - ATM_runGetTestResult&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+#------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_pseAutotestServices_GetCriticalAutoTestsReachedFlag&#xD;
+&#xD;
+&#xD;
+# Description&#xD;
+- The function aims at returning the auto test reached flag&#xD;
+&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+    - Test result from ATM_runGetTestResult&#xD;
+&#xD;
+&#xD;
+## Outputs&#xD;
+    - pb8CriticalAutoTestsFlag&#xD;
+&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_runGetCriticalAutoTestsReachedFlag&#xD;
+&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:55:43+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T14:34:58+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:49:01.064+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:55:43+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T14:34:58+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to InReviewByDesignTeam</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Linked runnable does not exist</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DPU_31.07.2023]: Update linked runnable</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Fix finding</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestServices/GetCriticalAutoTestsReachedFlag</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                        <SERVER-COM-SPEC T="2023-03-02T10:49:42+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestServices/GetTestResult</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-22T09:49:50+02:00" UUID="e4d96602-3451-4814-9375-da94f05ba0b5">
+                      <SHORT-NAME>ptrpAtmServicesAsrOs</SHORT-NAME>
+                      <DESC T="2023-06-07T17:53:16+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_BswMIf_ptrpAtmServicesAsrOs_ATM_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+- The ATM_runMainFunction runnable shall be called when the Os task {OsTask_Alv_Autotests} is executed&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable &#xD;
+- ATM_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+	DOM_eCS_TF_H_300&#xD;
+	DOM_eCS_TF_H_301&#xD;
+	DOM_eCS_TF_H_302&#xD;
+	FUSA_SM_S32K1XXSM_452&#xD;
+	DOM_eCS_TF_H_380&#xD;
+	DOM_eCS_TF_H_377&#xD;
+	DOM_eCS_TF_H_374&#xD;
+	&#xD;
+&#xD;
+--------------------------------------------------------------------------------------------------------------------------------</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:55:52+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T14:52:40+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:49:40.780+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:55:52+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T14:52:40+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrOsServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-22T09:50:01+02:00" UUID="02804301-0a86-4a14-8e4f-63b31fe632b4">
+                      <SHORT-NAME>ptrpAtmServicesBswMIf</SHORT-NAME>
+                      <DESC T="2023-06-21T09:50:01+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_Atm_ptrpAtmServicesBswMIf_ATM_runInit&#xD;
+&#xD;
+# Description&#xD;
+- The ATM_Init runnable shall be called during the initialization in the BswM_OnStartComEffective runnable&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ATM_Init&#xD;
+&#xD;
+# Traceability&#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:56:01+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-03T14:05:19+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T09:49:52.642+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:56:01+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-03T14:05:19+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_03.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/TriggerInterfaces/itrAtmServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

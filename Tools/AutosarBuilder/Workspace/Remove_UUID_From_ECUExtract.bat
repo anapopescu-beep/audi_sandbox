@@ -1,0 +1,1 @@
+Powershell.exe -executionpolicy remotesigned -File "%~dp0\Remove_UUID_Regex.ps1"

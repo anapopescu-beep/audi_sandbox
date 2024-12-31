@@ -1,0 +1,221 @@
+#ifndef CIL_H_
+#define CIL_H_ 1
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+H-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+*******************************************************************************
+
+******************************************************************************/
+/**
+ *    $Revision: 1.6.2.14 $
+ *    $ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/CIL/Implementation/inc/project.pj $
+ */
+
+/**
+ * Overview of the interfaces:
+ *    Communication Interface Layer (CIL) oversees extracting data from the 
+ *    network frames (e.g. CAN) and providing the data to the application, and 
+ *    packing the outgoing data to the network frames.
+ *    The aim of the CIL component is to interpret all received signals on the
+ *    communication component and to provide the right information to the application.
+ *    Also, it’s purpose is to gather information from the Application and
+ *    compute the status signals and sent them to the CAN bus.
+ *    CIL oversees:
+ *       - Unpacking received data frames from the network (CAN), and providing 
+ *         the data to the application
+ *       - Packing the outgoing data to data frames for the network (CAN)
+ */
+/*****************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/******************************************************************************
+DEFINITION OF CONSTANTS
+******************************************************************************/
+
+/**
+ * \brief
+ * 		Number of buckles in the car
+ */
+#define CIL_NO_OF_BUCKLES     KU8_SIX
+
+/**
+ * \brief
+ * 		Number of seats in the car
+ */
+#define CIL_NO_OF_SEATS       KU8_FOUR
+
+/******************************************************************************
+DECLARATION OF TYPES
+******************************************************************************/
+/**
+ * \brief
+ *       Data structure used to configure every byte of an 64 byte frame
+ */
+typedef struct
+{
+  VAR(uint8, TYPEDEF) u8Byte0;
+  VAR(uint8, TYPEDEF) u8Byte1;
+  VAR(uint8, TYPEDEF) u8Byte2;
+  VAR(uint8, TYPEDEF) u8Byte3;
+  VAR(uint8, TYPEDEF) u8Byte4;
+  VAR(uint8, TYPEDEF) u8Byte5;
+  VAR(uint8, TYPEDEF) u8Byte6;
+  VAR(uint8, TYPEDEF) u8Byte7;
+  VAR(uint8, TYPEDEF) u8Byte8;
+  VAR(uint8, TYPEDEF) u8Byte9;
+  VAR(uint8, TYPEDEF) u8Byte10;
+  VAR(uint8, TYPEDEF) u8Byte11;
+  VAR(uint8, TYPEDEF) u8Byte12;
+  VAR(uint8, TYPEDEF) u8Byte13;
+  VAR(uint8, TYPEDEF) u8Byte14;
+  VAR(uint8, TYPEDEF) u8Byte15;
+  VAR(uint8, TYPEDEF) u8Byte16;
+  VAR(uint8, TYPEDEF) u8Byte17;
+  VAR(uint8, TYPEDEF) u8Byte18;
+  VAR(uint8, TYPEDEF) u8Byte19;
+  VAR(uint8, TYPEDEF) u8Byte20;
+  VAR(uint8, TYPEDEF) u8Byte21;
+  VAR(uint8, TYPEDEF) u8Byte22;
+  VAR(uint8, TYPEDEF) u8Byte23;
+  VAR(uint8, TYPEDEF) u8Byte24;
+  VAR(uint8, TYPEDEF) u8Byte25;
+  VAR(uint8, TYPEDEF) u8Byte26;
+  VAR(uint8, TYPEDEF) u8Byte27;
+  VAR(uint8, TYPEDEF) u8Byte28;
+  VAR(uint8, TYPEDEF) u8Byte29;
+  VAR(uint8, TYPEDEF) u8Byte30;
+  VAR(uint8, TYPEDEF) u8Byte31;
+  VAR(uint8, TYPEDEF) u8Byte32;
+  VAR(uint8, TYPEDEF) u8Byte33;
+  VAR(uint8, TYPEDEF) u8Byte34;
+  VAR(uint8, TYPEDEF) u8Byte35;
+  VAR(uint8, TYPEDEF) u8Byte36;
+  VAR(uint8, TYPEDEF) u8Byte37;
+  VAR(uint8, TYPEDEF) u8Byte38;
+  VAR(uint8, TYPEDEF) u8Byte39;
+  VAR(uint8, TYPEDEF) u8Byte40;
+  VAR(uint8, TYPEDEF) u8Byte41;
+  VAR(uint8, TYPEDEF) u8Byte42;
+  VAR(uint8, TYPEDEF) u8Byte43;
+  VAR(uint8, TYPEDEF) u8Byte44;
+  VAR(uint8, TYPEDEF) u8Byte45;
+  VAR(uint8, TYPEDEF) u8Byte46;
+  VAR(uint8, TYPEDEF) u8Byte47;
+  VAR(uint8, TYPEDEF) u8Byte48;
+  VAR(uint8, TYPEDEF) u8Byte49;
+  VAR(uint8, TYPEDEF) u8Byte50;
+  VAR(uint8, TYPEDEF) u8Byte51;
+  VAR(uint8, TYPEDEF) u8Byte52;
+  VAR(uint8, TYPEDEF) u8Byte53;
+  VAR(uint8, TYPEDEF) u8Byte54;
+  VAR(uint8, TYPEDEF) u8Byte55;
+  VAR(uint8, TYPEDEF) u8Byte56;
+  VAR(uint8, TYPEDEF) u8Byte57;
+  VAR(uint8, TYPEDEF) u8Byte58;
+  VAR(uint8, TYPEDEF) u8Byte59;
+  VAR(uint8, TYPEDEF) u8Byte60;
+  VAR(uint8, TYPEDEF) u8Byte61;
+  VAR(uint8, TYPEDEF) u8Byte62;
+  VAR(uint8, TYPEDEF) u8Byte63;
+} CIL_stFrameDataBytes;
+/******************************************************************************
+DECLARATION OF VARIABLES
+******************************************************************************/
+
+extern uint8 CIL_u8BuckleStatusTx[CIL_NO_OF_BUCKLES];
+
+extern uint8 CIL_u8SeatOccupancySensorTx[CIL_NO_OF_SEATS];
+
+/******************************************************************************
+DECLARATION OF CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTIONS
+******************************************************************************/
+
+
+extern void CIL_Gliwa_RxNotification(REC_GliwaDataIn_Type *data);
+extern void CIL_Gliwa_TXNotification(CIL_stFrameDataBytes *data);
+
+void CIL_runInit(void);
+
+/******************************************************************************
+DECLARATION OF FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+Evolution of the component
+
+Created by : F.Gilbert
+
+$Log: CIL.h  $
+Revision 1.6.2.14 2023/06/08 09:50:14CEST Mihai Motoc (mihai.motoc) 
+Doxygen comments updates
+Revision 1.6.2.13 2023/05/10 13:37:16EEST Mihai Motoc (mihai.motoc) 
+Code fixes for BswMIf
+Revision 1.6.2.12 2023/04/18 15:24:57EEST Dan Dustinta (dan.dustinta) 
+add local functions
+Revision 1.6.2.11 2023/03/24 08:46:27EET Septimiu Vintila (septimiu.vintila) 
+Changes after review.
+Revision 1.6.2.10 2023/03/14 11:39:46EET Gabriel Brasoveanu (gabriel.brasoveanu) 
+Measurement frame, Gliwa Out frame and DevKit frame changed from 64 signals of 1 byte to 8 signals of 8 bytes
+Revision 1.6.2.9 2023/03/10 11:25:34EET Septimiu Vintila (septimiu.vintila) 
+MF redesign; cast corrected in CanToAppli
+Revision 1.6.2.8 2023/03/07 12:14:38EET Septimiu Vintila (septimiu.vintila) 
+Syncronization mechanism (time-slot mechanism with transmision mechanism) fixed.
+Revision 1.6.2.7 2023/03/03 12:35:24EET Dan Dustinta (dan.dustinta) 
+update MF handling
+Revision 1.6.2.6 2023/01/25 11:46:22EET Septimiu Vintila (septimiu.vintila) 
+Added time-slots mechanism for AppliToCan functionality:
+ - main function moved to 2ms
+ - functionality splitted in 5 time slots
+Revision 1.6.2.5 2023/01/16 11:38:49EET Septimiu Vintila (septimiu.vintila) 
+Fixes after review.
+Revision 1.6.2.4 2022/12/14 11:36:18EET Septimiu Vintila (septimiu.vintila) 
+Integration for Gliwa related Tx/Rx frames.
+Revision 1.6.2.3 2022/11/24 10:13:19EET Septimiu Vintila (septimiu.vintila) 
+CIL implemantation.
+Revision 1.2 2021/10/27 09:52:21EEST Pierre-Olivier Pilot (pierre-olivier.pilot) 
+Intermediate release.
+- Update MCU Pinout
+- Configure ADC
+- Add LuT for NTC temperature
+- Add Measurement frame. (Id to be changed)
+- Add current regulation in SAD (PI controller)
+- Add solenoid discrete model in targetlink
+Revision 1.1 2021/08/26 08:16:53CEST Pierre-Olivier Pilot (pierre-olivier.pilot) 
+Initial revision
+
+******************************************************************************/
+
+#ifdef __cplusplus
+}
+#endif
+
+/******************************************************************************
+End Of File
+*****************************************************************************/
+
+#endif /* CIL_H_ */
+
+
+

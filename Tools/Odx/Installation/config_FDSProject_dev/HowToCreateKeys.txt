@@ -1,0 +1,5 @@
+/* create P8 with public and private key */
+openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:3072 -pkeyopt  rsa_keygen_pubexp:17 | openssl pkcs8 -topk8 -nocrypt -outform der > c:\new\rsa-3072-private-key2.p8
+
+/* extract private key  - use Asn.1 Editor to extract after creation from cer file */
+openssl pkey -pubout -inform der -outform der -in c:\new\rsa-3072-private-key2.p8 -out c:\new\publi.cer

@@ -1,0 +1,39 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest
+ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest: The interface shall return the {Auto-test Result} for the selected {Auto-test ID}
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest
+
+	Step 2: Set a BP in function atm_cbk_runOverTemperature in order to call IoHwAb_CheckEcuOverTemperatureAutotest function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function IoHwAb_CheckEcuOverTemperatureAutotest in order to change MCU Temperature 
+		Expected result:  BP was set
+
+	Step 4: Write MCU Temperature 
+		Expected result:  MCU Temperature succesfully write
+
+	Step 5: Set a BP in function IoHwAb_CheckEcuOverTemperatureAutotest in order check if the auto test result is OK 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function atm_cbk_runOverTemperature in order check the auto test result is OK 
+		Expected result:  BP was set
+
+	Step 7: Read aoto test result 
+		Expected result:  Auto test result succesfully read
+
+Postcondition
+
+	Step 8: Return ECU to default values

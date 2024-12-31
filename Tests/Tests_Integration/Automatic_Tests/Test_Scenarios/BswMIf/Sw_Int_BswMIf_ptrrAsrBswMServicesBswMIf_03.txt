@@ -1,0 +1,53 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnLowPwrFromPostRun, ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnRunFromLowPwrBusAvailable
+ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnLowPwrFromPostRun: The BswM_RequestMode runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to: - Set BswM EcuState Port to be able to notify that LOW POWER state is requested
+ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnRunFromLowPwrBusAvailable: The BswM_RequestMode runnable shall be called in the BswM_OnRunFromLowPwrBusAvailable runnable in order to: - Set BswM EcuState Port to be able to notify that RUN state is requested
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnLowPwrFromPostRun
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_OnLowPwrFromPostRun in order to call BswM_RequestMode function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function BswM_RequestMode  in order to: - Set BswM EcuState Port to be able to notify that LOW POWER state is requested 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_OnLowPwrFromPostRun for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnRunFromLowPwrBusAvailable
+
+	Step 8: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 9: Set a BP in function BswM_OnRunFromLowPwrBusAvailable in order to call BswM_RequestMode function 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function BswM_RequestMode in order to: - Set BswM EcuState Port to be able to notify that RUN state is requested
+
+	Step 11: Set a BP in function BswM_OnRunFromLowPwrBusAvailable for check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 12: Return ECU to default values

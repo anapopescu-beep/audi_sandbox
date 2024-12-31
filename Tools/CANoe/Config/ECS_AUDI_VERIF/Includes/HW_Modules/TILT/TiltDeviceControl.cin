@@ -1,0 +1,691 @@
+/*@!Encoding:1252*/
+includes
+{   
+
+}
+
+variables
+{  
+  int iTiltDeviceComPort  = 8;
+  int iTiltDeviceBaudrate = 9600;
+  int iTiltDeviceParity   = 0;	
+  int iTiltDeviceStopbit  = 1;
+	int iTiltDeviceByteSize = 8;
+  byte bSerialBuffer[50];
+  const int iTiltD_PASS   = 1;
+  const int iTiltD_FAIL   = -1;
+  int iTiltDeviceInstantaneousPosition;
+  int iZeroPosition      = 1000;
+  const int iDefaultAxis_Speed  = 50;
+  const int iDefaultAxis_Accel  = 5;
+  const int iMaxAxis_Speed      = 0;
+  const int iMaxAxis_Accel      = 0;
+  enum CheckTiltDevicePosition {PositionCheck, NoPositionCheck};
+}
+
+/// <COM Port Operation>
+int OpenPortTiltDevice()
+  
+{
+  stack char cPanelOutput[200];
+  if (rs232Open(iTiltDeviceComPort) == iTiltD_PASS)
+  {
+    rs232Configure(iTiltDeviceComPort, iTiltDeviceBaudrate, iTiltDeviceByteSize, iTiltDeviceStopbit, iTiltDeviceParity);
+    return iTiltD_PASS;
+  }
+  else
+  {
+    snprintf(cPanelOutput, elcount(cPanelOutput), "Error: Can't open COM port: %i.", iTiltDeviceComPort);        
+    testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice","Can't open COM port: %i",iTiltDeviceComPort);
+    return iTiltD_FAIL;
+  }   
+}
+
+/// <Tilt Device Movement>
+// Function that opens communication port to TiltDevice, selects desired servo axis and sends "SET" command for the desired servo angle position.
+// "TiltDevice_axis"      = holds the TiltDevice axis number. Numbering begins from 0 and ends at 5.
+// "TiltDevice_angle"     = servo angle position. The units of 'TiltDevice_angle' are degrees.
+void TiltDeviceSetAngle(byte TiltDevice_axis, int TiltDevice_angle)
+{   
+  char cPanelOutput[200];
+  stack int TiltDevice_angle_uS;
+  bSerialBuffer[0] = 0x84; //SetCommand byte
+  
+  if (OpenPortTiltDevice() == iTiltD_FAIL)
+    
+  {
+    return;
+  }
+  
+  if(TiltDevice_axis == 0x01)
+  {
+    
+    if((TiltDevice_angle >= 0 && TiltDevice_angle <= 90))
+    {
+  
+      switch (TiltDevice_angle)
+      {
+        case 0:
+          
+          bSerialBuffer[1] = TiltDevice_axis; 
+          bSerialBuffer[2] = (@TiltDevice_Parameters::axis_0x01_angle_0_Overshoot * 4) & 0x7F;
+          bSerialBuffer[3] = ((@TiltDevice_Parameters::axis_0x01_angle_0_Overshoot * 4) >> 7) & 0x7F;  
+          RS232Send(iTiltDeviceComPort, bSerialBuffer, 4);
+          testWaitForTimeout(iZeroPosition);         
+                  
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_0; //Overshoot angle 0 position, then return to angle 0.    
+        break;
+        
+        case 5:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_05;      
+        break;
+        
+        case 10:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_10;       
+        break;
+          
+        case 17:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_17;      
+        break;
+          
+        case 19:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_19;          
+        break;
+        
+        case 20:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_20;          
+        break;
+        
+        case 25:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_25;          
+        break;
+        
+        case 30:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_30;          
+        break;
+        
+        case 45:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_45;          
+        break;
+        
+        case 60:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_60;          
+        break;
+        
+        case 75:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_75;          
+        break;
+        
+        case 90:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_90;          
+        break;        
+        
+        default:
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect angle selection for axis 0x01 --> %i°",TiltDevice_angle);
+        Write("TiltDevice - Incorrect angle selection for axis 0x01");
+        return;
+      }     
+    }
+    
+    else if(TiltDevice_angle >= -90 && TiltDevice_angle <= 0)      
+    {
+      
+      switch (TiltDevice_angle)
+      {
+        case -5:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_05;   
+        break;
+          
+        case -10:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_10;   
+        break;
+          
+        case -20:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_20;   
+        break;
+          
+        case -25:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_25;   
+        break;  
+             
+        case -30:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_30;   
+        break; 
+          
+        case -45:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_45;   
+        break; 
+          
+        case -60:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_60;   
+        break; 
+          
+        case -75:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_75;   
+        break; 
+          
+        case -90:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_90;   
+        break; 
+          
+        default:
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect angle selection for axis 0x01 --> %i°",TiltDevice_angle);
+        Write("TiltDevice - Incorrect angle selection for axis 0x01");
+        return;
+      }      
+    }
+    
+  }
+  
+  else if(TiltDevice_axis == 0x00)
+  {
+    
+    if((TiltDevice_angle >= 0 && TiltDevice_angle <= 90))
+    {
+  
+      switch (TiltDevice_angle)
+      {
+        case 0:
+          
+          bSerialBuffer[1] = TiltDevice_axis; 
+          bSerialBuffer[2] = (@TiltDevice_Parameters::axis_0x00_angle_0_Overshoot * 4) & 0x7F;
+          bSerialBuffer[3] = ((@TiltDevice_Parameters::axis_0x00_angle_0_Overshoot * 4) >> 7) & 0x7F;  
+          RS232Send(iTiltDeviceComPort, bSerialBuffer, 4);
+          testWaitForTimeout(iZeroPosition);          
+          
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_0;   //Overshoot angle 0 position, then return to angle 0.
+        break;
+          
+         case 5:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_05 ;   
+         break;
+          
+         case 10:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_10;   
+         break;
+          
+         case 20:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_20;   
+         break;
+          
+         case 25:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_25;   
+         break;
+          
+          case 30:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_30;   
+         break;
+          
+        default:
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect angle selection for axis 0x00 --> %i°",TiltDevice_angle);
+        Write("TiltDevice - Incorrect angle selection for axis 0x00");
+        return;
+      }
+    }
+    
+    else if(TiltDevice_angle >= -90 && TiltDevice_angle <= 0)      
+    {
+      
+       switch (TiltDevice_angle)
+      {
+        case -5:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_minus_05;   
+        break;
+          
+        case -10:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_minus_10;   
+        break; 
+
+// Below angles cannot be reached due to ECU harness position and risk of TiltDevice to part collision, hence they are ignored.         
+//        case -20:
+//          TiltDevice_angle_uS = 1700;   
+//        break; 
+//          
+//        case -25:
+//          TiltDevice_angle_uS = 1750;   
+//        break; 
+//          
+//        case -30:
+//          TiltDevice_angle_uS = 1820;   
+//        break;
+          
+        default:
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect angle selection for axis 0x00 --> %i°",TiltDevice_angle);
+        Write("TiltDevice - Incorrect angle selection for axis 0x00");
+        return;
+      }      
+    }    
+  }
+  
+  else if(TiltDevice_axis != 0x00 || TiltDevice_axis != 0x01)
+    {
+      testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect axis selected. --> Axis 0x0%1X does not exist.",TiltDevice_axis);
+      Write("Incorrect axis selected. --> Axis 0x%1X does not exist.",TiltDevice_axis);
+      return;    
+    }    
+    
+    
+      bSerialBuffer[1] = TiltDevice_axis; 
+      bSerialBuffer[2] = (TiltDevice_angle_uS * 4) & 0x7F;
+      bSerialBuffer[3] = ((TiltDevice_angle_uS * 4) >> 7) & 0x7F;
+  
+    if(RS232Send(iTiltDeviceComPort, bSerialBuffer, 4) == iTiltD_PASS)
+         {
+            testStepPass(@sysvar::CORE::sysLevelOfDetailPass, "TiltDevice", "TiltDevice axis 0x0%1X SET to %i°", TiltDevice_axis, TiltDevice_angle);
+         }
+    
+        else
+            {
+               snprintf(cPanelOutput, elcount(cPanelOutput), "Error when sending serial request on port: [%i].", iTiltDeviceComPort);
+               testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", cPanelOutput);
+               return; 
+            }
+     @sysvar::CORE::sysLevelOfDetailStep = 3;
+     TiltDeviceGetPosition(TiltDevice_axis);
+                       
+     if(iTiltDeviceInstantaneousPosition == TiltDevice_angle_uS)
+    {
+      testStepPass(@sysvar::CORE::sysLevelOfDetailPass, "TiltDevice", "TiltDevice axis  0x0%1X reached SET angle position",TiltDevice_axis);
+    }
+    else
+    {
+      testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "TiltDevice axis 0x0%1X did not reach SET angle position",TiltDevice_axis);
+    }
+          
+}
+
+
+
+/// <Tilt Device Movement>
+// Function that opens communication port to TiltDevice, selects desired servo axis and sends "SET" command for the desired servo angle position.
+// "TiltDevice_axis"      = holds the TiltDevice axis number. Numbering begins from 0 and ends at 5.
+// "TiltDevice_angle"     = servo angle position. The units of 'TiltDevice_angle' are degrees.
+// "iPositionCheckSet"    = function overload which bypasses the "TiltDeviceGetPosition" function return check.
+void TiltDeviceSetAngle(byte TiltDevice_axis, int TiltDevice_angle, int iPositionCheckSet)
+{   
+  char cPanelOutput[200];
+  stack int TiltDevice_angle_uS;
+  bSerialBuffer[0] = 0x84; //SetCommand byte
+  
+  if (OpenPortTiltDevice() == iTiltD_FAIL)
+    
+  {
+    return;
+  }
+  
+  if(TiltDevice_axis == 0x01)
+  {
+    
+    if((TiltDevice_angle >= 0 && TiltDevice_angle <= 90))
+    {
+  
+      switch (TiltDevice_angle)
+      {
+        case 0:
+          
+          bSerialBuffer[1] = TiltDevice_axis; 
+          bSerialBuffer[2] = (@TiltDevice_Parameters::axis_0x01_angle_0_Overshoot * 4) & 0x7F;
+          bSerialBuffer[3] = ((@TiltDevice_Parameters::axis_0x01_angle_0_Overshoot * 4) >> 7) & 0x7F;  
+          RS232Send(iTiltDeviceComPort, bSerialBuffer, 4);
+          testWaitForTimeout(iZeroPosition);         
+                  
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_0; //Overshoot angle 0 position, then return to angle 0.    
+        break;
+        
+        case 5:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_05;      
+        break;
+        
+        case 10:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_10;       
+        break;
+          
+        case 17:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_17;      
+        break;
+          
+        case 19:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_19;          
+        break;
+        
+        case 20:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_20;          
+        break;
+        
+        case 25:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_25;          
+        break;
+        
+        case 30:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_30;          
+        break;
+        
+        case 45:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_45;          
+        break;
+        
+        case 60:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_60;          
+        break;
+        
+        case 75:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_75;          
+        break;
+        
+        case 90:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_90;          
+        break;        
+        
+        default:
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect angle selection for axis 0x01 --> %i°",TiltDevice_angle);
+        Write("TiltDevice - Incorrect angle selection for axis 0x01");
+        return;
+      }     
+    }
+    
+    else if(TiltDevice_angle >= -90 && TiltDevice_angle <= 0)      
+    {
+      
+      switch (TiltDevice_angle)
+      {
+        case -5:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_05;   
+        break;
+          
+        case -10:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_10;   
+        break;
+          
+        case -20:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_20;   
+        break;
+          
+        case -25:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_25;   
+        break;  
+             
+        case -30:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_30;   
+        break; 
+          
+        case -45:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_45;   
+        break; 
+          
+        case -60:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_60;   
+        break; 
+          
+        case -75:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_75;   
+        break; 
+          
+        case -90:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x01_angle_minus_90;   
+        break; 
+          
+        default:
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect angle selection for axis 0x01 --> %i°",TiltDevice_angle);
+        Write("TiltDevice - Incorrect angle selection for axis 0x01");
+        return;
+      }      
+    }
+    
+  }
+  
+  else if(TiltDevice_axis == 0x00)
+  {
+    
+    if((TiltDevice_angle >= 0 && TiltDevice_angle <= 90))
+    {
+  
+      switch (TiltDevice_angle)
+      {
+        case 0:
+          
+          bSerialBuffer[1] = TiltDevice_axis; 
+          bSerialBuffer[2] = (@TiltDevice_Parameters::axis_0x00_angle_0_Overshoot * 4) & 0x7F;
+          bSerialBuffer[3] = ((@TiltDevice_Parameters::axis_0x00_angle_0_Overshoot * 4) >> 7) & 0x7F;  
+          RS232Send(iTiltDeviceComPort, bSerialBuffer, 4);
+          testWaitForTimeout(iZeroPosition);          
+          
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_0;   //Overshoot angle 0 position, then return to angle 0.
+         break;
+          
+         case 5:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_05 ;   
+         break;
+          
+         case 10:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_10;   
+         break;
+          
+         case 20:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_20;   
+         break;
+          
+         case 25:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_25;   
+         break;
+          
+          case 30:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_30;   
+         break;
+          
+        default:
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect angle selection for axis 0x00 --> %i°",TiltDevice_angle);
+        Write("TiltDevice - Incorrect angle selection for axis 0x00");
+        return;
+      }
+    }
+    
+    else if(TiltDevice_angle >= -90 && TiltDevice_angle <= 0)      
+    {
+      
+       switch (TiltDevice_angle)
+      {
+        case -5:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_minus_05;   
+        break;
+          
+        case -10:
+          TiltDevice_angle_uS = @TiltDevice_Parameters::axis_0x00_angle_minus_10;   
+        break; 
+          
+// Below angles cannot be reached due to ECU harness position and risk of TiltDevice to part collision, hence they are ignored.         
+//        case -20:
+//          TiltDevice_angle_uS = 1700;   
+//        break; 
+//          
+//        case -25:
+//          TiltDevice_angle_uS = 1750;   
+//        break; 
+//          
+//        case -30:
+//          TiltDevice_angle_uS = 1820;   
+//        break;
+          
+        default:
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect angle selection for axis 0x00 --> %i°",TiltDevice_angle);
+        Write("TiltDevice - Incorrect angle selection for axis 0x00");
+        return;
+      }      
+    }    
+  }
+  
+  else if(TiltDevice_axis != 0x00 || TiltDevice_axis != 0x01)
+    {
+      testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "Incorrect axis selected. --> Axis 0x0%1X does not exist.",TiltDevice_axis);
+      Write("Incorrect axis selected. --> Axis 0x%1X does not exist.",TiltDevice_axis);
+      return;    
+    }    
+    
+    
+      bSerialBuffer[1] = TiltDevice_axis; 
+      bSerialBuffer[2] = (TiltDevice_angle_uS * 4) & 0x7F;
+      bSerialBuffer[3] = ((TiltDevice_angle_uS * 4) >> 7) & 0x7F;
+  
+    if(RS232Send(iTiltDeviceComPort, bSerialBuffer, 4) == iTiltD_PASS)
+         {
+            testStepPass(@sysvar::CORE::sysLevelOfDetailPass, "TiltDevice", "TiltDevice axis 0x0%1X SET to %i°", TiltDevice_axis, TiltDevice_angle);
+         }
+    
+        else
+            {
+               snprintf(cPanelOutput, elcount(cPanelOutput), "Error when sending serial request on port: [%i].", iTiltDeviceComPort);
+               testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", cPanelOutput);
+               return; 
+            }
+            
+      if (iPositionCheckSet == NoPositionCheck)
+      {
+        //no check required
+      }
+      
+      else{        
+            @sysvar::CORE::sysLevelOfDetailStep = 3;
+            TiltDeviceGetPosition(TiltDevice_axis);
+                       
+            if(iTiltDeviceInstantaneousPosition == TiltDevice_angle_uS)
+                {
+                  testStepPass(@sysvar::CORE::sysLevelOfDetailPass, "TiltDevice", "TiltDevice axis  0x0%1X reached SET angle position",TiltDevice_axis);
+                }
+            else
+                {
+                  testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice", "TiltDevice axis 0x0%1X did not reach SET angle position",TiltDevice_axis);
+                }
+          }
+          
+}
+
+
+/// <Tilt Device Movement>
+// Overload function for "TiltDeviceSetTarget" that opens communication port to TiltDevice, selects two consecutive desired servo axis and sends "SET" command for each desired servo angle position.
+// "TiltDevice_axis_X"      = holds the TiltDevice servo axis number. Servo axis is usually 0x00.
+// "TiltDevice_angle_X"     = servo angle position for TiltDevice_angle_X. The units of 'TiltDevice_angle' are degrees.
+// "TiltDevice_axis_Y"      = holds the TiltDevice servo axis number. Servo axis is usually 1.
+// "TiltDevice_angle_Y"     = servo angle position for TiltDevice_angle_Y. The units of 'TiltDevice_angle' are degrees.
+void TiltDeviceSetAngle(byte TiltDevice_axis_X, int TiltDevice_angle_X, byte TiltDevice_axis_Y, int TiltDevice_angle_Y)
+{  
+   char cPanelOutput[200];
+  
+   if((TiltDevice_angle_X >= -90 && TiltDevice_angle_X <= 90) && (TiltDevice_angle_Y >= -90 && TiltDevice_angle_Y <= 90))
+    {
+         TiltDeviceSetAngle(TiltDevice_axis_X, TiltDevice_angle_X);
+         TiltDeviceSetAngle(TiltDevice_axis_Y, TiltDevice_angle_Y);
+    }
+   
+   else
+    {
+        if (TiltDevice_angle_X < -90 || TiltDevice_angle_X > 90)
+          
+        {
+          testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice","TiltDevice_angle_X angle is out of range : %i",TiltDevice_angle_X);
+        }
+        
+        if (TiltDevice_angle_Y < -90 || TiltDevice_angle_Y > 90)
+        {
+          testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice","TiltDevice_angle_Y angle is out of range : %i",TiltDevice_angle_Y);
+        }      
+    } 
+}
+
+/// <Tilt Device Position>
+// Function that returns the instantaneous value position of the requested axis
+// "TiltDevice_axis"   = holds the TiltDevice axis number.
+// Current position in uS is available as iTiltDeviceInstantaneousPosition.
+// Example:  TiltDeviceGetPosition(0x00)
+int TiltDeviceGetPosition(byte TiltDevice_axis)
+{  
+  byte bPosition [50];
+  char cPanelOutput[200];
+  byte bTiltDeviceResponse [2];
+     
+  if (OpenPortTiltDevice() == iTiltD_FAIL)
+    
+  {
+    return iTiltD_FAIL;
+  } 
+  
+  bSerialBuffer[0] = 0x90;
+  bSerialBuffer[1] = TiltDevice_axis;  
+  
+  testWaitForTimeout(1000); //wait time for servo movement to new posible position
+    
+  if(RS232Send(iTiltDeviceComPort, bSerialBuffer, 2) == iTiltD_PASS)
+  {
+
+  }
+  
+  else
+  {
+   snprintf(cPanelOutput, elcount(cPanelOutput), "Error when sending serial request on port: [%i].", iTiltDeviceComPort);
+   testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "PS", cPanelOutput);
+   return iTiltD_FAIL;   
+  }
+  
+  if(rs232Receive(iTiltDeviceComPort, bTiltDeviceResponse, elcount(bTiltDeviceResponse)) == iTiltD_PASS)
+  {    
+
+    testWaitForTimeout(50);  //wait time for rs232Receive buffer write
+        
+    iTiltDeviceInstantaneousPosition = ((bTiltDeviceResponse[1] << 8) + bTiltDeviceResponse[0]) / 4;
+    
+    testStepPass(@sysvar::CORE::sysLevelOfDetailPass, "TiltDevice", "TiltDevice axis 0x0%1X GET position is: %i", TiltDevice_axis, iTiltDeviceInstantaneousPosition); 
+    Write("TiltDevice axis %x position is: %i uS", TiltDevice_axis, iTiltDeviceInstantaneousPosition);
+  }
+  
+  else if (rs232Receive(iTiltDeviceComPort, bTiltDeviceResponse, elcount(bTiltDeviceResponse)) == iTiltD_FAIL)
+  {
+    testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "TiltDevice","Unable to get axis 0x0%1X position", TiltDevice_axis);
+  }
+    rs232Close(iTiltDeviceComPort);
+    return iTiltDeviceInstantaneousPosition;
+ }
+
+
+
+/// <Tilt Device Configuration>
+// Function that sets two TiltDevice paramenters:
+//              - "speed" at which a servo axis’s output value changes. Represents the "maximum" speed a servo axis can attain.
+//              - "acceleration" of a servo axis’s output. Represents the speed with which a axis ramps up to the "maximum" speed.
+//
+// "TiltDevice_axis"    = holds the TiltDevice axis number
+// "axis_Speed"         = holds the maximum speed of servo axis. Values from 1 to 255 should be used.
+//                        axis_Speed set at 0 means maximum speed or speed is unlimited.
+// "axis_Acceleration"  = holds the ramp up speed of servo axis to reach the maximum speed. Values from 1 to 255 should be used. 
+//                        axis_Acceleration set to 0 means servo axis accelerates to its target angle as fast as mechanically possible.
+// Example:  TiltDeviceGetPosition(0x00, 50, 10) //moves Tilt Device plaform to angle position in a smooth way.
+//           TiltDeviceGetPosition(0x00, 255, 10) //moves Tilt Device plafrom to angle position with maximum speed and acceleration.
+void TiltDeviceConfigure (byte TiltDevice_axis, int axis_Speed, int axis_Acceleration)  
+{  
+  if (OpenPortTiltDevice() == iTiltD_FAIL)
+    
+    {
+      return;
+    }
+  
+  bSerialBuffer[0] = 0x87;
+  bSerialBuffer[1] = TiltDevice_axis;
+  bSerialBuffer[2] = axis_Speed & 0x7F;
+  bSerialBuffer[3] = (axis_Speed >> 7) & 0x7F; 
+  bSerialBuffer[4] = 0x89;
+  bSerialBuffer[5] = TiltDevice_axis;
+  bSerialBuffer[6] = axis_Acceleration & 0x7F;
+  bSerialBuffer[7] = (axis_Acceleration >> 7) & 0x7F; 
+    
+    if(RS232Send(iTiltDeviceComPort, bSerialBuffer, 8) == iTiltD_PASS)
+         {
+            testStepPass(@sysvar::CORE::sysLevelOfDetailPass, "TiltDevice", "TiltDevice axis  0x0%1X speed set to %i and acceleration to %i", TiltDevice_axis, axis_Speed, axis_Acceleration);
+            Write("TiltDevice axis 0x0%1X speed set to %i and acceleration to %i", TiltDevice_axis, axis_Speed, axis_Acceleration);
+         }
+    
+        else
+            {
+               testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "Unable to set TiltDevice axis 0x0%1X configuration", TiltDevice_axis);
+               return; 
+            }    
+  testWaitForTimeout(50); //wait for bSerialBuffer data transmission
+
+  rs232Close(iTiltDeviceComPort);
+}

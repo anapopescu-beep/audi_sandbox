@@ -1,0 +1,1599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2016-05-30T16:03:21+02:00">
+              <SHORT-NAME>BswMIf</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2017-09-21T09:07:02+02:00">
+                  <SHORT-NAME>BswMIf</SHORT-NAME>
+                  <CATEGORY>BSW_System_Services</CATEGORY>
+                  <INTERNAL-BEHAVIORS>
+                    <SWC-INTERNAL-BEHAVIOR T="2023-06-21T13:55:08+03:00">
+                      <SHORT-NAME>BswMIf_IB</SHORT-NAME>
+                      <DATA-TYPE-MAPPING-REFS>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/BswMIf_DataDictionary/DataTypeMappingSet/DataTypeMappingSet_BswMIf</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/FSM_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_FSM</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/NvmIf_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_NvmIf</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/RCM_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_RCM</DATA-TYPE-MAPPING-REF>
+                      </DATA-TYPE-MAPPING-REFS>
+                      <EVENTS>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="28444e07-3573-4c7c-ae98-dd9da47222b0">
+                          <SHORT-NAME>EcuM_ValidateWakeupEvent</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoB</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrEcuMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_ValidateWakeupEvent</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <TIMING-EVENT T="2022-09-07T14:23:19+03:00" UUID="d3f1de85-8fe2-409c-a8b3-9133645967aa">
+                          <SHORT-NAME>ev_BswMIf_runMainFunction</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswMIf_runMainFunction</START-ON-EVENT-REF>
+                          <PERIOD>0.01</PERIOD>
+                        </TIMING-EVENT>
+                        <OPERATION-INVOKED-EVENT UUID="19907179-893d-4798-9a09-d90a429556bc">
+                          <SHORT-NAME>oie_pseEcuStateTransitions_BswM_SetEcuStateTransitionStatus</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_SetEcuStateTransitionStatus</START-ON-EVENT-REF>
+                          <OPERATION-IREF>
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/pseEcuStateTransitions</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/BswMIf_DataDictionary/ClientServerInterfaces/icsEcuTransitionState/BswM_SetEcuStateTransitionStatus</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT UUID="3dd15483-5945-4b9d-ac57-a6b06ad77e41">
+                          <SHORT-NAME>oie_psePassengerOccupancyState_BswM_UpdatePassangerOccupancyStatus</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_UpdatePassangerOccupancyStatus</START-ON-EVENT-REF>
+                          <OPERATION-IREF>
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/psePassengerOccupancyState</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/BswMIf_DataDictionary/ClientServerInterfaces/icsPassengerOccupancyState/BswM_UpdatePassangerOccupancyStatus</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="2370db02-ccd7-4588-bd18-e29f2b694e39">
+                          <SHORT-NAME>trATM_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAtmServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/ATM_DataDictionnary/TriggerInterfaces/itrAtmServices/ATM_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="34867fb2-604d-40d8-8459-6225e3a0b483">
+                          <SHORT-NAME>trActivateTask_BswM_OnPostRunFromRun</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnPostRunFromRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserActivateTask</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="b2552b5a-4fc4-4adc-8216-4af42be240b2">
+                          <SHORT-NAME>trActivateTask_BswM_OnStartupTwoA</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserActivateTask</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="e9490998-bd81-4b9c-8757-3a61cbfc2599">
+                          <SHORT-NAME>trActivateTask_BswM_On_Prep_Shutdown</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_On_Prep_Shutdown</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserActivateTask</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-26T16:51:27+03:00" UUID="d70f90f1-7f17-42a3-9ac7-bc141bb115f4">
+                          <SHORT-NAME>trAdcIf_runDeInit</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnGoOffOneA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T16:51:27+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAdcIfServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/AdcIf_DataDictionnary/TriggerInterfaces/itrAdcIfServices/AdcIf_runDeInit</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-26T16:52:00+03:00" UUID="51f22907-2b13-4081-9732-abab139aef84">
+                          <SHORT-NAME>trAdcIf_runInit</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T16:52:00+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAdcIfServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/AdcIf_DataDictionnary/TriggerInterfaces/itrAdcIfServices/AdcIf_runInit</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="61249065-6ae0-4f67-88d9-3ffc421d0444">
+                          <SHORT-NAME>trBswM_RequestMode</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_Cyclic_10msTimer</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="5ce766a3-4f01-47f7-8b3b-0b6080e2a3f9">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_CB_NfyNvMJobEnd</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_CB_NfyNvMJobEnd</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="15d218f1-3d84-448c-9f86-c1892005cb68">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnGoOffOneA</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnGoOffOneA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="966c7dc5-fc5d-42a2-b95c-0cb73e96b603">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnLowPwrFromPostRun</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnLowPwrFromPostRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="90030adc-84ce-4e4a-86f5-d2031daf8ae9">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnPostRunFromRun</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnPostRunFromRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="24927ef8-8533-43f4-b529-398cb9b67a89">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnRunFromLowPwrBusAvailable</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromLowPwrBusAvailable</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="b1f7e370-6446-4835-aabc-64b4e7a9277b">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnRunFromLowPwrPassengerDetected</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromLowPwrPassengerDetected</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="682622c5-8997-4622-91f8-76443314266b">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnRunFromPostRunBusAvailable</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromPostRunBusAvailable</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="e92eed1c-e1d8-4719-a821-9593fb68cd8f">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnRunFromPostRunPassengerDetected</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromPostRunPassengerDetected</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="6422e74f-96ae-48ec-adb0-538a1e1c78ab">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnRunFromWakeup</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromWakeup</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="c4423a8a-0784-4f23-b803-1a593e6d0c56">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnStartComEffective</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="5ec45339-3ac5-4f27-b96b-cd5feb4b6f74">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnStartupTwoA</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="402b2ef3-ee9b-4770-90d9-4d7741295bd8">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_OnStartupTwoB</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoB</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="ad788d0c-a8c9-48fa-91b1-22cb3fc5a9ba">
+                          <SHORT-NAME>trBswM_RequestMode_BswM_On_Prep_Shutdown</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_On_Prep_Shutdown</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrBswMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_RequestMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="fd8548f1-3e73-4a9f-ba05-c47f44ea129c">
+                          <SHORT-NAME>trCIL_runInit</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrCilServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/CIL_DataDictionnary/TriggerInterfaces/itrCilServices/CIL_runInit</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="4d588086-42c3-49ac-bda6-446e97fa5bb4">
+                          <SHORT-NAME>trCanIf_CheckWakeup</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_CB_NfyNvMJobEnd</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrCanIfServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanIfServices/CanIf_CheckWakeup</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="b69a646c-2ac0-4b8c-a0a7-ad68d1eaea43">
+                          <SHORT-NAME>trCanIf_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrCanIfServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanIfServices/CanIf_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="37c1a3f4-a7c5-441d-b27e-56420f1020ef">
+                          <SHORT-NAME>trCanSM_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrCanSMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanSMServices/CanSM_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="7ff3d3fe-9a58-430b-a28c-9eb8cdd86364">
+                          <SHORT-NAME>trCanTp_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrCanTpServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanTpServices/CanTp_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="9735dfd0-b2f9-4edc-baac-e904d560c013">
+                          <SHORT-NAME>trCan_EnableControllerInterrupts_BswM_OnStartupTwoA</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrCanServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanServices/Can_EnableControllerInterrupts</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="cf0d745f-bde9-4c80-a5a7-239f1f8b6d2b">
+                          <SHORT-NAME>trCan_SetControllerMode_BswM_OnStartupTwoA</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrCanServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanServices/Can_SetControllerMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="54883c6e-2935-47da-8ace-8aac626bf947">
+                          <SHORT-NAME>trClearEvent</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/OsTask_Bsw_ReadWrite_AllProcess</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserClearEvent</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="4eca8c76-7f6f-412a-98b9-4930260b5765">
+                          <SHORT-NAME>trComM_ASR40_RequestComMode_BswM_OnPostRunFromRun</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnPostRunFromRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComMServices/ComM_ASR40_RequestComMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="4cecf9f1-87c2-444a-af31-d839faf60ef7">
+                          <SHORT-NAME>trComM_ASR40_RequestComMode_BswM_OnWakeupValidation</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnWakeupValidation</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComMServices/ComM_ASR40_RequestComMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="9d0d50e4-3cf3-47d0-ba41-22001372f977">
+                          <SHORT-NAME>trComM_CommunicationAllowed</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnWakeupValidation</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComMServices/ComM_CommunicationAllowed</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="6ab2ad29-0290-4eb5-8e72-511a4e012989">
+                          <SHORT-NAME>trComM_DeInit</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnGoOffOneA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComMServices/ComM_DeInit</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="980c9c97-14fd-482d-b9ce-2520f78473e1">
+                          <SHORT-NAME>trComM_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoB</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComMServices/ComM_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="ba4b3811-641c-40d3-8380-c1a089037cbe">
+                          <SHORT-NAME>trCom_ClearIpduGroupVector_BswM_OnDisableTxPdu</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnDisableTxPdu</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComServices/Com_ClearIpduGroupVector</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="d2d2c5d6-6b0c-455b-8106-0117332af405">
+                          <SHORT-NAME>trCom_ClearIpduGroupVector_BswM_OnEnableTxPdu</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnEnableTxPdu</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComServices/Com_ClearIpduGroupVector</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="b62480e4-073e-4eab-bffd-960c02c4ecac">
+                          <SHORT-NAME>trCom_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComServices/Com_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="c0853244-3f37-4f31-a61d-5aa97ccce205">
+                          <SHORT-NAME>trCom_IpduGroupControl_BswM_OnDisableTxPdu</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnDisableTxPdu</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComServices/Com_IpduGroupControl</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="29dd50cd-fd51-49e0-b426-718506f043a1">
+                          <SHORT-NAME>trCom_IpduGroupControl_BswM_OnEnableTxPdu</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnEnableTxPdu</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComServices/Com_IpduGroupControl</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="2ee64d1b-8859-4494-85a3-07c8cbd4fc2e">
+                          <SHORT-NAME>trCom_SetIpduGroup_BswM_OnDisableTxPdu</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnDisableTxPdu</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComServices/Com_SetIpduGroup</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="f2cdaf3e-4b47-4290-b359-aa19748e0ffa">
+                          <SHORT-NAME>trCom_SetIpduGroup_BswM_OnEnableTxPdu</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnEnableTxPdu</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrComServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrComServices/Com_SetIpduGroup</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="b84e789c-bba7-46d9-81a1-c8deb08c9fe0">
+                          <SHORT-NAME>trDIA_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrDiaServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/DIA_DataDictionnary/TriggerInterfaces/itrDiaServices/DIA_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T14:19:37+02:00" UUID="dda69a5b-ed4d-47b7-ac1d-fbe63457411f">
+                          <SHORT-NAME>trDcm_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T14:19:37+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrDcmServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrDcmServices/Dcm_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="b4186e5e-c75e-4180-9457-6eceea7f4fe3">
+                          <SHORT-NAME>trDem_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoB</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrDemServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrDemServices/Dem_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="4b64ee89-5493-4877-b38d-08ba69dc7263">
+                          <SHORT-NAME>trDem_Shutdown</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_On_Prep_Shutdown</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrDemServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrDemServices/Dem_Shutdown</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="9111aa8f-e6dc-405c-ae4a-f06b1b9b6f33">
+                          <SHORT-NAME>trEcuM_ClearWakeupEvent</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrEcuMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_ClearWakeupEvent</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="ea3c954a-a35b-4b48-a4b9-d53666be4ca9">
+                          <SHORT-NAME>trEcuM_ClearWakeupEvent_BswM_On_Prep_Shutdown</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_On_Prep_Shutdown</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrEcuMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_ClearWakeupEvent</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="ea2349fb-3dee-4da6-8040-fb1b1c3669ae">
+                          <SHORT-NAME>trEcuM_GoDown</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_ProceedReset</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrEcuMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_GoDown</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T13:18:53+02:00" UUID="0e9883f1-b3e4-4695-ae4a-10efa1ca4e1d">
+                          <SHORT-NAME>trEcuM_GoDown_BswM_OnWakeupExpired</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnWakeupExpired</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T13:18:53+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrEcuMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_GoDown</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="73069825-9f45-4d59-96cf-b03869707f13">
+                          <SHORT-NAME>trFSM_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoB</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrFsmServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/FSM_DataDictionnary/TriggerInterfaces/itrFsmServices/FSM_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="3269e532-7311-4370-9100-7f097bac8e64">
+                          <SHORT-NAME>trFSM_ModesInit</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrFsmServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/FSM_DataDictionnary/TriggerInterfaces/itrFsmServices/FSM_ModesInit</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="62c32896-24be-45ee-9ae9-414b38fa7e01">
+                          <SHORT-NAME>trFee_MainFunction</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/OsTask_Bsw_ReadWrite_AllProcess</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrFeeServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrFeeServices/Fee_MainFunction</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="2c40481a-615c-41c5-8651-2c72e6243781">
+                          <SHORT-NAME>trFls_MainFunction</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/OsTask_Bsw_ReadWrite_AllProcess</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrFlsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrFlsServices/Fls_MainFunction</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="969acd2f-e25a-43dd-94e7-a7443e3de45a">
+                          <SHORT-NAME>trGpt_DisableNotification</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_Cyclic_10msTimer</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_DisableNotification</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="22393b2f-740f-488a-b1e4-b137988aeefb">
+                          <SHORT-NAME>trGpt_DisableNotification_BswM_OnRunFromPostRunBusAvailable</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromPostRunBusAvailable</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_DisableNotification</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="5d1d281c-c86e-4be4-8c69-be65772a856d">
+                          <SHORT-NAME>trGpt_EnableNotification_BswM_OnRunFromLowPwrPassengerDetected</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromLowPwrPassengerDetected</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_EnableNotification</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="876ed50c-ba72-4e13-b63f-c22c0d4b4ff8">
+                          <SHORT-NAME>trGpt_EnableNotification_BswM_OnRunFromPostRunPassengerDetected</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromPostRunPassengerDetected</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_EnableNotification</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T13:16:16+02:00" UUID="87a47177-f015-46d1-93ac-c6d8f28223f8">
+                          <SHORT-NAME>trGpt_EnableNotification_BswM_OnStartupTwoB</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoB</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T13:16:16+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_EnableNotification</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="ca5130c3-a146-41a3-85b9-ef9a26c74d29">
+                          <SHORT-NAME>trGpt_StartTimer_BswM_CB_NfyNvMJobEnd</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_CB_NfyNvMJobEnd</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_StartTimer</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="e22851d1-f56b-4df1-b0f8-e9aaccd73175">
+                          <SHORT-NAME>trGpt_StartTimer_BswM_OnRunFromLowPwrPassengerDetected</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromLowPwrPassengerDetected</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_StartTimer</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="28f0f31a-2208-478e-8165-0b07d5df3d05">
+                          <SHORT-NAME>trGpt_StartTimer_BswM_OnRunFromPostRunPassengerDetected</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromPostRunPassengerDetected</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_StartTimer</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="4c3f2fd6-9040-4beb-a549-fa7610dadc1b">
+                          <SHORT-NAME>trGpt_StopTimer</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_Cyclic_10msTimer</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_StopTimer</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="e027eb56-1964-4311-bc84-247a0e145c62">
+                          <SHORT-NAME>trGpt_StopTimer_BswM_OnRunFromPostRunBusAvailable</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromPostRunBusAvailable</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrGptServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/Gpt_StopTimer</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="6fd6b293-fdc3-4bff-bc74-b195b36bafee">
+                          <SHORT-NAME>trLPM_sleepInit</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnLowPwrFromPostRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrLpmServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/LPM_DataDictionary/TriggerInterfaces/itrLpmServices/LPM_sleepInit</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="e68dfe09-81d4-462a-aa01-85419167460d">
+                          <SHORT-NAME>trLPM_sleepMainLoop</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnLowPwrFromPostRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrLpmServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/LPM_DataDictionary/TriggerInterfaces/itrLpmServices/LPM_sleepMainLoop</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="6d0abad1-31f5-4965-8251-6172fd12b295">
+                          <SHORT-NAME>trLPM_sleepRestore</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnLowPwrFromPostRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrLpmServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/LPM_DataDictionary/TriggerInterfaces/itrLpmServices/LPM_sleepRestore</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-27T17:57:40+03:00" UUID="54556212-bf0e-421d-aa72-f5ad22309831">
+                          <SHORT-NAME>trMIC_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-27T17:57:40+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrMicServices</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/MIC_DataDictionnary/TriggerInterfaces/itrMicServices/MIC_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-06-21T13:55:08+03:00" UUID="792e46e7-0474-44d6-a2f4-91b130397cd9">
+                          <SHORT-NAME>trMcuIf_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnRunFromWakeup</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-06-21T13:55:08+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrMcuIfServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/McuIf_DataDictionary/TriggerInterfaces/itrMcuIfServices/McuIf_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="2407eec4-1edb-475e-b7cb-9a0bc7843421">
+                          <SHORT-NAME>trNvM_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrNvMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrNvMServices/NvM_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="11a3f333-9b22-4381-b79d-b013df2ccda3">
+                          <SHORT-NAME>trNvM_MainFunction</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/OsTask_Bsw_ReadWrite_AllProcess</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrNvMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrNvMServices/NvM_MainFunction</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="96086c0c-0401-4200-a5e7-0898feae04a3">
+                          <SHORT-NAME>trNvM_ReadAll_BswM_OnStartupTwoA</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrNvMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrNvMServices/NvM_ReadAll</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="79035742-5a22-4373-90dd-63dda788cafe">
+                          <SHORT-NAME>trNvM_WriteAll_BswM_OnPostRunFromRun</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnPostRunFromRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrNvMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrNvMServices/NvM_WriteAll</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="79b38656-4c2d-415a-bd7a-515218cd7a87">
+                          <SHORT-NAME>trNvM_WriteAll_BswM_On_Prep_Shutdown</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_On_Prep_Shutdown</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrNvMServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrNvMServices/NvM_WriteAll</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="b9854bfb-4021-470a-9bfc-7bfafcdc2aee">
+                          <SHORT-NAME>trOStopScheduleTable_BswM_OnStartComEffective</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserStopScheduleTable</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="9a6d91d5-5d17-4785-8796-378895f36949">
+                          <SHORT-NAME>trPduR_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrPduRServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrPduRServices/PduR_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="e7a4610e-c308-4a8a-a45a-0831cd8b0d71">
+                          <SHORT-NAME>trRCM_runDetermineResetCause</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrRcmServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/RCM_DataDictionnary/TriggerInterfaces/itrRcmServices/RCM_runDetermineResetCause</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="788a2363-af95-4e45-ac31-208a1b8a7ae7">
+                          <SHORT-NAME>trResumeAllInterrupts</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/OsTask_Bsw_ReadWrite_AllProcess</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_FastResumeAllInterrupts</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="b460b9e8-ae4c-4474-bbff-2910e720fb4c">
+                          <SHORT-NAME>trRte_StartScheduleTable_SchM_DefaultScheduleTable</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_ProceedReset</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserStartScheduleTable</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="2cd1e15c-fde6-4892-a26a-d6481050c04d">
+                          <SHORT-NAME>trRte_Start_BswM_OnStartComEffective</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrRteServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrRteServices/Rte_Start</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T14:14:13+02:00" UUID="065a24a1-987b-450a-8f38-80b9185687b0">
+                          <SHORT-NAME>trRte_Stop</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_On_Prep_Shutdown</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T14:14:13+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrRteServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrRteServices/Rte_Stop</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="62b72977-0946-44f4-9ed1-9c28281f2da7">
+                          <SHORT-NAME>trSAD_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartComEffective</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrSadServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/SAD_DataDictionnary/TriggerInterfaces/itrSadServices/SAD_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="a05d452c-955a-4acb-aa2a-5bb4241b8bf0">
+                          <SHORT-NAME>trSetEvent</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/OsTask_Bsw_ReadWrite_AllProcess</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserSetEvent</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="ee0aacf8-fb3f-42fc-a015-a9fd506a249f">
+                          <SHORT-NAME>trSetEvent_BswM_OnPostRunFromRun</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnPostRunFromRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserSetEvent</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="e4721ed7-ba3d-4feb-acba-8888242b37db">
+                          <SHORT-NAME>trSetEvent_BswM_OnStartupTwoA</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnStartupTwoA</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserSetEvent</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="5e0562da-4089-401d-85ab-84cb65d64db5">
+                          <SHORT-NAME>trSetEvent_BswM_On_Prep_Shutdown</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_On_Prep_Shutdown</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserSetEvent</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T13:14:38+02:00" UUID="dacb9531-095d-4348-b74b-1f45f01dab72">
+                          <SHORT-NAME>trStartScheduleTableRel_BswM_CB_NfyNvMJobEnd</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_CB_NfyNvMJobEnd</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T13:14:38+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserStartScheduleTable</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T13:21:58+02:00" UUID="90a0bbd2-e042-437c-a528-103ff964d11c">
+                          <SHORT-NAME>trStartScheduleTableRel_BswM_OnPostRunFromRun</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnPostRunFromRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T13:21:58+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserStartScheduleTable</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T14:14:58+02:00" UUID="a0ff085d-90b7-47cd-af28-0b9d7ddca16d">
+                          <SHORT-NAME>trStartScheduleTableRel_BswM_On_Prep_Shutdown</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_On_Prep_Shutdown</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T14:14:58+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserStartScheduleTable</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T13:15:05+02:00" UUID="0f28e30e-41dd-4813-a0d5-51203edf170c">
+                          <SHORT-NAME>trStopScheduleTable_BswM_CB_NfyNvMJobEnd</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_CB_NfyNvMJobEnd</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T13:15:05+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserStopScheduleTable</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T13:21:37+02:00" UUID="44860416-f0ac-411a-80a7-03eef14924f3">
+                          <SHORT-NAME>trStopScheduleTable_BswM_OnPostRunFromRun</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_OnPostRunFromRun</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T13:21:37+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserStopScheduleTable</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="a00fa272-5473-4818-b367-fb37541ac76c">
+                          <SHORT-NAME>trStopScheduleTable_Rte_DefaultScheduleTable</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/BswM_ProceedReset</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserStopScheduleTable</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="b59c59b4-a6f8-49aa-bd97-b5611c33b076">
+                          <SHORT-NAME>trSuspendAllInterrupts</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/OsTask_Bsw_ReadWrite_AllProcess</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_FastSuspendAllInterrupts</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="6e5bf8eb-e7ec-4fbb-9a3a-ad5fbda4c69a">
+                          <SHORT-NAME>trTerminateTask</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/OsTask_Bsw_ReadWrite_AllProcess</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserTerminateTask</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="50eb2fcf-86c6-45e6-bef9-a74e37754591">
+                          <SHORT-NAME>trWaitEvent</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB/OsTask_Bsw_ReadWrite_AllProcess</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrrAsrOsServicesBswMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OS_UserWaitEvent</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                      </EVENTS>
+                      <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                      <RUNNABLES>
+                        <RUNNABLE-ENTITY T="2023-03-30T10:51:19+03:00" UUID="DCE:c83cc502-2a36-475d-adce-a153caaf1f7f">
+                          <SHORT-NAME>BswMIf_runMainFunction</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-SEND-POINTS>
+                            <VARIABLE-ACCESS T="2023-05-16T11:21:34+03:00" UUID="dec8d157-3993-4e4d-aafc-9b001ab6b07f">
+                              <SHORT-NAME>dsp_u8BlockRestoreStatus</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/psrBswMIfServices</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/isrNvmBlockRestoreFinished/u8BlockRestoreStatus</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-SEND-POINTS>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrOsServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/BswMIf_runMainFunction</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="e6fcf3d6-9a98-444d-93b2-3bc4d93b5ce2">
+                              <SHORT-NAME>scp_GetNvmBlockStatus</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/pclNvmIfServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/GetNvmBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="66c2c701-7e63-49fc-8de1-fbef9118b9d5">
+                              <SHORT-NAME>scp_RestorePRAMBlockDefaults</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/pclNvmIfServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/RestorePRAMBlockDefaults</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="5803b07c-bd7a-42c7-85a3-04ea8f86fabe">
+                              <SHORT-NAME>scp_SetRamBlockStatus</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/pclNvmIfServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-03-30T10:51:19+03:00" UUID="49b39e52-fb69-4167-8e63-cf5bbcf68122">
+                              <SHORT-NAME>scp_updateCurrentEcuState</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/pclCILGetEcuState</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/CIL_DataDictionnary/ClientServerInterfaces/icsEcuStateServices/updateCurrentEcuState</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>BswMIf_runMainFunction</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:26812ec8-ad14-4b8a-ab35-5e6082409173">
+                          <SHORT-NAME>BswM_CB_NfyNvMJobEnd</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrNvMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrNvMServices/BswM_CB_NfyNvMJobEnd</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_CB_NfyNvMJobEnd_0</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:b2005cf4-f2c5-4860-8128-ac2e7214d62f">
+                          <SHORT-NAME>BswM_Cyclic_10msTimer</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrGptServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrGptServices/BswM_Cyclic_10msTimer</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_Cyclic_10msTimer</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:ecc889a0-7af8-466b-8a5c-111504c80706">
+                          <SHORT-NAME>BswM_HWResetNotification</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_HWResetNotification</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="9be54122-8879-46d8-a6ae-a5247770b631">
+                              <SHORT-NAME>scp_NotifyResetCause</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/pclNotifyResetCause</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification/NotifyResetCause</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>BswM_HWResetNotification</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:c3f3c29a-f0fa-413b-9ac6-eba819908c79">
+                          <SHORT-NAME>BswM_JumpToFBLNotification</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_JumpToFBLNotification</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="f63c6ddb-594c-4f39-8a65-31bebfc831fc">
+                              <SHORT-NAME>scp_NotifyResetCause</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/pclNotifyResetCause</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification/NotifyResetCause</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>BswM_JumpToFBLNotification</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:3c063ec0-92da-4afe-b583-b1e6fc5d2466">
+                          <SHORT-NAME>BswM_OnDisableTxPdu</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnDisableTxPdu</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnDisableTxPdu</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:b48c5f3c-7113-4098-a9ff-f1644d5ccba9">
+                          <SHORT-NAME>BswM_OnEnableTxPdu</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnEnableTxPdu</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnEnableTxPdu</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2022-08-26T16:51:14+03:00" UUID="DCE:46b461f2-f09e-4ccd-829e-0d8acae61586">
+                          <SHORT-NAME>BswM_OnGoOffOneA</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnGoOffOneA</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnGoOffOneA</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:dea8b28a-9568-4efa-89a3-0c91d38e3e19">
+                          <SHORT-NAME>BswM_OnLowPwrFromPostRun</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnLowPwrFromPostRun</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnLowPwrFromPostRun</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-28T07:54:20+02:00" UUID="DCE:5db8d489-d192-48a2-9c67-636f1f223835">
+                          <SHORT-NAME>BswM_OnPostRunFromRun</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnPostRunFromRun</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnPostRunFromRun</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:072389d1-0e8b-404a-b6bd-178d58441993">
+                          <SHORT-NAME>BswM_OnRunFromLowPwrBusAvailable</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnRunFromLowPwrBusAvailable</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnRunFromLowPwrBusAvailable</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:c3756a86-9ed2-451d-8fe0-069a72b6162c">
+                          <SHORT-NAME>BswM_OnRunFromLowPwrPassengerDetected</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnRunFromLowPwrPassengerDetected</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnRunFromLowPwrPassengerDetected</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:752e0eb0-b2c9-40f3-a342-ab179f7306e2">
+                          <SHORT-NAME>BswM_OnRunFromPostRunBusAvailable</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnRunFromPostRunBusAvailable</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnRunFromPostRunBusAvailable</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:8c66f709-0631-4c07-9b4c-4a4fef844603">
+                          <SHORT-NAME>BswM_OnRunFromPostRunPassengerDetected</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnRunFromPostRunPassengerDetected</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnRunFromPostRunPassengerDetected</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-03-02T08:59:46+02:00" UUID="DCE:cd065c4f-45be-445f-8915-1a35536d3602">
+                          <SHORT-NAME>BswM_OnRunFromSafeState</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-SEND-POINTS>
+                            <VARIABLE-ACCESS T="2023-05-16T11:21:45+03:00" UUID="16e0ae8f-4f8e-48fd-b5d6-6fa886b9fbc4">
+                              <SHORT-NAME>dsp_au8DiagReq</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/psrFsmSolenoidReqBswMIf</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsDiagRequest/au8DiagReq</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS T="2023-05-16T11:21:52+03:00" UUID="105f2fe1-8e3a-4933-a984-34d7b98ab110">
+                              <SHORT-NAME>dsp_au8DiagReqComplement</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/psrFsmSolenoidReqBswMIf</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsDiagRequest/au8DiagReqComplement</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-SEND-POINTS>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnRunFromSafeState</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnRunFromSafeState</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:7e761e8c-3e5b-4cb1-8801-637971bc63ee">
+                          <SHORT-NAME>BswM_OnRunFromWakeup</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnRunFromWakeup</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnRunFromWakeup</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-03-02T08:59:29+02:00" UUID="DCE:7ebcfde9-f44b-4f27-9181-002d01f7116f">
+                          <SHORT-NAME>BswM_OnSafeStateFromPostRun</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-SEND-POINTS>
+                            <VARIABLE-ACCESS T="2023-05-16T11:22:01+03:00" UUID="17965dbf-0e24-41c7-a6a0-b32c9fbdff67">
+                              <SHORT-NAME>dsp_au8DiagReq</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/psrFsmSolenoidReqBswMIf</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsDiagRequest/au8DiagReq</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                            <VARIABLE-ACCESS T="2023-05-16T11:22:04+03:00" UUID="a7ca9bfb-1c72-4e55-92a4-ed48922f2b4e">
+                              <SHORT-NAME>dsp_au8DiagReqComplement</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/psrFsmSolenoidReqBswMIf</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/eCS_DataDictionnary/SenderReceiverInterfaces/isrEcsDiagRequest/au8DiagReqComplement</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-SEND-POINTS>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnSafeStateFromPostRun</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnSafeStateFromPostRun</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:dd5e6496-89f3-4a66-b93e-240eacfe3227">
+                          <SHORT-NAME>BswM_OnStartComEffective</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnStartComEffective</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="577d70da-7384-43df-afda-cee09d54383c">
+                              <SHORT-NAME>scp_SetOperationCycleState</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/pclDemSetOpCycle</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_OperationCycle/SetOperationCycleState</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>BswM_OnStartComEffective</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2022-08-26T16:50:31+03:00" UUID="DCE:8c235b3b-c2d9-4ddd-9038-3b67d2a5f779">
+                          <SHORT-NAME>BswM_OnStartupTwoA</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnStartupTwoA</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnStartupTwoA</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2022-08-26T09:49:19+03:00" UUID="DCE:f61d9b94-6bfa-4b08-8559-d55a85a24563">
+                          <SHORT-NAME>BswM_OnStartupTwoB</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnStartupTwoB</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnStartupTwoB</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-16T13:18:19+02:00" UUID="DCE:7287785b-c24e-4647-8e3a-4f8b6d7c9ba1">
+                          <SHORT-NAME>BswM_OnWakeupExpired</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnWakeupExpired</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnWakeupExpired</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:2044abc7-bfb5-429a-949d-353405a0d3ca">
+                          <SHORT-NAME>BswM_OnWakeupValidation</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_OnWakeupValidation</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_OnWakeupValidation</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:e5640053-a92c-4de2-9382-c12b53c67f55">
+                          <SHORT-NAME>BswM_On_Prep_Shutdown</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_On_Prep_Shutdown</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_On_Prep_Shutdown</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:62e69255-7cbf-4e07-af07-93eef06e968a">
+                          <SHORT-NAME>BswM_ProceedReset</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_ProceedReset</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_ProceedReset</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:1905ef6c-ec6d-45e6-883e-4dd21dcd4cb8">
+                          <SHORT-NAME>BswM_SWResetNotification</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrBswMServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrBswMServices/BswM_SWResetNotification</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="5a1dc4f7-3cba-4a8f-bc0f-8534f134816a">
+                              <SHORT-NAME>scp_NotifyResetCause</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/pclNotifyResetCause</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification/NotifyResetCause</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>BswM_SWResetNotification</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:ebb0ca57-c8e1-4490-927d-bd1469defbaf">
+                          <SHORT-NAME>BswM_SetEcuStateTransitionStatus</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpNmIfServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/NmIf_DataDictionary/TriggerInterfaces/itrNmIfServices/BswM_SetEcuStateTransitionStatus</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>BswM_SetEcuStateTransitionStatus</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-06-21T10:33:14+03:00" UUID="DCE:c96409e2-e9a8-4a94-8884-78108730e642">
+                          <SHORT-NAME>BswM_UpdatePassangerOccupancyStatus</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>BswM_UpdatePassangerOccupancyStatus</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:e832a557-8734-4a67-8bef-d5095a7725f1">
+                          <SHORT-NAME>OsTask_Bsw_ReadWrite_AllProcess</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/ptrpAsrOsServicesBswMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/OsTask_Bsw_ReadWrite_AllProcess</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>OsTask_Bsw_ReadWrite_AllProcess_0</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                      </RUNNABLES>
+                      <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                    </SWC-INTERNAL-BEHAVIOR>
+                  </INTERNAL-BEHAVIORS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+                <SWC-IMPLEMENTATION T="2015-10-21T09:49:22+02:00">
+                  <SHORT-NAME>BswMIf_imp</SHORT-NAME>
+                  <CATEGORY>BSW_System_Services</CATEGORY>
+                  <CODE-DESCRIPTORS>
+                    <CODE T="2015-10-12T16:44:00+02:00">
+                      <SHORT-NAME>BswMIf_Impl_Code</SHORT-NAME>
+                      <ARTIFACT-DESCRIPTORS>
+                        <AUTOSAR-ENGINEERING-OBJECT>
+                          <SHORT-LABEL>BswMIf_Impl_Code_CodeDesc</SHORT-LABEL>
+                          <CATEGORY>SWSRC</CATEGORY>
+                        </AUTOSAR-ENGINEERING-OBJECT>
+                      </ARTIFACT-DESCRIPTORS>
+                    </CODE>
+                  </CODE-DESCRIPTORS>
+                  <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+                  <RESOURCE-CONSUMPTION T="2016-05-27T17:04:30+02:00">
+                    <SHORT-NAME>BswMIf_Impl_ResCons</SHORT-NAME>
+                    <MEMORY-SECTIONS>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00" UUID="2699c4dc-98a0-408e-ad85-6fbd85eb9204">
+                        <SHORT-NAME>CODE</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00">
+                        <SHORT-NAME>CODE_ASIL_A</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="c13f3980-e1df-4209-afe7-64f2fd09ac25">
+                        <SHORT-NAME>CONST_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="4f7e2f72-801d-4e72-82f8-ab2cae016c92">
+                        <SHORT-NAME>CONST_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="22c5526f-5730-4981-ae6d-7129562bf874">
+                        <SHORT-NAME>CONST_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="9a143913-0f4e-4c90-a64a-c8d73283c2dc">
+                        <SHORT-NAME>CONST_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="ed3cfe82-74cf-445b-a92b-4b6469b59f8e">
+                        <SHORT-NAME>CONST_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="55600390-37bd-4936-a95b-c0bd2b6529c8">
+                        <SHORT-NAME>VAR_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="9c8cfbc8-661f-45be-8fb3-1bc11ab6f987">
+                        <SHORT-NAME>VAR_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00" UUID="8fc6dcc0-c2f2-4ac9-8cb2-52108ce1e778">
+                        <SHORT-NAME>VAR_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00">
+                        <SHORT-NAME>VAR_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:53:16+02:00" UUID="596359d1-0817-4cc0-b6a4-dc32cb7dd539">
+                        <SHORT-NAME>VAR_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00" UUID="4388f32c-59da-4c91-ad1f-85efab39cef1">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="e50aba90-7c18-422e-b851-d2b2f4f496e3">
+                        <SHORT-NAME>VAR_NO_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="0518acb5-3ba9-4375-8693-66cf3858ccdf">
+                        <SHORT-NAME>VAR_NO_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="1ca18be1-4d70-4db0-9e96-9abbcf40b0b6">
+                        <SHORT-NAME>VAR_NO_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="9ffdf9f1-a348-46c9-8904-67051c79e4c4">
+                        <SHORT-NAME>VAR_NO_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2017-02-07T16:23:34+01:00" UUID="9e16c414-d587-4c84-a102-ec27708baead">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_POWER_ON_CLEARED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/VAR_POWER_ON_CLEARED</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                    </MEMORY-SECTIONS>
+                  </RESOURCE-CONSUMPTION>
+                  <SW-VERSION>1.0.0</SW-VERSION>
+                  <VENDOR-ID>0</VENDOR-ID>
+                  <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/AUTOLIV/SoftwareComponents/BswMIf/BswMIf/BswMIf_IB</BEHAVIOR-REF>
+                </SWC-IMPLEMENTATION>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

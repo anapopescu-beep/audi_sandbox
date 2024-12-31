@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_4-2-1_STRICT_COMPACT.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>EB</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>PostBuildSelectable</SHORT-NAME>
+          <ELEMENTS>
+            <PREDEFINED-VARIANT>
+              <SHORT-NAME>TDK_4G</SHORT-NAME>
+              <POST-BUILD-VARIANT-CRITERION-VALUE-SET-REFS>
+                <POST-BUILD-VARIANT-CRITERION-VALUE-SET-REF DEST="POST-BUILD-VARIANT-CRITERION-VALUE-SET">/EB/PostBuildSelectable/PostBuildCriterionValueSet_TDK_4G</POST-BUILD-VARIANT-CRITERION-VALUE-SET-REF>
+              </POST-BUILD-VARIANT-CRITERION-VALUE-SET-REFS>
+            </PREDEFINED-VARIANT>
+            <POST-BUILD-VARIANT-CRITERION-VALUE-SET>
+              <SHORT-NAME>PostBuildCriterionValueSet_TDK_4G</SHORT-NAME>
+              <POST-BUILD-VARIANT-CRITERION-VALUES>
+                <POST-BUILD-VARIANT-CRITERION-VALUE>
+                  <VARIANT-CRITERION-REF DEST="POST-BUILD-VARIANT-CRITERION">/EB/PostBuildSelectable/Criterions/AccelResolution</VARIANT-CRITERION-REF>
+                  <VALUE>1</VALUE>
+                </POST-BUILD-VARIANT-CRITERION-VALUE>
+              </POST-BUILD-VARIANT-CRITERION-VALUES>
+            </POST-BUILD-VARIANT-CRITERION-VALUE-SET>
+          </ELEMENTS>
+          <AR-PACKAGES>
+            <AR-PACKAGE>
+              <SHORT-NAME>Criterions</SHORT-NAME>
+              <ELEMENTS>
+                <COMPU-METHOD>
+                  <SHORT-NAME>CompuMethod_AccelResolution</SHORT-NAME>
+                  <CATEGORY>TEXTTABLE</CATEGORY>
+                  <COMPU-INTERNAL-TO-PHYS>
+                    <COMPU-SCALES>
+                      <COMPU-SCALE>
+                        <LOWER-LIMIT>0</LOWER-LIMIT>
+                        <UPPER-LIMIT>0</UPPER-LIMIT>
+                        <COMPU-CONST>
+                          <VT>TDK_2G</VT>
+                        </COMPU-CONST>
+                      </COMPU-SCALE>
+                      <COMPU-SCALE>
+                        <LOWER-LIMIT>1</LOWER-LIMIT>
+                        <UPPER-LIMIT>1</UPPER-LIMIT>
+                        <COMPU-CONST>
+                          <VT>TDK_4G</VT>
+                        </COMPU-CONST>
+                      </COMPU-SCALE>
+                    </COMPU-SCALES>
+                  </COMPU-INTERNAL-TO-PHYS>
+                </COMPU-METHOD>
+                <POST-BUILD-VARIANT-CRITERION>
+                  <SHORT-NAME>AccelResolution</SHORT-NAME>
+                  <COMPU-METHOD-REF DEST="COMPU-METHOD">/EB/PostBuildSelectable/Criterions/CompuMethod_AccelResolution</COMPU-METHOD-REF>
+                </POST-BUILD-VARIANT-CRITERION>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>
+

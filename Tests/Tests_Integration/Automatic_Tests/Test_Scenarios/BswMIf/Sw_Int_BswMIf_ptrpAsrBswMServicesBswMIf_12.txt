@@ -1,0 +1,42 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnStartComEffective, ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromWakeup
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnStartComEffective: The BswM_OnStartComEffective runnable shall be called by the Autosar BswM in case of: - Bus communication is available AND wakeup was validated
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromWakeup: The BswM_OnRunFromWakeup runnable shall be called by the Autosar BswM in case of: - Wakeup is validated and all modules were initialized {BswM_OnStartComEffective}
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnStartComEffective
+
+	Step 2: Set a BP in function BswM_Action_BswMAction_BswM_OnStartComEffective in order call BswM_OnStartComEffective function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function BswM_OnStartComEffective in order to check Bus if communication is available AND wakeup was validated 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_Action_BswMAction_BswM_OnStartComEffective in order to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromWakeup
+
+	Step 5: Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromWakeup in order call BswM_OnRunFromWakeup function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function BswM_OnRunFromWakeup in order to check Bus if Wakeup is validated and all modules were initialized 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromWakeup in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 8: Return ECU to default values

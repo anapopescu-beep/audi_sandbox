@@ -1,0 +1,42 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_DIA_pseDID_FDE4_EcsSteps_WriteData, ARCH_SW_DIA_pseDID_FDE4_EcsSteps_ReadData
+ARCH_SW_DIA_pseDID_FDE4_EcsSteps_WriteData: nterface used to write the eCS steps definition (8 * 4 bytes).
+ARCH_SW_DIA_pseDID_FDE4_EcsSteps_ReadData: Interface used to read ECS steps configuration n * 4 bytes. (n = 8 steps). First byte is duration MSB, second byte duration LSB, third byte is PWM order and forth byte is options.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_DIA_pseDID_FDE4_EcsSteps_WriteData
+
+	Step 2: Send diagnostic request in order to go in Supplier Session
+
+	Step 3: Send request for press Supplier Security Access button
+
+	Step 4: Send diagnostic request in order to write the eCS steps with value 0x17
+
+Action: ARCH_SW_DIA_pseDID_FDE4_EcsSteps_ReadData
+
+	Step 5: Send diagnostic request in order to go in Supplier Session
+
+	Step 6: Send request for press Supplier Security Access button
+
+	Step 7: Send diagnostic request in order to read ECS steps configuration
+
+	Step 8: Set a BP in function DIA_runDidFDE4_EcsStepsRead in order to read ECS steps configuration 
+		Expected result:  BP was set
+
+	Step 9: Read ECS steps value 
+		Expected result:  ECS steps succesfully read
+
+Postcondition
+
+	Step 10: Return ECU to default values

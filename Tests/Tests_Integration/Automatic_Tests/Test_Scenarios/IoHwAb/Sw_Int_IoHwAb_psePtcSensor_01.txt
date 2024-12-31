@@ -1,0 +1,40 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Tes
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_psePtcSensor, ARCH_SW_pclPtcSensor
+ARCH_SW_IoHwAb_psePtcSensor: The runnable shall read the {Raw PTC Sensor Temperature} via the AdcIf_runGetChannelValue interface in LSB and convert it to *C.
+ARCH_SW_pclPtcSensor: Function used to get the output temperature of the resistor sensor and then transmit it to CAN.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+	Step 2: Start MeasurementFrame 01 
+		Expected result:  MF Started.
+
+Action: ARCH_SW_IoHwAb_psePtcSensor, ARCH_SW_pclPtcSensor
+
+	Step 3: Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at RTE Call for GetTemperature 
+		Expected result:  BP reached.
+
+	Step 4: Set a breakpoint in function IoHwAb_GetPtcTemperature at ps16EcuTemperature assignment 
+		Expected result:  BP reached.
+
+	Step 5: Write Local Tmp Intermediate Value with value 8 
+		Expected result:  Variable overwritten with 8.
+
+	Step 6: Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend after RTE Call for GetTemperature 
+		Expected result:  BP reached.
+
+	Step 7: Evaluate PTC sensor data flow
+
+Postcondition
+
+	Step 8: Return ECU to default values

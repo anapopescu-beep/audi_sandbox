@@ -1,0 +1,545 @@
+/*@!Encoding:1252*/
+/*------------------------------------------------------------------------------
+                                IMPORT LIBRARY
+ ------------------------------------------------------------------------------*/
+/* To include all the libraries used by the .capl script. */
+/* WARNING: Some things such as diagnostic functions are different from project
+to project, change those according to your project requirements */
+includes
+{
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Defines.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Project_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Diagnostic_Functions.cin"
+}
+
+/*------------------------------------------------------------------------------
+                                    GLOBALS
+ ------------------------------------------------------------------------------*/
+/* To declare the constants used throurough the entire module, and global variables */
+variables
+{
+
+/*----------------------------Global Variables---------------------------------*/
+  float sEcs_HW_defekt;
+ 
+}
+
+
+/*------------------------------------------------------------------------------
+                                TEST FUNCTIONS
+------------------------------------------------------------------------------*/
+/*------------------------- Test Preconditions ------------------------------*/
+/* For operations to ensure the correct execution of the test case, such as IGN_ON,
+checking that CAN communication is present, etc.
+/* Varies from module to module, use from Helper_Functions.cin only the ones you need */
+testfunction RunPreTs()
+{
+  DisplayRequirementsInfo();
+  AddTestSetupInformation();
+  
+  PreTS_StartLogging();
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization");
+  
+  testStep("", "Delete all breakpoint from debugger.");
+  debugger_deleteAllBreakpoints();
+  
+  testStep("", "Reset the debugger.");
+  debugger_reset();
+  
+  testStep("", "Run the debugger.");
+  debugger_run();
+}
+
+/*------------------------- Test Postconditions ------------------------------*/
+/* For operations to ensure that after the test case was executed, the enviroment
+would go back to a blank state, to be ready for the next test step in queue. Call it a Cleanup phase. */
+testfunction RunPostTs()
+{
+  stopLogging("TestCaseLogASC");
+  stopLogging("TestCaseLogBLF");
+}
+
+testcase InitTestModule()
+{
+  ConfigureTestModuleInformation();
+  strncpy(cLogPathAndName, "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Logs\\",  elcount(cLogPathAndName));
+}
+
+
+/*------------------------------------------------------------------------------
+                                TEST EXECUTION
+------------------------------------------------------------------------------*/
+
+testcase SW_Int_NmIf_ptrpAsrComServicesNmIf_01()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_01");
+  AddRequirementInfo("ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_01", " The NmIf_CbkRxAck_Airbag_01 runnable shall be called by Autosar Com in case of reception of Airbag_01 frame.");
+  //***************************************************************************************
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  
+//====================================================
+  testCaseComment("Action: ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_01"); 
+  testStep("STEP", "Send request for Disable Airbag_01 frame");
+   TestDisableMsg(Airbag_01);
+  
+   testStep("STEP", "Set a breakpoint in function NmIf_CbkRxAck_Airbag_01 in order to check that runnable was called and Breakpoint reached --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_CbkRxAck_Airbag_01", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  
+  testStep("STEP", "Send request for Enable Airbag_01 frame");
+    TestSetMsgEvent(Airbag_01);
+  
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase SW_Int_NmIf_ptrpAsrComServicesNmIf_02()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_02");
+  AddRequirementInfo("ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_02", " The NmIf_CbkRxAck_Airbag_02 runnable shall be called by Autosar Com in case of reception of Airbag_02 frame.");
+  //***************************************************************************************
+  
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+//====================================================
+  
+  testCaseComment("Action: ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_02"); 
+  testStep("STEP", "Send request for Disable Airbag_02 frame");
+   TestDisableMsg(Airbag_02);
+  
+   testStep("STEP", "Set a breakpoint in function NmIf_CbkRxAck_Airbag_02 in order to check that runnable was called and Breakpoint reached --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_CbkRxAck_Airbag_02", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  
+  testStep("STEP", "Send request for Enable Airbag_02 frame");
+    TestSetMsgEvent(Airbag_02);
+  
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase SW_Int_NmIf_ptrpAsrComServicesNmIf_03()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_eCS_01");
+  AddRequirementInfo("ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_eCS_01", "The NmIf_CbkRxAck_Airbag_eCS_01 runnable shall be called by Autosar Com in case of reception of Airbag_eCS_01 frame.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+  
+  testCaseComment("Action: ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_eCS_01");
+  testStep("STEP", "Send request for Disable Airbag_eCS_01 frame");
+   TestDisableMsg(Airbag_eCS_01);
+  
+   testStep("STEP", "Set a breakpoint in function NmIf_CbkRxAck_Airbag_eCS_01 in order to check that runnable was called and Breakpoint reached --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_CbkRxAck_Airbag_eCS_01", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  
+  testStep("STEP", "Send request for Enable Airbag_eCS_01 frame");
+    TestSetMsgEvent(Airbag_eCS_01);
+  
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase SW_Int_NmIf_ptrpAsrComServicesNmIf_04()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "Yes");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_01");
+  AddRequirementInfo("ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_01", "The NmIf_CbkRxTOut_Airbag_01 runnable shall be called by Autosar Com in case of timeout on Airbag_01 frame.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+  
+  testCaseComment("Action: ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_01");
+  testStep("STEP", "Send request for Enable Airbag_01 frame");
+    TestSetMsgEvent(Airbag_01);
+ 
+   testStep("STEP", "Set a breakpoint in function NmIf_CbkRxTOut_Airbag_01 in order to check if runnable was called and Breakpoint reached --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_CbkRxTOut_Airbag_01", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  
+   testStep("STEP", "Send request for Disable Airbag_01 frame");
+   TestDisableMsg(Airbag_01);
+  
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase SW_Int_NmIf_ptrpAsrComServicesNmIf_05()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "Yes");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_02 ");
+  AddRequirementInfo("ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_02", "The NmIf_CbkRxTOut_Airbag_02 runnable shall be called by Autosar Com in case of timeout on Airbag_02 frame.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+  
+  testCaseComment("Action: ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_02");
+    testStep("STEP", "Send request for Enable Airbag_02 frame");
+    TestSetMsgEvent(Airbag_02);
+  
+   testStep("STEP", "Set a breakpoint in function NmIf_CbkRxTOut_Airbag_02 in order to check that runnable was called and Breakpoint reached --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_CbkRxTOut_Airbag_02", "0");
+   testStep("", "Run the debugger.");
+   debugger_run();
+  
+   testStep("STEP", "Send request for Disable Airbag_02 frame");
+   TestDisableMsg(Airbag_02);
+
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase SW_Int_NmIf_ptrpAsrComServicesNmIf_06()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "Yes");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_eCS_01  ");
+  AddRequirementInfo("ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_eCS_01 ", "The NmIf_CbkRxTOut_Airbag_eCS_01 runnable shall be called by Autosar Com in case of reception of Airbag_eCS_01 frame.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+  
+  testCaseComment("Action: ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_eCS_01");
+   testStep("STEP", "Set a breakpoint in function NmIf_CbkRxTOut_Airbag_eCS_01 in order to check that runnable was called and Breakpoint reached --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_CbkRxTOut_Airbag_eCS_01", "0");
+   testStep("", "Run the debugger.");
+   debugger_run();
+
+    testStep("STEP", "Send request for Enable Airbag_eCS_01 frame");
+    TestSetMsgEvent(Airbag_eCS_01);
+  
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase SW_Int_NmIf_ptrpAsrOsServicesNmIf_01()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_ptrpAsrOsServicesNmIf_NmIf_runMainFunction");
+  AddRequirementInfo("ARCH_SW_NmIf_ptrpAsrOsServicesNmIf_NmIf_runMainFunction ", "The NmIf_runMainFunction runnable shall be called when the Os task {OsTask_Alv_Com} is executed.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+  
+  testCaseComment("Action: ARCH_SW_NmIf_ptrpAsrOsServicesNmIf_NmIf_runMainFunction");
+   testStep("STEP", "Set a breakpoint in function OsTask_Alv_Com at the NmIf_runMainFunction function call. --> BP is reached");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Supplier\\Tresos_Configuration_8.5.1\\Workspace\\Application\\Tresos_BSW_generated\\src\\Rte.c", "5234");
+//   debugger_setRelativeFunctionBpAtLine("OsTask_Alv_ModeMngmt", "12");
+   testStep("", "Run the debugger.");
+   debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+   testStep("STEP", "Set a breakpoint in function NmIf_runMainFunction in order to check if function was called  --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_runMainFunction", "3");
+   testStep("", "Run the debugger.");
+   debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase SW_Int_NmIf_ptrrAsrComMServicesNmIf_01()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_ptrrAsrComMServicesNmIf_NmIf_runMainFunction");
+  AddRequirementInfo("ARCH_SW_NmIf_ptrrAsrComMServicesNmIf_NmIf_runMainFunction ", "The ComM_ASR40_RequestComMode runnable shall be called in the NmIf_runMainFunction runnable in order to: - Set ComM module to silent mode to disable transmission of frames when Process Mode is requested - Set ComM module to no com mode to disable transmission and reception of frames when Bus Timeout is received - Set ComM module to full com mode to enable transmission and reception of frames when Bus ACK is received.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+  
+  testCaseComment("Action: ARCH_SW_NmIf_ptrrAsrComMServicesNmIf_NmIf_runMainFunction");
+   testStep("STEP", "Set a breakpoint in function NmIf_runMainFunction at first If statement. --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_runMainFunction", "3");
+   debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Modify variable nmif_u8TimeoutFramesStatus with value KU8_NMIF_BUS_TIMEOUT --> Variable modified with 0x7.");
+  debugger_writeVariable("uint8", "nmif_u8TimeoutFramesStatus,,app.elf", "0", "7");
+  ExpectedTestResult(debugger_result, "7", "Variable was modified with 7.");
+  
+  testStep("STEP", "Modify variable nmif_u8NoCommunicationStatus with value KU8_NMIF_NO_COMM_NOT_ACTIVE --> Varable modified with 0x2.");
+  debugger_writeVariable("uint8", "nmif_u8NoCommunicationStatus,,app.elf", "0", "2");
+  ExpectedTestResult(debugger_result, "2", "Variable was modified with 2.");
+  
+   testStep("STEP", "Step In.");
+   debugger_stepIn();
+   debugger_getCPUStatus();
+   ExpectedTestResult(debugger_result, "CPU is Stopped", "CPU Stopped");
+  
+  testStep("STEP", "Modify variable nmif_u8WakeupFramesStatus with value KU8_NMIF_BUS_WAKEUP --> Variable modified with 0x0.");
+  debugger_writeVariable("uint8", "nmif_u8WakeupFramesStatus,,app.elf", "0", "0");
+  ExpectedTestResult(debugger_result, "0", "Variable was modified with 0.");
+  
+   testStep("STEP", "Step In.");
+   debugger_stepIn();
+   ExpectedTestResult(debugger_result, "NmIf_runMainFunction", "CPU Stopped");
+  
+   testStep("STEP", "Step In function ComM_ASR40_RequestComMode. --> ComM_ASR40_RequestComMode function.");
+   debugger_stepIn();
+   ExpectedTestResult(debugger_result, "ComM_ASR40_RequestComMode", "CPU Stopped");
+    
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase SW_Int_NmIf_ptrrAsrComMServicesNmIf_02()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_ptrrAsrComMServicesNmIf_NmIf_runMainFunction");
+  AddRequirementInfo("ARCH_SW_NmIf_ptrrAsrComMServicesNmIf_NmIf_runMainFunction ", "The ComM_ASR40_RequestComMode runnable shall be called in the NmIf_runMainFunction runnable in order to: - Set ComM module to silent mode to disable transmission of frames when Process Mode is requested - Set ComM module to no com mode to disable transmission and reception of frames when Bus Timeout is received - Set ComM module to full com mode to enable transmission and reception of frames when Bus ACK is received.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+  
+  testCaseComment("Action: ARCH_SW_NmIf_ptrrAsrComMServicesNmIf_NmIf_runMainFunction");
+   testStep("STEP", "Set a breakpoint in function NmIf_runMainFunction at first If statement. --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_runMainFunction", "23");
+   debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Modify variable nmif_u8WakeupFramesStatus with value KU8_NMIF_BUS_WAKEUP --> Variable modified with 0x3.");
+  debugger_writeVariable("uint8", "nmif_u8WakeupFramesStatus,,app.elf", "0", "3");
+  ExpectedTestResult(debugger_result, "3", "Variable was modified with 3.");
+  
+  testStep("STEP", "Modify variable nmif_u8FullCommunicationStatus with value KU8_NMIF_FULL_COMM_NOT_ACTIVE --> Varable modified with 0x2.");
+  debugger_writeVariable("uint8", "nmif_u8FullCommunicationStatus,,app.elf", "0", "2");
+  ExpectedTestResult(debugger_result, "2", "Variable was modified with 2.");
+  
+   testStep("STEP", "Step In.");
+   debugger_stepIn();
+   debugger_getCPUStatus();
+   ExpectedTestResult(debugger_result, "CPU is Stopped", "CPU Stopped");
+  
+   testStep("STEP", "STEP OVER.");
+   debugger_stepOver();
+   ExpectedTestResult(debugger_result, STEP_OVER_SUCCESSFUL, "STEP OVER");
+  
+   testStep("STEP", "Step In function ComM_ASR40_RequestComMode. --> ComM_ASR40_RequestComMode function.");
+   debugger_stepIn();
+   ExpectedTestResult(debugger_result, "ComM_ASR40_RequestComMode", "CPU Stopped");
+    
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase SW_Int_NmIf_pclEcuStateTransitionBswMIf_01()
+{
+//***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_NmIf_pclECUStateTransitionsBswMIf ");
+  AddRequirementInfo("ARCH_SW_NmIf_pclECUStateTransitionsBswMIf  ", "The interface shall be used to set the current status of RunToLowPowerTransition flag. This interface is called every time when CAN bus is not available {timeout} and at least one frame is received on bus.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+  
+  testCaseComment("Action: ARCH_SW_NmIf_pclECUStateTransitionsBswMIf");
+   testStep("STEP", "Set a breakpoint in function NmIf_runMainFunction at the check of received wakeup. --> BP is reached");
+   debugger_setRelativeFunctionBpAtLine("NmIf_runMainFunction", "23");
+   debugger_run();
+    debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Modify variable nmif_u8TimeoutFramesStatus with value 1 --> Variable modified with 0x1");
+  debugger_writeVariable("uint8", "nmif_u8TimeoutFramesStatus,,app.elf", "0", "1");
+  ExpectedTestResult(debugger_result, "1", "Variable was modified with 1.");
+  
+  testStep("STEP", "Modify variable nmif_u8FullCommunicationStatus with value 2 --> Variable modified with 0x2");
+  debugger_writeVariable("uint8", "nmif_u8FullCommunicationStatus,,app.elf", "0", "2");
+  ExpectedTestResult(debugger_result, "2", "Variable was modified with 2.");
+  
+   testStep("STEP", "Step In.");
+   debugger_stepIn();
+   ExpectedTestResult(debugger_result, "NmIf_runMainFunction", "CPU Stopped");
+  
+   testStep("STEP", "Step In.");
+   debugger_stepIn();
+   ExpectedTestResult(debugger_result, "BswM_SetEcuStateTransitionStatus", "CPU Stopped at BswM_SetEcuStateTransitionStatus");
+    
+//====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+void MainTest()
+{
+  InitTestModule();
+////  SW_Int_NmIf_ptrpAsrComServicesNmIf_01();
+////  SW_Int_NmIf_ptrpAsrComServicesNmIf_02();
+////  SW_Int_NmIf_ptrpAsrComServicesNmIf_03();
+////  SW_Int_NmIf_ptrpAsrComServicesNmIf_04();
+////  SW_Int_NmIf_ptrpAsrComServicesNmIf_05();
+////  SW_Int_NmIf_ptrpAsrComServicesNmIf_06();
+////  SW_Int_NmIf_ptrpAsrOsServicesNmIf_01();
+//  SW_Int_NmIf_ptrrAsrComMServicesNmIf_01();
+//  SW_Int_NmIf_ptrrAsrComMServicesNmIf_02();
+////  SW_Int_NmIf_pclEcuStateTransitionBswMIf_01();
+}

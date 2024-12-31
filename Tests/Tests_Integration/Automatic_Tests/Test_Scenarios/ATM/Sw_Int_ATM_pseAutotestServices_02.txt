@@ -1,0 +1,34 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_pseAutotestServices_GetCriticalAutoTestsReachedFlag
+ARCH_SW_pseAutotestServices_GetCriticalAutoTestsReachedFlag: The function aims at returning the auto test reached flag.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_pseAutotestServices_GetCriticalAutoTestsReachedFlag
+
+	Step 2: Set a BP in function ATM_runGetCriticalAutoTestsReachedFlag at the ATM_runGetTestResult function call. 
+		Expected result:  BP is reached.
+
+	Step 3: Set a BP in function atm_PlayCyclicTests at the atm_executeAutoTest function call. 
+		Expected result:  BP is reached.
+
+	Step 4: Set a BP in function atm_executeAutoTest at u8ReturnedAutoTestStatus = ATM_kastTestConfig[ku8AutotestID].pfAutotestCallbackType();. 
+		Expected result:  BP is reached.
+
+	Step 5: Set a BP in function ATM_runGetTestResult at *u8TestResult = atm_au8AtStatuses[u8AutoTestId];. 
+		Expected result:  BP is reached.
+
+Postcondition
+
+	Step 6: Return ECU to default values

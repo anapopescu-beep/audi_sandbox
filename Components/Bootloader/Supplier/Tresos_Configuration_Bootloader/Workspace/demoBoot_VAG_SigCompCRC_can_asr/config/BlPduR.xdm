@@ -1,0 +1,294 @@
+<?xml version='1.0'?>
+<datamodel version="7.0" 
+           xmlns="http://www.tresos.de/_projects/DataModel2/16/root.xsd" 
+           xmlns:a="http://www.tresos.de/_projects/DataModel2/16/attribute.xsd" 
+           xmlns:v="http://www.tresos.de/_projects/DataModel2/06/schema.xsd" 
+           xmlns:d="http://www.tresos.de/_projects/DataModel2/06/data.xsd">
+
+  <d:ctr type="AUTOSAR" factory="autosar" 
+         xmlns:ad="http://www.tresos.de/_projects/DataModel2/08/admindata.xsd" 
+         xmlns:cd="http://www.tresos.de/_projects/DataModel2/08/customdata.xsd" 
+         xmlns:f="http://www.tresos.de/_projects/DataModel2/14/formulaexpr.xsd" 
+         xmlns:icc="http://www.tresos.de/_projects/DataModel2/08/implconfigclass.xsd" 
+         xmlns:mt="http://www.tresos.de/_projects/DataModel2/11/multitest.xsd"  
+         xmlns:variant="http://www.tresos.de/_projects/DataModel2/11/variant.xsd">
+    <d:lst type="TOP-LEVEL-PACKAGES">
+      <d:ctr name="BlPduR" type="AR-PACKAGE">
+        <d:lst type="ELEMENTS">
+          <d:chc name="BlPduR" type="AR-ELEMENT" value="MODULE-CONFIGURATION">
+            <d:ctr type="MODULE-CONFIGURATION">
+              <a:a name="DEF" value="ASPath:/TS_TxDxM0I23R0/BlPduR"/>
+              <d:ctr name="General" type="IDENTIFIABLE">
+                <d:var name="MANAGE_PERIOD" type="INTEGER" value="1"/>
+                <d:var name="Can_Protocol_Supported" type="BOOLEAN" value="true">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="FlexRay_Protocol_Supported" type="BOOLEAN" 
+                       value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="Eth_Protocol_Supported" type="BOOLEAN" 
+                       value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="Lin_Protocol_Supported" type="BOOLEAN" 
+                       value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="QueuedManagement" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="MultipleRxBuffer" type="BOOLEAN" value="false"/>
+                <d:var name="RxPhysicalBufferSize" type="INTEGER" value="4095">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="RxFunctionalBufferSize" type="INTEGER" value="8"/>
+                <d:var name="RxBufferNum" type="INTEGER" value="2"/>
+                <d:var name="Enable_DownloadData_Streaming" type="BOOLEAN" 
+                       value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+              <d:ctr name="SleepManagement" type="IDENTIFIABLE">
+                <d:var name="Grouping_NM_Message" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:ref name="PduConnectionGroupRef" type="REFERENCE" >
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:ref>
+                <d:ref name="IDGroupPDURef" type="REFERENCE" >
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:ref>
+                <d:var name="RxPduId" type="INTEGER" value="0">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+              <d:ctr name="MultipleIdentifier" type="IDENTIFIABLE">
+                <d:var name="MultipleIdentifierGroup" type="STRING" 
+                       value="EXTERNAL_NOTIFICATION"/>
+                <d:var name="MultipleIdentifierSelectTimeout" type="INTEGER" 
+                       value="500">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:ref name="IDGroupPDURef" type="REFERENCE" value=""/>
+                <d:var name="IDGroupPDUId" type="INTEGER" value=""/>
+                <d:var name="IDGroupByteNum" type="INTEGER" value=""/>
+                <d:var name="RxPduId" type="INTEGER" value="0">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+              <d:lst name="PduConnection" type="MAP">
+                <d:ctr name="PduConnection_DIA_RGS_VL" type="IDENTIFIABLE">
+                  <d:lst name="RxPdu" type="MAP">
+                    <d:ctr name="RxPdus_Phys_DIA_RGS_VL" type="IDENTIFIABLE">
+                      <d:ref name="Ref" type="REFERENCE" 
+                             value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_DIA_RGS_VL_Req"/>
+                      <d:var name="Type" type="STRING" value="PHYSICAL">
+                        <a:a name="IMPORTER_INFO" value="@DEF"/>
+                      </d:var>
+                      <d:var name="Id" type="INTEGER" value="0"/>
+                    </d:ctr>
+                  </d:lst>
+                  <d:ref name="TxPduRef" type="REFERENCE" 
+                         value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_DIA_RGS_VL_Resp"/>
+                  <d:var name="TxConfPduId" type="INTEGER" value="0"/>
+                  <d:var name="TesterAddress" type="INTEGER" value="0">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="LinConnection" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="ShareFunctionalId" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:ref name="SharedPduReference" type="REFERENCE" >
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:ref>
+                </d:ctr>
+                <d:ctr name="PduConnection_DIA_RGS_VR" type="IDENTIFIABLE">
+                  <d:lst name="RxPdu" type="MAP">
+                    <d:ctr name="RxPdus_Phys_VR" type="IDENTIFIABLE">
+                      <d:ref name="Ref" type="REFERENCE" 
+                             value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_DIA_RGS_VR_Req"/>
+                      <d:var name="Type" type="STRING" value="PHYSICAL">
+                        <a:a name="IMPORTER_INFO" value="@DEF"/>
+                      </d:var>
+                      <d:var name="Id" type="INTEGER" value="1"/>
+                    </d:ctr>
+                  </d:lst>
+                  <d:ref name="TxPduRef" type="REFERENCE" 
+                         value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_DIA_RGS_VR_Resp"/>
+                  <d:var name="TxConfPduId" type="INTEGER" value="1"/>
+                  <d:var name="TesterAddress" type="INTEGER" value="0"/>
+                  <d:var name="LinConnection" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="ShareFunctionalId" type="BOOLEAN" value="false"/>
+                  <d:ref name="SharedPduReference" type="REFERENCE" 
+                         value="ASPath:/BlPduR/BlPduR/PduConnection_DIA_RGS_VL/RxPdus_Func"/>
+                </d:ctr>
+                <d:ctr name="PduConnection_Diag_RGS_VL" type="IDENTIFIABLE">
+                  <d:lst name="RxPdu" type="MAP">
+                    <d:ctr name="RxPdu_Diag_RGS_VL" type="IDENTIFIABLE">
+                      <d:ref name="Ref" type="REFERENCE" 
+                             value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_Diag_RGS_VL_Req"/>
+                      <d:var name="Type" type="STRING" value="PHYSICAL">
+                        <a:a name="IMPORTER_INFO" value="@DEF"/>
+                      </d:var>
+                      <d:var name="Id" type="INTEGER" value="2"/>
+                    </d:ctr>
+                  </d:lst>
+                  <d:ref name="TxPduRef" type="REFERENCE" 
+                         value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_Diag_RGS_VL_Resp"/>
+                  <d:var name="TxConfPduId" type="INTEGER" value="2"/>
+                  <d:var name="TesterAddress" type="INTEGER" value="1"/>
+                  <d:var name="LinConnection" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="ShareFunctionalId" type="BOOLEAN" value="false"/>
+                  <d:ref name="SharedPduReference" type="REFERENCE" 
+                         value="ASPath:/BlPduR/BlPduR/PduConnection_DIA_RGS_VL/RxPdus_Func"/>
+                </d:ctr>
+                <d:ctr name="PduConnection_Diag_RGS_VR" type="IDENTIFIABLE">
+                  <d:lst name="RxPdu" type="MAP">
+                    <d:ctr name="RxPdu_Diag_RGS_VR" type="IDENTIFIABLE">
+                      <d:ref name="Ref" type="REFERENCE" 
+                             value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_Diag_RGS_VR_Req"/>
+                      <d:var name="Type" type="STRING" value="PHYSICAL">
+                        <a:a name="IMPORTER_INFO" value="@DEF"/>
+                      </d:var>
+                      <d:var name="Id" type="INTEGER" value="3"/>
+                    </d:ctr>
+                  </d:lst>
+                  <d:ref name="TxPduRef" type="REFERENCE" 
+                         value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_Diag_RGS_VR_Resp"/>
+                  <d:var name="TxConfPduId" type="INTEGER" value="3"/>
+                  <d:var name="TesterAddress" type="INTEGER" value="1"/>
+                  <d:var name="LinConnection" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="ShareFunctionalId" type="BOOLEAN" value="false"/>
+                  <d:ref name="SharedPduReference" type="REFERENCE" 
+                         value="ASPath:/BlPduR/BlPduR/PduConnection_DIA_RGS_VL/RxPdus_Func"/>
+                </d:ctr>
+                <d:ctr name="PduConnection_OBDC_SSN_RGS_VL" type="IDENTIFIABLE">
+                  <d:lst name="RxPdu" type="MAP">
+                    <d:ctr name="RxPdu_OBDC_SSN_RGS_VL" type="IDENTIFIABLE">
+                      <d:ref name="Ref" type="REFERENCE" 
+                             value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_OBDC_SSN_RGS_VL_Req"/>
+                      <d:var name="Type" type="STRING" value="PHYSICAL">
+                        <a:a name="IMPORTER_INFO" value="@DEF"/>
+                      </d:var>
+                      <d:var name="Id" type="INTEGER" value="4"/>
+                    </d:ctr>
+                  </d:lst>
+                  <d:ref name="TxPduRef" type="REFERENCE" 
+                         value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_OBDC_SSN_RGS_VL_Resp"/>
+                  <d:var name="TxConfPduId" type="INTEGER" value="4"/>
+                  <d:var name="TesterAddress" type="INTEGER" value="2"/>
+                  <d:var name="LinConnection" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="ShareFunctionalId" type="BOOLEAN" value="false"/>
+                  <d:ref name="SharedPduReference" type="REFERENCE" 
+                         value="ASPath:/BlPduR/BlPduR/PduConnection_DIA_RGS_VL/RxPdus_Func"/>
+                </d:ctr>
+                <d:ctr name="PduConnection_OBDC_SSN_RGS_VR" type="IDENTIFIABLE">
+                  <d:lst name="RxPdu" type="MAP">
+                    <d:ctr name="RxPdu_OBDC_SSN_RGS_VR" type="IDENTIFIABLE">
+                      <d:ref name="Ref" type="REFERENCE" 
+                             value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_OBDC_SSN_RGS_VR_Req"/>
+                      <d:var name="Type" type="STRING" value="PHYSICAL">
+                        <a:a name="IMPORTER_INFO" value="@DEF"/>
+                      </d:var>
+                      <d:var name="Id" type="INTEGER" value="5"/>
+                    </d:ctr>
+                  </d:lst>
+                  <d:ref name="TxPduRef" type="REFERENCE" 
+                         value="ASPath:/EcuC/EcuC/EcucPduCollection/Sdu_OBDC_SSN_RGS_VR_Resp"/>
+                  <d:var name="TxConfPduId" type="INTEGER" value="5"/>
+                  <d:var name="TesterAddress" type="INTEGER" value="2"/>
+                  <d:var name="LinConnection" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="ShareFunctionalId" type="BOOLEAN" value="false"/>
+                  <d:ref name="SharedPduReference" type="REFERENCE" 
+                         value="ASPath:/BlPduR/BlPduR/PduConnection_DIA_RGS_VL/RxPdus_Func"/>
+                </d:ctr>
+              </d:lst>
+              <d:lst name="IDGroup" type="MAP">
+                <d:ctr name="IDGroup_DIA_RGS_VL" type="IDENTIFIABLE">
+                  <d:lst name="ConnectionReflist" type="MAP">
+                    <d:ctr name="ConnectionReflist_0" type="IDENTIFIABLE">
+                      <d:ref name="ConnectionRef" type="REFERENCE" 
+                             value="ASPath:/BlPduR/BlPduR/PduConnection_DIA_RGS_VL"/>
+                    </d:ctr>
+                    <d:ctr name="ConnectionReflist_2" type="IDENTIFIABLE">
+                      <d:ref name="ConnectionRef" type="REFERENCE" 
+                             value="ASPath:/BlPduR/BlPduR/PduConnection_OBDC_SSN_RGS_VL"/>
+                    </d:ctr>
+                    <d:ctr name="ConnectionReflist_1" type="IDENTIFIABLE">
+                      <d:ref name="ConnectionRef" type="REFERENCE" 
+                             value="ASPath:/BlPduR/BlPduR/PduConnection_Diag_RGS_VL"/>
+                    </d:ctr>
+                  </d:lst>
+                  <d:var name="Default" type="BOOLEAN" value="true"/>
+                  <d:var name="ArchitectureId" type="INTEGER" value="12"/>
+                </d:ctr>
+                <d:ctr name="IDGroup_DIA_RGS_VR" type="IDENTIFIABLE">
+                  <d:lst name="ConnectionReflist" type="MAP">
+                    <d:ctr name="ConnectionReflist_0" type="IDENTIFIABLE">
+                      <d:ref name="ConnectionRef" type="REFERENCE" 
+                             value="ASPath:/BlPduR/BlPduR/PduConnection_DIA_RGS_VR"/>
+                    </d:ctr>
+                    <d:ctr name="ConnectionReflist_1" type="IDENTIFIABLE">
+                      <d:ref name="ConnectionRef" type="REFERENCE" 
+                             value="ASPath:/BlPduR/BlPduR/PduConnection_Diag_RGS_VR"/>
+                    </d:ctr>
+                    <d:ctr name="ConnectionReflist_2" type="IDENTIFIABLE">
+                      <d:ref name="ConnectionRef" type="REFERENCE" 
+                             value="ASPath:/BlPduR/BlPduR/PduConnection_OBDC_SSN_RGS_VR"/>
+                    </d:ctr>
+                  </d:lst>
+                  <d:var name="Default" type="BOOLEAN" value="false">
+                    <a:a name="IMPORTER_INFO" value="@DEF"/>
+                  </d:var>
+                  <d:var name="ArchitectureId" type="INTEGER" value="12"/>
+                </d:ctr>
+              </d:lst>
+              <d:ctr name="CommonPublishedInformation" type="IDENTIFIABLE">
+                <d:var name="ArMajorVersion" type="INTEGER" value="0">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="ArMinorVersion" type="INTEGER" value="0">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="ArPatchVersion" type="INTEGER" value="0">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="SwMajorVersion" type="INTEGER" value="0"/>
+                <d:var name="SwMinorVersion" type="INTEGER" value="23"/>
+                <d:var name="SwPatchVersion" type="INTEGER" value="0"/>
+                <d:var name="ModuleId" type="INTEGER" value="0">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="VendorId" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="Release" type="STRING" value="">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+              <d:ctr name="PublishedInformation" type="IDENTIFIABLE">
+                <d:var name="PbcfgMSupport" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+            </d:ctr>
+          </d:chc>
+        </d:lst>
+      </d:ctr>
+    </d:lst>
+  </d:ctr>
+
+</datamodel>

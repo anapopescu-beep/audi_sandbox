@@ -1,0 +1,302 @@
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+
+/*!****************************************************************************
+Overview of the interfaces:
+   This file defines the information (interfaces, definitions and data) provided
+by the module IoHwAb, part of the component IoHwAb.
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "IoHwAb_AdcIf.h"
+#include "Rte_IoHwAb.h"
+#include "common.h"
+#include "Nvp_Cfg.h"
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/**
+ *\brief
+ *     Macro used to count number of solenoids.
+ */
+#define KU8_IOHWAB_NUMBER_OF_SOLENOIDS  ((uint8) KU8_GLOBAL_NUMBER_OF_SOLENOIDS)
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+* \brief
+*       Auto test to check over temperature of MCU.
+* \outputparam
+*       Name: pu8TestResult;
+*       Type: u8TestResultType *;
+*       Description: Autotest test result;
+*       Range: 
+*          KU8_ATM_TEST_OK
+*          KU8_ATM_TEST_NOK
+*          KU8_ATM_TEST_NOT_DECIDED;    
+* \dynamicaspectcaller
+*       ATM SW Component.
+* \dynamicaspectdescription
+*       API called in ATM_castTestConfig autotests list.
+* \constrains
+*       ADC pheripheral must be initialised.
+* \ddesignrequirement
+*       DSG_IoHwAb_CheckEcuOverTemperatureAutotest
+* \archrequirement
+*       ARCH_SW_IoHwAb_pseEcuOverTemperature
+*       ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest
+*       ARCH_SW_IoHwAb_pclRawAdcService_IoHwAb_GetPtcTemperature
+*/
+EXPORTED void IoHwAb_CheckEcuOverTemperatureAutotest(u8TestResultType * pu8TestResult)
+{
+
+
+   Get ADC_OUT_OF_ORDER auto-test last result;
+
+   /* To execute this auto-test, ADC auto-test shall be passed */
+   if ( KU8_ATM_TEST_OK ==  ADC_OUT_OF_ORDER)
+   {
+      /* Read Temperature in deci °C with offset -40°c = -400 deci °C*/
+      IoHwAb_GetPtcTemperature(&s16MCUTemperature);
+      if ((NVP_s16TemperatureSensorLowThrs  <= s16MCUTemperature) &&
+          (NVP_s16TemperatureSensorHighThrs >= s16MCUTemperature))
+      {
+         Temperature is in nominal range, return OK;
+      }
+      else
+      {
+         Temperature is out of nominal range, return OK;
+      }
+   }
+
+   Return the auto test status;
+}
+
+/**
+* \brief
+*       Auto test to check overvoltage detection on KL30 ADC line.
+* \outputparam
+*       Name: pu8TestResult;
+*       Type: u8TestResultType *;
+*       Description: Autotest test result;
+*       Range: 
+*          KU8_ATM_TEST_OK
+*          KU8_ATM_TEST_NOK
+*          KU8_ATM_TEST_NOT_DECIDED;    
+* \dynamicaspectcaller
+*       ATM SW Component.
+* \dynamicaspectdescription
+*       API called in ATM_castTestConfig autotests list.
+* \constrains
+*       ADC pheripheral must be initialised.
+* \ddesignrequirement
+*		DSG_IoHwAb_CheckPowerSupplyOvervoltageAutotest
+* \archrequirement
+*       ARCH_SW_IoHwAb_pseCheckPowerSupplyOV
+*       ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckPowerSupplyOvervoltageAutotest
+*       ARCH_SW_IoHwAb_prrSolenoidPwm_IoHwAb_runGetMeasure
+*       ARCH_SW_IoHwAb_pclRawAdcService_IoHwAb_runGetMeasure 
+*       ARCH_SW_IoHwAb_pclDioIfServices_IoHwAb_runGetMeasure
+*/
+EXPORTED void IoHwAb_CheckPowerSupplyOvervoltageAutotest(u8TestResultType * pu8TestResult)
+{
+
+
+   Get ADC_OUT_OF_ORDER auto-test last result;
+
+
+   /* To execute this auto-test, ADC auto-test shall be passed  */
+   if (KU8_ATM_TEST_OK == ADC_OUT_OF_ORDER)
+   {
+
+      /* ADC auto-test are OK, we can get the battery voltage */
+      Get the filtered physical value measured on ADC Power Vbat pin from IoHwAb;
+
+      Read last state of IoHwAb_CheckPowerSupplyOvervoltageAutotest autotest;
+
+      /* Check current autotest last status */
+      if (KU8_ATM_TEST_OK == IoHwAb_CheckPowerSupplyOvervoltageAutotest)
+      {
+         if (Check if KL30 is under NVP_u16UnderKL30QualificationThrs)
+         {
+            Voltage is below the threshold, return OK;
+         }
+         else
+         {
+            Voltage is over the threshold, return NOK;
+         }
+      }
+      else
+      {
+         if (Check if KL30 is under NVP_u16UnderKL30QualificationThrs)
+         {
+            Voltage is below the threshold, return OK;
+         }
+         else
+         {
+            Voltage is over the threshold, return NOK;
+         }
+      }
+   }
+
+   Return the auto test status;
+}
+
+/**
+* \brief
+*       Auto test to check undervoltage detection on KL30 ADC line.
+* \outputparam
+*       Name: pu8TestResult;
+*       Type: u8TestResultType *;
+*       Description: Autotest test result;
+*       Range: 
+*          KU8_ATM_TEST_OK
+*          KU8_ATM_TEST_NOK
+*          KU8_ATM_TEST_NOT_DECIDED;    
+* \dynamicaspectcaller
+*       ATM SW Component.
+* \dynamicaspectdescription
+*       API called in ATM_castTestConfig autotests list.
+* \constrains
+*       ADC pheripheral must be initialised.
+* \ddesignrequirement
+*		DSG_IoHwAb_CheckPowerSupplyUndervoltageAutotest
+* \archrequirement
+*       ARCH_SW_IoHwAb_pseCheckPowerSupplyUV
+*       ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckPowerSupplyUndervoltageAutotest
+*       ARCH_SW_IoHwAb_prrSolenoidPwm_IoHwAb_runGetMeasure
+*       ARCH_SW_IoHwAb_pclRawAdcService_IoHwAb_runGetMeasure 
+*       ARCH_SW_IoHwAb_pclDioIfServices_IoHwAb_runGetMeasure
+*/
+EXPORTED void IoHwAb_CheckPowerSupplyUndervoltageAutotest(u8TestResultType * pu8TestResult)
+{
+
+
+	
+    Get ADC_OUT_OF_ORDER auto-test last result;
+
+	/* To execute this auto-test, ADC auto-test shall be passed  */
+	if (KU8_ATM_TEST_OK == ADC_OUT_OF_ORDER)
+	{
+
+	   /* ADC auto-test are OK, we can get the battery voltage */
+	   Get the filtered physical value measured on ADC Power Vbat pin from IoHwAb;
+
+	   Read last state of IoHwAb_CheckPowerSupplyUndervoltageAutotest autotest;
+
+      if (Check current autotest last status )
+      {
+         if (Check if KL30 is under NVP_u16UnderKL30QualificationThrs)
+         {
+            Voltage is below the threshold, return OK;
+
+         }
+         else
+         {
+            Voltage is over the threshold, return NOK;
+         }
+      }
+      else
+      {
+         if (Check if KL30 is under NVP_u16UnderKL30QualificationThrs)
+         {
+            Voltage is below the threshold, return OK;
+         }
+         else
+         {
+            Voltage is over the threshold, return NOK;
+         }
+      }
+
+	}
+
+	Return the auto test status;
+	
+}
+
+/******************************************************************************
+End Of File
+*****************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

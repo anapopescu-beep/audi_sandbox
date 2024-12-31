@@ -1,0 +1,370 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  int index1; 
+  dword glbHandleFile;
+  byte fBuffer[4096];
+  const long LEDdefault = 0x00A4D3FA;
+  
+  diagRequest eCS_OEM.VW_Application_Software_Version_Number_Read Req_Software_Number_Read;
+  diagRequest eCS_OEM.Soft_Reset_Reset Req_Soft_Reset;
+  diagRequest eCS_OEM.FaultMemory_Clear Req_FaultMemory_Clear;
+}
+
+
+
+on start
+{
+  @sysvar::Flash::firstFileStatusLED = LEDdefault;
+  @sysvar::Flash::secondFileStatusLED = LEDdefault;
+  @sysvar::Flash::CheckSwButton = 0;
+}
+
+on sysvar sysvar::Flash::iFlashPathDropdown
+{
+  if (@sysvar::Flash::iFlashPathDropdown == 0)
+  {
+    // application
+    sysSetVariableString("Flash_config", "firstFilePath", "..\\SWDL_Binaries\\ES01404H.R11\\app");
+    @sysvar::Flash::bFilenameSwitch = 0;
+    @sysvar::Flash_config::checkboxWriteApp = 1;
+    @sysvar::Flash_config::checkboxWriteCalib = 1;
+  }
+  else if (@sysvar::Flash::iFlashPathDropdown == 1)
+  {
+    // bootloader updater
+     sysSetVariableString("Flash_config", "firstFilePath", "..\\SWDL_Binaries\\ES01404H.R11\\fbl_u");
+    @sysvar::Flash::bFilenameSwitch = 1;
+    @sysvar::Flash_config::checkboxWriteApp = 1;
+    @sysvar::Flash_config::checkboxWriteCalib = 0;
+  }
+  else
+  {
+    // nothing
+  }
+}
+
+on sysvar sysvar::Flash::flashingTestModuleDone
+{  
+  if(@sysvar::Flash::flashingTestModuleDone > 3)
+  {
+    //show the button
+    SetControlVisibility("Flash_panel", "ButtonStart", 1);
+  }
+  
+  if(@sysvar::Flash::flashingTestModuleDone == 1)
+  {
+    //show the button
+    SetControlVisibility("Flash_panel", "ButtonStart", 0);
+  }
+  
+}
+
+on sysvar sysvar::Flash_config::checkboxFileOne
+{
+  if(@sysvar::Flash_config::checkboxFileOne == 1)
+  {
+    @sysvar::Flash_config::checkboxFileTwo = 0;
+  }
+}
+
+on sysvar sysvar::Flash_config::checkboxFileTwo
+{
+  if(@sysvar::Flash_config::checkboxFileTwo == 1)
+  {
+    @sysvar::Flash_config::checkboxFileOne = 0;
+  }
+}
+
+on sysvar sysvar::Flash::flashingTestModuleTrigger
+{
+  long status1 = 0;
+  long status2 = 0;
+  
+  if(@sysvar::Flash::flashingTestModuleTrigger == 1)
+  {
+    status1 = CheckApplFile();
+    status2 = CheckBoloFile();
+    
+    //checkf if the files can be opened
+    if(status1 == 0)
+    {
+      @sysvar::Flash_config::checkboxFileOne = 0;
+    }
+    
+    if(status2 == 0)
+    {
+      @sysvar::Flash_config::checkboxFileTwo = 0;
+    }
+    
+    //write the file with the paths
+    
+    
+  }
+}
+
+on sysvar sysvar::Flash::clearEditor
+{
+  if(@sysvar::Flash::clearEditor == 1)
+    DeleteControlContent("Flash_panel","Console");
+}
+
+// ECU SW Reset and Clear DTC
+on sysvar sysvar::Flash::ClearErrorsButton
+{
+  if (@sysvar::Flash::ClearErrorsButton == 1)
+  {
+     Req_FaultMemory_Clear.SendRequest();
+     write("Req_FaultMemory_Clear was called");
+     Req_Soft_Reset.SendRequest();
+     write("Req_Soft_Reset was called"); 
+  }
+}
+
+// Check SW version
+on sysvar sysvar::Flash::CheckSwButton
+{
+  if(@sysvar::Flash::CheckSwButton == 1)
+  {
+    diagSendRequest(Req_Software_Number_Read);
+    write("Req_Software_Number_Read was called");
+  }
+}
+
+on diagResponse eCS_OEM.VW_Application_Software_Version_Number_Read
+  {
+   byte VersionNumberReadBuffer[8];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   VersionNumberReadBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Flash::SwVersion, VersionNumberReadBuffer,elCount(VersionNumberReadBuffer));
+}
+
+
+on sysvar_update sysvar::Flash_config::firstFilePath
+{
+  CheckApplFile();
+}
+
+on sysvar_update sysvar::Flash_config::FirstFileEncryption
+{
+  CheckApplFile();
+}
+
+on sysvar_update sysvar::Flash_config::FirstFileCompression
+{
+  CheckApplFile();
+}
+
+on sysvar_update sysvar::Flash_config::secondFilePath
+{
+  CheckBoloFile();
+}
+
+long CheckApplFile()
+{
+  long size1 = 0;
+  long size11 = 0;
+  long res;
+  char filePath1[2550];
+  char filePathTemp[2550];
+  char basefilePath[2550];
+  
+  //Buildthe path of the file
+  sysGetVariableString("Flash_config", "firstFilePath", filePath1, elCount(filePath1));
+    
+  //Build the full path to where the files are stored
+  //Check if files are encrypted and compressed
+  if((@sysvar::Flash_config::FirstFileCompression != 0) && (@sysvar::Flash_config::FirstFileEncryption != 0))
+  {
+    strncat(filePath1, "\\compressed_encrypted", elCount(filePath1));
+  }
+  //Check if files are compressed
+  else if(@sysvar::Flash_config::FirstFileCompression != 0)
+  {
+    strncat(filePath1, "\\compressed", elCount(filePath1));
+  }
+  //check if files are encrypted
+  else if (@sysvar::Flash_config::FirstFileEncryption != 0)
+  {
+    strncat(filePath1, "\\encrypted", elCount(filePath1));
+  }
+  //they're just plain-old s-files :/
+  else
+  {
+    strncat(filePath1, "\\default", elCount(filePath1));
+  }  
+  
+  
+  //get the full file to the file
+  strncpy_off(filePathTemp, 0, filePath1, elCount(filePathTemp));
+  if(@sysvar::Flash::bFilenameSwitch == 1)
+  {
+    strncpy_off(filePathTemp, strlen(filePath1), "\\fbl_u.bin", elCount(filePathTemp));
+  }
+  else
+  {
+    strncpy_off(filePathTemp, strlen(filePath1), "\\app.bin", elCount(filePathTemp));
+  }
+  
+  write("First file path %s",filePathTemp);
+  size1 = OpenFile(filePathTemp);
+  write("First file size %d",size1);
+  sysSetVariableString("Flash_config", "app_path", filePath1);
+  @sysvar::Flash::File1Size = size1;
+
+//  res = sysUndefineVariable("Flash_config", "firstFilePath");
+//  write("delete DefaultVar %d",res);
+//  res = sysDefineVariableString("Flash_config", "firstFilePath", filePath1);
+//  write("Set DefaultVar %d",res);
+  
+  
+  //check signature file is present
+  strncpy_off(filePathTemp, 0, filePath1, elCount(filePathTemp));
+  if(@sysvar::Flash::bFilenameSwitch == 1)
+  {
+    strncpy_off(filePathTemp, strlen(filePath1), "\\sig_fbl_u.bin", elCount(filePathTemp));
+  }
+  else
+  {
+    strncpy_off(filePathTemp, strlen(filePath1), "\\sig_app.bin", elCount(filePathTemp));
+  }
+  write("First file sig path %s",filePathTemp);
+  size11 = OpenFile(filePathTemp);
+  if (size11 == 0)
+  {
+    size1 = 0;
+    @sysvar::Flash::File1Size = size1;
+  }
+  
+  if(@sysvar::Flash_config::checkboxWriteCalib == 1)
+  {
+      //check calibration file is present
+      strncpy_off(filePathTemp, 0, filePath1, elCount(filePathTemp));
+      strncpy_off(filePathTemp, strlen(filePath1), "\\calib.bin", elCount(filePathTemp));
+      write("First file calib path %s",filePathTemp);
+      
+      size11 = OpenFile(filePathTemp);
+      write("Calib file size %d",size11);
+
+  @sysvar::Flash::File1Size += size11;
+  if (size11 == 0)
+  {
+    size1 = 0;
+    @sysvar::Flash::File1Size = 0;
+  }
+  
+  //check calibration signature file is present
+  strncpy_off(filePathTemp, 0, filePath1, elCount(filePathTemp));
+  strncpy_off(filePathTemp, strlen(filePath1), "\\sig_calib.bin", elCount(filePathTemp));
+  write("First file calib sig path %s",filePathTemp);
+  size11 = OpenFile(filePathTemp);
+  if (size11 == 0)
+  {
+    size1 = 0;
+    @sysvar::Flash::File1Size = 0;
+  }
+   }
+  return size1;
+}
+
+long CheckBoloFile()
+{
+  long size2 = 0;
+  long size22 = 0;
+  char filePath2[2550];
+  char filePathTemp[2550];
+  
+  //open file and get length
+  sysGetVariableString("Flash_config", "secondFilePath", filePath2, elCount(filePath2));
+  strncpy_off(filePathTemp, 0, filePath2, elCount(filePathTemp));
+  if(@sysvar::Flash::bFilenameSwitch == 1)
+  {
+    strncpy_off(filePathTemp, strlen(filePath2), "\\fbl_u.bin", elCount(filePathTemp));
+  }
+  else
+  {
+    strncpy_off(filePathTemp, strlen(filePath2), "\\app.bin", elCount(filePathTemp));
+  }
+  write("Second file path %s",filePathTemp);
+  size2 = OpenFile(filePathTemp);
+  write("Second file size %d",size2);
+  @sysvar::Flash::File2Size = size2;
+  
+  //check application signature file
+  strncpy_off(filePathTemp, 0, filePath2, elCount(filePathTemp));
+  if(@sysvar::Flash::bFilenameSwitch == 1)
+  {
+  strncpy_off(filePathTemp, strlen(filePath2), "\\sig_fbl_u.bin", elCount(filePathTemp));
+  }
+  else
+  {
+  strncpy_off(filePathTemp, strlen(filePath2), "\\sig_app.bin", elCount(filePathTemp));
+  }
+  write("Second file calib sig path %s",filePathTemp);
+  size22 = OpenFile(filePathTemp);
+  if (size22 == 0)
+  {
+    size22 = 0;
+    @sysvar::Flash::File2Size = 0;
+  }
+  
+  //check calibration file
+  strncpy_off(filePathTemp, 0, filePath2, elCount(filePathTemp));
+  strncpy_off(filePathTemp, strlen(filePath2), "\\calib.bin", elCount(filePathTemp));
+  write("Second file calib sig path %s",filePathTemp);
+  size22 = OpenFile(filePathTemp);
+  @sysvar::Flash::File2Size += size22;
+  if (size22 == 0)
+  {
+    size22 = 0;
+    @sysvar::Flash::File2Size = 0;
+  }
+  
+  //check calibration signature file
+  strncpy_off(filePathTemp, 0, filePath2, elCount(filePathTemp));
+  strncpy_off(filePathTemp, strlen(filePath2), "\\sig_calib.bin", elCount(filePathTemp));
+  write("Second file calib sig path %s",filePathTemp);
+  size22 = OpenFile(filePathTemp);
+  if (size22 == 0)
+  {
+    size22 = 0;
+    @sysvar::Flash::File2Size = 0;
+  }
+  return size2;
+}
+
+long OpenFile(char path[])
+{
+  long ret = 1;
+  long size = 0;
+  glbHandleFile = openFileRead(path,1);
+  
+  ret = 1;
+  size = 0;
+  
+  if(glbHandleFile != 0)
+  {
+    while(ret != 0)
+    {
+      ret = fileGetBinaryBlock(fBuffer, 4096, glbHandleFile);
+      size += ret;
+    }
+    fileRewind(glbHandleFile);
+    fileClose(glbHandleFile);
+  }
+  else
+  {
+    write("File NOT Opened");
+    size = 0;
+  }
+  return size;
+}
+

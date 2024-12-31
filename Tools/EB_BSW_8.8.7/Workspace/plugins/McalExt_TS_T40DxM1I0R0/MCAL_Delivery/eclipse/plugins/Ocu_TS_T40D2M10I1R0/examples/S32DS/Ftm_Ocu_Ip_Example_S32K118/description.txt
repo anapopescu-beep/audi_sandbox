@@ -1,0 +1,48 @@
+1. Example Description
+    - This application demonstrates the usage of a subset of Real Time Drivers. It is not part of the production code deliverables.
+    - The application includes a Design Studio project, that uses predefined configurations for the IP layer only (Gpio_Dio, Port_Ip, IntCtrl_Ip, Clock_Ip, Ftm_Ocu_Ip...).
+    - The example perform basic functionality of Ocu driver.
+    1.1 The application software functionality
+        - Clock_Ip_Init
+          Initialize the clock sources, the clock tree and to configure the clock gating of the peripherals.
+          The clock configuration that is used will enable and use the PLL as source clock.
+        - IntCtrl_Ip_Init, IntCtrl_Ip_ConfigIrqRouting
+          Enable the interrupt used by the application and set the correct handler for it.
+        - Port_Ci_Port_Ip_Init
+          Initialize the pins used by application using  Port driver
+        - Ftm_Ocu_Ip_Init, Ftm_Ocu_Ip_StartChannel, Ftm_Ocu_Ip_EnableNotification
+          Initialize OCU, start the selected timer and enable its notification that will raise a notification
+          After the initialization, 1 channel will start counting and 1 notification will be generated each compare match.
+          Notification function will toggle the PTD15 pin and will increase a 'count' variable by 1; the API will toggle the PTD16 gpio pin every 300 increments of the counter using Gpio_Dio_Ip driver.
+2. Installation steps
+    2.1 Hardware installation
+        2.1.1 Supported boards
+            - S32K118EVB2-Q048 (PCB 47530 RevX1, SCH RevA1)
+        2.2.2 Connections
+            A wire connection is required between the following:
+                - pin J109.2    (PTD15 FTM0_CH0 output); 
+                - close 2-3 slot on J110 jumper to wire PTD16 to RGB_RED LED and the example will blink the LED.
+        2.2.3 Pemicro
+            The pemicro must be connected to J14 10-pin JTAG Cortex Debug connector.
+    2.2 Software installation
+        2.2.1 Importing the S32 Design Studio project
+            After opening S32 Design Studio, go to "File -> New -> S32DS Project From Example" and select this example. Then click on "Finish".
+            The project should now be copied into you current workspace.
+
+3. Generating, building and running the example application
+    3.1 Generating the S32 configuration
+        Before running the example a configuration needs to be generated.  First go to Project Explorer View in S32 DS and select the current project. Select the "S32 Configuration Tool" menu then click on the desired configuration tool (Pins, Cocks, Peripherals etc...). Clicking on any one of those will generate all the components. Make the desired changes(if any) then click on the "S32 Configuration Tool->Update Code" button.
+    3.2 Compiling the application
+        Select the configuration to be built: FLASH (Debug_FLASH) by left clicking on the downward arrow corresponding to the build button in eclipse.
+        Use Project > Build to build the project.
+        Wait for the build action to be completed before continuing to the next step. Check the compiler console for error messages; upon completion, the *.elf binary file
+        should be created.
+    3.3 Running the application on the board
+        Go to Run and select Debug Configurations. There will be a debug configuration for this project:
+
+        Configuration Name                  Description
+        -------------------------------     -----------------------
+        $(example)_debug_flash_pemicro        Debug the FLASH configuration using PEmicro probe
+
+        Select the desired debug configuration and click on Launch. Now the perspective will change to the Debug Perspective.
+        Use the controls to control the program flow.

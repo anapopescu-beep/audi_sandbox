@@ -1,0 +1,44 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrRteServicesBswMIf_Rte_Start_BswM_OnStartComEffective, ARCH_SW_BswMIf_ptrrRteServicesBswMIf_Rte_Stop_BswM_On_Prep_Shutdown
+ARCH_SW_BswMIf_ptrrRteServicesBswMIf_Rte_Start_BswM_OnStartComEffective: The Rte_Start runnable shall be called in the BswM_OnStartComEffective runnable in order to start RTE services
+ARCH_SW_BswMIf_ptrrRteServicesBswMIf_Rte_Stop_BswM_On_Prep_Shutdown: The Rte_Stop runnable shall be called in the BswM_On_Prep_Shutdown runnable in order to stop RTE services
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrRteServicesBswMIf_Rte_Start_BswM_OnStartComEffective
+
+	Step 2: Set a BP in function BswM_OnStartComEffective in order to start RTE services
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function Rte_Start for check if interface work 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_OnStartComEffective for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrRteServicesBswMIf_Rte_Stop_BswM_On_Prep_Shutdown
+
+	Step 5: Send diagnostic request in order to do soft Reset
+
+	Step 6: Set a BP in function BswM_ProceedReset in order to call BswM_On_Prep_Shutdown and to stop RTE services  
+		Expected result:  BP was set
+
+	Step 7: Set a BP in Rte_Stop for check if BP is reached in order to stop RTE services 
+		Expected result:  BP was set
+
+	Step 8: Set a BP in function BswM_CB_NfyNvMJobEnd for check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 9: Return ECU to default values

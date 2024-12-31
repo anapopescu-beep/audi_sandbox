@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!--
+*   @file    plugin.xml
+*   @version 1.0.0
+*
+*   @brief   AUTOSAR Resource_TS_T40D2M10I1R0 - tresos Studio plugin configuration file.
+*   @details This file contains the configuration for the Resource_TS_T40D2M10I1R0 tresos Studio plugin.
+-->
+<!--
+====================================================================================================
+*   Project              : ACM-MCAL: ECU Resource Manager
+*   Platform             : CORTEXM
+*   Peripheral           : S32K14X
+*   Dependencies         : none
+*
+*   This file is part of MCAL integration. Elektrobit included or updated extentions.
+*   (c) 2005-2022 Elektrobit Automotive GmbH
+*   All rights exclusively reserved for Elektrobit Automotive GmbH,
+*   unless expressly agreed to otherwise.
+====================================================================================================
+====================================================================================================
+====================================================================================================
+-->
+
+<plugin>
+
+
+    
+  <!--
+  ** Start of  Resource_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Resource_TS_T40D2M10I1R0_ModuleId"
+          name="Resource_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Resource_TS_T40D2M10I1R0"
+            label="Resource"
+            mandatory="true"
+            allowMultiple="false"
+            description="Resource Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Resource"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" 
+		            derivate="S32K14X"/>
+       </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Resource_TS_T40D2M10I1R0_ConfigId"
+              name="Resource_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Resource_TS_T40D2M10I1R0">
+
+           <!--
+             Register the files from which schemas and pre- an
+             recommended configuration is loaded. For Autosar Modules
+             this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+           -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="config/Resource.xdm"  type="xdm"/>
+       </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Resource"/>
+      </data>
+
+      <editor id="Resource_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Resource Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Resource"/>
+          <parameter name="title" value="Resource_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Resource_TS_T40D2M10I1R0"
+               id="Resource_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+   
+
+ <extension point="dreisoft.tresos.autosar2.api.plugin.ecuresource">
+
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k116_lqfp48.properties">
+      <parameter name="subderivative" value="s32k116_lqfp48"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k116_qfn32.properties">
+      <parameter name="subderivative" value="s32k116_qfn32"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k118_lqfp48.properties">
+      <parameter name="subderivative" value="s32k118_lqfp48"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k118_lqfp64.properties">
+      <parameter name="subderivative" value="s32k118_lqfp64"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k142_lqfp100.properties">
+      <parameter name="subderivative" value="s32k142_lqfp100"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k142_lqfp48.properties">
+      <parameter name="subderivative" value="s32k142_lqfp48"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k142_lqfp64.properties">
+      <parameter name="subderivative" value="s32k142_lqfp64"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k142w_lqfp48.properties">
+      <parameter name="subderivative" value="s32k142w_lqfp48"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k142w_lqfp64.properties">
+      <parameter name="subderivative" value="s32k142w_lqfp64"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k144_lqfp100.properties">
+      <parameter name="subderivative" value="s32k144_lqfp100"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k144_lqfp48.properties">
+      <parameter name="subderivative" value="s32k144_lqfp48"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k144_lqfp64.properties">
+      <parameter name="subderivative" value="s32k144_lqfp64"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k144_mapbga100.properties">
+      <parameter name="subderivative" value="s32k144_mapbga100"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k144w_lqfp48.properties">
+      <parameter name="subderivative" value="s32k144w_lqfp48"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k144w_lqfp64.properties">
+      <parameter name="subderivative" value="s32k144w_lqfp64"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k146_lqfp100.properties">
+      <parameter name="subderivative" value="s32k146_lqfp100"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k146_lqfp144.properties">
+      <parameter name="subderivative" value="s32k146_lqfp144"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k146_lqfp64.properties">
+      <parameter name="subderivative" value="s32k146_lqfp64"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k146_mapbga100.properties">
+      <parameter name="subderivative" value="s32k146_mapbga100"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k148_lqfp100.properties">
+      <parameter name="subderivative" value="s32k148_lqfp100"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k148_lqfp144.properties">
+      <parameter name="subderivative" value="s32k148_lqfp144"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k148_lqfp176.properties">
+      <parameter name="subderivative" value="s32k148_lqfp176"/>
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/CORTEXM_S32K14X_s32k148_mapbga100.properties">
+      <parameter name="subderivative" value="s32k148_mapbga100"/>
+    </ecuresource>
+
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/S32K14X/canwizard.properties">
+    </ecuresource>
+    <ecuresource
+      target="CORTEXM"
+      derivate="S32K14X"
+      moduleId="Resource_TS_T40D2M10I1R0"
+      file="resources/S32K14X/cangeneraltypesmapping.properties">
+    </ecuresource>
+   </extension>
+
+     
+      <extension point="dreisoft.tresos.autosar2.api.plugin.ecuresourcefinder">
+	  <ecuresourcefinder>
+	  <finder class="dreisoft.tresos.autosar2.api.ecuresource.DefaultEcuResourceFinder">	  
+        <parameter name="name" value="subderivative"/>
+        <parameter name="path" value="ASPath:/TS_T40D2M10I1R0/Resource/ResourceGeneral/ResourceSubderivative"/>
+      </finder>
+    </ecuresourcefinder>
+  </extension>
+     <extension point="org.eclipse.help.toc">
+    <toc file="anchors.xml" primary="true"/>
+  </extension>
+  </plugin>

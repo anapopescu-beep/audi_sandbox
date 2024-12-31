@@ -1,0 +1,68 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+  #include "..\..\Includes\PowerSupplyControl.cin"
+}
+
+variables
+{
+char sysLiveUpdateStatusBuffer[5]="";
+
+}
+
+void MainTest()
+{
+  if (@sysvar::PowerSupply::sysPowerOnButton==1)
+  {
+    PowerOn();
+    ReadPowerSupplyState();
+    ReadVoltage();
+    ReadCurrent();
+  }
+  if (@sysvar::PowerSupply::sysPowerOffButton==1)
+  {
+    PowerOff();
+    @sysvar::PowerSupply::sysCurrentDisplay = 0;
+    @sysvar::PowerSupply::sysVoltageDisplay = 0;
+    ReadPowerSupplyState();
+  }
+  if (@sysvar::PowerSupply::sysSetVoltageButton==1)
+  {
+    SetVoltage(@sysvar::PowerSupply::sysSetVoltageInput);
+    TestWaitForTimeout(250);  
+    ReadVoltage();
+    TestWaitForTimeout(250);  
+    ReadCurrent();
+  }
+  
+  if (@sysvar::PowerSupply::sysSetCurrentButton==1)
+  {
+    SetCurrent(@sysvar::PowerSupply::sysSetCurrentInput);
+    TestWaitForTimeout(250);  
+    ReadVoltage();
+    TestWaitForTimeout(250);  
+    ReadCurrent();
+  }
+  
+  if (@sysvar::PowerSupply::sysLiveUpdateStartStopButton==1)
+  {
+    sysSetVariableString(sysvar::PowerSupply::sysLiveUpdateStatus,"ON");
+    
+    TestWaitForTimeout(10);  
+    
+    while (@sysvar::PowerSupply::sysLiveUpdateStartStopButton==1) 
+    {
+        TestWaitForTimeout(250);  
+        ReadVoltage();
+        TestWaitForTimeout(250);  
+        ReadCurrent();
+        TestWaitForTimeout(250);
+    }
+  }
+  
+  if (@sysvar::PowerSupply::sysLiveUpdateStartStopButton==0)
+  {
+    sysSetVariableString(sysvar::PowerSupply::sysLiveUpdateStatus,"OFF");
+  }
+}

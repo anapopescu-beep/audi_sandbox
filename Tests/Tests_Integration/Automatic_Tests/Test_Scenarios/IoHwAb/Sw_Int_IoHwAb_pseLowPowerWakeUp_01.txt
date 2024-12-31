@@ -1,0 +1,34 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_pseLowPowerWakeUp
+ARCH_SW_IoHwAb_pseLowPowerWakeUp: The runnable shall the voltage level of the {Wake channel 1} and {Wake channel 2} via the input parameters. The runnable shall set the {Wake Up Status} output parameter to B_TRUE if any transition of buckle and seat sensor status is detected. The runnable shall report the {Wake Up Status} on the output parameter if the {Report Wake Up Status} input parametr is se to B_TRUE.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_IoHwAb_pseLowPowerWakeUp
+
+	Step 2: Set a breakpoint in function IoHwAb_DetectSeatOccupancy 
+		Expected result:  BP reached.
+
+	Step 3: Write Local au8RteSeat with value 1 
+		Expected result:  Variable overwritten with 0x1.
+
+	Step 4: Set a breakpoint in function CIL_runAppliToCAN at the execution of the current time slot
+
+	Step 5: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot04 after getting getting feedback from Seat Occupancy Sensors.
+
+	Step 6: Evaluate seat sensor data flow
+
+Postcondition
+
+	Step 7: Return ECU to default values

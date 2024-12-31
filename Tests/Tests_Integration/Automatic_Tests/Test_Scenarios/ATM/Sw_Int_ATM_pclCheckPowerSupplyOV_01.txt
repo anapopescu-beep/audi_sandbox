@@ -1,0 +1,37 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_pclCheckPowerSupplyOV
+ARCH_SW_pclCheckPowerSupplyOV: This is the test function for overvoltage on the Power stage battery voltage.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_pclCheckPowerSupplyOV
+
+	Step 2: Set a BP in function atm_cbk_CheckPowerSupplyOV at the RTE Call for CheckPowerSupplyOV Autotest. 
+		Expected result:  BP is reached.
+
+	Step 3: Set a BP in function IoHwAb_CheckPowerSupplyOvervoltageAutotest at the return of auto test status. 
+		Expected result:  BP is reached.
+
+	Step 4: Modify the autotest result with value KU8_ATM_TEST_OK. 
+		Expected result:  BP is reached.
+
+	Step 5: Set a BP in function atm_cbk_CheckPowerSupplyOV after the RTE Call for CheckPowerSupplyOV Autotest. 
+		Expected result:  BP is reached.
+
+	Step 6: Check that u8TestResult is equal to KU8_ATM_TEST_OK. 
+		Expected result:  Variable is set to 0x1.
+
+Postcondition
+
+	Step 7: Return ECU to default values

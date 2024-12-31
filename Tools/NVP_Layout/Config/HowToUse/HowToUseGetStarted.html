@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en-us">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<link rel="stylesheet" href="HowtoUse.css">
+		<title>How To Use NVP_Layout</title>
+	</head>
+	
+	<body>
+		<h1>
+			<center>How to Use the NVP_Layout application</center>
+		</h1>
+		<p>
+			This document defines how to use the application with global view.<br>
+			If you need more information please refer to advanced section.
+		</p>
+		<h2>0 - Prerequisites</h2>
+		<p>
+			Make sure that :<br>
+			<ul>
+				<li>File in <i>S:\Components\Application\NVP\Config\NVP_Layout</i> are up to date.</li>
+				<li>Read-only are not present on the sandbox. Use <i>S:\Scripts\VirtualDrive\core\RemoveReadOnly.bat</i> if not.</li>
+				<li>For NVM part, don't forget to configure the different block in TRESOS first.</li>
+			</ul>
+		</p>
+		<h2>1 - GLOBAL CONFIGURATION</h2>
+		<p>
+			<p>
+				The global configuration tab is use to configure the different block in memory.<br>
+				This view is based on the <b><i>GlobalConfiguration.xml</b></i> file in <i>S:\Components\Application\NVP\Config\NVP_Layout</i> folder.<br>
+			</p>
+			<h3>1.1 - Overview</h3>
+			<center>
+			<figure>
+				<img src="GlobalMemoryConfigurationwithID.PNG" alt="Picture not available" />
+				<br><figcaption>Figure 1 : Overview of the Global Memory Configuration panel</figcaption>
+			</figure></center>
+			<ol>
+				<li>Panel controller to switch between different section.</li>
+				<li>Title of the active tab.</li>
+				<li>Use to import from the database present in xml file.</li>
+				<li>Use to save the data from this panel to the local xml file.</li>
+				<li>Change the base of the number from decimal to hexadecimal and vice versa.</li>
+				<li>Launch the generation of compiled file.</li>
+				<li>Set a pop-up to rename the project in title.</li>
+				<li>Set the start address of the different memory section.</li>
+				<li>Set the size of the different memory section.</li>
+				<li>Set the version of the calibration part.</li>
+			</ol>
+			<h3>1.2 - Functionality</h3>
+			<p>
+				This tab is for present the memory mapping and modify it if wanted. There is no hidden functionality.
+			</p>
+			<h3>1.3 - Generate file</h3>
+			<p>
+				Impacted file :
+				<ul>
+				<li><b><i>GlobalConfiguration.xml</b></i></li>
+				<li><b><i>Nvp_MemoryMapping.h</b></i></li>
+				<li><b><i>CalibrationFlash.S00</b></i></li>
+				</ul>
+			</p>
+			<p>
+				This tab is used to update the <b><i>GlobalConfiguration.xml</b></i> with the import and export action.
+				(For more precision according the structure of this file please refer to the advanced tab)<br><br>
+				It is use to generate the compiled file <b><i>Nvp_MemoryMapping.h</b></i>, and the flashed file <b><i>CalibrationFlash.S00</b></i>.<br>
+				The first file is used to setup the start memory section in software.
+				The second is for write, in the end of the calibration memory section, the version of the calibration.<br>
+				Those file are generate by python script present in <i>S:\Components\Application\NVP\Config\NVP_Layout\Scripts</i>, named as <b><i>generate_</i>NameOfFile+extension<i>.py</b></i>.
+			</p>
+			<h3>1.4 - Impact on other tab</h3>
+			<p>
+				The data Calibration (FLASH) and Ram Shadow are export to respectively the calibration tab and the Nvm Default tab.<br>
+				In order to automatically recompute the different address of the data. 
+			</p>
+		</p>
+		<h2>2 - CALIBRATION</h2>
+		<p>
+			<p>
+				The Calibration tab is use to configure all parameter for the calibration section memory, except the start address which is configurable in Global Memory Configuration in the 8 section.
+			</p>
+			<h3>1.1 - Overview</h3>
+			<center>
+			<figure>
+				<img src="CalibrationwithID.PNG" alt="Picture not available" />
+				<br><figcaption>Figure 2 : Overview of the Calibration Memory section panel</figcaption>
+			</figure></center>
+			<ol>
+				<li>Panel controller to switch between different section.</li>
+				<li>Title of the active tab.</li>
+				<li>Add a block instance to the memory calibration section.</li>
+				<li>Delete the selected block from the calibration section.</li>
+				<li>Add a data in the selected block.</li>
+				<li>Delete the selected data in the selected block.</li>
+				<li>Use to import from the database present in xml file..</li>
+				<li>Change the base of the number from decimal to hexadecimal and vice versa.</li>
+				<li>Use to save the data from this panel to the local xml file.</li>
+				<li>Launch the generation of compiled file.</li>
+				<li>Calibration block section define the different block present in calibration section.</li>
+				<li>Calibration data section define the different data present in a calibration block.</li>
+				<li>This button is used to modify the order of the selected block with UP action.</li>
+				<li>This button is used to modify the order of the selected block with DOWN action.</li>
+				<li>This check box is used to select and inform which block is currently selected.<br>
+				You can select the block with a click on the name too.</li>
+				<li>This button is used to modify the order of the selected variable with UP action.</li>
+				<li>This button is used to modify the order of the selected variable with DOWN action.</li>
+				<li>This check box is used to select and inform which variable is currently selected.</li>
+			</ol>
+			<h3>1.2 - Functionality</h3>
+			<p>
+				The calibration tab can configure the calibration memory section with simple action. Add or remove a block is automatically, and the address, id, size, ... are automatically recompute.<br>
+				Some check are also implemented or will be implemented, like : high and low range check, empty block, memory misalignment, automatic prefix according the type of variable.
+			</p>
+			<h3>1.3 - Generate file</h3>
+			<p>
+				Impacted file :
+				<ul>
+				<li><b><i>Calibration.xml</b></i></li>
+				<li><b><i>Nvp_Generated_Calibration.h</b></i></li>
+				<li><b><i>Nvp_Generated_Calibration.c</b></i></li>
+				<li><b><i>CalibrationFlash.S00</b></i></li>
+				</ul>
+			</p>
+			<p>
+				This tab is used to update the <b><i>Calibration.xml</b></i> with the import and export action.
+				(For more precision according the structure of this file please refer to the advanced tab)<br><br>
+				It is use to generate the compiled file <b><i>Nvp_Generated_Calibration.h</b></i> and <b><i>Nvp_Generated_Calibration.c</b></i>, and the flashed file <b><i>CalibrationFlash.S00</b></i>.<br>
+				The first two file are used to setup the the calibration memory in software. They define the definition of a block and instantiate each variable to is address.<br>
+				The last file is for setup the calibration in memory, in other word it force the write of one data in a define address place in memory.<br>
+				Those file are generate by python script present in <i>S:\Components\Application\NVP\Config\NVP_Layout\Scripts</i>, named as <b><i>generate_</i>NameOfFile+extension<i>.py</b></i>
+			</p>
+			<h3>1.4 - Impact on other tab</h3>
+			<p>
+				NO IMPACT with other view 
+			</p>
+		</p>
+		<h2>3 - NVM DEFAULT</h2>
+		<p>
+			<p>
+				The Nvm Default tab is used to set-up the default value of the variable NVM memory section. It take as input of this memory mapping the <b>TRESOS</b> output and the previous mapping of the NVP.<br>
+				Before use this tab you need to correctly generate the file in TRESOS part.
+			</p>
+			<h3>1.1 - Overview</h3>
+			<center>
+			<figure>
+				<img src="NvmDefaultwithID.PNG" alt="Picture not available" />
+				<br><figcaption>Figure 3 : Overview of the NVM Default Memory section panel</figcaption>
+			</figure></center>
+			<ol>
+				<li>Panel controller to switch between different section.</li>
+				<li>Title of the active tab.</li>
+				<li>Add a data in the selected block.</li>
+				<li>Delete the selected data in the selected block.</li>
+				<li>Use to import from the database present in xml file and the TRESOS generated file.</li>
+				<li>Change the base of the number from decimal to hexadecimal and vice versa.</li>
+				<li>Use to save the data from this panel to the local xml file.</li>
+				<li>Launch the generation of compiled file.</li>
+				<li>Calibration block section define the different block present in calibration section.</li>
+				<li>Calibration data section define the different data present in a calibration block.</li>
+				<li>This check box is used to select and inform which block is currently selected.<br>
+				You can select the block with a click on the name too.</li>
+				<li>This button is used to modify the order of the selected variable with UP action.</li>
+				<li>This button is used to modify the order of the selected variable with DOWN action.</li>
+				<li>This check box is used to select and inform which variable is currently selected.</li>
+			</ol>
+			<h3>1.2 - Functionality</h3>
+			<p>
+				When the application is open, an import is launch. The import consist in make 2 temporary memory definition, one from TRESOS and the other from the previous database.<br>
+				A merge is automatically launch between those two different definition. The merge is almost automatic only the conflict were pop-up, and a manual action is needed. <br>
+				Each import launch a merge, if there is nothing to manually merge the application is directly available.<br>
+				The file from TRESOS take into account form the application are :
+				<li><i>S:\Tools\Tresos_Configuration_8.5.1\Workspace\S32K_DevKit\Tresos_BSW_generated\include\<b>NvM_Cfg.h</b></i></li>
+				<li><i>S:\Tools\Tresos_Configuration_8.5.1\Workspace\S32K_DevKit\Tresos_BSW_generated\src\<b>NvM_Cfg.c</b></i></li>
+				After the import you are able to configure the default data from the NVM part.
+				Add or remove a block is made by TRESOS so you are not allowed to do this is the application, this part is used to define the variable inside the different block.<br>
+				Some check are also implemented or will be implemented, like : high and low range check, memory misalignment, automatic prefix according the type of variable, block size align with TRESOS defined size.<br>
+				Address, id, size, ... are also automatically recompute.
+			</p>
+			<h3>1.3 - Generate file</h3>
+			<p>
+				Impacted file :
+				<ul>
+				<li><b><i>NvmDefault.xml</b></i></li>
+				<li><b><i>Nvp_alias.h</b></i></li>
+				<li><b><i>Nvp_Generated_NvmDefault.h</b></i></li>
+				<li><b><i>Nvp_Generated_NvmDefault.c</b></i></li>
+				<li><b><i>NvmDefaultValue.S00</b></i></li>
+				</ul>
+			</p>
+			<p>
+				This tab is used to update the <b><i>NvmDefault.xml</b></i> with the import and export action.
+				(For more precision according the structure of this file please refer to the advanced tab)<br><br>
+				It is use to generate the compiled file <b><i>Nvp_alias.h</b></i>, <b><i>Nvp_Generated_NvmDefault.h</b></i> and <b><i>Nvp_Generated_NvmDefault.c</b></i>, and the flashed file <b><i>NvmDefaultValue.S00</b></i>.<br>
+				The first three file are used to setup the the Nvm memory in software. They define the definition of a block and instantiate each variable to is address.<br>
+				Furthermore they make the link between the block from TRESOS and the address of the default value for each block.<br>
+				The last file is for setup the Nvm default value in memory, in other word it force the write of one data in a define address place in memory. This value is used as default by the software in case of problem in memory.<br>
+				Those file are generate by python script present in <i>S:\Components\Application\NVP\Config\NVP_Layout\Scripts</i>, named as <b><i>generate_</i>NameOfFile+extension<i>.py</b></i>
+			</p>
+			<h3>1.4 - Impact on other tab</h3>
+			<p>
+				NO IMPACT with other view 
+			</p>
+		</p>
+		<h2>4 - TIPS</h2>
+		<p>
+			Some tips and tricks to use the application in a good way :<br>
+			<ul>
+				<li>
+					The generation is deactivate if modification are made in the current page. Try to Export your modification before generate the compiled file.
+				</li>
+				<li>The import delete all current value never export. So be sure that all wanted data are well export, and the TRESOS size are well set and generate.</li>
+				<li>If you need a lot of variable in a block please be gentle with the Front end, and don't Spam click. the limit is 1000 block of 1000 variable of 1000 data (if the variable is an array).</li>
+			</ul>
+		</p>
+	</body>
+</html>

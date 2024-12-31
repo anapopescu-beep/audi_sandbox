@@ -1,0 +1,901 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  int devKit_counterOldValue = 0;
+  int devKit_counter = 0;
+  int MF_counter = 0;
+  int Airbag_01_counterOldValue = 0;
+  int Airbag_01_counter = 0;
+  int Airbag_02_counterOldValue = 0;
+  int Airbag_02_counter = 0;
+  int Airbag_eCS_01_counterOldValue = 0;
+  int Airbag_eCS_01_counter = 0;
+  int eCS_01_counterOldValue = 0;
+  int eCS_01_counter = 0;
+  int MF_counterOldValue = 0;
+  
+  msTimer S1_UnlockTimeout;
+  msTimer S2_UnlockTimeout;
+  msTimer S3_UnlockTimeout;
+  msTimer S4_UnlockTimeout;
+  msTimer S5_UnlockTimeout;
+  msTimer S6_UnlockTimeout;
+  msTimer timeoutFrame;
+  
+  double oldTimeStamp_MF = 0;
+  double oldTimeStamp_devKit = 0;
+  double oldTimeStamp_Airbag_eCS_01 = 0;
+  double oldTimeStamp_Airbag_01 = 0;
+  double oldTimeStamp_Airbag_02 = 0;
+  double oldTimeStamp_eCS_01 = 0;
+}
+
+on start
+{
+  setTimerCyclic(timeoutFrame, 500);
+  setControlVisibility("eCS", "S1_Unlock", 0);
+  setControlVisibility("eCS", "S2_Unlock", 0);
+  setControlVisibility("eCS", "S3_Unlock", 0);
+  setControlVisibility("eCS", "S4_Unlock", 0);
+  setControlVisibility("eCS", "S5_Unlock", 0);
+  setControlVisibility("eCS", "S6_Unlock", 0);
+  
+  setControlVisibility("eCS", "S1_Lock", 0);
+  setControlVisibility("eCS", "S2_Lock", 0);
+  setControlVisibility("eCS", "S3_Lock", 0);
+  setControlVisibility("eCS", "S4_Lock", 0);
+  setControlVisibility("eCS", "S5_Lock", 0);
+  setControlVisibility("eCS", "S6_Lock", 0);
+  
+  setControlVisibility("eCS", "S1_BeltBuckled", 0);
+  setControlVisibility("eCS", "S2_BeltBuckled", 0);
+  setControlVisibility("eCS", "S3_BeltBuckled", 0);
+  setControlVisibility("eCS", "S4_BeltBuckled", 0);
+  setControlVisibility("eCS", "S5_BeltBuckled", 0);
+  setControlVisibility("eCS", "S6_BeltBuckled", 0);
+  
+  setControlVisibility("eCS", "S5_SeatOccupied", 0);
+  setControlVisibility("eCS", "S6_SeatOccupied", 0);
+  
+  setControlVisibility("eCS", "S1_Warning", 0);
+  setControlVisibility("eCS", "S2_Warning", 0);
+  setControlVisibility("eCS", "S3_Warning", 0);
+  setControlVisibility("eCS", "S4_Warning", 0);
+  setControlVisibility("eCS", "S5_Warning", 0);
+  setControlVisibility("eCS", "S6_Warning", 0);
+}
+
+on message DevKit_01
+{
+  int S1_State;
+  int S2_State;
+  int S3_State;
+  int S4_State;
+  int S5_State;
+  int S6_State;
+  
+  int S1_UnlockConfirmed;
+  int S2_UnlockConfirmed;
+  int S3_UnlockConfirmed;
+  int S4_UnlockConfirmed;
+  int S5_UnlockConfirmed;
+  int S6_UnlockConfirmed;
+  
+  int S1_BuckleState;
+  int S2_BuckleState;
+  int S3_BuckleState;
+  int S4_BuckleState;
+  int S5_BuckleState;
+  int S6_BuckleState;
+  
+  int S5_SeatState;
+  int S6_SeatState;
+  
+  double newTimeStamp_devKit = 0;
+  oldTimeStamp_devKit = newTimeStamp_devKit;
+  newTimeStamp_devKit = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_devKit = newTimeStamp_devKit - oldTimeStamp_devKit;
+  @sysvar::PanelControl::statusDevKit = 1;
+  devKit_counter++;
+
+  S1_State = getSignal(DevKit_01::eCS_Solenoid_1_State);
+  S2_State = getSignal(DevKit_01::eCS_Solenoid_2_State);
+  S3_State = getSignal(DevKit_01::eCS_Solenoid_3_State);
+  S4_State = getSignal(DevKit_01::eCS_Solenoid_4_State);
+  S5_State = getSignal(DevKit_01::eCS_Solenoid_5_State);
+  S6_State = getSignal(DevKit_01::eCS_Solenoid_6_State);
+  
+  S1_BuckleState  = getSignal(DevKit_01::eCS_BuckleStatus_S1);
+  S2_BuckleState  = getSignal(DevKit_01::eCS_BuckleStatus_S2);
+  S3_BuckleState  = getSignal(DevKit_01::eCS_BuckleStatus_S3);
+  S4_BuckleState  = getSignal(DevKit_01::eCS_BuckleStatus_S4);
+  S5_BuckleState  = getSignal(eCS_01::eCS_Gurtschloss_Status_Reihe2_FA);
+  S6_BuckleState  = getSignal(eCS_01::eCS_Gurtschloss_Status_Reihe2_BF);
+  
+  S5_SeatState  = getSignal(eCS_01::eCS_SBS_Belegung_Reihe2_FA);
+  S6_SeatState  = getSignal(eCS_01::eCS_SBS_Belegung_Reihe2_BF);
+  
+  S1_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S1);
+  S2_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S2);
+  S3_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S3);
+  S4_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S4);
+  S5_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S5);
+  S6_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S6);
+  
+  //Lock = 0
+  //Unlock = 1
+  //Backup = 2
+  //Disabled = 3
+  
+  if(S1_State == 0)
+  {
+    setControlVisibility("eCS", "S1_Unlock", 0);
+    setControlVisibility("eCS", "S1_Lock", 1);
+    setControlVisibility("eCS", "S1_Disabled", 0);
+  }
+  else if (S1_State == 1)
+  {
+    setControlVisibility("eCS", "S1_Unlock", 1);
+    setControlVisibility("eCS", "S1_Lock", 0);
+    setControlVisibility("eCS", "S1_Disabled", 0);
+  }
+  else if(S1_State == 2)
+  {
+    if (S1_UnlockConfirmed == 1)
+    {
+      cancelTimer(S1_UnlockTimeout);
+      setControlVisibility("eCS", "S1_Unlock", 0);
+      setControlVisibility("eCS", "S1_Lock", 1);
+      setControlVisibility("eCS", "S1_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S1_UnlockTimeout) == 0)
+      {
+          setTimer(S1_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S1_State == 3)
+  {
+    setControlVisibility("eCS", "S1_Unlock", 0);
+    setControlVisibility("eCS", "S1_Lock", 0);
+    setControlVisibility("eCS", "S1_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S2_State == 0)
+  {
+    setControlVisibility("eCS", "S2_Unlock", 0);
+    setControlVisibility("eCS", "S2_Lock", 1);
+    setControlVisibility("eCS", "S2_Disabled", 0);
+  }
+  else if (S2_State == 1)
+  {
+    setControlVisibility("eCS", "S2_Unlock", 1);
+    setControlVisibility("eCS", "S2_Lock", 0);
+    setControlVisibility("eCS", "S2_Disabled", 0);
+  }
+  else if(S2_State == 2)
+  {
+    if (S2_UnlockConfirmed == 1)
+    {
+      cancelTimer(S2_UnlockTimeout);
+      setControlVisibility("eCS", "S2_Unlock", 0);
+      setControlVisibility("eCS", "S2_Lock", 1);
+      setControlVisibility("eCS", "S2_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S2_UnlockTimeout) == 0)
+      {
+          setTimer(S2_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S2_State == 3)
+  {
+    setControlVisibility("eCS", "S2_Unlock", 0);
+    setControlVisibility("eCS", "S2_Lock", 0);
+    setControlVisibility("eCS", "S2_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S3_State == 0)
+  {
+    setControlVisibility("eCS", "S3_Unlock", 0);
+    setControlVisibility("eCS", "S3_Lock", 1);
+    setControlVisibility("eCS", "S3_Disabled", 0);
+  }
+  else if (S3_State == 1)
+  {
+    setControlVisibility("eCS", "S3_Unlock", 1);
+    setControlVisibility("eCS", "S3_Lock", 0);
+    setControlVisibility("eCS", "S3_Disabled", 0);
+  }
+  else if(S3_State == 2)
+  {
+    if (S3_UnlockConfirmed == 1)
+    {
+      cancelTimer(S3_UnlockTimeout);
+      setControlVisibility("eCS", "S3_Unlock", 0);
+      setControlVisibility("eCS", "S3_Lock", 1);
+      setControlVisibility("eCS", "S3_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S3_UnlockTimeout) == 0)
+      {
+          setTimer(S3_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S3_State == 3)
+  {
+    setControlVisibility("eCS", "S3_Unlock", 0);
+    setControlVisibility("eCS", "S3_Lock", 0);
+    setControlVisibility("eCS", "S3_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S4_State == 0)
+  {
+    setControlVisibility("eCS", "S4_Unlock", 0);
+    setControlVisibility("eCS", "S4_Lock", 1);
+    setControlVisibility("eCS", "S4_Disabled", 0);
+  }
+  else if (S4_State == 1)
+  {
+    setControlVisibility("eCS", "S4_Unlock", 1);
+    setControlVisibility("eCS", "S4_Lock", 0);
+    setControlVisibility("eCS", "S4_Disabled", 0);
+  }
+  else if(S4_State == 2)
+  {
+    if (S4_UnlockConfirmed == 1)
+    {
+      cancelTimer(S4_UnlockTimeout);
+      setControlVisibility("eCS", "S4_Unlock", 0);
+      setControlVisibility("eCS", "S4_Lock", 1);
+      setControlVisibility("eCS", "S4_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S4_UnlockTimeout) == 0)
+      {
+          setTimer(S4_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S4_State == 3)
+  {
+    setControlVisibility("eCS", "S4_Unlock", 0);
+    setControlVisibility("eCS", "S4_Lock", 0);
+    setControlVisibility("eCS", "S4_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S5_State == 0)
+  {
+    setControlVisibility("eCS", "S5_Unlock", 0);
+    setControlVisibility("eCS", "S5_Lock", 1);
+    setControlVisibility("eCS", "S5_Disabled", 0);
+  }
+  else if (S5_State == 1)
+  {
+    setControlVisibility("eCS", "S5_Unlock", 1);
+    setControlVisibility("eCS", "S5_Lock", 0);
+    setControlVisibility("eCS", "S5_Disabled", 0);
+  }
+  else if(S5_State == 2)
+  {
+    if (S5_UnlockConfirmed == 1)
+    {
+      cancelTimer(S5_UnlockTimeout);
+      setControlVisibility("eCS", "S5_Unlock", 0);
+      setControlVisibility("eCS", "S5_Lock", 1);
+      setControlVisibility("eCS", "S5_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S5_UnlockTimeout) == 0)
+      {
+      setTimer(S5_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S5_State == 3)
+  {
+    setControlVisibility("eCS", "S5_Unlock", 0);
+    setControlVisibility("eCS", "S5_Lock", 0);
+    setControlVisibility("eCS", "S5_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S6_State == 0)
+  {
+    setControlVisibility("eCS", "S6_Unlock", 0);
+    setControlVisibility("eCS", "S6_Lock", 1);
+    setControlVisibility("eCS", "S6_Disabled", 0);
+  }
+  else if (S6_State == 1)
+  {
+    setControlVisibility("eCS", "S6_Unlock", 1);
+    setControlVisibility("eCS", "S6_Lock", 0);
+    setControlVisibility("eCS", "S6_Disabled", 0);
+  }
+  else if(S6_State == 2)
+  {
+    if (S6_UnlockConfirmed == 1)
+    {
+      cancelTimer(S6_UnlockTimeout);
+      setControlVisibility("eCS", "S6_Unlock", 0);
+      setControlVisibility("eCS", "S6_Lock", 1);
+      setControlVisibility("eCS", "S6_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S6_UnlockTimeout) == 0)
+      {
+          setTimer(S6_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S6_State == 3)
+  {
+    setControlVisibility("eCS", "S6_Unlock", 0);
+    setControlVisibility("eCS", "S6_Lock", 0);
+    setControlVisibility("eCS", "S6_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+  //belt buckled = 2; belt not buckled = 3
+  //seat not occupied = 2; seat occupied = 3
+  
+  if(S1_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S1_BeltBuckled", 1);
+    setControlVisibility("eCS", "S1_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S1_BeltBuckled", 0);
+    setControlVisibility("eCS", "S1_BeltNotBuckled", 1);
+  }
+    
+  if(S2_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S2_BeltBuckled", 1);
+    setControlVisibility("eCS", "S2_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S2_BeltBuckled", 0);
+    setControlVisibility("eCS", "S2_BeltNotBuckled", 1);
+  }
+    
+  if(S3_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S3_BeltBuckled", 1);
+    setControlVisibility("eCS", "S3_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S3_BeltBuckled", 0);
+    setControlVisibility("eCS", "S3_BeltNotBuckled", 1);
+  }
+    
+  if(S4_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S4_BeltBuckled", 1);
+    setControlVisibility("eCS", "S4_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S4_BeltBuckled", 0);
+    setControlVisibility("eCS", "S4_BeltNotBuckled", 1);
+  }
+    
+  if(S5_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S5_BeltBuckled", 1);
+    setControlVisibility("eCS", "S5_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S5_BeltBuckled", 0);
+    setControlVisibility("eCS", "S5_BeltNotBuckled", 1);
+  }
+    
+  if(S6_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S6_BeltBuckled", 1);
+    setControlVisibility("eCS", "S6_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S6_BeltBuckled", 0);
+    setControlVisibility("eCS", "S6_BeltNotBuckled", 1);
+  }
+  
+  if(S5_SeatState == 2)
+  {
+    setControlVisibility("eCS", "S5_SeatOccupied", 1);
+    setControlVisibility("eCS", "S5_SeatNotOccupied", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S5_SeatOccupied", 0);
+    setControlVisibility("eCS", "S5_SeatNotOccupied", 1);
+  }
+  
+  if(S6_SeatState == 2)
+  {
+    setControlVisibility("eCS", "S6_SeatOccupied", 1);
+    setControlVisibility("eCS", "S6_SeatNotOccupied", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S6_SeatOccupied", 0);
+    setControlVisibility("eCS", "S6_SeatNotOccupied", 1);
+  }
+  
+}
+
+on message eCS_Measurement_Frame
+{
+  int S1_ShortToGnd;
+  int S2_ShortToGnd;
+  int S3_ShortToGnd;
+  int S4_ShortToGnd;
+  int S5_ShortToGnd;
+  int S6_ShortToGnd;
+  
+  int S1_ShortToVCC;
+  int S2_ShortToVCC;
+  int S3_ShortToVCC;
+  int S4_ShortToVCC;
+  int S5_ShortToVCC;
+  int S6_ShortToVCC;
+
+  int S1_Overvoltage;
+  int S2_Overvoltage;
+  int S3_Overvoltage;
+  int S4_Overvoltage;
+  int S5_Overvoltage;
+  int S6_Overvoltage;
+  
+  int S1_OC;
+  int S2_OC;
+  int S3_OC;
+  int S4_OC;
+  int S5_OC;
+  int S6_OC;
+  
+  int S1_ActuatorBlocked;
+  int S2_ActuatorBlocked;
+  int S3_ActuatorBlocked;
+  int S4_ActuatorBlocked;
+  int S5_ActuatorBlocked;
+  int S6_ActuatorBlocked;
+    
+  double newTimeStamp_MF = 0;
+  oldTimeStamp_MF = newTimeStamp_MF;
+  newTimeStamp_MF = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_MF = newTimeStamp_MF - oldTimeStamp_MF;
+  @sysvar::PanelControl::statusMF = 1;
+  MF_counter++;
+  
+  S1_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_OpenCircuit);
+  S2_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_OpenCircuit);
+  S3_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_OpenCircuit);
+  S4_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_OpenCircuit);
+  S5_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_OpenCircuit);
+  S6_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_OpenCircuit);
+  
+  S1_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_Overvoltage);
+  S2_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_Overvoltage);
+  S3_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_Overvoltage);
+  S4_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_Overvoltage);
+  S5_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_Overvoltage);
+  S6_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_Overvoltage);
+  
+  S1_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_ShortToVBAT);
+  S2_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_ShortToVBAT);
+  S3_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_ShortToVBAT);
+  S4_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_ShortToVBAT);
+  S5_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_ShortToVBAT);
+  S6_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_ShortToVBAT);
+  
+  S1_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_ShortToGND);
+  S2_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_ShortToGND);
+  S3_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_ShortToGND);
+  S4_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_ShortToGND);
+  S5_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_ShortToGND);
+  S6_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_ShortToGND);
+  
+    
+  S1_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_ActuatorBlocked);
+  S2_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_ActuatorBlocked);
+  S3_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_ActuatorBlocked);
+  S4_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_ActuatorBlocked);
+  S5_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_ActuatorBlocked);
+  S6_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_ActuatorBlocked);
+  
+  if((S1_OC == 1) ||(S1_ShortToVCC == 1) || (S1_ShortToGnd == 1) || (S1_ActuatorBlocked == 1) || (S1_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S1_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S1_Warning", 0);
+  }
+  
+    if((S2_OC == 1) ||(S2_ShortToVCC == 1) || (S2_ShortToGnd == 1) || (S2_ActuatorBlocked == 1) || (S2_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S2_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S2_Warning", 0);
+  }
+  
+    if((S3_OC == 1) ||(S3_ShortToVCC == 1) || (S3_ShortToGnd == 1) || (S3_ActuatorBlocked == 1) || (S2_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S3_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S3_Warning", 0);
+  }
+  
+    if((S4_OC == 1) ||(S4_ShortToVCC == 1) || (S4_ShortToGnd == 1) || (S4_ActuatorBlocked == 1) || (S3_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S4_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S4_Warning", 0);
+  }
+  
+    if((S5_OC == 1) ||(S5_ShortToVCC == 1) || (S5_ShortToGnd == 1) || (S5_ActuatorBlocked == 1) || (S4_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S5_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S5_Warning", 0);
+  }
+  
+    if((S6_OC == 1) ||(S6_ShortToVCC == 1) || (S6_ShortToGnd == 1) || (S6_ActuatorBlocked == 1) || (S5_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S6_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S6_Warning", 0);
+  }
+  
+}
+
+on message Airbag_eCS_01
+{
+  double newTimeStamp_Airbag_eCS_01 = 0;
+  oldTimeStamp_Airbag_eCS_01 = newTimeStamp_Airbag_eCS_01;
+  newTimeStamp_Airbag_eCS_01 = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_Airbag_eCS_01 = newTimeStamp_Airbag_eCS_01 - oldTimeStamp_Airbag_eCS_01;
+  @sysvar::PanelControl::statusAirbag_eCS_01 = 1;
+  Airbag_eCS_01_counter++;
+}
+on message Airbag_01
+{
+  double newTimeStamp_Airbag01 = 0;
+  oldTimeStamp_Airbag_01 = newTimeStamp_Airbag01;
+  newTimeStamp_Airbag01 = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_Airbag_01 = newTimeStamp_Airbag01 - oldTimeStamp_Airbag_01;
+  @sysvar::PanelControl::statusAirbag_01 = 1;
+  Airbag_01_counter++;
+}
+on message Airbag_02
+{
+  double newTimeStamp_Airbag_02 = 0;
+  oldTimeStamp_Airbag_02 = newTimeStamp_Airbag_02;
+  newTimeStamp_Airbag_02 = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_Airbag_02  = newTimeStamp_Airbag_02 - oldTimeStamp_Airbag_02;
+  @sysvar::PanelControl::statusAirbag_02 = 1;
+  Airbag_02_counter++;
+}
+on message eCS_01
+{
+  double newTimeStamp_eCS_01 = 0;
+  oldTimeStamp_eCS_01 = newTimeStamp_eCS_01;
+  newTimeStamp_eCS_01 = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_eCS_01 = newTimeStamp_eCS_01 - oldTimeStamp_eCS_01;
+  @sysvar::PanelControl::statuseCS_01 = 1;
+  eCS_01_counter++;
+}
+
+on timer S1_UnlockTimeout
+{
+    setControlVisibility("eCS", "S1_Unlock", 0);
+    setControlVisibility("eCS", "S1_Lock", 1);
+    setControlVisibility("eCS", "S1_Disabled", 0);
+}
+
+on timer S2_UnlockTimeout
+{
+    setControlVisibility("eCS", "S2_Unlock", 0);
+    setControlVisibility("eCS", "S2_Lock", 1);
+    setControlVisibility("eCS", "S2_Disabled", 0);
+}
+
+on timer S3_UnlockTimeout
+{
+    setControlVisibility("eCS", "S3_Unlock", 0);
+    setControlVisibility("eCS", "S3_Lock", 1);
+    setControlVisibility("eCS", "S3_Disabled", 0);
+}
+
+on timer S4_UnlockTimeout
+{
+    setControlVisibility("eCS", "S4_Unlock", 0);
+    setControlVisibility("eCS", "S4_Lock", 1);
+    setControlVisibility("eCS", "S4_Disabled", 0);
+}
+
+on timer S5_UnlockTimeout
+{
+    setControlVisibility("eCS", "S5_Unlock", 0);
+    setControlVisibility("eCS", "S5_Lock", 1);
+    setControlVisibility("eCS", "S5_Disabled", 0);
+}
+
+on timer S6_UnlockTimeout
+{
+    setControlVisibility("eCS", "S6_Unlock", 0);
+    setControlVisibility("eCS", "S6_Lock", 1);
+    setControlVisibility("eCS", "S6_Disabled", 0);
+}
+
+on timer timeoutFrame
+{
+  if(devKit_counterOldValue == devKit_counter)
+    @sysvar::PanelControl::statusDevKit = 0;
+  
+  if(MF_counterOldValue == MF_counter)
+    @sysvar::PanelControl::statusMF = 0;
+  
+  if(Airbag_01_counterOldValue == Airbag_01_counter)
+    @sysvar::PanelControl::statusAirbag_01 = 0;
+  
+  if(Airbag_02_counterOldValue == Airbag_02_counter)
+    @sysvar::PanelControl::statusAirbag_02 = 0;
+  
+  if(Airbag_eCS_01_counterOldValue == Airbag_eCS_01_counter)
+    @sysvar::PanelControl::statusAirbag_eCS_01 = 0;
+  
+  if(eCS_01_counterOldValue == eCS_01_counter)
+    @sysvar::PanelControl::statuseCS_01 = 0;
+  
+  Airbag_01_counterOldValue = Airbag_01_counter;
+  Airbag_02_counterOldValue = Airbag_02_counter;
+  Airbag_eCS_01_counterOldValue = Airbag_eCS_01_counter;
+  eCS_01_counterOldValue = eCS_01_counter;
+  devKit_counterOldValue = devKit_counter;
+  MF_counterOldValue = MF_counter;
+  
+}
+
+on sysvar_update PanelControl::closePanelDevKit
+{
+  closePanel("devKit_01");
+}
+
+on sysvar_update PanelControl::closePanelMF
+{
+  closePanel("measurementFrame");
+}
+
+on sysvar_update PanelControl::closePanelAirBag_01
+{
+  closePanel("AirBag_01");
+}
+
+on sysvar_update PanelControl::closePanelAirBag_02
+{
+  closePanel("AirBag_02");
+}
+
+on sysvar_update PanelControl::closePanelAirBag_eCS_01
+{
+  closePanel("Airbag_eCS_01");
+}
+
+on sysvar_update PanelControl::closePaneleCS_01
+{
+  closePanel("eCS_01");
+}
+
+on sysvar_update PanelControl::openPanelDevKit
+{
+  openPanel("devKit_01");
+}
+
+on sysvar_update PanelControl::openPanelMF
+{
+  openPanel("measurementFrame");
+}
+
+on sysvar_update PanelControl::openPanelAirBag_01
+{
+  openPanel("AirBag_01");
+}
+
+on sysvar_update PanelControl::openPanelAirBag_02
+{
+  openPanel("AirBag_02");
+}
+
+on sysvar_update PanelControl::openPanelAirBag_eCS_01
+{
+  openPanel("Airbag_eCS_01");
+}
+
+on sysvar_update PanelControl::openPaneleCS_01
+{
+  openPanel("eCS_01");
+}
+
+
+on sysvar_update PanelControl::openPanelSbc
+{
+  openPanel("SbcErrors");
+}
+
+
+on sysvar_update PanelControl::openPanelAcc
+{
+  openPanel("AccelerometerErrors");
+}
+
+on sysvar_update PanelControl::enableAirbag_01
+{
+  if(@sysvar::PanelControl::enableAirbag_01 == 1)
+  {
+    @sysvar::PanelControl::disableAirbag_01 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::disableAirbag_01
+{
+  if(@sysvar::PanelControl::disableAirbag_01 == 1)
+  {
+    @sysvar::PanelControl::enableAirbag_01 = 0;
+     @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::enableAirbag_02
+{
+  if(@sysvar::PanelControl::enableAirbag_02 == 1)
+  {
+    @sysvar::PanelControl::disableAirbag_02 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::disableAirbag_02
+{
+  if(@sysvar::PanelControl::disableAirbag_02 == 1)
+  {
+    @sysvar::PanelControl::enableAirbag_02 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::enableAirbag_eCS_01
+{
+  if(@sysvar::PanelControl::enableAirbag_eCS_01 == 1)
+  {
+    @sysvar::PanelControl::disableAirbag_eCS_01 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::disableAirbag_eCS_01
+{
+  if(@sysvar::PanelControl::disableAirbag_eCS_01 == 1)
+  {
+    @sysvar::PanelControl::enableAirbag_eCS_01 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update eCS::clearDiagConsole
+{
+  if (@sysvar::eCS::clearDiagConsole == 1)
+  {    
+  deleteControlContent("Diag","RegistrationConsole");
+  }
+}
+
+on sysvar_update eCS::all_akt_tests
+{
+  /* No action */
+  if(@eCS::all_akt_tests == 0)
+  {
+    $AB_eCS_Aktuatortest_FA = 0;
+    $AB_eCS_Aktuatortest_BF = 0;
+    $AB_eCS_Aktuatortest_Reihe2_FA = 0;
+    $AB_eCS_Aktuatortest_Reihe2_BF = 0;
+  }
+  /* Locked */
+  else if (@eCS::all_akt_tests == 1)
+  {
+    $AB_eCS_Aktuatortest_FA = 1;
+    $AB_eCS_Aktuatortest_BF = 1;
+    $AB_eCS_Aktuatortest_Reihe2_FA = 1;
+    $AB_eCS_Aktuatortest_Reihe2_BF = 1;
+  }
+  /* Unlocked */
+  else if (@eCS::all_akt_tests == 2)
+  {
+    $AB_eCS_Aktuatortest_FA = 2;
+    $AB_eCS_Aktuatortest_BF = 2;
+    $AB_eCS_Aktuatortest_Reihe2_FA = 2;
+    $AB_eCS_Aktuatortest_Reihe2_BF = 2;
+  }
+  /* Implausible */
+  else if(@eCS::all_akt_tests == 3)
+  {
+    $AB_eCS_Aktuatortest_FA = 3;
+    $AB_eCS_Aktuatortest_BF = 3;
+    $AB_eCS_Aktuatortest_Reihe2_FA = 3;
+    $AB_eCS_Aktuatortest_Reihe2_BF = 3;
+  }
+}
+
+on sysvar_update eCS::conversionStatus
+{
+  if(@sysvar::eCS::conversionStatus==1)
+  {
+  @sysvar::eCS::eCSTestFailed=(@sysvar::eCS::eCSEnterEventStatus>>0)&0x01;
+  @sysvar::eCS::eCSTestFailedThisOpCycle=(@sysvar::eCS::eCSEnterEventStatus>>1)&0x01;
+  @sysvar::eCS::eCSPendingDTC=(@sysvar::eCS::eCSEnterEventStatus>>2)&0x01;
+  @sysvar::eCS::eCSConfirmedDTC=(@sysvar::eCS::eCSEnterEventStatus>>3)&0x01;
+  @sysvar::eCS::eCSTestNCSinceLastClear=(@sysvar::eCS::eCSEnterEventStatus>>4)&0x01;
+  @sysvar::eCS::eCSTestFailedSinceLastClear=(@sysvar::eCS::eCSEnterEventStatus>>5)&0x01;
+  @sysvar::eCS::eCSTestNCThisOPCycle=(@sysvar::eCS::eCSEnterEventStatus>>6)&0x01;
+  @sysvar::eCS::eCSWarningIndicatorReq=(@sysvar::eCS::eCSEnterEventStatus>>7)&0x01;
+  
+  }
+}
+
+on sysvar_update PanelControl::openPanelSolenoidErrors
+{
+  openPanel("SolenoidErrors");
+}

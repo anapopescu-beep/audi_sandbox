@@ -1,0 +1,41 @@
+1. Example Description
+        Blink a led using interrupts of ICU driver.
+    1.1 The application software functionality
+            Main application is toggling an output pin connected to an input pin. 
+            - ICU driver dependencies initialization and ICU driver initialization.
+            - Install the used ISR.
+            - Toggle a GPIO pin routed to the input channel(FTM_0 CH_3) to toggle the interrupt.
+            - Toggle a led when GPIO pin is toggled.
+            User can exercise in debug mode the toggling of pin and generation of interrupt.
+2. Installation steps
+    2.1 Hardware installation
+        2.1.1 Supported boards
+            - S32K118EVB2-Q048 PCB 47530 RevX1 SCH RevA1
+        2.2.2 Connections
+            Wire connection is required as follows:
+                - Connect J5.9 PTD1 (FTM0_CH3 - input channel) to J4.2 PTB13 (GPIO - trigger channel).
+                - Connect J109.2 and J109.3 to power the RGB_GREEN Led (controlled by PTD15).
+        2.2.3 Debugger
+            The debugger must be connected to the J14 10-pin JTAG Cortex Debug connector.
+    2.2 Software installation
+        2.2.1 Importing the S32 Design Studio project
+            After opening S32 Design Studio, go to "File -> New -> S32DS Project From Example" and select this example. Then click on "Finish".
+            The project should now be copied into you current workspace.
+         
+3. Generating, building and running the example application
+    3.1 Generating the S32 configuration
+        Before running the example a configuration needs to be generated.  First go to Project Explorer View in S32 DS and select the current project. Select the "S32 Configuration Tool" menu then click on the desired configuration tool (Pins, Cocks, Peripherals etc...). Clicking on any one of those will generate all the components. Make the desired changes(if any) then click on the "S32 Configuration Tool->Update Code" button.
+    3.2 Compiling the application
+        Select the configuration to be built: RAM (Debug_RAM) by left clicking on the downward arrow corresponding to the build button in eclipse.
+        Use Project > Build to build the project.
+        Wait for the build action to be completed before continuing to the next step. Check the compiler console for error messages; upon completion, the *.elf binary file
+        should be created.
+    3.3 Running the application on the board
+        Go to Run and select Debug Configurations. There will be a debug configuration for this project:
+
+        Configuration Name                  Description
+        -------------------------------     -----------------------
+        $(example)_debug_ram_s32debugger | Debug the RAM configuration using S32 Debugger
+
+        Select the desired debug configuration and click on Launch. Now the perspective will change to the Debug Perspective.
+        Use the controls to control the program flow.

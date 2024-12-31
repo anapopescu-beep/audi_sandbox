@@ -1,0 +1,177 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+******************************************************************************/
+/* PRQA S 0288 ++ */
+/*
+ * Explanation:
+ *    Disabled for MKS keywords
+ */
+/*
+$Revision: 1.1 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Tools/Build_Env/Workspace/Build/Makefile/Bootmanager/project.pj $
+*/
+/* PRQA S 0288 -- */
+/*!****************************************************************************
+
+@details
+   Linker file for Steering Wheel application on NXP S32K144 MCU derivative 
+   for IAR build toolchain.
+
+******************************************************************************/
+
+/* ************************************************************************** */
+/* Some address key values                                                    */
+/* ************************************************************************** */
+
+define symbol _FLASH_NVFLEX_START_      = 0x00021000; /* 4 kB of Flex NV ROM default values - E2P Param */ 
+define symbol _FLASH_NVFLEX_END_        = 0x00021FFF;
+
+define symbol _FLASH_CALIB_START_       = 0x00022000; /* 4 kB of Flex NV ROM default values - Calibration */ 
+define symbol _FLASH_CALIB_END_         = 0x00022FFF;
+
+define symbol _FLASH_START_             = 0x00023000; /* 384 kB of Application Code */
+define symbol _FLASH_END_               = 0x00080048;
+
+define symbol _BTLD_FLASH_START_        = 0x00000500; /* 128 kB of BTLD Code */
+define symbol _BTLD_FLASH_END_          = 0x00000FFF;
+
+define symbol _RAM_START_               = 0x1FFF9000; /* Application RAM data - 28 kB RAM Low */
+define symbol _RAM_END_                 = 0x1FFFFFFF;
+
+define symbol _STACK_START_             = 0x20000000; /* Stack - 12 kB RAM Up = 0x3000 */
+define symbol _STACK_END_               = 0x20002FFF; /* keep in mind that 16 bytes shall be available just after this address */
+                                                      /* due to OS stack memory protection feature */
+
+define symbol _RAM_NOINIT_START_        = 0x20003F00; /* 256 bytes of RAM No init */
+define symbol _RAM_NOINIT_END_          = 0x20003FFF;
+
+define symbol _RAM_NVFLEX_START_        = 0x14000000; /* 4 kB of Flex NV RAM available since E3P is not used */ 
+define symbol _RAM_NVFLEX_END_          = 0x14000FFF;
+
+define symbol _OS_STACK_SIZE_           = 0x1100; /* Os stack - Size = 2048 (global stack for ITs) + 512 (extended task)= 2560 = 0x0A00 --> 0x1100 */
+define symbol _STACK_SIZE_              = 0x1F00; /* Common stack - Size = 0x3000 - 0x1100 = 0x1F00  */
+/* ************************************************************************** */
+/* Addressing memories range for S32K MCU                                     */
+/* ************************************************************************** */
+define memory Mem with size = 4G;
+
+/* ************************************************************************** */
+/* Memory region definition                                                   */
+/* ************************************************************************** */
+define region flash_rsvd1_region        = Mem:[from 0x00000000 to 0x000001FF];  /* default location for interrupt vector table */
+/* define region flash_rsvd2_region        = Mem:[from 0x000203C0 to 0x000203FF];  *//* IFR program once field */
+define region flash_rsvd3_region        = Mem:[from 0x00000400 to 0x0000040F];  /* flash configuration area : Critical data */
+
+define region flash_defaultEEP_region   = Mem:[from _FLASH_NVFLEX_START_ to _FLASH_NVFLEX_END_];
+define region flash_calib_region        = Mem:[from _FLASH_CALIB_START_ to _FLASH_CALIB_END_];
+
+
+/*define region flash_code_app_region     = Mem:[from _FLASH_START_ to _FLASH_END_];*/
+define region flash_code_app_region     = Mem:[from _BTLD_FLASH_START_ to _BTLD_FLASH_END_];
+
+/* define region iram_intvec_region        = Mem:[from 0x1FFF8000 to 0x1FFF81FF]; */
+define region iram_data_region          = Mem:[from _RAM_START_ to _RAM_END_];
+define region iram_stack_region         = Mem:[from _STACK_START_ to _STACK_END_];
+define region iram_noinit_region        = Mem:[from _RAM_NOINIT_START_ to _RAM_NOINIT_END_];
+define region iram_flexram_region       = Mem:[from _RAM_NVFLEX_START_ to _RAM_NVFLEX_END_];
+
+
+/* ************************************************************************** */
+/* Initialization strategy                                                    */
+/* ************************************************************************** */
+initialize manually { section .data                     };
+initialize manually { section .mcal_data                };
+initialize manually { section .mcal_data_no_cacheable   };
+initialize manually { section .ramcode                  };
+
+do not initialize   { section .bss,  section .mcal_bss, section .mcal_bss_no_cacheable, section .flash_config, section .noinit , section .nv_ram_data , section .osstack};
+
+/* ************************************************************************** */
+/* Blocks definition                                                          */
+/* ************************************************************************** */
+define block CSTACK    with alignment = 8, size = _STACK_SIZE_  { }; /* CSTACK Name has to be kept since the OS ASR from NXP only knows this name for IAR toolchain */
+define block OSSTACK   with alignment = 8, size = _OS_STACK_SIZE_ { section .osstack }; /* OSSTACK is used for extended tasks and ISR */
+
+define block AppIntVec                          { section .vector };
+define block AppStartup with fixed order        { section .startup } ;
+define block AppCode with fixed order           { section .text, section .mcal_text, section .ostext};
+
+define block AppBSS with fixed order            { section .bss, section .mcal_bss};
+define block AppData with fixed order           { section .data, section .mcal_data};
+define block AppData_Init with fixed order      { section .data_init, section .mcal_data_init};
+define block AppROData with fixed order         { section .rodata,  section .mcal_const_cfg, section .mcal_const};
+define block AppFlashConfig                     { section .flash_config};
+define block AppNoInitData                      { section .noinit};
+define block AppFlsRomCode                      { section .fls_ram_code_text};
+
+define block AppFlexRomData with fixed order    { section .nv_default_data};
+define block AppCalibrationData with fixed order{ section .nv_calib_data};
+define block AppFlexRamData with fixed order    { section .nv_ram_data};
+
+/* ************************************************************************** */
+/* Memory blocks allocation                                                   */
+/* ************************************************************************** */
+
+/* Base location for Interrup vector table */
+place in flash_rsvd1_region     { block AppIntVec };
+
+/* Flash config location : HW defined by S32K144 target */
+place in flash_rsvd3_region     { block AppFlashConfig }; 
+
+/* Application Flash layout refer to Architecture document for more details */
+place in flash_code_app_region  { block AppStartup, block AppCode, block AppROData, block AppData_Init, block AppFlsRomCode};
+
+/* Application RAM layout refer to Architecture document for more details */
+place in iram_data_region       { block AppData, block AppBSS };
+                                  
+/* Application Stack located in SRAM Upper */
+place in iram_stack_region      { block CSTACK, block OSSTACK };
+
+/* NoInit RAM data not erased by startup */
+place in iram_noinit_region     { block AppNoInitData };
+
+/* Flex RAM data used by application during run time initialized by startup sequence */
+place in iram_flexram_region    { block AppFlexRamData };
+
+place in flash_defaultEEP_region { block AppFlexRomData };
+
+place in flash_calib_region     { block AppCalibrationData};
+
+/* ************************************************************************** */
+/* Definition of Symbols for Startup code                                     */
+/* ************************************************************************** */
+
+define exported symbol _Stack_end    = start(iram_stack_region);
+define exported symbol _Stack_start  = start(iram_stack_region) + size(iram_stack_region); 
+
+define exported symbol _PFlash_Start	= _FLASH_START_;
+define exported symbol _PFlash_End		= _FLASH_END_;
+define exported symbol _EEP_Def_Start	= _FLASH_NVFLEX_START_;
+define exported symbol _EEP_Def_End		= _FLASH_NVFLEX_END_;
+define exported symbol _Calib_Start		= _FLASH_CALIB_START_;
+define exported symbol _Calib_End		= _FLASH_CALIB_END_;
+define exported symbol _Ram_Start		= _RAM_START_;
+define exported symbol _Ram_End			= _RAM_END_;
+define exported symbol _NoInitRam_Start = _RAM_NOINIT_START_;
+define exported symbol _NoInitRam_End	= _RAM_NOINIT_END_;
+define exported symbol _FlexRam_Start	= _RAM_NVFLEX_START_;
+define exported symbol _FlexRam_End		= _RAM_NVFLEX_END_;
+
+keep { block AppNoInitData, block OSSTACK , section .nv_ram_data };
+
+/* Begin of the RAM area for applications. Do not edit or delete this comment: it is used by the SysGen for IAR */ 
+/* End of the RAM area for applications. Do not edit or delete this comment: it is used by the SysGen for IAR */
+
+
+
+
+
+

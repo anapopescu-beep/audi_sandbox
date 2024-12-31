@@ -1,0 +1,76 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  
+}
+
+
+on message DevKit_01
+{ 
+  float sigValZ;
+  float sigValY;
+  float sigValX;
+    
+  sigValZ = getSignal(TDK_4g_AZ);  
+  sigValY = getSignal(TDK_4g_AY);  
+  sigValX = getSignal(TDK_4g_AX);
+  
+  @sysvar::TiltAngle::sysX_AxisDisplay = (arctan(sigValX / (sqrt ((sigValY * sigValY) + (sigValZ * sigValZ)) + 0.000001))) * (180/ 3.141592654);
+  
+  @sysvar::TiltAngle::sysY_AxisDisplay = (arctan(sigValY / (sqrt ((sigValX * sigValX) + (sigValZ * sigValZ)) + 0.000001))) * (180/ 3.141592654);
+}
+
+
+
+//Set angle
+on sysvar_update TiltDeviceControlPanel::SetAngleButton_X
+{ 
+  if (@sysvar::TiltDeviceControlPanel::SetAngleButton_X == 1)
+  {  
+    @sysvar::TiltDeviceControlPanel::tiltControlStatus = 1;
+    @sysvar::TiltDeviceControlPanel::TiltDeviceControlTrigger = 1;    
+  }
+}
+
+on sysvar_update TiltDeviceControlPanel::SetAngleButton_Y
+{
+  if (@sysvar::TiltDeviceControlPanel::SetAngleButton_Y == 1)
+  { 
+    @sysvar::TiltDeviceControlPanel::TiltDeviceControlTrigger = 1;
+    @sysvar::TiltDeviceControlPanel::tiltControlStatus = 2;
+  }
+}
+
+//Set axis speed and acceleration
+on sysvar_update TiltDeviceControlPanel::SetSpeedAndAcceButton_X
+{ 
+  if (@sysvar::TiltDeviceControlPanel::SetSpeedAndAcceButton_X == 1)
+  {  
+    @sysvar::TiltDeviceControlPanel::TiltDeviceControlTrigger = 1;
+    @sysvar::TiltDeviceControlPanel::tiltControlStatus = 3;
+  }
+}
+
+on sysvar_update TiltDeviceControlPanel::SetSpeedAndAcceButton_Y
+{ 
+  if (@sysvar::TiltDeviceControlPanel::SetSpeedAndAcceButton_Y == 1)
+  {  
+    @sysvar::TiltDeviceControlPanel::TiltDeviceControlTrigger = 1;
+    @sysvar::TiltDeviceControlPanel::tiltControlStatus = 4;
+  }
+}
+
+//Set Tilt Device back to horizontal position
+on sysvar_update TiltDeviceControlPanel::SetDefaultDevicePositionButton
+{ 
+  if (@sysvar::TiltDeviceControlPanel::SetDefaultDevicePositionButton == 1)
+  {  
+    @sysvar::TiltDeviceControlPanel::TiltDeviceControlTrigger = 1;
+    @sysvar::TiltDeviceControlPanel::tiltControlStatus = 5;
+  }
+}

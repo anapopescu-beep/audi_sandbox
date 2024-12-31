@@ -1,0 +1,162 @@
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.2 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/OsIf/Design/project.pj $
+*/
+/*****************************************************************************
+
+details
+   This module is intended to handle error and protection Os hooks.
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Os_hooks.h"
+#include "Rte_OsIf.h"
+#ifndef QAC
+#include "Os.h"
+#include "Os_config.h"
+#else
+#include "Os_Stubs.h"
+#include "Std_Types.h"
+#include "Platform_Types.h"
+#endif
+#include "common.h"
+#include "MIC_Public.h"
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+* \brief
+*     This service is a callout called when an error hook is available.
+* \inputparam
+*     Name: Error;
+*     Type: StatusType - uint8;
+*     Description: Os error status;
+*     Range: 0..KU8_MAX;
+* \dynamicaspectcaller
+*     Called by OS.  
+* \ddesignrequirement
+*     DSG_OsIf_ErrorHook
+* \archrequirement
+*     ARCH_SW_OsIf_ptrpAsrOsServices_ErrorHook;
+*     ARCH_SW_OsIf_pclRcmServices_ErrorHook;
+*     ARCH_SW_OsIf_pclResetCauseNotification_ErrorHook;
+**/
+void ErrorHook(StatusType Error)
+{
+   Get kernel data;
+   Call RTE report OS error status;
+   Call RTE reset cause notification;
+
+   while (1)
+   {
+      Wait reset because watchdog not triggered;
+   }
+}
+
+/**
+* \brief
+*     This service is a callout called when an protection hook is available.
+* \inputparam
+*     Name: errorID;
+*     Type: StatusType - uint8;
+*     Description: Os error id;
+*     Range:
+*         OS_E_EXCEPTPROT - 14u
+*         OS_E_MEMPROT - 10u;
+* \return
+*     Os action do nothing
+* \dynamicaspectcaller
+*     Called by OS.   
+* \ddesignrequirement
+*     DSG_OsIf_ErrorHook
+* \archrequirement
+*     ARCH_SW_OsIf_ptrpAsrOsServices_ProtectionHook;
+*     ARCH_SW_OsIf_ptrrMicServices;
+*     ARCH_SW_OsIf_pclRcmServices_ProtectionHook;
+*     ARCH_SW_OsIf_pclResetCauseNotification_ProtectionHook;
+**/
+ProtectionReturnType ProtectionHook(StatusType errorID)
+{
+   Get kernel data;
+   Call RTE report OS error status;
+
+   switch(errorID)
+   {
+      /*OS_EC_OS_ERROR_HardFault*/
+      case Hard fault:
+      {
+         Make ECC management for hard fault exception;
+         break;
+      }
+      /*OS_EC_OS_ERROR_BusFault*/ 
+      case Bus fault:
+      {
+         Make ECC management for bus fault exception;
+         break;
+      }
+      default:
+      {
+         Call RTE reset cause notification;
+         break;
+      }
+   }
+
+   return PRO_IGNORE;
+}
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

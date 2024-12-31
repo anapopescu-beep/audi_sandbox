@@ -1,0 +1,378 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  int globalFrameMonitoringEnable = 0;
+  int globalSignalReceivedCorrectly = 1;
+  int globalPassCount = 0;
+  int globalFailCount = 0;
+  
+  int globalUnlockConfirmationCounter_S1 = 0;
+  int globalUnlockConfirmationCounter_S2 = 0;
+  int globalUnlockConfirmationCounter_S3 = 0;
+  int globalUnlockConfirmationCounter_S4 = 0;
+  int globalUnlockConfirmationCounter_S5 = 0;
+  int globalUnlockConfirmationCounter_S6 = 0;
+  
+  int globalUnlockConfirmationLastCounter_S1 = 0;
+  int globalUnlockConfirmationLastCounter_S2 = 0;
+  int globalUnlockConfirmationLastCounter_S3 = 0;
+  int globalUnlockConfirmationLastCounter_S4 = 0;
+  int globalUnlockConfirmationLastCounter_S5 = 0;
+  int globalUnlockConfirmationLastCounter_S6 = 0;
+}
+
+on message DevKit_01
+{
+  int unlockConfirmedStatus_S1 = 1;
+  int unlockConfirmedStatus_S2 = 1;
+  int unlockConfirmedStatus_S3 = 1;
+  int unlockConfirmedStatus_S4 = 1;
+  int unlockConfirmedStatus_S5 = 1;
+  int unlockConfirmedStatus_S6 = 1;
+  
+  int solenoidEnabled_S1 = 1; // solenoid disabled
+  int solenoidEnabled_S2 = 1; // solenoid disabled
+  int solenoidEnabled_S3 = 1; // solenoid disabled
+  int solenoidEnabled_S4 = 1; // solenoid disabled
+  int solenoidEnabled_S5 = 1; // solenoid disabled
+  int solenoidEnabled_S6 = 1; // solenoid disabled
+  
+  if ($DevKit_01::eCS_Solenoid_1_State.raw != 3)
+  {
+    solenoidEnabled_S1 = 0; // solenoid enabled
+  }
+  if ($DevKit_01::eCS_Solenoid_2_State.raw != 3)
+  {
+    solenoidEnabled_S2 = 0; // solenoid enabled
+  }
+  if ($DevKit_01::eCS_Solenoid_3_State.raw != 3)
+  {
+    solenoidEnabled_S3 = 0; // solenoid enabled
+  }
+   if ($DevKit_01::eCS_Solenoid_4_State.raw != 3)
+  {
+    solenoidEnabled_S4 = 0; // solenoid enabled
+  }
+  if ($DevKit_01::eCS_Solenoid_5_State.raw != 3)
+  {
+    solenoidEnabled_S5 = 0; // solenoid enabled
+  }
+  if ($DevKit_01::eCS_Solenoid_6_State.raw != 3)
+  {
+    solenoidEnabled_S6 = 0; // solenoid enabled
+  }
+
+  if(globalFrameMonitoringEnable == 0)
+  {
+// solenoid 1 and 2 handling 
+    if((solenoidEnabled_S1 == 0) && (solenoidEnabled_S2 == 0))
+    {
+      if($Airbag_eCS_01::AB_eCS_Aktuatortest_FA.raw == 2)
+      {
+        // 0h - NOT_DETERMINED
+        // 1h - UNLOCK_CONFIRMED
+        if(($DevKit_01::eCS_UnlockConfirmation_S1.raw == 1) && ($DevKit_01::eCS_UnlockConfirmation_S2.raw == 1))
+        {
+          // behavior is correct
+          unlockConfirmedStatus_S1 = 0;
+          unlockConfirmedStatus_S2 = 0;
+          if(globalUnlockConfirmationLastCounter_S1 < $DevKit_01::eCS_UnlockCounter_S1)
+          {
+            globalUnlockConfirmationCounter_S1 += 1;
+            globalUnlockConfirmationLastCounter_S1 =  $DevKit_01::eCS_UnlockCounter_S1.raw;
+          }
+          if(globalUnlockConfirmationLastCounter_S2 < $DevKit_01::eCS_UnlockCounter_S2)
+          {
+            globalUnlockConfirmationCounter_S2 += 1;
+            globalUnlockConfirmationLastCounter_S2 =  $DevKit_01::eCS_UnlockCounter_S2.raw;
+          }
+        }
+        else 
+        {
+          if($DevKit_01::eCS_UnlockConfirmation_S1.raw == 1)
+          {
+            if(globalUnlockConfirmationLastCounter_S1 < $DevKit_01::eCS_UnlockCounter_S1)
+            {
+              globalUnlockConfirmationCounter_S1 += 1;
+              globalUnlockConfirmationLastCounter_S1 =  $DevKit_01::eCS_UnlockCounter_S1.raw;
+            }
+          }
+          else
+          {
+            unlockConfirmedStatus_S1 = 1;
+          }
+          if($DevKit_01::eCS_UnlockConfirmation_S2.raw == 1)
+          {
+            if(globalUnlockConfirmationLastCounter_S2 < $DevKit_01::eCS_UnlockCounter_S2)
+            {
+              globalUnlockConfirmationCounter_S2 += 1;
+              globalUnlockConfirmationLastCounter_S2 = $DevKit_01::eCS_UnlockCounter_S2.raw;
+            }
+          }
+          else
+          {
+            unlockConfirmedStatus_S2 = 1;
+          }
+        }
+      }
+      else
+      {
+        // behavior is correct
+        unlockConfirmedStatus_S1 = 0;
+        unlockConfirmedStatus_S2 = 0;
+      }
+    }
+    else
+    {
+      // behavior is correct
+      unlockConfirmedStatus_S1 = 0;
+      unlockConfirmedStatus_S2 = 0;
+    }
+      
+// solenoid 3 and 4 handling 
+    if((solenoidEnabled_S3 == 0) && (solenoidEnabled_S4 == 0))
+    {
+      if($Airbag_eCS_01::AB_eCS_Aktuatortest_BF.raw == 2)
+      {
+        // 0h - NOT_DETERMINED
+        // 1h - UNLOCK_CONFIRMED
+        if(($DevKit_01::eCS_UnlockConfirmation_S3.raw == 1) && ($DevKit_01::eCS_UnlockConfirmation_S4.raw == 1))
+        {
+          // behavior is correct
+          unlockConfirmedStatus_S3 = 0;
+          unlockConfirmedStatus_S4 = 0;
+          if(globalUnlockConfirmationLastCounter_S3 < $DevKit_01::eCS_UnlockCounter_S3)
+          {
+            globalUnlockConfirmationCounter_S3 += 1;
+            globalUnlockConfirmationLastCounter_S3 =  $DevKit_01::eCS_UnlockCounter_S3.raw;
+          }
+          if(globalUnlockConfirmationLastCounter_S4 < $DevKit_01::eCS_UnlockCounter_S4)
+          {
+            globalUnlockConfirmationCounter_S4 += 1;
+            globalUnlockConfirmationLastCounter_S4 =  $DevKit_01::eCS_UnlockCounter_S4.raw;
+          }
+        }
+        else 
+        {
+          if($DevKit_01::eCS_UnlockConfirmation_S3.raw == 1)
+          {
+            if(globalUnlockConfirmationLastCounter_S3 < $DevKit_01::eCS_UnlockCounter_S3)
+            {
+              globalUnlockConfirmationCounter_S3 += 1;
+              globalUnlockConfirmationLastCounter_S3 =  $DevKit_01::eCS_UnlockCounter_S3.raw;
+            }
+          }
+          else
+          {
+            unlockConfirmedStatus_S3 = 1;
+          }
+          if($DevKit_01::eCS_UnlockConfirmation_S4.raw == 1)
+          {
+            if(globalUnlockConfirmationLastCounter_S4 < $DevKit_01::eCS_UnlockCounter_S4)
+            {
+              globalUnlockConfirmationCounter_S4 += 1;
+              globalUnlockConfirmationLastCounter_S4 =  $DevKit_01::eCS_UnlockCounter_S4.raw;
+            }
+          }
+          else
+          {
+            unlockConfirmedStatus_S4 = 1;
+          }
+        }
+      }
+      else
+      {
+        // behavior is correct
+        unlockConfirmedStatus_S3 = 0;
+        unlockConfirmedStatus_S4 = 0;
+      }
+    }
+    else
+    {
+      // behavior is correct
+      unlockConfirmedStatus_S3 = 0;
+      unlockConfirmedStatus_S4 = 0;
+    }
+      
+// solenoid 5 handling 
+    if(solenoidEnabled_S5 == 0)
+    {
+      if($Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_FA.raw == 2)      
+      {
+        // 0h - NOT_DETERMINED
+        // 1h - UNLOCK_CONFIRMED
+        if($DevKit_01::eCS_UnlockConfirmation_S5.raw == 1)
+        {
+          // behavior is correct
+          unlockConfirmedStatus_S5 = 0; 
+          if(globalUnlockConfirmationLastCounter_S5 < $DevKit_01::eCS_UnlockCounter_S5.raw)
+          {
+            globalUnlockConfirmationCounter_S5 += 1;
+            globalUnlockConfirmationLastCounter_S5 = $DevKit_01::eCS_UnlockCounter_S5.raw;
+          }
+        }
+        else
+        {
+          unlockConfirmedStatus_S5 = 1; // test step failed
+        }
+      }
+      else
+      {
+        // behavior is correct
+        unlockConfirmedStatus_S5 = 0; 
+      }   
+    }
+    else
+    {
+      // behavior is correct
+      unlockConfirmedStatus_S5 = 0; 
+    }   
+
+// solenoid 6 handling 
+    if(solenoidEnabled_S6 == 0)
+    {
+      if($Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_BF.raw == 2)
+      {
+        // 0h - NOT_DETERMINED
+        // 1h - UNLOCK_CONFIRMED
+        if($DevKit_01::eCS_UnlockConfirmation_S6.raw == 1)
+        {
+          // behavior is correct
+          unlockConfirmedStatus_S6 = 0; // test step passed
+          if(globalUnlockConfirmationLastCounter_S6 < $DevKit_01::eCS_UnlockCounter_S6)
+          {
+            globalUnlockConfirmationCounter_S6 += 1;
+            globalUnlockConfirmationLastCounter_S6 = $DevKit_01::eCS_UnlockCounter_S6.raw;
+          }
+        }
+        else
+        {
+          unlockConfirmedStatus_S6 = 1; // test step failed
+        }
+      }
+      else
+      {
+          // behavior is correct
+          unlockConfirmedStatus_S6 = 0;  // test step passed
+      }
+    }
+    else
+    {
+        // behavior is correct
+        unlockConfirmedStatus_S6 = 0;  // test step passed
+    }
+      
+    write("%d,%d,%d,%d,%d,%d",unlockConfirmedStatus_S1,unlockConfirmedStatus_S2,unlockConfirmedStatus_S3,unlockConfirmedStatus_S4,unlockConfirmedStatus_S5,unlockConfirmedStatus_S6);
+    if ((unlockConfirmedStatus_S1 == 0) &&
+        (unlockConfirmedStatus_S2 == 0) &&
+        (unlockConfirmedStatus_S3 == 0) &&
+        (unlockConfirmedStatus_S4 == 0) &&
+        (unlockConfirmedStatus_S5 == 0) &&
+        (unlockConfirmedStatus_S6 == 0))
+    {
+      globalSignalReceivedCorrectly = 0; // test step passed
+    }
+    else
+    {
+      globalSignalReceivedCorrectly = 1; // test step failed
+    }
+
+  }
+}
+
+void MainTest ()
+{
+
+  // 0h - NO_ACTION
+  // 1h - LOCKED
+  // 2h - UNLOCKED
+  $Airbag_eCS_01::AB_eCS_Aktuatortest_BF = 0;
+  $Airbag_eCS_01::AB_eCS_Aktuatortest_FA = 0;
+  $Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_BF = 0;
+  $Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_FA = 0;
+
+  // issue lock/unlock commands and check if unlock was correctly determined
+  LockUnlockTest();
+
+  // 0h - NO_ACTION
+  // 1h - LOCKED
+  // 2h - UNLOCKED
+  $Airbag_eCS_01::AB_eCS_Aktuatortest_BF = 0;
+  $Airbag_eCS_01::AB_eCS_Aktuatortest_FA = 0;
+  $Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_BF = 0;
+  $Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_FA = 0;
+}
+
+testcase LockUnlockTest()
+{
+  int loopIdx = 0;
+  char printbuf1[500];
+  char printbuf2[500];
+
+  for(loopIdx = 0; loopIdx < 1000; loopIdx++)
+  {
+      globalFrameMonitoringEnable = 1; // stop monitoring
+
+      $Airbag_eCS_01::AB_eCS_Aktuatortest_BF = 1;
+      $Airbag_eCS_01::AB_eCS_Aktuatortest_FA = 1;
+      $Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_BF = 1;
+      $Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_FA = 1;
+    
+      // wait 1750ms in LOCK state
+      TestWaitForTimeout(750);
+    
+      globalUnlockConfirmationLastCounter_S1 = $DevKit_01::eCS_UnlockCounter_S1.raw;
+      globalUnlockConfirmationLastCounter_S2 = $DevKit_01::eCS_UnlockCounter_S2.raw;
+      globalUnlockConfirmationLastCounter_S3 = $DevKit_01::eCS_UnlockCounter_S3.raw;
+      globalUnlockConfirmationLastCounter_S4 = $DevKit_01::eCS_UnlockCounter_S4.raw;
+      globalUnlockConfirmationLastCounter_S5 = $DevKit_01::eCS_UnlockCounter_S5.raw;
+      globalUnlockConfirmationLastCounter_S6 = $DevKit_01::eCS_UnlockCounter_S6.raw;
+      
+      $Airbag_eCS_01::AB_eCS_Aktuatortest_BF = 2;
+      $Airbag_eCS_01::AB_eCS_Aktuatortest_FA = 2;
+      $Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_BF = 2;
+      $Airbag_eCS_01::AB_eCS_Aktuatortest_Reihe2_FA = 2;
+
+      // wait for frame evaluation
+      TestWaitForTimeout(250);
+      
+      globalFrameMonitoringEnable = 0; // enable conditions for checking if the DevKit_01 frame was received on the bus  
+      globalSignalReceivedCorrectly = 1; // initialize as failed
+    
+      // wait for frame evaluation
+      TestWaitForTimeout(500);
+    
+      if(globalSignalReceivedCorrectly != 0)
+      {
+        // keep count of how many times the test step failed
+        globalFailCount+=1;
+        
+        // prepare test step text
+        snprintf(printbuf1,elcount(printbuf1),"Unlock not determined (Passed: %d/Failed: %d/Total: %d)",globalPassCount,globalFailCount,(loopIdx+1));
+        
+        // unlock was not confirmed 
+        testStepFail("STEP", printbuf1);
+      }
+      else
+      {
+        // keep count of how many times the test step passed
+        globalPassCount+=1;
+        
+        // prepare test step text
+        snprintf(printbuf1,elcount(printbuf1),"Unlock confirmed (Passed: %d/Failed: %d/Total: %d)",globalPassCount,globalFailCount,(loopIdx+1));
+        
+        // unlock was confirmed
+        testStep("STEP", printbuf1);
+      }
+      
+      snprintf(printbuf2,elcount(printbuf2),"(Passed: S1 %d, S2 %d, S3 %d, S4 %d, S5 %d, S6 %d)", globalUnlockConfirmationCounter_S1, globalUnlockConfirmationCounter_S2, globalUnlockConfirmationCounter_S3, globalUnlockConfirmationCounter_S4, globalUnlockConfirmationCounter_S5, globalUnlockConfirmationCounter_S6);
+      
+      // log individual status
+      testStep("STEP", printbuf2);
+  }
+}

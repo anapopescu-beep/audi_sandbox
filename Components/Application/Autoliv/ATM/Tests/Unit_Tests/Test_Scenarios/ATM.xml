@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<documentlist>
+	<exportinfo
+	    user="alexandru.nastase"
+	    date="2023-07-18 10:57:30+0300">
+	</exportinfo>
+	<requirementdocument
+	    name="ATM"
+	    description=" "
+	    alias=" "
+	    version="1.0">
+		<attributelist>
+			<attribute
+			    name="Content Type"
+			    description="Controls the formatting of requirements, possible values are: PLAIN (the default) and HTML."
+			    type="STRING"
+			    value="PLAIN"
+			    flags="1"
+			    isVersioned="false"/>
+			<attribute
+			    name="Enable Evaluation"
+			    description="Enables/disables the evaluation of requirements from the document."
+			    type="BOOLEAN"
+			    value="true"
+			    isVersioned="false"/>
+			<attribute
+			    name="Enable Suspicious Calculation"
+			    description="Enables/disables the consideration of the requirements from the document for the caculation of the suspicious state of elements that refer to those requirements."
+			    type="BOOLEAN"
+			    value="true"
+			    isVersioned="false"/>
+			<attribute
+			    name="Show Text Section IDs"
+			    description="Show the IDs of text sections within the GUI and the test reports."
+			    type="BOOLEAN"
+			    value="false"
+			    isVersioned="false"/>
+		</attributelist>
+		<requirement
+		    id="1"
+		    shortdescription="DSG_ATM_Init."
+		    text="The function ATM_Init is the memory initialization function for the ATM module. The initialization value of the status of each auto test is KU8_ATM_TEST_NOT_DECIDED. The state and cycle counters of the state machine are initialized to zero."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="2"
+		    shortdescription="DSG_atm_SetDemEvent."
+		    text="Update the associated event status accordingly with Autotest result."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="3"
+		    shortdescription="DSG_atm_executeAutoTest."
+		    text="Function used to checks if an autotest execution is compliant with the ECU mode (according to its parameters), executes it (if compliant), or ignore it (if not compliant), update the AEC status according to the test result (if executed)."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="4"
+		    shortdescription="DSG_atm_isAutoTestEnabled."
+		    text="Function used to check if an autotest is enabled."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="5"
+		    shortdescription="DSG_atm_PlayOneShotTests."
+		    text="Function used to run one shot tests from startup tests sequential list."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="6"
+		    shortdescription="DSG_atm_PlayCyclicTests."
+		    text="Function used to run cyclic tests. Running Auto test phase:&#10;Execute auto test only if enabled If status = OK, then go to next startup auto test at next ATM Main time slot For critical auto tests:&#10;If status = NOK and if ONE_SHOT_ABORT, then startup phase is frozen If status = NOK and if ONE_SHOT_RETRY, then retry auto test execution until OK at next ATM Main time slot For NOT critical auto tests:&#10;If status = NOK and if ONE_SHOT, then go to next startup auto test at next ATM Main time slot."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="7"
+		    shortdescription="DSG_ATM_runMainFunction."
+		    text="The function ATM_MainFunction is the main entry point executed periodically by the Scheduler or OS."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="8"
+		    shortdescription="DSG_ATM_runGetTestResult"
+		    text="The function ATM_runGetTestResult allows any module to get the test result of any auto test, identified by Auto test ID to get the last test result executed by ATM independently of AEC status."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="9"
+		    shortdescription="DSG_ATM_runGetCriticalAutoTestsReachedFlag"
+		    text="Function used to get the auto test reached flag."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="10"
+		    shortdescription="DSG_atm_cbk_CheckAdc"
+		    text="Callback of Rte_Call_pclCheckAdc autotest to check ADC."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="11"
+		    shortdescription="DSG_atm_cbk_CheckAdcCalib"
+		    text="Callback of Rte_Call_pclCheckAdcCalib autotest to check ADC calibration."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="12"
+		    shortdescription="DSG_atm_cbk_RunResetCause_RCM_Autotest"
+		    text="Callback of Rte_Call_pclRunResetCause autotest to check if an unexpected reset cause has been detected."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="13"
+		    shortdescription="DSG_atm_cbk_RunEepromMemoryNotProgrammed_NVMIF_Autotest"
+		    text="Callback of Rte_Call_pclRunEepromMemoryNotProgrammed autotest to check if the EEPROM write was performed correctly."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="14"
+		    shortdescription="DSG_atm_cbk_RunEepromMemoryCorruption_MIC_Autotest"
+		    text="Callback of automatic test Rte_Call_pclRunEepromMemoryCorruption to check if an unexpected EEPROM error occurred during runtime execution."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="15"
+		    shortdescription="DSG_atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest"
+		    text="Callback of Rte_Call_pclRunPFlashMemoryCorruption autotest to check if an unexpected PFlash error occurred during runtime execution."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="16"
+		    shortdescription="DSG_atm_cbk_RunRamMemoryCorruption_MIC_Autotest"
+		    text="Callback of Rte_Call_pclRunRamMemoryCorruption AutoTest to check if an unexpected RAM error occurred during runtime execution."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="17"
+		    shortdescription="DSG_atm_cbk_runOverTemperature"
+		    text="Callback of Rte_Call_pclEcuOverTemperature AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="18"
+		    shortdescription="DSG_atm_cbk_runExtWDTest"
+		    text="Callback of Rte_Call_pclRunExtWDTest AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="19"
+		    shortdescription="DSG_atm_cbk_CheckPowerSupplyUV"
+		    text="Callback of Rte_Call_pclCheckPowerSupplyUV AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="20"
+		    shortdescription="DSG_atm_cbk_CheckPowerSupplyOV"
+		    text="Callback of Rte_Call_pclCheckPowerSupplyOV AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="21"
+		    shortdescription="DSG_atm_cbk_CheckActuatorStuck"
+		    text="Callback of Rte_Call_pclCheckActuatorState AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="22"
+		    shortdescription="DSG_atm_cbk_CheckShortToVBAT"
+		    text="Callback of Rte_Call_pclCheckShortToVBAT_AutotestCallback_Solenoid AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="23"
+		    shortdescription="DSG_atm_cbk_CheckShortToGND"
+		    text="Callback of Rte_Call_pclCheckShortToGND_AutotestCallback_Solenoid AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="24"
+		    shortdescription="DSG_atm_cbk_CheckOpenCircuit"
+		    text="Callback of Rte_Call_pclCheckOpenCircuit_AutotestCallback_Solenoid AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="25"
+		    shortdescription="DSG_atm_cbk_CheckMcuSelfTest"
+		    text="Callback of Mcu selftest AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="26"
+		    shortdescription="DSG_atm_cbk_CheckAccAlarmbPin"
+		    text="Callback of Rte_Call_pclCheckAccAlarmbPin_AutotestCallback AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="27"
+		    shortdescription="DSG_atm_cbk_CheckSbcStatusInfo"
+		    text="Callback of Rte_Call_pclCheckSbcStatusInfo_AutotestCallback AutoTest."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="28"
+		    shortdescription="DSG_atm_cbk_CheckBatteryUnstable"
+		    text="Dummy auto-test used to delay initialization if KL30 &lt; specified threshold."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="29"
+		    shortdescription="DSG_atm_cbk_CheckPowerStageFailiure"
+		    text="Auto-test callback for checking the power stage."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="30"
+		    shortdescription="DSG_atm_cbk_CheckSolenoidOvervoltage"
+		    text="Auto-test for checking overvoltage condition voltage on each solenoid."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+		<requirement
+		    id="31"
+		    shortdescription="DSG_atm_cbk_CheckMcuCrcRegisterStatus"
+		    text="Auto-test callback for checking the MCU CRC registers."
+		    priority="UNDEFINED"
+		    version="1.0"
+		    creationuser="alexandru.nastase"
+		    creationdate="2023-07-10 15:35:35+0300"
+		    modificationuser="alexandru.nastase"
+		    modificationdate="2023-07-10 15:35:35+0300">
+			<attributelist>
+			</attributelist>
+		</requirement>
+	</requirementdocument>
+</documentlist>

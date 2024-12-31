@@ -1,0 +1,45 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromLowPwrBusAvailable
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromLowPwrBusAvailable: The BswM_OnRunFromLowPwrBusAvailable runnable shall be called by the Autosar BswM in case of: - The current state of ECU is LOW POWER AND a Passive wakeup is detected {CAN Bus activity}
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromLowPwrBusAvailable
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_OnLowPwrFromPostRun in order to go in BswM_Action_BswMAction_BswM_RunStateFromLowPwr_PassiveWake function 
+		Expected result:  BP was set
+
+	Step 6: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 7: Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromLowPwr_PassiveWake in order to call BswM_OnPostRunFromRun function 
+		Expected result:  BP was set
+
+	Step 8: Set a BP in function BswM_OnRunFromLowPwrBusAvailable in order to check if The current state of ECU is LOW POWER AND a Passive wakeup was detected {CAN Bus activity} 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromLowPwr_PassiveWake in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 10: Return ECU to default values

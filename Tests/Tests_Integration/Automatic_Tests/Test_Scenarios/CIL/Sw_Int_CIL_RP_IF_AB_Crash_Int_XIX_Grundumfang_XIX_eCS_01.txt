@@ -1,0 +1,35 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_CIL_RP_IF_AB_Crash_Int_XIX_Grundumfang_XIX_eCS, ARCH_SW_CIL_psrCrashStatus
+ARCH_SW_CIL_RP_IF_AB_Crash_Int_XIX_Grundumfang_XIX_eCS: Interface used to receive the crash status from the CAN bus
+ARCH_SW_CIL_psrCrashStatus: Interface used to transmit the crash status to the rest of the Application - The solenoids will be locked if a crash situation has been detected(any value other than NO_CRASH)
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_CIL_RP_IF_AB_Crash_Int_XIX_Grundumfang_XIX_eCS, ARCH_SW_CIL_psrCrashStatus
+
+	Step 2: Set a breakpoint in CIL_runCANToAppli at the RTE Read of Crash Status sent via CAN message 
+		Expected result:  BP reached.
+
+	Step 3: Set signal AB_Crash_Int to value CRASH_INTENSITY_1 
+		Expected result:  Signal set to 1.
+
+	Step 4: Set a breakpoint in CIL_runCANToAppli at the RTE Write of Crash Status 
+		Expected result:  BP reached.
+
+	Step 5: Set a breakpoint in CIL_runAppliToCAN in order to transmit the crash status to the rest of the Applications 
+		Expected result:  BP reached.
+
+Postcondition
+
+	Step 6: Return ECU to default values

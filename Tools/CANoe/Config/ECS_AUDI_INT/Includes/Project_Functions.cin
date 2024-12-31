@@ -1,0 +1,52 @@
+/*@!Encoding:1252*/
+/*File to gather project specific functions and variables*/
+variables
+{
+   char cLogPathAndName[200] ="C:\\\\Projects\\\\eCS_Platform_Git\\\\Tests\\\\Tests_Integration\\\\Automatic_Tests\\\\Test_Logs\\\\";
+   char cFullLogPath[1000];
+   char cLogName[500];
+}
+
+
+/// <Logging>
+// Generates the full log path including name for .asc log.
+void SetLoggingFile(char cFullLogPath[], char cLogName[])
+{
+  stack char cTimeBuffer[64];
+  
+  strncpy(cFullLogPath, "", 1);
+  
+  getLocalTimeString(cTimeBuffer);
+  str_replace(cTimeBuffer, " ", "_");
+  str_replace(cTimeBuffer, ":", "_");
+  str_replace(cTimeBuffer, "__", "_");
+
+  strncat(cLogName, "_", elcount(cLogName));
+  strncat(cLogName, cTimeBuffer, elcount(cLogName));
+  strncat(cLogName, ".asc", elcount(cLogName));
+  
+  strncat(cFullLogPath, cLogPathAndName, elcount(cFullLogPath));
+  strncat(cFullLogPath, cLogName, elcount(cFullLogPath));
+}
+
+/// <Logging>
+// Starts an .ASC log with the {cInputLogName}_{LocalTimeString}.asc
+// Log location is taken from "cLogPathAndName" variable in "Testbench_configuration.cin".
+// The log name is written after the requirements table with a hyperlink to the log file.
+// Example output log name: "{cInputLogName}_Thu_Nov_18_13_32_49_2021.asc"
+void StartLoggingASC(char cInputLogName[])
+{ 
+  strncpy(cLogName, cInputLogName, (elcount(cInputLogName)));
+
+  SetLoggingFile(cFullLogPath, cLogName);
+  setLogFileName("TestLoggingBlock", cFullLogPath);
+  startLogging("TestLoggingBlock");
+  
+  TestReportAddExtendedInfo("html", "<A HREF=\'%s'>Log file: %s </A>", cFullLogPath, cLogName);
+}
+
+/// <Logging>
+void StopLoggingASC()
+{
+  stopLogging("TestLoggingBlock");
+}

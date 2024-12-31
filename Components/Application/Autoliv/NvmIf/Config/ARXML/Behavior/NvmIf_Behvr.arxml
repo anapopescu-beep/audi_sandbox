@@ -1,0 +1,1331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="59783be8-c0ad-4f35-baa5-be5f2f1128a6">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="1ccde172-df8e-46c7-b881-5bad228f61a0">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="4ab4b27d-7ea3-40cc-98a7-14a3f9f070fc">
+              <SHORT-NAME>NvmIf</SHORT-NAME>
+              <ELEMENTS>
+                <ECU-ABSTRACTION-SW-COMPONENT-TYPE T="2018-04-26T11:21:28+02:00" UUID="c406035c-dcb7-4660-bf8b-b1a59db5803a">
+                  <SHORT-NAME>NvmIf</SHORT-NAME>
+                  <CATEGORY>BSW_Memory_Services</CATEGORY>
+                  <INTERNAL-BEHAVIORS>
+                    <SWC-INTERNAL-BEHAVIOR T="2022-08-27T12:46:55+03:00" UUID="915b73bc-e819-42e3-a448-14e6048ace82">
+                      <SHORT-NAME>NvmIf</SHORT-NAME>
+                      <CONSTANT-VALUE-MAPPING-REFS>
+                        <CONSTANT-VALUE-MAPPING-REF DEST="CONSTANT-SPECIFICATION-MAPPING-SET">/AUTOLIV/NvmIf_DataDictionnary/ConstantsMappingSet/ConstantsMappingSet_NvmIf</CONSTANT-VALUE-MAPPING-REF>
+                      </CONSTANT-VALUE-MAPPING-REFS>
+                      <DATA-TYPE-MAPPING-REFS>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/ATM_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_ATM</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/NvmIf_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_NvmIf</DATA-TYPE-MAPPING-REF>
+                      </DATA-TYPE-MAPPING-REFS>
+                      <EVENTS>
+                        <OPERATION-INVOKED-EVENT T="2017-03-23T13:18:51+01:00" UUID="970831ca-3b8e-4339-b383-366738b1b953">
+                          <SHORT-NAME>oie_pseNvmIfServices_GetBlockStatus</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf/NvmIf_GetNvmBlockStatus</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2017-03-23T13:19:40+01:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pseNvmIfServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/GetNvmBlockStatus</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2018-06-14T15:00:59+02:00" UUID="ba32bd51-39f8-45a1-8e0c-5dd30e10a760">
+                          <SHORT-NAME>oie_pseNvmIfServices_GetNvmBlockLength</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf/NvmIf_GetNvmBlockLength</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2018-06-14T15:00:59+02:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pseNvmIfServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/GetNvmBlockLength</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT UUID="2c5097e1-13c4-4502-a4b1-c24872826172">
+                          <SHORT-NAME>oie_pseNvmIfServices_NvmIf_GetRamAddressByBlockId</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf/NvmIf_GetRamAddressByBlockId</START-ON-EVENT-REF>
+                          <OPERATION-IREF>
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pseNvmIfServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/NvmIf_GetRamAddressByBlockId</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2022-08-27T12:46:07+03:00" UUID="bee1fc4d-4546-42cc-96b4-a5e4bde47395">
+                          <SHORT-NAME>oie_pseNvmIfServices_ReadBlockByAddress</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf/NvmIf_ReadBlockByAddress</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2022-08-27T12:46:07+03:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pseNvmIfServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/ReadBlockByAddress</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT UUID="8839a225-01ae-4c61-bb4a-592adddef80f">
+                          <SHORT-NAME>oie_pseNvmIfServices_RestorePRAMBlockDefaults</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf/NvmIf_RestorePRAMBlockDefaults</START-ON-EVENT-REF>
+                          <OPERATION-IREF>
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pseNvmIfServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/RestorePRAMBlockDefaults</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2022-08-27T12:46:31+03:00" UUID="12aa939e-5455-417b-920a-6a7cf3c3fe05">
+                          <SHORT-NAME>oie_pseNvmIfServices_SetRamBlockStatus</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf/NvmIf_SetRamBlockStatus</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2022-08-27T12:46:31+03:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pseNvmIfServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/SetRamBlockStatus</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2022-08-27T12:46:42+03:00" UUID="155e703d-42d7-4de9-bcad-ce0c5b40cc85">
+                          <SHORT-NAME>oie_pseNvmIfServices_WriteBlockByAddress</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf/NvmIf_WriteBlockByAddress</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2022-08-27T12:46:42+03:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pseNvmIfServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/WriteBlockByAddress</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2022-08-27T12:46:55+03:00" UUID="24d00521-9c7a-402b-8ee2-a8d32ab4e75d">
+                          <SHORT-NAME>oie_pseNvmIfServices_WriteNvmBlock</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf/NvmIf_WriteNvmBlock</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2022-08-27T12:46:55+03:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pseNvmIfServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/NvmIf_DataDictionnary/ClientServerInterfaces/icsNvmIfServices/WriteNvmBlock</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2021-06-14T01:20:42+02:00" UUID="72ab9e12-9714-4f79-82c5-fa6c82ceb90f">
+                          <SHORT-NAME>oie_pseRunEepromMemoryNotProgrammed_AutotestCallback</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf/NvmIf_Autotest_RunEepromMemoryNotProgrammed</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2021-06-14T01:20:42+02:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pseRunEepromMemoryNotProgrammed</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                      </EVENTS>
+                      <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                      <RUNNABLES>
+                        <RUNNABLE-ENTITY T="2023-02-28T17:01:29+02:00" UUID="DCE:bee8af85-a783-4527-83f9-edc85b5dbd4e">
+                          <SHORT-NAME>NvmIf_Autotest_RunEepromMemoryNotProgrammed</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>NvmIf_Autotest_RunEepromMemoryNotProgrammed</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2018-06-15T09:51:28+02:00" UUID="DCE:39516348-ace4-4fac-8045-3397b6c9e060">
+                          <SHORT-NAME>NvmIf_GetNvmBlockLength</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>NvmIf_GetNvmBlockLength</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-04-28T08:42:51+03:00" UUID="e203c2a1-5c70-4e80-8437-b951514c4e64">
+                          <SHORT-NAME>NvmIf_GetNvmBlockStatus</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>true</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="a7252e41-e813-4860-9ff0-297f95942123">
+                              <SHORT-NAME>scp_GetErrorStatus</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AeeTraceabilityNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="14f1091c-8620-4035-8b30-7eb55d4fb4e6">
+                              <SHORT-NAME>scp_GetErrorStatus1</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AssemblySerialNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="bf5282e0-3b5a-4ae9-875e-86b439d6238a">
+                              <SHORT-NAME>scp_GetErrorStatus10</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsSteps</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="2c849a78-5732-425f-9e76-e75681cc031a">
+                              <SHORT-NAME>scp_GetErrorStatus11</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsVariant</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="1d709ec7-9b37-4fa1-ba9d-075cecd65014">
+                              <SHORT-NAME>scp_GetErrorStatus12</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_HwPartNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="d05b2660-48c1-4526-8e55-316dd6f16f07">
+                              <SHORT-NAME>scp_GetErrorStatus13</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_LockUnlockECU</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="d70710dd-4f80-470c-9f2b-10bae930dcf6">
+                              <SHORT-NAME>scp_GetErrorStatus14</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_AutotestEnableParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="0e5014b5-a547-44f5-baff-7fd33c982c2b">
+                              <SHORT-NAME>scp_GetErrorStatus15</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_AutotestParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="cbb903f3-b4a5-4adc-9743-3e017dea2dd9">
+                              <SHORT-NAME>scp_GetErrorStatus16</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_DemDefault</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="f37d94b8-7708-40bc-ba69-a6fd8895cac5">
+                              <SHORT-NAME>scp_GetErrorStatus17</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_EccCounters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="23bb70dd-5798-488d-9f0d-94808eb3d0bf">
+                              <SHORT-NAME>scp_GetErrorStatus18</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_MeasFrameCfg</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="d42902ca-c61a-43f6-9da4-313b37ce9876">
+                              <SHORT-NAME>scp_GetErrorStatus19</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_ProcessMode</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="3647f9d7-ea37-4af4-91dc-0fa9a65f287f">
+                              <SHORT-NAME>scp_GetErrorStatus2</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsAccLowPass</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="3bbd5240-ca8f-4b1c-9a15-f2d567202a57">
+                              <SHORT-NAME>scp_GetErrorStatus20</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_WarmResetCounters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-31T09:22:55+03:00" UUID="94492bf7-dcc8-4bfc-b766-b118ef3c028c">
+                              <SHORT-NAME>scp_GetErrorStatus21</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_EcuTempCalibration</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="bb6ec756-ea32-42fd-87a9-d06c9df79e24">
+                              <SHORT-NAME>scp_GetErrorStatus22</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AlvNvmVersion</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="4609576e-0dc6-4e4c-bae3-10b83ce20407">
+                              <SHORT-NAME>scp_GetErrorStatus23</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AccAngleCalibration</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="f416066b-d14b-4c9d-a362-24030c1a824f">
+                              <SHORT-NAME>scp_GetErrorStatus24</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsSensitivityOPT</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="709b59fd-f9f7-492d-9645-48b69983802e">
+                              <SHORT-NAME>scp_GetErrorStatus25</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EolCounters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="37ae280d-03ee-4399-a684-78a908a99b5a">
+                              <SHORT-NAME>scp_GetErrorStatus26</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_PhysicalMeasurements</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="6635c749-9b6d-43ac-9aa3-aee5e32d0add">
+                              <SHORT-NAME>scp_GetErrorStatus27</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_SolenoidParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="b2f5690d-683e-4f0c-868e-3147b8fbf137">
+                              <SHORT-NAME>scp_GetErrorStatus28</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcuStateTimingParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="7d85f888-06a0-4a3d-9834-aaea45d23c1b">
+                              <SHORT-NAME>scp_GetErrorStatus29</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemSparePartNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="0addd7e6-9793-46fe-bc38-0794c4fad0e1">
+                              <SHORT-NAME>scp_GetErrorStatus3</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsAccOffsets</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="6838fb27-a87f-4664-8666-df9191111230">
+                              <SHORT-NAME>scp_GetErrorStatus30</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemHardwareNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="630ed9ff-2cdc-4457-b3ca-21c4b309838b">
+                              <SHORT-NAME>scp_GetErrorStatus31</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemSystemName</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="5a8b4e78-15f2-4b51-8b89-ae4729a8763a">
+                              <SHORT-NAME>scp_GetErrorStatus32</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemFlashBootloader</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="99b681d5-24a9-4171-9353-4d67bed0f7db">
+                              <SHORT-NAME>scp_GetErrorStatus33</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemOdxIdentifier</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="461e86bf-4c79-4290-8f6c-162a8ebd5616">
+                              <SHORT-NAME>scp_GetErrorStatus34</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemOdxVersion</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="a24962f0-40ab-4cd0-a432-344025acf78f">
+                              <SHORT-NAME>scp_GetErrorStatus35</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemEcuSerialNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="eca238ec-1f6b-4130-b01c-5be86a9d6435">
+                              <SHORT-NAME>scp_GetErrorStatus36</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemLogicalBlockVersion</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="95abf716-2d5d-4dde-8290-372c635abeae">
+                              <SHORT-NAME>scp_GetErrorStatus37</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemHardwareVersionNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="44ecfce5-6402-4e08-a0a8-ff94bb0eb538">
+                              <SHORT-NAME>scp_GetErrorStatus38</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemAppSwVersionNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="d1c9edff-6854-4199-8508-847b298e5f47">
+                              <SHORT-NAME>scp_GetErrorStatus4</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsAlgoOutputDelay</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="850e874e-3dfe-402b-95c5-f5dacd6cca13">
+                              <SHORT-NAME>scp_GetErrorStatus5</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsParameters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-09-19T09:24:09+03:00" UUID="aaad1c6d-f19c-4d22-8dff-66105d9be4b8">
+                              <SHORT-NAME>scp_GetErrorStatus6</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_MeasFrameRamCfg</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:14:30+03:00" UUID="8c460d63-a2ca-4200-9c04-2d480571b473">
+                              <SHORT-NAME>scp_GetErrorStatus7</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsProfiles</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="46caadd1-1da6-4dce-8f20-58acc6fb4d80">
+                              <SHORT-NAME>scp_GetErrorStatus8</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_SBSLastState</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:42:51+03:00" UUID="72397b5c-bee6-4d5b-bcb1-6a120eec2773">
+                              <SHORT-NAME>scp_GetErrorStatus9</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsSensitivityLUT</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>NvmIf_GetNvmBlockStatus</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:95fe12d6-56bb-492c-93dd-d74d7ea897ed">
+                          <SHORT-NAME>NvmIf_GetRamAddressByBlockId</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>NvmIf_GetRamAddressByBlockId</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2022-08-27T12:39:10+03:00" UUID="DCE:c320821e-6732-42c6-ae3a-a59569ca2195">
+                          <SHORT-NAME>NvmIf_ReadBlockByAddress</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>NvmIf_ReadBlockByAddress</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:1653665b-fa89-44f4-92e3-92fb007b71ff">
+                          <SHORT-NAME>NvmIf_RestorePRAMBlockDefaults</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>NvmIf_RestorePRAMBlockDefaults</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-04-28T08:43:10+03:00" UUID="DCE:fdaa5718-f98c-44ac-ba10-6aeb8cd311ec">
+                          <SHORT-NAME>NvmIf_SetRamBlockStatus</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="490a79c0-dc5e-49fa-b90d-f757dc39c62c">
+                              <SHORT-NAME>scp_SetRamBlockStatus</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AeeTraceabilityNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="ffaaa638-1581-4c4d-a8b5-17259080f551">
+                              <SHORT-NAME>scp_SetRamBlockStatus1</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AssemblySerialNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="d9e0e4fa-0a5a-4a6c-b94e-6055d369c564">
+                              <SHORT-NAME>scp_SetRamBlockStatus10</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsSteps</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="64595d57-34ae-49d7-b52a-697d735a202a">
+                              <SHORT-NAME>scp_SetRamBlockStatus11</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsVariant</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="ae762f6f-ff28-408a-9d3c-822acec123a2">
+                              <SHORT-NAME>scp_SetRamBlockStatus12</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_HwPartNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="bd08ddf4-965f-4e73-9b9e-9f3dbecc87a1">
+                              <SHORT-NAME>scp_SetRamBlockStatus13</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_LockUnlockECU</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="7a237205-fe67-42c1-9a28-78d23711cbe7">
+                              <SHORT-NAME>scp_SetRamBlockStatus14</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_AutotestEnableParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="987ff79b-a4d1-475b-8a01-fb3ef1b616fe">
+                              <SHORT-NAME>scp_SetRamBlockStatus15</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_AutotestParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="cb125ed6-21b4-47e0-9a5d-7a7886f379d9">
+                              <SHORT-NAME>scp_SetRamBlockStatus16</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_DemDefault</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="f5963976-0eb8-4ad7-8ea5-4d8633d78a31">
+                              <SHORT-NAME>scp_SetRamBlockStatus17</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_EccCounters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="978e706e-8dce-4d39-924e-b3ed31b5b690">
+                              <SHORT-NAME>scp_SetRamBlockStatus18</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_MeasFrameCfg</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="2e86f19d-c4b0-434a-bf6c-ba17d020769a">
+                              <SHORT-NAME>scp_SetRamBlockStatus19</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_ProcessMode</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="564bf704-cd90-4070-bce4-fc064748a91b">
+                              <SHORT-NAME>scp_SetRamBlockStatus2</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsAccLowPass</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="69fdd836-e86d-4558-ae3e-21b439e490e7">
+                              <SHORT-NAME>scp_SetRamBlockStatus20</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_WarmResetCounters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-31T09:21:51+03:00" UUID="ad858b12-5b3b-4d86-9266-039c3a9be5bd">
+                              <SHORT-NAME>scp_SetRamBlockStatus21</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_EcuTempCalibration</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="a8471774-7fb6-4b34-8df9-0a61a596918a">
+                              <SHORT-NAME>scp_SetRamBlockStatus22</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AlvNvmVersion</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="5228dac6-17b3-4810-80a6-3fec7d72c19c">
+                              <SHORT-NAME>scp_SetRamBlockStatus23</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AccAngleCalibration</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="f99b5c04-e156-4810-9d8d-00370627bc85">
+                              <SHORT-NAME>scp_SetRamBlockStatus24</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsSensitivityOPT</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="25706371-f4e0-4ac8-8c99-16856bd71cbc">
+                              <SHORT-NAME>scp_SetRamBlockStatus25</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EolCounters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="8ae34692-d050-4648-98f0-1f11ddeabbfc">
+                              <SHORT-NAME>scp_SetRamBlockStatus26</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_PhysicalMeasurements</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="611c3d68-eec3-472d-aeb9-c3e1dee94145">
+                              <SHORT-NAME>scp_SetRamBlockStatus27</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_SolenoidParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="9a840050-5bdc-4840-a33f-6a193b6d8e5e">
+                              <SHORT-NAME>scp_SetRamBlockStatus28</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcuStateTimingParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="9aa71a3f-3eb8-41d9-bfc1-58c443e05d5f">
+                              <SHORT-NAME>scp_SetRamBlockStatus29</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemSparePartNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="7226590d-b413-4833-96e1-38fc7bc186fe">
+                              <SHORT-NAME>scp_SetRamBlockStatus3</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsAccOffsets</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="c89190ea-6c31-491e-a376-edf66dfd19ed">
+                              <SHORT-NAME>scp_SetRamBlockStatus30</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemHardwareNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="2bc959fb-99ef-4f37-b5d4-de240fd81a23">
+                              <SHORT-NAME>scp_SetRamBlockStatus31</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemSystemName</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="728fd0b9-4287-4adb-8334-8a63198f776e">
+                              <SHORT-NAME>scp_SetRamBlockStatus32</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemFlashBootloader</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="3fce0900-9b6b-4c4c-99f5-7a199d8c289c">
+                              <SHORT-NAME>scp_SetRamBlockStatus33</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemOdxIdentifier</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="279fba35-45e9-4777-9bea-56d7e84a743d">
+                              <SHORT-NAME>scp_SetRamBlockStatus34</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemOdxVersion</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="436f1359-e7b8-473a-8a95-52143ebcf4dd">
+                              <SHORT-NAME>scp_SetRamBlockStatus35</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemEcuSerialNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="557f3227-249a-4b76-b652-dfe11afac3b2">
+                              <SHORT-NAME>scp_SetRamBlockStatus36</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemLogicalBlockVersion</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="be7663a8-cc0c-4111-8ea5-549290998c30">
+                              <SHORT-NAME>scp_SetRamBlockStatus37</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemHardwareVersionNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="6f1c1ad0-24ec-4734-814c-70432c250b68">
+                              <SHORT-NAME>scp_SetRamBlockStatus38</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemAppSwVersionNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="cc304bce-347e-4435-9d71-8ffe1679af39">
+                              <SHORT-NAME>scp_SetRamBlockStatus4</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsAlgoOutputDelay</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="c61758cb-ab5a-40bc-bf56-326aaf04da1c">
+                              <SHORT-NAME>scp_SetRamBlockStatus5</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsParameters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-09-19T09:24:58+03:00" UUID="4da0efd4-775d-4d05-a216-3d43aafc48b9">
+                              <SHORT-NAME>scp_SetRamBlockStatus6</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_MeasFrameRamCfg</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:18:15+03:00" UUID="262eaad2-d627-4551-8511-7939043a4ee2">
+                              <SHORT-NAME>scp_SetRamBlockStatus7</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsProfiles</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="4bab9a0e-a2bf-41fe-af88-4f26e8c5becd">
+                              <SHORT-NAME>scp_SetRamBlockStatus8</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_SBSLastState</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:10+03:00" UUID="6724271a-aff1-4633-af5b-c76d4901e8e2">
+                              <SHORT-NAME>scp_SetRamBlockStatus9</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsSensitivityLUT</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/SetRamBlockStatus</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>NvmIf_SetRamBlockStatus</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2022-08-27T12:39:18+03:00" UUID="DCE:cf56844d-003e-4664-8516-af41ee1197b9">
+                          <SHORT-NAME>NvmIf_WriteBlockByAddress</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>NvmIf_WriteBlockByAddress</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-04-28T08:43:31+03:00" UUID="DCE:2802ca98-0687-4ea7-8cb9-85daed2a9758">
+                          <SHORT-NAME>NvmIf_WriteNvmBlock</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="9574e1fc-0fee-4af7-8f61-5e73a26af070">
+                              <SHORT-NAME>scp_WriteBlock</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AeeTraceabilityNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="ddc89fa6-df8f-485f-8a9a-7c5d5ad855b9">
+                              <SHORT-NAME>scp_WriteBlock1</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AssemblySerialNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="bb1f388e-5351-4825-876e-593ba9fe9bfb">
+                              <SHORT-NAME>scp_WriteBlock10</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsSteps</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="3cf8113a-fd7f-4c96-bfd9-815f83e58473">
+                              <SHORT-NAME>scp_WriteBlock11</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsVariant</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="34765b3e-84bd-42e5-a50e-4ed06a4a18c1">
+                              <SHORT-NAME>scp_WriteBlock12</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_HwPartNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="01eec924-3c2b-4d74-aac2-0337c1eb9574">
+                              <SHORT-NAME>scp_WriteBlock13</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_LockUnlockECU</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="555da1aa-2b4a-43cc-a61d-eda330d89ba6">
+                              <SHORT-NAME>scp_WriteBlock14</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_AutotestEnableParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="02e68c08-fd7e-4310-9753-6938d872d916">
+                              <SHORT-NAME>scp_WriteBlock15</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_AutotestParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="7f591e47-40d7-4a44-a75d-5d8b7e9a689f">
+                              <SHORT-NAME>scp_WriteBlock16</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_DemDefault</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="131cc1f2-5da7-4138-875a-5f3a3fb9edfc">
+                              <SHORT-NAME>scp_WriteBlock17</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_EccCounters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="42238d29-bbfd-403f-86dc-cb385770b608">
+                              <SHORT-NAME>scp_WriteBlock18</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_MeasFrameCfg</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="6bfaab4a-f637-4343-966a-025bffa7eb43">
+                              <SHORT-NAME>scp_WriteBlock19</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_ProcessMode</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="c6a1e7a1-46ed-4763-9758-3cff77de19e4">
+                              <SHORT-NAME>scp_WriteBlock2</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsAccLowPass</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="26bc81f7-fde8-4461-a92e-e52277f2f7ca">
+                              <SHORT-NAME>scp_WriteBlock20</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_WarmResetCounters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-31T09:21:37+03:00" UUID="597b2540-a7e7-4dfe-8fb8-5c0031efef0e">
+                              <SHORT-NAME>scp_WriteBlock21</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_EcuTempCalibration</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="db9bd94d-6b24-407a-9806-54e08e69c5fa">
+                              <SHORT-NAME>scp_WriteBlock22</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AlvNvmVersion</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="361a1b9a-fb4a-47b0-a7e0-0792142663c1">
+                              <SHORT-NAME>scp_WriteBlock23</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_AccAngleCalibration</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="24b4d5c5-e7c8-4ad8-af8d-c3806d6a6d41">
+                              <SHORT-NAME>scp_WriteBlock24</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsSensitivityOPT</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="1ad3cf26-585f-4cc8-8e6a-6d8aac61f2ec">
+                              <SHORT-NAME>scp_WriteBlock25</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EolCounters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="57539c17-6a7f-4440-be5a-b4e6e4db9c80">
+                              <SHORT-NAME>scp_WriteBlock26</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_PhysicalMeasurements</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="5e869477-a7b0-478c-8242-787bf8256be1">
+                              <SHORT-NAME>scp_WriteBlock27</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_SolenoidParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="356f15ea-c764-4fcc-be2f-e675c6d135c3">
+                              <SHORT-NAME>scp_WriteBlock28</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcuStateTimingParam</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="dd50e3c5-816f-401b-934e-5f43bc73eff0">
+                              <SHORT-NAME>scp_WriteBlock29</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemSparePartNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="2eba08f1-c3a9-4c48-981f-b610e7d4f73c">
+                              <SHORT-NAME>scp_WriteBlock3</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsAccOffsets</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="88c4c429-e567-4cfd-880c-a157473e5c51">
+                              <SHORT-NAME>scp_WriteBlock30</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemHardwareNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="ff32c29e-5930-4339-a8f1-ff7b07221ed0">
+                              <SHORT-NAME>scp_WriteBlock31</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemSystemName</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="05211ade-4831-40a2-b49f-cc651942d609">
+                              <SHORT-NAME>scp_WriteBlock32</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemFlashBootloader</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="21080b72-516d-4670-87e3-292118d2fd75">
+                              <SHORT-NAME>scp_WriteBlock33</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemOdxIdentifier</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="a186e5e7-06af-46f7-b0d5-619161f4c875">
+                              <SHORT-NAME>scp_WriteBlock34</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemOdxVersion</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="077fea9c-210d-4d8b-9b18-50a547fcfe2e">
+                              <SHORT-NAME>scp_WriteBlock35</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemEcuSerialNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="a88fdd51-6cf2-42ba-9766-f1394b2a4172">
+                              <SHORT-NAME>scp_WriteBlock36</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemLogicalBlockVersion</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="2bb85061-a376-4776-9a81-35a19f4e4417">
+                              <SHORT-NAME>scp_WriteBlock37</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemHardwareVersionNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="735840b1-4e6d-43d6-8c82-fed7eec32db0">
+                              <SHORT-NAME>scp_WriteBlock38</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_OemAppSwVersionNumber</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="4dcefd8e-9115-43a9-bb8a-72d07897099b">
+                              <SHORT-NAME>scp_WriteBlock4</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsAlgoOutputDelay</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="7433a170-2e0a-43d8-a3a5-406604c9d0d5">
+                              <SHORT-NAME>scp_WriteBlock5</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsParameters</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-09-19T09:25:28+03:00" UUID="4a1d2412-80e3-4d10-a831-f73e9e82f4af">
+                              <SHORT-NAME>scp_WriteBlock6</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmServices_MeasFrameRamCfg</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2022-08-27T12:16:32+03:00" UUID="b72cde1f-3fc5-4b77-bb9b-75aba4ac49b7">
+                              <SHORT-NAME>scp_WriteBlock7</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsProfiles</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="3fea7401-3806-44e9-a483-aea31a356d84">
+                              <SHORT-NAME>scp_WriteBlock8</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_SBSLastState</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-28T08:43:31+03:00" UUID="d562c5cd-6b30-4f9d-9253-8d8e15c12731">
+                              <SHORT-NAME>scp_WriteBlock9</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/pclNvmService_EcsSensitivityLUT</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_NvM/ASR42/PortInterfaces/NvM_ASR42_Service/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>NvmIf_WriteNvmBlock</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                      </RUNNABLES>
+                      <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                    </SWC-INTERNAL-BEHAVIOR>
+                  </INTERNAL-BEHAVIORS>
+                </ECU-ABSTRACTION-SW-COMPONENT-TYPE>
+                <SWC-IMPLEMENTATION T="2019-07-25T13:21:26+02:00" UUID="c6581e6c-274b-4149-b4e6-3dec06b5f4eb">
+                  <SHORT-NAME>NvmIf_imp</SHORT-NAME>
+                  <CATEGORY>BSW_Memory_Services</CATEGORY>
+                  <CODE-DESCRIPTORS>
+                    <CODE T="2018-04-26T11:21:28+02:00" UUID="b0853d62-2665-4143-976b-4efd7b53d6da">
+                      <SHORT-NAME>NvmIf_Impl_Code</SHORT-NAME>
+                      <ARTIFACT-DESCRIPTORS>
+                        <AUTOSAR-ENGINEERING-OBJECT T="2017-03-02T08:41:22+01:00">
+                          <SHORT-LABEL>NvmIf_Impl_Code_CodeDesc</SHORT-LABEL>
+                          <CATEGORY>SWSRC</CATEGORY>
+                        </AUTOSAR-ENGINEERING-OBJECT>
+                      </ARTIFACT-DESCRIPTORS>
+                    </CODE>
+                  </CODE-DESCRIPTORS>
+                  <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+                  <RESOURCE-CONSUMPTION T="2018-09-05T14:54:54+02:00" UUID="97d87a30-3502-4bc1-a3d8-966df8cc7fb2">
+                    <SHORT-NAME>NvmIf_ImplResCons</SHORT-NAME>
+                    <MEMORY-SECTIONS>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00" UUID="5791932b-5004-4843-8815-afc57a2c0378">
+                        <SHORT-NAME>CODE</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00">
+                        <SHORT-NAME>CODE_ASIL_A</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="49f35905-2b64-41b2-b30b-a746abb263ea">
+                        <SHORT-NAME>CONST_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="f09cf4ad-4902-450d-954e-1a5f0ea208d3">
+                        <SHORT-NAME>CONST_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="c396310e-fa8c-4c8c-a284-bde21cf15532">
+                        <SHORT-NAME>CONST_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="eead2b4b-ed3f-4d91-8fb5-d17675b3ba7d">
+                        <SHORT-NAME>CONST_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="1a879c95-1b9a-48ca-afe4-bc29fb672214">
+                        <SHORT-NAME>CONST_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="312e0e20-4766-46c8-a729-248f3d1238c5">
+                        <SHORT-NAME>VAR_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="f3420aa9-a454-404f-b652-b70c2a736e39">
+                        <SHORT-NAME>VAR_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00" UUID="d047bcca-dee3-4cdb-8c83-ab8a68afcead">
+                        <SHORT-NAME>VAR_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00">
+                        <SHORT-NAME>VAR_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:53:16+02:00" UUID="5fbf942a-9850-4ba3-8cb9-eb26c546ed17">
+                        <SHORT-NAME>VAR_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00" UUID="50a2f4fe-31c7-47a9-98e7-a50ff8586d33">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="cab1a7ce-6a19-48a4-b273-ff2eed712945">
+                        <SHORT-NAME>VAR_NO_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="76854739-12b7-49db-a853-9099463d52af">
+                        <SHORT-NAME>VAR_NO_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="0dfd8a37-22cb-41e8-8903-b49d6e2baaa2">
+                        <SHORT-NAME>VAR_NO_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="0cce07bb-aae7-449f-9c2c-3f6ad3a2f1cf">
+                        <SHORT-NAME>VAR_NO_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2017-02-07T16:23:34+01:00" UUID="fcc7d54d-3ab2-4641-a68c-936a047cc5a6">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_POWER_ON_CLEARED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/VAR_POWER_ON_CLEARED</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                    </MEMORY-SECTIONS>
+                  </RESOURCE-CONSUMPTION>
+                  <SW-VERSION>1.0.0</SW-VERSION>
+                  <VENDOR-ID>0</VENDOR-ID>
+                  <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/AUTOLIV/SoftwareComponents/NvmIf/NvmIf/NvmIf</BEHAVIOR-REF>
+                </SWC-IMPLEMENTATION>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

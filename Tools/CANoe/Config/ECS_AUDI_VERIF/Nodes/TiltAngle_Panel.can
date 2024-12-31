@@ -1,0 +1,99 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  diagRequest eCS.AccCalibStart_Start Req_AccCalibStart_Start;
+  diagResponse eCS.AccCalibStart_Start Resp_AccCalibStart_Start;
+  diagResponse eCS.DefaultSession_Start Resp_Default_Start;
+  mstimer tWaitMSAccCalibStart; 
+  mstimer tWaitMSECUUnlock; 
+}
+
+on preStart  
+{
+  @TiltAngle::sysLEDcontrol = sysvar::TiltAngle::sysLEDcontrol::`Off;
+  setControlVisibility("Tilt Angle","LED_AccCalibOutput",1); 
+}
+
+on timer tWaitMSECUUnlock  
+{
+    @Platform::DIAG_ECUUnlock = 1;
+}
+
+on timer tWaitMSAccCalibStart
+{  
+  Req_AccCalibStart_Start.SendRequest();
+  write("Req_AccCalibStart_Start was called"); 
+  @Platform::DIAG_Security_Control_Update = 0;
+}
+
+on sysvar sysvar::TiltAngle::sysAccCalibStart
+  
+{
+  if (@this == sysvar::TiltAngle::sysAccCalibStart::AccCalibStartButton)
+    
+  {    
+   @Platform::DIAG_Security_Control == 97;    
+   @Platform::DIAG_Security_Control_Update = 1; 
+   setTimer(tWaitMSECUUnlock,200);
+   setTimer(tWaitMSAccCalibStart, 500);
+  }
+  
+}
+
+
+on diagResponse eCS.AccCalibStart_Start
+  
+{      
+  //diagIsPositiveResponse(Resp_AccCalibStart_Start) must bse used in conjunction with diagGetLastResponse to overrite previous saved diag response
+  //diagGetLastResponse(this), "this" can also be used as it overwrites previous saved diagnostic response 
+ 
+    diagGetLastResponse(Resp_AccCalibStart_Start); 
+    if (diagIsPositiveResponse(Resp_AccCalibStart_Start) == 1)
+    
+  {
+    @TiltAngle::sysLEDcontrol = sysvar::TiltAngle::sysLEDcontrol::`On;
+    setControlVisibility("Tilt Angle","LED_AccCalibOutput",1);
+  }
+  
+  else if ((diagGetResponseCode(Resp_AccCalibStart_Start) != 0x78))
+    
+  {
+    @TiltAngle::sysLEDcontrol = sysvar::TiltAngle::sysLEDcontrol::Fail;
+    setControlVisibility("Tilt Angle","LED_AccCalibOutput",1);
+    Write("Unexpected NRC received !");    
+  }
+  
+}
+
+
+on message DevKit_01
+{
+  
+  if (@TiltAngle::sysAutoupdate == sysvar::TiltAngle::sysAutoupdate::`On || @TiltAngle::sysAutoupdate == sysvar::TiltAngle::sysAutoupdate::SingleUpdate)
+    
+  {    
+  float sigValZ;
+  float sigValY;
+  float sigValX;
+    
+  sigValZ = getSignal(TDK_4g_AZ);  
+  sigValY = getSignal(TDK_4g_AY);  
+  sigValX = getSignal(TDK_4g_AX);
+  
+  @sysvar::TiltAngle::sysX_AxisDisplay = -(arctan(sigValX / (sqrt ((sigValY * sigValY) + (sigValZ * sigValZ)) + 0.000001))) * (180/ 3.141592654);
+  
+  @sysvar::TiltAngle::sysY_AxisDisplay = -(arctan(sigValY / (sqrt ((sigValX * sigValX) + (sigValZ * sigValZ)) + 0.000001))) * (180/ 3.141592654);
+  }
+  
+  if(@TiltAngle::sysAutoupdate == sysvar::TiltAngle::sysAutoupdate::SingleUpdate)
+  {
+    @sysvar::TiltAngle::sysAutoupdate = 0;
+  }
+
+}
+

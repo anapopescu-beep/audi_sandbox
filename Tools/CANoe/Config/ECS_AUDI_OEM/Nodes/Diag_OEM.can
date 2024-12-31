@@ -1,0 +1,561 @@
+/*@!Encoding:1252*/
+includes
+{
+  #pragma library("..\Includes\AER_SA.dll")
+}
+
+variables
+{
+  int index1; 
+ 
+  diagRequest eCS_OEM.Active_Diagnostic_Session_Read Req_Active_Diagnostic_Session_Read;
+  
+  diagRequest eCS_OEM.VW_Spare_Part_Number_Read Req_Spare_Part_Number_Read;
+    
+  diagRequest eCS_OEM.VW_Application_Software_Version_Number_Read Req_Software_Number_Read;
+  
+  diagRequest eCS_OEM.VW_ECU_Hardware_Number_Read Req_Hardware_Number_Read;
+  
+  diagRequest eCS_OEM.VW_System_Name_Or_Engine_Type_Read Req_System_Name_Read;
+  
+  diagRequest eCS_OEM.Technical_specifications_version_Read Req_Technical_specifications_version_Read;
+  
+  diagRequest eCS_OEM.VW_Logical_Software_Block_Counter_Of_Programming_Attempts_Read Req_Logical_Software_Block_Counter_Read;
+    
+  diagRequest eCS_OEM.VW_Logical_Software_Block_Lock_Value_Read Req_Logical_Block_Lock_Value_Read;
+ 
+  diagRequest eCS_OEM.Bootloader_TP_Blocksize_Read Req_Bootloader_TP_Blocksize_Read;
+    
+  diagRequest eCS_OEM.Programming_preconditions_Read Req_Programming_preconditions_Read;
+  
+  diagRequest eCS_OEM.ECU_Programming_Information_Read Req_ECU_Programming_Information_Read;
+  
+  diagRequest eCS_OEM.ASAM_ODX_File_Identifier_Read Req_ASAM_File_Identifier_Read;
+  
+  diagRequest eCS_OEM.ASAM_ODX_File_Version_Read Req_ASAM_ODX_File_Version_Read;
+    
+  diagRequest eCS_OEM.FDS_project_data_Read Req_FDS_project_data_Read;
+  
+  diagRequest eCS_OEM.VW_ECU_Hardware_Version_Number_Read Req_ECU_Hardware_Version_Read;
+  
+  diagRequest eCS_OEM.ECU_Serial_Number_Read Req_ECU_Serial_Number_Read;
+    
+  diagRequest eCS_OEM.VW_Logical_Software_Block_Version_Read_Read Req_Software_Block_Version_Read;
+  
+  diagRequest eCS_OEM.Fingerprint_And_Programming_Date_Of_Logical_Software_Blocks_Read_Read Req_Fingerprint_Software_Blocks_Version_Read;
+  
+  diagRequest * Parameter_Req;
+  diagResponse * Parameter_Res;
+ 
+  char request[4095];  //input request string
+  byte RTS=0;         //request to send
+  byte CTS=1;         //clear to send
+  long index=0;       //index for parsing the input string
+  mstimer diagTimer;  //diagnostic cyclic timer
+  const int period = 100;
+  const byte true = 1;
+  const byte false = 0;
+  byte SAlevel = 0;   //Security access level
+    //diagnostic objects
+  diagRequest * req;  //diagnostic request object
+
+  byte CheckLPM = 0;  //signal that the response to a LPM configuration has to be checked
+  const int timeout = 12500;   //diag timeout in seconds
+  int ActiveTimerTimeout = 500;
+}
+
+on preStart
+{
+  diagSetTarget("eCS"); 
+}
+
+on diagResponse *
+{
+  byte rdata[255];    /* Receive data buffer */
+  dword temp;         /* Temp data buffer */
+  long len;         
+  byte seed[8];
+  byte skey[8];
+  byte SAkey[10];
+  byte idx;
+  byte rtiCfg;
+  diagResponse * resp;
+  char Swver[10];
+  char ConvertAscii[80];
+  char epv_buf[500];
+  char out[301];
+  char temp_epv_buf[10];
+  char dataToPrint[50];
+  int i, Carry;
+    
+  len = this.GetPrimitiveSize();                                                /* Get length of response */
+  this.GetPrimitiveData(rdata, elcount(rdata));                                 /* Copy actual response from "on diagResponse *" into data array */
+  
+  /* If seed is received */
+  if(rdata[0] == 0x67)
+  {
+    if(rdata[1]==SAlevel)
+    {
+      if(rdata[1]==0x11)
+      {
+          temp =  rdata[2]*16777216 + rdata[3]*65536 + rdata[4] * 256 + rdata[5];
+          i = 5;
+          while(i>0)
+          {
+            Carry = 0;
+            if(temp>= 0xE0D1C2B3)
+            {
+              Carry = 1;
+            }
+            
+            temp+= 0x1F2E3D4C;
+            
+            if(Carry == 1)
+            {
+              temp = (temp << 1) + ((temp & 0x80000000)?1:0);
+            }
+            temp ^=0x4D5E234B;
+            i--;
+          }
+          SAkey[2] = ((temp) & 0xFF000000)>>24;
+          SAkey[3] = ((temp) & 0xFF0000)>>16;
+          SAkey[4] = ((temp) & 0xFF00)>>8;
+          SAkey[5] = ((temp) & 0xFF);
+          SAkey[0] = 0x27;
+          SAkey[1] = SAlevel+1;
+          SendDiag(SAkey,6);                                                     /* Send key */
+      }
+      else
+      {
+        getALVkey(len,rdata,SAkey);                                              /* Contsruct frame */
+      
+        SAkey[0] = 0x27;
+        SAkey[1] = SAlevel+1;
+        SendDiag(SAkey,10);                                                      /* Send key */
+      }
+    }
+    else if(rdata[1] == (SAlevel+1))
+    {
+      putValueToControl("AlvDiag", "LPM_view","> Security access granted\n");
+      CTS = true;
+    }
+  }
+  /* Manage positive response for any special session request */
+  else if(rdata[0] == 0x50)
+  {
+    if(rdata[1] == 0x7E)
+      putValueToControl("AlvDiag", "LPM_view","> Supplier Session active\n");
+    else if(rdata[1] == 0x01)
+      putValueToControl("AlvDiag", "LPM_view","> Default Session active\n");
+    else if(rdata[1] == 0x02)
+      putValueToControl("AlvDiag", "LPM_view","> Programming Session active\n");
+    else if(rdata[1] == 0x03)
+      putValueToControl("AlvDiag", "LPM_view","> Extended Session active\n");
+    CTS = true;
+  }
+  /* Manage positive response for any special read request */
+  else if(rdata[0] == 0x62)
+  {
+    strncat(out, "> Positive response for ", 25);
+    
+    for(i = 0; i < 3; i++)
+    {
+      snprintf(dataToPrint, elcount(dataToPrint), "%.2X ", rdata[i]);  // byte to HEX convert
+      strncat(out, dataToPrint, elcount(out));  // Concatenate HEX value to output string
+    }
+    strncat(out, "service\n", 50);
+    
+    putValueToControl("AlvDiag", "LPM_view",out);
+    CTS = true;
+  }
+  /* Manage positive response for any special write request */
+  else if(rdata[0] == 0x6E)
+  {
+    CTS = true;
+  }
+  /* Manage positive response for any special routine request */
+  else if(rdata[0] == 0x71)
+  {
+    CTS = true;
+  }
+  /* Manage positive response for write memory by address request */
+  else if(rdata[0] == 0x7D)
+  {
+    CTS = true;
+  }
+  /* Manage positive response for read memory by address request */
+  else if(rdata[0] == 0x63)
+  {
+    CTS = true;
+  }
+  /* Manage negative responses */
+  else if(rdata[0] == 0x7F)
+  {
+    /* Manage negative responses for security access */
+    if(rdata[1] == 0x27)
+    {
+//      putValueToControl("Diag", "LPM_view","> Security access FAILED. NRC:  "); 
+//      putValueToControl("Diag", "LPM_view",rdata[2],0,1);
+//      putValueToControl("Diag", "LPM_view","\n");
+//          
+//      putValueToControl("Diag_Dev", "LPM_view","> Security access FAILED. NRC:  ");
+//      putValueToControl("Diag_Dev", "LPM_view",rdata[2],0,1);
+//      putValueToControl("Diag_Dev", "LPM_view","\n");
+      
+      CTS = true;
+    }
+    /* Display negative response */
+    else
+    {
+//      putValueToControl("Diag", "LPM_view","> Service ");
+//      putValueToControl("Diag", "LPM_view",rdata[1],0,1);
+//      putValueToControl("Diag", "LPM_view"," -> NRC:  ");
+//      putValueToControl("Diag", "LPM_view",rdata[2],0,1);
+//      putValueToControl("Diag", "LPM_view","\n");
+//      
+//      putValueToControl("Diag_Dev", "LPM_view","> Service ");
+//      putValueToControl("Diag_Dev", "LPM_view",rdata[1],0,1);
+//      putValueToControl("Diag_Dev", "LPM_view"," -> NRC:  ");
+//      putValueToControl("Diag_Dev", "LPM_view",rdata[2],0,1);
+//      putValueToControl("Diag_Dev", "LPM_view","\n");
+      CTS = true;
+    }
+  }
+  /* Manage the diag response */
+  else
+  {
+    CTS = true;
+  }
+  
+}
+on sysvar_update Diag_Dev::btnReadPN
+{
+    if(@sysvar::Diag_Dev::btnReadPN == 1)
+    {
+      diagSendRequest(Req_Spare_Part_Number_Read);
+      diagSendRequest(Req_Software_Number_Read);
+      diagSendRequest(Req_Hardware_Number_Read);
+      diagSendRequest(Req_System_Name_Read);
+      diagSendRequest(Req_Technical_specifications_version_Read);
+      diagSendRequest(Req_Logical_Software_Block_Counter_Read);
+      diagSendRequest(Req_Logical_Block_Lock_Value_Read);
+      diagSendRequest(Req_Bootloader_TP_Blocksize_Read);
+      diagSendRequest(Req_Programming_preconditions_Read);
+      diagSendRequest(Req_ECU_Programming_Information_Read);
+      diagSendRequest(Req_ASAM_File_Identifier_Read);
+      diagSendRequest(Req_ASAM_ODX_File_Version_Read);
+      diagSendRequest(Req_FDS_project_data_Read);
+      diagSendRequest(Req_ECU_Serial_Number_Read);
+      diagSendRequest(Req_Software_Block_Version_Read);
+      diagSendRequest(Req_Fingerprint_Software_Blocks_Version_Read);
+      diagSendRequest(Req_ECU_Hardware_Version_Read);
+      diagSendRequest(Req_Active_Diagnostic_Session_Read);
+    }
+}
+on sysvar_update Diag::sendDiagString
+{
+  int size;
+  
+  if(@sysvar::Diag::sendDiagString)
+  {
+    deleteControlContent("AlvDiag", "LPM_view"); 
+    
+    /* Get input field data */
+    SysGetVariableString(sysvar::Diag::diagString, request, elcount(request));
+    
+    /* Get number of characters in input */
+    size = strlen(request);
+    
+    /* Append '.' to mark end of request */
+    strncpy_off(request, size, ".", size+2);
+    
+    /* Signal sending and reset index */
+    RTS = 1;
+    index = 0;
+    
+    setTimerCyclic(diagTimer,period);
+  }
+}
+void SendDiag(byte data[],long len)
+{
+  long idx1;
+
+  diagResize(req,len);                              /* Set diagnostic request object size */
+  
+  for(idx1 = 0; idx1 < len; idx1++)
+  {
+    diagSetPrimitiveByte(req,idx1,data[idx1]);      /* Set primite bytes data */
+  }
+  
+  diagSendRequest(req);                             /* Send request */ 
+}
+
+
+on timer diagTimer
+{
+  word idx;         /* Diag request index */
+  word len;         /* Current service length */
+  byte dreq[4095];  /* Diag request */
+  char tmpstr[5];   /* Temporary string */
+  char tmpsar[6];   /* Temporary string for security access */
+  word parse;
+
+  /* If request is pending and no processing done */
+  if((RTS == true) && (CTS == true))
+  {
+    parse = true;
+    idx = 0;
+    
+    /* Parse string until end or new request */
+    while(parse == true)
+    {
+      /* If a request delimiter or end of request is detected */
+      if((request[index] == ';') || (request[index] == '.'))
+      {
+        parse = false; /* Stop parsing */
+      }
+      /* Send security access request */
+      else if(request[index] == 'S')
+      {
+        parse = false;                                    /* Stop parsing */
+        dreq[0] = 0x27;                                   /* Request seed */
+        strncpy(tmpsar,"0x", 3);                          /* Set tmpsar as hex */
+        substr_cpy_off(tmpsar, 2,request, index+1, 2, 5); /* Copy 2 chars for level */
+        dreq[1] = (byte)atol(tmpsar);                     /* Convert to decimal */ 
+        SAlevel = dreq[1];                                /* Set level in buffer */
+        idx = 2;                                          /* Manage indexes */
+        index += 3;
+      }
+      else
+      {
+        tmpstr[0] = '0';                                  /* Set tempstring as hex */
+        tmpstr[1] = 'x';
+        tmpstr[2] = request[index];                       /* Copy 2 chars from request to tempstring */
+        tmpstr[3] = request[index+1];
+        
+        dreq[idx] = (byte)atol(tmpstr);                   /* Convert to integer */
+       
+        idx += 1;                                         /* Change indexes */
+        index += 2;                     
+      }
+    }
+    
+    /* Check if request is pending */
+    if(request[index] == ';')
+    {
+      RTS = true;                                         /* Signal new request */
+      index++;                                            /* Increment the index to skip ; character */
+      parse = true;                                       /* Reenable parsing of data once data is processed */
+    }
+    else
+    {
+      cancelTimer(diagTimer);                             /* Stop timer, "." reached */
+      RTS = false;                                        /* Clear sending flag */
+    }
+    
+    CTS = false;                                          /* Signal that data is processing */
+    
+    SendDiag(dreq,idx);                                   /* Send request */                  
+  }
+}
+
+// Read
+on diagResponse eCS_OEM.Active_Diagnostic_Session_Read
+{
+   byte ActiveDiagSessionBuffer[5];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   ActiveDiagSessionBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadActiveSession, ActiveDiagSessionBuffer,elCount(ActiveDiagSessionBuffer));
+  write("intra");
+}
+  
+// Read
+on diagResponse eCS_OEM.VW_Spare_Part_Number_Read
+  {
+   byte SparePartNumberBuffer[15];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   SparePartNumberBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadSparePartNumber, SparePartNumberBuffer,elCount(SparePartNumberBuffer));
+}
+ 
+on diagResponse eCS_OEM.VW_Application_Software_Version_Number_Read
+  {
+   byte VersionNumberReadBuffer[8];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   VersionNumberReadBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadApplicationSoftwareVersionNumber, VersionNumberReadBuffer,elCount(VersionNumberReadBuffer));
+}
+  
+ on diagResponse eCS_OEM.VW_ECU_Hardware_Number_Read
+  {
+   byte ECUHardwareNumberBuffer[15];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   ECUHardwareNumberBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadECUHardwareNumber, ECUHardwareNumberBuffer,elCount(ECUHardwareNumberBuffer));
+}
+ on diagResponse eCS_OEM.VW_System_Name_Or_Engine_Type_Read
+  {
+   byte SystemNameEngineTypeBuffer[17];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   SystemNameEngineTypeBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadSystemNameOrEngineType, SystemNameEngineTypeBuffer,elCount(SystemNameEngineTypeBuffer));
+  }
+ on diagResponse eCS_OEM.Technical_specifications_version_Read
+  {
+   byte TechnicalSpecificationBuffer[32];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   TechnicalSpecificationBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadTechnicalspecificationsVersion, TechnicalSpecificationBuffer,elCount(TechnicalSpecificationBuffer));
+  }
+  
+ on diagResponse eCS_OEM.VW_Logical_Software_Block_Counter_Of_Programming_Attempts_Read
+  {
+   byte LogicalBlockCounterBuffer[10];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   LogicalBlockCounterBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadLogicalSoftwareBlockCounterOfProgrammingAttempts, LogicalBlockCounterBuffer,elCount(LogicalBlockCounterBuffer));
+  }
+  
+  on diagResponse eCS_OEM.VW_Logical_Software_Block_Lock_Value_Read
+  {
+   byte LogicalBlockLockBuffer[10];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   LogicalBlockLockBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadLogicalSoftwareBlockLockValue, LogicalBlockLockBuffer,elCount(LogicalBlockLockBuffer));
+  }
+  
+on diagResponse eCS_OEM.Bootloader_TP_Blocksize_Read
+  {
+   byte BootloaderTPBlocksizeBuffer[5];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   BootloaderTPBlocksizeBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadBootloaderTPBlocksize, BootloaderTPBlocksizeBuffer,elCount(BootloaderTPBlocksizeBuffer));
+  }
+
+  on diagResponse eCS_OEM.Programming_preconditions_Read
+  {
+   byte ProgrammingPreconditionsBuffer[12];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   ProgrammingPreconditionsBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadProgrammingPrecodndition, ProgrammingPreconditionsBuffer,elCount(ProgrammingPreconditionsBuffer));
+  }
+ 
+ on diagResponse eCS_OEM.ECU_Programming_Information_Read
+  {
+   byte ECUProgrammingInformationBuffer[5];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   ECUProgrammingInformationBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadECUProgrammingInformation, ECUProgrammingInformationBuffer,elCount(ECUProgrammingInformationBuffer));
+  }
+ 
+ on diagResponse eCS_OEM.ASAM_ODX_File_Identifier_Read
+  {
+   byte ASAMIdentifierBuffer[28];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   ASAMIdentifierBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadASAMODXFileIdentifier, ASAMIdentifierBuffer,elCount(ASAMIdentifierBuffer));
+  }
+  
+  on diagResponse eCS_OEM.ASAM_ODX_File_Version_Read
+  {
+   byte ASAMVersionBuffer[10];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   ASAMVersionBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadASAMODXFileVersion, ASAMVersionBuffer,elCount(ASAMVersionBuffer));
+  }
+  
+ on diagResponse eCS_OEM.FDS_project_data_Read
+  {
+   byte FDSDataReadBuffer[10];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   FDSDataReadBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadFDSprojectdata, FDSDataReadBuffer,elCount(FDSDataReadBuffer));
+  }
+ 
+ on diagResponse eCS_OEM.VW_ECU_Hardware_Version_Number_Read
+  {
+   byte ECUVersionNumberBuffer[8];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   ECUVersionNumberBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadECUHardwareVersionNumber, ECUVersionNumberBuffer,elCount(ECUVersionNumberBuffer));
+  }
+ 
+  on diagResponse eCS_OEM.ECU_Serial_Number_Read
+  {
+   byte ECUSerialNumberBuffer[25];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   ECUSerialNumberBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadECUSerialNumber, ECUSerialNumberBuffer,elCount(ECUSerialNumberBuffer));
+  }
+  
+ on diagResponse eCS_OEM.VW_Logical_Software_Block_Version_Read_Read
+  {
+   byte LogicalSoftwareBlockVersionBuffer[17];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   LogicalSoftwareBlockVersionBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadLogicalSoftwareBlockVersionRead, LogicalSoftwareBlockVersionBuffer,elCount(LogicalSoftwareBlockVersionBuffer));
+  }
+  
+on diagResponse eCS_OEM.Fingerprint_And_Programming_Date_Of_Logical_Software_Blocks_Read_Read
+  {
+   byte FingerprintProgrammingBlocksBuffer[35];
+    
+   for (index1 = 3; index1 < this.GetPrimitiveSize(); index1++)
+  {
+   FingerprintProgrammingBlocksBuffer[index1-3]=this.GetPrimitiveByte(index1);
+  }
+  sysSetVariableData(sysvar::Diag_Dev::varReadFingerprintAndProgramming, FingerprintProgrammingBlocksBuffer,elCount(FingerprintProgrammingBlocksBuffer));
+  }
+  
+

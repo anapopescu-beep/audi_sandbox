@@ -1,0 +1,2164 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/**
+ *    $Revision: 1.3.1.10 $
+ *    $ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/CIL/Design/project.pj $
+ */
+
+/**
+ * Overview of the component :
+ *    Communication Interface Layer (CIL) oversees extracting data from the 
+ *    network frames (e.g. CAN) and providing the data to the application, and 
+ *    packing the outgoing data to the network frames.
+ *    The aim of the CIL component is to interpret all received signals on the
+ *    communication component and to provide the right information to the application.
+ *    Also, it’s purpose is to gather information from the Application and
+ *    compute the status signals and sent them to the CAN bus.
+ *    CIL oversees:
+ *       - Unpacking received data frames from the network (CAN), and providing 
+ *         the data to the application
+ *       - Packing the outgoing data to data frames for the network (CAN)
+ */
+
+/*!****************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Rte_CIL.h"
+#include "Nvp_Cfg.h"
+#include "CIL.h"
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+/**
+ * \brief
+ *       Constant with the number of support time slots for getting API data
+ *       DO NOT CHANGE THIS VALUE -> 10ms cyclic time is assured by 5 TimeSlots
+ */
+#define KU8_CIL_ATC_NB_OF_SLOTS (KU8_FIVE)
+
+/**
+ * \brief
+ *       The bit mask for the full range of states of solenoid [0,6]
+ */
+#define KU8_CIL_SOLENOID_STATE_MASK ((uint8) 0x07)
+
+
+/**
+ * \brief
+ *       The constant represents the max time the ECU is allowed to report
+ *       INIT on the status frame (e.g. 1000ms)
+ */
+#define KU32_CIL_INIT_STATUS_FRAME_TIMEOUT_VAL ((uint32) 145u)
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+/**
+ * \brief
+ *       Function pointer for addressing TX frames callbacks
+ */
+typedef void (*cil_pfTxSlotFunction_Type)(void);
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+
+/**
+ * \brief
+ *       This variable is used to store the Dev Frame output to CAN
+ * \initialization
+ *       KU8_ZERO
+ */
+LOCAL CIL_stFrameDataBytes cil_u8EcuCanDataOutFrame0Content = { KU8_ZERO };
+
+/**
+ * \brief
+ *       This variable is used to store the time Slot Counter
+ * \initialization
+ *       KU8_ZERO
+ */
+LOCAL uint8 cil_u8PeriodicDataTimeSlotID = KU8_ZERO;
+
+/**
+ * \brief
+ *       This variable is used to signal that ECU is blocked in INIT phase for longer
+ *       than allowed timeout without an appropriate error bit.
+ * \initialization
+ *       KU8_FALSE
+ */
+LOCAL uint8 cil_u8UnknownStatusFrameError = KU8_FALSE;
+
+
+
+/**
+ * \brief
+ *       This variable is what is actually sent on the Dev Frame to CAN (8 Byte Chunks)
+ */
+LOCAL REC_CanDataOut64_Type cil_u8EcuCanDataOutFrame0OnBus;
+
+/**
+ * \brief
+ *       This variable is used to monitor the max time the ECU is allowed to report
+ *       INIT on the status frame
+ * \initialization
+ *       KU32_ZERO
+ */
+LOCAL uint32 cil_u32ReportInitStatusTimeoutCnt = KU32_ZERO;
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+/**
+ * \brief
+ *       Array of function pointers that manage the CAN outputs from Application
+ */
+LOCAL const cil_pfTxSlotFunction_Type cil_kapfPerGetDataFunc[KU8_CIL_ATC_NB_OF_SLOTS];
+
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+
+/**
+* \brief
+*        This function is used to gather data necessary to compute the seat occupancy
+*        status for seats 1&&2 for the 2nd row
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot04
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_SBS_Belegung
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_SBS_Belegung_Reihe2_BF_XIX_Grundumfang_XIX_eCS;
+*        ARCH_SW_CIL_SP_IF_eCS_SBS_Belegung_Reihe2_FA_XIX_Grundumfang_XIX_eCS;
+*        ARCH_SW_CIL_prrSeatOccupancySensorStatus;
+**/
+LOCAL_INLINE void cil_Manage_eCS_SBS_Belegung(void)
+{
+   /* initialize seat occupancy Tx array */
+   Initialize CIL_u8SeatOccupancySensorTx to NOT_INSTALLED;
+
+    /* Get feedback from Seat Occupancy Sensors and map to CAN mapping (values for existing sensor seats will be overwritten) */
+    Rte_Read_CIL_prrSeatOccupancySensorStatus_au8SeatOccupancySensorStatus();
+
+    /* Seat Sensor 3 Status */
+    if (The first seat on the second row is not configured)
+    {
+       /* Seat Sensor 3 not coded */
+       CIL_u8SeatOccupancySensorTx coresponding to the first seat on the second row = NOT_INSTALLED;
+    }
+    else
+    {
+       switch (Seat Occupancy from IoHwAb)
+       {
+       case SEAT_OCCUPANCY_NOT_DETECTED:
+          CIL_u8SeatOccupancySensorTx coresponding to the first seat on the second row = SEAT_NOT_OCCUPIED;
+          break;
+       case SEAT_OCCUPANCY_DETECTED:
+          CIL_u8SeatOccupancySensorTx coresponding to the first seat on the second row = SEAT_OCCUPIED;
+          break;
+       default: /* KU8_SEAT_OCCUPANCY_UNKNOWN or random value due to memory corruption */
+          if(The first seat on the second row is configured as removable)
+          {
+             CIL_u8SeatOccupancySensorTx coresponding to the first seat on the second row = SEAT_OCCUPIED;
+          }
+          else
+          {
+             CIL_u8SeatOccupancySensorTx coresponding to the first seat on the second row = SHORT_TO_GND;
+          }
+          break;
+       }
+    }
+
+    /* Seat Sensor 4 Status */
+    if (KUB_eCS_SBS_SEAT_2_NOT_CONFIGURED_VARIANT)
+    {
+       /* Seat Sensor 4 not coded */
+       CIL_u8SeatOccupancySensorTx coresponding to the second seat on the second row = NOT_INSTALLED;
+    }
+    else
+    {
+       switch (Seat Occupancy from IoHwAb)
+       {
+       case SEAT_OCCUPANCY_NOT_DETECTED:
+          CIL_u8SeatOccupancySensorTx coresponding to the second seat on the second row = SEAT_NOT_OCCUPIED;
+          break;
+       case SEAT_OCCUPANCY_DETECTED:
+          CIL_u8SeatOccupancySensorTx coresponding to the second seat on the second row = SEAT_OCCUPIED;
+          break;
+       default: /* KU8_SEAT_OCCUPANCY_UNKNOWN or random value due to memory corruption */
+          if(The second seat on the second row is configured as removable)
+          {
+             CIL_u8SeatOccupancySensorTx coresponding to the second seat on the second row = SEAT_OCCUPIED;
+          }
+          else
+          {
+             CIL_u8SeatOccupancySensorTx coresponding to the second seat on the second row = SHORT_TO_GND;
+          }
+          break;
+       }
+    }
+
+    /* Signal: eCS_SBS_Belegung_Reihe2_FA */
+    Rte_Write_SP_IF_eCS_SBS_Belegung_Reihe2_FA_XIX_Grundumfang_XIX_eCS_DE_eCS_SBS_Belegung_Reihe2_FA();
+
+    /* Signal: eCS_SBS_Belegung_Reihe2_BF */
+    Rte_Write_SP_IF_eCS_SBS_Belegung_Reihe2_BF_XIX_Grundumfang_XIX_eCS_DE_eCS_SBS_Belegung_Reihe2_BF();
+}
+
+
+/**
+* \brief
+*        This function is used to output the current state of the solenoid coresponding
+*        to the first solenoid on the front row, seat BF
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot01
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Status_Verr_Reihe1_BFS_1
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Status_Verr_Reihe1_BFS_1;
+*        ARCH_SW_CIL_pclModeManagement;
+*        ARCH_SW_CIL_prrSolenoidState;
+*        ARCH_SW_CIL_prrEcsAlgoData_u8EcsFlag;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Status_Verr_Reihe1_BFS_1(void)
+{
+   /* Get all solenoid state */
+   Rte_Read_prrSolenoidState_au8SolenoidState();
+
+   /* Get eCS algo outputs: Driver trigger */
+   Rte_Read_prrEcsAlgoData_u8EcsFlag();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_INIT_PHASE_IN_PROGRESS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_ECU_CAN_INHIB_STATUS);
+      
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_3_ABORTION_ERROR | KU64_SOLENOID_3_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_3_CONFIGURED);
+
+   /* eCS status computation */
+   if(The solenoid is not configured)
+   {
+      u8SolenoidStatus = NOT_CONFIGURED;
+   }
+   else if(Init phase is not finished)
+   {
+      u8SolenoidStatus = INIT;
+   }
+   else if(The solenoid is disabled due to an error)
+   {
+      u8SolenoidStatus = ERROR;
+   }
+   else
+   {
+      if((The solenoid is in the STARTUP state) OR (The solenoid is in the DIAGNOSTIC state))
+      {
+         if(The eCS ball algorithm outputs LOCK) OR (Crash signal has been received via the mode management interface))
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else if(The eCS ball algorithm outputs UNLOCK)
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+         else
+         {
+            /* do nothing */
+         }
+      }
+      else if(The solenoid is in the UNLOCK state) OR (The solenoid is in the BACKUP state))
+      {
+         if (Crash signal has been received via the mode management interface)
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+      }
+      else if (The solenoid is in the LOCK state)
+      {
+         u8SolenoidStatus = LOCK;
+      }
+      else if (The solenoid is in the disabled state)
+      {
+         u8SolenoidStatus = ERROR;
+      }
+      else
+      {
+         /* Can not decide */
+      }
+   }
+
+   /* Write signal to CAN bus */
+   Rte_Write_SP_IF_eCS_Status_Verr_Reihe1_BFS_1_DE_eCS_Status_Verr_Reihe1_BFS_1(u8SolenoidStatus);
+
+}
+
+/**
+* \brief
+*        This function is used to output the current state of the solenoid coresponding
+*        to the second solenoid on the front row, seat BF
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot02
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Status_Verr_Reihe1_BFS_2
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Status_Verr_Reihe1_BFS_2;
+*        ARCH_SW_CIL_pclModeManagement;
+*        ARCH_SW_CIL_prrSolenoidState;
+*        ARCH_SW_CIL_prrEcsAlgoData_u8EcsFlag;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Status_Verr_Reihe1_BFS_2(void)
+{
+   /* Get all solenoid state */
+   Rte_Read_prrSolenoidState_au8SolenoidState();
+
+   /* Get eCS algo outputs: Driver trigger */
+   Rte_Read_prrEcsAlgoData_u8EcsFlag();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_INIT_PHASE_IN_PROGRESS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_ECU_CAN_INHIB_STATUS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_4_ABORTION_ERROR | KU64_SOLENOID_4_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_4_CONFIGURED);
+   /* eCS status computation */
+   if(The solenoid is not configured)
+   {
+      u8SolenoidStatus = NOT_CONFIGURED;
+   }
+   else if(Init phase is not finished)
+   {
+      u8SolenoidStatus = INIT;
+   }
+   else if(The solenoid is disabled due to an error)
+   {
+      u8SolenoidStatus = ERROR;
+   }
+   else
+   {
+      if((The solenoid is in the STARTUP state) OR (The solenoid is in the DIAGNOSTIC state))
+      {
+         if(The eCS ball algorithm outputs LOCK) OR (Crash signal has been received via the mode management interface))
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else if(The eCS ball algorithm outputs UNLOCK)
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+         else
+         {
+            /* do nothing */
+         }
+      }
+      else if(The solenoid is in the UNLOCK state) OR (The solenoid is in the BACKUP state))
+      {
+         if (Crash signal has been received via the mode management interface)
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+      }
+      else if (The solenoid is in the LOCK state)
+      {
+         u8SolenoidStatus = LOCK;
+      }
+      else if (The solenoid is in the disabled state)
+      {
+         u8SolenoidStatus = ERROR;
+      }
+      else
+      {
+         /* Can not decide */
+      }
+   }
+
+   /* Write signal to CAN bus */
+   Rte_Write_SP_IF_eCS_Status_Verr_Reihe1_BFS_2_DE_eCS_Status_Verr_Reihe1_BFS_2(u8SolenoidStatus);
+}
+
+/**
+* \brief
+*        This function is used to output the current state of the solenoid coresponding
+*        to the first solenoid on the front row, seat FA
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot02
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Status_Verr_Reihe1_FS_1
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Status_Verr_Reihe1_FS_1;
+*        ARCH_SW_CIL_pclModeManagement;
+*        ARCH_SW_CIL_prrSolenoidState;
+*        ARCH_SW_CIL_prrEcsAlgoData_u8EcsFlag;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Status_Verr_Reihe1_FS_1(void)
+{
+   /* Get all solenoid state */
+   Rte_Read_prrSolenoidState_au8SolenoidState(au8SolenoidStates);
+
+   /* Get eCS algo outputs: Driver trigger */
+   Rte_Read_prrEcsAlgoData_u8EcsFlag();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_INIT_PHASE_IN_PROGRESS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_ECU_CAN_INHIB_STATUS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_1_ABORTION_ERROR | KU64_SOLENOID_1_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_1_CONFIGURED);
+   /* eCS status computation */
+   if(The solenoid is not configured)
+   {
+      u8SolenoidStatus = NOT_CONFIGURED;
+   }
+   else if(Init phase is not finished)
+   {
+      u8SolenoidStatus = INIT;
+   }
+   else if(The solenoid is disabled due to an error)
+   {
+      u8SolenoidStatus = ERROR;
+   }
+   else
+   {
+      if((The solenoid is in the STARTUP state) OR (The solenoid is in the DIAGNOSTIC state))
+      {
+         if(The eCS ball algorithm outputs LOCK) OR (Crash signal has been received via the mode management interface))
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else if(The eCS ball algorithm outputs UNLOCK)
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+         else
+         {
+            /* do nothing */
+         }
+      }
+      else if(The solenoid is in the UNLOCK state) OR (The solenoid is in the BACKUP state))
+      {
+         if (Crash signal has been received via the mode management interface)
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+      }
+      else if (The solenoid is in the LOCK state)
+      {
+         u8SolenoidStatus = LOCK;
+      }
+      else if (The solenoid is in the disabled state)
+      {
+         u8SolenoidStatus = ERROR;
+      }
+      else
+      {
+         /* Can not decide */
+      }
+   }
+
+   /* Write signal to CAN bus */
+   Rte_Write_SP_IF_eCS_Status_Verr_Reihe1_FS_1_DE_eCS_Status_Verr_Reihe1_FS_1(u8SolenoidStatus);
+}
+
+/**
+* \brief
+*        This function is used to output the current state of the solenoid coresponding
+*        to the second solenoid on the front row, seat FA
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot03
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Status_Verr_Reihe1_FS_2
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Status_Verr_Reihe1_FS_2;
+*        ARCH_SW_CIL_pclModeManagement;
+*        ARCH_SW_CIL_prrSolenoidState;
+*        ARCH_SW_CIL_prrEcsAlgoData_u8EcsFlag;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Status_Verr_Reihe1_FS_2(void)
+{
+   /* Get all solenoid state */
+   Rte_Read_prrSolenoidState_au8SolenoidState());
+
+   /* Get eCS algo outputs: Driver trigger */
+   Rte_Read_prrEcsAlgoData_u8EcsFlag();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_INIT_PHASE_IN_PROGRESS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_ECU_CAN_INHIB_STATUS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_2_ABORTION_ERROR | KU64_SOLENOID_2_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_2_CONFIGURED);
+   /* eCS status computation */
+   if(The solenoid is not configured)
+   {
+      u8SolenoidStatus = NOT_CONFIGURED;
+   }
+   else if(Init phase is not finished)
+   {
+      u8SolenoidStatus = INIT;
+   }
+   else if(The solenoid is disabled due to an error)
+   {
+      u8SolenoidStatus = ERROR;
+   }
+   else
+   {
+      if((The solenoid is in the STARTUP state) OR (The solenoid is in the DIAGNOSTIC state))
+      {
+         if(The eCS ball algorithm outputs LOCK) OR (Crash signal has been received via the mode management interface))
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else if(The eCS ball algorithm outputs UNLOCK)
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+         else
+         {
+            /* do nothing */
+         }
+      }
+      else if(The solenoid is in the UNLOCK state) OR (The solenoid is in the BACKUP state))
+      {
+         if (Crash signal has been received via the mode management interface)
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+      }
+      else if (The solenoid is in the LOCK state)
+      {
+         u8SolenoidStatus = LOCK;
+      }
+      else if (The solenoid is in the disabled state)
+      {
+         u8SolenoidStatus = ERROR;
+      }
+      else
+      {
+         /* Can not decide */
+      }
+   }
+
+   /* Write signal to CAN bus */
+   Rte_Write_SP_IF_eCS_Status_Verr_Reihe1_FS_2_DE_eCS_Status_Verr_Reihe1_FS_2(u8SolenoidStatus);
+}
+
+/**
+* \brief
+*        This function is used to output the current state of the solenoid coresponding
+*        to the solenoid on the second row, seat BF
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot03
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Status_Verr_Reihe2_BFS
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Status_Verr_Reihe2_BFS;
+*        ARCH_SW_CIL_pclModeManagement;
+*        ARCH_SW_CIL_prrSolenoidState;
+*        ARCH_SW_CIL_prrEcsAlgoData_u8EcsFlag;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Status_Verr_Reihe2_BFS(void)
+{
+   /* Get all solenoid state */
+   Rte_Read_prrSolenoidState_au8SolenoidState();
+
+   /* Get eCS algo outputs: Driver trigger */
+   Rte_Read_prrEcsAlgoData_u8EcsFlag(&b8EcsTrigger);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_INIT_PHASE_IN_PROGRESS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_ECU_CAN_INHIB_STATUS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_6_ABORTION_ERROR | KU64_SOLENOID_6_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_6_CONFIGURED);
+   /* eCS status computation */
+   if(The solenoid is not configured)
+   {
+      u8SolenoidStatus = NOT_CONFIGURED;
+   }
+   else if(Init phase is not finished)
+   {
+      u8SolenoidStatus = INIT;
+   }
+   else if(The solenoid is disabled due to an error)
+   {
+      u8SolenoidStatus = ERROR;
+   }
+   else
+   {
+      if((The solenoid is in the STARTUP state) OR (The solenoid is in the DIAGNOSTIC state))
+      {
+         if(The eCS ball algorithm outputs LOCK) OR (Crash signal has been received via the mode management interface))
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else if(The eCS ball algorithm outputs UNLOCK)
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+         else
+         {
+            /* do nothing */
+         }
+      }
+      else if(The solenoid is in the UNLOCK state) OR (The solenoid is in the BACKUP state))
+      {
+         if (Crash signal has been received via the mode management interface)
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+      }
+      else if (The solenoid is in the LOCK state)
+      {
+         u8SolenoidStatus = LOCK;
+      }
+      else if (The solenoid is in the disabled state)
+      {
+         u8SolenoidStatus = ERROR;
+      }
+      else
+      {
+         /* Can not decide */
+      }
+   }
+
+   /* Write signal to CAN bus */
+   Rte_Write_SP_IF_eCS_Status_Verr_Reihe2_BFS_DE_eCS_Status_Verr_Reihe2_BFS(u8SolenoidStatus);
+}
+
+/**
+* \brief
+*        This function is used to output the current state of the solenoid coresponding
+*        to the solenoid on the second row, seat FA
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot03
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Status_Verr_Reihe2_FS
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Status_Verr_Reihe2_FS;
+*        ARCH_SW_CIL_pclModeManagement;
+*        ARCH_SW_CIL_prrSolenoidState;
+*        ARCH_SW_CIL_prrEcsAlgoData_u8EcsFlag;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Status_Verr_Reihe2_FS(void)
+{
+   /* Get all solenoid state */
+   Rte_Read_prrSolenoidState_au8SolenoidState());
+
+   /* Get eCS algo outputs: Driver trigger */
+   Rte_Read_prrEcsAlgoData_u8EcsFlag();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_INIT_PHASE_IN_PROGRESS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_ECU_CAN_INHIB_STATUS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_5_ABORTION_ERROR | KU64_SOLENOID_5_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_5_CONFIGURED);
+   /* eCS status computation */
+   if(The solenoid is not configured)
+   {
+      u8SolenoidStatus = NOT_CONFIGURED;
+   }
+   else if(Init phase is not finished)
+   {
+      u8SolenoidStatus = INIT;
+   }
+   else if(The solenoid is disabled due to an error)
+   {
+      u8SolenoidStatus = ERROR;
+   }
+   else
+   {
+      if((The solenoid is in the STARTUP state) OR (The solenoid is in the DIAGNOSTIC state))
+      {
+         if(The eCS ball algorithm outputs LOCK) OR (Crash signal has been received via the mode management interface))
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else if(The eCS ball algorithm outputs UNLOCK)
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+         else
+         {
+            /* do nothing */
+         }
+      }
+      else if(The solenoid is in the UNLOCK state) OR (The solenoid is in the BACKUP state))
+      {
+         if (Crash signal has been received via the mode management interface)
+         {
+            u8SolenoidStatus = LOCK;
+         }
+         else
+         {
+            u8SolenoidStatus = UNLOCK;
+         }
+      }
+      else if (The solenoid is in the LOCK state)
+      {
+         u8SolenoidStatus = LOCK;
+      }
+      else if (The solenoid is in the disabled state)
+      {
+         u8SolenoidStatus = ERROR;
+      }
+      else
+      {
+         /* Can not decide */
+      }
+   }
+
+   /* Write signal to CAN bus */
+   Rte_Write_SP_IF_eCS_Status_Verr_Reihe2_FS_DE_eCS_Status_Verr_Reihe2_FS(u8SolenoidStatus);
+}
+
+
+/**
+* \brief
+*        This function is used to output the current error state and error source
+*        of the solenoid coresponding to the first solenoid on the front row, seat BF
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot01
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Error_Reihe1_BFS_1
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Error_Reihe1_BFS_1;
+*        ARCH_SW_CIL_prrSolenoidNbOfBackups;
+*        ARCH_SW_CIL_prrSolenoidOCStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToGndStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToVccStatus;
+*        ARCH_SW_CIL_prrSolenoidOvervoltageStatus;
+*        ARCH_SW_CIL_pclModeManagement;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Error_Reihe1_BFS_1(void)
+{
+
+   /* Get Solenoid error status */
+   Rte_Read_prrSolenoidOCStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToGndStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToVccStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidOvervoltageStatus_au8SolenoidOvervoltageStatus();
+
+   Rte_Read_prrSolenoidStuckStatus_au8SolenoidIsStuck();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_3_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_3_CONFIGURED);
+
+   if(The solenoid is configured)
+   {
+      if(The solenoid is disabled due to an error)
+      {
+         if(Short to VBAT error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_VBAT;
+         }
+         else if(Open circuit or Solenoid Overvoltage error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = OPEN_CIRCUIT;
+         }
+         else if(Short to GND error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_GND;
+         }
+         else if(Actuator Blocked error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = ACTUATOR_BLOCKED_ERROR;
+         }
+         else
+         {
+            u8SolenoidErrorStatus = NO_ERROR;
+         }
+      }
+      else
+      {
+         u8SolenoidErrorStatus = NO_ERROR;
+      }
+   }
+   else
+   {
+      u8SolenoidErrorStatus = NO_ERROR;
+   }
+
+   (void)Rte_Write_SP_IF_eCS_Error_Reihe1_BFS_1_DE_eCS_Error_Reihe1_BFS_1(u8SolenoidErrorStatus);
+}
+
+/**
+* \brief
+*        This function is used to output the current error state and error source
+*        of the solenoid coresponding to the second solenoid on the front row, seat BF
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot01
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Error_Reihe1_BFS_2
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Error_Reihe1_BFS_2;
+*        ARCH_SW_CIL_prrSolenoidNbOfBackups;
+*        ARCH_SW_CIL_prrSolenoidOCStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToGndStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToVccStatus;
+*        ARCH_SW_CIL_prrSolenoidOvervoltageStatus;
+*        ARCH_SW_CIL_pclModeManagement;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Error_Reihe1_BFS_2(void)
+{
+   /* Get Solenoid error status */
+   Rte_Read_prrSolenoidOCStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToGndStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToVccStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidOvervoltageStatus_au8SolenoidOvervoltageStatus();
+
+   Rte_Read_prrSolenoidStuckStatus_au8SolenoidIsStuck();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_4_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_4_CONFIGURED);
+   if(The solenoid is configured)
+   {
+      if(The solenoid is disabled due to an error)
+      {
+         if(Short to VBAT error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_VBAT;
+         }
+         else if(Open circuit or Solenoid Overvoltage error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = OPEN_CIRCUIT;
+         }
+         else if(Short to GND error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_GND;
+         }
+         else if(Actuator Blocked error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = ACTUATOR_BLOCKED_ERROR;
+         }
+         else
+         {
+            u8SolenoidErrorStatus = NO_ERROR;
+         }
+      }
+      else
+      {
+         u8SolenoidErrorStatus = NO_ERROR;
+      }
+   }
+   else
+   {
+      u8SolenoidErrorStatus = NO_ERROR;
+   }
+
+   Rte_Write_SP_IF_eCS_Error_Reihe1_BFS_2_DE_eCS_Error_Reihe1_BFS_2(u8SolenoidErrorStatus);
+}
+
+/**
+* \brief
+*        This function is used to output the current error state and error source
+*        of the solenoid coresponding to the first solenoid on the front row, seat FA
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot02
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Error_Reihe1_FS_1
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Error_Reihe1_FS_1;
+*        ARCH_SW_CIL_prrSolenoidNbOfBackups;
+*        ARCH_SW_CIL_prrSolenoidOCStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToGndStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToVccStatus;
+*        ARCH_SW_CIL_prrSolenoidOvervoltageStatus;
+*        ARCH_SW_CIL_pclModeManagement;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Error_Reihe1_FS_1(void)
+{
+   /* Get Solenoid error status */
+   Rte_Read_prrSolenoidOCStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToGndStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToVccStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidOvervoltageStatus_au8SolenoidOvervoltageStatus();
+   
+   Rte_Read_prrSolenoidStuckStatus_au8SolenoidIsStuck();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_1_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_1_CONFIGURED);
+   if(The solenoid is configured)
+   {
+      if(The solenoid is disabled due to an error)
+      {
+         if(Short to VBAT error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_VBAT;
+         }
+         else if(Open circuit or Solenoid Overvoltage error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = OPEN_CIRCUIT;
+         }
+         else if(Short to GND error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_GND;
+         }
+         else if(Actuator Blocked error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = ACTUATOR_BLOCKED_ERROR;
+         }
+         else
+         {
+            u8SolenoidErrorStatus = NO_ERROR;
+         }
+      }
+      else
+      {
+         u8SolenoidErrorStatus = NO_ERROR;
+      }
+   }
+   else
+   {
+      u8SolenoidErrorStatus = NO_ERROR;
+   }
+
+   Rte_Write_SP_IF_eCS_Error_Reihe1_FS_1_DE_eCS_Error_Reihe1_FS_1(u8SolenoidErrorStatus);
+}
+
+/**
+* \brief
+*        This function is used to output the current error state and error source
+*        of the solenoid coresponding to the second solenoid on the front row, seat FA
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot02
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Error_Reihe1_FS_2
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Error_Reihe1_FS_2;
+*        ARCH_SW_CIL_prrSolenoidNbOfBackups;
+*        ARCH_SW_CIL_prrSolenoidOCStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToGndStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToVccStatus;
+*        ARCH_SW_CIL_prrSolenoidOvervoltageStatus;
+*        ARCH_SW_CIL_pclModeManagement;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Error_Reihe1_FS_2(void)
+{
+   /* Get Solenoid error status */
+   Rte_Read_prrSolenoidOCStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToGndStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToVccStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidOvervoltageStatus_au8SolenoidOvervoltageStatus();
+
+   Rte_Read_prrSolenoidStuckStatus_au8SolenoidIsStuck();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_2_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_2_CONFIGURED);
+
+   if(The solenoid is configured)
+   {
+      if(The solenoid is disabled due to an error)
+      {
+         if(Short to VBAT error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_VBAT;
+         }
+         else if(Open circuit or Solenoid Overvoltage error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = OPEN_CIRCUIT;
+         }
+         else if(Short to GND error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_GND;
+         }
+         else if(Actuator Blocked error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = ACTUATOR_BLOCKED_ERROR;
+         }
+         else
+         {
+            u8SolenoidErrorStatus = NO_ERROR;
+         }
+      }
+      else
+      {
+         u8SolenoidErrorStatus = NO_ERROR;
+      }
+   }
+   else
+   {
+      u8SolenoidErrorStatus = NO_ERROR;
+   }
+
+   Rte_Write_SP_IF_eCS_Error_Reihe1_FS_2_DE_eCS_Error_Reihe1_FS_2();
+}
+
+/**
+* \brief
+*        This function is used to output the current error state and error source
+*        of the solenoid coresponding to the solenoid on the second row, seat BF
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot04
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Error_Reihe2_BFS
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Error_Reihe2_BFS;
+*        ARCH_SW_CIL_prrSolenoidNbOfBackups;
+*        ARCH_SW_CIL_prrSolenoidOCStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToGndStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToVccStatus;
+*        ARCH_SW_CIL_prrSolenoidOvervoltageStatus;
+*        ARCH_SW_CIL_pclModeManagement;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Error_Reihe2_BFS(void)
+{
+   /* Get Solenoid error status */
+   Rte_Read_prrSolenoidOCStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToGndStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToVccStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidOvervoltageStatus_au8SolenoidOvervoltageStatus();
+   
+   Rte_Read_prrSolenoidStuckStatus_au8SolenoidIsStuck();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_6_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_6_CONFIGURED);
+
+   if(The solenoid is configured)
+   {
+      if(The solenoid is disabled due to an error)
+      {
+         if(Short to VBAT error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_VBAT;
+         }
+         else if(Open circuit or Solenoid Overvoltage error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = OPEN_CIRCUIT;
+         }
+         else if(Short to GND error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_GND;
+         }
+         else if(Actuator Blocked error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = ACTUATOR_BLOCKED_ERROR;
+         }
+         else
+         {
+            u8SolenoidErrorStatus = NO_ERROR;
+         }
+      }
+      else
+      {
+         u8SolenoidErrorStatus = NO_ERROR;
+      }
+   }
+   else
+   {
+      u8SolenoidErrorStatus = NO_ERROR;
+   }
+
+   Rte_Write_SP_IF_eCS_Error_Reihe2_BFS_DE_eCS_Error_Reihe2_BFS();
+}
+
+/**
+* \brief
+*        This function is used to output the current error state and error source
+*        of the solenoid coresponding to the solenoid on the second row, seat FA
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot04
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Error_Reihe2_FS
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Error_Reihe2_FS;
+*        ARCH_SW_CIL_prrSolenoidNbOfBackups;
+*        ARCH_SW_CIL_prrSolenoidOCStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToGndStatus;
+*        ARCH_SW_CIL_prrSolenoidShortToVccStatus;
+*        ARCH_SW_CIL_prrSolenoidOvervoltageStatus;
+*        ARCH_SW_CIL_pclModeManagement;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Error_Reihe2_FS(void)
+{
+   /* Get Solenoid error status */
+   Rte_Read_prrSolenoidOCStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToGndStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidShortToVccStatus_au8SolenoidAutotestStatus();
+
+   Rte_Read_prrSolenoidOvervoltageStatus_au8SolenoidOvervoltageStatus();
+   
+   Rte_Read_prrSolenoidStuckStatus_au8SolenoidIsStuck();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_5_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_5_CONFIGURED);
+
+   if(The solenoid is configured)
+   {
+      if(The solenoid is disabled due to an error)
+      {
+         if(Short to VBAT error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_VBAT;
+         }
+         else if(Open circuit or Solenoid Overvoltage error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = OPEN_CIRCUIT;
+         }
+         else if(Short to GND error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = SHORT_TO_GND;
+         }
+         else if(Actuator Blocked error is present on the solenoid)
+         {
+            u8SolenoidErrorStatus = ACTUATOR_BLOCKED_ERROR;
+         }
+         else
+         {
+            u8SolenoidErrorStatus = NO_ERROR;
+         }
+      }
+      else
+      {
+         u8SolenoidErrorStatus = NO_ERROR;
+      }
+   }
+   else
+   {
+      u8SolenoidErrorStatus = NO_ERROR;
+   }
+
+   Rte_Write_SP_IF_eCS_Error_Reihe2_FS_DE_eCS_Error_Reihe2_FS();
+}
+
+/**
+* \brief
+*        This function is used to output the last valid state of the seat occupancy
+*        sensor coresponding to the first seat on the second row
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot05
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_SBS_LastState_Reihe2_FS
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_SBS_LastState_Reihe2_FS
+**/
+LOCAL_INLINE void cil_Manage_eCS_SBS_LastState_Reihe2_FS(void)
+{
+   Set u8SbsLastStateValue to INIT;
+
+   if(SBS Last State is Configured)
+   {
+   /* Read last saved data from NvM */
+   switch(NVP_au8SBSLastState corresponding to the first seat on the second row)
+   {
+      case KSEAT_OCCUPANCY_SHORT_TO_GND:
+      {
+         /* Translate internal value to CAN signal */
+         Set u8SbsLastStateValue to ERROR;
+         break;
+      }
+      case SEAT_OCCUPANCY_DETECTED:
+      {
+         /* Translate internal value to CAN signal */
+         Set u8SbsLastStateValue TO OCCUPIED;
+         break;
+      }
+      case SEAT_OCCUPANCY_NOT_DETECTED:
+      {
+         /* Translate internal value to CAN signal */
+         Set u8SbsLastStateValue to NOT_OCCUPIED;
+         break;
+      }
+      case SEAT_OCCUPANCY_UNKNOWN:
+      {
+         /* Translate internal value to CAN signal */
+         Set u8SbsLastStateValue to ERROR;
+         break;
+      }
+      default:
+         break;
+      }
+   }
+
+   Rte_Write_SP_IF_eCS_SBS_LastState_Reihe2_FS_DE_eCS_SBS_LastState_Reihe2_FS(u8SbsLastStateValue);
+}
+
+/**
+* \brief
+*        This function is used to output the last valid state of the seat occupancy
+*        sensor coresponding to the second seat on the second row
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot05
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_SBS_LastState_Reihe2_BFS
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_SBS_LastState_Reihe2_BFS
+**/
+LOCAL_INLINE void cil_Manage_eCS_SBS_LastState_Reihe2_BFS(void)
+{
+   Set u8SbsLastStateValue to INIT;
+
+   if(SBS Last State is Configured)
+   {
+   /* Read last saved data from NvM */
+   switch(NVP_au8SBSLastState corresponding to the second seat on the second row)
+   {
+      case KSEAT_OCCUPANCY_SHORT_TO_GND:
+      {
+         /* Translate internal value to CAN signal */
+         Set u8SbsLastStateValue to ERROR;
+         break;
+      }
+      case SEAT_OCCUPANCY_DETECTED:
+      {
+         /* Translate internal value to CAN signal */
+         Set u8SbsLastStateValue TO OCCUPIED;
+         break;
+      }
+      case SEAT_OCCUPANCY_NOT_DETECTED:
+      {
+         /* Translate internal value to CAN signal */
+         Set u8SbsLastStateValue to NOT_OCCUPIED;
+         break;
+      }
+      case SEAT_OCCUPANCY_UNKNOWN:
+      {
+         /* Translate internal value to CAN signal */
+         Set u8SbsLastStateValue to ERROR;
+         break;
+      }
+      default:
+         break;
+      }
+   }
+
+   (void)Rte_Write_SP_IF_eCS_SBS_LastState_Reihe2_BFS_DE_eCS_SBS_LastState_Reihe2_BFS(u8SbsLastStateValue);
+}
+
+/**
+* \brief
+*        This function is used to gather data necessary to compute the seat occupancy
+*        status
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot04
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_DevKit_Seat_Occupancy_Status
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0
+**/
+LOCAL_INLINE void cil_Manage_eCS_DevKit_Seat_Occupancy_Status(void)
+{
+   /* Fill Development Frame with acquisition data */
+   Send CIL_u8SeatOccupancySensorTx on the CAN bus;
+}
+
+/**
+* \brief
+*        This function is used to gather data necessary to compute the HW Defekt
+*        signal
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot04
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_HW_defekt
+* \archrequirement
+*        ARCH_SW_CIL_pclModeManagement;
+*        ARCH_SW_CIL_SP_IF_eCS_HW_defekt_XIX_Grundumfang_XIX_eCS;
+**/
+LOCAL_INLINE void cil_Manage_eCS_HW_defekt(void)
+{
+   Rte_Call_pclModeManagement_CheckModeStatus(ECU_PERMANENT_HW_ERROR);
+
+   if(Mode mask is set for ECU_PERMANENT_HW_ERROR)
+   {
+      u8HwDefektTx = ERROR_PRESENT;
+   }
+   else
+   {
+      u8HwDefektTx = NO_ERROR_PRESENT;
+   }
+
+   /* Signal: eCS_HW_defekt */
+   Rte_Write_SP_IF_eCS_HW_defekt_XIX_Grundumfang_XIX_eCS_DE_eCS_HW_defekt(u8HwDefektTx);
+}
+
+/**
+* \brief
+*        This function is used to gather data necessary to compute the Stoerung
+*        signal
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot04
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Stoerung
+* \archrequirement
+*        ARCH_SW_CIL_pclModeManagement;
+*        ARCH_SW_CIL_SP_IF_eCS_Stoerung_XIX_Grundumfang_XIX_eCS;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Stoerung(void)
+{
+   Rte_Call_pclModeManagement_CheckModeStatus(ECU_SPORADIC_ERROR);
+
+   if(Mode mask is set for ECU_SPORADIC_ERROR)
+   {
+      u8SporadicErrorTx = ERROR_PRESENT;
+   }
+   else
+   {
+      if(cil_u8UnknownStatusFrameError set to TRUE)
+      {
+         u8SporadicErrorTx = ERROR_PRESENT;
+      }
+      else
+      {
+         u8SporadicErrorTx = NO_ERROR_PRESENT;
+      }
+   }
+
+   /* Signal: eCS_Stoerung */
+   Rte_Write_SP_IF_eCS_Stoerung_XIX_Grundumfang_XIX_eCS_DE_eCS_Stoerung(u8SporadicErrorTx);
+}
+
+/**
+* \brief
+*        This function is used to gather data necessary to compute the current status
+*        of the eCS ECU
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot03
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Status
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Status_XIX_Grundumfang_XIX_eCS;
+*        ARCH_SW_CIL_prrEcsAlgoData_u8EcsFlag;
+*        ARCH_SW_CIL_pclModeManagement;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Status(void)
+{
+   /* Get eCS algo outputs: Driver trigger */
+   Rte_Read_prrEcsAlgoData_u8EcsFlag();
+
+   Rte_Call_pclModeManagement_CheckModeStatus(INIT_PHASE_IN_PROGRESS);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_x_ABORTION_ERROR | KU64_SOLENOID_x_INHIB_ERROR);
+
+   Rte_Call_pclModeManagement_CheckModeStatus(ECU_CAN_INHIB_STATUS);
+
+   /* eCS status computation */
+   if(Mode mask is set for INIT_PHASE_IN_PROGRESS)
+   {
+      if(KU32_CIL_INIT_STATUS_FRAME_TIMEOUT_VAL > cil_u32ReportInitStatusTimeoutCnt)
+      {
+         Increment cil_u32ReportInitStatusTimeoutCnt;
+
+         u8MergedECSStatus = INIT;
+      }
+      else if(Mode mask is set for SOLENOID_x_ERROR_DISABLED)
+      {
+         u8MergedECSStatus = ERROR_PRESENT;
+      }
+      else
+      {
+         cil_u8UnknownStatusFrameError = TRUE;
+
+         u8MergedECSStatus = ERROR_PRESENT;
+      }             
+   }
+   else
+   {
+      if(Mode mask is set for SOLENOID_x_ERROR_DISABLED)
+      {
+         u8MergedECSStatus = ERROR_PRESENT;
+      }
+      else
+      {
+         if(b8EcsTrigger is ECS_ALGO_UNLOCK)
+         {
+            if (Mode mask is set for ECU_CAN_INHIB_STATUS, e.g. crash signal is received)
+            {
+               u8MergedECSStatus = LOCK;
+            }
+            else
+            {
+               /* No way to difference between unlock states from feedback point of view */
+               u8MergedECSStatus = UNLOCK;
+            }
+         }
+         else if (b8EcsTrigger is ECS_ALGO_LOCK)
+         {
+            u8MergedECSStatus = LOCK;
+         }
+         else
+         {
+            /* Can not decide */
+         }
+      }
+      
+      cil_u32ReportInitStatusTimeoutCnt = ZERO;
+   }
+
+   if(cil_u32ReportInitStatusTimeoutCnt is ZERO)
+   {
+      cil_u8UnknownStatusFrameError = FALSE;
+   }
+
+   /* Signal: eCS_Status */
+   Rte_Write_SP_IF_eCS_Status_XIX_Grundumfang_XIX_eCS_DE_eCS_Status(u8MergedECSStatus);
+}
+
+/**
+* \brief
+*        This function is used to gather data on the current status of the buckles
+*        corresponding to seats 1&&2 on the 2nd row
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot01
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_Gurtschloss_Status
+* \archrequirement
+*        ARCH_SW_CIL_SP_IF_eCS_Gurtschloss_Status_Reihe2_FA_XIX_Grundumfang_XIX_eCS;
+*        ARCH_SW_CIL_SP_IF_eCS_Gurtschloss_Status_Reihe2_BF_XIX_Grundumfang_XIX_eCS;
+*        ARCH_SW_CIL_prrBuckleStatus;
+*        ARCH_SW_CIL_psrCILData_au8MergedBuckleStatus;
+**/
+LOCAL_INLINE void cil_Manage_eCS_Gurtschloss_Status(void)
+{
+   /* Get status for all buckles and map to CAN signal (values read from Airbag_02 for existing buckles will be overwritten) */
+   Rte_Read_CIL_prrBuckleStatus_au8BuckleStatus(u8BuckleStatusRx);
+
+   /* Buckle 5 status */
+   if (Buckle for FA seat second row not configured)
+   {
+      /* Buckle 5 not coded */
+       CIL_u8BuckleStatusTx corrseponding first buckle on the second row = BUCKLE_NOT_CONFIGURED;
+   }
+   else
+   {
+      switch (Buckle input from IoHwAb for first buckle on the second row)
+      {
+      case BUCKLE_NOT_LATCHED:
+         if(The first buckle on the second row is configured with inverted logic)
+         {
+            CIL_u8BuckleStatusTx corrseponding first buckle on the second row = BUCKLED;
+         }
+         else
+         {
+            CIL_u8BuckleStatusTx corrseponding first buckle on the second row = NOT_BUCKLED;
+         }
+         break;
+      case BUCKLE_LATCHED:
+         if(The first buckle on the second row is configured with inverted logic)
+         {
+            CIL_u8BuckleStatusTx corrseponding first buckle on the second row = NOT_BUCKLED;
+         }
+         else
+         {
+            CIL_u8BuckleStatusTx corrseponding first buckle on the second row = BUCKLED;
+         }
+         break;
+      default: /* KU8_BUCKLE_UNKNOWN or random value due to memory corruption */
+         CIL_u8BuckleStatusTx corrseponding first buckle on the second row = ERROR;
+         break;
+      }
+   }
+
+   /* Buckle 6 status */
+   if (Buckle for BF seat second row not configured)
+   {
+      /* Buckle 6 not coded */
+       CIL_u8BuckleStatusTx corrseponding second buckle on the second row = BUCKLE_NOT_CONFIGURED;
+   }
+   else
+   {
+      switch (Buckle input from IoHwAb for second buckle on the second row)
+      {
+      case KU8_BUCKLE_NOT_LATCHED:
+         if(The second buckle on the second row is configured with inverted logic)
+         {
+            CIL_u8BuckleStatusTx corrseponding second buckle on the second row = BUCKLED;
+         }
+         else
+         {
+            CIL_u8BuckleStatusTx corrseponding second buckle on the second row = NOT_BUCKLED;
+         }
+         break;
+      case KU8_BUCKLE_LATCHED:
+         if(The second buckle on the second row is configured with inverted logic)
+         {
+            CIL_u8BuckleStatusTx corrseponding second buckle on the second row = NOT_BUCKLED;
+         }
+         else
+         {
+            CIL_u8BuckleStatusTx corrseponding second buckle on the second row = BUCKLED;
+         }
+         break;
+      default: /* KU8_BUCKLE_UNKNOWN or random value due to memory corruption */
+         CIL_u8BuckleStatusTx corrseponding second buckle on the second row = ERROR;
+         break;
+      }
+   }
+
+   /* Build the merged internal buckle status and make it visible */
+   Build array containing buckle status for coresponding to each solenoid in u8MergedBuckleStatus;
+
+   /* write merged buckle status to the rest of the Application */
+   Rte_Write_CIL_psrCILData_au8MergedBuckleStatus(u8MergedBuckleStatus);
+
+   /* Signal: eCS_Gurtschloss_Status_Reihe2_FA */
+   Rte_Write_SP_IF_eCS_Gurtschloss_Status_Reihe2_FA_XIX_Grundumfang_XIX_eCS_DE_eCS_Gurtschloss_Status_Reihe2_FA();
+
+   /* Signal: eCS_Gurtschloss_Status_Reihe2_BF */
+   Rte_Write_SP_IF_eCS_Gurtschloss_Status_Reihe2_BF_XIX_Grundumfang_XIX_eCS_DE_eCS_Gurtschloss_Status_Reihe2_BF();
+}
+
+/**
+* \brief
+*        This function is used to gather data on the current status of the buckles
+*        corresponding to seats 1&&2 on the 1st row
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot01
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_DevKit_Buckle_Status
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_CanDataOut_Frame
+**/
+LOCAL_INLINE void cil_Manage_eCS_DevKit_Buckle_Status(void)
+{
+   /* write data to CAN frame */
+   Write CIL_u8BuckleStatusTx on the CAN bus;
+}
+
+/**
+* \brief
+*        This function is used to gather data what profiles are currently executed
+*        on each solenoid
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot01
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_DevKit_Solenoid_Profiles_States
+* \archrequirement
+*        ARCH_SW_CIL_pclSolenoidProfile;
+*        ARCH_SW_CIL_pclSolenoidStep;
+*        ARCH_SW_CIL_prrSolenoidState;
+**/
+LOCAL_INLINE void cil_Manage_eCS_DevKit_Solenoid_Profiles_States(void)
+{
+   /* Get solenoid current step */
+   Rte_Read_CIL_pclSolenoidStep_au8CurrentStep();
+
+   /* Get solenoid profile */
+   Rte_Read_pclSolenoidProfile_au8SelectedProfile();
+
+   /* Get all solenoid state */
+   Rte_Read_prrSolenoidState_au8SolenoidState();
+
+   /* Concatenates the solenoids 1 and 2 states */
+   Concatenate the solenoid states for efficient CAN transmission;
+
+   /* Fill Development Frame with acquisition data */
+   Send the solenoid states on the CAN bus;
+
+   Send the currently executed profile for each solenoid on the CAN bus;
+
+   Send the currently executed step for each solenoid on the CAN bus;
+}
+
+/**
+* \brief
+*        This function is used to gather data about acceleration data available
+*        on the SPI bus
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot02
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_DevKit_Acceleration_Output
+* \archrequirement
+*        ARCH_SW_CIL_prr3DAcceleration;
+*        ARCH_SW_CIL_prrAccelMtrPerSecSqd;
+**/
+LOCAL_INLINE void cil_Manage_eCS_DevKit_Acceleration_Output(void)
+{
+   /* Get Raw Acceleration in g from SPI communication */
+   Rte_Read_prr3DAcceleration_st3DAccel();
+   Rte_Read_prrAccelMtrPerSecSqd_stAccelMtrPerSecSqd();
+
+   Add calibration offsets to the raw acceleration in g;
+
+   /* Fill Development Frame with acquisition data */
+   Send acceleration data in g with offsets on the CAN bus;
+
+   Send acceleration data in m/s^2 on the CAN bus;
+}
+
+/**
+* \brief
+*        This function is used to gather data about the current output of the
+*        ball algorithm
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot02
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_DevKit_Algo_Output
+* \archrequirement
+*        ARCH_SW_CIL_prrEcsAlgoData_u8EcsFlag;
+*        ARCH_SW_CIL_prrEcsAlgoData_u16BallPosition;
+**/
+LOCAL_INLINE void cil_Manage_eCS_DevKit_Algo_Output(void)
+{
+   /* Get eCS algo outputs: Ball position in mm */
+   Rte_Read_prrEcsAlgoData_u16BallPosition();
+
+   /* Get eCS algo outputs: Driver trigger */
+   Rte_Read_prrEcsAlgoData_u8EcsFlag();
+
+   /* Fill Development Frame with acquisition data */
+   Send ball position in mm on the CAN bus;
+
+   Send eCS ball algorithm output on the CAN bus;
+}
+
+/**
+* \brief
+*        This function is used to gather data of the current status of the lever(if
+*        it has reached the unlock position or not)
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot02
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_DevKit_Solenoid_Mechanical_Status
+* \archrequirement
+*        ARCH_SW_CIL_pclModeManagement
+**/
+LOCAL_INLINE void cil_Manage_eCS_DevKit_Solenoid_Mechanical_Status(void)
+{
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_1_UNLOCK_CONFIRMED);
+   if(Solenoid 1 is confirmed)
+   {
+      Set bit corresponding to solenoid 1 on the CAN signal;
+   }
+   else
+   {
+      Clear bit corresponding to solenoid 1 on the CAN signal;
+   }
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_2_UNLOCK_CONFIRMED);
+   if(Solenoid 2 is confirmed)
+   {
+      Set bit corresponding to solenoid 2 on the CAN signal;
+   }
+   else
+   {
+      Clear bit corresponding to solenoid 2 on the CAN signal;
+   }
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_3_UNLOCK_CONFIRMED);
+   if(Solenoid 3 is confirmed)
+   {
+      Set bit corresponding to solenoid 3 on the CAN signal;
+   }
+   else
+   {
+      Clear bit corresponding to solenoid 3 on the CAN signal;
+   }
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_4_UNLOCK_CONFIRMED);
+   if(Solenoid 4 is confirmed)
+   {
+      Set bit corresponding to solenoid 4 on the CAN signal;
+   }
+   else
+   {
+      Clear bit corresponding to solenoid 4 on the CAN signal;
+   }
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_5_UNLOCK_CONFIRMED);
+   if(Solenoid 5 is confirmed)
+   {
+      Set bit corresponding to solenoid 5 on the CAN signal;
+   }
+   else
+   {
+      Clear bit corresponding to solenoid 5 on the CAN signal;
+   }
+
+   Rte_Call_pclModeManagement_CheckModeStatus(KU64_SOLENOID_6_UNLOCK_CONFIRMED);
+   if(Solenoid 6 is confirmed)
+   {
+      Set bit corresponding to solenoid 6 on the CAN signal;
+   }
+   else
+   {
+      Clear bit corresponding to solenoid 6 on the CAN signal;
+   }
+
+   /* Fill Development Frame with acquisition data */
+   Send solenoid lever confirmation data on the CAN bus;
+}
+
+/**
+* \brief
+*        This function is used to gather data regarding various counters that
+*        will be sent on the CAN bus
+*        e.g. execution counters, warm reset counters
+* \dynamicaspectcaller
+*        cil_ManagePeriodicData_TimeSlot05
+* \dynamicaspectdescription
+*        Called by local function for better granularity and split between OEM/Internal functions
+* \constrains
+*        NVP_u8EnableDevFrame must be != KU8_ZERO (DevKit Frame is enabled)
+* \ddesignrequirement
+*        DSG_cil_Manage_eCS_DevKit_Counter_Management
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0
+**/
+LOCAL_INLINE void cil_Manage_eCS_DevKit_Counter_Management(void)
+{
+   Send NVP_au32ExecutedSolenoidCounters on the CAN bus;
+
+   Send NVP_u32WarmResetCounter on the CAN bus;
+}
+
+/**
+* \brief
+*        This function represents the 1st time slot
+*        of managing the CAN outputs from application.
+* \dynamicaspectcaller
+*        CIL_runAppliToCAN
+* \dynamicaspectdescription
+*        Called by external function
+* \ddesignrequirement
+*        DSG_CIL_cil_ManagePeriodicData_TimeSlot01
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0
+**/
+LOCAL_INLINE void cil_ManagePeriodicData_TimeSlot01(void)
+{
+   cil_Manage_eCS_Gurtschloss_Status();
+
+   cil_Manage_eCS_Status_Verr_Reihe1_BFS_1();
+
+   cil_Manage_eCS_Error_Reihe1_BFS_1();
+
+   cil_Manage_eCS_Error_Reihe1_BFS_2();
+
+   if (The development frame is enabled via NVP_u8EnableDevFrame)
+   {
+      cil_Manage_eCS_DevKit_Solenoid_Profiles_States();
+
+      cil_Manage_eCS_DevKit_Buckle_Status();
+   }
+}
+
+/**
+* \brief
+*        This function represents the 2nd time slot
+*        of managing the CAN outputs from application.
+* \dynamicaspectcaller
+*        CIL_runAppliToCAN
+* \dynamicaspectdescription
+*        Called by external function
+* \ddesignrequirement
+*        DSG_CIL_cil_ManagePeriodicData_TimeSlot02
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0
+**/
+LOCAL_INLINE void cil_ManagePeriodicData_TimeSlot02(void)
+{
+   cil_Manage_eCS_Status_Verr_Reihe1_BFS_2();
+
+   cil_Manage_eCS_Status_Verr_Reihe1_FS_1();
+
+   cil_Manage_eCS_Error_Reihe1_FS_1();
+
+   cil_Manage_eCS_Error_Reihe1_FS_2();
+
+   if (The development frame is enabled via NVP_u8EnableDevFrame)
+   {
+      cil_Manage_eCS_DevKit_Acceleration_Output();
+
+      cil_Manage_eCS_DevKit_Algo_Output();
+
+      cil_Manage_eCS_DevKit_Solenoid_Mechanical_Status();
+   }
+}
+
+/**
+* \brief
+*        This function represents the 3rd time slot
+*        of managing the CAN outputs from application.
+* \dynamicaspectcaller
+*        CIL_runAppliToCAN
+* \dynamicaspectdescription
+*        Called by external function
+* \ddesignrequirement
+*        DSG_CIL_cil_ManagePeriodicData_TimeSlot03
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0
+**/
+LOCAL_INLINE void cil_ManagePeriodicData_TimeSlot03(void)
+{
+   cil_Manage_eCS_Status();
+
+   cil_Manage_eCS_Status_Verr_Reihe1_FS_2();
+
+   cil_Manage_eCS_Status_Verr_Reihe2_BFS();
+
+   cil_Manage_eCS_Status_Verr_Reihe2_FS();
+}
+
+/**
+* \brief
+*        This function represents the 4th time slot
+*        of managing the CAN outputs from application.
+* \dynamicaspectcaller
+*        CIL_runAppliToCAN
+* \dynamicaspectdescription
+*        Called by external function
+* \ddesignrequirement
+*        DSG_CIL_cil_ManagePeriodicData_TimeSlot04
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0
+**/
+LOCAL_INLINE void cil_ManagePeriodicData_TimeSlot04(void)
+{
+   cil_Manage_eCS_SBS_Belegung();
+
+   cil_Manage_eCS_HW_defekt();
+
+   cil_Manage_eCS_Stoerung();
+
+   cil_Manage_eCS_Error_Reihe2_BFS();
+
+   cil_Manage_eCS_Error_Reihe2_FS();
+
+   if (The development frame is enabled via NVP_u8EnableDevFrame)
+   {
+      cil_Manage_eCS_DevKit_Seat_Occupancy_Status();
+   }
+}
+
+/**
+* \brief
+*        This function represents the 5th time slot
+*        of managing the CAN outputs from application.
+* \inputparam
+*        Name: NA.;
+*        Type: NA.;
+*        Description: NA.;
+*        Range: NA.;
+* \outputparam
+*        Name: NA.;
+*        Type: NA.;
+*        Description: NA.;
+*        Range: NA.;
+* \constrains
+*        NA.
+* \dynamicaspectcaller
+*        CIL_runAppliToCAN
+* \dynamicaspectdescription
+*        Called by external function
+* \ddesignrequirement
+*        DSG_CIL_cil_ManagePeriodicData_TimeSlot05
+* \archrequirement
+*        ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0
+**/
+LOCAL_INLINE void cil_ManagePeriodicData_TimeSlot05(void)
+{
+   cil_Manage_eCS_SBS_LastState_Reihe2_FS();
+
+   cil_Manage_eCS_SBS_LastState_Reihe2_BFS();
+
+   if (The development frame is enabled via NVP_u8EnableDevFrame)
+   {
+      cil_Manage_eCS_DevKit_Counter_Management();
+
+      Send buffered data as 8 bytes chunks on the CAN bus;
+
+      /* Write data to CAN */
+      Rte_Write_CIL_P_CAN_CanDataOut_Frame_0_EcuCanDataOut();
+   }
+}
+
+
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+* \brief
+*        This function represents the CIL periodic main function used to update transmitted frames signals values.
+* \dynamicaspectcaller
+*        Scheduler.
+* \dynamicaspectdescription
+*        Called at 2 ms.
+* \ddesignrequirement
+*        DSG_CIL_runAppliToCAN
+* \archrequirement
+*        ARCH_SW_CIL_ptrpAsrOsServicesCIL_CIL_runAppliToCAN
+*        ARCH_SW_CIL_prrEcsAlgoData_b8EcsFlag
+**/
+EXPORTED void CIL_runAppliToCAN(void)
+{
+   /* Execute the current time slot */
+   (*(cil_kapfPerGetDataFunc[cil_u8PeriodicDataTimeSlotID]))();
+
+   /* Update Counter */
+   cil_u8PeriodicDataTimeSlotID = ((cil_u8PeriodicDataTimeSlotID + KU8_ONE) % KU8_CIL_ATC_NB_OF_SLOTS);
+}
+
+/******************************************************************************
+Evolution of the component
+
+Created by : F.GILBERT
+
+$Log: CIL_AppliToCAN.c_template  $
+Revision 1.3.1.10 2023/07/20 08:28:51CEST David Puscasu (david.puscasu) 
+Update Traceability
+Revision 1.3.1.9 2023/07/18 09:30:01EEST David Puscasu (david.puscasu) 
+Update Traceability on CIL
+Revision 1.3.1.8 2023/06/19 09:48:23EEST Lucian Ardeleanu (lucian.ardeleanu) 
+[DSG] Detailed Design Documents to be fixed
+Revision 1.3.1.7 2023/06/07 09:09:12EEST Dan Dustinta (dan.dustinta) 
+update error mapping for OEM
+Revision 1.3.1.6 2023/05/17 08:59:11EEST Dan Dustinta (dan.dustinta) 
+updat ddesign
+Revision 1.5.3.41 2023/05/16 15:01:21EEST Dan Dustinta (dan.dustinta) 
+update findings after PRWB
+Revision 1.5.3.40 2023/05/16 13:28:32EEST Dan Dustinta (dan.dustinta) 
+update b8 to u8
+Revision 1.5.3.39 2023/05/16 12:43:42EEST Dan Dustinta (dan.dustinta) 
+update b8 to u8
+Revision 1.5.3.38 2023/05/15 16:20:26EEST Ioan Repede (ioan.repede) 
+Update RTE connection for SolenoidStuckStatus prot from FSM.
+Revision 1.5.3.37 2023/05/12 09:30:26EEST Dan Dustinta (dan.dustinta) 
+update signal strategy
+Revision 1.5.3.36 2023/05/11 14:20:17EEST Ioan Repede (ioan.repede) 
+Update the CIL singnals based on solenoids errors.
+Revision 1.5.3.35 2023/04/25 13:31:26EEST Dan Dustinta (dan.dustinta) 
+add handling of timeout of init signal
+Revision 1.5.3.34 2023/04/24 09:10:11EEST Gabriel Brasoveanu (gabriel.brasoveanu) 
+Code implementation for readout of the last buckle state
+Revision 1.5.3.33 2023/04/21 12:59:28EEST Dan Dustinta (dan.dustinta) 
+update inverted logic and seat removable
+Revision 1.5.3.32 2023/04/20 17:26:46EEST Gabriel Brasoveanu (gabriel.brasoveanu) 
+Handle new signals imported from K-matrix
+Revision 1.5.3.31 2023/04/19 09:23:30EEST Dan Dustinta (dan.dustinta) 
+update traceability
+Revision 1.5.3.30 2023/04/18 17:07:29EEST Dan Dustinta (dan.dustinta) 
+refactor for consistency with CIL_MF
+Revision 1.5.3.28 2023/04/18 15:24:57EEST Dan Dustinta (dan.dustinta) 
+add local functions
+Revision 1.5.3.27 2023/03/30 13:33:46EEST Dan Dustinta (dan.dustinta) 
+add DSG req for SRM
+Revision 1.5.3.26 2023/03/30 13:06:07EEST Gabriel Brasoveanu (gabriel.brasoveanu) 
+Add new frame MF_Logger used to send on bus current ECU State
+Revision 1.5.3.25 2023/03/30 07:49:53EEST Septimiu Vintila (septimiu.vintila) 
+Memmap corrected.
+Revision 1.5.3.24 2023/03/29 15:52:52EEST Septimiu Vintila (septimiu.vintila) 
+Fix after review (memory sections added)
+Revision 1.5.3.23 2023/03/27 16:22:41EEST Ioan Repede (ioan.repede) 
+Update CAN signal for eCS_Status to stay in Init phase util INIT_PHASE_IN_PROGRESS flag from FSM_ModeStatus is set.
+Revision 1.5.3.22 2023/03/24 08:46:26EET Septimiu Vintila (septimiu.vintila) 
+Changes after review.
+Revision 1.5.3.21 2023/03/23 09:42:42EET Ioan Repede (ioan.repede) 
+Update variables and defines related to Mode Mask to 64 bits.
+Revision 1.5.3.20 2023/03/15 16:34:44EET Dan Dustinta (dan.dustinta) 
+devkit frame fix
+Revision 1.5.3.19 2023/03/14 11:39:44EET Gabriel Brasoveanu (gabriel.brasoveanu) 
+Measurement frame, Gliwa Out frame and DevKit frame changed from 64 signals of 1 byte to 8 signals of 8 bytes
+Revision 1.5.3.18 2023/03/13 09:31:43EET Dan Dustinta (dan.dustinta) 
+update naming for clarity
+Revision 1.5.3.17 2023/03/10 11:25:32EET Septimiu Vintila (septimiu.vintila) 
+MF redesign; cast corrected in CanToAppli
+Revision 1.5.3.16 2023/03/09 08:29:29EET Septimiu Vintila (septimiu.vintila) 
+Typo corrected.
+Revision 1.5.3.15 2023/03/03 12:35:24EET Dan Dustinta (dan.dustinta) 
+update MF handling
+Revision 1.5.3.14 2023/02/20 13:53:35EET Ioan Repede (ioan.repede) 
+Update Solenoid states singnals.
+Revision 1.5.3.13 2023/02/15 10:07:34EET Septimiu Vintila (septimiu.vintila) 
+QAC related code changes.
+Revision 1.5.3.12 2023/01/30 16:00:06EET Septimiu Vintila (septimiu.vintila) 
+Read acceleration in m/s^2 added & TX signals updated.
+Revision 1.5.3.11 2023/01/25 11:46:21EET Septimiu Vintila (septimiu.vintila) 
+Added time-slots mechanism for AppliToCan functionality:
+ - main function moved to 2ms
+ - functionality splitted in 5 time slots
+Revision 1.5.3.10 2023/01/17 15:49:26EET Dan Dustinta (dan.dustinta) 
+update CIL runnables
+Revision 1.5.3.9 2023/01/17 15:25:06EET Septimiu Vintila (septimiu.vintila) 
+Unlock status recieved while crash was detected inhibited.
+Revision 1.5.3.8 2023/01/17 15:20:05EET Septimiu Vintila (septimiu.vintila) 
+Defines for LOCK/UNLOCK states corrected.
+Revision 1.5.3.7 2023/01/16 13:35:02EET Septimiu Vintila (septimiu.vintila) 
+Variables name changed.
+Revision 1.5.3.6 2023/01/16 11:38:47EET Septimiu Vintila (septimiu.vintila) 
+Fixes after review.
+Revision 1.5.3.5 2023/01/06 09:30:16EET Septimiu Vintila (septimiu.vintila) 
+Gliwa Tx Frame put as direct/immediate.
+DevOut Frame put as direct/immediate.
+Measurement Frame put as direct/immediate.
+Revision 1.5.3.4 2022/12/14 11:35:54EET Septimiu Vintila (septimiu.vintila) 
+Integration for Gliwa related Tx/Rx frames.
+Revision 1.5.3.3 2022/11/24 10:13:15EET Septimiu Vintila (septimiu.vintila) 
+CIL implemantation.
+Revision 1.3 2022/03/22 14:37:47EET Pierre-Olivier Pilot (pierre-olivier.pilot) 
+eCS_ECUV.007:
+* SPIIF: update Accel init sequence: remove filter configuration (we select bank 6 but we configure register from bank 0 => drift issue). Only the full scale register is written
+	? Implements a test function to get accelerometer temperautre. Output in MF block 4
+* Remove 2g variant configuration. Force accelerometer to use 4g
+* Fix SAD following cycle management. A bug was found when going grom lock to unlock, the holding profile was run for 1ms then the unlocking one was triggered.
+* DIA RC: update calibration
+Revision 1.2 2021/09/24 10:04:31CEST Razvan Badiu (razvan.badiu) 
+add offset computation
+Revision 1.1 2021/09/14 14:39:09EEST Pierre-Olivier Pilot (pierre-olivier.pilot) 
+Initial revision
+Member added to project e:/MKSProjects/SBE/Innovation/ECS/Phase_01/Components/Application/Autoliv/CIL/Implementation/src/project.pj
+Revision 1.3 2021/06/18 12:20:15CEST Sabrine Bouazizi (sabrine.bouazizi) 
+Add Roe Management
+Revision 1.2 2021/06/09 11:02:29CEST Sabrine Bouazizi (sabrine.bouazizi) 
+AT/DTC MNGT Add ROE Management
+Revision 1.1 2020/12/08 14:13:01CET Gaetan Lievre (gaetan.lievre) 
+Initial revision
+
+*****************************************************************************/
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

@@ -1,0 +1,159 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_BswM_OnPostRunFromRun, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ActivateTask_BswM_On_Prep_Shutdown, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_BswM_On_Prep_Shutdown, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StopScheduleTable_BswM_ProceedReset, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StartScheduleTable_BswM_ProceedReset, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_WaitEvent_OsTask_Bsw_ReadWrite_AllProcess, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ClearEvent_OsTask_Bsw_ReadWrite_AllProcess, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SuspendAllInterrupts_OsTask_Bsw_ReadWrite_AllProcess, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ResumeAllInterrupts_OsTask_Bsw_ReadWrite_AllProcess, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_TerminateTask_OsTask_Bsw_ReadWrite_AllProcess, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_OsTask_Bsw_ReadWrite_AllProcess, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StartScheduleTableRel_BswM_On_Prep_Shutdown
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_BswM_OnPostRunFromRun:   The SetEvent runnable shall be called in the BswM_OnPostRunFromRun runnable in order to set the task dedicated to the WriteAll process fastening.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ActivateTask_BswM_On_Prep_Shutdown: The ActivateTask runnable shall be called in the BswM_On_Prep_Shutdown runnable in order to activate the task dedicated to the WriteAll process fastening.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_BswM_On_Prep_Shutdown: The SetEvent runnable shall be called in the BswM_On_Prep_Shutdown runnable in order to set the task dedicated to the WriteAll process fastening.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StopScheduleTable_BswM_ProceedReset: The StopScheduleTable runnable shall be called in the BswM_ProceedReset runnable in order to stop the main schedule table.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StartScheduleTable_BswM_ProceedReset: The StartScheduleTable runnable shall be called in the BswM_ProceedReset runnable in order to start the default schedule table.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_WaitEvent_OsTask_Bsw_ReadWrite_AllProcess: The WaitEvent runnable shall be called in the OsTask_Bsw_ReadWrite_AllProcess runnable in order to wait for ReadWrite Os task.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ClearEvent_OsTask_Bsw_ReadWrite_AllProcess: The ClearEvent runnable shall be called in the OsTask_Bsw_ReadWrite_AllProcess runnable in order to clear ReadWrite Os task assigned event.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SuspendAllInterrupts_OsTask_Bsw_ReadWrite_AllProcess: The SuspendAllInterrupts runnable shall be called in the OsTask_Bsw_ReadWrite_AllProcess runnable in order to suspend all interrupts.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ResumeAllInterrupts_OsTask_Bsw_ReadWrite_AllProcess: The ResumeAllInterrupts runnable shall be called in the OsTask_Bsw_ReadWrite_AllProcess runnable in order to resume all interrupts.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_TerminateTask_OsTask_Bsw_ReadWrite_AllProcess: The TerminateTask runnable shall be called in the OsTask_Bsw_ReadWrite_AllProcess runnable in order to terminate task when all blocks have been correctly managed.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_OsTask_Bsw_ReadWrite_AllProcess: The SetEvent runnable shall be called in the OsTask_Bsw_ReadWrite_AllProcess runnable in order to set the event in OS task.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StartScheduleTableRel_BswM_On_Prep_Shutdown: The StartScheduleTableRel runnable shall be called in the BswM_On_Prep_Shutdown runnable in order to start the default schedule table after main schedule table (RTE) was stopped.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ActivateTask_BswM_On_Prep_Shutdown, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_BswM_On_Prep_Shutdown 
+
+	Step 2: Send diagnostic request in order to do soft Reset
+
+	Step 3: Set a BP in function BswM_ProceedReset in order to call BswM_On_Prep_Shutdown and to Activate the event dedicated to the OsTask_Bsw_ReadWrite_AllProcess 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_CB_NfyNvMJobEnd for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StopScheduleTable_BswM_ProceedReset
+
+	Step 5: Send diagnostic request in order to do hard Reset
+
+	Step 6: Set a BP in function BswM_ProceedReset in order to stop the main schedule table 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in OS_UserStopScheduleTable for check if BP is reached in order to stop the main schedule table 
+		Expected result:  BP was set
+
+	Step 8: Set a BP in function BswM_ProceedReset to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StartScheduleTable_BswM_ProceedReset
+
+	Step 9: Send diagnostic request in order to do hard Reset
+
+	Step 10: Set a BP in function BswM_ProceedReset in order to start the default schedule table 
+		Expected result:  BP was set
+
+	Step 11: Set a BP in OS_UserStartScheduleTable for check if BP is reached in order to start the default schedule table 
+		Expected result:  BP was set
+
+	Step 12: Set a BP in function BswM_ProceedReset to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_WaitEvent_OsTask_Bsw_ReadWrite_AllProcess 
+
+	Step 13: Set a BP in OsTask_Bsw_ReadWrite_AllProcess in order to wait for ReadWrite Os task 
+		Expected result:  BP was set
+
+	Step 14: Set a BP in OS_UserWaitEvent for check if BP is reached in order to wait for ReadWrite Os task 
+		Expected result:  BP was set
+
+	Step 15: Set a BP in function OsTask_Bsw_ReadWrite_AllProcess to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ClearEvent_OsTask_Bsw_ReadWrite_AllProcess
+
+	Step 16: Set a BP in OsTask_Bsw_ReadWrite_AllProcess in order to clear ReadWrite Os task assigned event 
+		Expected result:  BP was set
+
+	Step 17: Set a BP in OS_UserClearEvent for check if BP is reached in order to clear ReadWrite Os task assigned event 
+		Expected result:  BP was set
+
+	Step 18: Set a BP in function OsTask_Bsw_ReadWrite_AllProcess to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SuspendAllInterrupts_OsTask_Bsw_ReadWrite_AllProcess
+
+	Step 19: Set a BP in OsTask_Bsw_ReadWrite_AllProcess in order to suspend all interrupts 
+		Expected result:  BP was set
+
+	Step 20: Set a BP in function OS_FastSuspendAllInterrupts for check if BP is reached in order to suspend all interrupts 
+		Expected result:  BP was set
+
+	Step 21: Set a BP in function OsTask_Bsw_ReadWrite_AllProcess to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ResumeAllInterrupts_OsTask_Bsw_ReadWrite_AllProcess
+
+	Step 22: Set a BP in OsTask_Bsw_ReadWrite_AllProcess in order to resume all interrupts 
+		Expected result:  BP was set
+
+	Step 23: Set a BP in function OS_FastSuspendAllInterrupts for check if BP is reached in order to resume all interrupts 
+		Expected result:  BP was set
+
+	Step 24: Set a BP in function OsTask_Bsw_ReadWrite_AllProcess to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_TerminateTask_OsTask_Bsw_ReadWrite_AllProcess 
+
+	Step 25: Set a BP in OsTask_Bsw_ReadWrite_AllProcess in order to terminate task when all blocks have been correctly managed 
+		Expected result:  BP was set
+
+	Step 26: Set a BP in OS_UserTerminateTask for check if BP is reached in order to terminate task when all blocks have been correctly managed 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_OsTask_Bsw_ReadWrite_AllProcess
+
+	Step 27: Set a BP in OsTask_Bsw_ReadWrite_AllProcess in order to set the event in OS task 
+		Expected result:  BP was set
+
+	Step 28: Set a BP in OS_UserSetEvent for check if BP is reached in order to set the event in OS task 
+		Expected result:  BP was set
+
+	Step 29: Set a BP in function OsTask_Bsw_ReadWrite_AllProcess to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StartScheduleTableRel_BswM_On_Prep_Shutdown
+
+	Step 30: Send diagnostic request in order to do soft Reset
+
+	Step 31: Set a BP in function BswM_ProceedReset in order to call BswM_On_Prep_Shutdown and to start the default schedule table after main schedule table (RTE) was stopped 
+		Expected result:  BP was set
+
+	Step 32: Set a BP in OS_UserStartScheduleTable for check if BP is reached in order to start the default schedule table after main schedule table (RTE) was stopped 
+		Expected result:  BP was set
+
+	Step 33: Set a BP in function BswM_CB_NfyNvMJobEnd for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_BswM_OnPostRunFromRun
+
+	Step 34: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 35: Set a BP in function BswM_OnPostRunFromRun in order to Activate the event dedicated to the OsTask_Bsw_ReadWrite_AllProcess 
+		Expected result:  BP was set
+
+	Step 36: Set a BP in OS_UserSetEvent to ckeck if BP is reached in order to set the task dedicated to the WriteAll process fastening 
+		Expected result:  BP was set
+
+	Step 37: Set a BP in function BswM_OnStartupTwoA for check the interface 
+		Expected result:  BP was set
+
+	Step 38: Enable comunication 
+		Expected result:  Comunication enable
+
+Postcondition
+
+	Step 39: Return ECU to default values

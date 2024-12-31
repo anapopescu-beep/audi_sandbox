@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2015-09-29T16:42:13+02:00">
+              <SHORT-NAME>McuIf</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2023-06-21T13:58:21+03:00">
+                  <SHORT-NAME>McuIf</SHORT-NAME>
+                  <LONG-NAME T="2019-08-19T15:45:04+02:00">
+                    <L-4 T="2022-12-16T14:03:48+02:00" L="FOR-ALL">McuIf_AC_Mcu</L-4>
+                  </LONG-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <PORTS>
+                    <P-PORT-PROTOTYPE T="2023-06-21T12:53:58+03:00" UUID="ec303a86-954f-4fab-8020-88a2fe67b407">
+                      <SHORT-NAME>pseCheckCrcOnMcuRegisters</SHORT-NAME>
+                      <DESC T="2023-06-21T14:07:58+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+- ARCH_SW_McuIf_pseCheckCrcOnMcuRegisters_McuIf_CheckMcuCrcRegisterStatus&#xD;
+&#xD;
+# Description&#xD;
+	- The auto-test shall detect if the MCU PORT, ADC and FTM registers are changed during runtime.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Autotest Result}&#xD;
+		-  Can be one of the following values: OK, NOK, NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- McuIf_CheckMcuCrcRegisterStatus&#xD;
+&#xD;
+#Traceability&#xD;
+	FUSA_SM_S32K1XXSM_853&#xD;
+	FUSA_SM_S32K1XXSM_852&#xD;
+	FUSA_SM_S32K1XXSM_574&#xD;
+	FUSA_SM_S32K1XXSM_572&#xD;
+	FUSA_SM_S32K1XXSM_570&#xD;
+	FUSA_SM_S32K1XXSM_556&#xD;
+	DOM_eCS_TF_H_388&#xD;
+	DOM_eCS_TF_H_389&#xD;
+	DOM_eCS_TF_H_390</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T11:04:02+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T15:47:42+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-06-21T12:53:38.205+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality added</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T11:04:02+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[IRe_22.06.2023] Reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">No findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T15:47:42+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2023-06-21T11:19:37+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-06-20T22:09:58+03:00" UUID="6694bd18-56ea-4bc4-91ff-78206eae5a7a">
+                      <SHORT-NAME>pseCheckMcuSelfTest</SHORT-NAME>
+                      <DESC T="2023-06-20T22:13:39+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+- ARCH_SW_McuIf_pseCheckMcuSelfTest_McuIf_CheckMcuSelfTest&#xD;
+&#xD;
+# Description&#xD;
+	- The auto-test shall detect if the MCU is functioning correct&#xD;
+	- The NXP core library is called to do the actual check&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Autotest Result}&#xD;
+		-  Can be one of the following values: OK, NOK, NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- McuIf_CheckMcuSelfTest&#xD;
+&#xD;
+#Traceability&#xD;
+DOM_eCS_TF_H_233, DOM_eCS_TF_H_234, DOM_eCS_TF_H_235</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:58:38+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T15:49:50+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-06-20T22:01:00.726+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:58:38+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T15:49:50+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2023-05-16T14:35:18+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-06-21T14:04:53+03:00" UUID="4f290920-7f06-493d-bc7c-c220c168ec70">
+                      <SHORT-NAME>ptrpMcuIfServicesBswmIf</SHORT-NAME>
+                      <DESC T="2023-06-21T14:00:26+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_McuIf_ptrpMcuIfServicesBswmIf_McuIf_runInit&#xD;
+&#xD;
+# Description&#xD;
+-  The McuIf_runInit runnable shall be called in the BswM_OnRunFromWakeup runnable in order to initialize and calculate&#xD;
+   PORT, ADC and FTM CRC on registers.&#xD;
+	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- McuIf_runInit&#xD;
+&#xD;
+#Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T11:03:34+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T15:50:13+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-06-21T14:04:38.458+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality added</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T11:03:34+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[IRe_22.06.2023] Reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">No findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T15:50:13+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/McuIf_DataDictionary/TriggerInterfaces/itrMcuIfServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

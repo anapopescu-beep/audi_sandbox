@@ -1,0 +1,100 @@
+/**************************************
+ * (c) 2015 Elektrobit Automotive GmbH
+ *
+ **************************************/
+
+/*
+ * Simple linker script for IAR binutils.
+ *
+ * Copyright 1998-2014 Elektrobit Automotive GmbH
+ * All rights exclusively reserved for Elektrobit Automotive GmbH,
+ * unless expressly agreed to otherwise.
+ *
+ * $Id: CompileBoard.ldscript 1.2.1.2 2022/09/01 06:52:40CEST Andrei Anca (andrei.anca) in_work  $
+*/
+
+/* Declare the memory space Mem of 4 Gigabytes */
+define memory Mem with size = 4G;
+
+/* Define memory regions in memory space 'Mem' */
+define region empty		= Mem:[from 0x00000000 size 0x0];		/* empty region					*/
+define region reset		= Mem:[from 0x00000000 size 0x100];		/* reset-vector					*/
+/* Gap @ 0x00000400:	                                   		 * reserved and not writable!	*/
+define region exctable	= Mem:[from 0x00000800 size 0x3800];	/* exception (+interrupt) table	*/
+define region rom 		= Mem:[from 0x00004000 size 0x7C000];	/* the rest of FLASH memory		*/
+define region ram 		= Mem:[from 0x20000000 size 0x7000];	/* High-order RAM (system-bus)	*/
+
+
+/* Output section 'ExceptionTable' (Type 'RESET') */
+define block ExceptionTable with fixed order, alignment = 256
+{
+	section ExceptionTable,
+	section ExceptionTable.*,
+	section InterruptTable,
+	section InterruptTable.*
+};
+place in exctable { block ExceptionTable };
+
+/* Output section 'text' (Type 'TEXT') */
+define block text with fixed order, alignment = 32
+{
+	section .os_text,
+	section .os_text.*,
+	section .text,
+	section .text.*,
+	section i.*,
+	section i.*.*
+};
+place in rom { block text };
+
+/* Output section 'rodata' (Type 'RODATA') */
+define block rodata with fixed order, alignment = 32
+{
+	section .const*,
+	section .const*.*,
+	section .constdata,
+	section .constdata.*,
+	section .rodata,
+	section .rodata.*
+};
+place in rom { block rodata };
+
+/* Output section 'DATA' (Type 'DATA') */
+define block DATA with fixed order, alignment = 32
+{
+	section .data,
+	section .data.*
+}
+except
+{
+	section *_init
+};
+
+/* Manual initialization */
+initialize manually with packing = none
+{
+	section .data,
+	section .data.*
+};
+
+
+/* Output section 'BSS' (Type 'BSS') */
+define block BSS with fixed order, alignment = 32
+{
+	section .bss,
+	section .bss.*,
+	section .bss.*.*,
+	section .os_idlestack,
+	section .os_idlestack.*,
+	section COMMON,
+	section COMMON.*
+};
+
+/* Place DATA, BSS to ram */
+define block group_DATABSS with fixed order
+{
+	block DATA,
+	block BSS
+};
+place in ram { block group_DATABSS };
+

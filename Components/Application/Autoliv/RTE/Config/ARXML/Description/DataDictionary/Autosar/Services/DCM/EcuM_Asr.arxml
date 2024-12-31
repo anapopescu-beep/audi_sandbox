@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd" T="2022-08-26T12:36:25+03:00">
+  <AR-PACKAGES>
+    <AR-PACKAGE T="2022-08-26T12:36:41+03:00" UUID="fa1482be-89d9-4301-b258-af546d4bc79b">
+      <SHORT-NAME>EB</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2022-08-26T12:36:41+03:00">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <ELEMENTS>
+            <SERVICE-SW-COMPONENT-TYPE T="2022-08-28T09:58:38+03:00" UUID="DCE:20eecf4e-ebe8-4917-9aff-b1dc92c7c5b5">
+              <SHORT-NAME>EcuM</SHORT-NAME>
+              <CATEGORY>ASR_Interfaces</CATEGORY>
+              <PORTS>
+                <P-PORT-PROTOTYPE T="2022-08-28T09:58:38+03:00" UUID="1fc6e2a1-9fc7-43c4-91db-7548ce3a1c9e">
+                  <SHORT-NAME>ptrpAsrEcuMServicesBswMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrEcuMServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE T="2022-08-28T09:58:38+03:00" UUID="86386921-a329-4bd5-a076-70a8c62e1bb2">
+                  <SHORT-NAME>ptrpAsrEcuMServicesEcuMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrEcuMServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE T="2022-08-28T09:58:38+03:00" UUID="1a96ba43-aa72-494b-ab6b-4244e8991eaf">
+                  <SHORT-NAME>ptrpAsrEcuMServicesOsIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrEcuMServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE T="2022-08-26T20:02:38+03:00" UUID="50e6b980-6b90-410c-a06d-39e0ec487da2">
+                  <SHORT-NAME>ptrrAsrEcuMServicesEcuMIf</SHORT-NAME>
+                  <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrEcuMServices</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE T="2022-08-28T13:56:45+03:00" UUID="91920608-24ba-4f72-8c04-4c296bdc7560">
+                  <SHORT-NAME>ptrrAsrEcuMServicesSbc</SHORT-NAME>
+                  <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrEcuMServices</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR T="2022-08-28T09:58:45+03:00" UUID="56a21459-cba6-440a-9EcuM-0d5b62a594bd">
+                  <SHORT-NAME>EcuM_IB</SHORT-NAME>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY UUID="DCE:31bfd390-0740-4452-8166-2e4ecce38a9a">
+                      <SHORT-NAME>EcuM_ClearWakeupEvent</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>EcuM_ClearWakeupEvent</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:57bb4c4c-794b-4d90-bb81-8b5201acb271">
+                      <SHORT-NAME>EcuM_GoDown</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>EcuM_GoDown</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-28T09:58:53+03:00" UUID="DCE:d12112cb-7b51-4dc7-828a-d9e7b443d64d">
+                      <SHORT-NAME>EcuM_StartupTwo</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <EXTERNAL-TRIGGERING-POINTS>
+                        <EXTERNAL-TRIGGERING-POINT>
+                          <TRIGGER-IREF>
+                            <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/EB/SoftwareComponents/EcuM/ptrpAsrEcuMServicesOsIf</CONTEXT-P-PORT-REF>
+                              <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_StartupTwo</TARGET-TRIGGER-REF>
+                            </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGERING-POINT>
+                      </EXTERNAL-TRIGGERING-POINTS>
+                      <SYMBOL>EcuM_StartupTwo</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:d4b417b1-4d28-43df-aa3e-0b9c132a535d">
+                      <SHORT-NAME>EcuM_ValidateWakeupEvent</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>EcuM_ValidateWakeupEvent</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </SERVICE-SW-COMPONENT-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <AR-PACKAGE T="2022-09-21T09:01:23+03:00" UUID="83dbf1d3-fd69-4d31-99ba-2a110ed331f7">
+          <SHORT-NAME>TriggerInterfaces</SHORT-NAME>
+          <ELEMENTS>
+            <TRIGGER-INTERFACE T="2022-08-28T09:56:07+03:00">
+              <SHORT-NAME>itrAsrEcuMServices</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <TRIGGERS>
+                <TRIGGER UUID="c2e1b8aa-ba36-45a8-9963-4e559fbd8ab6">
+                  <SHORT-NAME>EcuM_AL_DriverInitOne</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="8ea5352f-942b-44b4-9631-63923dcd56b5">
+                  <SHORT-NAME>EcuM_AL_Reset</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="ea740246-b98a-4bba-8a3a-f5e710eb1c87">
+                  <SHORT-NAME>EcuM_AL_SetProgrammableInterrupts</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="51ba34d1-6b20-4c69-ad04-f6eee451c744">
+                  <SHORT-NAME>EcuM_AL_SwitchOff</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="30725512-20ec-474b-8722-5316e3da1ec3">
+                  <SHORT-NAME>EcuM_CheckRamHash</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="e6dcfa7a-8008-4f30-b053-00c7564cd2df">
+                  <SHORT-NAME>EcuM_CheckValidation</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="a19a48ad-757e-4fbe-a03a-287a89c71dae">
+                  <SHORT-NAME>EcuM_CheckWakeup</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="f83ba8e5-5497-436f-b02f-dc71c2ed216b">
+                  <SHORT-NAME>EcuM_ClearWakeupEvent</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="5797da74-a19d-4e90-9935-422c0069da7f">
+                  <SHORT-NAME>EcuM_DeterminePbConfiguration</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="7b8b1711-df9a-4c44-b70a-9fd1e444435c">
+                  <SHORT-NAME>EcuM_DisableWakeupSources</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-26T19:50:40+03:00" UUID="b4961b47-a9bd-4361-918e-4acf8348a63e">
+                  <SHORT-NAME>EcuM_DriverInitListOne</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="7575b6d3-eb26-4fa2-9899-18fb9f12bf00">
+                  <SHORT-NAME>EcuM_EnableWakeupSources</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="8a0b7e16-8288-481a-a181-1054e3a12333">
+                  <SHORT-NAME>EcuM_ErrorHook</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="d0d2f744-7015-4b30-b9ae-0bf0fd0f5dd5">
+                  <SHORT-NAME>EcuM_GenerateRamHash</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="ec6a0a52-fc31-4107-b8a5-425a28cbc7d8">
+                  <SHORT-NAME>EcuM_GoDown</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="d5b9be07-78e6-4853-bf0a-0e8953e74ca8">
+                  <SHORT-NAME>EcuM_OnGoOffOne</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="677af725-6a9c-47bd-93fb-b53ac4b2cde0">
+                  <SHORT-NAME>EcuM_OnGoOffTwo</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="c40d390a-bcb6-492e-8004-7e6066673652">
+                  <SHORT-NAME>EcuM_PostHalt</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="ca7eade1-a694-49dd-9b60-a8949c98da32">
+                  <SHORT-NAME>EcuM_PreHalt</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="da7f49bf-bcc9-4ad8-b4f7-091e164f5e57">
+                  <SHORT-NAME>EcuM_SleepActivity</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="4ae8aa4e-3295-4a7e-b83a-ebd5225d063a">
+                  <SHORT-NAME>EcuM_StartWakeupSources</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-28T09:56:07+03:00" UUID="e40e6fd6-ea21-4aef-8a01-91546f27686c">
+                  <SHORT-NAME>EcuM_StartupTwo</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="3701268c-d3e2-4991-b84d-2251feb3162a">
+                  <SHORT-NAME>EcuM_StopWakeupSources</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="ca68fed8-91c1-4470-865f-f2cc62194664">
+                  <SHORT-NAME>EcuM_ValidateWakeupEvent</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+              </TRIGGERS>
+            </TRIGGER-INTERFACE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

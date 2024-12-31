@@ -1,0 +1,361 @@
+VERSION "created by canmatrix"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Airbag_ECU eCS_ECU
+VAL_TABLE_ Abs_SignalValues 1 "ABS_Active" 0 "ABS_Inactive" ;
+VAL_TABLE_ BallStable 170 "Stable" 85 "Unstable" ;
+VAL_TABLE_ BeltCycleStep_values 255 "No step running" 7 "Step 8" 6 "Step 7" 5 "Step 6" 4 "Step 5" 3 "Step 4" 2 "Step 3" 1 "Step 2" 0 "Step 1" ;
+VAL_TABLE_ BeltCycle_values 255 "No belt cycle running" 16 "ANG Manufacturing cycle" 15 "AEE Manufcaturing cycle" 14 "OEM Manufacturing cycle" 13 "Start-up cycle" 12 "Hard Release (backup)" 11 "Hard Release (standard)" 10 "Smooth Release (backup)" 9 "Smooth Release (standard)" 8 "Belt Slack Reduction" 7 "PreCrash cycle 8" 6 "PreCrash cycle 7" 5 "PreCrash cycle 6" 4 "PreCrash cycle 5" 3 "PreCrash cycle 4" 2 "PreCrash cycle 3" 1 "PreCrash cycle 2" 0 "PreCrash cycle 1" ;
+VAL_TABLE_ BlockID_values 24 "Measurement Block 24" 23 "Measurement Block 23" 22 "Measurement Block 22" 21 "Measurement Block 21" 20 "Measurement Block 20" 19 "Measurement Block 19" 18 "Measurement Block 18" 17 "Measurement Block 17" 16 "Measurement Block 16" 15 "Measurement Block 15" 14 "Measurement Block 14" 13 "Measurement Block 13" 12 "Measurement Block 12" 11 "Measurement Block 11" 10 "Measurement Block 10" 9 "Measurement Block 09" 8 "Measurement Block 08" 7 "Measurement Block 07" 6 "Measurement Block 06" 5 "Measurement Block 05" 4 "Measurement Block 04" 3 "Measurement Block 03" 2 "Measurement Block 02" 1 "Measurement Block 01" ;
+VAL_TABLE_ ERR_Status_Values 4 "Functional mode" 3 "Backup mode" 2 "Downgraded mode" 1 "Faulty mode" 0 "Startup mode" ;
+VAL_TABLE_ GearBoxValues 15 "Invalid" 11 "Reverse" 10 "Parked" 7 "seventh gear" 6 "Sixth gear" 5 "Fifth gear" 4 "Fourth gear" 3 "Third gear" 2 "Second gear" 1 "First gear" 0 "Neutral" ;
+VAL_TABLE_ HallSensorStatus 255 "Not tested yet" 170 "OK" 85 "Out of order" ;
+VAL_TABLE_ PCMSeverities_values 8 "PCM Severity 8" 7 "PCM Severity 7" 6 "PCM Severity 6" 5 "PCM Severity 5" 4 "PCM Severity 4" 3 "PCM Severity 3" 2 "PCM Severity 2" 1 "PCM Severity 1" 0 "No pre-crash situation" ;
+VAL_TABLE_ PCMSource 31 "VDA, FRR, KAFAS, PCM CAN & ACSM" 30 "FRR, KAFAS, PCM via CAN & ACSM" 29 "VDA, KAFAS, PCM via CAN & ACSM" 28 "KAFAS, PCM via CAN & ACSM" 27 "VDA, FRR, PCM via CAN & ACSM" 26 "FRR, PCM via CAN & ACSM" 25 "VDA, PCM via CAN & CASM" 24 "PCM via CAN & ACSM" 23 "VDA, FRR, KAFAS & ACSM" 22 "FRR, KAFAS & ACSM" 21 "VDA, KAFAS & ACSM" 20 "KAFAS & ACSM" 19 "VDA, FRR & ACSM" 18 "FRR & ACSM" 17 "VDA & ACSM" 16 "ACSM" 15 "VDA, FRR, KAFAS & PCM via CAN" 14 "FRR, KAFAS & PCM via CAN" 13 "VDA, KAFAS & PCM via CAN" 12 "KAFAS & PCM via CAN" 11 "VDA, FRR & PCM via CAN" 10 "FRR & PCM via CAN" 9 "VDA & PCM via CAN" 8 "PCM via CAN" 7 "VDA, FRR & KAFAS" 6 "FRR & KAFAS" 5 "VDA & KAFAS" 4 "KAFAS only" 3 "VDA & FRR" 2 "FRR only" 1 "VDA only" 0 "No PCM request" ;
+VAL_TABLE_ VDA_Activation_Paths 1 "EBK0" 0 "No Activation" ;
+VAL_TABLE_ VehicleDynQF 1 "Invalid" 0 "Valid" ;
+VAL_TABLE_ VehicleDynSensorQF 3 "Initializing" 2 "Reserved" 1 "Invalid" 0 "Valid" ;
+VAL_TABLE_ VehicleStable 170 "Stable" 85 "Unstable" ;
+VAL_TABLE_ eCSTrigger 1 "Locked" 0 "Unlocked" ;
+VAL_TABLE_ eCSVariant 3 "ST 2g" 2 "ST 4g" 1 "TDK 2g" 0 "TDK 4g" ;
+VAL_TABLE_ eCS_SolenoidStates 4 "Disabled" 3 "Remag" 2 "Holding" 1 "Unlocking" 0 "Locked" ;
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ New_Signal_225 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1989 eCS_Measurement_Logger_Frame: 8 eCS_ECU
+ SG_ eCS_ECU_STATE : 0|8@1- (1,0) [0|0] "" Vector__XXX
+
+BO_ 256 DevKit_01: 64 eCS_ECU
+ SG_ eCS_BuckleStatus_S6 : 295|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_BuckleStatus_S5 : 287|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_BuckleStatus_S4 : 279|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_BuckleStatus_S3 : 271|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_BuckleStatus_S2 : 263|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_BuckleStatus_S1 : 255|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_WarmResetCounter : 495|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockCounter_S6 : 479|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockCounter_S5 : 455|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockCounter_S4 : 431|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockCounter_S3 : 407|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockCounter_S2 : 383|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockCounter_S1 : 359|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmedCounter_S6 : 487|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmedCounter_S5 : 463|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmedCounter_S4 : 439|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmedCounter_S3 : 415|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmedCounter_S2 : 391|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmedCounter_S1 : 367|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_LockCounter_S6 : 471|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_LockCounter_S5 : 447|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_LockCounter_S4 : 423|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_LockCounter_S3 : 399|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_LockCounter_S2 : 375|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_LockCounter_S1 : 351|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmation_S6 : 245|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmation_S5 : 244|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmation_S4 : 243|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmation_S3 : 242|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmation_S2 : 241|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_UnlockConfirmation_S1 : 240|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Accel_Az : 167|16@0- (0.0025,0) [-81.92|81.9175] "m/s^2" Vector__XXX
+ SG_ eCS_Accel_Ay : 151|16@0- (0.0025,0) [-81.92|81.9175] "m/s^2" Vector__XXX
+ SG_ eCS_Accel_Ax : 135|16@0- (0.0025,0) [-81.92|81.9175] "m/s^2" Vector__XXX
+ SG_ eCS_CurrentStep_S6 : 223|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_CurrentStep_S5 : 215|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_CurrentStep_S4 : 207|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_CurrentStep_S3 : 199|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_CurrentStep_S2 : 191|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_CurrentStep_S1 : 183|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_6_State : 5|3@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ eCS_Solenoid_5_State : 2|3@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ eCS_Solenoid_4_State : 237|3@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ eCS_Solenoid_3_State : 234|3@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ eCS_Solenoid_2_State : 229|3@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ eCS_Solenoid_1_State : 226|3@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ eCS_SelectedProfile_S6 : 127|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_SelectedProfile_S5 : 119|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_SelectedProfile_S4 : 111|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_SelectedProfile_S3 : 103|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_SelectedProfile_S2 : 95|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_SelectedProfile_S1 : 87|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ Ball_Position : 71|16@0+ (0.0001,0) [0|1.41] "mm" Vector__XXX
+ SG_ eCSTrigger : 56|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ TDK_4g_AZ : 47|16@0- (0.000125,0) [-4.096|4.095875] "g"  Airbag_ECU
+ SG_ TDK_4g_AY : 31|16@0- (0.000125,0) [-4.096|4.095875] "g"  Airbag_ECU
+ SG_ TDK_4g_AX : 15|16@0- (0.000125,0) [-4.096|4.095875] "g"  Airbag_ECU
+
+BO_ 1988 eCS_Measurement_Frame: 64 eCS_ECU
+ SG_ eCS_AEC_23_Status m2 : 368|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_23_ID m2 : 360|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_AlarmbPreinitSeqError m1 : 466|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_AccelZaxisBroken m1 : 467|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ACC_AccelYaxisBroken m1 : 468|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ACC_AccelXaxisBroken m1 : 469|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ eCS_AEC_22_Status m2 : 352|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_22_ID m2 : 344|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_6_Overvoltage m1 : 501|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_5_Overvoltage m1 : 500|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_4_Overvoltage m1 : 499|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_3_Overvoltage m1 : 498|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_2_Overvoltage m1 : 497|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_1_Overvoltage m1 : 496|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_1_V_BOOST m1 : 487|16@0+ (0.001,0) [0|0] "V" Vector__XXX
+ SG_ eCS_AEC_21_Status m2 : 336|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_21_ID m2 : 328|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_20_Status m2 : 320|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_20_ID m2 : 312|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_6_ActuatorBlocked m1 : 477|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_5_ActuatorBlocked m1 : 476|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_4_ActuatorBlocked m1 : 475|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_3_ActuatorBlocked m1 : 474|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_2_ActuatorBlocked m1 : 473|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_1_ActuatorBlocked m1 : 472|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_6_ShortToVBAT m1 : 397|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_6_ShortToGND m1 : 389|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_6_OpenCircuit m1 : 381|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_5_ShortToVBAT m1 : 396|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_5_ShortToGND m1 : 388|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_5_OpenCircuit m1 : 380|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_4_ShortToVBAT m1 : 395|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_4_ShortToGND m1 : 387|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_4_OpenCircuit m1 : 379|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_3_ShortToVBAT m1 : 394|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_3_ShortToGND m1 : 386|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_3_OpenCircuit m1 : 378|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_2_ShortToVBAT m1 : 393|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_2_ShortToGND m1 : 385|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_2_OpenCircuit m1 : 377|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_1_ShortToVBAT m1 : 392|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_1_ShortToGND m1 : 384|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_Solenoid_1_OpenCircuit m1 : 376|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_WD_FAIL_BIT0 m1 : 421|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_DEV_STAT_BIT0 m1 : 423|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_WD_FAIL_BIT1 m1 : 422|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_DEV_STAT_BIT1 m1 : 408|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_WK_WU m1 : 427|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_VS_UV m1 : 405|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_VS_OV m1 : 404|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_VCC2_UV m1 : 415|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_VCC2_OT m1 : 400|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_VCC1_WARN m1 : 402|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_VCC1_UV m1 : 413|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_VCC1_SC m1 : 414|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_VCC1_OV m1 : 403|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_VCAN_UV m1 : 430|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_TSD2_SAFE m1 : 412|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_TSD2 m1 : 411|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_TSD1 m1 : 410|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_TPW m1 : 409|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_TIMER_WU m1 : 428|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_SYSERR m1 : 417|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_SPI_FAIL m1 : 420|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_POR m1 : 401|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_GPIO_WK_WU m1 : 426|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_GPIO_OL m1 : 424|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_GPIO_OC m1 : 425|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_FAILURE m1 : 419|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_CANTO m1 : 418|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_CAN_WU m1 : 429|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SBC_CAN_FAIL m1 : 416|2@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_ReturnStatusError m1 : 464|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_CRC_Error m1 : 465|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_vrefshieldxy_alarm m1 : 438|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_vddmaster_alarm m1 : 455|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_vddio_alarm m1 : 442|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_vdd_alarm m1 : 443|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_temp_vref_alarm m1 : 444|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_temp_dsp_alarm m1 : 453|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_temp12_alarm m1 : 454|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_sys_clk_alarm m1 : 450|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_spi_crc_alarm m1 : 457|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_spi_cmddecod_alarm m1 : 458|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_spi_clkcnt_alarm m1 : 459|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_regcheck_alarm m1 : 460|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_reg_eccerr_alarm m1 : 463|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_reg_eccdone_warn m1 : 448|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_rcosc2_freqmeas_alarm m1 : 452|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_rcosc1_freqmeas_alarm m1 : 451|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_otp_reg_alarm m1 : 447|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_otp_cpy_alarm m1 : 449|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_dvddreg_alarm m1 : 441|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_cp_vref_alarm m1 : 445|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_bg_alarm m1 : 446|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_avddreg_alarm m1 : 440|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_ahb_eccerr_alarm m1 : 461|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_ahb_eccdone_warn m1 : 462|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_ahb_bus_alarm m1 : 456|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_accel_z_dcst_alarm m1 : 433|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_accel_y_dcst_alarm m1 : 434|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_accel_x_dcst_alarm m1 : 435|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_accel_vref_alarm m1 : 436|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_accel_cp_alarm m1 : 437|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_otp_crc_alarm m1 : 432|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ACC_vrefshieldz_alarm m1 : 439|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_19_Status m2 : 304|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_19_ID m2 : 296|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_18_Status m2 : 288|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_18_ID m2 : 280|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_17_Status m2 : 272|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_17_ID m2 : 264|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_16_Status m2 : 256|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_16_ID m2 : 248|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_15_Status m2 : 240|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_15_ID m2 : 232|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_13_Status m2 : 208|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_13_ID m2 : 200|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_9_Status m2 : 144|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_9_ID m2 : 136|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_8_Status m2 : 128|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_8_ID m2 : 120|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_7_Status m2 : 112|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_7_ID m2 : 104|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_6_Status m2 : 96|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_6_ID m2 : 88|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_5_Status m2 : 80|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_5_ID m2 : 72|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_4_Status m2 : 64|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_4_ID m2 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_3_Status m2 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_3_ID m2 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_2_Status m2 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_2_ID m2 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_1_Status m2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_1_ID m2 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_14_Status m2 : 224|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_14_ID m2 : 216|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_12_Status m2 : 192|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_12_ID m2 : 184|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_11_Status m2 : 176|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_11_ID m2 : 168|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_10_Status m2 : 160|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_AEC_10_ID m2 : 152|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_15 m3 : 456|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_14 m3 : 424|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_13 m3 : 392|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_12 m3 : 360|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_11 m3 : 328|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_10 m3 : 296|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_9 m3 : 264|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_8 m3 : 232|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_7 m3 : 200|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_6 m3 : 168|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_5 m3 : 136|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_4 m3 : 104|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_3 m3 : 72|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_2 m3 : 40|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_3_AddressBlock_1 m3 : 8|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ eCS_MF_1_SolenoidVoltage_S6 m1 : 200|16@1- (1,0) [0|0] "mV" Vector__XXX
+ SG_ eCS_MF_1_SolenoidVoltage_S5 m1 : 184|16@1- (1,0) [0|0] "mV" Vector__XXX
+ SG_ eCS_MF_1_SolenoidTemperature_S6 m1 : 359|8@0- (1,0) [0|0] "Celsius" Vector__XXX
+ SG_ eCS_MF_1_SolenoidTemperature_S5 m1 : 351|8@0- (1,0) [0|0] "Celsius" Vector__XXX
+ SG_ eCS_MF_1_SolenoidCurrent_S6 m1 : 296|16@1- (1,0) [0|0] "mA" Vector__XXX
+ SG_ eCS_MF_1_SolenoidCurrent_S5 m1 : 280|16@1- (1,0) [0|0] "mA" Vector__XXX
+ SG_ eCS_MF_1_V_BATT m1 : 367|16@0+ (0.001,0) [0|0] "V" Vector__XXX
+ SG_ eCS_MF_1_SolenoidVoltage_S4 m1 : 168|16@1- (1,0) [0|0] "mV" Vector__XXX
+ SG_ eCS_MF_1_SolenoidVoltage_S3 m1 : 152|16@1- (1,0) [0|0] "mV" Vector__XXX
+ SG_ eCS_MF_1_SolenoidVoltage_S2 m1 : 136|16@1- (1,0) [0|0] "mV" Vector__XXX
+ SG_ eCS_MF_1_SolenoidVoltage_S1 m1 : 120|16@1+ (1,0) [0|0] "mv" Vector__XXX
+ SG_ eCS_MF_1_SolenoidTemperature_S4 m1 : 343|8@0- (1,0) [0|0] "Celsius" Vector__XXX
+ SG_ eCS_MF_1_SolenoidTemperature_S3 m1 : 335|8@0- (1,0) [0|0] "Celsius" Vector__XXX
+ SG_ eCS_MF_1_SolenoidTemperature_S2 m1 : 327|8@0- (1,0) [0|0] "Celsius" Vector__XXX
+ SG_ eCS_MF_1_SolenoidTemperature_S1 m1 : 319|8@0- (1,0) [0|0] "Celsius" Vector__XXX
+ SG_ eCS_MF_1_SolenoidCurrent_S4 m1 : 264|16@1- (1,0) [0|0] "mA" Vector__XXX
+ SG_ eCS_MF_1_SolenoidCurrent_S3 m1 : 248|16@1- (1,0) [0|0] "mA" Vector__XXX
+ SG_ eCS_MF_1_SolenoidCurrent_S2 m1 : 232|16@1- (1,0) [0|0] "mA" Vector__XXX
+ SG_ eCS_MF_1_SolenoidCurrent_S1 m1 : 216|16@1- (1,0) [0|0] "mA" Vector__XXX
+ SG_ eCS_MF_1_PWM_S6 m1 : 119|8@0+ (0.5,0) [0|100] "%" Vector__XXX
+ SG_ eCS_MF_1_PWM_S5 m1 : 111|8@0+ (0.5,0) [0|100] "%" Vector__XXX
+ SG_ eCS_MF_1_PWM_S4 m1 : 103|8@0+ (0.5,0) [0|100] "%" Vector__XXX
+ SG_ eCS_MF_1_PWM_S3 m1 : 95|8@0+ (0.5,0) [0|100] "%" Vector__XXX
+ SG_ eCS_MF_1_PWM_S2 m1 : 87|8@0+ (0.5,0) [0|100] "%" Vector__XXX
+ SG_ eCS_MF_1_PWM_S1 m1 : 79|8@0+ (0.5,0) [0|100] "%" Vector__XXX
+ SG_ eCS_MF_1_PtcTemperature m1 : 40|16@1- (1,0) [0|0] "C" Vector__XXX
+ SG_ eCS_MF_1_McuTemperature m1 : 8|16@1- (1,0) [0|0] "C" Vector__XXX
+ SG_ eCS_MF_1_ECU_Temperature m1 : 63|16@0- (1,0) [-40|125] "°C" Vector__XXX
+ SG_ eCS_MF_1_AccTemperature m1 : 24|16@1- (1,0) [0|0] "C" Vector__XXX
+ SG_ eCS_MF_BlockID M : 7|8@0+ (1,0) [0|0] ""  Airbag_ECU
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+CM_ SG_ 256 eCS_CurrentStep_S6 "SNA";
+CM_ SG_ 256 eCS_CurrentStep_S5 "SNA";
+CM_ SG_ 1988 eCS_MF_1_SolenoidVoltage_S6 "SNA";
+CM_ SG_ 1988 eCS_MF_1_SolenoidVoltage_S5 "SNA";
+CM_ SG_ 1988 eCS_MF_1_SolenoidTemperature_S6 "SNA";
+CM_ SG_ 1988 eCS_MF_1_SolenoidTemperature_S5 "SNA";
+CM_ SG_ 1988 eCS_MF_1_SolenoidCurrent_S6 "SNA";
+CM_ SG_ 1988 eCS_MF_1_SolenoidCurrent_S5 "SNA";
+CM_ SG_ 1988 eCS_MF_1_PWM_S6 "SNA";
+CM_ SG_ 1988 eCS_MF_1_PWM_S5 "SNA";
+CM_ SG_ 1988 eCS_MF_1_PtcTemperature "Resolution shall be checked (mm)
+Value starts at 0mm at SW init.";
+CM_ SG_ 1988 eCS_MF_1_McuTemperature "Resolution is not properly defined (mm/s)";
+CM_ SG_ 1988 eCS_MF_1_AccTemperature "Value table to be documented";
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "vector_leerstring";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "VFrameFormat" "ExtendedCAN_FD";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenMsgSendType" "";
+BA_DEF_DEF_  "BusType" "";
+BA_ "BusType" "CAN FD";
+BA_ "VFrameFormat" BO_ 1989 14;
+BA_ "VFrameFormat" BO_ 256 14;
+BA_ "VFrameFormat" BO_ 1988 14;
+VAL_ 1989 eCS_ECU_STATE 26 "Process mode Active" 22 "Autonomous mode Active" 12 "Wakeup mode Active" 11 "Shutdown mode Active" 10 "Low Power mode Active" 9 "Post Run mode Active" 8 "Run mode Active" 6 "Go_Off_One_B State Active" 5 "Go_Off_One_A State Active" 4 "Wakeup Validated State Active" 2 "Startup_Two_B State Active" 0 "Startup_Two_A State Active" ;
+VAL_ 256 eCS_BuckleStatus_S6 3 "Belt Plugged In" 2 "Belt Not Plugged In" 1 "Init" 0 "Not Installed" ;
+VAL_ 256 eCS_BuckleStatus_S5 3 "Belt Plugged In" 2 "Belt Not Plugged In" 1 "Init" 0 "Not Installed" ;
+VAL_ 256 eCS_BuckleStatus_S4 3 "Belt Plugged In" 2 "Belt Not Plugged In" 1 "Init" 0 "Not Installed" ;
+VAL_ 256 eCS_BuckleStatus_S3 3 "Belt Plugged In" 2 "Belt Not Plugged In" 1 "Init" 0 "Not Installed" ;
+VAL_ 256 eCS_BuckleStatus_S2 3 "Belt Plugged In" 2 "Belt Not Plugged In" 1 "Init" 0 "Not Installed" ;
+VAL_ 256 eCS_BuckleStatus_S1 3 "Belt Plugged In" 2 "Belt Not Plugged In" 1 "Init" 0 "Not Installed" ;
+VAL_ 256 eCS_UnlockConfirmation_S6 1 "Unlock Confirmed" 0 "Not Determined" ;
+VAL_ 256 eCS_UnlockConfirmation_S5 1 "Unlock Confirmed" 0 "Not Determined" ;
+VAL_ 256 eCS_UnlockConfirmation_S4 1 "Unlock Confirmed" 0 "Not Determined" ;
+VAL_ 256 eCS_UnlockConfirmation_S3 1 "Unlock Confirmed" 0 "Not Determined" ;
+VAL_ 256 eCS_UnlockConfirmation_S2 1 "Unlock Confirmed" 0 "Not Determined" ;
+VAL_ 256 eCS_UnlockConfirmation_S1 1 "Unlock Confirmed" 0 "Not Determined" ;
+VAL_ 256 eCS_Solenoid_6_State 5 "Diagnostic" 4 "Startup" 3 "Disabled" 0 "Locked" 1 "Unlocked" 2 "Backup" ;
+VAL_ 256 eCS_Solenoid_5_State 5 "Diagnostic" 4 "Startup" 3 "Disabled" 0 "Locked" 1 "Unlocked" 2 "Backup" ;
+VAL_ 256 eCS_Solenoid_4_State 5 "Diagnostic" 4 "Startup" 3 "Disabled" 0 "Locked" 1 "Unlocked" 2 "Backup" ;
+VAL_ 256 eCS_Solenoid_3_State 5 "Diagnostic" 4 "Startup" 3 "Disabled" 0 "Locked" 1 "Unlocked" 2 "Backup" ;
+VAL_ 256 eCS_Solenoid_2_State 5 "Diagnostic" 4 "Startup" 3 "Disabled" 0 "Locked" 1 "Unlocked" 2 "Backup" ;
+VAL_ 256 eCS_Solenoid_1_State 5 "Diagnostic" 4 "Startup" 3 "Disabled" 0 "Locked" 1 "Unlocked" 2 "Backup" ;
+VAL_ 256 eCSTrigger 0 "Unlocked" 1 "Locked" ;
+

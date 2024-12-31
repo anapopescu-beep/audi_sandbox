@@ -1,0 +1,31 @@
+SYStem.RESet
+SYStem.CPU S32K144
+SYStem.Up
+
+DO ~~/demo/arm/flash/s32k.cmm PREPAREONLY
+
+
+;	S32K144 Flash Regions:
+;	PFlashSize=0x80000	=	512 KB
+;	DFlashSize=0x10000	=	64 KB
+
+DIALOG.YESNO "Program flash memory?"
+LOCAL &progflash
+ENTRY &progflash
+IF &progflash
+(
+	FLASH.ReProgram ALL /Erase
+    Data.LOAD.Elf ../../../output/bin/*.elf /Quad
+    FLASH.ReProgram OFF
+
+    SYStem.Up
+
+)
+ELSE
+(
+	Data.LOAD.Elf ../../../output/bin/*.elf /NOCODE
+)
+
+List.auto
+
+ENDDO

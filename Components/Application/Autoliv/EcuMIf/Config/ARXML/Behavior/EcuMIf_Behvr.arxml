@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE T="2023-04-18T15:39:52+03:00">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2016-05-30T16:03:21+02:00">
+              <SHORT-NAME>EcuMIf</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2022-08-26T20:12:24+03:00">
+                  <SHORT-NAME>EcuMIf</SHORT-NAME>
+                  <CATEGORY>BSW_System_Services</CATEGORY>
+                  <INTERNAL-BEHAVIORS>
+                    <SWC-INTERNAL-BEHAVIOR T="2023-02-27T14:00:20+02:00">
+                      <SHORT-NAME>EcuMIf_IB</SHORT-NAME>
+                      <DATA-TYPE-MAPPING-REFS>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/EcuMIf_DataDictionary/DataTypeMappingSet/DataTypeMappingSet_EcuMIf</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/RCM_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_RCM</DATA-TYPE-MAPPING-REF>
+                      </DATA-TYPE-MAPPING-REFS>
+                      <EVENTS>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-26T19:52:39+03:00" UUID="4cd5b19e-9012-4574-b2d0-1176c3ca3bb6">
+                          <SHORT-NAME>trAdcIf_Calib</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T20:14:55+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrEcuMIfServicesAdcIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/EcuMIf_DataDictionary/TriggerInterfaces/itrEcuMIfServices/AdcIf_Calib</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-21T13:53:02+02:00" UUID="7f49ea87-9c4b-4ba8-8fbd-8281575f75bd">
+                          <SHORT-NAME>trAdc_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-21T13:53:02+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrAdcServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrAdcServices/Adc_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="ad8ab5de-f425-4025-b7e7-ae48de47cf52">
+                          <SHORT-NAME>trCanIf_CheckValidation</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_CheckValidation</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrCanIfServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanIfServices/CanIf_CheckValidation</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT UUID="55cd6f26-019a-4bb5-af85-4f8f1292086b">
+                          <SHORT-NAME>trCanIf_SetControllerMode</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_StartWakeupSources</START-ON-EVENT-REF>
+                          <TRIGGER-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrCanIfServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanIfServices/CanIf_SetControllerMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T14:38:48+02:00" UUID="99f20d85-7c47-4beb-b30e-31271768bb27">
+                          <SHORT-NAME>trCanIf_SetControllerMode_EcuM_StopWakeupSources</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_StopWakeupSources</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-16T14:38:48+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrCanIfServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanIfServices/CanIf_SetControllerMode</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-21T13:52:22+02:00" UUID="f2b54533-5fdb-4eeb-9218-cbcd25354479">
+                          <SHORT-NAME>trCan_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-21T13:52:22+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrCanServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanServices/Can_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-21T13:51:33+02:00" UUID="906cc87f-0bb3-4368-bc21-6e21a83ea70a">
+                          <SHORT-NAME>trDem_PreInit</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-21T13:51:33+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrDemServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrDemServices/Dem_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-26T19:42:18+03:00" UUID="ba3bbf0f-3f10-46e4-90c9-fdeb5c94a117">
+                          <SHORT-NAME>trDioIf_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T20:15:01+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrEcuMIfServicesDioIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/EcuMIf_DataDictionary/TriggerInterfaces/itrEcuMIfServices/DioIf_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-21T13:52:48+02:00" UUID="79cc26a7-5873-435e-a287-050dc678b29b">
+                          <SHORT-NAME>trFee_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-21T13:52:48+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrFeeServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrFeeServices/Fee_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-21T13:52:35+02:00" UUID="9d160f34-ce3f-4367-a9ac-d09146341672">
+                          <SHORT-NAME>trFls_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-21T13:52:35+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrFlsServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrFlsServices/Fls_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-21T13:51:49+02:00" UUID="dd82045f-2509-4ceb-8578-9cc699ccbfa7">
+                          <SHORT-NAME>trMcu_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-21T13:51:49+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrMcuServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrMcuServices/Mcu_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-21T13:53:31+02:00" UUID="d32e0fb0-a4bb-4127-bbd6-a35b4354d249">
+                          <SHORT-NAME>trPwm_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-21T13:53:31+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrAsrPwmServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrPwmServices/Pwm_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-21T13:53:48+02:00" UUID="392934a7-dfab-4d62-b22e-4c7a54a918bf">
+                          <SHORT-NAME>trSpi_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB/EcuM_DefaultInitListOne</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2023-02-21T13:53:48+02:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrrSpiServicesEcuMIf</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrSpiServices/Spi_Init</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                      </EVENTS>
+                      <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                      <RUNNABLES>
+                        <RUNNABLE-ENTITY T="2023-02-27T13:42:38+02:00" UUID="DCE:77c8a65f-5646-4a3c-be7b-8588f7c1ef66">
+                          <SHORT-NAME>Can_CheckWakeup</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrCanServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrCanServices/Can_CheckWakeup</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>Can_CheckWakeup_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:cd3fd634-06d8-4e54-973f-1f4ad14a820c">
+                          <SHORT-NAME>EcuM_AL_DriverInitOne</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_AL_DriverInitOne</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_AL_DriverInitOne_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2022-08-26T16:33:17+03:00" UUID="DCE:8ab95b73-d82c-4980-80d6-0400a995e780">
+                          <SHORT-NAME>EcuM_AL_Reset</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_AL_Reset</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="6707740e-d4e2-42f4-9789-10bb0378cef5">
+                              <SHORT-NAME>scp_SBC_Reset</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/pclSbcServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/SBC_Reset</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>EcuM_AL_Reset_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:29cecb22-6ce2-489f-b484-e223be82956e">
+                          <SHORT-NAME>EcuM_AL_SetProgrammableInterrupts</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_AL_SetProgrammableInterrupts</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_AL_SetProgrammableInterrupts_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:c67170b4-ac35-4b2a-9ca8-18567ea948ec">
+                          <SHORT-NAME>EcuM_AL_SwitchOff</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_AL_SwitchOff</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="d13fad23-5879-43e0-8805-dd70cf29d5bd">
+                              <SHORT-NAME>scp_NotifyResetCause</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/pclNotifyResetCause</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification/NotifyResetCause</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT UUID="15f9787f-d5cc-4a28-8611-beb343fded3a">
+                              <SHORT-NAME>scp_SBC_Shutdown</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/pclSbcServices</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/SBC_Shutdown</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>EcuM_AL_SwitchOff_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:21e5e1aa-e173-42b1-ba4e-12d4877c5cce">
+                          <SHORT-NAME>EcuM_CheckRamHash</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_CheckRamHash</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_CheckRamHash_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:94ac368f-5e00-402e-8d3b-e2a3b4aac62f">
+                          <SHORT-NAME>EcuM_CheckValidation</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_CheckValidation</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_CheckValidation_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:0cd06650-987e-4451-8c69-554c0c82ea30">
+                          <SHORT-NAME>EcuM_CheckWakeup</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_CheckWakeup</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_CheckWakeup_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2022-08-26T19:53:04+03:00" UUID="DCE:6bbc6ab0-b23d-437d-8894-204c38f7d601">
+                          <SHORT-NAME>EcuM_DefaultInitListOne</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_DriverInitListOne</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_DefaultInitListOne_0_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:566243e7-749e-45fb-88b4-994d8289cb3a">
+                          <SHORT-NAME>EcuM_DeterminePbConfiguration</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_DeterminePbConfiguration</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_DeterminePbConfiguration_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:5b4c7a2b-86d9-4bed-96be-d39b471615c5">
+                          <SHORT-NAME>EcuM_DisableWakeupSources</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_DisableWakeupSources</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_DisableWakeupSources_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:df4ea0e8-ddfb-43b2-82c4-c2efc7bdaa45">
+                          <SHORT-NAME>EcuM_EnableWakeupSources</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_EnableWakeupSources</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_EnableWakeupSources_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:d16ac4e9-a82b-45ed-90fa-657696f840ef">
+                          <SHORT-NAME>EcuM_ErrorHook</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_ErrorHook</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_ErrorHook_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:57496682-88dd-45a8-bf8e-313d8a8e972f">
+                          <SHORT-NAME>EcuM_GenerateRamHash</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_GenerateRamHash</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_GenerateRamHash_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:e81f80d4-4c29-4e44-93db-9496f3eb7e21">
+                          <SHORT-NAME>EcuM_OnGoOffOne</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_OnGoOffOne</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_OnGoOffOne_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:242b87e6-6c57-4121-9d20-f30ffdfa8beb">
+                          <SHORT-NAME>EcuM_OnGoOffTwo</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_OnGoOffTwo</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_OnGoOffTwo_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:7b73fac0-4299-41e3-a7bc-8f832fecbcd1">
+                          <SHORT-NAME>EcuM_PostHalt</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_PostHalt</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_PostHalt_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:79dab27e-125d-4db9-bceb-c56abd5a74c1">
+                          <SHORT-NAME>EcuM_PreHalt</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_PreHalt</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_PreHalt_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:200bd880-0a0f-4b9b-a167-83665a6b96f3">
+                          <SHORT-NAME>EcuM_SleepActivity</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_SleepActivity</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_SleepActivity_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:830dc310-5631-49f0-9c79-ee6878443a68">
+                          <SHORT-NAME>EcuM_StartWakeupSources</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_StartWakeupSources</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_StartWakeupSources_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY UUID="DCE:2f660f03-fc79-4bc1-91f2-19fda94033b8">
+                          <SHORT-NAME>EcuM_StopWakeupSources</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/ptrpAsrEcuMServicesEcuMIf</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_StopWakeupSources</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>EcuM_StopWakeupSources_symb</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                      </RUNNABLES>
+                      <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                    </SWC-INTERNAL-BEHAVIOR>
+                  </INTERNAL-BEHAVIORS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+                <SWC-IMPLEMENTATION T="2015-10-21T09:49:22+02:00">
+                  <SHORT-NAME>EcuMIf_imp</SHORT-NAME>
+                  <CATEGORY>BSW_System_Services</CATEGORY>
+                  <CODE-DESCRIPTORS>
+                    <CODE T="2015-10-12T16:44:00+02:00">
+                      <SHORT-NAME>EcuMIf_Impl_Code</SHORT-NAME>
+                      <ARTIFACT-DESCRIPTORS>
+                        <AUTOSAR-ENGINEERING-OBJECT>
+                          <SHORT-LABEL>EcuMIf_Impl_Code_CodeDesc</SHORT-LABEL>
+                          <CATEGORY>SWSRC</CATEGORY>
+                        </AUTOSAR-ENGINEERING-OBJECT>
+                      </ARTIFACT-DESCRIPTORS>
+                    </CODE>
+                  </CODE-DESCRIPTORS>
+                  <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+                  <RESOURCE-CONSUMPTION T="2016-05-27T17:04:30+02:00">
+                    <SHORT-NAME>EcuMIf_Impl_ResCons</SHORT-NAME>
+                    <MEMORY-SECTIONS>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00" UUID="eeeae7f9-65a6-4db8-8b84-433eb5042f61">
+                        <SHORT-NAME>CODE</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00">
+                        <SHORT-NAME>CODE_ASIL_A</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="e9789685-5607-475f-8380-55249e65ef5a">
+                        <SHORT-NAME>CONST_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="601e9698-26f1-43d3-a8e6-2f91c170da17">
+                        <SHORT-NAME>CONST_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="3869a1fd-a1e9-4de8-8145-56def061d6cd">
+                        <SHORT-NAME>CONST_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="dcf72c6c-c8d8-4644-be5b-db4d3773d9c1">
+                        <SHORT-NAME>CONST_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="7db1d43a-4a52-433d-8772-4fd5262491cb">
+                        <SHORT-NAME>CONST_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="d440876a-5ccf-4b25-b7fa-0712c5667fe9">
+                        <SHORT-NAME>VAR_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="ef48eab5-adbf-4f37-ae0c-6874968ace8e">
+                        <SHORT-NAME>VAR_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00" UUID="35d4a960-adbd-4ac1-bd73-40e6ab1115f3">
+                        <SHORT-NAME>VAR_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00">
+                        <SHORT-NAME>VAR_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:53:16+02:00" UUID="d4517c1f-337c-48c6-b007-4ab8cf087d70">
+                        <SHORT-NAME>VAR_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00" UUID="408fe12b-d540-4adc-b857-08a6cb6ea9e4">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="e5a1d846-bb8d-4939-95e0-7074a4d58160">
+                        <SHORT-NAME>VAR_NO_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="085671c6-8baa-46bd-8d0d-d7a3d52a18f2">
+                        <SHORT-NAME>VAR_NO_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="4a6d58de-2fcc-43e5-b93f-342a43837072">
+                        <SHORT-NAME>VAR_NO_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="7a22f109-fd44-44cc-b004-454caba2bbcd">
+                        <SHORT-NAME>VAR_NO_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2017-02-07T16:23:34+01:00" UUID="ef05b8fe-834f-4341-8752-cd5afd0e8bba">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_POWER_ON_CLEARED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/VAR_POWER_ON_CLEARED</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                    </MEMORY-SECTIONS>
+                  </RESOURCE-CONSUMPTION>
+                  <SW-VERSION>1.0.0</SW-VERSION>
+                  <VENDOR-ID>0</VENDOR-ID>
+                  <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/AUTOLIV/SoftwareComponents/EcuMIf/EcuMIf/EcuMIf_IB</BEHAVIOR-REF>
+                </SWC-IMPLEMENTATION>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

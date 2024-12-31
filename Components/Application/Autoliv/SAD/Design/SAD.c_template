@@ -1,0 +1,1677 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version:
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.11 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/SAD/Design/project.pj $
+*/
+
+/*!****************************************************************************
+
+details
+   The SAD component is responsible for the control of the solenoid actuators
+   and error detection
+
+******************************************************************************/
+
+/*!****************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "SAD.h"
+#include "Rte_SAD.h"
+#include "RteIf.h"
+#include "Math.h"
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+/**
+ *\brief
+ *      Indicate the status of the current step as invalid.
+ */
+#define KU8_SAD_INVALID_STEP                 ((uint8) 0)
+
+/**
+ *\brief
+ *      Indicate the status of the current step as a new step.
+ */
+#define KU8_SAD_NEW_STEP                     ((uint8) 1)
+
+/**
+ *\brief
+ *      Indicate the status of the current step as it is ongoing.
+ */
+#define KU8_SAD_ON_GOING_STEP                ((uint8) 2)
+
+/**
+ *\brief
+ *      Indicates the position of the first step from the profile array
+ */
+#define KU8_SAD_INDEX_OF_FIRST_STEP          ((uint8) 4)
+
+
+/**
+ *\brief
+ *      Indicates the position of the option byte from the step description.
+ */
+#define KU8_SAD_INDEX_OF_OPTION_BYTE         ((uint8) 6)
+
+/**
+ *\brief
+ *      Indicates the maximum number of steps configured in NVP
+ */
+#define KU8_SAD_MAX_STEP                     ((uint8) 8)
+
+/**
+ *\brief
+ *       Indicate the limit value of the profile number. If a profile is set to a
+ *       higher value, the profile is invalid.
+ */
+#define KU8_SAD_NB_MAX_PROFILES_LIB          ((uint8) 4)
+
+/**
+ *\brief
+ *      Indicates the maximum number of steps assigned to a profile
+ */
+#define KU8_SAD_NB_MAX_STEPS_LIB             ((uint8) 8)
+
+/**
+ *\brief
+ *      Indicate the value of an invalid step
+ */
+#define KU8_SAD_NO_STEP_TYPE                 ((uint8) 7)
+
+/**
+ *\brief
+ *      Indicate the number of bytes assigned to a profile.
+ */
+#define KU8_SAD_PROFILE_SIZE                 ((uint8) 12)
+
+/**
+ *\brief
+ *      Indicates the type of control to be as PWM (the other type is current)
+ */
+#define KU8_SAD_PWM_ORDER_TYPE               ((uint8) 2)
+
+/**
+ *\brief
+ *      Indicate the number of bytes from a step
+ */
+#define KU8_SAD_STEP_SIZE                    ((uint8) 7)
+
+/**
+ *\brief
+ *      Indicates the maximum number of steps assigned to a profile.
+ */
+#define KU8_SAD_MAX_STEP_INDEX               ((uint8) 8)
+
+/**
+ *\brief
+ *      Indicate the first profile from the NVP block
+ */
+#define KU8_SAD_UNLOCK_PROFILE               NVP_au8EcsProfile_0
+
+/**
+ *\brief
+ *      Indicate the first step from the NVP block
+ */
+#define KU8_SAD_STEP_0                       NVP_au8Step_0
+
+/**
+ *\brief
+ *      Indicates the NVP value for timeout value for detecting solenoid
+ *      lock action
+ */
+#define KU16_SAD_LOCK_DETECTION_TIMEOUT      ((uint16) NVP_u16LockDetectionTimeout)
+
+/**
+ *\brief
+ *      Indicate the value in LSB units for 100% PWM
+ */
+#define KU16_SAD_MAX_PWM_LSB                 ((uint16) 0x8000)
+
+/**
+ *\brief
+ *      Indicate the value in LSB units for 99% PWM
+ */
+#define KU16_SAD_NINETY_NINE_PER_PWM         ((uint16) 32767)
+
+/**
+ *\brief
+ *      The maximum value of PWM in percentage multiply by a gain factor of 1000
+ */
+#define KU32_SAD_MAX_PWM                     ((uint32) 100000)
+
+/**
+ *\brief
+ *      Correction factor obtains from considering the effect of some hardware
+ *      components in voltage readings.
+ */
+#define KU32_SAD_CORECTIVE_FACTOR            ((uint32) 3077)
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+/**
+ * \brief
+ *       Data structure used to save the configuration of the current executed step
+ */
+typedef struct sad_stStepParam_tag {
+   uint16 u16Duration;     /* Description: Step duration: 1 lsb = 1ms            */
+   uint8 u8Order;          /* Description: Order type : PWM or current           */
+   uint32 u32Consign;      /* Description: PWM Value                             */
+   boolean b8IsRamp;       /* Description: Ramp option: 0 - OFF; 1 - ON          */
+   boolean b8IsInfinite;   /* Description: Infinite step option: 0 - OFF; 1 - ON */
+   boolean b8IsTrigOff;    /* Description: Trigger option: 0 - OFF; 1 - ON       */
+} sad_stStepParam;
+
+/**
+ * \brief
+ *       Data structure used to save the configuration of the NVP implemented steps
+ */
+typedef struct sad_stStepParamCollection_tag {
+   sad_stStepParam astStepParam[KU8_EIGHT];
+} sad_stStepParamCollection;
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+LOCAL void sad_ControlSolenoidsCircuitry(void);
+LOCAL void sad_ControlStepExecution(const uint8 ku8SolenoidIdx);
+LOCAL void sad_ManageStepEvents(const uint8 ku8SolenoidIdx);
+LOCAL void sad_SelectStepId(const uint8 ku8SolenoidIdx);
+LOCAL void sad_StepPreprocessing(const uint8 ku8SolenoidIdx);
+LOCAL void sad_ExtractSteps(const uint8 ku8SolenoidIdx);
+LOCAL void sad_runSolenoidControl(const uint8 ku8SolenoidIdx);
+LOCAL void sad_TriggerDiagProfile(const uint8 ku8SolenoidIdx);
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/**
+ * \brief
+ *       Used to indicate if an Unlock request was read for the first time after
+ *       a lock state.
+ *
+ * \initialization
+ *       KB_FALSE ((boolean) 0x00).
+ * \range
+ *       ;
+ */
+LOCAL boolean sad_bFirstUnlock = KB_FALSE;
+
+/**
+ * \brief
+ *       Used to store each solenoid's step status, which represents if
+ *       the current step was completely executed or not.
+ *
+ * \initialization
+ *       KB_FALSE (boolean 0)
+ *
+ * \range
+ *       KB_FALSE
+ *       KB_TRUE;
+ */
+LOCAL boolean sad_abIsStepFinished[KU8_MAX_SOLENOID_NB] =
+{
+      KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE
+};
+
+/**
+ * \brief
+ *       Used to store each solenoid's step status, which represents if
+ *       the previous step was completely executed or not.
+ *
+ * \initialization
+ *       KB_FALSE (boolean 0)
+ *
+ * \range
+ *       KB_FALSE
+ *       KB_TRUE;
+ */
+LOCAL boolean sad_abIsPrevStepFinished[KU8_MAX_SOLENOID_NB] =
+{
+      KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE
+};
+
+/**
+ * \brief
+ *       Used to store each solenoid duration status, which represents if
+ *       the defined duration of the current step was reached.
+ *
+ * \initialization
+ *       KB_FALSE (boolean 0)
+ *
+ * \range
+ *       KB_FALSE
+ *       KB_TRUE;
+ */
+LOCAL boolean sad_abIsTimerElapsed[KU8_MAX_SOLENOID_NB] =
+{
+      KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE
+};
+
+/**
+ * \brief
+ *       Store the status of the trigger-off option if is configured for
+ *       the current step of each solenoid. If the option is set and
+ *       the unlock confirmation is confirmed for the current solenoid,
+ *       the flag is set.
+ *
+ * \initialization
+ *       KB_FALSE (boolean 0)
+ *
+ * \range
+ *       KB_FALSE
+ *       KB_TRUE;
+ */
+LOCAL boolean sad_abIsTrigOff[KU8_MAX_SOLENOID_NB] =
+{
+      KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE, KB_FALSE
+};
+
+
+/**
+ * \brief
+ *       The variable is used to store the index of the last controlled solenoid
+ *       in order to start the new cycle with the next one.
+ *
+ * \initialization
+ *       KU8_SOLENOID_1 ((uint8) 0).
+ * \range
+ *       KU8_SOLENOID_1...KU8_SOLENOID_6;
+ */
+
+LOCAL uint8 sad_u8SolenoidLastIndex = KU8_SOLENOID_1;
+
+/**
+ *\brief
+ *     The variable used to store the Infinite step reached status check on the
+ *     last step.
+ *
+ * \initialization
+ *       KU8_ZERO (uint8 0x00)
+ *
+ * \range
+ *       0..KU8_MAX.
+ */
+LOCAL uint8 sad_u8PrevSolenoidSolenoidInfiniteStepReached = KU8_ZERO;
+
+/**
+ *\brief
+ *     The variable used to store the state of the ON_OFF_PWR switch.
+ *
+ * \initialization
+ *       KU8_ZERO (uint8 0x00)
+ *
+ * \range
+ *       0..KU8_MAX.
+ */
+LOCAL uint8 sad_u8PrevOnOffPwrSwitch = KU8_FALSE;
+
+/**
+ *\brief
+ *       Variable used to store the bit mask which represents if a solenoid has
+ *       an active profile request from FSM.
+ *
+ * \initialization
+ *       KU8_ZERO ((uint8) 0x00)
+ *
+ * \range
+ *       0..KU8_MAX;
+ */
+LOCAL uint8 sad_u8SolenoidActiveProfile = KU8_ZERO;
+
+/**
+ * \brief
+ *       The variable is used to store the counter value used to determine how
+ *       many cycles all solenoids will be controlled in the same function call.
+ *
+ * \initialization
+ *       KU8_ZERO ((uint8) 0x00).
+ * \range
+ *       KU8_ZERO..KU8_MAX;
+ */
+LOCAL uint8 sad_u8LockAllSolCnt = KU8_ZERO;
+
+/**
+ * \brief
+ *       Store the counter value which represents the index of the currently
+ *       executing step from a profile.
+ *
+ * \initialization
+ *       KU8_ZERO (uint8 0x00)
+ *
+ * \range
+ *       0..KU8_MAX.
+ */
+LOCAL uint8 sad_au8StepIdx[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO
+};
+
+/**
+ * \brief
+ *       Store the counter value which represents the index of the previously
+ *       executed step from a profile.
+ *
+ * \initialization
+ *       KU8_ZERO (uint8 0x00)
+ *
+ * \range
+ *       0..KU8_MAX;
+ */
+LOCAL uint8 sad_au8PrevStepIdx[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO
+};
+
+/**
+ *\brief
+ *     The variable used to store the solenoid profile request which should be
+ *     run.
+ *
+ * \initialization
+ *       KU8_PROFILE_NONE (255U)
+ *
+ * \range
+ *       KU8_PROFILE_UNLOCK
+ *       KU8_PROFILE_BACKUP
+ *       KU8_PROFILE_DIAGNOSTIC
+ *       KU8_PROFILE_NONE;
+ */
+LOCAL uint8 sad_au8SelectedProfile[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_PROFILE_NONE, KU8_PROFILE_NONE, KU8_PROFILE_NONE,
+      KU8_PROFILE_NONE, KU8_PROFILE_NONE, KU8_PROFILE_NONE
+};
+
+/**
+ *\brief
+ *     The variable used to store the last solenoid profile request which was
+ *     active.
+ *
+ * \initialization
+ *       KU8_PROFILE_UNLOCK (0U)
+ *
+ * \range
+ *       KU8_PROFILE_UNLOCK
+ *       KU8_PROFILE_BACKUP
+ *       KU8_PROFILE_DIAGNOSTIC
+ *       KU8_PROFILE_NONE;
+ */
+LOCAL uint8 sad_au8PrevSelectedProfile[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_PROFILE_UNLOCK, KU8_PROFILE_UNLOCK, KU8_PROFILE_UNLOCK,
+      KU8_PROFILE_UNLOCK, KU8_PROFILE_UNLOCK, KU8_PROFILE_UNLOCK
+};
+
+/**
+ *\brief
+ *     The variable used to store the last solenoid profile request which was
+ *     active but only if the PWM cut-off variant is active.
+ *
+ * \initialization
+ *       KU8_PROFILE_NONE (255U)
+ *
+ * \range
+ *       KU8_PROFILE_UNLOCK
+ *       KU8_PROFILE_BACKUP
+ *       KU8_PROFILE_DIAGNOSTIC
+ *       KU8_PROFILE_NONE;
+ */
+LOCAL uint8 sad_au8PrevSelectedProfilePwmCutOff[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_PROFILE_NONE, KU8_PROFILE_NONE, KU8_PROFILE_NONE,
+      KU8_PROFILE_NONE, KU8_PROFILE_NONE, KU8_PROFILE_NONE
+};
+
+/**
+ *\brief
+ *     Variable stores the status of the Short to ground and Open circuit
+ *     auto-tests. If both auto-tests were run at least once after powering on,
+ *     the status should be changed to KU8_TRUE.
+ *
+ * \initialization
+ *       KU8_FALSE (uint8 0x55)
+ *
+ * \range
+ *       KU8_FALSE
+ *       KU8_TRUE;
+ */
+LOCAL uint8 sad_au8SolenoidAutotestsFinished[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_FALSE, KU8_FALSE, KU8_FALSE, KU8_FALSE, KU8_FALSE, KU8_FALSE
+};
+
+/**
+ *\brief
+ *       Variable stores the order type configured for each step.
+ *
+ * \initialization
+ *       KU8_ZERO (uint8 0x00)
+ *
+ * \range
+ *       KU8_ZERO
+ *       KU8_SAD_NO_STEP_TYPE
+ *       KU8_SAD_PWM_ORDER_TYPE;
+ */
+LOCAL uint8 sad_au8OrderOut[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO
+};
+
+/**
+ *\brief
+ *       Variable stores the status of the current executed step of each solenoid.
+ *
+ * \initialization
+ *       KU8_ZERO (uint8 0x00)
+ *
+ * \range
+ *       KU8_SAD_INVALID_STEP
+ *       KU8_SAD_NEW_STEP
+ *       KU8_SAD_ON_GOING_STEP;
+ */
+LOCAL uint8 sad_au8CurrentStepStatus[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO
+};
+
+/**
+ *\brief
+ *     This variable stores the step ID of each solenoid that was last
+ *     time executed.
+ *
+ * \initialization
+ *       KU8_ZERO (uint8 0x00)
+ *
+ * \range
+ *       0..KU8_MAX.
+ */
+LOCAL uint8 sad_au8PrevStepToExecute[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO, KU8_ZERO
+};
+
+
+/**
+ *\brief
+ *     Used to store the counter value of each solenoid which will represent
+ *     the time passed before the detection of the lock action will reach
+ *     the timeout value.
+ *
+ *     1 lsb = function call (currently called at each 1ms)
+ *
+ * \initialization
+ *      KU16_ZERO (uint16 0)
+ *
+ * \range
+ *       0..KU16_MAX.
+ */
+LOCAL uint16 sad_au16LockDetectionTimeout[KU8_MAX_SOLENOID_NB] =
+{
+      KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ *\brief
+ *     Used to store the counter value of each solenoid which will represent
+ *     the time passed running the current step.
+ *
+ *     1 lsb = function call (currently called at each 1ms)
+ *
+ * \initialization
+ *      KU16_ZERO (uint16 0)
+ *
+ * \range
+ *       0..KU16_MAX.
+ */
+LOCAL uint16 sad_au16CurrentTime[KU8_MAX_SOLENOID_NB] =
+{
+      KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ *\brief
+ *     Used to store the counter value of the variable sad_au16CurrentTime
+ *     at the end of a cycle.
+ *
+ *     1 lsb = function call (currently called at each 1ms)
+ *
+ * \initialization
+ *      KU16_ZERO (uint16 0)
+ *
+ * \range
+ *       0..KU16_MAX.
+ */
+LOCAL uint16 sad_au16PrevTime[KU8_MAX_SOLENOID_NB] =
+{
+      KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ *\brief
+ *     The variable used to store the PWM duty cycle was calculated.
+ *
+ * \initialization
+ *      KU16_ZERO (uint16 0)
+ *
+ * \range
+ *       0..KU16_MAX.
+ */
+LOCAL uint16 sad_au16Consign[KU8_MAX_SOLENOID_NB] =
+{
+      KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ *\brief
+ *     The variable used to store the last value of consign at the end of the cycle.
+ *
+ * \initialization
+ *      KU16_ZERO (uint16 0)
+ *
+ * \range
+ *       0..KU16_MAX.
+ */
+LOCAL uint16 sad_au16PrevConsign[KU8_MAX_SOLENOID_NB] =
+{
+      KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ *\brief
+ *     The variable used to store the PWM duty cycle.
+ *
+ * \initialization
+ *      KU16_SAD_NINETY_NINE_PER_PWM (uint16 32767)
+ *
+ * \range
+ *       0..KU16_MAX.
+ */
+LOCAL uint16 sad_au16DutyCycle[KU8_MAX_SOLENOID_NB] =
+{
+      KU16_SAD_NINETY_NINE_PER_PWM, KU16_SAD_NINETY_NINE_PER_PWM, KU16_SAD_NINETY_NINE_PER_PWM,
+      KU16_SAD_NINETY_NINE_PER_PWM, KU16_SAD_NINETY_NINE_PER_PWM, KU16_SAD_NINETY_NINE_PER_PWM
+};
+
+/**
+ *\brief
+ *     The variable used to store the previous PWM duty cycle.
+ *
+ * \initialization
+ *      KU16_ZERO (uint16 0)
+ *
+ * \range
+ *       0..KU16_MAX.
+ */
+LOCAL uint16 sad_au16PrevDutyCycle[KU8_MAX_SOLENOID_NB] =
+{
+      KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO, KU16_ZERO
+};
+
+/**
+ *\brief
+ *     The variable used to store the calculated slope value.
+ *
+ * \initialization
+ *      KS16_ZERO (sint16 0)
+ *
+ * \range
+ *       KS16_MIN..KS16_MAX.
+ */
+LOCAL sint16 sad_as16SlopeValue[KU8_MAX_SOLENOID_NB] =
+{
+      KS16_ZERO, KS16_ZERO, KS16_ZERO, KS16_ZERO, KS16_ZERO, KS16_ZERO
+};
+
+/**
+ *\brief
+ *     The variable used to store the previously calculated slope value.
+ *
+ * \initialization
+ *      KS16_ZERO (sint16 0)
+ *
+ * \range
+ *       KS16_MIN..KS16_MAX.
+ */
+
+LOCAL sint16 sad_as16PrevSlopeValue[KU8_MAX_SOLENOID_NB] =
+{
+      KS16_ZERO, KS16_ZERO, KS16_ZERO, KS16_ZERO, KS16_ZERO, KS16_ZERO
+};
+
+/**
+ *\brief
+ *     This variable stores the value in mA of the current executed step.
+ *
+ * \initialization
+ *       KU32_ZERO (uint32 0x00)
+
+ */
+LOCAL uint32 sad_u32CurrentTargetInMilliA[KU8_MAX_SOLENOID_NB] = {
+   KU32_ZERO, KU32_ZERO, KU32_ZERO, KU32_ZERO, KU32_ZERO, KU32_ZERO
+};
+
+/**
+ *\brief
+ *     The variable used to store the current step characteristics from NVP.
+ *
+ * \initialization
+ *      Duration  - KU16_ZERO (uint16 0)
+ *      Order     - KU8_ZERO (uint8 0)
+ *      Consign   - KU8_ZERO (uint8 0)
+ *      Ramp      - KB_FALSE (boolean 0)
+ *      Infinite  - KB_FALSE (boolean 0)
+ *      TrigOff   - KB_FALSE (boolean 0)
+ */
+LOCAL sad_stStepParam sad_astStep[KU8_MAX_SOLENOID_NB] = {
+   { KU16_ZERO, KU8_ZERO, KU8_ZERO, KB_FALSE, KB_FALSE, KB_FALSE },
+   { KU16_ZERO, KU8_ZERO, KU8_ZERO, KB_FALSE, KB_FALSE, KB_FALSE },
+   { KU16_ZERO, KU8_ZERO, KU8_ZERO, KB_FALSE, KB_FALSE, KB_FALSE },
+   { KU16_ZERO, KU8_ZERO, KU8_ZERO, KB_FALSE, KB_FALSE, KB_FALSE },
+   { KU16_ZERO, KU8_ZERO, KU8_ZERO, KB_FALSE, KB_FALSE, KB_FALSE },
+   { KU16_ZERO, KU8_ZERO, KU8_ZERO, KB_FALSE, KB_FALSE, KB_FALSE }
+};
+
+
+/**
+ *\brief
+ *     The variable used to store the step characteristics from NVP.
+ */
+LOCAL sad_stStepParamCollection sad_astStepCollection[KU8_MAX_SOLENOID_NB];
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/**
+ *\brief
+ *     The variable used to store each bit is the state of the corresponding
+ *     solenoid. The bit will be set when the current executed step has the
+ *     infinite option active.
+ *
+ * \initialization
+ *       KU8_ZERO (uint8 0x00)
+ *
+ * \range
+ *       0..KU8_MAX.
+ */
+EXPORTED uint8 SAD_u8SolenoidInfiniteStepReached = KU8_ZERO;
+
+/**
+ *\brief
+ *     Store a bit mask in which, each bit represents a solenoid. If the bit
+ *     is SET the solenoid is used, else if the bit is CLEAR the solenoid is not
+ *     used.
+ *
+ * \initialization
+ *      KU8_ZERO (uint8 0x00)
+ *
+ * \range
+ *       0..KU8_MAX.
+ */
+EXPORTED uint8 SAD_u8SolenoidUsedBitMask = KU8_ZERO;
+
+/**
+ *\brief
+ *       This variable stores the step ID which will be executed for each solenoid.
+ *
+ * \initialization
+ *       KU8_SAD_UNDEFINED_STEP (uint8 255)
+ *
+ * \range
+ *       0...KU8_MAX.
+ */
+EXPORTED uint8 SAD_au8StepToExecute[KU8_MAX_SOLENOID_NB] =
+{
+      KU8_SAD_UNDEFINED_STEP, KU8_SAD_UNDEFINED_STEP, KU8_SAD_UNDEFINED_STEP,
+      KU8_SAD_UNDEFINED_STEP, KU8_SAD_UNDEFINED_STEP, KU8_SAD_UNDEFINED_STEP
+};
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/**
+ * \brief
+ *       This array holds the configuration mask of each solenoid based on what
+ *       flag to check.
+ * \initialization
+ *       {KU64_SOLENOID_X_CONFIGURED}
+ *       where X - the solenoid number
+ *
+ * \range
+ *       0..KU64_MAX;
+ */
+LOCAL const uint64 sad_kau64SolenoidConfigMask[KU8_MAX_SOLENOID_NB] =
+{
+   /* Solenoid 1 */ (KU64_SOLENOID_1_CONFIGURED),
+   /* Solenoid 2 */ (KU64_SOLENOID_2_CONFIGURED),
+   /* Solenoid 3 */ (KU64_SOLENOID_3_CONFIGURED),
+   /* Solenoid 4 */ (KU64_SOLENOID_4_CONFIGURED),
+   /* Solenoid 5 */ (KU64_SOLENOID_5_CONFIGURED),
+   /* Solenoid 6 */ (KU64_SOLENOID_6_CONFIGURED)
+};
+
+/**
+ * \brief
+ *       This array holds the unlock confirmation mask of each solenoid based on what
+ *       flag to check.
+ * \initialization
+ *       {KU64_SOLENOID_X_UNLOCK_CONFIRMED}
+ *       where X - the solenoid number
+ *
+ * \range
+ *       0..KU64_MAX.
+ */
+LOCAL const uint64 sad_kau64SolenoidUnlockConfirmedMask[KU8_MAX_SOLENOID_NB] =
+{
+   /* Solenoid 1 */ (KU64_SOLENOID_1_UNLOCK_CONFIRMED),
+   /* Solenoid 2 */ (KU64_SOLENOID_2_UNLOCK_CONFIRMED),
+   /* Solenoid 3 */ (KU64_SOLENOID_3_UNLOCK_CONFIRMED),
+   /* Solenoid 4 */ (KU64_SOLENOID_4_UNLOCK_CONFIRMED),
+   /* Solenoid 5 */ (KU64_SOLENOID_5_UNLOCK_CONFIRMED),
+   /* Solenoid 6 */ (KU64_SOLENOID_6_UNLOCK_CONFIRMED)
+};
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+/**
+ * \brief
+ *       Check if Auto-test was finished in the current cycle.
+ *       A logical '1' shall indicate that the DTC test has not run to
+ *       completion during the current operation cycle.
+ *       If the test runs and passes or fails then the bit shall be set
+ *       (and latched) to '0' until a new operation cycle is started.
+ */
+#define KU8_SAD_EVENT_COMPLETED(EventStatus) \
+         (KU8_ZERO == ((EventStatus) & (DEM_UDS_STATUS_TNCTOC)))
+
+/**
+ * \brief
+ *       Check if Auto-test was failed in the current cycle.
+ *       A logical '1' shall indicate that the DTC test has failed
+ *       during the current operation cycle.
+ */
+#define KU8_SAD_EVENT_FAILED(EventStatus) \
+         (DEM_UDS_STATUS_TF == ((EventStatus) & (DEM_UDS_STATUS_TF)))
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/**
+* \brief
+*        This function is used to manage the solenoid circuitry (boost control,
+*        solenoid enabled and solenoids ON/OFF system);
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        SAD_runMainFunction
+* \dynamicaspectdescription
+*        The local function is called by the function SAD_runMainFunction.
+* \constraints
+*        None.
+* \ddesignrequirement
+*        DSG_sad_ControlSolenoidsCircuitry
+* \archrequirement
+*        ARCH_SW_SAD_pclModeManagement
+*        ARCH_SW_SAD_pclDioIfServices;
+**/
+LOCAL void sad_ControlSolenoidsCircuitry(void)
+{
+   Read the status of the battery unstable test;
+   Read the solenoids states from FSM;
+
+   for(Each solenoid)
+   {
+      if((The solenoid is disabled) AND (The solenoid is configured))
+      {
+         Mark the current solenoid as disabled in a bitmask variable;
+      }
+   }
+
+   for(Each solenoid while no active profile runs)
+   {
+      if (The solenoid has an active profile)
+      {
+         Turn on whole current source/boost circuit;
+
+         Prepare a flag to 'FALSE' in order to 
+         anounce the circutry is not ready to be turned off;
+
+         if(All solenoids are in an infinite step)
+         {
+            Turn off the booster;
+         }
+         else
+         {
+            if(The battery voltage is unstable)
+            {
+               Turn off the booster;
+            }
+            else
+            {
+               Turn on the booster;
+            }
+         }
+
+         Exit the for loop because at least one solenoid has an active profile;
+      }
+      else
+      {
+         /* check if profile is KU8_PROFILE_NONE for all solenoids */
+         if(All solenoids have LOCK profile requests)
+         {
+            if(The battery voltage is unstable)
+            {
+               Turn off the booster;
+            }
+            else
+            {
+               Turn on the booster;
+            }
+
+            if(The ON_OFF flag is set to 'TRUE'(The circuitry is ready to be turned off))
+            {
+               Turn off whole current source/boost circuit;
+            }
+
+            Set the ON_OFF flag to 'TRUE' to mark the Solenoid circutry is ready to be turned off;
+
+            Reset the solenoid infinite step execution flags;
+         }
+      }
+   }
+}
+
+/**
+* \brief
+*        This function is used to manage the solenoid profile execution by
+*        extracting the profile and assigned steps from NVP variables and
+*        supervising the execution of each step of the profile.
+* \inputparam
+*        Name: ku8SolenoidIdx;
+*        Type: const uint8;
+*        Description: The id of the solenoid;
+*        Range: 0..5;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        SAD_runMainFunction
+* \dynamicaspectdescription
+*        The local function is called by the function SAD_runMainFunction.
+* \constraints
+*        The function is called only for enabled solenoids.
+* \ddesignrequirement
+*        DSG_sad_runSolenoidControl
+* \archrequirement
+*        ARCH_SW_SAD_ptrpAsrOsServices
+*        ARCH_SW_SAD_pclDioIfServices
+*        ARCH_SW_SAD_pclPwmServices
+**/
+LOCAL INLINE void sad_runSolenoidControl(const uint8 ku8SolenoidIdx)
+{
+   sad_SelectStepId(ku8SolenoidIdx);
+
+   sad_StepPreprocessing(ku8SolenoidIdx);
+ 
+   sad_ControlStepExecution(ku8SolenoidIdx);
+
+   Save the calculated PWM value from the first step of UNLOCK profile in order to be used to prepare
+   next UNLOCK.
+   
+   if (Selected profile is LOCK)
+   {
+      if(The PWM cut-off variant is currently configured)
+      {
+         if(A UNLOCK/BACKUP to LOCK profile transition)
+         {
+            Set the PWM to the highest possible value in order to set the lowest possible current;
+
+            Enable the current solenoid channel;
+
+            if (Lock detection timeout has not expired)
+            {
+               Increment the lock timeout;
+            }
+            else
+            {
+               Reset the counter and previously executed profile;
+            }
+         }
+         else
+         {
+            Set the PWM value to the value configured in the first step;
+            Disable the current solenoid channel;
+         }
+      }
+      else
+      {
+         Set the PWM value to the value configured in the first step;
+         Disable the current solenoid channel;
+      }
+   }
+   else
+   {
+      switch (Order type of current executed step)
+      {
+         case KU8_SAD_PWM_ORDER_TYPE:
+         {
+            Prepare to enable PWM output;
+
+            if (The previous slope value != ZERO)
+            {
+               Set duty cycle based on last dudty cycle and slope value;
+            }
+            else
+            {
+               if(The previous PWM was zero)
+               {
+                  Set the PWM value to the value configured in the first step;
+               }
+               else
+               {
+                  Keep the last duty cycle value;
+               }
+            }
+            break;
+         }
+         default:
+
+            Prepare to disable PWM output since step is not configured correctly;
+            Set PWM to 99% in order to have the lowest possible current;
+            break;
+
+      }
+
+      if (PWM is enabled)
+      {
+         Enable the current solenoid channel;
+      }
+      else
+      {
+         if(The PWM cut-off variant is currently disabled)
+         {
+            Disable the current solenoid channel;
+         }
+         else if(The PWM cut-off variant is currently configured)
+         {
+            Set cut-off with 99% PWM;
+         }
+         else
+         {
+            Do nothing;
+         }
+      }
+
+      if(The PWM cut-off variant is currently configured)
+      {
+         Save the last executed profile;         
+      }
+   }
+
+   if(If all enabled solenoids have reached the infinite step)
+   {
+      Requested duty cycle for current solenoid =  sad_CalculatePWM(ku8SolenoidIdx);
+   }
+
+   Set the duty cycle for the current solenoid;
+   sad_ManageStepEvents(ku8SolenoidIdx);
+
+   Save the current executed step;
+   Save the current selected profile;
+   Save the current current PWM value;
+   Save the current slope value;
+   Save the current duty cycle;
+   Save the current finish state of the current step;
+   Save the current elipsed type of the setp execution;
+   Save the current step index;
+}
+
+/**
+* \brief
+*        This function is used to manage the state of the current step.
+*        Checks if the current step was finished or is still running.
+* \inputparam
+*        Name: ku8SolenoidIdx;
+*        Type: const uint8;
+*        Description: The id of the solenoid;
+*        Range: 0..5;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        sad_runSolenoidControl
+* \dynamicaspectdescription
+*        The local function is called by the function sad_runSolenoidControl.
+* \constraints
+*        The function is called only for enabled solenoids.
+* \ddesignrequirement
+*        DSG_sad_ManageStepEvents
+* \archrequirement
+*        ARCH_SW_SAD_ptrpAsrOsServices
+**/
+LOCAL INLINE void sad_ManageStepEvents(const uint8 ku8SolenoidIdx)
+{
+   if((A new step is selected) OR (The current step is ongoing))
+   {
+      if ((The current step period elipsed) OR (The current step is configured as trigger-off))
+      {
+         Set current step as finished;
+      }
+      else
+      {
+         Set current step as not finished;
+      }
+   }
+   else
+   {
+      Set current step as finished;
+   }
+}
+
+/**
+* \brief
+*        This function is used to manage the selection of the step to be executed
+*        based on the previous step status (if was finished or not) and the
+*        profile.
+* \inputparam
+*        Name: ku8SolenoidIdx;
+*        Type: const uint8;
+*        Description: The id of the solenoid;
+*        Range: 0..5;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        sad_runSolenoidControl
+* \dynamicaspectdescription
+*        The local function is called by the function sad_runSolenoidControl.
+* \constraints
+*        The function is called only for enabled solenoids.
+* \ddesignrequirement
+*        DSG_sad_SelectStepId
+* \archrequirement
+*        ARCH_SW_SAD_ptrpAsrOsServices
+**/
+LOCAL INLINE void sad_SelectStepId(const uint8 ku8SolenoidIdx)
+{
+
+   if (The selected profile is invalid)
+   {
+      Set the step to executed as UNDEFINED;
+   }
+   else
+   {
+      if ((The last executed profile is different from than actual one) OR
+          (The previous executed step was undefined))
+      {
+         Reset the step counter;
+      }
+      else
+      {
+         if (The last step was finished)
+         {
+            Increment the index value of the step based on the previous executed step index;
+         }
+         else
+         {
+            Do not increment the step index;
+         }
+      }
+
+      Extract the new step index value from the selected profile;
+
+      if (The current step index of the profile is grater than the maximum profile steps number)
+      {
+         Set the step to executed as UNDEFINED; 
+      }
+      else
+      {
+         Save the byte position of the first step from the active profile;
+
+         if (The step value from the step position of the active profile is grater than maximum steps configured in NVP)
+         {
+            Set the step to executed as UNDEFINED;
+         }
+         else
+         {
+            Set the step to execute based on the active profile and step index;
+         }
+      }
+   }
+
+   if (The step to execute is UNDEFINED)
+   {
+      Reset the step index;
+   }
+   else
+   {
+      Update step index to step counter value;
+   }
+}
+
+/**
+* \brief
+*        This function is used to manage the execution of each step based on
+*        the option, duration, PWM and previous step executed.
+* \inputparam
+*        Name: ku8SolenoidIdx;
+*        Type: const uint8;
+*        Description: The id of the solenoid;
+*        Range: 0..5;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        sad_runSolenoidControl
+* \dynamicaspectdescription
+*        The local function is called by the function sad_runSolenoidControl.
+* \constraints
+*        The function is called only for enabled solenoids.
+* \ddesignrequirement
+*        DSG_sad_ControlStepExecution
+* \archrequirement
+*        ARCH_SW_SAD_ptrpAsrOsServices
+*        ARCH_SW_SAD_pclModeManagement
+**/
+LOCAL INLINE void sad_ControlStepExecution(const uint8 ku8SolenoidIdx)
+{
+
+   if(A new step started)
+   {
+      Set the new step started flag to TRUE;
+   }
+   else
+   {
+      Set the new step started flag to FALSE;
+   }
+
+   Read solenoid Unlock confirmation status;
+
+   if((The step has Trigger off mode enabled) AND (Solenoid Unlock was confirmed))
+   {
+      Set trigger-off flag for the current solenoid to TRUE;
+   }
+   else
+   {
+      Set trigger-off flag for the current solenoid to FALSE;
+   }
+
+   if (The step has Infinite step mode enabled)
+   {
+      Reset the timer for this solenoid step to zero;
+
+      if(The selected profile is an active one)
+      {
+         if(The curesnt step is Ongoing)
+         {
+            Set the coresponding bit for current solenoid to logic '1' in SolenoidInfiniteStepReached variable;
+         }
+         else
+         {
+            Set the coresponding bit for current solenoid to logic '0' in SolenoidInfiniteStepReached variable;
+         }
+      }
+   }
+   else
+   {
+      if(The selected profile is an active one)
+      {
+         Set the coresponding bit for current solenoid to logic '0' in SolenoidInfiniteStepReached variable;
+      }
+
+      if ((The curesnt step is Ongoing) AND (The step didn't started in this cycle))
+      {
+         Local timer takes the value of the prevous solenoid step timer;
+      }
+      else
+      {
+        Reset Local timer to zero;
+      }
+
+      Increment the solenoid current step timer;
+
+      if (The solenoid current timer is not incremented correctly)
+      {
+        Set the Solenoid current step timer to invalide value;
+      }
+   }
+
+   if(The current step duration is exceeded)
+   {
+      Set the time elipsed flag for current solenoid to TRUE;
+   }
+   else
+   {
+      Set the time elipsed flag for current solenoid to FALSE;
+   }
+
+   if (A new step started)
+   {
+      if (The PWM order type is configured for this step)
+      {
+         Save the PWM order type from NVP;
+      }
+      else
+      {
+         Save the No order step type configuration;
+      }
+
+      switch (Step order type)
+      {
+         case KU8_SAD_PWM_ORDER_TYPE:
+
+            Convert PWM from 0-100% to PWM units based on current step PWM configured value;
+            break;
+         
+         default:
+         
+            Set the PWM to ZERO;
+            break;
+         
+      }
+
+      if (The step has Ramp mode enabled)
+      {
+         Update the stored PWM value to be as the previous one;
+         Update the slope value based on Converted PWM of the current step, last cycle PWM value and the duration of the step;
+      }
+      else
+      {
+         Update the stored PWM value to be as the Converted PWM of the current step;
+         Set slope value to ZERO;
+      }
+   }
+   else
+   {
+      if (The current step is Ongoing)
+      {
+         Keep the same slope value calculated when the step begins;
+      }
+      else
+      {
+         Reset order type to no type;
+         Reset PWM value to ZERO;
+         Reset slope value to ZERO;
+      }
+   }
+}
+
+/**
+* \brief
+*        This function is used to extract the option bites from the selected
+*        step.
+* \inputparam
+*        Name: ku8SolenoidIdx;
+*        Type: const uint8;
+*        Description: The id of the solenoid;
+*        Range: 0..5;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        sad_runSolenoidControl
+* \dynamicaspectdescription
+*        The local function is called by the function sad_runSolenoidControl.
+* \constraints
+*        The function is called only for enabled solenoids.
+* \ddesignrequirement
+*        DSG_sad_StepPreprocessing
+* \archrequirement
+*        ARCH_SW_SAD_ptrpAsrOsServices
+*        ARCH_SW_SAD_psrSolenoidElectricalCharacteristics
+**/
+LOCAL INLINE void sad_StepPreprocessing(const uint8 ku8SolenoidIdx)
+{
+   if (The step to be executed do not exist in NVP)
+   {
+      Set the current step status to INVALID;
+   }
+   else
+   {
+      if ((The duration of the executed step is equal with ZERO) OR
+          (Is invalide) OR
+          (Order mode is not PWM_ORDER_TYPE))
+      {
+         Set the current step status as INVALID;
+      }
+      else
+      {
+         if (The executed step changes)
+         {
+            Set curent step status as NEW_STEP;
+         }
+         else
+         {
+            Set curent step status as ONGOING_STEP;
+         }
+      }
+
+      if (The current executed step is NEW_STEP)
+      {
+         Save the current step propertyes from the selected step of the active profile from NVP;
+         Calculate the current in mA from the PWM value extracted from NVP.
+         Transmit via RTE the current target of the solenoid;
+      }
+   }
+}
+
+/**
+* \brief
+*        This function is used to extract the steps from the NVP variable at
+*        the initialization step.
+* \inputparam
+*        Name: ku8SolenoidIdx;
+*        Type: const uint8;
+*        Description: The id of the solenoid;
+*        Range: 0..5;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        SAD_Init
+* \dynamicaspectdescription
+*        The local function is called by the function SAD_Init.
+* \constraints
+*        The function is called only at the initialization step.
+* \ddesignrequirement
+*        DSG_sad_ExtractSteps
+* \archrequirement
+*        ARCH_SW_Sad_ptrpSadServicesBswMIf_SAD_Init
+**/
+LOCAL INLINE void sad_ExtractSteps(const uint8 ku8SolenoidIdx)
+{
+
+   for(Each step from NVP)
+   {
+      Save the index of Option byte from the step;
+
+      Save in StepCollection structure for the current step the dureation;
+      Save in StepCollection structure for the current step the PWM value;
+      Save in StepCollection structure for the current step the Ramp option from option byte;
+      Save in StepCollection structure for the current step the Infinite option from option byte;
+      Save in StepCollection structure for the current step the TrigOff option from option byte;
+      Save in StepCollection structure for the current step the Order option;
+   }
+}
+
+/**
+* \brief
+*        This function is used to request the diagnostic profile for each
+*        solenoid based on specific auto-tests status.
+* \inputparam
+*        Name: ku8SolenoidIdx;
+*        Type: const uint8;
+*        Description: The id of the solenoid;
+*        Range: 0..5;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        SAD_runMainFunction
+* \dynamicaspectdescription
+*        The local function is called by the function SAD_runMainFunction.
+* \constraints
+*        The function is called only for the enabled solenoids at each 1ms.
+* \ddesignrequirement
+*        DSG_sad_TriggerDiagProfile
+* \archrequirement
+*        ARCH_SW_SAD_ptrpAsrOsServices
+*        ARCH_SW_SAD_pseDiagRequestServices
+*        ARCH_SW_SAD_pclEvtActuatorOpenCircuit
+*        ARCH_SW_SAD_pclEvtActuatorShortToGround
+**/
+LOCAL INLINE void sad_TriggerDiagProfile(const uint8 ku8SolenoidIdx)
+{
+   Read Diag and DiagComplement requests;
+   Read the Open circuit DTC;
+   Read the Short to GND DTC;
+
+   if(The Open Circuit AND Short to GND auto-tests were performed)
+   {
+      if((Diag request not corrupted) AND
+         (The Diag request is DIAG_PROFILE_REQUEST_ON))
+      {
+         Clear the diagnostic request;
+      }
+
+      Mark the solenoid auto-tests finished as TRUE for the current solenoid;
+   }
+   else if (The requested auto-tests for the current solenoid are not finished)
+   {
+      Set the diagnostic request to diagnostic profile;
+   }
+   else
+   {
+      Do nothing;
+   }
+
+   Send diagnostic request request;
+}
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+/**
+* \brief
+*        This function is called at the initialization phase and it's used to
+*        check what solenoid is enabled and to extract the description of the
+*        steps from NVP variables.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        BswM_OnStartComEffective.
+* \dynamicaspectdescription
+*        The local function is called by the function BswM_OnStartComEffective.
+* \constraints
+*        The function is called once at initialization.
+* \ddesignrequirement
+*        DSG_SAD_Init
+* \archrequirement
+*        ARCH_SW_Sad_ptrpSadServicesBswMIf_SAD_Init
+*        ARCH_SW_SAD_pclModeManagement
+**/
+EXPORTED void SAD_Init(void)
+{
+
+   for(Each solenoid)
+   {
+      Read the enable status of the solenoid;
+      if(Solenoid is enabled)
+      {
+         Set the coresponding bit from the solenoid used mask to logic '1';
+      }
+      sad_ExtractSteps(u8Idx);
+   }
+}
+
+/**
+* \brief
+*        This function is responsible for managing the execution of the profiles
+*        for each solenoid and boosts control.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        None.
+* \dynamicaspectcaller
+*        BswM_OnStartComEffective
+* \dynamicaspectdescription
+*        The local function is called by the OsTask_Alv_eCS_App.
+* \constraints
+*        The function is called periodic at 1ms.
+* \ddesignrequirement
+*        DSG_SAD_runMainFunction
+* \archrequirement
+*        ARCH_SW_IoHwAb_pclModeManagement
+*        ARCH_SW_SAD_ptrpAsrOsServices
+*        ARCH_SW_SAD_prrSolenoidProfile
+*        ARCH_SW_SAD_pclModeManagement
+*        ARCH_SW_SAD_pseSolenoidPWM
+*        ARCH_SW_SAD_pseSolenoidStep
+**/
+EXPORTED void SAD_runMainFunction(void)
+{
+   if(The selected profile was updated from FSM)
+   {
+      Get current profile command from FSM;
+
+      for(Each solenoid until one of them has an active profile)
+      {
+         if (The current selected profile for the current solenoid is an active profile)
+         {
+            Set the coresponding bit from a bit mask variable to logic '1' to mark the
+            current solenoid has an active profile;
+         }
+         else
+         {
+            Set the coresponding bit from a bit mask variable to logic '0' to mark the
+            current solenoid has an LOCK request;
+         }
+      }
+   }
+   else
+   {
+      for(Each solenoid)
+      {
+         Set the current profile command to LOCK;
+         Set the coresponding bit from a bit mask variable to logic '0' to mark the
+         current solenoid has an LOCK request;
+      }
+   }
+
+   Get the status of the Critical auto-test;
+
+   sad_ControlSolenoidsCircuitry();
+
+   if(At least one solenoid has an active profile request)
+   {
+      if(Is the first time after LOCK when the unlock command was requested)
+      {
+         Set the start index for the for loop to be Solenoid 1;
+         Mark the first active profile request was processed;
+      }
+
+      Set the limit index for the for loop to be the starting index plus the offset value
+      in order to iterate through the for loop for just for the solenoids seted by
+      the offset variable;
+      
+      Reset the counter for locking all solenoids at once;
+   }
+   else
+   {
+      if(The counter for locking all solenoids at once did not reach the limit)
+      {
+         Set the start index for the for loop to be Solenoid 1;
+         Set the limit index for the for loop to be the last solenoid;
+         Increment the locking all solenoids at once counter;
+      }
+      else
+      {
+         Set the limit index for the for loop to be the starting index plus the offset value
+         in order to iterate through the for loop for just for the solenoids seted by
+         the offset variable;
+         
+         Set the counter for locking all solenoids at once to the target limit;
+      }
+
+      Mark the first active profile request after LOCK as TRUE
+      to be available for next Unlock command;
+   }
+
+   for(Each solenoid)
+   {
+      if(Solenoid is configured)
+      {
+         sad_runSolenoidControl(u8SolenoidIdx);
+
+         if(The critical auto-tests were executed)
+         {
+            sad_TriggerDiagProfile(u8SolenoidIdx);
+         }
+      }
+   }
+
+   increment the index of the last executed solenoid ID for the next cycle;
+   Save the current Infinite step reached status for the next cycle;
+   Report the current PWM to the rest of the Application;
+   Report the current executed step to the rest of the Application;   
+}
+
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

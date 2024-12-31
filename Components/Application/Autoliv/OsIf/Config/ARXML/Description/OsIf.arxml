@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2015-09-29T16:42:13+02:00">
+              <SHORT-NAME>OsIf</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2022-08-28T09:56:40+03:00">
+                  <SHORT-NAME>OsIf</SHORT-NAME>
+                  <CATEGORY>BSW_Operating_System</CATEGORY>
+                  <PORTS>
+                    <R-PORT-PROTOTYPE T="2023-02-22T10:18:37+02:00" UUID="45d26be2-447d-4392-9c41-7b78c7be30ea">
+                      <SHORT-NAME>pclRcmServices</SHORT-NAME>
+                      <DESC T="2023-02-22T10:14:09+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_OsIf_pclRcmServices_ErrorHook&#xD;
+&#xD;
+# Description&#xD;
+	- The report OS error status runnable shall be called in order to signal to the RCM module what kind of OS exception has occured&#xD;
+	- The {OS Error Task Id} parameter shall represent the task on which an OS exception has occured&#xD;
+	- The {OS Error Code} parameter shall represent the OS exception type&#xD;
+&#xD;
+# Data Flow&#xD;
+## Outputs&#xD;
+	- {OS Error Task Id}&#xD;
+	- {OS Error Code}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- ErrorHook&#xD;
+&#xD;
+#Traceability &#xD;
+&#xD;
+#---------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_OsIf_pclRcmServices_ProtectionHook&#xD;
+&#xD;
+# Description&#xD;
+	- The report OS error status runnable shall be called in order to signal to the RCM module what kind of OS exception has occured&#xD;
+	- The {OS Error Task Id} parameter shall represent the task on which an OS exception has occured&#xD;
+	- The {OS Error Code} parameter shall represent the OS exception type&#xD;
+&#xD;
+# Data Flow&#xD;
+## Outputs&#xD;
+	- {OS Error Task Id}&#xD;
+	- {OS Error Code}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- ProtectionHook&#xD;
+&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:31:59+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T11:14:58+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T10:18:15.614+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:31:59+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T11:14:58+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2022-08-27T18:08:59+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/SenderReceiverInterfaces/icsRcmServices/ReportOsErrorStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/RCM_DataDictionnary/SenderReceiverInterfaces/icsRcmServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T10:18:49+02:00" UUID="c0b05feb-df19-4744-a4d0-5e352305284f">
+                      <SHORT-NAME>pclResetCauseNotification</SHORT-NAME>
+                      <DESC T="2023-02-22T10:17:22+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_OsIf_pclResetCauseNotification_ErrorHook&#xD;
+&#xD;
+# Description&#xD;
+	- The reset cause notification shall be called in order to signal to the RCM module that an reset has occured&#xD;
+	- The {Reset Cause Notification} parameter shall represent the type of reset that has occured (KU32_OS_EXCEPTION_NOTIFICATION)&#xD;
+	- The {Reset Cause Status} parameter shall represent the current status of the reset notification&#xD;
+&#xD;
+# Data Flow&#xD;
+## Outputs&#xD;
+	- {Reset Cause Notification}&#xD;
+	- {Reset Cause Status}&#xD;
+		- Can be: KU32_RESET_CAUSE_ACTIVE, KU32_RESET_CAUSE_INACTIVE&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- ErrorHook&#xD;
+&#xD;
+#Traceability &#xD;
+&#xD;
+#---------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_OsIf_pclResetCauseNotification_ProtectionHook&#xD;
+&#xD;
+# Description&#xD;
+	- The reset cause notification shall be called in order to signal to the RCM module that an reset has occured&#xD;
+	- The {Reset Cause Notification} parameter shall represent the type of reset that has occured (KU32_OS_EXCEPTION_NOTIFICATION)&#xD;
+	- The {Reset Cause Status} parameter shall represent the current status of the reset notification&#xD;
+&#xD;
+# Data Flow&#xD;
+## Outputs&#xD;
+	- {Reset Cause Notification}&#xD;
+	- {Reset Cause Status}&#xD;
+		- Can be: KU32_RESET_CAUSE_ACTIVE, KU32_RESET_CAUSE_INACTIVE&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- ProtectionHook&#xD;
+&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:32:14+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T11:22:37+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T10:18:40.196+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:32:14+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T11:22:37+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2022-08-27T18:09:41+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification/NotifyResetCause</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-22T10:07:19+02:00" UUID="bf548f54-8411-4e8a-a8a0-b63508179f7b">
+                      <SHORT-NAME>ptrpAsrOsServicesOsIf</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_OsIf_ptrpAsrOsServices_OsTask_Bsw_Init&#xD;
+&#xD;
+# Description&#xD;
+- The OsTask_Bsw_Init runnable shall be called during the initialization by the Autosar Os&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- OsTask_Bsw_Init&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_OsIf_ptrpAsrOsServices_ErrorHook&#xD;
+&#xD;
+# Description&#xD;
+- The ErrorHook runnable shall be called by the Autosar Os in case of a protection violation is detected unless the error was caused within ProtectionHook()&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- ErrorHook&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_OsIf_ptrpAsrOsServices_ProtectionHook&#xD;
+&#xD;
+# Description&#xD;
+- The ProtectionHook runnable shall be called by the Autosar Os whenever an error is detected unless the error was caused within ErrorHook()&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- ProtectionHook&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:31:48+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T15:28:36+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T10:07:09.045+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:31:48+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T15:28:36+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrOsServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T10:18:59+02:00" UUID="ddfa96f7-935f-4c73-8dcb-987c93136d48">
+                      <SHORT-NAME>ptrrAsrBswMServicesOsIf</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_OsIf_ptrrAsrBswMServices&#xD;
+&#xD;
+# Description&#xD;
+- The BswM_RequestMode runnable shall be called during the initialization in the OsTask_Bsw_Init runnable in order to signal that the Startup Two A phase can begin (Autosar compliant)&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- OsTask_Bsw_Init&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:32:32+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T11:17:02+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T10:18:50.690+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:32:32+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T11:17:02+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrBswMServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T10:19:08+02:00" UUID="f435419f-9711-4f43-8149-f7a45cbe6e54">
+                      <SHORT-NAME>ptrrAsrEcuMServicesOsIf</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_OsIf_ptrrAsrEcuMServices&#xD;
+&#xD;
+# Description&#xD;
+- The EcuM_StartupTwo runnable shall be called during the initialization in the OsTask_Bsw_Init runnable&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- OsTask_Bsw_Init&#xD;
+&#xD;
+# Traceability&#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:32:43+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T11:23:06+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T10:19:00.805+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:32:43+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T11:23:06+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrEcuMServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-22T10:19:19+02:00" UUID="2c1d12dd-0b40-4703-a7e0-947fd08ed3d7">
+                      <SHORT-NAME>ptrrMicServices</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_OsIf_ptrrMicServices&#xD;
+&#xD;
+# Description&#xD;
+	- The MIC_HardFaultException runnable shall be called if the ProtectionHook runnable was called by the OS with the OS_E_EXCEPTPROT error Id&#xD;
+	- The MIC_BusFaultException runnable shall be called if the ProtectionHook runnable was called by the OS with the OS_E_MEMPROT error Id&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- ProtectionHook&#xD;
+&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:32:58+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T11:16:29+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-22T10:19:10.068+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:32:58+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T11:16:29+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/MIC_DataDictionnary/TriggerInterfaces/itrMicServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                  </PORTS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

@@ -1,0 +1,204 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  // Serial Port settings
+  int iArduinoComPort = 14;
+  int iBaudrate = 9600;
+  int iParity = 0;	
+  int iStopbit = 1;
+	int iByteSize = 8;
+  
+  char sNewLine[10] = "\n";
+  char sResetRequest[10] = "reset";
+  
+  msTimer closePortTimer;
+  
+  const int iPS_SERIAL_PR   = 1;
+  const int iPS_SERIAL_FAIL = -1;
+}
+
+on timer closePortTimer
+{
+  RS232Close(iArduinoComPort);
+}
+
+int DigitalPotentiometer_OpenPort()
+{  
+  if (rs232Open(iArduinoComPort) == iPS_SERIAL_PR)
+  {
+    rs232Configure(iArduinoComPort, iBaudrate, iByteSize, iStopbit, iParity);
+    return iPS_SERIAL_PR;
+  }
+  else
+  {
+    write("Error: Can't open COM port: %d.", iArduinoComPort);    
+    testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "Digital Potentiometer","Can't open COM port: %i",iArduinoComPort);
+    return iPS_SERIAL_FAIL;
+  }
+}
+
+int DigitalPotentiometer_Send(char sSerialRequest[])
+{
+  stack byte bSerialBuffer[50];
+  stack char sErrorMessage[200];
+  
+  memcpy(bSerialBuffer, sSerialRequest, strlen(sSerialRequest));
+  
+  if(RS232Send(iArduinoComPort, bSerialBuffer, strlen(sSerialRequest)) == iPS_SERIAL_PR)
+  {
+    return iPS_SERIAL_PR;
+  }
+
+  snprintf(sErrorMessage, elcount(sErrorMessage), "Error when sending serial request on port: [%d].", iArduinoComPort);
+  write(sErrorMessage);
+ 
+  testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "Digital Potentiometer", sErrorMessage);
+  return iPS_SERIAL_FAIL;
+}
+
+void InitDigitalPotentiometer()
+{
+  DigitalPotentiometer_OpenPort();
+  testWaitForTimeout(1000);
+  RS232Close(iArduinoComPort);
+  ResetDigitalPotentiometer();
+}
+
+
+//
+//
+//
+void ResetDigitalPotentiometer()
+{
+  stack char sSerialRequest[50]; 
+  stack char sErrorMessage[200];
+  stack char sSuccessMessage[200];
+  
+  stack int iOpenPort = iPS_SERIAL_FAIL;
+  if(isTimerActive(closePortTimer) != 0)
+    {
+      cancelTimer(closePortTimer);
+      iOpenPort = iPS_SERIAL_PR;
+    }
+    else
+    {
+      iOpenPort = DigitalPotentiometer_OpenPort();
+      testWaitForTimeout(1000);
+    }
+  
+    if (iOpenPort == iPS_SERIAL_PR)
+    { 
+      snprintf(sSerialRequest, elcount(sSerialRequest), "%s%s", sResetRequest, sNewLine); 
+      if (DigitalPotentiometer_Send(sSerialRequest) == iPS_SERIAL_PR)
+        {
+          snprintf(sSuccessMessage, elcount(sSuccessMessage), "Reset request succesfully sent to the Digital Potentiometer Controller.");
+          testStepPass(@sysvar::CORE::sysLevelOfDetailPass, "Digital Potentiometer", sSuccessMessage);
+        }
+      else
+        {
+          snprintf(sErrorMessage, elcount(sErrorMessage), "Reset request FAILED to be sent to the Digital Potentiometer Controller.");
+          testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "Digital Potentiometer", sErrorMessage);
+        }
+    }  
+}
+
+void SetDigitalPotentiometertSide(int iSide)
+{
+  stack char sSerialRequest[10]; 
+  stack char sErrorMessage[100];
+  stack char sSuccessMessage[100];
+ 
+  stack int iOpenPort = iPS_SERIAL_FAIL;
+  
+  if(isTimerActive(closePortTimer) != 0)
+    {
+      cancelTimer(closePortTimer);
+      iOpenPort = iPS_SERIAL_PR;
+    }
+    else
+    {
+      iOpenPort = DigitalPotentiometer_OpenPort();
+      testWaitForTimeout(1000);
+    }
+  
+    if (iOpenPort == iPS_SERIAL_PR)
+    { 
+      if(iSide != iLeft && iSide != iRight)
+      {     
+        snprintf(sErrorMessage, elcount(sErrorMessage), "INVALID ARGUMENT iSide = %d ! iSide shall be iLeft or iRight.", iSide);
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "SetDigitalPotentiometertSide() function call", sErrorMessage);
+      }
+      if(iSide == iLeft)
+      {
+        snprintf(sSerialRequest, elcount(sSerialRequest), "%s%s", "left", sNewLine); 
+      }
+      if(iSide == iRight)
+      {
+        snprintf(sSerialRequest, elcount(sSerialRequest), "%s%s", "right", sNewLine); 
+      }
+      if (DigitalPotentiometer_Send(sSerialRequest) == iPS_SERIAL_PR)
+        {
+          snprintf(sSuccessMessage, elcount(sSuccessMessage), "Set side request succesfully sent to the Digital Potentiometer Controller.");
+          testStepPass(@sysvar::CORE::sysLevelOfDetailPass, "Digital Potentiometer", sSuccessMessage);
+        }
+      else
+        {
+          snprintf(sErrorMessage, elcount(sErrorMessage), "Set side request FAILED to be sent to the Digital Potentiometer Controller.");
+          testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "Digital Potentiometer", sErrorMessage);
+        }
+    }  
+}
+
+// 
+//
+//
+void SetDigitalResistance(int iResistanceValue)
+{
+  stack char sErrorMessage[200];
+  stack char sSuccessMessage[200];
+  stack char sSerialRequest[50];
+  stack int iOpenPort = iPS_SERIAL_FAIL;
+  {
+    if(isTimerActive(closePortTimer) != 0)
+    {
+      cancelTimer(closePortTimer);
+      iOpenPort = iPS_SERIAL_PR;
+    }
+    else
+    {
+      iOpenPort = DigitalPotentiometer_OpenPort();
+      testWaitForTimeout(1000);
+    }
+    
+    if (iOpenPort == iPS_SERIAL_PR)
+    { 
+      if (iResistanceValue < 0 || iResistanceValue > 10000) 
+      {
+        snprintf(sErrorMessage, elcount(sErrorMessage), "Invalid argument: iResistanceValue out of range!");
+        write(sErrorMessage);
+        testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "Digital Potentiometer", sErrorMessage);
+      }
+      else
+      {
+        snprintf(sSerialRequest, elcount(sSerialRequest), "%d%s", iResistanceValue/100, sNewLine);     
+        if (DigitalPotentiometer_Send(sSerialRequest) == iPS_SERIAL_PR)
+          {
+            snprintf(sSuccessMessage, elcount(sSuccessMessage), "%d Ohms set request succesfully sent to the Digital Potentiometer Controller.", iResistanceValue);
+            testStepPass(@sysvar::CORE::sysLevelOfDetailPass, "Digital Potentiometer", sSuccessMessage);
+          }
+        else
+          {
+            snprintf(sErrorMessage, elcount(sErrorMessage), "%d Ohms set request FAILED to be sent to the Digital Potentiometer Controller.", iResistanceValue);
+            testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "Digital Potentiometer", sErrorMessage);
+          }
+      }
+    }
+    setTimer(closePortTimer, 350);
+  }
+}
+

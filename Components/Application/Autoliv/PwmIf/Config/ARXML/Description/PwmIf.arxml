@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="b7bb2a9b-d9b5-456e-bd47-f7c25df94824">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="771eba22-3de1-4d4e-a450-ba8f78835e12">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2022-09-21T09:04:45+03:00" UUID="c9af83f2-5d9e-46b2-9d12-4d22b7ecc616">
+              <SHORT-NAME>PwmIf</SHORT-NAME>
+              <ELEMENTS>
+                <ECU-ABSTRACTION-SW-COMPONENT-TYPE T="2023-02-21T13:36:12+02:00" UUID="1b5a699c-1c07-48b6-837e-fa96d6150e2f">
+                  <SHORT-NAME>PwmIf</SHORT-NAME>
+                  <CATEGORY>MCAL_IO_Drivers</CATEGORY>
+                  <PORTS>
+                    <P-PORT-PROTOTYPE T="2023-02-21T19:45:16+02:00" UUID="DCE:fe9da527-cb55-44e0-9196-6b0d7ba49220">
+                      <SHORT-NAME>psePwmServices</SHORT-NAME>
+                      <DESC T="2023-02-21T13:42:08+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_PwmIf_psePwmServices_PwmIf_SetDutyCycle&#xD;
+&#xD;
+# Description&#xD;
+- The PwmIf_SetDutyCycle runnable shall be called in order set a Pwm Duty Cycle on a uC pin&#xD;
+- A configurable array will hold the mapping to Pwm channels(e.g. position 1 of configuration array is Pwm Channel 3).&#xD;
+- The runnable will select the Pwm channel from the configuration array with the index from the {Mapped Target Channel Id} input parameter &#xD;
+- The runnable will set duty cycle from the {Pwm Duty Cycle} input parameter on the uC pin&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Mapped Target Channel Id}&#xD;
+- {Pwm Duty Cycle}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- PwmIf_SetDutyCycle&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+#-----------------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_PwmIf_psePwmServices_PwmIf_EnablePWM&#xD;
+&#xD;
+# Description&#xD;
+- The PwmIf_EnablePWM runnable shall be called in order to enable Pwm Duty Cycle on a uC pin&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Mapped Target Channel Id}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- PwmIf_EnablePWM&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+#-----------------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_PwmIf_psePwmServices_PwmIf_DisablePWM&#xD;
+&#xD;
+# Description&#xD;
+- The PwmIf_DisablePWM runnable shall be called in order to disable Pwm Duty Cycle on a uC pin&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Mapped Target Channel Id}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- PwmIf_DisablePWM&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:55:18+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T15:42:06+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T19:45:08.369+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">change for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">updated functionality</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:55:18+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T15:42:06+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to ToBeClarified</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Unclear description, the uC pin duty cycle cannot be tested during integration test</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/PwmIf_DataDictionnary/ClientServerInterfaces/icsPwmIfServices/EnablePWM</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/PwmIf_DataDictionnary/ClientServerInterfaces/icsPwmIfServices/DisablePWM</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/PwmIf_DataDictionnary/ClientServerInterfaces/icsPwmIfServices/SetDutyCycle</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/PwmIf_DataDictionnary/ClientServerInterfaces/icsPwmIfServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-21T19:45:27+02:00" UUID="121571d3-5267-456c-b31d-6b9172100711">
+                      <SHORT-NAME>ptrrAsrPwmServicesPwmIf</SHORT-NAME>
+                      <DESC T="2023-02-21T13:32:44+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_DioIf_PwmIf_ptrrAsrPwmServicesPwmIf_Pwm_SetDutyCycle_PwmIf_SetDutyCycle&#xD;
+&#xD;
+# Description&#xD;
+- The Pwm_SetDutyCycle runnable shall be called in the PwmIf_SetDutyCycle runnable in order to set a duty cycle on a uC pin&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Target Channel Id}&#xD;
+- {Pwm Duty Cycle}&#xD;
+&#xD;
+## Outptus&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- PwmIf_SetDutyCycle&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:55:27+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T15:41:36+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T19:45:18.933+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">change for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">updated functionality</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:55:27+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T15:41:36+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to ToBeClarified</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Unclear description, the uC pin duty cycle cannot be tested during integration test</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrPwmServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                  </PORTS>
+                </ECU-ABSTRACTION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

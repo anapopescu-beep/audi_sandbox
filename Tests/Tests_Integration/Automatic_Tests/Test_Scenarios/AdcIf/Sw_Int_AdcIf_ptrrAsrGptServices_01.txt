@@ -1,0 +1,40 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_AdcIf_ptrrAsrGptServices, ARCH_SW_AdcIf_ptrpAsrGptServices
+ARCH_SW_AdcIf_ptrrAsrGptServices: The Gpt_Init runnable shall be called in the AdcIf_runInit runnable in order to initialize the Gpt component. The Gpt_StartTimer runnable shall be called in the AdcIf_runInit runnable in order to start the timer that will trigger the Adc conversion. The Gpt_EnableNotification runnable shall be called in the AdcIf_runInit runnable in order to enable the notification on the timer expiration event.
+ARCH_SW_AdcIf_ptrpAsrGptServices: The AdcIf_GPTOnTimer_Expiration runnable shall be called when the Gpt timer expires via the Gpt_InitChannelPB_TDK_4G runnable.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_AdcIf_ptrrAsrGptServices
+
+	Step 2: Set a breakpoint in function AdcIf_runInit at Gpt_Init function call. 
+		Expected result:  BP is reached.
+
+	Step 3: Set a breakpoint in function AdcIf_runInit at Gpt_EnableNotification function call 
+		Expected result:  BP is reached.
+
+	Step 4: Set a breakpoint in function AdcIf_runInit at Gpt_StartTimer function call 
+		Expected result:  BP is reached.
+
+Action: ARCH_SW_AdcIf_ptrpAsrGptServices
+
+	Step 5: Set a breakpoint in function AdcIf_runInit at Gpt_Init function call 
+		Expected result:  BP is reached.
+
+	Step 6: Set a breakpoint in function AdcIf_GPTOnTimer_Expiration at ADCIF_EndOfConvGroup0 function call 
+		Expected result:  BP is reached.
+
+Postcondition
+
+	Step 7: Return ECU to default values

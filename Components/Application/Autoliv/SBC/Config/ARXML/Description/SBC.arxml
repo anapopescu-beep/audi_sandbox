@@ -1,0 +1,1449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2022-09-21T08:51:26+03:00" UUID="0281b584-1f6c-430e-aa81-d4d6891c651d">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="75a5199f-747e-4298-b247-74ac348aa766">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2017-03-14T16:05:19+02:00" UUID="DCE:e7f874af-1fb5-4415-9b2e-6096a763d7ad">
+              <SHORT-NAME>SBC</SHORT-NAME>
+              <ELEMENTS>
+                <COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE T="2023-04-07T16:10:22+03:00" UUID="3aa05caa-c504-49a4-9bef-9b1a3f72ef6d">
+                  <SHORT-NAME>SBC</SHORT-NAME>
+                  <CATEGORY>MCAL_Communication_Abstraction</CATEGORY>
+                  <PORTS>
+                    <R-PORT-PROTOTYPE T="2023-04-24T23:55:29+03:00" UUID="e60d5482-bdff-4962-9d5a-dc79a8e998e9">
+                      <SHORT-NAME>pclResetCause</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pclResetCause_SBC_Autotest_WdgTest&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall provide the SBC reset reason to the application.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Autotest_WdgTest&#xD;
+	&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA>
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T13:53:22+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-06-20T15:04:06.825+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:20:44+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:53:22+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-04-06T13:43:08+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCause/DetermineResetCause</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-04-06T13:43:08+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCause/GetResetCause</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCause</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-04-06T13:35:08+03:00" UUID="8d339461-c5c3-40a5-a11c-3cb160b1f25f">
+                      <SHORT-NAME>pclResetCauseNotification</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pclResetCauseNotification_SBC_Init&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall store the SBC reset reason in the no init ram area.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Init&#xD;
+	&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA>
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T13:52:35+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-06-20T14:59:06.058+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:20:59+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:52:35+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-04-06T13:35:08+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification/NotifyResetCause</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-20T10:47:55+02:00" UUID="c943152a-af64-4e44-9c6d-70d07e040d08">
+                      <SHORT-NAME>pseCheckSbcStatusInfo</SHORT-NAME>
+                      <DESC T="2023-03-31T09:05:32+03:00">
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pseCheckSbcStatusInfo&#xD;
+&#xD;
+# Description&#xD;
+	- The autotest shall check the Status information section of a Spi response from the SBC chip&#xD;
+	- If one or more bits of status information are qualified within 100ms then the result of autotest shall be NOK&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+	- Can be one of the following values: OK, NOK, NOT DECIDED&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Autotest_CheckStatusInformation&#xD;
+	&#xD;
+#Traceability &#xD;
+	DOM_eCS_TF_H_309 &#xD;
+	DOM_eCS_TF_H_310&#xD;
+	DOM_eCS_TF_H_311&#xD;
+	FUSA_DS_TLE9461_3ES_1034&#xD;
+	FUSA_DS_TLE9461_3ES_1042&#xD;
+	FUSA_DS_TLE9461_3ES_1046&#xD;
+	FUSA_DS_TLE9461_3ES_1047&#xD;
+	FUSA_DS_TLE9461_3ES_1058&#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+	&#xD;
+	&#xD;
+	</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:51:44+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-02-23T07:51:44+02:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-02-20T10:47:37.685+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:51:44+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION T="2023-07-13T14:02:54+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-06-20T14:09:24.415+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:19:38+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T14:02:54+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.1</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByDesignTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-08-30T13:50:08.818+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">SBC FuSa requirements Traceability</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2023-01-27T09:48:46+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-22T11:09:48+02:00" UUID="7365d7ac-30d7-440a-8b72-fd12b850e07b">
+                      <SHORT-NAME>pseSbcServices</SHORT-NAME>
+                      <DESC T="2023-02-22T11:04:16+02:00">
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pseSbcServicesLpm_SBC_sleepTriggerWatchdog&#xD;
+	&#xD;
+# Description&#xD;
+	- The SBC_sleepTriggerWatchdog runnable shall be called by LPM module to trigger the watchdog during init and mainloop phase (LPM_sleepInit and LPM_sleepMainLoop)&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_sleepTriggerWatchdog&#xD;
+	&#xD;
+#Traceability &#xD;
+	FUSA_DS_TLE9461_3ES_731&#xD;
+	FUSA_DS_TLE9461_3ES_1000&#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pseSbcServicesLpm_SBC_SetToNormal&#xD;
+	&#xD;
+# Description&#xD;
+	- The SBC_SetToNormal runnable shall be called to put the SBC in normal mode state (LPM_sleepRestore)&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_SetToNormal&#xD;
+	&#xD;
+#Traceability &#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pseSbcServicesLpm_SBC_SetToLowPower&#xD;
+	&#xD;
+# Description&#xD;
+	- The SBC_SetToLowPower runnable shall be called to put the SBC in low power mode (LPM_sleepInit)&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_SetToLowPower&#xD;
+	&#xD;
+#Traceability &#xD;
+	FUSA_DS_TLE9461_3ES_227&#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+------------------------------------------------------------------------------------</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:51:52+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T13:57:18+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-02-22T11:08:50.187+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality update</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:51:52+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:57:18+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.1</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByDesignTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-08-30T13:53:57.112+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">SBC FuSa requirements Traceability</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2023-02-22T11:03:20+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_sleepTriggerWatchdog</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                        <SERVER-COM-SPEC T="2023-02-22T11:03:20+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_SetToLowPower</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                        <SERVER-COM-SPEC T="2023-02-22T11:03:20+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_SetToNormal</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2022-09-21T13:03:32+03:00" UUID="f2f85809-f547-42c7-9cf9-fc73cbe2a809">
+                      <SHORT-NAME>pseSbcStatus</SHORT-NAME>
+                      <DESC T="2022-09-21T11:13:54+03:00">
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pseSbcStatus_SBC_GetSBCStatusInformation&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall read the SBC status registers and report them via the {SBC Status Information} output parameter&#xD;
+	- The following flags should be reported:&#xD;
+		- Under voltage&#xD;
+		- CAN wake-up&#xD;
+		- Watchdog failure &#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {SBC Status Information}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_GetSBCStatusInformation&#xD;
+	&#xD;
+#Traceability &#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pseSbcStatus_SBC_Shutdown&#xD;
+	&#xD;
+# Description&#xD;
+	- The SBC_Shutdown runnable shall be called by the Autosar EcuM in deinitialization phase (EcuM_AL_SwitchOff)&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Shutdown&#xD;
+	&#xD;
+#Traceability &#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pseSbcStatus_SBC_Reset&#xD;
+&#xD;
+# Description&#xD;
+	- The SBC_Reset runnable shall be called in order to make a reset (EcuM_AL_Reset and MIC_MachineExceptionInterrupt)&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Reset&#xD;
+	&#xD;
+#Traceability &#xD;
+	FUSA_DS_TLE9461_3ES_941&#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+------------------------------------------------------------------------------------</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:52:02+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-02-23T07:52:02+02:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-02-20T10:46:20.502+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:52:02+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION T="2023-07-13T13:58:48+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-06-20T14:08:33.832+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:19:58+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:58:48+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.1</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByDesignTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-08-30T13:54:23.016+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">SBC FuSa requirements Traceability</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/SBC_Reset</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/SBC_Shutdown</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/GetSbcStatus</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-04-24T23:49:06+03:00" UUID="31961a86-7837-464c-8f0c-e7607f7a1f76">
+                      <SHORT-NAME>pseSbcWdgAutotest</SHORT-NAME>
+                      <DESC T="2023-06-12T15:13:33+03:00">
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SBC_pseSbcWdgAutotest&#xD;
+&#xD;
+# Description&#xD;
+	- The autotest shall check the Wdg from the SBC chip&#xD;
+	- The watchdog is enabled and never triggered, a reset is expected&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+- {Autotest Result}&#xD;
+	- Can be one of the following values: OK, NOK&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Autotest_WdgTest&#xD;
+	&#xD;
+#Traceability &#xD;
+	FUSA_SM_S32K1XXSM_539&#xD;
+	FUSA_SM_S32K1XXSM_541&#xD;
+	FUSA_SM_S32K1XXSM_263&#xD;
+	FUSA_SM_S32K1XXSM_291&#xD;
+	DOM_eCS_TF_H_292&#xD;
+	DOM_eCS_TF_H_293&#xD;
+	FUSA_DS_TLE9461_3ES_1127</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-22T13:20:13+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T14:01:57+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-06-22T08:56:34.469+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:20:13+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DPU_06.07.2023]: Update Port description</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">The architecture requirement tag was wrong</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-11T10:44:09+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_11.07.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T14:01:57+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.1</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByDesignTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-08-30T13:52:53.339+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">SBC FuSa requirements Traceability</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2023-04-07T16:10:22+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-03-01T13:43:41+02:00" UUID="ed163e5a-222e-4b98-a86d-e4627c2afa32">
+                      <SHORT-NAME>psrSbcStatusFailiureSource</SHORT-NAME>
+                      <DESC T="2023-07-31T14:41:47+03:00">
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SBC_psrSbcStatusFailiureSource_SBC_Init&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall read the content of the SBC status registers that were previously read from the SPI bus&#xD;
+	- The runnable shall write the content of the SBC Status Registers on the {SBC Status Register} output parameter.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+&#xD;
+## Outputs&#xD;
+	- {SBC Status Register} &#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Init&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+-------------------------------------------------------------------&#xD;
+&#xD;
+Architecture Element ID&#xD;
+	- ARCH_SW_SBC_psrSbcStatusFailiureSource_SBC_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall read the content of the SBC status registers that were previously read from the SPI bus&#xD;
+	- The runnable shall write the content of the SBC Status Registers on the {SBC Status Register} output parameter.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- None&#xD;
+&#xD;
+## Outputs&#xD;
+	- {SBC Status Register} &#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_runMainFunction&#xD;
+	&#xD;
+#Traceability &#xD;
+	&#xD;
+	&#xD;
+	</L-2>
+                      </DESC>
+                      <ADMIN-DATA>
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-31T14:42:03+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-06-20T14:51:05.441+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-22T13:20:26+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GRB_22.06.2023]: reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T14:05:47+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to ToBeClarified</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Unclear description</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-31T14:42:03+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_31.07.2023]: Fixed</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL"></L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <NONQUEUED-SENDER-COM-SPEC T="2023-03-01T13:43:49+02:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/isrSbcFailiureSource/u32SbcReg1Status</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION>0</USES-END-TO-END-PROTECTION>
+                          <INIT-VALUE>
+                            <APPLICATION-VALUE-SPECIFICATION>
+                              <CATEGORY>VALUE</CATEGORY>
+                              <SW-VALUE-CONT>
+                                <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                <SW-VALUES-PHYS>
+                                  <V>0</V>
+                                </SW-VALUES-PHYS>
+                              </SW-VALUE-CONT>
+                            </APPLICATION-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-SENDER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/Interfaces/isrSbcFailiureSource</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2022-09-21T13:03:45+03:00" UUID="c4629fe8-610e-4a49-af72-529b188c4f27">
+                      <SHORT-NAME>ptrpAsrOsServicesSBC</SHORT-NAME>
+                      <DESC T="2022-09-21T11:11:11+03:00">
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrpAsrOsServices&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called periodically at 10ms in order to trigger the watchdog&#xD;
+	- The watchdog should be trigger in windowed mode each 40ms&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_runMainFunction&#xD;
+	&#xD;
+#Traceability&#xD;
+	FUSA_DS_TLE9461_3ES_970&#xD;
+	FUSA_DS_TLE9461_3ES_992&#xD;
+	FUSA_DS_TLE9461_3ES_993&#xD;
+	FUSA_DS_TLE9461_3ES_994&#xD;
+	FUSA_DS_TLE9461_3ES_1014&#xD;
+	FUSA_DS_TLE9461_3ES_1019&#xD;
+	FUSA_DS_TLE9461_3ES_1025&#xD;
+	FUSA_DS_TLE9461_3ES_1026&#xD;
+	FUSA_DS_TLE9461_3ES_1061&#xD;
+	FUSA_DS_TLE9461_3ES_1064&#xD;
+	FUSA_DS_TLE9461_3ES_1065&#xD;
+	FUSA_DS_TLE9461_3ES_1086&#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+	FUSA_DS_TLE9461_3ES_1128&#xD;
+	FUSA_DS_TLE9461_3ES_1132&#xD;
+	FUSA_DS_TLE9461_3ES_1139&#xD;
+	FUSA_DS_TLE9461_3ES_1151&#xD;
+	FUSA_DS_TLE9461_3ES_1181&#xD;
+	FUSA_DS_TLE9461_3ES_1182&#xD;
+	FUSA_DS_TLE9461_3ES_1183&#xD;
+	FUSA_DS_TLE9461_3ES_1254&#xD;
+	FUSA_DS_TLE9461_3ES_1255&#xD;
+	FUSA_DS_TLE9461_3ES_1256</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:52:14+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T13:54:12+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-02-20T10:48:16.385+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:52:14+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:54:12+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.1</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByDesignTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-08-30T13:55:21.102+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">SBC FuSa requirements Traceability</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrOsServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-21T20:19:45+02:00" UUID="7613d9ee-d956-422f-92bc-2f5bb8545793">
+                      <SHORT-NAME>ptrpSbcServicesEcuM</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrpSbcServicesEcuM_SBC_Init&#xD;
+	&#xD;
+# Description&#xD;
+	- The SBC_Init runnable shall be called by the Autosar EcuM in initialization phase(EcuM_DefaultInitListOne)&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Init&#xD;
+	&#xD;
+#Traceability &#xD;
+	DOM_eCS_TF_H_291&#xD;
+	FUSA_DS_TLE9461_3ES_155&#xD;
+	FUSA_DS_TLE9461_3ES_174&#xD;
+	FUSA_DS_TLE9461_3ES_196&#xD;
+	FUSA_DS_TLE9461_3ES_202&#xD;
+	FUSA_DS_TLE9461_3ES_213&#xD;
+	FUSA_DS_TLE9461_3ES_217&#xD;
+	FUSA_DS_TLE9461_3ES_262&#xD;
+	FUSA_DS_TLE9461_3ES_263&#xD;
+	FUSA_DS_TLE9461_3ES_265&#xD;
+	FUSA_DS_TLE9461_3ES_282&#xD;
+	FUSA_DS_TLE9461_3ES_285&#xD;
+	FUSA_DS_TLE9461_3ES_950&#xD;
+	FUSA_DS_TLE9461_3ES_952&#xD;
+	FUSA_DS_TLE9461_3ES_955&#xD;
+	FUSA_DS_TLE9461_3ES_956&#xD;
+	FUSA_DS_TLE9461_3ES_957&#xD;
+	FUSA_DS_TLE9461_3ES_964&#xD;
+	FUSA_DS_TLE9461_3ES_1005&#xD;
+	FUSA_DS_TLE9461_3ES_1026&#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+	FUSA_DS_TLE9461_3ES_1127&#xD;
+	FUSA_DS_TLE9461_3ES_1128&#xD;
+	FUSA_DS_TLE9461_3ES_1132&#xD;
+	FUSA_DS_TLE9461_3ES_1133&#xD;
+	FUSA_DS_TLE9461_3ES_1139&#xD;
+	FUSA_DS_TLE9461_3ES_1151&#xD;
+	FUSA_DS_TLE9461_3ES_1181&#xD;
+	FUSA_DS_TLE9461_3ES_1182&#xD;
+	FUSA_DS_TLE9461_3ES_1183&#xD;
+	FUSA_DS_TLE9461_3ES_1254&#xD;
+	FUSA_DS_TLE9461_3ES_1255&#xD;
+	FUSA_DS_TLE9461_3ES_1256</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:52:22+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T13:55:18+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T20:19:21.414+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">change for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">updated functionality</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:52:22+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:55:18+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.1</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByDesignTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-08-30T13:54:42.217+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">SBC FuSa requirements Traceability</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrEcuMServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-21T13:03:07+03:00" UUID="d0b2d172-f75f-4931-a23e-04c9b992afd4">
+                      <SHORT-NAME>ptrrSpiIfServices</SHORT-NAME>
+                      <DESC T="2023-02-20T13:17:49+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_spiSyncTransmitSequence_SBC_Init&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall trigger the watchdog first time with the SpiIf_spiSyncTransmitSequence interface&#xD;
+	- The runnable shall initialize the TLE9461 SBC with the help of the SpiIf_spiSyncTransmitSequence interface&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Init&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_spiReadIBFromChannel_SBC_Init&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall read the SBC status registers with the SpiIf_spiReadIBFromChannel interface&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Init&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_writeSpiData_SBC_Init&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall clear errors in status register of SBC with the SpiIf_writeSpiData interface&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Init&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_spiSyncTransmitSequence_SBC_runMainFunction&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall trigger the watchdog periodically with the SpiIf_spiSyncTransmitSequence interface&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_runMainFunction&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_spiReadIBFromChannel_SBC_runMainFunction&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall read the SBC status registers with the SpiIf_writeSpiData and SpiIf_spiReadIBFromChannel interfaces&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_runMainFunction&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_writeSpiData_SBC_runMainFunction&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall clear the SBC status registers with the SpiIf_writeSpiData interface&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_runMainFunction&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+ Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_spiSyncTransmitSequence_SBC_Shutdown&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall set the SBC registers in order to prepare the next wake-up using the SpiIf_spiSyncTransmitSequence interface&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Shutdown&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+ Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_spiSyncTransmitSequence_SBC_sleepTriggerWatchdog&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall trigger the watchdog periodically using the SpiIf_spiSyncTransmitSequence interface, when the ECU is in sleep mode&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_sleepTriggerWatchdog&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+ Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_spiSyncTransmitSequence_SBC_SetToNormal&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall set the SBC registers in order to set the SBC in normal mode, using the SpiIf_spiSyncTransmitSequence interface&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_SetToNormal&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+ Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_spiSyncTransmitSequence_SBC_SetToLowPower&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall set the SBC registers in order to set the SBC in low power mode, using the SpiIf_spiSyncTransmitSequence interface&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_SetToLowPower&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+ Architecture Element ID&#xD;
+	- ARCH_SW_SBC_ptrrSpiIfServices_SpiIf_spiSyncTransmitSequence_SBC_Reset&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall set the SBC registers in order to reset the ECU, using the SpiIf_spiSyncTransmitSequence interface&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SBC_Reset&#xD;
+	&#xD;
+#Traceability &#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:52:34+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T13:49:37+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-02-20T10:40:29.799+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:52:34+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:49:37+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/SpiIf_DataDictionnary/TriggerInterfaces/itrSpiIfServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                  </PORTS>
+                </COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE>
+                <SWC-IMPLEMENTATION T="2019-07-25T13:22:01+02:00" UUID="97e722ad-5093-42c2-91e4-189c68b6a610">
+                  <SHORT-NAME>SBC_imp</SHORT-NAME>
+                  <CATEGORY>MCAL_Communication_Abstraction</CATEGORY>
+                  <CODE-DESCRIPTORS>
+                    <CODE T="2017-03-07T20:08:42+01:00" UUID="84a430b9-67ca-450f-8f9a-5e0191ba8fd7">
+                      <SHORT-NAME>SBC_Impl_Code</SHORT-NAME>
+                      <ARTIFACT-DESCRIPTORS>
+                        <AUTOSAR-ENGINEERING-OBJECT T="2017-03-07T20:07:53+01:00">
+                          <SHORT-LABEL>SBC_Impl_Code_CodeDesc</SHORT-LABEL>
+                          <CATEGORY>SWSRC</CATEGORY>
+                        </AUTOSAR-ENGINEERING-OBJECT>
+                      </ARTIFACT-DESCRIPTORS>
+                    </CODE>
+                  </CODE-DESCRIPTORS>
+                  <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+                  <RESOURCE-CONSUMPTION T="2017-03-07T20:08:30+01:00" UUID="f2ac1264-e302-4d75-bca7-b491ad9ae14b">
+                    <SHORT-NAME>SBC_ImplResCons</SHORT-NAME>
+                    <MEMORY-SECTIONS>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00" UUID="eaac4de1-3286-42b7-9975-d2dca73ed13b">
+                        <SHORT-NAME>CODE</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CODE</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:47+02:00">
+                        <SHORT-NAME>CODE_ASIL_A</SHORT-NAME>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="69622158-6c66-4d24-885e-f73a24b2fcb9">
+                        <SHORT-NAME>CONST_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="7d7f7026-3f19-4c76-8699-3ca11c828b68">
+                        <SHORT-NAME>CONST_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="0d61e6e9-f597-493e-a1e9-26d08bbee2b8">
+                        <SHORT-NAME>CONST_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="7e68f3fd-3e6a-4761-a32b-01c52311ddaf">
+                        <SHORT-NAME>CONST_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00" UUID="736e0df3-8d27-4dad-ab8e-d495d5be6031">
+                        <SHORT-NAME>CONST_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:29:55+02:00">
+                        <SHORT-NAME>CONST_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CONST_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="60da59a5-b805-4199-92c4-dbb419684d38">
+                        <SHORT-NAME>VAR_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:52:41+02:00" UUID="27cfecfc-c967-4d40-9a74-4cd77d8bd4c7">
+                        <SHORT-NAME>VAR_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00" UUID="1a2d42e8-e75e-42a6-bb57-5115feaba105">
+                        <SHORT-NAME>VAR_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:21+02:00">
+                        <SHORT-NAME>VAR_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:53:16+02:00" UUID="3f43e54e-a6cb-430b-bd61-d15efbb3fbb1">
+                        <SHORT-NAME>VAR_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:04+02:00" UUID="a59535db-14fa-4fa2-a1c2-a04f5fdf8deb">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:54:47+02:00">
+                        <SHORT-NAME>VAR_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_INIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="6f6c84c3-9573-4b15-abce-7b9678c96d6a">
+                        <SHORT-NAME>VAR_NO_INIT_16</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_16_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>16</ALIGNMENT>
+                        <SIZE>16</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="d5c24c6c-fd4e-4011-96ef-46676c82ea4f">
+                        <SHORT-NAME>VAR_NO_INIT_32</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_32_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>32</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="ac7498bb-64d2-491f-b4ca-4cb62f26ccf5">
+                        <SHORT-NAME>VAR_NO_INIT_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_8_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>8</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2018-09-05T14:54:54+02:00" UUID="d7caa52b-201e-4914-942c-3791f7e758c7">
+                        <SHORT-NAME>VAR_NO_INIT_BOOL</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR/MemMap/SwAddrMethods/VAR_NOINIT</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_NO_INIT_BOOL_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>1</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/VAR_NOINIT_ASIL_A</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:04+02:00" UUID="6c47a5f5-f176-4cce-8dc3-0e115bbe81f4">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:30:04+02:00">
+                        <SHORT-NAME>VAR_NO_INIT_UNSPECIFIED_ASIL_A</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION>
+                        <SHORT-NAME>VAR_POWER_ON_CLEARED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/VAR_POWER_ON_CLEARED</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                    </MEMORY-SECTIONS>
+                  </RESOURCE-CONSUMPTION>
+                  <SW-VERSION>1.0.0</SW-VERSION>
+                  <VENDOR-ID>0</VENDOR-ID>
+                  <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB</BEHAVIOR-REF>
+                </SWC-IMPLEMENTATION>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES></AUTOSAR>

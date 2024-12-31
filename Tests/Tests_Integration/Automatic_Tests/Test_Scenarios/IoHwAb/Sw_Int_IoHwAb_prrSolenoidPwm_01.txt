@@ -1,0 +1,37 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_SAD_pseSolenoidPWM, ARCH_SW_IoHwAb_prrSolenoidPwm_IoHwAb_runGetMeasure
+ARCH_SW_IoHwAb_prrSolenoidPwm_IoHwAb_runGetMeasure: The runnable shall be used to compute the target PWM value and report it to the rest of the Application. The target PWM value shall be computed based on the KL30 Voltage and step definiton.
+ARCH_SW_IoHwAb_prrSolenoidPwm: The interface shall read the {Solenoid PWM} that is set in the Application in order to compute the current.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_SAD_pseSolenoidPWM, ARCH_SW_IoHwAb_prrSolenoidPwm_IoHwAb_runGetMeasure
+
+	Step 2: Set a breakpoint in function SAD_runMainFunction at Rte_Write_pseSolenoidPWM_au16Pwm. 
+		Expected result:  BP reached.
+
+	Step 3: Overwrite DutyCycle variable with value 0x55. 
+		Expected result:  Variabe written with 0x55
+
+	Step 4: Set a breakpoint in function IoHwAb_runGetMeasure at RTE Read for Rte_Read_prrSolenoidPwm_au16Pwm
+
+	Step 5: Evaluate the interface data flow case 
+		Expected result:  Variable is set to 0xae20
+
+	Step 6: Evaluate the interface data flow case 
+		Expected result:  Variable is set to 0x1fff
+
+Postcondition
+
+	Step 7: Return ECU to default values

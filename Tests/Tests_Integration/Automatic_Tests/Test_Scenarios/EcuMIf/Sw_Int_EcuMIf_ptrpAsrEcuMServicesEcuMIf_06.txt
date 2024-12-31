@@ -1,0 +1,35 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_GenerateRamHash, ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckRamHash
+ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_GenerateRamHash: - The EcuM_GenerateRamHash runnable shall be called by the Autosar EcuM for writing a RAM hash just before putting the ECU physically to sleep.
+ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckRamHash: - The EcuM_CheckRamHash runnable shall be called by the Autosar EcuM to provide a RAM integrity test.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_GenerateRamHash
+
+	Step 2: Set a breakpoint in function EcuM_HaltSequence in order to call EcuM_GenerateRamHash function
+
+	Step 3: Set a breakpoint in function EcuM_GenerateRamHash in order to check the interface 
+
+Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckRamHash
+
+	Step 4: Set a breakpoint in function EcuM_HaltSequence in order to call EcuM_CheckRamHash function
+
+	Step 5: Set a breakpoint in function EcuM_CheckRamHash in order to check the interface
+
+	Step 6: Read RamTestResult return value.
+
+Postcondition
+
+	Step 7: Return ECU to default values

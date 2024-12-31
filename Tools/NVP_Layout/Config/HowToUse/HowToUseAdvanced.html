@@ -1,0 +1,907 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en-us">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<link rel="stylesheet" href="HowtoUse.css">
+		<title>How to Use NVP_Layout, Advanced User</title>
+	</head>
+	<body>
+		<h1>
+			<center>Advanced User</center>
+		</h1>
+		<p>
+			This document have goal to explain how the application and the around file work.<br>
+			If you need more information please refer to advanced section.
+		</p>
+		
+		<h2>Summary</h2>
+		<p>
+			<a href="#prerequisites">0 - Prerequisites</a><br />
+			<a href="#glossary">1 - Glossary Of Terms / Expressions</a><br />
+			<a href="#xmlfile">2 - XML File</a><br />
+			<a href="#application">3 - Application</a><br />
+			<a href="#generation">4 - Generation Script</a>
+		</p>
+		<h2 id="prerequisites">0 - Prerequisites</h2>
+		<p>
+			Make sure that :<br>
+			<ul>
+				<li>File in <i>S:\Components\Application\NVP\Config\NVP_Layout</i> are up to date.</li>
+				<li>File in <i>S:\tool\NVP_Layout</i> are up to date.</li>
+				<li>Read-only are not present on the sandbox. Use <i>S:\Scripts\VirtualDrive\core\<b>RemoveReadOnly.bat</b></i> if not.</li>
+				<li>In order to open NVP_Layout project and compile a new application : 
+					<ol>
+						<li>Go to <i>S:\Tools\NVP_Layout\Workspace\NVP_Layout</i>.</li>
+						<li>Open in edit <b><i>.classpath</i></b>.</li>
+						<li>Update the 4 pathfile of the eclipse installation folder (see Figure 1).</li>
+						<li>Now you can import and compile the NVP_Layout project.</li>
+						<center>
+						<figure>
+							<img HEIGHT=500 width=1150 src="Classpath.PNG" alt="Picture not available" />
+							<br><figcaption>Figure 1 : <b><i>.classpath</i></b> file</figcaption>
+						</figure>
+						</center>
+					</ol>
+				</li>
+			</ul>
+		</p>
+		<h2 id="glossary">1 - Glossary Of Terms / Expressions</h2>
+		<p>
+			<table style="width:70%" border="black">
+				<tr>
+					<th></th>
+					<th align="left-side">Definition</th>
+				</tr>
+				<tr>
+					<td>XML :</td>
+					<td>File used as data base by the application, extension .xml</td>
+				</tr>
+				<tr>
+					<td>DTD :</td>
+					<td>File used as validation for XML, extension .dtd</td>
+				</tr>
+				<tr>
+					<td>UI :</td>
+					<td>User Interface, it define all object use to interact with the user.</td>
+				</tr>
+			</table>
+			
+		</p>
+		<h2 id="xmlfile">2 - XML File</h2>
+		<p>
+			The application and the generation script are based on .xml file (XML).<br>
+			The different file are present in <i>S:\Components\Application\NVP\Config\NVP_Layout</i>, and there is 1 xml file for each part of the application (Calibration, Nvm default Value and global memory configuration), and 1 doctype file (DTD) for each xml file.<br>
+			DTD are used to validate the structure of the XML, in other word all tag in each XML are describe in the linked DTD. And during parse of the document, if DTD are not align with XML an error is poped-up. 
+			<h3>2.1 - Structure</h3>
+			<p>
+				<h4>2.1.1 - Global Memory Configuration</h4>
+				<p>
+					This part have goal to save all global memory information, in other words the start address of each memory section, the size and the version of those memory section and the name of the application.<br>
+					Concerning file : 
+					<ul>
+						<li><b><i>GlobalConfiguration.dtd</i></b></li>
+						<li><b><i>GlobalConfiguration.xml</i></b></li>
+					</ul>
+					<p>
+					Structure of the XML :<br>
+					
+					<table style="width:50%">
+						<tr>
+							<td><span>&#8627;</span> Global Memory Configuration</td>
+							<td><span>&#8614;</span> Root element of the structure.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Start Address</td>
+							<td><span>&#8614;</span> Section where all start address are group.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Calibration</td>
+							<td><span>&#8614;</span> Start address of the Calibration memory section.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Ram Shadow</td>
+							<td><span>&#8614;</span> Start address of the Ram Shadow memory section.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> ROM</td>
+							<td><span>&#8614;</span> Start address of the Rom memory section.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Eeprom Alias</td>
+							<td><span>&#8614;</span> ID of the block corresponding for NVM section.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Version</td>
+							<td><span>&#8614;</span> Section where the version of the Calibration is set.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Major</td>
+							<td><span>&#8614;</span> Major version of the calibration.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Minor</td>
+							<td><span>&#8614;</span> Minor version of the calibration.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Subversion</td>
+							<td><span>&#8614;</span> Subversion of the calibration.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Memory Size</td>
+							<td><span>&#8614;</span> Size of the different memory section.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> CalibrationSize</td>
+							<td><span>&#8614;</span> Size of the Calibration section.</td>
+						</tr>
+					</table>
+					</p>
+				</p>
+				<h4 id="xmlfileCalibration">2.1.2 - Calibration</h4>
+				<p>
+					Concerning file : 
+					<ul>
+						<li><b><i>Calibration.dtd</i></b></li>
+						<li><b><i>Calibration.xml</i></b></li>
+					</ul>
+					<p>
+					Structure of the XML :<br>
+					
+					<table style="width:90%">
+						<tr>
+							<td><span>&#8627;</span> Calibration</td>
+							<td><span>&#8614;</span> <i>N-A</i> : </td>
+							<td>Root element of the structure.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Nb_Block</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>Contain the number of memory block in Calibration section. It is use to control the number of Block tag in this file.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Block</td>
+							<td><span>&#8614;</span> <i>N-A</i> : </td>
+							<td>The Block tag regroup all information about 1 memory block. This tag can be use more than once.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Name_of_Block</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Name of the current Block.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Address_of_Block</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Address of the current Block.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> ID</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>Id of the current Block, it need to be align with the place of the block tag in this file.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Nb_Variable</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>Contain the number of variable in the current Block. It is use to control the number of Variable tag in this file.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Size_of_Block</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>Contain the size of block : Sum on variable of Type_of_Variable in bytes multiply by NB_Data</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Variable</td>
+							<td><span>&#8614;</span> <i>N-A</i> : </td>
+							<td>The Variable tag regroup all information about 1 variable in the current Block. This tag can be use more than once.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Alias_In_RAM</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Name of current Variable.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Type_of_Variable</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>The type is limited to : "uint8","uint16","uint32","sint8","sint16","sint32".</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Array</td>
+							<td><span>&#8614;</span> <i>Boolean</i> : </td>
+							<td>True if the variable is consider as an array, false if not.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> NB_Data</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>If the Variable is an array, NB_Data correspond to the size of the array. Else NB_Data = 1.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Address_of_Variable</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Address of the current Variable.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Data</td>
+							<td><span>&#8614;</span> <i>N-A</i> : </td>
+							<td>The Data tag regroup all information about 1 data in the current Variable. This tag can be use more than once, if Array = true.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Value</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Contain the value of the data. It express in hexadecimal with the size of Type_of_Variable. For example if value = 0 and Type_of_Variable = uint16 => Value = 0000</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Unit</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Contain the unit of the variable.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Description</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Contain the Description of the variable, feel free.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Low_Range</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Contain the low range of Value.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> High_Range</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Contain the high range of Value.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Requirement</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Contain the Requirement linked to this data.</td>
+						</tr>
+					</table>
+					</p>
+				</p>
+				<h4>2.1.3 - Nvm Default</h4>
+				<p>
+					Concerning file : 
+					<ul>
+						<li><b><i>NvmDefault.dtd</i></b></li>
+						<li><b><i>NvmDefault.xml</i></b></li>
+					</ul>
+					<p>
+					Structure of the XML :<br>
+					
+					<table style="width:90%">
+						<tr>
+							<td><span>&#8627;</span> NvmDefault</td>
+							<td><span>&#8614;</span> <i>N-A</i> : </td>
+							<td>Root element of the structure.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Nb_Block</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>Contain the number of memory block in Nvm section. It is use to control the number of Block tag in this file.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Block</td>
+							<td><span>&#8614;</span> <i>N-A</i> : </td>
+							<td>The Block tag regroup all information about 1 memory block. This tag can be use more than once.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Name_of_Block</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Name of the current Block.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> ROM_Alias</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Contain the Tresos link to the default value of NVM, see Nvp_alias.h.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> RAM_Alias</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Contain the Tresos link to the current value of NVM, see Nvp_alias.h.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> FixedBlock</td>
+							<td><span>&#8614;</span> <i>Boolean</i> : </td>
+							<td>True if this block can not be modify by the application, false if not.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Address_of_Block</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Address of the current Block.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> ID</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>Id of the current Block, it need to be align with the place of the block tag in this file.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Nb_Variable</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>Contain the number of variable in the current Block. It is use to control the number of Variable tag in this file.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Size_of_Block</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>Contain the size of block : Sum on variable of Type_of_Variable in bytes multiply by NB_Data</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Tresos_Size</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>Contain the size set in Tresos tools. If FixedBlock=False and , Size_of_Block != Tresos_Size, the application will not generate the target file.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Variable</td>
+							<td><span>&#8614;</span> <i>N-A</i> : </td>
+							<td>The Variable tag regroup all information about 1 variable in the current Block. This tag can be use more than once.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Alias_In_RAM</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Name of current Variable.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Type_of_Variable</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>The type is limited to : "uint8","uint16","uint32","sint8","sint16","sint32".</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Array</td>
+							<td><span>&#8614;</span> <i>Boolean</i> : </td>
+							<td>True if the variable is consider as an array, false if not.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> NB_Data</td>
+							<td><span>&#8614;</span> <i>Decimal</i> : </td>
+							<td>If the Variable is an array, NB_Data correspond to the size of the array. Else NB_Data = 1.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Address_of_Variable</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Address of the current Variable.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Data</td>
+							<td><span>&#8614;</span> <i>N-A</i> : </td>
+							<td>The Data tag regroup all information about 1 data in the current Variable. This tag can be use more than once, if Array = true.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Value</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Contain the value of the data. It express in hexadecimal with the size of Type_of_Variable. For example if value = 0 and Type_of_Variable = uint16 => Value = 0000</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Unit</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Contain the unit of the variable.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Description</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Contain the Description of the variable, feel free.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Low_Range</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Contain the low range of Value.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> High_Range</td>
+							<td><span>&#8614;</span> <i>HexaDecimal</i> : </td>
+							<td>Contain the high range of Value.</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8627;</span> Requirement</td>
+							<td><span>&#8614;</span> <i>String</i> : </td>
+							<td>Contain the Requirement linked to this data.</td>
+						</tr>
+					</table>
+					</p>
+				</p>
+			</p>
+			<h3>2.2 - Use for</h3>
+			<p>
+				Those file are used as database for the NVP_Layout. During the start of the application all data are load from this file. A validation of the XML is done at startup with DTD.<br>
+				In other words all tag in XML need to be define in the correspond DTD with there iteration. During use of the application we can also write in those file to save the data modification.<br>
+				XML are also use as reference for the generation script. So if you modify the data in application but you don't export in XML, you will not generate source code with your modification.
+			</p>
+		</p>
+		<h2 id="application">3 - Application</h2>
+		<p>
+			<h3>3.1 - General Information</h3>
+			<p>
+				The application is based on a MVC model develop in Java. The main functionality is to present the memory layout, with the maximum of automatic action.<br>
+				In order to open the project, please make all the prerequisites, and specially the 4th step. After open Eclipse (the application was develop with Eclipse Oxygen.3 Release (4.7.3)), import the project from <i>S:\Tools\NVP_Layout\Workspace</i>.<br>
+				Two project are present : 
+				<table style="width:90%">
+					<tr>
+						<td>- NVP_Layout</td>
+						<td><span>&#8614;</span> Is the main java application. It's a standalone application.</td>
+					</tr>
+					<tr>
+						<td>- org.eclipse.nvplayout</td>
+						<td><span>&#8614;</span> Is the Eclipse plugin, if you had the <b><i>.org.eclipse.nvplayout_1.0.0.jar</i></b>. file to your eclipse plugins, you will be able to call the application directly from the eclipse view.(see Figure 2)</td>
+					</tr>
+				</table>
+				<center>
+				<figure>
+					<img src="Eclipse_Worspace.PNG" alt="Picture not available" />
+					<br><figcaption>Figure 2 : Eclipse Workspace</figcaption>
+				</figure>
+				</center>
+				<p>
+					The application is based on a MVC Model. The structure is a based for almost all application. It's composed in 3 part :
+					<table style="width:90%">
+						<tr>
+							<td>- Model</td>
+							<td><span>&#8614;</span> It's the based of the application it contain all the structure of data.</td>
+						</tr>
+						<tr>
+							<td>- View</td>
+							<td><span>&#8614;</span> This is the interface with the user.</td>
+						</tr>
+						<tr>
+							<td>- Controller</td>
+							<td><span>&#8614;</span> This part is linked between the View and the Model. This part contain the intelligence of the application.</td>
+						</tr>
+					</table>
+				</p>
+				<center>
+				<figure>
+					<img HEIGHT=300 width=750 src="Model_MVC.png" alt="Picture not available" />
+					<br><figcaption>Figure 3 : MVC Model</figcaption>
+				</figure>
+				</center>
+			</p>
+			<h3>3.2 - MVC Model apply to the application</h3>
+			
+			So the structure of the application is separate in three part Model, View and Controller. View and Controller have one Main file containing the call of all specific file, 1 file correspond to 1 part of the application (Calibration, Nvm, ...).<br>
+			The Model part is already separate by part of the application at Controller level, the separation in Model correspond to the level of detail of the model (Block, Variable, Data).
+			
+			<center>
+				<figure>
+					<img src="MVC_implementation.PNG" alt="Picture not available" />
+					<br><figcaption>Figure 4 : MVC Model apply to the application</figcaption>
+				</figure>
+			</center>
+			
+			The two gray file are generic class with specific action. The TabChangeListener.java is used to manage the switch between the different context. The SimpleErrorHandler.java is used to catch the different error when the application parse the XML.<br>
+				
+				<h4>3.2.1 - View</h4>
+				<p>
+					<table width=1800 border="black">
+						<tr>
+							<th width=300 >File</th>
+							<th>Definition</th>
+						</tr>
+						<tr>
+							<td><span>&rArr;</span> MainWindow.java</td>
+							<td>: This file is used to define the main function of the application. It call the main windows and create all the link to the different part of the application.
+							It instantiate one panel for each part, furthermore it control the switch between part to be the most user-friendly.
+							</td>
+						</tr>
+						
+						<tr>
+							<td><span>&rArr;</span> MemoryConfigurationWindow.java</td>
+							<td>: This file is used to define the UI for the global configuration panel. It define the different object which user can interact with. And call the MainController.java when modification are required by the user.
+							The display information on this panel are present in <b>1 - GLOBAL CONFIGURATION</b> of <i><b>HowToUseGetStarted.html</i></b>, see previous panel on the application.
+							</td>
+						</tr>
+						
+						<tr>
+							<td><span>&rArr;</span> CalibrationWindow.java</td>
+							<td>: This file is used to define the UI for the calibration panel. It define the different object for the UI, which can be split in three part :<br>
+							<ol>
+							<li> Global Header</li>
+							<li> Block Definition</li>
+							<li> Data Display</li>
+							</ol>
+							<center>
+								<figure>
+									<img HEIGHT=500 width=1150 src="CalibrationwithBlock.PNG" alt="Picture not available" />
+									<br><figcaption>Figure 5 : Overview of the Calibration Memory section panel</figcaption>
+								</figure>
+							</center>
+							
+							The Global Header contain the upper object of the panel, this part is set once and it never modify during the life of the application.
+							Only button generate file button are disable if modification are set but not export.
+							The Block Definition contain all information concerning the different memory block in memory.
+							This part is repaint when block information is modify.
+							The Data Display contain all information of variable for the selected block.
+							This part is also repaint on each data modification.
+							To schedule the repaint of the different section a thread is set, every 100ms a check is done and if modification are notify an update of the view is done.
+							This schedule is set to avoid an over use of the CPU. 
+							</td>
+						</tr>
+						
+						<tr>
+							<td><span>&rArr;</span> NvmDefaultWindow.java</td>
+							<td>: This file is used to define the UI for the Nvm Default panel. It have almost the same work flow as the Calibration panel.
+							<ol>
+							<li> Global Header</li>
+							<li> Block Definition</li>
+							<li> Data Display</li>
+							</ol>
+							<center>
+								<figure>
+									<img HEIGHT=480 width=1150 src="NvmDefaultwithBlock.PNG" alt="Picture not available" />
+									<br><figcaption>Figure 6 : Overview of the Nvm Default Memory section panel</figcaption>
+								</figure>
+							</center>
+							
+							The definition of the three part is the same as calibration. Only some action and information are different.
+							This part of the memory is linked to TRESOS Tool. So the definition of the different block are not set by the application.
+							Some action according the number and the size of block need to be disable.
+							Furthermore some check are mandatory according the link with the file generate by TRESOS and those the application generate.
+							That's why the column tresos size is present in the section 2.
+							
+							</td>
+						</tr>
+						
+						<tr>
+							<td><span>&rArr;</span> NvmImportWindow.java</td>
+							<td>: This file is used to define the UI for the Import Window.
+							This window is used when a difference between TRESOS file and local XML is different.
+							In that case a merge is launch and if a automatic is not possible between those file, this window pop with the possible choice.
+							<center>
+								<figure>
+									<img HEIGHT=460 width=1000 src="ImportwithID.PNG" alt="Picture not available" />
+									<br><figcaption>Figure 7 : Overview of the Import window</figcaption>
+								</figure>
+							</center>
+							
+							<ol>
+							<li> Import state (here 83% of the TRESOS Block are already import in the application)</li>
+							<li> Only 2 action are available during the merge.
+								<ul>
+								<li>Add Block : Create a new empty block with TRESOS parameter.</li>
+								<li>Merge : Copy the information of the selected block in 4 and paste the TRESOS information.</li>
+								</ul>
+								</li>
+							<li> Contain the information extract from TRESOS tools</li>
+							<li> Display the different block from the XML, which are not already merge.</li>
+							</ol>
+							
+							This window is only set when a merge during an import is mandatory.
+							That's why when it display the main window can't be selected.
+							When the merge is ended this window are disband only the instance of the window stay if an other merge is asked, in other word all information on this window are deleted.
+							This file contain only the management of the window the merge is done in the <b><i>NvmDefaultController.java</i></b>
+							
+							</td>
+						</tr>
+						
+						<tr>
+							<td><span>&rArr;</span> HowToUseWindow.java</td>
+							<td>: This file is used to define the UI for the file you are reading now ;).<br>
+							This goal is only to load and display two html file present in <i>S:\Tools\NVP_Layout\Config\HowToUse </i>.
+							</td>
+						</tr>
+						
+						<tr>
+							<td><span>&rArr;</span> TabChangeListener.java</td>
+							<td>: This file is not use as UI, the purpose of this class is to manage the switch of context between calibration, global configuration and Nvm default panel.
+
+							</td>
+						</tr>
+					</table>
+				</p>
+				<h4>3.2.2 - Controller</h4>
+				<p>
+					<table width=1800 border="black" align="justify">
+						<tr>
+							<th>File</th>
+							<th>Definition</th>
+						</tr>
+						<tr>
+							<td><span>&rArr;</span> MainController.java</td>
+							<td>: We can see this file as a router. They take all information from the View and dispatch to the different controller.
+							This router was added because some data in specific view was wanted by different controller, like the start address of the memory section.
+							</td>
+						</tr>
+						<tr>
+							<td><span>&rArr;</span> MemoryConfigurationController.java</td>
+							<td>: This Controller manage the different action asked from the <b><i>MemoryConfigurationWindow.java</i></b>.
+							It's the link between <b><i>MemoryConfigurationWindow.java</i></b>, via <b><i>MainController.java</i></b>, and <b><i>MemoryConfiguration.java</i></b>.
+							<br>
+							At startup of the application, when the class is instantiate an automatic import is launch.
+							This import consist on a load of the XML <b><i>GlobalConfiguration.xml</i></b>, this file contain all needed data for this section.
+							See <a href="#ModelMemoryConfiguration">3.2.3.1 - MemoryConfiguration</a> for more details about the structure.
+						</tr>
+						
+						<tr>
+							<td><span>&rArr;</span> CalibrationController.java</td>
+							<td>: This controller manage the action from the calibration view. Some data are also import from other view.
+							<br>
+							The first action of this class is to instantiate the calibration model.							
+							At Startup of the application, an automatic import is also launch.
+							This import consist on a load of data contain in XML <b><i>Calibration.xml</i></b>.
+							According the structure present in <a href="#xmlfileCalibration">2.1.2 - Calibration</a>.
+							To have more information about the data please see <a href="#ModelMemoryCalibration">3.2.3.2 - Calibration</a>.
+							<br>
+							On each demand of a new data some check are done and data are recompute to be align with modification.
+							All the check are specified in <a href="#ModelMemoryCalibration">3.2.3.2 - Calibration</a> but are made in this part.
+							</td>
+						</tr>
+						<tr>
+							<td><span>&rArr;</span> NvmDefaultController.java</td>
+							<td>: This controller manage the action from the Nvm Default view. Some data are also import from other view.
+							<br>
+							The first action of this class is to instantiate the Nvm model.							
+							At Startup of the application, an automatic import is also launch.
+							This import consist on a load of data contain in XML <b><i>NvmDefault.xml</i></b> and in TRESOS file <b><i>Nvm_Cfg.h/.c</i></b>.
+							As Calibration controller the Nvm Controller manage the check and the router to the NVM model present in <a href="ModelMemoryNVM">3.2.3.3 - NvmDefault</a>.
+							It also used to manage the merge between XML and TRESOS generated file.
+							The merge is almost automatic, the check is done by take into account the Name of the block.
+							In other word we load 2 provisional structure, one with XML information and the other with TRESOS data.
+							The TRESOS data are made as reference for the merge, so during this step the Name of block from TRESOS is made as reference, and it will be search in XML.
+							If a name correspond the merge is automatically done and the block are write in the local structure.
+							All block are parse one time, even if there is not corresponding block in XML.
+							After the first parse if there is some TRESOS block with no corresponding block, a manual merge is launch.
+							</td>
+						</tr>
+						
+						<tr>
+							<td><span>&rArr;</span> SimpleErrorHandler.java</td>
+							<td>: This class is used to catch the different error during the read of the XML. The error are made if XML are not align with DTD.
+							</td>
+						</tr>
+					</table>
+				</p>
+				<h4>3.2.3 - Model</h4>
+				<p>
+					<table width=1500 align="justify">
+						<tr>
+							<td>A Model is define for each part and so for each controller, in other word 3 Model is created MemoryConfiguration, Calibration and NvmDefault.
+							MemoryConfiguration is the easiest model is a flat model containing all information.
+							Calibration and NvmDefault are set on the same structure.
+							XXX represent "Calibration" or "NvmDefault".<br>
+							<table width=1500 align="justify">
+								<tr>
+									<td>
+									<span>&#8627;</span> XXX.java
+									</td>
+									<td>
+									<span>&#8614;</span> This class contain the structure of all the memory sector selected. It contain several instance of XXXblock.java.
+									</td>
+								</tr>
+								<tr>
+									<td>
+									&nbsp;<span>&#8627;</span> XXXblock.java<br>
+									</td>
+									<td>
+									<span>&#8614;</span> This class contain the block's structure of the concerning memory section. It could contain several instance of XXXvariable.java.
+									</td>
+								</tr>
+								<tr>
+									<td>
+									&nbsp;&nbsp;<span>&#8627;</span> XXXvariable.java<br>
+									</td>
+									<td>
+									<span>&#8614;</span> This class contain the structure of all the memory sector selected. It could contain several or none instance of XXXdata.java, according if the variable is define by the application or by Tresos, or if this variable is an array or not.
+									</td>
+								</tr>
+								<tr>
+									<td>
+									&nbsp;&nbsp;&nbsp;<span>&#8627;</span> XXXdata.java
+									</td>
+									<td>
+									<span>&#8614;</span> This class contain the structure of the basic information of one data in a variable.
+									</td>
+								</tr>
+							</table>
+							</td>
+						</tr>
+					</table>					
+				
+					<h5 id="ModelMemoryConfiguration">3.2.3.1 - MemoryConfiguration</h5>
+						<p>
+						As define before, this model is flat and contain only 9 integer ( 32 bit : 4; 16 bit : 5 ) and 1 string.
+						<table width=1500 align="justify">
+							<tr>
+								<td>String sApplicationName</td>
+								<td>Contain the name of the application, there is no constraint on this value, and it have no impact on the generate file.</td>
+							</tr>
+							<tr>
+								<td>long lCalibrationAddress;</td>
+								<td>Contain the start address of the Calibration memory section , when it's modify a copy is also done in Calibration Model.</td>
+							</tr>
+							<tr>
+								<td>long lRAMShadowAddress;</td>
+								<td>Contain the start address of the Ram Shadow memory section , when it's modify a copy is also done in NvmDefault Model to recompute the address of the different block and variable.</td>
+							</tr>
+							<tr>
+								<td>long lROMAddress;</td>
+								<td>Contain the start address of the ROM Default memory section. This value is not use by the application, but by the generation script to compute the ROM block address of the NVM default section.</td>
+							</tr>
+							<tr>
+								<td>long lEepromAliasAddress;</td>
+								<td>TBD</td>
+							</tr>
+							<tr>
+								<td>int iMajorVersion;</td>
+								<td>Contain the major version of the calibration memory section on 1 byte.</td>
+							</tr>
+							<tr>
+								<td>int iMinorVersion;</td>
+								<td>Contain the minor version of the calibration memory section on 1 byte.</td>
+							</tr>
+							<tr>
+								<td>int iSubversion;</td>
+								<td>Contain the subversion version of the calibration memory section on 1 byte.</td>
+							</tr>
+							<tr>
+								<td>int iCalibrationSize;</td>
+								<td>Contain the size of the calibration section. It's use to check the 
+								</td>
+							</tr>
+							<tr>
+								<td>int iVariableDisplay;</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+						</p>
+					<h5 id="ModelMemoryCalibration">3.2.3.2 - Calibration</h5>
+						<p>
+						As define before, this model contain 3 integer ( 32 bit : 1; 16 bit : 2 ) and 1 array of CalibrationBlock.
+						<table width=1500 align="justify">
+							<tr>
+								<td>int nbBlock;</td>
+								<td>Contain the name of the application, there is no constraint on this value, and it have no impact on the generate file.</td>
+							</tr>
+							<tr>
+								<td>long lStartAddress;</td>
+								<td>Contain the start address of the Calibration memory section.</td>
+							</tr>
+							<tr>
+								<td>int iVariableDisplay;</td>
+								<td>Contain the Type of display for the calibration view (HEXADECIMALDISPLAY = 0 or DECIMALDISPLAY = 1).</td>
+							</tr>
+							<tr>
+								<td>CalibrationBlock[] block;</td>
+								<td>Contain the array of the different calibration block.</td>
+							</tr>
+						</table>
+						The calibrationBlock structure is define as follow, this model contain 4 integer ( 32 bit : 1; 16 bit : 3 ), 1 String and 1 array of CalibrationVariable.
+						<table width=1500 align="justify">
+							<tr>
+								<td>CalibrationBlock[] block;</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>String sNameOfBlock;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>long lAddressOfBlock;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>int iID;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>int iNbVariable;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>int iSizeOfBlock;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>CalibrationVariable[] cvVariabletab;</td>
+								<td></td>
+							</tr>
+						</table>
+						The CalibrationVariable structure is define as follow, this model contain 3 integer ( 32 bit : 1; 16 bit : 2 ), 1 boolean, 2 String and 1 array of CalibrationData.
+						<table width=1500 align="justify">
+							<tr>
+								<td>CalibrationVariable[] cvVariabletab;</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>String sAliasInRAM;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>String sTypeOfVariable;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>boolean bArray;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>int iSizeOfData;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>long lAddressOfVariable;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>int iNbofData;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>CalibrationData[] cdDatatab;</td>
+								<td></td>
+							</tr>
+						</table>
+						The CalibrationData structure is define as follow, this model contain 4 integer ( 32 bit : 4; 16 bit : 0 ) and 3 String.
+						<table width=1500 align="justify">
+							<tr>
+								<td>CalibrationData[] cdDatatab;</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>long lAddressOfData;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>long lValue;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>String sUnit;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>String sDescription;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>long lLowRange;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>long lHighRange;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>String sRequirement;</td>
+								<td></td>
+							</tr>
+						</table>
+						</p>
+					<h5 id="ModelMemoryNVM">3.2.3.3 - NvmDefault</h5>
+						<p>
+						
+						</p>
+				</p>
+				
+			To have more information on each file please see the <a href="S:\Tools\NVP_Layout\Workspace\NVP_Layout\doc\index.html">Java Doc</a> in <i>S:\Tools\NVP_Layout\Workspace\<b>NVP_Layout-Java_Doc</b></i>
+
+
+		</p>
+		<h2 id="generation">4 - Generation Script</h2>
+		<p>
+			- Template<br>
+			- python<br>
+			- check<br>
+			- 
+		</p>
+		
+		
+		
+		
+		[Quand on ne travaillera plus le lendemain des jours de repos,<br>
+		la fatigue sera vaincue.]<br>
+		<i>Pierre Dac</i>
+	</body>
+</html>

@@ -1,0 +1,35 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_AdcIf_pseCheckAdc, ARCH_SW_pclCheckAdc
+ARCH_SW_AdcIf_pseCheckAdc: The autotest shall read the low and high voltage refference for the ADC peripheral via the {AdcIf_runGetChannelValue} runnable and will compare them with thresholds stored in the NvM memory({NVP_u16ADCLowVoltageThrs}, {NVP_u16ADCHighVoltageThrs}). Comparison shall be done in mV.
+ARCH_SW_pclCheckAdc: This is the ADC autotest. It consists of checking that the two reference voltages measured on the dedicated ADC channels do not drift.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_AdcIf_pseCheckAdc, ARCH_SW_pclCheckAdc
+
+	Step 2: Set a breakpoint in function AdcIf_runGetChannelValue in order to read the low and high voltage refference 
+		Expected result:  BP reached.
+
+	Step 3: Set a breakpoint in function AdcIf_Autotest_CheckAdc at the if statement 
+		Expected result:  BP reached.
+
+	Step 4: Set a breakpoint in function atm_cbk_CheckAdc in order to read autotest result 
+		Expected result:  BP reached.
+
+	Step 5: Evaluate test case result 
+		Expected result:  Variable is set to 0x1.
+
+Postcondition
+
+	Step 6: Return ECU to default values

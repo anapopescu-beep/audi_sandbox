@@ -1,0 +1,50 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrLpmServicesBswMIf_LPM_sleepMainLoop_BswM_OnLowPwrFromPostRun, ARCH_SW_BswMIf_ptrrLpmServicesBswMIf_LPM_sleepRestore_BswM_OnLowPwrFromPostRun
+ARCH_SW_BswMIf_ptrrLpmServicesBswMIf_LPM_sleepMainLoop_BswM_OnLowPwrFromPostRun: The LPM_sleepMainLoop runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to enter in main loop and stay there until: - Passenger occupancy detected - Bus activity detected - TLowPower timeout
+ARCH_SW_BswMIf_ptrrLpmServicesBswMIf_LPM_sleepRestore_BswM_OnLowPwrFromPostRun: The LPM_sleepRestore runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to restore previous state and set rules to go back in RUN STATE
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrLpmServicesBswMIf_LPM_sleepMainLoop_BswM_OnLowPwrFromPostRun
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function 
+		Expected result:  BP was set
+
+	Step 5: Change value for Post Run Timer in order to go in BswM_OnLowPwrFromPostRun function 
+		Expected result:  Succesfully changed
+
+	Step 6: Set a BP in function BswM_OnLowPwrFromPostRun in order to call LPM_sleepMainLoop 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function LPM_sleepMainLoop in order to enter in main loop and stay there until: - Passenger occupancy detected - Bus activity detected - TLowPower timeout 
+		Expected result:  BP was set
+
+	Step 8: Change value for lpm wakeup in order go out from while 
+		Expected result:  Succesfully changed
+
+Action: ARCH_SW_BswMIf_ptrrLpmServicesBswMIf_LPM_sleepRestore_BswM_OnLowPwrFromPostRun
+
+	Step 9: Set a BP in function BswM_OnLowPwrFromPostRun in order to call LPM_sleepRestore 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function LPM_sleepRestore in order to restore previous state and set rules to go back in RUN STATE
+
+Postcondition
+
+	Step 11: Return ECU to default values

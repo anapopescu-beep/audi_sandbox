@@ -1,0 +1,89 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+H-File Template Version:
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+*******************************************************************************
+
+Overview of the interfaces:
+  This file contains the implementation of the AUTOSAR module BlPduR.
+
+******************************************************************************/
+/*
+$Revision: 1.2 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Bootloader/Autoliv/FblUsr/Implementation/inc/project.pj $
+*/
+/*****************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#ifdef __cplusplus
+extern "C" {
+#endif
+/******************************************************************************
+DEFINITION OF CONSTANTS
+******************************************************************************/
+/*
+ *  MISRA deviation report:
+ *  - This file violates MISRA-C:2004, Rule 19.6:
+ *       "#undef shall not be used"
+ *    Reason:
+ *       The specification document explicitely describes this mechanism.
+ *  - This file violates MISRA-C:2004, Rule 19.15:
+ *       "Precautions shall be taken in order to prevent the contents
+ *        of a header file being included twice."
+ *    Reason:
+ *       This file needs to be included more than once in a compilation unit
+ */
+/* CHECK: NOPARSE */
+
+/*  MISRA-C:2004 Deviation List
+ *
+ *  MISRA-1) Deviated Rule: 3.4 (required)
+ *   "All uses of the #pragma directive shall be documented and explained."
+ *
+ *   Reason:
+ *   lib.
+ *
+ */
+/* Deviation MISRA-1 <START> */
+#if 0 /* to be able to use #elif for every module */
+/*------------------[Start of a module]--------------------------------------*/
+
+/* Start of History Record */
+#elif (defined BLPDUR_BUFF_START_SEC_VAR )
+  #undef BLPDUR_BUFF_START_SEC_VAR
+  #undef MEMMAP_ERROR
+#elif (defined BLPDUR_BUFF_STOP_SEC_VAR )
+  #undef BLPDUR_BUFF_STOP_SEC_VAR
+  #undef MEMMAP_ERROR
+
+#endif
+/******************************************************************************
+DECLARATION OF VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTIONS
+******************************************************************************/
+/******************************************************************************
+DECLARATION OF FUNCTION-LIKE MACROS
+******************************************************************************/
+#ifdef __cplusplus
+}
+#endif
+/******************************************************************************
+End Of File
+*****************************************************************************/

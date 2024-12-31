@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<T1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="2.0">
+  <Project Name="AUDI eCS" MainTickDuration="200" SyncTimeBitLength="32" T1targetVersion="2">
+    <Comment>Project file "S:\Components\Application\Supplier\T1\T1_project.t1p" auto-generated from Os_user.h and Os_config.h on 30.08.2023 at 14:51:51</Comment>
+    <System Name="Core0" TickDuration="200" MaxAbsTime="65535" KernelPriority="255" MinPreempPrio="1" SystemType="AUTOSAR OS" T1HandlerPeriod="10" SID="2" BID="3045529203" LicInfo1="POT1924" LicInfo2="LicID1141" StaticRunnableID="1023" TraceBufferSize="3000" >
+      <Comment>Core0</Comment>
+      <TargetSpecifics Target="ARM7M" NeedsUniqueSuccessorAddress="true" />
+      <TraceMergeAttributes TraceTimerIsMainTimer="true" />
+      <BasicSchedulingFrameEvent Type="T1_ACTIVATION" SystemElementID="5" SystemElementType="Task" ID="4294967295" />
+      <HeaderInclude>src\T1_AppInterface.h</HeaderInclude>
+      <SystemElement Name="OsTask_Bsw_ReadWrite_AllProcess: ECC" Priority="1" ID="0" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Bsw_ReadWrite_AllProcess" />
+      <SystemElement Name="OsTask_AppIdle: ECC" Priority="0" ID="1" Type="Task" MaxActivations="1" ExcludeFromCpuLoad="true" SymbolRef="OS_TASK_OsTask_AppIdle" />
+      <SystemElement Name="OsTask_Bsw_ComServices" Priority="8" ID="2" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Bsw_ComServices">
+        <SystemElement Name="Spi_MainFunction_Handling" ID="65536" Type="Runnable" SymbolRef="Spi_MainFunction_Handling" />
+        <SystemElement Name="Dcm_MainFunction" ID="65537" Type="Runnable" SymbolRef="Dcm_MainFunction" />
+        <SystemElement Name="Com_MainFunctionRx" ID="65538" Type="Runnable" SymbolRef="Com_MainFunctionRx" />
+        <SystemElement Name="Com_MainFunctionTx" ID="65539" Type="Runnable" SymbolRef="Com_MainFunctionTx" />
+        <SystemElement Name="Can_MainFunction_Mode" ID="65540" Type="Runnable" SymbolRef="Can_MainFunction_Mode" />
+        <SystemElement Name="CanTp_MainFunction" ID="65541" Type="Runnable" SymbolRef="CanTp_MainFunction" />
+        <SystemElement Name="CanSM_MainFunction" ID="65542" Type="Runnable" SymbolRef="CanSM_MainFunction" />
+        <SystemElement Name="Com_MainFunctionRouteSignals" ID="65543" Type="Runnable" SymbolRef="Com_MainFunctionRouteSignals" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Bsw_SysServices" Priority="6" ID="3" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Bsw_SysServices">
+        <SystemElement Name="EcuM_MainFunction" ID="65544" Type="Runnable" SymbolRef="EcuM_MainFunction" />
+        <SystemElement Name="BswM_MainFunction" ID="65545" Type="Runnable" SymbolRef="BswM_MainFunction" />
+        <SystemElement Name="ComM_MainFunction_0" ID="65546" Type="Runnable" SymbolRef="ComM_MainFunction_0" />
+        <SystemElement Name="Dem_MainFunction" ID="65547" Type="Runnable" SymbolRef="Dem_MainFunction" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Bsw_MemServices" Priority="4" ID="4" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Bsw_MemServices">
+        <SystemElement Name="NvM_MainFunction" ID="65548" Type="Runnable" SymbolRef="NvM_MainFunction" />
+        <SystemElement Name="Fee_MainFunction" ID="65549" Type="Runnable" SymbolRef="Fee_MainFunction" />
+        <SystemElement Name="Fls_MainFunction" ID="65550" Type="Runnable" SymbolRef="Fls_MainFunction" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Alv_ComHwAbs" Priority="7" ID="5" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Alv_ComHwAbs">
+        <SystemElement Name="SBC_runMainFunction" ID="65551" Type="Runnable" SymbolRef="SBC_runMainFunction" />
+        <SystemElement Name="ACC_ReadAccelerometerTemperature" ID="65552" Type="Runnable" SymbolRef="ACC_ReadAccelerometerTemperature" />
+        <SystemElement Name="T1_AppHandler" ID="65553" Type="Runnable" SymbolRef="T1_AppHandler" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Bsw_Init" Priority="3" ID="6" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Bsw_Init" />
+      <SystemElement Name="OsTask_Bsw_Events" Priority="2" ID="7" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Bsw_Events">
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_RequestPort_EXECUTE" ID="65554" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_RequestPort_EXECUTE" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_RequestPort_HARD" ID="65555" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_RequestPort_HARD" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_RequestPort_JUMPTOBOOTLOADER" ID="65556" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_RequestPort_JUMPTOBOOTLOADER" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_RequestPort_JUMPTOSYSSUPPLIERBOOTLOADER" ID="65557" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_RequestPort_JUMPTOSYSSUPPLIERBOOTLOADER" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_RequestPort_KEYONOFF" ID="65558" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_RequestPort_KEYONOFF" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_RequestPort_NONE" ID="65559" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_RequestPort_NONE" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_RequestPort_SOFT" ID="65560" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_RequestPort_SOFT" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Alv_eCSApp" Priority="11" ID="8" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Alv_eCSApp">
+        <SystemElement Name="ACC_runMainFunction" ID="65561" Type="Runnable" SymbolRef="ACC_runMainFunction" />
+        <SystemElement Name="eCS_runMainFunction" ID="65562" Type="Runnable" SymbolRef="eCS_runMainFunction" />
+        <SystemElement Name="FSM_runUpdateModeStatus" ID="65563" Type="Runnable" SymbolRef="FSM_runUpdateModeStatus" />
+        <SystemElement Name="FSM_runMainFunction" ID="65564" Type="Runnable" SymbolRef="FSM_runMainFunction" />
+        <SystemElement Name="SAD_runMainFunction" ID="65565" Type="Runnable" SymbolRef="SAD_runMainFunction" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Alv_Autotests" Priority="10" ID="9" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Alv_Autotests">
+        <SystemElement Name="ATM_runMainFunction" ID="65566" Type="Runnable" SymbolRef="ATM_runMainFunction" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Alv_ComServices" Priority="9" ID="10" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Alv_ComServices">
+        <SystemElement Name="CIL_runAppliToCAN" ID="65567" Type="Runnable" SymbolRef="CIL_runAppliToCAN" />
+        <SystemElement Name="CIL_runCANToAppli" ID="65568" Type="Runnable" SymbolRef="CIL_runCANToAppli" />
+        <SystemElement Name="CIL_runCANToSafetyAppli" ID="65569" Type="Runnable" SymbolRef="CIL_runCANToSafetyAppli" />
+        <SystemElement Name="CIL_runManageMF" ID="65570" Type="Runnable" SymbolRef="CIL_runManageMF" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Alv_EcuHwAbs" Priority="12" ID="11" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Alv_EcuHwAbs">
+        <SystemElement Name="IoHwAb_DetectVoltageFluctuation" ID="65571" Type="Runnable" SymbolRef="IoHwAb_DetectVoltageFluctuation" />
+        <SystemElement Name="IoHwAb_runFilterMeasurements2ms" ID="65572" Type="Runnable" SymbolRef="IoHwAb_runFilterMeasurements2ms" />
+        <SystemElement Name="IoHwAb_runFilterMeasurements10ms" ID="65573" Type="Runnable" SymbolRef="IoHwAb_runFilterMeasurements10ms" />
+        <SystemElement Name="IoHwAb_runFilterMeasurements100ms" ID="65574" Type="Runnable" SymbolRef="IoHwAb_runFilterMeasurements100ms" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Alv_ModeMngmt" Priority="5" ID="12" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Alv_ModeMngmt">
+        <SystemElement Name="BswMIf_runMainFunction" ID="65575" Type="Runnable" SymbolRef="BswMIf_runMainFunction" />
+        <SystemElement Name="NmIf_runMainFunction" ID="65576" Type="Runnable" SymbolRef="NmIf_runMainFunction" />
+        <SystemElement Name="STM_runIncreaseSystemTime" ID="65577" Type="Runnable" SymbolRef="STM_runIncreaseSystemTime" />
+      </SystemElement>
+      <SystemElement Name="OsTask_Bsw_ComEvents" Priority="2" ID="13" Type="Task" MaxActivations="1" SymbolRef="OS_TASK_OsTask_Bsw_ComEvents">
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NORM" ID="65578" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NORM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NORM" ID="65579" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NORM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NORM" ID="65580" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NORM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NORM" ID="65581" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NORM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NM" ID="65582" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NM" ID="65583" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NM" ID="65584" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NM" ID="65585" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NORM_NM" ID="65586" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NORM_NM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NORM_NM" ID="65587" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NORM_NM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NORM_NM" ID="65588" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NORM_NM" />
+        <SystemElement Name="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NORM_NM" ID="65589" Type="Runnable" SymbolRef="BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NORM_NM" />
+      </SystemElement>
+      <SystemElement Name="CAN0_ORED_IRQHandler: CAT2" Priority="993" ID="14" Type="Interrupt" SymbolRef="OS_ISR_CAN0_ORED_IRQHandler" />
+      <SystemElement Name="CAN0_Error_IRQHandler: CAT2" Priority="993" ID="15" Type="Interrupt" SymbolRef="OS_ISR_CAN0_Error_IRQHandler" />
+      <SystemElement Name="CAN0_ORED_0_15_MB_IRQHandler: CAT2" Priority="993" ID="16" Type="Interrupt" SymbolRef="OS_ISR_CAN0_ORED_0_15_MB_IRQHandler" />
+      <SystemElement Name="CAN0_ORED_16_31_MB_IRQHandler: CAT2" Priority="993" ID="17" Type="Interrupt" SymbolRef="OS_ISR_CAN0_ORED_16_31_MB_IRQHandler" />
+      <SystemElement Name="LPIT_0_CH_1_ISR: CAT2" Priority="994" ID="18" Type="Interrupt" SymbolRef="OS_ISR_LPIT_0_CH_1_ISR" />
+      <SystemElement Name="LPTMR_ISR: CAT1" Priority="997" ID="19" Type="Interrupt" SymbolRef="OS_ISR_LPTMR_ISR" />
+      <SystemElement Name="PORTD_ISR: CAT1" Priority="998" ID="20" Type="Interrupt" SymbolRef="OS_ISR_PORTD_ISR" />
+      <SystemElement Name="PORTE_ISR: CAT2" Priority="995" ID="21" Type="Interrupt" SymbolRef="OS_ISR_PORTE_ISR" />
+      <SystemElement Name="LPIT_0_CH_2_ISR: CAT2" Priority="995" ID="22" Type="Interrupt" SymbolRef="OS_ISR_LPIT_0_CH_2_ISR" />
+      <SystemElement Name="Os_Counter_FTM0_0: CAT2" Priority="996" ID="23" Type="Interrupt" SymbolRef="OS_CounterIsr_OsCounter_HARDWARE" />
+      <SystemElement Name="Check Integration" ID="0" Type="Stopwatch" />
+      <SystemElement Name="Check Integration Sync Timer Ticks" ID="0" Type="UserEvent" />
+      <SystemElement Name="printf string" ID="1" Type="UserEvent" />
+      <SystemElement Name="16 bit Data tracing" ID="2" Type="UserEvent" />
+      <SystemElement Name="32 bit Data tracing" ID="3" Type="UserEvent" />
+      <SystemElement Name="Binary Data tracing" ID="4" Type="UserEvent" />
+      <SystemElement Name="T1.cont error callback for core 0" ID="32" Type="UserEvent" />
+      <SystemElement Name="T1.cont CPU load callback for core 0" ID="33" Type="UserEvent" />
+      <SystemElement Name="T1_errorCount Increase" ID="34" Type="UserEvent">
+        <Info InfoStr="Core0 Error" Index="0x00" />
+      </SystemElement>
+      <EventChainSystemElement Name="OsTask_Alv_Autotests CET" ID="1" Type="EventChain" Kind="CoreExecTime">
+        <Constraint Type="CoreExecTime" SubType="Max">
+          <Value>400000</Value>
+        </Constraint>
+        <EventRef Type="T1_START" SystemElementID="9" SystemElementType="Task" ID="1" />
+        <EventRef Type="T1_STOP" SystemElementID="9" SystemElementType="Task" ID="1" />
+      </EventChainSystemElement>
+      <EventChainSystemElement Name="OsTask_Alv_eCSApp CET" ID="0" Type="EventChain" Kind="CoreExecTime">
+        <Constraint Type="CoreExecTime" SubType="Max">
+          <Value>450000</Value>
+        </Constraint>
+        <EventRef Type="T1_START" SystemElementID="8" SystemElementType="Task" ID="0" />
+        <EventRef Type="T1_STOP" SystemElementID="8" SystemElementType="Task" ID="0" />
+      </EventChainSystemElement>
+      <AppFeature Name="Capture Startup Trace">
+        <Mask>1</Mask>
+      </AppFeature>
+      <AppFeature Name="Allow on Target Trigger">
+        <Mask>2</Mask>
+      </AppFeature>
+      <AppFeature Name="Allow T1 Trace Data">
+        <Mask>4</Mask>
+      </AppFeature>
+      <AppFeature Name="Trace the stopwatch T1_SW_CHECK_INTEGRATION_CORE_ALL">
+        <Mask>8</Mask>
+      </AppFeature>
+      <Delay Name="Check Integration" Id="0" />
+      <Symbols>
+        <SymbolFilePath>..\..\..\..\Release\Application\app.elf</SymbolFilePath>
+        <AnnotationInclude>T1_project_Core0.t1a</AnnotationInclude>
+        <AnnotationInclude>C:\Projects\eCS_PTC\Components\Application\Supplier\T1\T1_project_Core0.t1a</AnnotationInclude>
+        <SymbolGroup Name="OsTask_Alv_Autotests_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>ATM_runMainFunction</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComHwAbs_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>SBC_runMainFunction</Symbol>
+          <Symbol>ACC_ReadAccelerometerTemperature</Symbol>
+          <Symbol>T1_AppHandler</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComHwAbs_Each_1_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>SBC_runMainFunction</Symbol>
+          <Symbol>T1_AppHandler</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComHwAbs_Each_undef_Offset_0_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>ACC_ReadAccelerometerTemperature</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComServices_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>CIL_runAppliToCAN</Symbol>
+          <Symbol>CIL_runCANToAppli</Symbol>
+          <Symbol>CIL_runCANToSafetyAppli</Symbol>
+          <Symbol>CIL_runManageMF</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComServices_Each_1_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>CIL_runAppliToCAN</Symbol>
+          <Symbol>CIL_runManageMF</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComServices_Each_undef_Offset_0_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>CIL_runCANToAppli</Symbol>
+          <Symbol>CIL_runCANToSafetyAppli</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_EcuHwAbs_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>IoHwAb_DetectVoltageFluctuation</Symbol>
+          <Symbol>IoHwAb_runFilterMeasurements2ms</Symbol>
+          <Symbol>IoHwAb_runFilterMeasurements10ms</Symbol>
+          <Symbol>IoHwAb_runFilterMeasurements100ms</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_EcuHwAbs_Each_1_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>IoHwAb_DetectVoltageFluctuation</Symbol>
+          <Symbol>IoHwAb_runFilterMeasurements2ms</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_EcuHwAbs_Each_5_Offset_0_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>IoHwAb_runFilterMeasurements10ms</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_EcuHwAbs_Each_undef_Offset_0_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>IoHwAb_runFilterMeasurements100ms</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ModeMngmt_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>BswMIf_runMainFunction</Symbol>
+          <Symbol>NmIf_runMainFunction</Symbol>
+          <Symbol>STM_runIncreaseSystemTime</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_eCSApp_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>ACC_runMainFunction</Symbol>
+          <Symbol>eCS_runMainFunction</Symbol>
+          <Symbol>FSM_runUpdateModeStatus</Symbol>
+          <Symbol>FSM_runMainFunction</Symbol>
+          <Symbol>SAD_runMainFunction</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_ComEvents_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NORM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NORM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NORM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NORM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NORM_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NORM_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NORM_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NORM_NM</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_ComServices_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>Spi_MainFunction_Handling</Symbol>
+          <Symbol>Dcm_MainFunction</Symbol>
+          <Symbol>Com_MainFunctionRx</Symbol>
+          <Symbol>Com_MainFunctionTx</Symbol>
+          <Symbol>Can_MainFunction_Mode</Symbol>
+          <Symbol>CanTp_MainFunction</Symbol>
+          <Symbol>CanSM_MainFunction</Symbol>
+          <Symbol>Com_MainFunctionRouteSignals</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_Events_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_EXECUTE</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_HARD</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_JUMPTOBOOTLOADER</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_JUMPTOSYSSUPPLIERBOOTLOADER</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_KEYONOFF</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_NONE</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_SOFT</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_MemServices_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>NvM_MainFunction</Symbol>
+          <Symbol>Fee_MainFunction</Symbol>
+          <Symbol>Fls_MainFunction</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_SysServices_All_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>EcuM_MainFunction</Symbol>
+          <Symbol>BswM_MainFunction</Symbol>
+          <Symbol>ComM_MainFunction_0</Symbol>
+          <Symbol>Dem_MainFunction</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_SysServices_Each_1_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>EcuM_MainFunction</Symbol>
+          <Symbol>BswM_MainFunction</Symbol>
+          <Symbol>Dem_MainFunction</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_SysServices_Each_undef_Offset_0_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>ComM_MainFunction_0</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_Autotests_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>ATM_runMainFunction</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComHwAbs_Each_4_Offset_0_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>ACC_ReadAccelerometerTemperature</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComHwAbs_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>SBC_runMainFunction</Symbol>
+          <Symbol>ACC_ReadAccelerometerTemperature</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComServices_Each_5_Offset_0_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>CIL_runCANToAppli</Symbol>
+          <Symbol>CIL_runCANToSafetyAppli</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ComServices_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>CIL_runCANToAppli</Symbol>
+          <Symbol>CIL_runCANToSafetyAppli</Symbol>
+          <Symbol>CIL_runAppliToCAN</Symbol>
+          <Symbol>CIL_runManageMF</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_EcuHwAbs_Each_50_Offset_0_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>IoHwAb_runFilterMeasurements100ms</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_EcuHwAbs_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>IoHwAb_DetectVoltageFluctuation</Symbol>
+          <Symbol>IoHwAb_runFilterMeasurements2ms</Symbol>
+          <Symbol>IoHwAb_runFilterMeasurements10ms</Symbol>
+          <Symbol>IoHwAb_runFilterMeasurements100ms</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_ModeMngmt_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>BswMIf_runMainFunction</Symbol>
+          <Symbol>NmIf_runMainFunction</Symbol>
+          <Symbol>STM_runIncreaseSystemTime</Symbol>
+          <Symbol>T1_AppHandler</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Alv_eCSApp_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>ACC_runMainFunction</Symbol>
+          <Symbol>eCS_runMainFunction</Symbol>
+          <Symbol>FSM_runUpdateModeStatus</Symbol>
+          <Symbol>FSM_runMainFunction</Symbol>
+          <Symbol>SAD_runMainFunction</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_ComEvents_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NORM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NORM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NORM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NORM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_TX_NORM_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_ENABLE_RX_DISABLE_TX_NORM_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_ENABLE_TX_NORM_NM</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_ComM_RequestPort_DCM_DISABLE_RX_TX_NORM_NM</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_ComServices_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>CanSM_MainFunction</Symbol>
+          <Symbol>Com_MainFunctionRx</Symbol>
+          <Symbol>Com_MainFunctionTx</Symbol>
+          <Symbol>Dcm_MainFunction</Symbol>
+          <Symbol>CanTp_MainFunction</Symbol>
+          <Symbol>Can_MainFunction_Mode</Symbol>
+          <Symbol>Spi_MainFunction_Handling</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_Events_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_EXECUTE</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_HARD</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_JUMPTOBOOTLOADER</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_JUMPTOSYSSUPPLIERBOOTLOADER</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_KEYOFFON</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_NONE</Symbol>
+          <Symbol>BswM_MRPFunc_BswM_Dcm_RequestPort_SOFT</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_MemServices_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>NvM_MainFunction</Symbol>
+          <Symbol>Fee_MainFunction</Symbol>
+          <Symbol>Fls_MainFunction</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_SysServices_Each_2_Offset_0_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>ComM_MainFunction_0</Symbol>
+        </SymbolGroup>
+        <SymbolGroup Name="OsTask_Bsw_SysServices_Runnables" IsCode="true" MeasureDuration="1000" FocusIntervalCount="16777216">
+          <Symbol>EcuM_MainFunction</Symbol>
+          <Symbol>BswM_MainFunction</Symbol>
+          <Symbol>ComM_MainFunction_0</Symbol>
+          <Symbol>Dem_MainFunction</Symbol>
+        </SymbolGroup>
+        <Extensions>
+        </Extensions>
+      </Symbols>
+      <MeasureOverheads Extended="true">
+        <MainMeasureOverhead>
+          <T1>89</T1>
+          <T2>89</T2>
+        </MainMeasureOverhead>
+        <T1flexMeasureOverhead>
+          <T1>500</T1>
+        </T1flexMeasureOverhead>
+      </MeasureOverheads>
+      <ReportConfiguration>
+        <CsvConfig TimeBase="formatted">
+          <SelectedTimingInformation>
+            <TimingInformation Type="CpuLoad" SubType="Max" />
+            <TimingInformation Type="CpuLoad" SubType="Min" />
+            <TimingInformation Type="CpuLoad" SubType="Average" />
+            <TimingInformation Type="CoreExecTime" SubType="Max" />
+            <TimingInformation Type="CoreExecTime" SubType="Min" />
+            <TimingInformation Type="CoreExecTime" SubType="Average" />
+            <TimingInformation Type="DeltaTime" SubType="Min" />
+          </SelectedTimingInformation>
+        </CsvConfig>
+        <HtmlConfig>
+          <SelectedTimingInformation>
+            <TimingInformation Type="CpuLoad" SubType="Max" />
+            <TimingInformation Type="CpuLoad" SubType="Min" />
+            <TimingInformation Type="CpuLoad" SubType="Average" />
+            <TimingInformation Type="CoreExecTime" SubType="Max" />
+            <TimingInformation Type="CoreExecTime" SubType="Min" />
+            <TimingInformation Type="CoreExecTime" SubType="Average" />
+            <TimingInformation Type="DeltaTime" SubType="Min" />
+            <TimingInformation Type="DeltaTime" SubType="Average" />
+          </SelectedTimingInformation>
+        </HtmlConfig>
+      </ReportConfiguration>
+      <StackQueryConfiguration />
+      <CommunicationConfig UseSameRxTxChannel="true">
+        <RxChannel>
+          <LayerConfig>
+            <Name>pure T1</Name>
+            <RoutingParameters xmlns:q1="Gliwa-CommunicationConfig" xsi:type="q1:GcpRoutingParameterType">
+              <AppId>0</AppId>
+              <TargetId>2</TargetId>
+            </RoutingParameters>
+            <BusRoutingParameter xmlns:q3="Gliwa-CommunicationConfig" xsi:type="q3:CanRoutingParameterType">
+              <CanId>
+                <Id>200</Id>
+                <isExtended>false</isExtended>
+              </CanId>
+            </BusRoutingParameter>
+          </LayerConfig>
+          <BusRef>
+            <Name>CAN_FD1</Name>
+            <BusType>CAN_FD</BusType>
+          </BusRef>
+          <Direction>RX</Direction>
+        </RxChannel>
+        <TxChannel>
+          <LayerConfig>
+            <Name>pure T1</Name>
+            <RoutingParameters xmlns:q1="Gliwa-CommunicationConfig" xsi:type="q1:GcpRoutingParameterType">
+              <AppId>0</AppId>
+              <TargetId>2</TargetId>
+            </RoutingParameters>
+            <BusRoutingParameter xmlns:q3="Gliwa-CommunicationConfig" xsi:type="q3:CanRoutingParameterType">
+              <CanId>
+                <Id>300</Id>
+                <isExtended>false</isExtended>
+              </CanId>
+            </BusRoutingParameter>
+          </LayerConfig>
+          <BusRef>
+            <Name>CAN_FD1</Name>
+            <BusType>CAN_FD</BusType>
+          </BusRef>
+          <Direction>TX</Direction>
+        </TxChannel>
+      </CommunicationConfig>
+    </System>
+    <Buses MaxTxBlocksize="8">
+      <Name>CAN_FD1</Name>
+      <Type>CAN_FD</Type>
+      <HwIdentifier Usage="Preferred">
+        <Name>VN1611 Channel 2</Name>
+        <HwType>VECTOR</HwType>
+      </HwIdentifier>
+      <TxCycleMs>10</TxCycleMs>
+      <BusConfig xmlns:q13="Gliwa-CommunicationConfig" xsi:type="q13:CanBusConfigType">
+        <Bitrate>500000</Bitrate>
+        <SamplePoint>80</SamplePoint>
+        <DataBitrate>500000</DataBitrate>
+        <DataSamplePoint>70</DataSamplePoint>
+      </BusConfig>
+    </Buses>
+    <CommunicationConfigList>
+      <TargetConnectionConfig Name="Default Connection">
+        <SystemConnectionList SID="2">
+          <SystemCommunicationConfig UseSameRxTxChannel="true">
+            <RxChannel>
+              <LayerConfig>
+                <Name>pure T1</Name>
+                <RoutingParameters xmlns:q1="Gliwa-CommunicationConfig" xsi:type="q1:GcpRoutingParameterType">
+                  <AppId>0</AppId>
+                  <TargetId>2</TargetId>
+                  <Timeout>400</Timeout>
+                </RoutingParameters>
+                <BusRoutingParameter xmlns:q3="Gliwa-CommunicationConfig" xsi:type="q3:CanRoutingParameterType">
+                  <CanId>
+                    <Id>200</Id>
+                    <isExtended>false</isExtended>
+                  </CanId>
+                </BusRoutingParameter>
+              </LayerConfig>
+              <BusRef>
+                <Name>CAN_FD1</Name>
+                <BusType>CAN_FD</BusType>
+              </BusRef>
+              <Direction>RX</Direction>
+            </RxChannel>
+            <TxChannel>
+              <LayerConfig>
+                <Name>pure T1</Name>
+                <RoutingParameters xmlns:q1="Gliwa-CommunicationConfig" xsi:type="q1:GcpRoutingParameterType">
+                  <AppId>0</AppId>
+                  <TargetId>2</TargetId>
+                </RoutingParameters>
+                <BusRoutingParameter xmlns:q3="Gliwa-CommunicationConfig" xsi:type="q3:CanRoutingParameterType">
+                  <CanId>
+                    <Id>300</Id>
+                    <isExtended>false</isExtended>
+                  </CanId>
+                </BusRoutingParameter>
+              </LayerConfig>
+              <BusRef>
+                <Name>CAN_FD1</Name>
+                <BusType>CAN_FD</BusType>
+              </BusRef>
+              <Direction>TX</Direction>
+            </TxChannel>
+            <Timeout>2000</Timeout>
+          </SystemCommunicationConfig>
+        </SystemConnectionList>
+      </TargetConnectionConfig>
+    </CommunicationConfigList>
+  </Project>
+</T1>

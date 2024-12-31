@@ -1,0 +1,30 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_pclEvtEcuoverTemperature
+ARCH_SW_pclEvtEcuoverTemperature: This is the autotest to check over temperature of MCU.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_pclEvtEcuoverTemperature
+
+	Step 2: Set a BP in function atm_SetDemEvent at the switch statement. 
+		Expected result:  BP is reached.
+
+	Step 3: Modify the Id of autotest with ATM_KU8_ID_TEST_MCU_OVER_TEMPERATURE
+
+	Step 4: Set a BP in function Dem_SetEventStatus at the result of event status. 
+		Expected result:  BP is reached.
+
+Postcondition
+
+	Step 5: Return ECU to default values

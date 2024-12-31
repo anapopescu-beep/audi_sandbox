@@ -1,0 +1,30 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrFlsServicesBswMIf_Fls_MainFunction_OsTask_Bsw_ReadWrite_AllProcess
+ARCH_SW_BswMIf_ptrrFlsServicesBswMIf_Fls_MainFunction_OsTask_Bsw_ReadWrite_AllProcess: The Fls_MainFunction runnable shall be called in the OsTask_Bsw_ReadWrite_AllProcess runnable in order to perform flash read/write/erase or compare fls jobs
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrFlsServicesBswMIf_Fls_MainFunction_OsTask_Bsw_ReadWrite_AllProcess
+
+	Step 2: Set a BP in OsTask_Bsw_ReadWrite_AllProcess in order to call Fls_MainFunction 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function Fls_MainFunction in order to perform flash read/write/erase or compare fls jobs 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function OsTask_Bsw_ReadWrite_AllProcess to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 5: Return ECU to default values

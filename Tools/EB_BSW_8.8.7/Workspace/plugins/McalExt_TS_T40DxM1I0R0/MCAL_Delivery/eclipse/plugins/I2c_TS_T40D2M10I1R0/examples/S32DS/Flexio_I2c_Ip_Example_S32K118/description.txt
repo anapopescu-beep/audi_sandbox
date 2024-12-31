@@ -1,0 +1,59 @@
+1. Example Description
+    This application demonstrates the usage of LPI2C driver in Real Time Drivers.
+    The application includes a Design Studio project, that uses predefined configurations for the IP layer only (Clock, Pin, Port_Ip, IntCtrl, OsIf, Lpi2c, Flexio_I2c).
+    The application uses the LPI2C and Flexio_I2c driver to asynchronous data.
+
+    1.1 The application software functionality
+            - Clock_Ip_Init
+                    Initialize the clock sources, the clock tree and to configure the clock gating of the peripherals.
+            - Port_Ci_Port_Ip_Init
+                    Initializes the pins used by the application using the Siul2_Port API.
+            - IntCtrl_Ip_Init
+                    Initializes the interrupt used by the application
+            - IntCtrl_Ip_EnableIrq
+                    Enable the interrupt used by the application
+            - Flexio_I2c_Ip_MasterInit
+                    Initialization i2c master. 
+            - Lpi2c_Ip_SlaveInit
+                    Initialization i2c slave.
+            - Lpi2c_Ip_StartListening
+                    Starting listening for i2c slave.             
+            - Flexio_I2c_Ip_MasterSendData
+                    Sending asynchronous data.
+
+2. Installation steps
+    2.1 Hardware installation
+        2.1.1 Supported boards
+            - EVB Kit
+                . S32K118EVB2-Q048 PCB 47530 RevX1 SCH RevA1 for S32K118
+        2.2.2 Connections
+			S32K118 EVB:
+				SDA: J1.2 - J5.7 (PTA2 - PTA1)
+				SCL: J1.1 - J5.6 (PTA3 - PTA0)
+				Pull up resistors of 4.7K each one connected between SDA and VDD and one connected between SCL and VDD.
+				VDD: J3.9
+        2.2.3 Debugger
+            The debugger must be connected to J32 10-pin JTAG Cortex Debug connector.
+    2.2 Software installation
+        2.2.1 Importing the S32 Design Studio project
+            After opening S32 Design Studio, go to "File -> New -> S32DS Project From Example" and select this example. Then click on "Finish".
+            The project should now be copied into you current workspace.
+            
+3. Generating, building and running the example application
+    3.1 Generating the S32 configuration
+        Before running the example a configuration needs to be generated.  First go to Project Explorer View in S32 DS and select the current project. Select the "S32 Configuration Tool" menu then click on the desired configuration tool (Pins, Cocks, Peripherals etc...). Clicking on any one of those will generate all the components. Make the desired changes(if any) then click on the "S32 Configuration Tool->Update Code" button.
+    3.2 Compiling the application
+        Select the configuration to be built: FLASH (Debug_FLASH) by left clicking on the downward arrow corresponding to the build button in S32 Design Studio. 
+        Use Project > Build to build the project.
+        Wait for the build action to be completed before continuing to the next step. Check the compiler console for error messages; upon completion, the *.elf binary file
+        should be created.
+    3.3 Running the application on the board
+        Go to Run and select Debug Configurations. There will be a debug configuration for this project:
+        
+        Configuration Name                            Description
+        -----------------------------------------     -----------------------
+        $(example)_Debug_FLASH_PNE                    Debug the FLASH configuration using PnE Debugger
+        
+        Select the desired debug configuration and click on Launch. Now the perspective will change to the Debug Perspective.
+        Use the controls to control the program flow.
+        

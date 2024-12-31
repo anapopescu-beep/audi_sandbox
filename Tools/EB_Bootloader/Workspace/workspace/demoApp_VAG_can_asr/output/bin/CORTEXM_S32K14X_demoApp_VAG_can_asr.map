@@ -1,0 +1,1133 @@
+﻿###############################################################################
+#
+# IAR ELF Linker V8.40.1.212/W32 for ARM                  03/Sep/2019  11:21:58
+# Copyright 2007-2019 IAR Systems AB.
+#
+#    Output file  =
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/bin/CORTEXM_S32K14X_demoApp_VAG_can_asr.elf
+#    Map file     =
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/bin\CORTEXM_S32K14X_demoApp_VAG_can_asr.map
+#    Command line =
+#        --map
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/bin\CORTEXM_S32K14X_demoApp_VAG_can_asr.map
+#        -f
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/make/lnk.inc
+#        (--no_wrap_diagnostics --semihosting --entry boardResetStart
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/APP_Prg.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/BlPduR_Cbk.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/main.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/Watchdog.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/UDS_Cbk.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/SchM.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/CanSM.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/ComM.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/Atomics.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/Atomics_TSPlatforms.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/board.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/board_reset_vector.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/board_irq.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/boardStartup.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/interruptvectors.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/exceptiontable.o
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/Base_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/BlPduR_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/Can_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/CanIf_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/CanIf_pbconfig.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/CanSM_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/CanTp_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/CanTp_pbconfig.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/Det_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/EcuC_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/Mcu_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/PduR_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/PduR_pbconfig.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/Port_src.a
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/lib/Uds_src.a)
+#        --config
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/boards/FRDMPK144_Q100_NoOS/board_flash-iar.ldscript
+#        --output
+#        C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/bin/CORTEXM_S32K14X_demoApp_VAG_can_asr.elf
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+__SystemLibrary = DLib
+__dlib_version  = 6
+
+
+*******************************************************************************
+*** HEAP SELECTION
+***
+
+The basic heap was selected because no calls to memory allocation
+functions were found in the application outside of system library
+functions, and there are calls to deallocation functions in the
+application.
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+define block reset_vector
+   with fixed order, alignment = 256 {
+      object board_reset_vector.o section .rodata,
+      object board_reset_vector.o section .rodata*, section .startup,
+      section .startup.* };
+"A0":  place at start of [from 0x2'0000 to 0x2'00ff] { block reset_vector };
+define block ExceptionTable
+   with fixed order, alignment = 256 {
+      section .ExceptionTable, section .ExceptionTable.*,
+      section .InterruptTable, section .InterruptTable.* };
+"P1":  place in [from 0x2'0800 to 0x2'0bff] { block ExceptionTable };
+define block text
+   with fixed order, alignment = 32 {
+      section .os_text, section .os_text.*, section .text, section .text.*,
+      section i.*, section i.*.* };
+"P2":  place in [from 0x2'0c00 to 0x5'ffff] { block text };
+define block rodata
+   with fixed order, alignment = 32 {
+      section .const*, section .const*.*, section .constdata,
+      section .constdata.*, section .rodata, section .rodata.* };
+"P3":  place in [from 0x2'0c00 to 0x5'ffff] { block rodata };
+define block DATA_init
+   with fixed order, alignment = 32 {
+      section .data_init, section .data.*_init };
+"P4":  place in [from 0x2'0c00 to 0x5'ffff] { block DATA_init };
+define block noinit
+   with fixed order, alignment = 32 {
+      section .prog_sig, section .prog_sig.*, section .ram_no_init,
+      section .ram_no_init.* };
+"P5":  place in [from 0x2000'6f00 to 0x2000'6fff] { block noinit };
+define block BSS
+   with fixed order, alignment = 32 {
+      section *.stack*, section *.stack.*, section .bss, section .bss.*,
+      section .bss.*.*, section .os_idlestack, section .os_idlestack.*,
+      section COMMON, section COMMON.* };
+define block DATA
+   with fixed order, alignment = 32 { section .data, section .data.* }
+      except { section *_init };
+define block group_DATABSS with fixed order { block BSS, block DATA };
+"P6":  place in [from 0x1fff'8700 to 0x2000'66ff] { block group_DATABSS };
+do not initialize {
+   section .bss*, section .stack*, section .prog_sig*, section .ram_no_init* };
+initialize manually with packing = copy, complex ranges {
+   section .data, section .data.* };
+keep {
+   object board_reset_vector.o section .rodata,
+   object board_reset_vector.o section .rodata* };
+
+No sections matched the following patterns:
+
+  section *.stack.*          in block BSS
+  section .ExceptionTable.*  in block ExceptionTable
+  section .InterruptTable.*  in block ExceptionTable
+  section .bss.*             in block BSS
+  section .bss.*.*           in block BSS
+  section .const*            in block rodata
+  section .const*.*          in block rodata
+  section .constdata         in block rodata
+  section .constdata.*       in block rodata
+  section .data.*            in block DATA
+  section .data.*_init       in block DATA_init
+  section .os_idlestack      in block BSS
+  section .os_idlestack.*    in block BSS
+  section .os_text           in block text
+  section .os_text.*         in block text
+  section .prog_sig.*        in block noinit
+  section .ram_no_init.*     in block noinit
+  section .rodata.*          in block rodata
+  section .startup.*         in block reset_vector
+  section .text.*            in block text
+  section COMMON             in block BSS
+  section COMMON.*           in block BSS
+  section i.*                in block text
+  section i.*.*              in block text
+
+
+  Section              Kind         Address    Size  Object
+  -------              ----         -------    ----  ------
+"A0":                                          0xae
+  reset_vector                     0x2'0000    0xae  <Block>
+    .rodata            const       0x2'0000     0x8  board_reset_vector.o [1]
+    .startup           ro code     0x2'0008    0xa6  boardStartup.o [1]
+                                 - 0x2'00ae    0xae
+
+"P1":                                         0x2c0
+  ExceptionTable                   0x2'0800   0x2c0  <Block>
+    .ExceptionTable    ro code     0x2'0800    0x40  exceptiontable.o [1]
+    .InterruptTable    ro code     0x2'0840   0x280  interruptvectors.o [1]
+                                 - 0x2'0ac0   0x2c0
+
+"P2-P4":                                     0x8540
+  text                             0x2'0c00  0x7bac  <Block>
+    .text              ro code     0x2'0c00   0x23c  APP_Prg.o [1]
+    .text              ro code     0x2'0e3c   0x65c  BlPduR_Prg.o [3]
+    .text              ro code     0x2'1498   0x1f4  board.o [1]
+    .text              ro code     0x2'168c    0x58  BlPduR_Cbk.o [1]
+    .text              ro code     0x2'16e4  0x1474  UDS_Prg.o [15]
+    .text              ro code     0x2'2b58  0x1f1c  CanTp_Merged.o [8]
+    .text              ro code     0x2'4a74    0x5a  TSMem.o [2]
+    .text              ro code     0x2'4ad0    0x68  PduR_AdjLayerApi.o [13]
+    .text              ro code     0x2'4b38    0x48  main.o [1]
+    .text              ro code     0x2'4b80   0x8ba  CanSM_Merged.o [6]
+    .text              ro code     0x2'543c   0x400  PduR_Merged.o [13]
+    .text              ro code     0x2'583c   0x14c  Can.o [9]
+    .text              ro code     0x2'5988   0x9c4  CanIf.o [5]
+    .text              ro code     0x2'634c    0x14  memset.o [16]
+    .text              ro code     0x2'6360     0x2  UDS_Cbk.o [1]
+    .text              ro code     0x2'6362    0x8c  TSPBConfig.o [2]
+    .text              ro code     0x2'63f0    0x90  Det.o [10]
+    .text              ro code     0x2'6480    0xd0  SchM.o [1]
+    .text              ro code     0x2'6550    0x28  Port.o [14]
+    .text              ro code     0x2'6578   0x1f8  Mcu.o [11]
+    .text              ro code     0x2'6770     0x2  CanSM.o [1]
+    .text              ro code     0x2'6772     0x2  ComM.o [1]
+    .text              ro code     0x2'6774  0x170c  Can_Flexcan.o [9]
+    .text              ro code     0x2'7e80    0x66  ABImemset.o [16]
+    .text              ro code     0x2'7ee6    0x10  Det_Rte.o [10]
+    .text              ro code     0x2'7ef8   0x324  Port_Port_Ci.o [14]
+    .text              ro code     0x2'821c    0xd0  Mcu_IPW.o [11]
+    .text              ro code     0x2'82ec    0xbc  Mcu_SIM.o [11]
+    .text              ro code     0x2'83a8    0x24  Mcu_RCM.o [11]
+    .text              ro code     0x2'83cc    0x34  Mcu_PMC.o [11]
+    .text              ro code     0x2'8400    0x10  Mcu_SMC.o [11]
+    .text              ro code     0x2'8410   0x1c0  Mcu_SCG.o [11]
+    .text              ro code     0x2'85d0    0x68  Mcu_PCC.o [11]
+    .text              ro code     0x2'8638    0x60  board_irq.o [1]
+    .text              ro code     0x2'8698   0x114  Can_Irq.o [9]
+  rodata                           0x2'87c0   0x92d  <Block>
+    .rodata            const       0x2'87c0     0x4  board.o [1]
+    .rodata            const       0x2'87c4    0x6c  UDS_Cfg.o [15]
+    .rodata            const       0x2'8830   0x1d0  UDS_Cfg.o [15]
+    .rodata            const       0x2'8a00    0x20  UDS_Cfg.o [15]
+    .rodata            const       0x2'8a20    0x50  UDS_Cfg.o [15]
+    .rodata            const       0x2'8a70     0xc  Can_PBcfg.o [9]
+    .rodata            const       0x2'8a7c    0x54  Can_PBcfg.o [9]
+    .rodata            const       0x2'8ad0     0x8  Can_PBcfg.o [9]
+    .rodata            const       0x2'8ad8     0xc  Can_PBcfg.o [9]
+    .rodata            const       0x2'8ae4    0x14  Can_PBcfg.o [9]
+    .rodata            const       0x2'8af8    0xa8  CanIf_PBcfg.o [4]
+    .rodata            const       0x2'8ba0    0xac  CanTp_PBcfg.o [7]
+    .rodata            const       0x2'8c4c    0xac  PduR_PBcfg.o [12]
+    .rodata            const       0x2'8cf8    0x10  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8d08     0x8  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8d10     0xc  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8d1c    0x18  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8d34    0x18  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8d4c    0x18  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8d64    0x18  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8d7c    0x20  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8d9c   0x100  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8e9c     0x8  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8ea4    0x14  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8eb8     0x8  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8ec0    0x1c  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8edc     0x4  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8ee0     0x4  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8ee4    0x10  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8ef4    0x1c  Mcu_PBcfg.o [11]
+    .rodata            const       0x2'8f10    0xa4  Port_PBcfg.o [14]
+    .rodata            const       0x2'8fb4     0x8  Port_PBcfg.o [14]
+    .rodata            const       0x2'8fbc    0x80  Port_PBcfg.o [14]
+    .rodata            const       0x2'903c    0x18  Port_PBcfg.o [14]
+    .rodata            const       0x2'9054     0x8  CanIf_Cfg.o [5]
+    .rodata            const       0x2'905c     0x4  CanIf_Lcfg.o [5]
+    .rodata            const       0x2'9060     0x4  CanTp_Lcfg.o [8]
+    .rodata            const       0x2'9064     0x4  Can_Cfg.o [9]
+    .rodata            const       0x2'9068    0x14  Can_Cfg.o [9]
+    .rodata            const       0x2'907c     0xc  Can_Cfg.o [9]
+    .rodata            const       0x2'9088     0xc  Can_Flexcan.o [9]
+    .rodata            const       0x2'9094    0x18  Can_Flexcan.o [9]
+    .rodata            const       0x2'90ac     0x4  PduR_Lcfg.o [13]
+    .rodata            const       0x2'90b0    0x38  PduR_Lcfg.o [13]
+    .rodata            const       0x2'90e8     0x1  APP_Prg.o [1]
+    .rodata            const       0x2'90e9     0x1  CanSM_Cfg.o [6]
+    .rodata            const       0x2'90ea     0x1  CanSM_Cfg.o [6]
+    .rodata            const       0x2'90eb     0x1  PduR_Lcfg.o [13]
+    .rodata            const       0x2'90ec     0x1  PduR_Lcfg.o [13]
+  DATA_init                        0x2'9100    0x40  <Block>
+    Initializer bytes  const       0x2'9100    0x40  <for section .data-1>
+                                 - 0x2'9140  0x8540
+
+"P6":                                        0x5c20
+  group_DATABSS                 0x1fff'8700  0x5c20  <Block>
+    BSS                         0x1fff'8700  0x5bd3  <Block>
+      .stack           uninit   0x1fff'8700   0x800  board_reset_vector.o [1]
+      .bss             uninit   0x1fff'8f00     0x8  APP_Prg.o [1]
+      .bss             uninit   0x1fff'8f08     0x8  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'8f10     0xc  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'8f1c     0x4  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'8f20     0xc  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'8f2c     0xc  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'8f38     0x4  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'8f3c    0x14  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'8f50    0x10  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'8f60     0x4  CanIf.o [5]
+      .bss             uninit   0x1fff'8f64     0x4  CanIf.o [5]
+      .bss             uninit   0x1fff'8f68     0x4  CanIf.o [5]
+      .bss             uninit   0x1fff'8f6c     0x4  CanIf.o [5]
+      .bss             uninit   0x1fff'8f70     0xc  CanSM_Cfg.o [6]
+      .bss             uninit   0x1fff'8f7c     0x4  CanTp_Merged.o [8]
+      .bss             uninit   0x1fff'8f80     0x4  Can.o [9]
+      .bss             uninit   0x1fff'8f84     0x4  Can.o [9]
+      .bss             uninit   0x1fff'8f88     0x4  Can.o [9]
+      .bss             uninit   0x1fff'8f8c     0x4  PduR_Merged.o [13]
+      .bss             uninit   0x1fff'8f90     0x4  Mcu.o [11]
+      .bss             uninit   0x1fff'8f94     0x4  Port.o [14]
+      .bss             uninit   0x1fff'8f98    0x10  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'8fa8  0x3ffc  BlPduR_Cfg.o [3]
+      .bss             uninit   0x1fff'cfa4    0x28  BlPduR_Cfg.o [3]
+      .bss             uninit   0x1fff'cfcc     0x4  CanIf_Cfg.o [5]
+      .bss             uninit   0x1fff'cfd0     0x4  CanIf_Cfg.o [5]
+      .bss             uninit   0x1fff'cfd4    0x3c  Det.o [10]
+      .bss             uninit   0x1fff'd010     0xc  CanTp_Cfg.o [8]
+      .bss             uninit   0x1fff'd01c     0xc  CanTp_Cfg.o [8]
+      .bss             uninit   0x1fff'd028  0x11d0  CanTp_Cfg.o [8]
+      .bss             uninit   0x1fff'e1f8    0x94  Can_Flexcan.o [9]
+      .bss             uninit   0x1fff'e28c     0x4  Can_Flexcan.o [9]
+      .bss             uninit   0x1fff'e290     0x4  Mcu_IPW.o [11]
+      .bss             uninit   0x1fff'e294    0x14  Port_Port_Ci.o [14]
+      .bss             uninit   0x1fff'e2a8     0x2  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2aa     0x2  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2ac     0x2  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2ae     0x2  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2b0     0x2  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2b2     0x2  BlPduR_Cfg.o [3]
+      .bss             uninit   0x1fff'e2b4     0x2  Det.o [10]
+      .bss             uninit   0x1fff'e2b6     0x2  Det.o [10]
+      .bss             uninit   0x1fff'e2b8     0x2  Det.o [10]
+      .bss             uninit   0x1fff'e2ba     0x1  APP_Prg.o [1]
+      .bss             uninit   0x1fff'e2bb     0x1  board.o [1]
+      .bss             uninit   0x1fff'e2bc     0x1  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'e2bd     0x1  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'e2be     0x1  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'e2bf     0x1  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'e2c0     0x1  BlPduR_Prg.o [3]
+      .bss             uninit   0x1fff'e2c1     0x1  CanIf.o [5]
+      .bss             uninit   0x1fff'e2c2     0x1  CanSM_Cfg.o [6]
+      .bss             uninit   0x1fff'e2c3     0x1  CanSM_Merged.o [6]
+      .bss             uninit   0x1fff'e2c4     0x1  CanSM_Merged.o [6]
+      .bss             uninit   0x1fff'e2c5     0x1  Can.o [9]
+      .bss             uninit   0x1fff'e2c6     0x1  PduR_Merged.o [13]
+      .bss             uninit   0x1fff'e2c7     0x1  Mcu.o [11]
+      .bss             uninit   0x1fff'e2c8     0x1  Mcu.o [11]
+      .bss             uninit   0x1fff'e2c9     0x1  Mcu.o [11]
+      .bss             uninit   0x1fff'e2ca     0x1  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2cb     0x1  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2cc     0x1  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2cd     0x1  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2ce     0x1  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2cf     0x1  UDS_Prg.o [15]
+      .bss             uninit   0x1fff'e2d0     0x1  Det.o [10]
+      .bss             uninit   0x1fff'e2d1     0x1  CanTp_Cfg.o [8]
+      .bss             uninit   0x1fff'e2d2     0x1  CanTp_Cfg.o [8]
+    DATA                        0x1fff'e2e0    0x40  <Block>
+      section .data-1           0x1fff'e2e0    0x3f  <Init block>
+        .data          inited   0x1fff'e2e0     0x4  Can.o [9]
+        .data          inited   0x1fff'e2e4     0x8  BlPduR_Cfg.o [3]
+        .data          inited   0x1fff'e2ec    0x30  BlPduR_Cfg.o [3]
+        .data          inited   0x1fff'e31c     0x1  CanSM_Merged.o [6]
+        .data          inited   0x1fff'e31d     0x1  CanSM_Merged.o [6]
+        .data          inited   0x1fff'e31e     0x1  Mcu.o [11]
+                              - 0x1fff'e320  0x5c20
+
+"P5":                                          0x64
+  noinit                        0x2000'6f00    0x64  <Block>
+    .prog_sig          uninit   0x2000'6f00     0x8  APP_Prg.o [1]
+    .ram_no_init       uninit   0x2000'6f08    0x5c  APP_Prg.o [1]
+                              - 0x2000'6f64    0x64
+
+Unused ranges:
+
+         From           To      Size
+         ----           --      ----
+     0x2'0ac0     0x2'0bff     0x140
+     0x2'9140     0x5'ffff  0x3'6ec0
+  0x1fff'e320  0x2000'66ff    0x83e0
+  0x2000'6f64  0x2000'6fff      0x9c
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                ro code  ro data  rw data
+    ------                -------  -------  -------
+command line/config:
+    -----------------------------------------------
+    Total:
+
+C:\devapp\EB\tresos_bolo\workspace\demoApp_VAG_can_asr\output\obj: [1]
+    APP_Prg.o                 572        1      109
+    BlPduR_Cbk.o               88
+    CanSM.o                     2
+    ComM.o                      2
+    SchM.o                    208
+    UDS_Cbk.o                   2
+    board.o                   500        4        1
+    boardStartup.o            166
+    board_irq.o                96
+    board_reset_vector.o                 8    2'048
+    exceptiontable.o           64
+    interruptvectors.o        640
+    main.o                     72
+    -----------------------------------------------
+    Total:                  2'412       13    2'158
+
+Base_src.a: [2]
+    TSMem.o                    90
+    TSPBConfig.o              140
+    -----------------------------------------------
+    Total:                    230
+
+BlPduR_src.a: [3]
+    BlPduR_Cfg.o                        56   16'478
+    BlPduR_Prg.o            1'628                93
+    -----------------------------------------------
+    Total:                  1'628       56   16'571
+
+CanIf_pbconfig.a: [4]
+    CanIf_PBcfg.o                      168
+    -----------------------------------------------
+    Total:                             168
+
+CanIf_src.a: [5]
+    CanIf.o                 2'500                17
+    CanIf_Cfg.o                          8        8
+    CanIf_Lcfg.o                         4
+    -----------------------------------------------
+    Total:                  2'500       12       25
+
+CanSM_src.a: [6]
+    CanSM_Cfg.o                          2       13
+    CanSM_Merged.o          2'234        2        4
+    -----------------------------------------------
+    Total:                  2'234        4       17
+
+CanTp_pbconfig.a: [7]
+    CanTp_PBcfg.o                      172
+    -----------------------------------------------
+    Total:                             172
+
+CanTp_src.a: [8]
+    CanTp_Cfg.o                               4'586
+    CanTp_Lcfg.o                         4
+    CanTp_Merged.o          7'964                 4
+    -----------------------------------------------
+    Total:                  7'964        4    4'590
+
+Can_src.a: [9]
+    Can.o                     332        4       17
+    Can_Cfg.o                           36
+    Can_Flexcan.o           5'900       36      152
+    Can_Irq.o                 276
+    Can_PBcfg.o                        136
+    -----------------------------------------------
+    Total:                  6'508      212      169
+
+Det_src.a: [10]
+    Det.o                     144                67
+    Det_Rte.o                  16
+    -----------------------------------------------
+    Total:                    160                67
+
+Mcu_src.a: [11]
+    Mcu.o                     504        1        8
+    Mcu_IPW.o                 208                 4
+    Mcu_PBcfg.o                        536
+    Mcu_PCC.o                 104
+    Mcu_PMC.o                  52
+    Mcu_RCM.o                  36
+    Mcu_SCG.o                 448
+    Mcu_SIM.o                 188
+    Mcu_SMC.o                  16
+    -----------------------------------------------
+    Total:                  1'556      537       12
+
+PduR_pbconfig.a: [12]
+    PduR_PBcfg.o                       172
+    -----------------------------------------------
+    Total:                             172
+
+PduR_src.a: [13]
+    PduR_AdjLayerApi.o        104
+    PduR_Lcfg.o                         62
+    PduR_Merged.o           1'024                 5
+    -----------------------------------------------
+    Total:                  1'128       62        5
+
+Port_src.a: [14]
+    Port.o                     40                 4
+    Port_PBcfg.o                       324
+    Port_Port_Ci.o            804                20
+    -----------------------------------------------
+    Total:                    844      324       24
+
+Uds_src.a: [15]
+    UDS_Cfg.o                          684
+    UDS_Prg.o               5'236                32
+    -----------------------------------------------
+    Total:                  5'236      684       32
+
+rt7M_tl.a: [16]
+    ABImemset.o               102
+    memset.o                   20
+    -----------------------------------------------
+    Total:                    122
+
+    Gaps                        8
+    Linker created                       1
+---------------------------------------------------
+    Grand Total:           32'530    2'421   23'670
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                       Address    Size  Type      Object
+-----                       -------    ----  ----      ------
+APP_ClearProgCounter       0x2'0d5b    0x28  Code  Gb  APP_Prg.o [1]
+APP_CommunicationControl
+                           0x2'0cbf     0x8  Code  Gb  APP_Prg.o [1]
+APP_ControlDTCSetting      0x2'0cc7     0x8  Code  Gb  APP_Prg.o [1]
+APP_EcuReset               0x2'0ccf    0x28  Code  Gb  APP_Prg.o [1]
+APP_Init                   0x2'0c01    0x82  Code  Gb  APP_Prg.o [1]
+APP_Manage                 0x2'0c83     0x2  Code  Gb  APP_Prg.o [1]
+APP_ProgSession            0x2'0c87    0x38  Code  Gb  APP_Prg.o [1]
+APP_ReqCheckProgPreCondition
+                           0x2'0d4f     0xc  Code  Gb  APP_Prg.o [1]
+APP_Reset_Cause            0x2'0d8b    0x24  Code  Gb  APP_Prg.o [1]
+APP_TpRxInd                0x2'0d89     0x2  Code  Gb  APP_Prg.o [1]
+APP_TpTxConf               0x2'0d87     0x2  Code  Gb  APP_Prg.o [1]
+APP_UdsSessionStatusInd
+                           0x2'0d83     0x2  Code  Gb  APP_Prg.o [1]
+BOARD_GET_ISR_SRC          0x2'00a5          Code  Gb  boardStartup.o [1]
+BSS$$Base               0x1fff'8700          Data  Gb  - Linker created -
+BSS$$Limit              0x1fff'e2d3          Data  Gb  - Linker created -
+BlPduRRxPhysBuffer      0x1fff'8fa8  0x3ffc  Data  Gb  BlPduR_Cfg.o [3]
+BlPduR_CopyRxData          0x2'1147    0x9c  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_CopyTxData          0x2'12a9    0x54  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_Custom_Com_Init     0x2'16a7    0x26  Code  Gb  BlPduR_Cbk.o [1]
+BlPduR_Custom_RequestCommunicationUp
+                           0x2'169b     0xc  Code  Gb  BlPduR_Cbk.o [1]
+BlPduR_GetRxPduId          0x2'168d     0x8  Code  Gb  BlPduR_Cbk.o [1]
+BlPduR_Init                0x2'0e3d    0x34  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_Init1               0x2'0e71     0x8  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_Init2               0x2'0e79    0x5e  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_Manage              0x2'0ed7    0x10  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_ReleaseBuffers      0x2'138f    0x12  Code  Lc  BlPduR_Prg.o [3]
+BlPduR_RetrieveConnectionInfo
+                           0x2'13ff    0x28  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_RxInd               0x2'11ff    0x70  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_SendMsgData         0x2'126f    0x3a  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_Send_TPFrame        0x2'1427    0x30  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_StartOfReception
+                           0x2'0fc1   0x186  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_StoreConnectionInfo
+                           0x2'13af    0x50  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_StoreRxPduId        0x2'1695     0x6  Code  Gb  BlPduR_Cbk.o [1]
+BlPduR_TpRxIndication      0x2'11e3    0x1c  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_TpRxMsgManage       0x2'0ee7    0xda  Code  Lc  BlPduR_Prg.o [3]
+BlPduR_TpTxConfirmation
+                           0x2'12fd    0x1c  Code  Gb  BlPduR_Prg.o [3]
+BlPduR_TxConf              0x2'1319    0x76  Code  Gb  BlPduR_Prg.o [3]
+BoardDisableInterrupts     0x2'15f7    0x1c  Code  Gb  board.o [1]
+BoardDisableMPU            0x2'150b     0xc  Code  Lc  board.o [1]
+BoardDisableWatchdog       0x2'1499    0x1a  Code  Lc  board.o [1]
+BoardEnableInterrupts      0x2'1613    0x1c  Code  Gb  board.o [1]
+BoardEnablePeripherals     0x2'14b3    0x12  Code  Lc  board.o [1]
+BoardFlexCanErrorInterrupt
+                           0x2'8677     0x8  Code  Gb  board_irq.o [1]
+BoardFlexCanMailboxInterrupt
+                           0x2'867f    0x1a  Code  Gb  board_irq.o [1]
+BoardInitInterrupts        0x2'1547    0xb0  Code  Gb  board.o [1]
+BoardInitMemorySections
+                           0x2'14e5    0x26  Code  Lc  board.o [1]
+BoardInitializationTimers
+                           0x2'14c5     0x8  Code  Gb  board.o [1]
+BoardInvalidInterrupt      0x2'8675     0x2  Code  Gb  board_irq.o [1]
+BoardIsrHandler            0x2'8639    0x36  Code  Gb  board_irq.o [1]
+BoardPerformReset          0x2'1631    0x20  Code  Gb  board.o [1]
+BoardSchedulingTimer       0x2'14cd    0x18  Code  Gb  board.o [1]
+BoardStack              0x1fff'8700   0x800  Data  Gb  board_reset_vector.o [1]
+BoardStart                 0x2'1517    0x30  Code  Gb  board.o [1]
+Board_CORTEXM_EnableVFPCoprocessor
+                           0x2'0079          Code  Gb  boardStartup.o [1]
+BswM_CanSM_CurrentState
+                           0x2'6771     0x2  Code  Gb  CanSM.o [1]
+CORTEXMExceptionTable      0x2'0800          Data  Gb  exceptiontable.o [1]
+CORTEXMInterruptTable      0x2'0840          Data  Gb  interruptvectors.o [1]
+CanConfigSet               0x2'8ae4    0x14  Data  Gb  Can_PBcfg.o [9]
+CanIf_BinarySwFiltering
+                           0x2'60b5    0xc2  Code  Lc  CanIf.o [5]
+CanIf_CanControllerMode
+                        0x1fff'cfcc     0x4  Data  Gb  CanIf_Cfg.o [5]
+CanIf_CbkFctPtrTbl         0x2'9054     0x8  Data  Gb  CanIf_Cfg.o [5]
+CanIf_ConfigLayout         0x2'8af8    0xa8  Data  Gb  CanIf_PBcfg.o [4]
+CanIf_ConfigPtr         0x1fff'8f64     0x4  Data  Gb  CanIf.o [5]
+CanIf_ControllerModeIndication
+                           0x2'5d95    0xa8  Code  Gb  CanIf.o [5]
+CanIf_DlcHandling          0x2'6215    0x28  Code  Lc  CanIf.o [5]
+CanIf_DriverConfigPtr   0x1fff'8f6c     0x4  Data  Lc  CanIf.o [5]
+CanIf_GetCanIfIdFromCtrlIdx
+                           0x2'5e3d    0x40  Code  Lc  CanIf.o [5]
+CanIf_Init                 0x2'59c5    0x94  Code  Gb  CanIf.o [5]
+CanIf_IsValidConfig        0x2'5989    0x3c  Code  Gb  CanIf.o [5]
+CanIf_LcfgSignature        0x2'905c     0x4  Data  Gb  CanIf_Lcfg.o [5]
+CanIf_PduMode           0x1fff'cfd0     0x4  Data  Gb  CanIf_Cfg.o [5]
+CanIf_ProcessRxPdu         0x2'62ab    0x70  Code  Lc  CanIf.o [5]
+CanIf_RxIndication         0x2'5cfd    0x98  Code  Gb  CanIf.o [5]
+CanIf_RxIndication_DetChecks
+                           0x2'6177    0x9e  Code  Lc  CanIf.o [5]
+CanIf_RxPduConfigPtr    0x1fff'8f68     0x4  Data  Lc  CanIf.o [5]
+CanIf_SendRxIndication     0x2'623d    0x2c  Code  Lc  CanIf.o [5]
+CanIf_SendTxConfirmation
+                           0x2'6269    0x42  Code  Lc  CanIf.o [5]
+CanIf_SetControllerMode
+                           0x2'5a59    0x70  Code  Gb  CanIf.o [5]
+CanIf_SetControllerModeInternal
+                           0x2'5e7d    0xca  Code  Lc  CanIf.o [5]
+CanIf_SetOffline           0x2'5f7b     0xc  Code  Lc  CanIf.o [5]
+CanIf_SetPduMode           0x2'5c47    0x76  Code  Gb  CanIf.o [5]
+CanIf_SetPduModeInternal
+                           0x2'5f47    0x34  Code  Lc  CanIf.o [5]
+CanIf_SoftwareFiltering
+                           0x2'5f87   0x12e  Code  Lc  CanIf.o [5]
+CanIf_State             0x1fff'e2c1     0x1  Data  Lc  CanIf.o [5]
+CanIf_Transmit             0x2'5ac9   0x17e  Code  Gb  CanIf.o [5]
+CanIf_TxConfirmation       0x2'5cbd    0x40  Code  Gb  CanIf.o [5]
+CanIf_TxPduConfigPtr    0x1fff'8f60     0x4  Data  Gb  CanIf.o [5]
+CanSMConfiguration         0x2'90e9     0x1  Data  Gb  CanSM_Cfg.o [6]
+CanSM_CheckCtrlModeIndications
+                           0x2'5385    0x36  Code  Lc  CanSM_Merged.o [6]
+CanSM_ClearCtrlModeIndAndSetModes
+                           0x2'535b    0x20  Code  Lc  CanSM_Merged.o [6]
+CanSM_CommFullCommunication
+                        0x1fff'e31d     0x1  Data  Gb  CanSM_Merged.o [6]
+CanSM_CommNoCommunication
+                        0x1fff'e2c3     0x1  Data  Gb  CanSM_Merged.o [6]
+CanSM_CommSilentCommunication
+                        0x1fff'e31c     0x1  Data  Gb  CanSM_Merged.o [6]
+CanSM_ControllerModeIndication
+                           0x2'4b81    0x6a  Code  Gb  CanSM_Merged.o [6]
+CanSM_ControllerModeTypeToUint8
+                           0x2'5419    0x22  Code  Lc  CanSM_Merged.o [6]
+CanSM_ControllerNetworkLut
+                           0x2'90ea     0x1  Data  Gb  CanSM_Cfg.o [6]
+CanSM_CtrlModeIndication
+                        0x1fff'e2c2     0x1  Data  Gb  CanSM_Cfg.o [6]
+CanSM_DefaultTrailingCriticalSection
+                           0x2'5317    0x1e  Code  Lc  CanSM_Merged.o [6]
+CanSM_DoTransitionSequence
+                           0x2'4d3d    0x5c  Code  Gb  CanSM_Merged.o [6]
+CanSM_DoTransitionSwitch
+                           0x2'4e1b    0x48  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_TRY_T_FUCO_BUS_OFF_PASSIVE
+                           0x2'52ed    0x2a  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_FUCO            0x2'4e63    0x46  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_FUCO_HANDLE_BUS_OFF
+                           0x2'519f    0xcc  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_FUCO_SICO       0x2'50ff    0x40  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_FUCO_TX_OFF     0x2'526b    0x32  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_FUCO_TX_ON      0x2'529d    0x50  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RFUCO           0x2'4f03    0x42  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RFUCO_CC_STARTED
+                           0x2'5093    0x6c  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RFUCO_CC_STOPPED
+                           0x2'504d    0x46  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RFUCO_INITIAL
+                           0x2'5015     0x6  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RFUCO_TRCV_NORMAL
+                           0x2'501b    0x32  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RNOCO           0x2'4ea9    0x5a  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RNOCO_CC_INITIAL
+                           0x2'4f5d    0x32  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RNOCO_CC_SLEEP
+                           0x2'4fc1     0x6  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RNOCO_CC_STOPPED
+                           0x2'4f8f    0x32  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RNOCO_DEINIT_INITIAL
+                           0x2'4f57     0x6  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RNOCO_FINAL     0x2'4fc7    0x4e  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_RNOCO_INITIAL
+                           0x2'4f45    0x12  Code  Lc  CanSM_Merged.o [6]
+CanSM_Do_T_SICO_FUCO       0x2'513f    0x60  Code  Lc  CanSM_Merged.o [6]
+CanSM_GlobalInit        0x1fff'e2c4     0x1  Data  Gb  CanSM_Merged.o [6]
+CanSM_Init                 0x2'4beb    0x6a  Code  Gb  CanSM_Merged.o [6]
+CanSM_NetworkInfo       0x1fff'8f70     0xc  Data  Gb  CanSM_Cfg.o [6]
+CanSM_RequestComMode       0x2'4c55    0x68  Code  Gb  CanSM_Merged.o [6]
+CanSM_RequestComModeInternal
+                           0x2'4cbd    0x80  Code  Lc  CanSM_Merged.o [6]
+CanSM_SetCtrlModes         0x2'53bb    0x4c  Code  Lc  CanSM_Merged.o [6]
+CanSM_SetPduModes          0x2'533d    0x1e  Code  Lc  CanSM_Merged.o [6]
+CanSM_VerifyRequestedComMode
+                           0x2'4d99    0x82  Code  Gb  CanSM_Merged.o [6]
+CanStatic_ConfigSet        0x2'907c     0xc  Data  Gb  Can_Cfg.o [9]
+CanStatic_pControlerDescriptors
+                        0x1fff'8f88     0x4  Data  Gb  Can.o [9]
+CanStatic_pCurrentConfig
+                        0x1fff'e2e0     0x4  Data  Gb  Can.o [9]
+CanTp_CalculateBlockSize
+                           0x2'2f47    0xa2  Code  Gb  CanTp_Merged.o [8]
+CanTp_CfgPtr            0x1fff'8f7c     0x4  Data  Gb  CanTp_Merged.o [8]
+CanTp_ChangeParameter      0x2'494d   0x10c  Code  Gb  CanTp_Merged.o [8]
+CanTp_Channel           0x1fff'd028  0x11d0  Data  Gb  CanTp_Cfg.o [8]
+CanTp_CheckAndHandleWaitFrameTimeOut
+                           0x2'3027    0x32  Code  Gb  CanTp_Merged.o [8]
+CanTp_CheckNPduLength      0x2'4027    0x94  Code  Lc  CanTp_Merged.o [8]
+CanTp_ConfigLayout         0x2'8ba0    0xac  Data  Gb  CanTp_PBcfg.o [7]
+CanTp_FindNSduId           0x2'3859    0xc0  Code  Lc  CanTp_Merged.o [8]
+CanTp_Init                 0x2'2b95   0x122  Code  Gb  CanTp_Merged.o [8]
+CanTp_InitChannelPtr       0x2'2cb7    0x76  Code  Gb  CanTp_Merged.o [8]
+CanTp_InitVars          0x1fff'e2d1     0x1  Data  Gb  CanTp_Cfg.o [8]
+CanTp_IsValidConfig        0x2'2b59    0x3c  Code  Gb  CanTp_Merged.o [8]
+CanTp_LcfgSignature        0x2'9060     0x4  Data  Gb  CanTp_Lcfg.o [8]
+CanTp_MainFunction         0x2'2d2d    0x5c  Code  Gb  CanTp_Merged.o [8]
+CanTp_NonIdleChannelCounter
+                        0x1fff'e2d2     0x1  Data  Gb  CanTp_Cfg.o [8]
+CanTp_PostRxIndication     0x2'36d9    0x6e  Code  Gb  CanTp_Merged.o [8]
+CanTp_PostSTminCallback
+                           0x2'4101    0x2c  Code  Gb  CanTp_Merged.o [8]
+CanTp_PostTxConfirmation
+                           0x2'4651    0x34  Code  Gb  CanTp_Merged.o [8]
+CanTp_PostponeRxFrame      0x2'3747    0x28  Code  Lc  CanTp_Merged.o [8]
+CanTp_PrepareFC            0x2'2e91    0xb6  Code  Gb  CanTp_Merged.o [8]
+CanTp_PreparePadding       0x2'31bb    0xaa  Code  Gb  CanTp_Merged.o [8]
+CanTp_PreparexF            0x2'3059   0x162  Code  Gb  CanTp_Merged.o [8]
+CanTp_ProcessConfirmedCF
+                           0x2'47c9    0xec  Code  Lc  CanTp_Merged.o [8]
+CanTp_ProcessCopyTxData
+                           0x2'4561    0x44  Code  Lc  CanTp_Merged.o [8]
+CanTp_ProcessReceivedCF
+                           0x2'3c5f    0x88  Code  Lc  CanTp_Merged.o [8]
+CanTp_ProcessReceivedFC
+                           0x2'3eaf   0x178  Code  Lc  CanTp_Merged.o [8]
+CanTp_ProcessReceivedFF
+                           0x2'3a51   0x20e  Code  Lc  CanTp_Merged.o [8]
+CanTp_ProcessReceivedIntermediateCF
+                           0x2'3ce7   0x136  Code  Lc  CanTp_Merged.o [8]
+CanTp_ProcessReceivedLastCF
+                           0x2'3e1d    0x92  Code  Lc  CanTp_Merged.o [8]
+CanTp_ProcessReceivedSF
+                           0x2'3919   0x138  Code  Lc  CanTp_Merged.o [8]
+CanTp_ProcessRxFrame       0x2'376f    0x86  Code  Lc  CanTp_Merged.o [8]
+CanTp_ProcessStartOfReception
+                           0x2'3265    0x8c  Code  Gb  CanTp_Merged.o [8]
+CanTp_ProcessStartOfReceptionData
+                           0x2'32f1    0x5e  Code  Gb  CanTp_Merged.o [8]
+CanTp_ProcessTxPdu         0x2'4685   0x144  Code  Lc  CanTp_Merged.o [8]
+CanTp_RequestTxFrameData
+                           0x2'4491    0xd0  Code  Lc  CanTp_Merged.o [8]
+CanTp_RxChannelCleanup     0x2'37f5    0x4c  Code  Lc  CanTp_Merged.o [8]
+CanTp_RxIndication         0x2'34b1   0x21a  Code  Gb  CanTp_Merged.o [8]
+CanTp_RxNSduBSValues    0x1fff'd01c     0xc  Data  Gb  CanTp_Cfg.o [8]
+CanTp_RxNSduStMinValues
+                        0x1fff'd010     0xc  Data  Gb  CanTp_Cfg.o [8]
+CanTp_RxProcessData        0x2'334f    0x44  Code  Gb  CanTp_Merged.o [8]
+CanTp_RxStateHandling      0x2'3393   0x11e  Code  Gb  CanTp_Merged.o [8]
+CanTp_STminCallback        0x2'40bb    0x46  Code  Gb  CanTp_Merged.o [8]
+CanTp_STminTimeoutHandling
+                           0x2'412d    0x18  Code  Lc  CanTp_Merged.o [8]
+CanTp_StallHandling        0x2'2e03    0x8e  Code  Lc  CanTp_Merged.o [8]
+CanTp_StopChannel          0x2'4145    0x92  Code  Gb  CanTp_Merged.o [8]
+CanTp_TimeoutHandling      0x2'2d89    0x7a  Code  Gb  CanTp_Merged.o [8]
+CanTp_Transmit             0x2'41d7   0x18c  Code  Gb  CanTp_Merged.o [8]
+CanTp_TransmitFrame        0x2'4363    0x7a  Code  Gb  CanTp_Merged.o [8]
+CanTp_TxConfirmation       0x2'45a5    0xa8  Code  Gb  CanTp_Merged.o [8]
+CanTp_TxStateHandling      0x2'43dd    0xae  Code  Gb  CanTp_Merged.o [8]
+CanTp_UnlockChannel        0x2'48b5    0x98  Code  Gb  CanTp_Merged.o [8]
+CanTp_VerifyBlockSize      0x2'2fe9    0x3e  Code  Gb  CanTp_Merged.o [8]
+Can_ControllerStatuses  0x1fff'e1f8    0x94  Data  Gb  Can_Flexcan.o [9]
+Can_FilterMasks0_PB        0x2'8a70     0xc  Data  Lc  Can_PBcfg.o [9]
+Can_FlexCan_DisableInterrupts
+                           0x2'6775    0x92  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_EnableInterrupts
+                           0x2'6807    0xec  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_GotoFreezeMode
+                           0x2'75ed    0xdc  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_InitController
+                           0x2'78b3   0x2f4  Code  Gb  Can_Flexcan.o [9]
+Can_FlexCan_InitReceiveMBs
+                           0x2'69cf   0x17a  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_InitRxInvidualMask
+                           0x2'68f3    0xdc  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_InitTransmitMBs
+                           0x2'6b49   0x1a4  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_InitVariables
+                           0x2'77d9    0xda  Code  Gb  Can_Flexcan.o [9]
+Can_FlexCan_ProcessRx      0x2'7e0d    0x56  Code  Gb  Can_Flexcan.o [9]
+Can_FlexCan_ProcessRxNormal
+                           0x2'7329   0x262  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_ProcessTx      0x2'7dab    0x62  Code  Gb  Can_Flexcan.o [9]
+Can_FlexCan_ProcessTxPoll
+                           0x2'71fb   0x124  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_ResetController
+                           0x2'777b    0x5a  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_SellectClockSource
+                           0x2'76cd    0xae  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_SetControllerMode
+                           0x2'7ba7    0x54  Code  Gb  Can_Flexcan.o [9]
+Can_FlexCan_SetControllerToSleepMode
+                           0x2'6f83    0x5e  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_SetControllerToStartMode
+                           0x2'6e7f   0x104  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_SetControllerToStopMode
+                           0x2'6ced   0x192  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_SetControllerToWakeupMode
+                           0x2'6fe1    0x5e  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_UpdateMB       0x2'703f   0x1bc  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_ValidHth       0x2'758b    0x58  Code  Lc  Can_Flexcan.o [9]
+Can_FlexCan_Write          0x2'7c01   0x1aa  Code  Gb  Can_Flexcan.o [9]
+Can_IflagImask             0x2'9094    0x18  Data  Gb  Can_Flexcan.o [9]
+Can_Init                   0x2'583d    0x86  Code  Gb  Can.o [9]
+Can_IsrFCA_ERR             0x2'8699    0x6a  Code  Gb  Can_Irq.o [9]
+Can_IsrFCA_MB_00_15        0x2'8703    0x4c  Code  Gb  Can_Irq.o [9]
+Can_IsrFCA_MB_16_31        0x2'874f    0x4c  Code  Gb  Can_Irq.o [9]
+Can_SetControllerMode      0x2'58c3    0x6e  Code  Gb  Can.o [9]
+Can_Write                  0x2'5931    0x40  Code  Gb  Can.o [9]
+Can_eDriverStatus       0x1fff'e2c5     0x1  Data  Gb  Can.o [9]
+Can_pControlerDescriptors
+                        0x1fff'8f84     0x4  Data  Gb  Can.o [9]
+Can_pCurrentConfig      0x1fff'8f80     0x4  Data  Gb  Can.o [9]
+Can_u32BaseAddress         0x2'9088     0xc  Data  Gb  Can_Flexcan.o [9]
+Can_u32TicksDelayDuration
+                        0x1fff'e28c     0x4  Data  Gb  Can_Flexcan.o [9]
+ComM_BusSM_ModeIndication
+                           0x2'6773     0x2  Code  Gb  ComM.o [1]
+ControlerDescriptors0_PB
+                           0x2'8ad8     0xc  Data  Lc  Can_PBcfg.o [9]
+ControlerDescriptors0_PC
+                           0x2'9068    0x14  Data  Lc  Can_Cfg.o [9]
+ControllerBaudrateCfgSet0_PB_0
+                           0x2'8ad0     0x8  Data  Lc  Can_PBcfg.o [9]
+ControllerBaudrateCfgSet0_PC_0
+                           0x2'9064     0x4  Data  Lc  Can_Cfg.o [9]
+DATA$$Base              0x1fff'e2e0          Data  Gb  - Linker created -
+DATA$$Limit             0x1fff'e320          Data  Gb  - Linker created -
+DATA_init$$Base            0x2'9100          Data  Gb  - Linker created -
+DATA_init$$Limit           0x2'9140           --   Gb  - Linker created -
+Det_ASR40_ReportError      0x2'63f1    0x7a  Code  Gb  Det.o [10]
+Det_Enter_SCHM_DET_EXCLUSIVE_AREA_0
+                           0x2'7ee7     0x8  Code  Gb  Det_Rte.o [10]
+Det_ErrorBuffer         0x1fff'cfd4    0x3c  Data  Gb  Det.o [10]
+Det_ErrorLost           0x1fff'e2b8     0x2  Data  Gb  Det.o [10]
+Det_Exit_SCHM_DET_EXCLUSIVE_AREA_0
+                           0x2'7eef     0x8  Code  Gb  Det_Rte.o [10]
+Det_State               0x1fff'e2d0     0x1  Data  Lc  Det.o [10]
+Det_UsedSlots           0x1fff'e2b6     0x2  Data  Gb  Det.o [10]
+Det_WriteIndex          0x1fff'e2b4     0x2  Data  Gb  Det.o [10]
+ExceptionTable$$Base       0x2'0800           --   Gb  - Linker created -
+ExceptionTable$$Limit      0x2'0ac0           --   Gb  - Linker created -
+FIRC_ClockConfigPB0_0      0x2'8d4c    0x18  Data  Lc  Mcu_PBcfg.o [11]
+McuModuleConfiguration     0x2'8ef4    0x1c  Data  Gb  Mcu_PBcfg.o [11]
+Mcu_CheckDistributePllClock
+                           0x2'65b7    0x20  Code  Lc  Mcu.o [11]
+Mcu_CheckInit              0x2'6579    0x1c  Code  Lc  Mcu.o [11]
+Mcu_CheckInitClock         0x2'6595    0x22  Code  Lc  Mcu.o [11]
+Mcu_ClockConfigPB0         0x2'8ea4    0x14  Data  Lc  Mcu_PBcfg.o [11]
+Mcu_DistributePllClock     0x2'6721    0x2e  Code  Gb  Mcu.o [11]
+Mcu_GetPllStatus           0x2'674f    0x22  Code  Gb  Mcu.o [11]
+Mcu_HLDChecksEntry         0x2'65d7    0x42  Code  Lc  Mcu.o [11]
+Mcu_HLDChecksExit          0x2'6619    0x24  Code  Lc  Mcu.o [11]
+Mcu_HwIPsConfigPB0         0x2'8ee4    0x10  Data  Lc  Mcu_PBcfg.o [11]
+Mcu_Init                   0x2'663d    0x90  Code  Gb  Mcu.o [11]
+Mcu_InitClock              0x2'66cd    0x40  Code  Gb  Mcu.o [11]
+Mcu_Ipw_DistributePllClock
+                           0x2'82b1    0x20  Code  Gb  Mcu_IPW.o [11]
+Mcu_Ipw_GetPllStatus       0x2'82d5    0x18  Code  Gb  Mcu_IPW.o [11]
+Mcu_Ipw_Init               0x2'821d    0x1e  Code  Gb  Mcu_IPW.o [11]
+Mcu_Ipw_InitClock          0x2'823b    0x76  Code  Gb  Mcu_IPW.o [11]
+Mcu_Mode_ConfigPB0         0x2'8d08     0x8  Data  Lc  Mcu_PBcfg.o [11]
+Mcu_PCC_PeripheralConfig
+                           0x2'85d1    0x68  Code  Gb  Mcu_PCC.o [11]
+Mcu_PMC_PowerInit          0x2'83cd    0x26  Code  Gb  Mcu_PMC.o [11]
+Mcu_RCM_ResetInit          0x2'83a9    0x1a  Code  Gb  Mcu_RCM.o [11]
+Mcu_Ram_ConfigPB0          0x2'8cf8    0x10  Data  Lc  Mcu_PBcfg.o [11]
+Mcu_SCG_DropSystemClockToSirc
+                           0x2'842b    0x6a  Code  Gb  Mcu_SCG.o [11]
+Mcu_SCG_FircInit           0x2'851f    0x48  Code  Gb  Mcu_SCG.o [11]
+Mcu_SCG_GetPLLStatus       0x2'858d    0x1a  Code  Gb  Mcu_SCG.o [11]
+Mcu_SCG_SircInit           0x2'84db    0x44  Code  Gb  Mcu_SCG.o [11]
+Mcu_SCG_SoscInit           0x2'8495    0x46  Code  Gb  Mcu_SCG.o [11]
+Mcu_SCG_SpllInit           0x2'8567    0x26  Code  Gb  Mcu_SCG.o [11]
+Mcu_SCG_SystemClockInit
+                           0x2'8411    0x1a  Code  Gb  Mcu_SCG.o [11]
+Mcu_SIM_ClockConfig        0x2'833b    0x38  Code  Gb  Mcu_SIM.o [11]
+Mcu_SIM_Init               0x2'82ed    0x4e  Code  Gb  Mcu_SIM.o [11]
+Mcu_SMC_AllowedModesConfig
+                           0x2'8401     0xc  Code  Gb  Mcu_SMC.o [11]
+Mcu_au8ClockConfigIds   0x1fff'e2c7     0x1  Data  Lc  Mcu.o [11]
+Mcu_au8ModeConfigIds    0x1fff'e2c8     0x1  Data  Lc  Mcu.o [11]
+Mcu_au8RamConfigIds     0x1fff'e2c9     0x1  Data  Lc  Mcu.o [11]
+Mcu_eStatus             0x1fff'e31e     0x1  Data  Lc  Mcu.o [11]
+Mcu_pClockConfig        0x1fff'e290     0x4  Data  Lc  Mcu_IPW.o [11]
+Mcu_pConfigPtr          0x1fff'8f90     0x4  Data  Gb  Mcu.o [11]
+MessageBufferConfigs0_PB
+                           0x2'8a7c    0x54  Data  Lc  Can_PBcfg.o [9]
+NCS_SdfVariableRangeError
+                           0x2'0d85     0x2  Code  Gb  APP_Prg.o [1]
+PCC_ClockConfigPB0_0       0x2'8e9c     0x8  Data  Lc  Mcu_PBcfg.o [11]
+PCC_aRegistersConfigPB0_0
+                           0x2'8d9c   0x100  Data  Lc  Mcu_PBcfg.o [11]
+PMC_ConfigPB0              0x2'8edc     0x4  Data  Lc  Mcu_PBcfg.o [11]
+PROG_SimulateCloseProgSession
+                           0x2'0daf    0x46  Code  Gb  APP_Prg.o [1]
+PROG_SimulateER            0x2'0df5    0x24  Code  Gb  APP_Prg.o [1]
+PduR_BlPduRRTabUpTpConfigIdx
+                           0x2'90ec     0x1  Data  Gb  PduR_Lcfg.o [13]
+PduR_BlPduRTransmit        0x2'4ad1    0x10  Code  Gb  PduR_AdjLayerApi.o [13]
+PduR_CanTpCopyRxData       0x2'4af3     0xe  Code  Gb  PduR_AdjLayerApi.o [13]
+PduR_CanTpCopyTxData       0x2'4b01    0x10  Code  Gb  PduR_AdjLayerApi.o [13]
+PduR_CanTpRTabLoTpConfigIdx
+                           0x2'90eb     0x1  Data  Gb  PduR_Lcfg.o [13]
+PduR_CanTpRxIndication     0x2'4b11    0x10  Code  Gb  PduR_AdjLayerApi.o [13]
+PduR_CanTpStartOfReception
+                           0x2'4ae1    0x12  Code  Gb  PduR_AdjLayerApi.o [13]
+PduR_CanTpTxConfirmation
+                           0x2'4b21    0x10  Code  Gb  PduR_AdjLayerApi.o [13]
+PduR_ConfigLayout          0x2'8c4c    0xac  Data  Gb  PduR_PBcfg.o [12]
+PduR_GenericTpCopyRxData
+                           0x2'5553    0x98  Code  Gb  PduR_Merged.o [13]
+PduR_GenericTpCopyTxData
+                           0x2'5667    0x9c  Code  Gb  PduR_Merged.o [13]
+PduR_GenericTpRxIndication
+                           0x2'55eb    0x7c  Code  Gb  PduR_Merged.o [13]
+PduR_GenericTpStartOfReception
+                           0x2'54b7    0x9c  Code  Gb  PduR_Merged.o [13]
+PduR_GenericTpTransmit     0x2'577f    0xa4  Code  Gb  PduR_Merged.o [13]
+PduR_GenericTpTxConfirmation
+                           0x2'5703    0x7c  Code  Gb  PduR_Merged.o [13]
+PduR_Init                  0x2'543d    0x3e  Code  Gb  PduR_Merged.o [13]
+PduR_IsValidConfig         0x2'547b    0x3c  Code  Gb  PduR_Merged.o [13]
+PduR_LcfgSignature         0x2'90ac     0x4  Data  Gb  PduR_Lcfg.o [13]
+PduR_State              0x1fff'e2c6     0x1  Data  Gb  PduR_Merged.o [13]
+PduR_TpModuleAPI           0x2'90b0    0x38  Data  Gb  PduR_Lcfg.o [13]
+PduR_gConfigPtr         0x1fff'8f8c     0x4  Data  Gb  PduR_Merged.o [13]
+PortConfigSet              0x2'903c    0x18  Data  Gb  Port_PBcfg.o [14]
+Port_Init                  0x2'6551    0x22  Code  Gb  Port.o [14]
+Port_Port_Ci_Init          0x2'8161    0x9e  Code  Gb  Port_Port_Ci.o [14]
+Port_Port_Ci_Init_ConfiguredPins
+                           0x2'8023   0x13e  Code  Lc  Port_Port_Ci.o [14]
+Port_Port_Ci_Init_UnusedPins
+                           0x2'7ef9   0x12a  Code  Lc  Port_Port_Ci.o [14]
+Port_Port_Ci_au16GpioDirChangeability
+                        0x1fff'e294    0x14  Data  Lc  Port_Port_Ci.o [14]
+Port_UnUsedPin             0x2'8fb4     0x8  Data  Lc  Port_PBcfg.o [14]
+Port_aPinConfigDefault     0x2'8fbc    0x80  Data  Lc  Port_PBcfg.o [14]
+Port_au16NoUnUsedPadsArrayDefault
+                           0x2'8f10    0xa4  Data  Lc  Port_PBcfg.o [14]
+Port_pConfig            0x1fff'8f94     0x4  Data  Gb  Port.o [14]
+RCM_ResetConfigPB0         0x2'8eb8     0x8  Data  Lc  Mcu_PBcfg.o [11]
+SCG_ClockConfigPB0_0       0x2'8d7c    0x20  Data  Lc  Mcu_PBcfg.o [11]
+SIM_ClockConfigPB0_0       0x2'8d10     0xc  Data  Lc  Mcu_PBcfg.o [11]
+SIM_ConfigPB0              0x2'8ec0    0x1c  Data  Lc  Mcu_PBcfg.o [11]
+SIRC_ClockConfigPB0_0      0x2'8d34    0x18  Data  Lc  Mcu_PBcfg.o [11]
+SMC_ConfigPB0              0x2'8ee0     0x4  Data  Lc  Mcu_PBcfg.o [11]
+SOSC_ClockConfigPB0_0      0x2'8d1c    0x18  Data  Lc  Mcu_PBcfg.o [11]
+SPLL_ClockConfigPB0_0      0x2'8d64    0x18  Data  Lc  Mcu_PBcfg.o [11]
+SchM_Enter_CanIf_SCHM_CANIF_EXCLUSIVE_AREA_0
+                           0x2'6521     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_CanSM_SCHM_CANSM_EXCLUSIVE_AREA_0
+                           0x2'6531     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_CanTp_SCHM_CANTP_EXCLUSIVE_AREA_0
+                           0x2'6541     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Can_CAN_EXCLUSIVE_AREA_02
+                           0x2'6491     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Can_CAN_EXCLUSIVE_AREA_03
+                           0x2'64a1     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Can_CAN_EXCLUSIVE_AREA_04
+                           0x2'64b1     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Can_CAN_EXCLUSIVE_AREA_05
+                           0x2'64c1     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Can_CAN_EXCLUSIVE_AREA_06
+                           0x2'64d1     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Can_CAN_EXCLUSIVE_AREA_07
+                           0x2'64e1     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Can_CAN_EXCLUSIVE_AREA_08
+                           0x2'64f1     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Can_CAN_EXCLUSIVE_AREA_09
+                           0x2'6501     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Can_CAN_EXCLUSIVE_AREA_13
+                           0x2'6511     0x8  Code  Gb  SchM.o [1]
+SchM_Enter_Det_SCHM_DET_EXCLUSIVE_AREA_0
+                           0x2'6481     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_CanIf_SCHM_CANIF_EXCLUSIVE_AREA_0
+                           0x2'6529     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_CanSM_SCHM_CANSM_EXCLUSIVE_AREA_0
+                           0x2'6539     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_CanTp_SCHM_CANTP_EXCLUSIVE_AREA_0
+                           0x2'6549     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Can_CAN_EXCLUSIVE_AREA_02
+                           0x2'6499     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Can_CAN_EXCLUSIVE_AREA_03
+                           0x2'64a9     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Can_CAN_EXCLUSIVE_AREA_04
+                           0x2'64b9     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Can_CAN_EXCLUSIVE_AREA_05
+                           0x2'64c9     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Can_CAN_EXCLUSIVE_AREA_06
+                           0x2'64d9     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Can_CAN_EXCLUSIVE_AREA_07
+                           0x2'64e9     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Can_CAN_EXCLUSIVE_AREA_08
+                           0x2'64f9     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Can_CAN_EXCLUSIVE_AREA_09
+                           0x2'6509     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Can_CAN_EXCLUSIVE_AREA_13
+                           0x2'6519     0x8  Code  Gb  SchM.o [1]
+SchM_Exit_Det_SCHM_DET_EXCLUSIVE_AREA_0
+                           0x2'6489     0x8  Code  Gb  SchM.o [1]
+TS_MemCpy32                0x2'4a75    0x5a  Code  Gb  TSMem.o [2]
+TS_PlatformSigIsValid      0x2'6363    0x8c  Code  Gb  TSPBConfig.o [2]
+UDS_AnswerOrNot            0x2'273b    0x2c  Code  Lc  UDS_Prg.o [15]
+UDS_CustomPositiveAnswerInd
+                           0x2'6361     0x2  Code  Gb  UDS_Cbk.o [1]
+UDS_DiagSession            0x2'2767   0x126  Code  Lc  UDS_Prg.o [15]
+UDS_DidFiltering           0x2'1f19    0x80  Code  Lc  UDS_Prg.o [15]
+UDS_DidSessionFiltering2
+                           0x2'1e8b    0x8e  Code  Lc  UDS_Prg.o [15]
+UDS_FilteringCfg1          0x2'18fd   0x10a  Code  Lc  UDS_Prg.o [15]
+UDS_FilteringCfg2          0x2'1c83   0x110  Code  Lc  UDS_Prg.o [15]
+UDS_FilteringCfg3          0x2'2165    0xd8  Code  Lc  UDS_Prg.o [15]
+UDS_GetCurrentSession      0x2'2aa1    0x7e  Code  Gb  UDS_Prg.o [15]
+UDS_GetRoutineStatus       0x2'25d7    0x66  Code  Lc  UDS_Prg.o [15]
+UDS_Init                   0x2'16e5    0x42  Code  Gb  UDS_Prg.o [15]
+UDS_LongRequestRespTxConf
+                           0x2'2a99     0x8  Code  Gb  UDS_Prg.o [15]
+UDS_LongRequestResponseInd
+                           0x2'2b4d     0xc  Code  Lc  UDS_Prg.o [15]
+UDS_Manage                 0x2'2925    0x9a  Code  Gb  UDS_Prg.o [15]
+UDS_NegativeAnswer         0x2'263d    0x5c  Code  Lc  UDS_Prg.o [15]
+UDS_P2AboutToExpireInd     0x2'0c85     0x2  Code  Gb  APP_Prg.o [1]
+UDS_PositiveAnswer         0x2'2699    0xa2  Code  Lc  UDS_Prg.o [15]
+UDS_RdbiManagement         0x2'1f99   0x1b6  Code  Lc  UDS_Prg.o [15]
+UDS_ReadDataByIdentifier
+                           0x2'0cf7    0x58  Code  Gb  APP_Prg.o [1]
+UDS_ReloadTStopDiag        0x2'2a2d    0x64  Code  Gb  UDS_Prg.o [15]
+UDS_ResponsePending_Manage
+                           0x2'29bf    0x6e  Code  Gb  UDS_Prg.o [15]
+UDS_RiFiltering            0x2'247d    0x82  Code  Lc  UDS_Prg.o [15]
+UDS_RiSessionFiltering3
+                           0x2'23ef    0x8e  Code  Lc  UDS_Prg.o [15]
+UDS_RxRequestWithAddrMode
+                           0x2'1727   0x1d6  Code  Gb  UDS_Prg.o [15]
+UDS_SelectSessionMask      0x2'2895    0x88  Code  Lc  UDS_Prg.o [15]
+UDS_ServiceFiltering1      0x2'1a07    0x80  Code  Lc  UDS_Prg.o [15]
+UDS_ServiceFiltering2      0x2'1d93    0x7c  Code  Lc  UDS_Prg.o [15]
+UDS_ServiceFiltering3      0x2'2245    0x76  Code  Lc  UDS_Prg.o [15]
+UDS_SessionFiltering1      0x2'1b47    0x80  Code  Lc  UDS_Prg.o [15]
+UDS_SessionFiltering2      0x2'1e0f    0x7c  Code  Lc  UDS_Prg.o [15]
+UDS_SessionFiltering3      0x2'2373    0x7c  Code  Lc  UDS_Prg.o [15]
+UDS_SessionStatusInd       0x2'13a1     0xe  Code  Gb  BlPduR_Prg.o [3]
+UDS_StartRoutineControl
+                           0x2'2505    0x66  Code  Lc  UDS_Prg.o [15]
+UDS_StopRoutineControl     0x2'2571    0x66  Code  Lc  UDS_Prg.o [15]
+UDS_StopSessionTimer       0x2'2a91     0x8  Code  Gb  UDS_Prg.o [15]
+UDS_SubServiceFiltering1
+                           0x2'1a87    0xc0  Code  Lc  UDS_Prg.o [15]
+UDS_SubServiceFiltering3
+                           0x2'22c9    0xaa  Code  Lc  UDS_Prg.o [15]
+UDS_SubServiceSessionFiltering1
+                           0x2'1bc7    0xbc  Code  Lc  UDS_Prg.o [15]
+__GLBL_RAM_END {Abs}    0x2000'66ff          Data  Gb  <internal module>
+__GLBL_RAM_START {Abs}  0x1fff'8700          Data  Gb  <internal module>
+__GLBL_ROM_END {Abs}       0x5'ffff          Data  Gb  <internal module>
+__GLBL_ROM_START {Abs}     0x2'0000          Data  Gb  <internal module>
+__aeabi_memset             0x2'7e81          Code  Gb  ABImemset.o [16]
+__iar_Memset               0x2'7e81          Code  Gb  ABImemset.o [16]
+__iar_Memset_word          0x2'7e89          Code  Gb  ABImemset.o [16]
+boardDisableInterruptsAsm
+                           0x2'0071          Code  Gb  boardStartup.o [1]
+boardEnableInterruptsAsm
+                           0x2'0075          Code  Gb  boardStartup.o [1]
+boardInvalidException      0x2'000b          Code  Gb  boardStartup.o [1]
+boardInvalidInterrupt      0x2'0009          Code  Gb  boardStartup.o [1]
+boardResetStart            0x2'0039          Code  Gb  boardStartup.o [1]
+board_wdt                  0x2'87c0     0x4  Data  Lc  board.o [1]
+group_DATABSS$$Base     0x1fff'8700           --   Gb  - Linker created -
+group_DATABSS$$Limit    0x1fff'e320           --   Gb  - Linker created -
+m_apstMultipleReceptionBuffer
+                        0x1fff'8f50    0x10  Data  Lc  BlPduR_Prg.o [3]
+m_apstReceptionBuffer   0x1fff'8f3c    0x14  Data  Gb  BlPduR_Prg.o [3]
+m_astDiagSrvCfg1           0x2'87c4    0x6c  Data  Gb  UDS_Cfg.o [15]
+m_astDiagSrvCfg2           0x2'8830   0x1d0  Data  Gb  UDS_Cfg.o [15]
+m_astDiagSrvCfg3           0x2'8a00    0x20  Data  Gb  UDS_Cfg.o [15]
+m_aubTPFuncBuffer       0x1fff'8f08     0x8  Data  Lc  BlPduR_Prg.o [3]
+m_aubUdsData            0x1fff'8f00     0x8  Data  Lc  APP_Prg.o [1]
+m_eSessionCode          0x1fff'e2a8     0x2  Data  Lc  UDS_Prg.o [15]
+m_eSessionIdx           0x1fff'e2ca     0x1  Data  Lc  UDS_Prg.o [15]
+m_eSessionMask          0x1fff'e2aa     0x2  Data  Lc  UDS_Prg.o [15]
+m_eSuppresPosRspMsgIndicationBit
+                        0x1fff'e2cc     0x1  Data  Lc  UDS_Prg.o [15]
+m_eUdsAddrMode          0x1fff'e2cf     0x1  Data  Lc  UDS_Prg.o [15]
+m_pstRxCurrentBufferConfig
+                        0x1fff'8f38     0x4  Data  Gb  BlPduR_Prg.o [3]
+m_pubTxBuffer           0x1fff'8f1c     0x4  Data  Gb  BlPduR_Prg.o [3]
+m_stLongRequest         0x1fff'8f98    0x10  Data  Lc  UDS_Prg.o [15]
+m_stRxFuncBufferConfig  0x1fff'8f2c     0xc  Data  Lc  BlPduR_Prg.o [3]
+m_stRxFuncBufferInfo    0x1fff'8f20     0xc  Data  Lc  BlPduR_Prg.o [3]
+m_stSessionInfo            0x2'8a20    0x50  Data  Gb  UDS_Cfg.o [15]
+m_stTxBufferInfo        0x1fff'8f10     0xc  Data  Gb  BlPduR_Prg.o [3]
+m_uSessionTimeCnt       0x1fff'e2ac     0x2  Data  Lc  UDS_Prg.o [15]
+m_uSrvIdx               0x1fff'e2cb     0x1  Data  Lc  UDS_Prg.o [15]
+m_uStartSrvIdx          0x1fff'e2cd     0x1  Data  Lc  UDS_Prg.o [15]
+m_uStartSubSrvIdx       0x1fff'e2ce     0x1  Data  Lc  UDS_Prg.o [15]
+m_uTreatmentStatus      0x1fff'e2be     0x1  Data  Lc  BlPduR_Prg.o [3]
+m_ubBoardIntLockNestingCounter
+                        0x1fff'e2bb     0x1  Data  Gb  board.o [1]
+m_ubBuffLockCount       0x1fff'e2bd     0x1  Data  Lc  BlPduR_Prg.o [3]
+m_ubCurrentConnection   0x1fff'e2bf     0x1  Data  Gb  BlPduR_Prg.o [3]
+m_ubProgFirstCall       0x1fff'e2ba     0x1  Data  Lc  APP_Prg.o [1]
+m_ubReceiveBuffCount    0x1fff'e2bc     0x1  Data  Gb  BlPduR_Prg.o [3]
+m_ubStoredConnection    0x1fff'e2c0     0x1  Data  Gb  BlPduR_Prg.o [3]
+m_uwDid                 0x1fff'e2ae     0x2  Data  Lc  UDS_Prg.o [15]
+m_uwRi                  0x1fff'e2b0     0x2  Data  Lc  UDS_Prg.o [15]
+main                       0x2'4b39    0x48  Code  Gb  main.o [1]
+memset                     0x2'634d    0x14  Code  Gb  memset.o [16]
+noinit$$Base            0x2000'6f00           --   Gb  - Linker created -
+noinit$$Limit           0x2000'6f64           --   Gb  - Linker created -
+reset_vector               0x2'0000     0x8  Data  Gb  board_reset_vector.o [1]
+reset_vector$$Base         0x2'0000           --   Gb  - Linker created -
+reset_vector$$Limit        0x2'00ae           --   Gb  - Linker created -
+rodata$$Base               0x2'87c0           --   Gb  - Linker created -
+rodata$$Limit              0x2'90ed           --   Gb  - Linker created -
+stNVMBootloaderData     0x2000'6f08    0x5c  Data  Gb  APP_Prg.o [1]
+stNoIntShareVar         0x2000'6f00     0x8  Data  Gb  APP_Prg.o [1]
+stPduConnection         0x1fff'e2b2     0x2  Data  Gb  BlPduR_Cfg.o [3]
+stRxPdu                 0x1fff'e2e4     0x8  Data  Gb  BlPduR_Cfg.o [3]
+stRxPhysBufferConfig    0x1fff'e2ec    0x30  Data  Gb  BlPduR_Cfg.o [3]
+stRxPhysBufferInfo      0x1fff'cfa4    0x28  Data  Gb  BlPduR_Cfg.o [3]
+text$$Base                 0x2'0c00           --   Gb  - Linker created -
+text$$Limit                0x2'87ac           --   Gb  - Linker created -
+
+
+[1] = C:\devapp\EB\tresos_bolo\workspace\demoApp_VAG_can_asr\output\obj
+[2] = Base_src.a
+[3] = BlPduR_src.a
+[4] = CanIf_pbconfig.a
+[5] = CanIf_src.a
+[6] = CanSM_src.a
+[7] = CanTp_pbconfig.a
+[8] = CanTp_src.a
+[9] = Can_src.a
+[10] = Det_src.a
+[11] = Mcu_src.a
+[12] = PduR_pbconfig.a
+[13] = PduR_src.a
+[14] = Port_src.a
+[15] = Uds_src.a
+[16] = rt7M_tl.a
+
+  32'530 bytes of readonly  code memory
+   2'421 bytes of readonly  data memory
+  23'670 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

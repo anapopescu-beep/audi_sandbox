@@ -1,0 +1,37 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_Reihe2_BF_XIX_Grundumfang_XIX_eCS
+ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_Reihe2_BF_XIX_Grundumfang_XIX_eCS: - Interface used to read if and on demand selt-test has been requested for each solenoid - The on demand self-test for seat BF Reihe 2 will trigger the unlock/lock for solenoids 6
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_Reihe2_BF_XIX_Grundumfang_XIX_eCS
+
+	Step 2: Set a breakpoint in function CIL_runCANToAppli at the check if Aktuatortest_Reihe2_BF command was received 
+		Expected result:  BP reached.
+
+	Step 3: Read the variable which stores AB_eCS_Aktuatortest_Reihe2_BF CAN command 
+		Expected result:  Variable read.
+
+	Step 4: Read the signal AB_eCS_Aktuatortest_Reihe2_BF 
+		Expected result:  Signal Value read.
+
+	Step 5: Set signal Aktuatortest_Reihe2_BF value to Entriegelt. 
+		Expected result:  Signal value is set to 2
+
+	Step 6: Set a breakpoint in function CIL_runCANToAppli in order to check if UNLOCK actuator 6 
+		Expected result:  BP reached.
+
+Postcondition
+
+	Step 7: Return ECU to default values

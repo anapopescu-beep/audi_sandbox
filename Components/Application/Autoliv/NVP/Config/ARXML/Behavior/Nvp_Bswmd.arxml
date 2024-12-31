@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2022-09-21T08:57:47+03:00">
+              <SHORT-NAME>NVP</SHORT-NAME>
+              <ELEMENTS>
+                <NV-BLOCK-SW-COMPONENT-TYPE T="2022-09-09T10:10:58+03:00" UUID="c3337b63-31e3-4da7-b7a8-b1c66bd36fca">
+                  <SHORT-NAME>NVP</SHORT-NAME>
+                  <LONG-NAME T="2020-08-13T13:52:09+02:00">
+                    <L-4 T="2020-08-13T13:52:12+02:00" L="FOR-ALL">NVP_AC_NonVolatileParameters</L-4>
+                  </LONG-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <PORTS>
+                    <P-PORT-PROTOTYPE T="2022-09-09T10:07:20+03:00" UUID="461a6e68-1af4-4a4c-90e9-70bae196b3a8">
+                      <SHORT-NAME>pseNvpBlockDataDcmIf</SHORT-NAME>
+                      <PROVIDED-COM-SPECS>
+                        <NV-PROVIDE-COM-SPEC T="2022-09-09T10:05:13+03:00">
+                          <RAM-BLOCK-INIT-VALUE>
+                            <APPLICATION-VALUE-SPECIFICATION T="2022-09-09T10:05:04+03:00">
+                              <SHORT-LABEL>ValueSpecification_PROCESS_MODE</SHORT-LABEL>
+                              <CATEGORY>VALUE</CATEGORY>
+                              <SW-VALUE-CONT>
+                                <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                <SW-VALUES-PHYS>
+                                  <VT>KU8_NVP_PROCESS_MODE_INACTIVE</VT>
+                                </SW-VALUES-PHYS>
+                              </SW-VALUE-CONT>
+                            </APPLICATION-VALUE-SPECIFICATION>
+                          </RAM-BLOCK-INIT-VALUE>
+                          <ROM-BLOCK-INIT-VALUE>
+                            <APPLICATION-VALUE-SPECIFICATION T="2022-09-09T10:05:13+03:00">
+                              <SHORT-LABEL>ValueSpecification_PROCESS_MODE</SHORT-LABEL>
+                              <CATEGORY>VALUE</CATEGORY>
+                              <SW-VALUE-CONT>
+                                <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                <SW-VALUES-PHYS>
+                                  <VT>KU8_NVP_PROCESS_MODE_INACTIVE</VT>
+                                </SW-VALUES-PHYS>
+                              </SW-VALUE-CONT>
+                            </APPLICATION-VALUE-SPECIFICATION>
+                          </ROM-BLOCK-INIT-VALUE>
+                          <VARIABLE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/NVP_DataDictionnary/SenderReceiverInterfaces/nvNvpBlockDescriptor/u8NvpProcessMode</VARIABLE-REF>
+                        </NV-PROVIDE-COM-SPEC>
+                        <NV-PROVIDE-COM-SPEC T="2022-09-09T10:07:20+03:00">
+                          <VARIABLE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/NVP_DataDictionnary/SenderReceiverInterfaces/nvNvpBlockDescriptor/u8NvpEcuLockStatus</VARIABLE-REF>
+                        </NV-PROVIDE-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="NV-DATA-INTERFACE">/AUTOLIV/NVP_DataDictionnary/SenderReceiverInterfaces/nvNvpBlockDescriptor</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2022-09-09T10:12:14+03:00" UUID="6ec4419c-73d0-4024-b2e4-33c67e90efe3">
+                      <SHORT-NAME>pseNvpBlockDataDia</SHORT-NAME>
+                      <PROVIDED-COM-SPECS>
+                        <NV-PROVIDE-COM-SPEC T="2022-09-09T10:10:58+03:00">
+                          <VARIABLE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/NVP_DataDictionnary/SenderReceiverInterfaces/nvNvpBlockDescriptor/u8NvpProcessMode</VARIABLE-REF>
+                        </NV-PROVIDE-COM-SPEC>
+                        <NV-PROVIDE-COM-SPEC T="2022-09-09T10:10:58+03:00">
+                          <VARIABLE-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/NVP_DataDictionnary/SenderReceiverInterfaces/nvNvpBlockDescriptor/u8NvpEcuLockStatus</VARIABLE-REF>
+                        </NV-PROVIDE-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="NV-DATA-INTERFACE">/AUTOLIV/NVP_DataDictionnary/SenderReceiverInterfaces/nvNvpBlockDescriptor</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                  <INTERNAL-BEHAVIORS>
+                    <SWC-INTERNAL-BEHAVIOR T="2022-09-09T10:04:14+03:00">
+                      <SHORT-NAME>NVP_IB_NonVolatileParameters</SHORT-NAME>
+                      <DATA-TYPE-MAPPING-REFS>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/NVP_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_NVP</DATA-TYPE-MAPPING-REF>
+                      </DATA-TYPE-MAPPING-REFS>
+                      <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                      <RUNNABLES>
+                        <RUNNABLE-ENTITY T="2022-09-09T09:06:28+03:00">
+                          <SHORT-NAME>NVP_runGetBlockData</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>true</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>NVP_runGetBlockData</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                      </RUNNABLES>
+                      <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                    </SWC-INTERNAL-BEHAVIOR>
+                  </INTERNAL-BEHAVIORS>
+                </NV-BLOCK-SW-COMPONENT-TYPE>
+                <SWC-IMPLEMENTATION T="2019-07-25T13:21:43+02:00">
+                  <SHORT-NAME>NVP_impNonVolatileParameters</SHORT-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <CODE-DESCRIPTORS>
+                    <CODE>
+                      <SHORT-NAME>NVP_Impl_Code_CodeDesc</SHORT-NAME>
+                      <ARTIFACT-DESCRIPTORS>
+                        <AUTOSAR-ENGINEERING-OBJECT>
+                          <SHORT-LABEL>NVP_Impl_Code_CodeDesc</SHORT-LABEL>
+                          <CATEGORY>SWSRC</CATEGORY>
+                        </AUTOSAR-ENGINEERING-OBJECT>
+                      </ARTIFACT-DESCRIPTORS>
+                    </CODE>
+                  </CODE-DESCRIPTORS>
+                  <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+                  <RESOURCE-CONSUMPTION T="2023-01-29T17:43:16+02:00">
+                    <SHORT-NAME>NVP_Impl_ResCons</SHORT-NAME>
+                    <MEMORY-SECTIONS>
+                      <MEMORY-SECTION T="2023-01-29T17:42:42+02:00">
+                        <SHORT-NAME>NVP_CONST_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:42:45+02:00">
+                        <SHORT-NAME>NVP_CONST_CAL_VERS_U32</SHORT-NAME>
+                        <LONG-NAME T="2021-03-02T14:13:24+01:00">
+                          <L-4 T="2021-03-02T14:13:24+01:00" L="FOR-ALL">NVP_CONST_CALIBRATION_VERSION_U32</L-4>
+                        </LONG-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:42:48+02:00">
+                        <SHORT-NAME>NVP_CONST_NVM_VERS_U32</SHORT-NAME>
+                        <LONG-NAME T="2021-03-02T14:14:07+01:00">
+                          <L-4 T="2021-03-02T14:14:07+01:00" L="FOR-ALL">NVP_CONST_NVM_VERSION_U32</L-4>
+                        </LONG-NAME>
+                        <ALIGNMENT>32</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:42:51+02:00">
+                        <SHORT-NAME>NVP_CONST_UNSPECIFIED</SHORT-NAME>
+                        <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                      <MEMORY-SECTION T="2023-01-29T17:43:07+02:00">
+                        <SHORT-NAME>NVP_VAR_8</SHORT-NAME>
+                        <ALIGNMENT>8</ALIGNMENT>
+                        <SIZE>0</SIZE>
+                        <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/AUTOSAR_MemMap/SwAddrMethods/VAR</SW-ADDRMETHOD-REF>
+                      </MEMORY-SECTION>
+                    </MEMORY-SECTIONS>
+                  </RESOURCE-CONSUMPTION>
+                  <SW-VERSION>1.0.0</SW-VERSION>
+                  <VENDOR-ID>0</VENDOR-ID>
+                  <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/AUTOLIV/SoftwareComponents/NVP/NVP/NVP_IB_NonVolatileParameters</BEHAVIOR-REF>
+                </SWC-IMPLEMENTATION>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

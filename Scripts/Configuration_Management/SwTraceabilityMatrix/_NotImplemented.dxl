@@ -1,0 +1,17 @@
+﻿filtering off
+ancestors on
+
+f1=attribute "_Type" == "Functional Requirement"
+f2=attribute "_Type" == "Non-Functional Requirement"
+f12=f1 || f2
+f3=attribute "_ReqStatus" != "Obsolete"
+f4=attribute "_ReqStatus" != "To_be_clarified"
+f5=attribute "_Implemented" != "True"
+f6=contains(attribute "_Target_eCS", "R1.2", true)
+f7=contains(attribute "_Target_eCS", "R1.1", true)
+f8=contains(attribute "_Target_eCS", "R1.0", true)
+f678= f6||f7||f8
+f9=(f12&&f3&&f4&&f5&&f678)
+set f9
+
+filtering on

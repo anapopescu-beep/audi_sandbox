@@ -1,0 +1,418 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.23.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-05
+******************************************************************************/
+/*
+ * Explanation:
+ *    Disabled for MKS keywords
+ */
+/*
+$Revision: 1.1 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Bootloader/Autoliv/APP/Design/project.pj $
+*/
+/*!****************************************************************************
+
+@details
+   API implementations of APP software component. 
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "EB_Prj.h"
+#include "board.h"
+#include "BL_Nvm.h"
+#include <S32K144.h>
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+/**
+ * \brief
+ *       APP_PROG_SESSION Value definition.
+ *
+**/
+#define APP_PROG_SESSION             (2U)
+/**
+ * \brief
+ *       APP_EXT_SESSION Value definition.
+ *
+**/
+#define APP_EXT_SESSION              (3U)
+/**
+ * \brief
+ *       KU8_ZERO Value definition.
+ *
+**/
+#define KU8_ZERO                     (0U)
+/**
+ * \brief
+ *       KU8_ONE Value definition.
+ *
+**/
+#define KU8_ONE                      (1U)
+/**
+ * \brief
+ *       KU8_RECEIVED_DATA_LENGTH Value definition.
+ *
+**/
+#define KU8_RECEIVED_DATA_LENGTH     (12u)
+/**
+ * \brief
+ *       KU8_FLASH_ADRESS_VALUE Value definition.
+ *
+**/
+#define KU8_FLASH_ADRESS_VALUE       (0x45u)
+/**
+ * \brief
+ *       KU8_FLASH_ADRESS_POSITION Value definition.
+ *
+**/
+#define KU8_FLASH_ADRESS_POSITION    (3U)
+/**
+ * \brief
+ *       KU8_DATA_STATUS_POSITION Value definition.
+ *
+**/
+#define KU8_DATA_STATUS_POSITION     (5U)
+/**
+ * \brief
+ *       KU8_DATA_ARRAY_START_INDEX Value definition.
+ *
+**/
+#define KU8_DATA_ARRAY_START_INDEX   (4U)
+/**
+ * \brief
+ *       KU8_DATA_ARRAY_LENGTH Value definition.
+ *
+**/
+#define KU8_DATA_ARRAY_LENGTH        (12U)
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+ *\brief
+ *      Interrupt enable function of APP SW Component. Interrupts must be resumed.
+ *\inputparam
+ *      Name: ebStatus;
+ *      Type: uint8;
+ *      Description: parameter unused from Tresos-generated function;
+ *\return
+ *      None.
+ *\dynamicaspectcaller
+ *      Supplier Flash_TS_T40D2M7I0R0 module.
+ *\dynamicaspectdescription
+ *      Called in FLASH_LLD_EraseSector function.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_APP_APP_InterruptEnable
+ *\archrequirement
+ *      ARCH_SW_APP_APP_InterruptEnable
+ **/
+void APP_InterruptEnable (uint8 ebStatus)
+{
+   /* Implement here a treatment for a critical section exit. */
+   BoardEnableInterrupts();
+   OSC_PARAM_UNUSED(ebStatus);
+}
+
+/**
+ *\brief
+ *      Interrupt disable function of APP SW Component. Interrupts must be suspended.
+ *\return
+ *      KU8_ZERO = always return 0 (Tresos generated function).
+ *\dynamicaspectcaller
+ *      Supplier Flash_TS_T40D2M7I0R0 module.
+ *\dynamicaspectdescription
+ *      Called in FLASH_LLD_EraseSector function.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_APP_APP_InterruptDisable
+ *\archrequirement
+ *      ARCH_SW_APP_APP_InterruptDisable
+ **/
+uint8 APP_InterruptDisable (void)
+{
+
+    /* Implement here a treatment for a critical section entry. */
+    BoardDisableInterrupts();
+    return (KU8_ZERO);
+}
+
+/**
+* \brief   
+*         Init function of APP SW Component.
+*         Here can be found all init API's of entire bootloader.
+*         This function initializes all layers of the complete STACK.
+*         EB_Init is called in this API.
+*         It shall be called only once at ECU startup.
+* \return  
+*         None.
+*\dynamicaspectcaller
+*        BM_Prg module.
+*\dynamicaspectdescription
+*        Called in BM_BootStartUp function.
+*\constrains
+*        None.
+ *\ddesignrequirement
+ *		DSG_APP_APP_Init
+ *\archrequirement
+ *      ARCH_SW_APP_APP_Init
+ **/
+void APP_Init (void)
+{
+   BM_SoftwareInit();
+}
+
+/**
+ *\brief
+ *      Flash unlock function of APP SW Component.
+ *\inputparam
+ *      Name: aubUdsData;
+ *      Type: uint8;
+ *      Description: pointer on request data;
+ *      Name: pulLen;
+ *      Type: PduLengthType;
+ *      Description: pointer on data length;
+ *\outputparam
+ *      Name: pulLen;
+ *      Type: PduLengthType;
+ *      Description: pointer on data length;
+ *      Name: aubUdsData;
+ *      Type: uint8;
+ *      Description: pointer on received data;
+ *\return
+ *      ret = Respond with acknowledge code or NRC code.
+ *\dynamicaspectcaller
+ *      Tresos_BSW_generated module.
+ *\dynamicaspectdescription
+ *      Tresos_BSW_generated - UDS_Cfg.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_APP_APP_UnlockFlash
+ *\archrequirement
+ *      ARCH_SW_APP_APP_UnlockFlash
+ **/
+tUdsStatus APP_UnlockFlash(PduLengthType *pulLen, uint8 *aubUdsData)
+{
+   uint8 app_ArrayCounter = 0; 
+
+  tUdsStatus ret =  UDS_ACK;
+  if(KU8_RECEIVED_DATA_LENGTH != (*pulLen))
+	{
+		ret = UDS_NRC_31;
+	}
+	else
+	{
+	   BoardDisableInterrupts();
+
+	   /* wait until the flash module is no longer busy */
+	   while((FTFC->FSTAT & FTFC_FSTAT_CCIF_MASK) == KU8_ONE )
+	   {
+	      ; /*wait*/
+	   }
+
+	   /* check if there are any errors */
+	   if((FTFC->FSTAT & (FTFC_FSTAT_FPVIOL_MASK | FTFC_FSTAT_ACCERR_MASK)) != KU8_ZERO )
+	   {
+	      FTFC->FSTAT = (FTFC_FSTAT_FPVIOL_MASK | FTFC_FSTAT_ACCERR_MASK);
+	   }
+
+	   /* Write Flash address in memory controller register (Flash Common Command Object Registers) */
+	   FTFC->FCCOB[KU8_FLASH_ADRESS_POSITION] = KU8_FLASH_ADRESS_VALUE;
+	   
+
+      /* Write Flash data in memory controller register (Flash Common Command Object Registers) */
+
+      for (app_ArrayCounter = KU8_DATA_ARRAY_START_INDEX; app_ArrayCounter < KU8_DATA_ARRAY_LENGTH; app_ArrayCounter++)
+      {
+         FTFC->FCCOB[app_ArrayCounter] = aubUdsData[app_ArrayCounter];
+      }
+	   FTFC->FSTAT = FTFC_FSTAT_CCIF_MASK;
+
+	   while((FTFC->FSTAT & FTFC_FSTAT_CCIF_MASK) == KU8_ZERO)
+	   {
+	      ; /*wait*/
+	   }
+
+      *pulLen = KU8_DATA_STATUS_POSITION;
+	    aubUdsData[KU8_DATA_ARRAY_START_INDEX] =  FTFC->FSEC;
+
+	   BoardEnableInterrupts();
+	} 
+   
+   return ret;
+}
+
+/**
+ *\brief
+ *      UDS Session status function of APP SW Component (Tresos generated function definition).
+ *\inputparam
+ *      Name: eUdsNewSessType;
+ *      Type: tUdsSessionType;
+ *      Description: new session;
+ *      Name: eUdsOldSessType;
+ *      Type: tUdsSessionType;
+ *      Description: old session;
+ *      Name: aubUdsData;
+ *      Type: uint8;
+ *      Description: pointer on received data;
+ *      Name: eUdsChangingCause;
+ *      Type: tUdsChangeReason;
+ *      Description: the reason of the changing session;
+ *\return
+ *      None.
+ *\dynamicaspectcaller
+ *      BlPduR module.
+ *\dynamicaspectdescription
+ *      Called in UDS_SessionStatusInd function.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_APP_APP_UdsSessionStatusInd
+ *\archrequirement
+ *      ARCH_SW_APP_APP_UdsSessionStatusInd
+ **/
+void APP_UdsSessionStatusInd (tUdsSessionType eUdsNewSessType,tUdsSessionType eUdsOldSessType,tUdsChangeReason eUdsChangingCause)
+{
+
+    OSC_PARAM_UNUSED(eUdsNewSessType);
+    OSC_PARAM_UNUSED(eUdsOldSessType);
+    OSC_PARAM_UNUSED(eUdsChangingCause);
+
+}
+
+/**
+ *\brief
+ *      Transmitter function of APP SW Component (Tresos generated function definition).
+ *\inputparam
+ *      Name: uMsgIdx;
+ *      Type: tTpMsgIdx;
+ *      Description: message ID;
+ *      Name: ebStatus;
+ *      Type: unit8;
+ *      Description: status;
+ *\return
+ *      None.
+ *\dynamicaspectcaller
+ *      BlPduR module.
+ *\dynamicaspectdescription
+ *      Called in BlPduR_TxConf function.
+ *      Callback is called: when a message reception is completed, successfully or not.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_APP_APP_TpTxConf
+ *\archrequirement
+ *      ARCH_SW_APP_APP_TpTxConf
+ **/
+void APP_TpTxConf (tTpMsgIdx uMsgIdx, u8 ebStatus)
+{
+    OSC_PARAM_UNUSED(uMsgIdx);
+    OSC_PARAM_UNUSED(ebStatus);
+}
+
+/**
+ *\brief
+ *      Receiver function of APP SW Component (Tresos generated function definition).
+ *\inputparam
+ *      Name: uMsgIdx;
+ *      Type: tTpMsgIdx;
+ *      Description: message ID;
+ *      Name: ebStatus;
+ *      Type: unit8;
+ *      Description: status;
+ *\return
+ *      None.
+ *\dynamicaspectcaller
+ *      BlPduR module.
+ *\dynamicaspectdescription
+ *      Called in BlPduR_RxInd function.
+ *      Callback is called: when a message reception is completed, successfully or not.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_APP_APP_TpRxInd
+ *\archrequirement
+ *      ARCH_SW_APP_APP_TpRxInd
+ **/
+void APP_TpRxInd (tTpMsgIdx uMsgIdx, u8 ebStatus)
+{
+    OSC_PARAM_UNUSED(uMsgIdx);
+    OSC_PARAM_UNUSED(ebStatus);
+
+}
+
+/**
+ *\brief
+ *      Variable range error check function of APP SW Component (Tresos generated function definition).
+ *\inputparam
+ *      Name: uwParam;
+ *      Type: uint16;
+ *      Description: parameter unused from Tresos-generated function;
+ *\return
+ *      None.
+ *\dynamicaspectcaller
+ *      Uds_TS_TxDxM3I17R0 module.
+ *\dynamicaspectdescription
+ *      Called in UDS_Prg.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_APP_NCS_SdfVariableRangeError
+ *\archrequirement
+ *      ARCH_SW_APPNCS_SdfVariableRangeError
+ **/
+void NCS_SdfVariableRangeError(u16 uwParam)
+{
+    OSC_PARAM_UNUSED(uwParam);
+}
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

@@ -1,0 +1,35 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffOne, ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffTwo
+ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffOne: - The EcuM_OnGoOffOne runnable shall be called by the Autosar EcuM when ECU state manager module perform a power off or a reset depending on the selected shutdown target.
+ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffTwo: - The EcuM_OnGoOffTwo runnable shall be called by the Autosar EcuM when ECU state manager module perform a power off or a reset depending on the selected shutdown target but after EcuM_OnGoOffOne was executed
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffOne
+
+	Step 2: Set a breakpoint in function EcuM_GoDown in order to call EcuM_OnGoOffOne function
+
+	Step 3: Send diagnostic request in order to do soft Reset
+
+	Step 4: Set a breakpoint in function EcuM_OnGoOffOne in order to check the interface
+
+Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffTwo
+
+	Step 5: Set a breakpoint in function EcuM_Shutdown in order to call  EcuM_OnGoOffTwo function
+
+	Step 6: Set a breakpoint in function EcuM_OnGoOffTwo in order to check the interface
+
+Postcondition
+
+	Step 7: Return ECU to default values

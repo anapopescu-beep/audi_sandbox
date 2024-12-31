@@ -1,0 +1,21 @@
+C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/obj/board.o: \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/boards/FRDMPK144_Q100_NoOS/board.c \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/boards/FRDMPK144_Q100_NoOS/board.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/application/ncs.h \
+ C:/devapp/EB/tresos_bolo/plugins/Base_TS_TxDxM5I0R0/include/Std_Types.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/generated/include/Platform_Types.h \
+ C:/devapp/EB/tresos_bolo/plugins/Compiler_TS_TxDxM1I0R0/include/CORTEXM/Compiler.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/config/Compiler_Cfg.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/config/Compiler_CfgExt.h \
+ C:/devapp/EB/tresos_bolo/plugins/Base_TS_TxDxM5I0R0/include/Compiler_Common.h \
+ C:/devapp/EB/tresos_bolo/plugins/Compiler_TS_TxDxM1I0R0/include/CORTEXM/iar/Compiler_Specific.h \
+ C:/devapp/EB/tresos_bolo/plugins/Resource_TS_T40D2M10I1R0/include/Compiler_CfgExtMCAL.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/boards/FRDMPK144_Q100_NoOS/Platforms_defs.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/boards/FRDMPK144_Q100_NoOS/Platforms_asm_CORTEXM.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/boards/FRDMPK144_Q100_NoOS/Platforms_asm_CORTEXM_iar.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/boards/FRDMPK144_Q100_NoOS/board_pub.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/generated/include/MemMap.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/application/BlPduR_MemMap.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/source/application/Board_MemMap.h \
+ C:/devapp/EB/tresos_bolo/plugins/Base_TS_TxDxM5I0R0/include/TSMem.h \
+ C:/devapp/EB/tresos_bolo/workspace/demoApp_VAG_can_asr/output/generated/include/Base_MemMap.h

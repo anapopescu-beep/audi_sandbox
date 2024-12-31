@@ -1,0 +1,106 @@
+/*************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+DUPLICATION or DISCLOSURE PROHIBITED without prior written consent
+
+**************************************************************************
+
+This file is used to configure application to allow inclusion of project
+specific configuration files.
+
+Current revision: $Revision: 1.1 $
+Checked in:       $Date: 2022/11/18 11:26:20CET $
+
+*************************************************************************/
+
+#ifndef I_CONFIG
+#define I_CONFIG 1
+
+
+/********* Define of target to be checked in all LLD files *********/
+#define MCU_TYPE_S32K
+
+/********** Global options that will impact many SW-C **************/
+
+/********** Define compiler specific DI/EI instruction *************/
+#define DisableAllInterrupt()       SuspendAllInterrupts()
+#define EnableAllInterrupt()        ResumeAllInterrupts()
+
+/************* List of configuration file definition ***************/
+
+/*************************************************************************
+Evolution of the component
+
+Created by :
+
+$Log: Config.h  $
+Revision 1.1 2022/11/18 11:26:20CET Dan Dustinta (dan.dustinta) 
+Initial revision
+Member added to project e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Bootmanager/Autoliv/BmUsr/Implementation/inc/project.pj
+Revision 1.1 2021/08/26 09:17:10EEST Pierre-Olivier Pilot (pierre-olivier.pilot) 
+Initial revision
+Member added to project e:/MKSProjects/SBE/Innovation/ECS/Phase_01/Components/Application/Autoliv/TL_Lib/Implementation/inc/project.pj
+Revision 1.1 2020/12/08 14:00:10CET Gaetan Lievre (gaetan.lievre) 
+Initial revision
+Member added to project e:/MKSProjects/AEM/Frame_Platforms/S32K144/Phase_01/View_Development/Components/Application/Autoliv/TL_Lib/Implementation/inc/project.pj
+Revision 1.1 2019/06/25 16:18:06CEST Nicolas Bianchi (nicolas.bianchi) 
+Initial revision
+Member added to project e:/MKSProjects/DEV_KIT/S32K/Phase_01/Components/Application/TL_Lib/Implementation/inc/project.pj
+Revision 1.1.1.5 2017/04/05 15:31:39CEST Andrei Mestereaga (andrei.mestereaga) 
+Disable / Enable interrupt macros changed to meet the AUTOSAR standard definitions
+Revision 1.1.1.4 2017/03/31 15:22:47EEST Andrei Mestereaga (andrei.mestereaga) 
+All asm instructions related to COSMIC compiler were suppressed from Confing.h file (TL_Lib)
+Revision 1.1.1.3 2017/03/31 14:05:26EEST Andrei Mestereaga (andrei.mestereaga) 
+Interrupt enable / disable defines were changed using the Rte enter / exit ciritcal section defines
+BFE_AC_BeltFunctionExecution_CODE changed to RTE_CODE
+Revision 1.1.1.2 2017/02/24 10:52:35EET Michael Pastor (michael.pastor) 
+MAJ PP4G R3.1E from Explo since 15/02/2017
+Revision 1.1.1.1 2017/02/15 17:21:53CET Michael Pastor (michael.pastor) 
+Check In modified already present files
+Revision 1.1 2016/10/05 18:28:45CEST Maxime Bourdon (maxime.bourdon) 
+Initial revision
+Member added to project e:/MKSProjects/err_generic/Exploration/Extended/PP4G_R31E/Components/Application/TL_Lib/Implementation/inc/project.pj
+Revision 1.1 2016/10/05 18:28:45CEST Maxime Bourdon (maxime.bourdon) 
+Initial revision
+Member added to project e:/MKSProjects/err_generic/Exploration/PP4G_Extended/Components/Application/TL_Lib/Implementation/inc/project.pj
+Revision 1.1 2016/10/05 10:13:37CEST Michael Pastor (michael.pastor) 
+Initial revision
+Member added to project e:/MKSProjects/err_generic/Platform/ECU_PP_4G/Mainstream/Phase_02/Core/Components/Application/TL_Lib/Implementation/inc/project.pj
+Revision 1.1 2016/09/20 09:48:12CEST Michael Pastor (michael.pastor) 
+Initial revision
+Member added to project e:/MKSProjects/err_generic/Exploration/Automation/PropagationProject_R3.0M/PP4G/Platform_Mainstream_Phase_01/Core/Components/Application/TL_Lib/Implementation/inc/inc.pj
+Revision 1.1 2015/10/13 18:21:55CEST Cedric Sauvage (cedric.sauvage) 
+Initial revision
+Member added to project e:/MKSProjects/err_generic/Exploration/AUTOSAR/RTE_Benchmark/ETAS/Development_View/Source/Application/OPT_GENERIC/inc/project.pj
+Revision 1.7 2014/09/05 17:31:28CEST Sebastien Claveau (sclaveau) 
+Rename BRS into BMM module
+Revision 1.6 2014/06/16 07:24:49CEST Cedric Sauvage (csauvage) 
+Integration of Low Power mode + CAN wake up
+SW Workaround with ADC peripheral to be confirmed with Freescale later
+ESM cleaned code
+Add Post Run state in ESM
+Synchronization between WDG refresh command (COP) and Shutdown Sequence
+Add a new MCU API to de-init all peripherals
+Register init for MCU Voltage domain VDDC/VDDX
+Revision 1.5 2014/04/23 14:40:46CEST Francois.Gilbert (fgilbert) 
+Suppression of eval_board and automatic wake up  switches
+EOL and VDA functions removed from void list
+Revision 1.4 2014/04/11 17:55:52CEST Herve Egnifi (hegnifi) 
+Renaming of BDS opt into BRS opt to be compliant with new Modules names
+Revision 1.3 2014/02/19 14:54:20CET Cedric Sauvage (csauvage) 
+Add PWM boost options for PP4G (will be moved later in the Belt function stack)
+Revision 1.2 2014/01/29 10:41:11CET Cedric Sauvage (csauvage) 
+Some compil options added
+Revision 1.1 2014/01/24 10:30:39CET Cedric Sauvage (csauvage) 
+Initial revision
+Member added to project e:/MKSProjects/err_generic/Platform/ECU_PP_4G/Mainstream/Phase_01/Development_View/Source/Application/OPT_GENERIC/inc/project.pj
+
+
+*************************************************************************/
+
+#endif /* I_CONFIG */
+
+/* end of file */

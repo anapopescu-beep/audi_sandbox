@@ -1,0 +1,80 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0
+ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0: The runnable shall write all the content of the CAN signals belonging to the eCS Dev Frame - The runnable shall read from the Application the followig data and send them on the CAN bus: - NVP_u32eCSVariant - Acceleration on X,Y,Z axis in g - eCS Algorithm Decision - Ball Position in mm - Selected Profile[for each solenoid] - Acceleration on X,Y,Z axis in m/s^2 - Selected step [for each solenoid] - Solenoid state [for each solenoid] - Solenoid confirmation status [for each solenoid] - Buckle Status [for each solenoid] - Lock Execution Counter [for each solenoid] - Unlock Execution Counter [for each solenoid] - Unlock Confirmed Execution Counter [for each solenoid] - Warm reset counter
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0
+
+	Step 2: Start DevKit_01 Frame 
+		Expected result:  Frame started.
+
+	Step 3: Send request for Supplier session
+
+	Step 4: Send request for  Supplier Security Access
+
+	Step 5: Send request for press ECUUnlock button
+
+	Step 6: Send request for Activate measurement frame
+
+	Step 7: Set a breakpoint in function CIL_runAppliToCAN at the execution for the current time slot 
+		Expected result:  BP reached.
+
+	Step 8: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot01 at the 1th timeslot 
+		Expected result:  BP reached.
+
+	Step 9: Run the debugger 1 times, in order to reach the 1st timeslot.
+
+	Step 10: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot01 after RTE Call Solenoid state 
+		Expected result:  BP reached.
+
+	Step 11: Read Solenoid 1 state value. 
+		Expected result:  Solenoid state value succesfully read
+
+	Step 12: Read Solenoid 2 state value. 
+		Expected result:  Solenoid state value succesfully read
+
+	Step 13: Read Solenoid 3 state value. 
+		Expected result:  Solenoid state value succesfully read
+
+	Step 14: Read Solenoid 4 state value. 
+		Expected result:  Solenoid state value succesfully read
+
+	Step 15: Read Solenoid 5 state value. 
+		Expected result:  Solenoid state value succesfully read
+
+	Step 16: Read Solenoid 6 state value. 
+		Expected result:  Solenoid state value succesfully read
+
+	Step 17: Check that signal eCS_Solenoid_1_State value set  
+		Expected result:  Signal is set
+
+	Step 18: Check that signal eCS_Solenoid_2_State value set  
+		Expected result:  Signal is set
+
+	Step 19: Check that signal eCS_Solenoid_3_State value set  
+		Expected result:  Signal is set
+
+	Step 20: Check that signal eCS_Solenoid_4_State value set  
+		Expected result:  Signal is set
+
+	Step 21: Check that signal eCS_Solenoid_5_State value set  
+		Expected result:  Signal is set
+
+	Step 22: Check that signal eCS_Solenoid_6_State value set  
+		Expected result:  Signal is set
+
+Postcondition
+
+	Step 23: Return ECU to default values

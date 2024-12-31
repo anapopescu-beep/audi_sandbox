@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2015-09-29T16:42:13+02:00">
+              <SHORT-NAME>NmIf</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2017-09-21T09:07:02+02:00">
+                  <SHORT-NAME>NmIf</SHORT-NAME>
+                  <CATEGORY>BSW_Communication_Services</CATEGORY>
+                  <PORTS>
+                    <R-PORT-PROTOTYPE T="2023-02-21T21:06:20+02:00" UUID="f4e19227-1cc8-4bf6-a9ce-0d1eb95599ae">
+                      <SHORT-NAME>pclEcuStateTransitionBswMIf</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID &#xD;
+ARCH_SW_NmIf_pclECUStateTransitionsBswMIf&#xD;
+&#xD;
+# Description&#xD;
+- The interface shall be used to set the current status of RunToLowPowerTransition flag. This interface is called every time when&#xD;
+   CAN bus is not available {timeout} and at least one frame is received on bus.&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+	- {State of transition}&#xD;
+		- Can be one of the following values: FALSE, TRUE&#xD;
+## Outputs:&#xD;
+- None&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- NmIf_runMainFunction&#xD;
+&#xD;
+# Traceability&#xD;
+DOM_eCS_TF_P_214</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:29:24+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:47:06+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T21:06:12.478+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:29:24+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:47:06+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/BswMIf_DataDictionary/ClientServerInterfaces/icsEcuTransitionState/BswM_SetEcuStateTransitionStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/BswMIf_DataDictionary/ClientServerInterfaces/icsEcuTransitionState</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-21T21:05:56+02:00" UUID="f0038984-4226-49cd-8f6b-ff71047f1f40">
+                      <SHORT-NAME>ptrpAsrComServicesNmIf</SHORT-NAME>
+                      <DESC T="2023-02-16T12:20:41+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_01&#xD;
+&#xD;
+# Description&#xD;
+	- The NmIf_CbkRxAck_Airbag_01 runnable shall be called by Autosar Com in case of reception of Airbag_01 frame.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+-None&#xD;
+## Outputs&#xD;
+-None&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- NmIf_CbkRxAck_Airbag_01 &#xD;
+&#xD;
+#Traceability &#xD;
+DOM_eCS_TF_P_203, DOM_eCS_TF_P_193&#xD;
+------------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_02&#xD;
+&#xD;
+# Description&#xD;
+	- The NmIf_CbkRxAck_Airbag_02 runnable shall be called by Autosar Com in case of reception of Airbag_02 frame.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+-None&#xD;
+## Outputs&#xD;
+-None&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- NmIf_CbkRxAck_Airbag_02 &#xD;
+&#xD;
+#Traceability &#xD;
+DOM_eCS_TF_P_203, DOM_eCS_TF_P_193&#xD;
+------------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxAck_Airbag_eCS_01&#xD;
+&#xD;
+# Description&#xD;
+	- The NmIf_CbkRxAck_Airbag_eCS_01 runnable shall be called by Autosar Com in case of reception of Airbag_eCS_01 frame.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+-None&#xD;
+## Outputs&#xD;
+-None&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- NmIf_CbkRxAck_Airbag_eCS_01&#xD;
+&#xD;
+#Traceability &#xD;
+DOM_eCS_TF_P_203, DOM_eCS_TF_P_193&#xD;
+------------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_01&#xD;
+&#xD;
+# Description&#xD;
+	- The NmIf_CbkRxTOut_Airbag_01 runnable shall be called by Autosar Com in case of timeout on Airbag_01 frame.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+-None&#xD;
+## Outputs&#xD;
+-None&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- NmIf_CbkRxTOut_Airbag_01&#xD;
+&#xD;
+#Traceability &#xD;
+DOM_eCS_TF_P_190&#xD;
+------------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_02&#xD;
+&#xD;
+# Description&#xD;
+	- The NmIf_CbkRxTOut_Airbag_02 runnable shall be called by Autosar Com in case of timeout on Airbag_02 frame.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+-None&#xD;
+## Outputs&#xD;
+-None&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- NmIf_CbkRxTOut_Airbag_02&#xD;
+&#xD;
+#Traceability &#xD;
+DOM_eCS_TF_P_190&#xD;
+------------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrpAsrComServicesNmIf_NmIf_CbkRxTOut_Airbag_eCS_01&#xD;
+&#xD;
+# Description&#xD;
+	- The NmIf_CbkRxTOut_Airbag_eCS_01 runnable shall be called by Autosar Com in case of reception of Airbag_eCS_01 frame.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+-None&#xD;
+## Outputs&#xD;
+-None&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- NmIf_CbkRxTOut_Airbag_eCS_01&#xD;
+&#xD;
+#Traceability &#xD;
+DOM_eCS_TF_P_190</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:28:51+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:49:24+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T21:05:32.328+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:28:51+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:49:24+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrComServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-21T21:06:09+02:00" UUID="24d89562-a599-4b3d-97c4-a31e9129b0cd">
+                      <SHORT-NAME>ptrpAsrOsServicesNmIf</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrpAsrOsServicesNmIf_NmIf_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+	- The NmIf_runMainFunction runnable shall be called when the Os task {OsTask_Alv_Com} is executed.&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+-None&#xD;
+## Outputs&#xD;
+-None&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- NmIf_runMainFunction&#xD;
+&#xD;
+#Traceability &#xD;
+DOM_eCS_TF_P_203</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:29:03+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:48:12+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T21:05:58.850+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:29:03+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:48:12+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrOsServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-21T21:06:32+02:00" UUID="39c2f0c6-df3a-4f2b-af68-ddc93423bf04">
+                      <SHORT-NAME>ptrrAsrBswMServicesNmIf</SHORT-NAME>
+                      <DESC T="2023-02-16T12:21:26+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrrAsrBswMServicesNmIf_NmIf_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+-  The BswM_RequestMode runnable shall be called in the NmIf_runMainFunction runnable in order to:&#xD;
+	- Set TX PDU request port to disable tx to be able to trigger BswM rule.&#xD;
+	- Set TX PDU request port to enable tx to be able to trigger BswM rule.&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- NmIf_runMainFunction&#xD;
+&#xD;
+#Traceability&#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:29:35+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:41:27+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T21:06:22.186+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:29:35+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:41:27+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrBswMServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-21T21:06:43+02:00" UUID="3cbf3281-d04f-4560-8547-f9f3e5b670ec">
+                      <SHORT-NAME>ptrrAsrComMServicesNmIf</SHORT-NAME>
+                      <DESC T="2023-02-22T14:31:52+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrrAsrComMServicesNmIf_NmIf_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+-  The ComM_ASR40_RequestComMode runnable shall be called in the NmIf_runMainFunction runnable in order to:&#xD;
+	- Set ComM module to silent mode to disable transmission of frames when Process Mode is requested&#xD;
+	- Set ComM module to no com mode to disable transmission and reception of frames when Bus Timeout is received&#xD;
+	- Set ComM module to full com mode to enable transmission and reception of frames when Bus ACK is received&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- NmIf_runMainFunction&#xD;
+&#xD;
+#Traceability&#xD;
+DOM_eCS_TF_P_223, DOM_eCS_TF_P_224, DOM_eCS_TF_P_163, DOM_eCS_TF_P_166, DOM_eCS_TF_P_190, DOM_eCS_TF_P_193, DOM_eCS_TF_P_222</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:29:48+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:45:38+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T21:06:34.139+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:29:48+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:45:38+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrComMServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-21T21:06:56+02:00" UUID="dad0e023-d687-4313-819b-21e7149debfb">
+                      <SHORT-NAME>ptrrNmIfServicesBswMIf</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_NmIf_ptrrNmIfServicesBswMIf_NmIf_runMainFunction&#xD;
+&#xD;
+# Description&#xD;
+- The BswM_SetEcuStateTransitionStatus runnable shall be called when bus acknowledge is received.&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable &#xD;
+- BswM_SetEcuStateTransitionStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:30:07+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-12T10:46:17+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T21:06:45.685+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:30:07+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-12T10:46:17+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_12.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/NmIf_DataDictionary/TriggerInterfaces/itrNmIfServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                  </PORTS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

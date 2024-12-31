@@ -1,0 +1,33 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DriverInitListOne, ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DeterminePbConfiguration
+ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DriverInitListOne: - The EcuM_DriverInitListOne runnable shall be called by the Autosar EcuM at startup procedure to initialize default list one: - Dem - Mcu - McuArchClock - Port - Can - Fls - Fee - Adc - AdcIf - Pwm - DioIf - Spi - Sbc
+ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DeterminePbConfiguration: - The EcuM_DeterminePbConfiguration runnable shall be called by the Autosar EcuM at startup procedure to evaluate some condition, like port pin or NVRAM value, to determine which post-build configuration shall be used.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DriverInitListOne
+
+	Step 2: Set a breakpoint in function EcuM_Init in order to call EcuM_DeterminePbConfiguration function
+
+Requirement Under Test: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DeterminePbConfiguration
+
+	Step 3: Set a breakpoint in function EcuM_DeterminePbConfiguration in order to check if runnable was called by Autosar
+
+	Step 4: Set a breakpoint in function EcuM_DriverInitListOne in order to go in function EcuM_DefaultInitListOne
+
+	Step 5: Set a breakpoint in function EcuM_DefaultInitListOne in order to check if runnable was called in EcuM_DriverInitListOne function
+
+Postcondition
+
+	Step 6: Return ECU to default values

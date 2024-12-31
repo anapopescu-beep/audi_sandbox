@@ -1,0 +1,84 @@
+					Autoliv Electronics Document
+
+Preconditions
+
+	Step 0: Bench Initialization
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_Init_BswM_OnStartupTwoA, ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_ReadAll_BswM_OnStartupTwoA, ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_WriteAll_BswM_OnPostRunFromRun, ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_MainFunction_OsTask_Bsw_ReadWrite_AllProcess,ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_WriteAll_BswM_On_Prep_Shutdown
+ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_Init_BswM_OnStartupTwoA: The NvM_Init runnable shall be called in the BswM_OnStartupTwoA runnable in order to initialize NvM stack.
+ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_ReadAll_BswM_OnStartupTwoA: The NvM_ReadAll runnable shall be called in the BswM_OnStartupTwoA runnable in order to start Read All process.
+ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_WriteAll_BswM_OnPostRunFromRun: The NvM_WriteAll runnable shall be called in the BswM_OnPostRunFromRun runnable in order to start Write All process.
+ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_MainFunction_OsTask_Bsw_ReadWrite_AllProcess: The NvM_MainFunction runnable shall be called in the OsTask_Bsw_ReadWrite_AllProcess runnable in order to manage NvM jobs.
+ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_WriteAll_BswM_On_Prep_Shutdown: The NvM_WriteAll runnable shall be called in the BswM_On_Prep_Shutdown runnable in order to start Write All process.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_Init_BswM_OnStartupTwoA
+
+	Step 2: Set a BP in function BswM_OnStartupTwoA in order to Initialize NvM stack  
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function NvM_Init for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_ReadAll_BswM_OnStartupTwoA
+
+	Step 4: Set a BP in function BswM_OnStartupTwoA in order to Start Read All process 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function NvM_Init for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_WriteAll_BswM_On_Prep_Shutdown
+
+	Step 6: Send diagnostic request in order to do soft Reset
+
+	Step 7: Set a BP in function BswM_ProceedReset in order to call BswM_On_Prep_Shutdown and to start Write All process 
+		Expected result:  BP was set
+
+	Step 8: Set a BP in NvM_WriteAll for check if BP is reached in order to start Write All process 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function BswM_CB_NfyNvMJobEnd for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_WriteAll_BswM_OnPostRunFromRun
+
+	Step 10: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 11: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 12: Set a BP in function BswM_OnStartupTwoA in order to Start Write All process 
+		Expected result:  BP was set
+
+	Step 13: Set a BP in function NvM_WriteAll for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrNvMServicesBswMIf_NvM_MainFunction_OsTask_Bsw_ReadWrite_AllProcess
+
+	Step 14: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 15: Set a BP in OsTask_Bsw_ReadWrite_AllProcess in order to call NvM_MainFunction function 
+		Expected result:  BP was set
+
+	Step 16: Modify the local variable bswmif_u8IsReadWriteAllProcessFinished with value 55. 
+		Expected result:  bswmif_u8IsReadWriteAllProcessFinished value is set.
+
+	Step 17: Set a BP in function NvM_MainFunction in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 18: Return ECU to default values

@@ -1,0 +1,41 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnRunFromPostRunBusAvailable
+ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnRunFromPostRunBusAvailable: The BswM_RequestMode runnable shall be called in the BswM_OnRunFromPostRunBusAvailable runnable in order to: - Set BswM EcuState Port to be able to notify that RUN state is requested
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnRunFromPostRunBusAvailable
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to call BswM_OnRunFromPostRunBusAvailable function 
+		Expected result:  BP was set
+
+	Step 5: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 6: Set a BP in function BswM_OnRunFromPostRunBusAvailable in order to call BswM_RequestMode function 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_RequestMode in order to: - Set BswM EcuState Port to be able to notify that RUN state is requested
+
+	Step 8: Set a BP in function BswM_OnRunFromPostRunBusAvailable for check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 9: Return ECU to default values

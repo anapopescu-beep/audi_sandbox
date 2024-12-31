@@ -1,0 +1,173 @@
+/*@!Encoding:1252*/
+
+includes
+{ 
+  
+ 
+  
+
+}
+
+variables
+{
+
+}
+
+void MainTest()
+{
+  signalTestCase();
+}
+testcase signalTestCase()
+{
+  if(@sysvar::eCS::all_akt_tests == 0)
+  {
+      if(@sysvar::eCS::AB_crash_int == 0)
+      {
+        setSignal(AB_Crash_Int, 0);
+      }
+      
+      else if (@sysvar::eCS::AB_crash_int == 1)
+      {
+        setSignal(AB_Crash_Int, 1);
+      }
+      else if (@sysvar::eCS::AB_crash_int == 2)
+      {
+        setSignal(AB_Crash_Int, 2);
+      }
+      else if (@sysvar::eCS::AB_crash_int == 3)
+      {
+        setSignal(AB_Crash_Int, 3);
+      }
+      else if (@sysvar::eCS::AB_crash_int == 4)
+      {
+        setSignal(AB_Crash_Int, 4);
+      }
+      else if (@sysvar::eCS::AB_crash_int == 5)
+      {
+        setSignal(AB_Crash_Int, 5);
+      }
+
+      if(@sysvar::eCS::akt_test_FA == 0)
+      {
+        setSignal(AB_eCS_Aktuatortest_FA, 0); 
+      }
+      else if (@sysvar::eCS::akt_test_FA == 1)
+      {
+        setSignal(AB_eCS_Aktuatortest_FA, 1);
+      }
+      else if (@sysvar::eCS::akt_test_FA == 2)
+      {
+        setSignal(AB_eCS_Aktuatortest_FA, 2);
+      }
+      else if (@sysvar::eCS::akt_test_FA == 3)
+      {
+        setSignal(AB_eCS_Aktuatortest_FA, 3);
+      }
+    
+      if(@sysvar::eCS::akt_test_BF == 0)
+      {
+        setSignal(AB_eCS_Aktuatortest_BF, 0);
+      }
+      else if (@sysvar::eCS::akt_test_BF == 1)
+      {
+        setSignal(AB_eCS_Aktuatortest_BF, 1);
+      }
+      else if (@sysvar::eCS::akt_test_BF == 2)
+      {
+        setSignal(AB_eCS_Aktuatortest_BF, 2);
+      }
+      else if (@sysvar::eCS::akt_test_BF == 3)
+      {
+        setSignal(AB_eCS_Aktuatortest_BF, 3); 
+      }
+     
+      if(@sysvar::eCS::reihe2_FA == 0)
+      {
+        setSignal(AB_eCS_Aktuatortest_Reihe2_FA, 0);
+      }
+      else if (@sysvar::eCS::reihe2_FA == 1)
+      {
+        setSignal(AB_eCS_Aktuatortest_Reihe2_FA, 1);
+      }
+      else if (@sysvar::eCS::reihe2_FA == 2)
+      {
+        setSignal(AB_eCS_Aktuatortest_Reihe2_FA, 2); 
+      }
+      else if (@sysvar::eCS::reihe2_FA == 3)
+      {
+        setSignal(AB_eCS_Aktuatortest_Reihe2_FA, 3);
+      }
+      
+       if(@sysvar::eCS::reihe2_BF == 0)
+      {
+        setSignal(AB_eCS_Aktuatortest_Reihe2_BF, 0);
+      }
+      else if (@sysvar::eCS::reihe2_BF == 1)
+      {
+        setSignal(AB_eCS_Aktuatortest_Reihe2_BF, 1); 
+      }
+      else if (@sysvar::eCS::reihe2_BF == 2)
+      {
+        setSignal(AB_eCS_Aktuatortest_Reihe2_BF, 2);
+      }
+      else if (@sysvar::eCS::reihe2_BF == 3)
+      {
+        setSignal(AB_eCS_Aktuatortest_Reihe2_BF, 3);
+      }
+  }
+  else if(@sysvar::eCS::all_akt_tests != 0)
+      {
+        if(@sysvar::eCS::all_akt_tests == 0)
+      { 
+        setSignal(AB_eCS_Aktuatortest_FA, 0);
+        TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_BF, 0);
+        TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_Reihe2_FA, 0);
+        TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_Reihe2_BF, 0);
+        TestWaitForTimeout(500); 
+      }
+      if (@sysvar::eCS::all_akt_tests == 1)
+      {
+        setSignal(AB_eCS_Aktuatortest_FA, 1);
+         TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_BF, 1);
+         TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_Reihe2_FA, 1);
+         TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_Reihe2_BF, 1);
+         TestWaitForTimeout(500); 
+      }
+       if (@sysvar::eCS::all_akt_tests == 2)
+      {
+        setSignal(AB_eCS_Aktuatortest_FA, 2);
+         TestWaitForTimeout(500); 
+ TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_BF, 2);
+        setSignal(AB_eCS_Aktuatortest_Reihe2_FA, 2);
+         TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_Reihe2_BF, 2);
+         TestWaitForTimeout(500); 
+      }
+       if (@sysvar::eCS::all_akt_tests == 3)
+      {
+        setSignal(AB_eCS_Aktuatortest_FA, 3);
+         TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_BF, 3);
+         TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_Reihe2_FA, 3);
+         TestWaitForTimeout(500); 
+        setSignal(AB_eCS_Aktuatortest_Reihe2_BF, 3);
+         TestWaitForTimeout(500); 
+      }
+      }
+}
+
+    
+ 
+  
+
+     
+   
+

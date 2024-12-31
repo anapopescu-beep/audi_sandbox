@@ -1,0 +1,38 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_pseEcuOverTemperature, ARCH_SW_pclEcuOverTemperature
+ARCH_SW_IoHwAb_pseEcuOverTemperature: The auto-test shall read the {ECU Temperature} and compare it to the threshold from the NvM memory ({NVP_s16TemperatureSensorLowThrs} and {NVP_s16TemperatureSensorHighThrs}). Comparison shall be done in *C. If the {ECU Temperature} is lower or equal to {NVP_s16TemperatureSensorLowThrs} then the {Autotest Result} must be NOK. If the {ECU Temperature} is greater or equal to {NVP_s16TemperatureSensorHighThrs} then the {Autotest Result} must be NOK. If the {ECU Temperature} is greater or equal to {NVP_s16TemperatureSensorHighThrs} then the {Autotest Result} must be NOK.
+ARCH_SW_pclEcuOverTemperature: This is the autotest to check over temperature of MCU.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_IoHwAb_pseEcuOverTemperature, ARCH_SW_pclEcuOverTemperature
+
+	Step 2: Set a breakpoint in function atm_cbk_runOverTemperature at the RTE Call for CheckEcuOverTemperatureAutotest 
+		Expected result:  BP reached
+
+	Step 3: Set a breakpoint in function IoHwAb_CheckEcuOverTemperatureAutotest at the previous ADC autotest evaluation. 
+		Expected result:  BP reached
+
+	Step 4: Modify previous ADC test result with value KU8_ATM_TEST_NOT_DECIDED 
+		Expected result:  Variable was written with 0x4
+
+	Step 5: Set a breakpoint in function atm_cbk_runOverTemperature 
+		Expected result:  BP reached
+
+	Step 6: Evaluate autotest result. 
+		Expected result:  Variable is equal to 0x4
+
+Postcondition
+
+	Step 7: Return ECU to default values

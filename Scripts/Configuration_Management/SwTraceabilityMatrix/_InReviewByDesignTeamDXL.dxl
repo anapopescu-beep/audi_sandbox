@@ -1,0 +1,12 @@
+﻿filtering off
+ancestors on
+
+f1=attribute "_Type" == "Functional Requirement"
+f2=attribute "_Type" == "Non-Functional Requirement"
+f12=f1 || f2
+f3=attribute "_ReqStatus" == "InReview_by_Design_Team"
+f4=contains(attribute "_ImpactedDiscipline", "SW", false)
+f5=(f12&&f3&&f4)
+set f5
+
+filtering on

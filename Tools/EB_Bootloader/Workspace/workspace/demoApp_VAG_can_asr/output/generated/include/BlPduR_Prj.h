@@ -1,0 +1,89 @@
+/*********************************************************************************/
+/*                                                                               */
+/*                               BOOT Layers                                     */
+/*                                                                               */
+/* ----------------------------------------------------------------------------- */
+/*                                                                               */
+/*                                     BlPduR                                       */
+/*                                                                               */
+/*********************************************************************************/
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                        */
+/*%%   _____________________________   %%  \file BlPduR_Prj.h                       */
+/*%%  |                             |  %%                                        */
+/*%%  |   &&&&&   &&&&&             |  %%  Module version: 0.9.0 BL-3.X                */
+/*%%  |   &       &    &            |  %%                                        */
+/*%%  |   &&&&    &&&&&             |  %%                                        */
+/*%%  |   &       &    &            |  %%                                        */
+/*%%  |   &&&&&   &&&&&             |  %%                                        */
+/*%%  |_____________________________|  %%                                        */
+/*%%                                   %%                                        */
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                        */
+/*********************************************************************************/
+/* Copyright 2010 by Elektrobit Automotive GmbH                                  */
+/* All rights exclusively reserved for Elektrobit Automotive GmbH,               */
+/* unless expressly agreed to otherwise.                                         */
+/*********************************************************************************/
+
+#ifndef BLPDUR_PRJ_H
+#define BLPDUR_PRJ_H
+
+/* Stack type is bootloader */
+#define BOOTLOADER
+
+#include "ncs.h"
+#include "ComStack_Types.h"
+
+#include <PduR.h>
+#include "PduR_BlPduR.h"
+
+/* TYPES */
+/* - Header Files: CAN                                                           */
+#include "Can.h"
+#include "CanIf.h"
+#include "CanTp.h"
+#include "CanSM.h"
+#include <CanSM_ComM.h>
+
+/*-------------------------------------------------------------------------------*/
+/* - Header Files: DIAG                                                          */
+#include "UDS_Types.h"
+/* - Header Files: BlPduR                                                            */
+#include "BlPduR_Types.h"
+/* - Header Files: APP                                                           */
+#include "APP_Types.h"
+
+
+/* PUB */
+/*-------------------------------------------------------------------------------*/
+/* - Header Files: DIAG                                                          */
+#include "UDS_Pub.h"
+/*-------------------------------------------------------------------------------*/
+/* - Header Files: BlPduR                                                            */
+#include "BlPduR_Pub.h"
+/*-------------------------------------------------------------------------------*/
+/* - Header Files: APP                                                           */
+#include "APP_Pub.h"
+#include "APP_Boot.h"
+
+/* CFG */
+/*-------------------------------------------------------------------------------*/
+/* - Header Files: DIAG                                                          */
+#include "UDS_Cfg.h"
+/*-------------------------------------------------------------------------------*/
+/* - Header Files: BlPduR                                                            */
+#include "BlPduR_Cfg.h"
+
+
+/* HW */
+
+/* CBK */
+
+/*-------------------------------------------------------------------------------*/
+/* - Header Files: DIAG                                                          */
+#include "UDS_Cbk.h"
+/* - Header Files: BlPduR                                                          */
+#include "BlPduR_Cbk.h"
+/* - Header Files: APP                                                           */
+#include "APP_Cbk.h"
+
+#endif      /* BLPDUR_PRJ_H */

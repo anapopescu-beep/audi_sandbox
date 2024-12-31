@@ -1,0 +1,38 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_CIL_SP_IF_eCS_Status_XIX_Grundumfang_XIX_eCS
+ARCH_SW_CIL_SP_IF_eCS_Status_XIX_Grundumfang_XIX_eCS: The runnable shall write the status of the eCS ECU on the CAN bus - The runnable shall read the current output of the virtual ball algorithm - The runnable shall read the critical auto-test status via the mode management interface - The runnable shall read the permanent and sporadic error status via the mode management interface - If the critical auto-tests have not been run then the INIT value shall be transmitted on the CAN Bus - If the permanent HW error mode is set then the ERROR value shall be transmitted on the CAN Bus - If the sporadic error mode is set then the ERROR value shall be transmitted on the CAN Bus - If the ball algorithm outputs the LOCK state then this value shall be transmitted on the CAN bus - If the ball algorithm outputs the UNLOCK state then this value shall be transmitted on the CAN bus
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_CIL_SP_IF_eCS_Status_XIX_Grundumfang_XIX_eCS
+
+	Step 2: Set a breakpoint in function CIL_runAppliToCAN at the execution for the current time slot 
+		Expected result:  BP reached.
+
+	Step 3: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot04 at the 4th timeslot 
+		Expected result:  BP reached.
+
+	Step 4: Run the debugger 4 times, in order to reach the 4th timeslot.
+
+	Step 5: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot04 after RTE Call for CheckModeStatus 
+		Expected result:  BP reached.
+
+	Step 6: Set Sporatic error variable to B_TRUE
+
+	Step 7: Check that signal Stoerung is set to 0x1  
+		Expected result:  Signal is set to 1.
+
+Postcondition
+
+	Step 8: Return ECU to default values

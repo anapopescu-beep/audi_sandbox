@@ -1,0 +1,176 @@
+#ifndef __PLATFORMS_ASM_CORTEXM_H
+#define __PLATFORMS_ASM_CORTEXM_H
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+H-File Template Version:
+Template version: AEM_PROCESS_1.24.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-07
+*******************************************************************************
+
+Overview of the interfaces:
+   This file includes the appropriate Platforms_asm_PA_xxx.h include file * depending on the chosen toolchain.
+   Macros are defined that permit the same source files to be processed by the assemblers of
+  all toolchains. This is done by including the appropriate toolchain file.
+  The assembler memory-map file is also included if appropriate.
+******************************************************************************/
+/*
+ * Explanation:
+ *    Disabled for MKS keywords
+ */
+/*
+$Revision: 1.1 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Bootloader/Autoliv/FblUsr/Design/project.pj $
+*/
+/*****************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include <Platforms_defs.h>
+
+/* Include the appropriate abstraction file for the toolchain
+*/
+#if (PLATFORMS_TOOLCHAIN==PLATFORMS_gnu)
+#include <Platforms_asm_CORTEXM_gnu.h>
+#elif (PLATFORMS_TOOLCHAIN==PLATFORMS_multi)
+#include <Platforms_asm_CORTEXM_multi.h>
+#elif (PLATFORMS_TOOLCHAIN==PLATFORMS_iar)
+#include <Platforms_asm_CORTEXM_iar.h>
+#else
+#error "Unknown or unsupported toolchain. Check your Makefiles!"
+#endif
+/******************************************************************************
+DEFINITION OF CONSTANTS
+******************************************************************************/
+/**
+ *\brief
+ *      Stack length.
+ *
+ */
+#define ISTACKLEN 0x200U
+
+/*
+ * PLATFORMS_ASM_SRC_END
+ *
+ * This macro marks the end of an assembly source file.
+ * Note:  This is the default implementation, it may be changed in the toolchain header!
+ *        The default implementation is empty, because only a few assemblers need it.
+*/
+#ifndef PLATFORMS_ASM_SRC_END
+#define PLATFORMS_ASM_SRC_END
+#endif
+
+/* Text section alignment
+ *
+ * This could be already defined by the user's memmap, so we only define it if it isn't already defined.
+*/
+#ifndef PLATFORMS_ASM_ALIGN_TEXT
+#define PLATFORMS_ASM_ALIGN_TEXT Platforms_align(16,4)
+#endif
+
+/* intctab section alignment
+ *
+ * This could be already defined by the user's memmap, so we only define it if it isn't already defined.
+*/
+#ifndef PLATFORMS_ASM_ALIGN_INTCTAB
+#define PLATFORMS_ASM_ALIGN_INTCTAB  Platforms_align(4,2)
+#endif
+#ifndef PLATFORMS_ASM_ALIGN_INTCVEC
+#define PLATFORMS_ASM_ALIGN_INTCVEC  Platforms_align(PLATFORMS_INTC_VECSIZE, PLATFORMS_INTC_VECSIZE_POW2)
+#endif
+
+/* exctab section alignment
+ *
+ * These could be already defined by the user's memmap, so we only define them if they aren't already defined.
+*/
+#ifndef PLATFORMS_ASM_ALIGN_EXCTAB
+#define PLATFORMS_ASM_ALIGN_EXCTAB   Platforms_align(256,8)
+#endif
+#ifndef PLATFORMS_ASM_ALIGN_EXCTAB10
+#define PLATFORMS_ASM_ALIGN_EXCTAB10 Platforms_align(16,4)
+#endif
+#ifndef PLATFORMS_ASM_ALIGN_EXCTAB20
+#define PLATFORMS_ASM_ALIGN_EXCTAB20 Platforms_align(32,5)
+#endif
+#ifndef PLATFORMS_ASM_ALIGN_EXCVEC
+#define PLATFORMS_ASM_ALIGN_EXCVEC   Platforms_align(16,4)
+#endif
+
+/*
+ * Abstraction to the the type and size associated with symbols in
+ * some object file formats (most notably ELF).
+ *
+ * These are optional, so if a toolchain does not support this feature
+ * the macros can be defined empty for that toolchain.
+ *
+ * The following default implementation works for most toolchains.
+ */
+/* Marks fsymbol as a function */
+#ifndef PLATFORMS_ASM_FUNCTION
+#define PLATFORMS_ASM_FUNCTION(fsymbol)  .type   fsymbol, @function
+#endif
+
+/* Marks fsymbol as an object */
+#ifndef PLATFORMS_ASM_OBJECT
+#define PLATFORMS_ASM_OBJECT(fsymbol)    .type   fsymbol, @object
+#endif
+
+/* Sets the size of the function/object at fsymbol;
+ * To be used immediately after the definition of the object, size is computed
+ * as the offset of the symbol definition to the current location.
+ */
+#ifndef PLATFORMS_ASM_SIZE
+#define PLATFORMS_ASM_SIZE(fsymbol)      .size   fsymbol, . - fsymbol
+#endif
+
+
+/**
+ *\brief
+ *      BOARD_FPCCR_ASPEN (FPCCR bit ASPEN). If 1, the CPU sets CONTROL. FPCA to 1 after a FPU instruction was executed.
+ *
+ */
+#define BOARD_FPCCR_ASPEN    (1 << 31)
+
+/**
+ *\brief
+ *      BOARD_FPCCR_LSPEN (FPCCR bit LSPEN). If 1, the CPU enables lazy FPU context saving.
+ *
+ */
+#define BOARD_FPCCR_LSPEN    (1 << 30)
+
+/**
+ *\brief
+ *      BOARD_CORTEXM_CONTROL_FPCA (Control bit FPCA). FPCA floating point extension active in current
+ *      context. This means, the floating point context is automatically saved on exception entry.
+ *
+ */
+#define BOARD_CORTEXM_CONTROL_FPCA       0x00000004
+/******************************************************************************
+DECLARATION OF VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTIONS
+******************************************************************************/
+/******************************************************************************
+DECLARATION OF FUNCTION-LIKE MACROS
+******************************************************************************/
+/******************************************************************************
+End Of File
+*****************************************************************************/
+/* CHECK: PARSE */
+#endif /* __PLATFORMS_ASM_CORTEXM_H */
+/* Editor settings - DO NOT DELETE
+ * vi:set ts=4:
+*/

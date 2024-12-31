@@ -1,0 +1,288 @@
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+
+/*
+$Revision: 1.3 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/EIM/Design/project.pj $
+*/
+
+/*****************************************************************************
+
+@details
+   This module can inject different types of DEM errors.
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Rte_EIM.h"
+#include "EIM.h"
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+/**
+ * \brief
+ * This module is used to configure EIM warm reset
+ *
+ */
+#define EIM_KU8_WARM_RESET_AEC_CFG        ((uint8)0x03)
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+#if (EIM_CONFIGURED == CAL_KU8_ERROR_INJECTION_MANAGER_ACTIVE)
+
+
+/**
+ * \brief
+ *    	This variable is used configure EIM time counter.
+ * \initialization
+ * 		KU8_ZERO.
+ * \range
+ *		0..KU32_MAX.
+ */
+LOCAL uint32 eim_u32TimeCounter[KU8_EIM_MAXIMUM_NUMBER_OF_ERRORS] = {KU8_ZERO,KU8_ZERO,KU8_ZERO,KU8_ZERO,KU8_ZERO};
+/**
+ * \brief
+ *    	This variable is used to configure EIM counter after cycle
+ * \initialization
+ * 		KU8_ZERO
+ * \range
+*		0..KU32_MAX.
+ */
+LOCAL uint32 eim_u32CounterAfterCycle[KU8_EIM_MAXIMUM_NUMBER_OF_ERRORS] = {KU8_ZERO,KU8_ZERO,KU8_ZERO,KU8_ZERO,KU8_ZERO};
+
+
+
+/**
+ * \brief
+ *    This variable is used to configure EIM AEC event ID.
+ * \initialization
+ * 		0xFF.
+ * \range
+ * 		1..20.
+ */
+LOCAL uint8 eim_u8AecEventId = KU8_EIM_PROFILE_NONE;
+
+/**
+ * \brief
+ *    	This variable is used to configure EIM Run initialization condition.
+ * \initialization
+ * 		KB_FALSE.
+ * \range
+ * 		0..1.
+ */
+LOCAL boolean eim_bRunInitCondition = KB_FALSE;
+
+
+#endif
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+#if (EIM_CONFIGURED == CAL_KU8_ERROR_INJECTION_MANAGER_ACTIVE)
+
+
+/**
+ * \brief
+ *    	This variable is used to Change Event status.
+ * \initialization
+ * 		0x05.
+ * \range
+ *		0..KU32_MAX.
+ */
+volatile uint32 EIM_u32ChangeEventStatus[KU8_EIM_MAXIMUM_NUMBER_OF_ERRORS];
+/**
+ * \brief
+ *    This variable is used to configure XOR EIM change event status.
+ * \initialization
+ * 		False.
+ * \range
+ *		0..KU32_MAX.
+ */
+volatile uint32 EIM_u32ChangeEventStatusXOR[KU8_EIM_MAXIMUM_NUMBER_OF_ERRORS];
+
+
+#endif
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+
+#if (EIM_CONFIGURED == CAL_KU8_ERROR_INJECTION_MANAGER_ACTIVE)
+/**
+* \brief
+*     Function used to initialize the error event status for the EIM module
+* \dynamicaspectcaller
+*     BswMIf_runMainFunction
+* \dynamicaspectdescription
+*     Called only at startup
+* \constrains
+*     No constraints
+* \ddesignrequirement
+*     DSG_EIM_Init
+* \archrequirement
+*
+**/
+EXPORTED void EIM_Init(void)
+{
+   /* Check if initialization is not running*/
+   if(If initialization is not running)
+   {
+      for(Go through all errors)
+      { 
+		Initialize Eim_ChangeEventStatus array with default value;
+      }
+      Set the initialization flag to true;
+ 
+   }
+}
+
+/**
+* \brief
+*     Function used to handle error event status for the EIM module
+* \dynamicaspectcaller
+*     ATM_runMainFunction
+* \dynamicaspectdescription
+*     Called cyclic at every 10ms by ATM_runMainFunction method.
+* \constrains
+*     EIM must be activated
+* \ddesignrequirement
+*     DSG_EIM_ManageAecStatus
+* \archrequirement
+*  ARCH_SW_EIM_pseInjectError
+*  ARCH_SW_EIM_prrFSMSolenoidProfile
+**/
+
+EXPORTED void EIM_ManageAecStatus(void)
+{
+   
+   Initialize Eim_ChangeEventStatus array with default value;
+   Read solenoid profile status;
+
+   for(Go through all errors)
+   {
+      if( If an event status change condition is met)
+      {
+         Extract the AEC event ID from the current element in EIM_u32ChangeEventStatus array;
+         
+         /*Checking if the AEC status is qualified*/
+         if(If the AEC status is qualified)
+         {
+               Assign  extracted qualification type to u8QualificationType variable;
+               /*Switch based on the qualification type of the event*/
+               switch(Event qualification type)
+               {
+               /*If the qualification type is instant*/
+               case Qualification type is instant:
+                  /*If warm reset*/
+                  if(If warm reset)
+                  {
+                     Infinite loop;
+                  }
+                  else
+                  {
+                     Set the event status to failed;
+                  }
+                  break;
+               /*If the qualification type is after x time*/
+               case Qualification type is after x time:
+                  /*Increment time counter*/
+                  Increment time counter;
+                  if(If timecounter == x time)
+                  {
+                     /*If warm reset*/
+                     if(If warm reset)
+                     {
+                        Infinite loop;
+                     }
+                     else
+                     {
+                        Set the event status to failed;
+                     }
+                     Reset the time counter of the event;
+
+                  }
+                  break;
+               /*If the qualification type is after x time after started cycle*/
+               case Qualification type is after x time after started cycle:
+                  if(If selected profiles is not none)
+                  {
+                     Increment time counter;
+                     
+                     if(If timecounter == x time after started cycle)
+                     {  
+					/*If warm reset*/
+                        if(If warm reset)
+                        {
+                           Infinite loop;
+                           
+                        }
+                        else
+                        {
+                            Set the event status to failed;
+                        	 
+                        }
+							Reset the time counter of the event;
+                        
+                     }
+                  }
+                  break;
+
+               default:
+                  break;
+               }
+         }
+         /*If the stats is desqualified, set Dem event status to PASSED*/
+         else if(If the stats is desqualified)
+         {
+        	 Set Dem event status to PASSED;
+         }
+         else
+         {
+            /* do nothing */
+         }
+      }
+   }
+}
+#endif
+
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

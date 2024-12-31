@@ -1,0 +1,56 @@
+B::
+TOOLBAR ON
+STATUSBAR ON
+FramePOS 15.625,8.9286,,,Maximized
+WinPAGE.RESet
+WinPAGE.Create P000
+WinCLEAR
+WinPOS 0.0 0.0 111. 66. 16. 1. W000
+WinTABS 10. 27. 25. 62.
+List
+WinPOS 115.75 0.0 42. 12. 0. 0. W001
+Register
+WinPOS 162.0 0.0 73. 10. 0. 0. W003
+Var.Watch
+WinPOS 115.75 16.286 99. 15. 5. 0. W002
+Frame
+WinPOS 115.63 37.429 71. 28. 16. 1. W005
+Data.dump (0) /DIALOG
+WinPAGE.select P000
+; ------------------------------------------------------------------------------
+
+SYStem.RESet
+SYStem.CPU S32K144
+SYStem.Up
+
+;	S32K144 Flash Regions:
+;	PFlashSize=0x80000	=	512 KB
+;	DFlashSize=0x10000	=	64 KB
+
+DIALOG.YESNO "Program flash memory?"
+LOCAL &progflash
+ENTRY &progflash
+IF &progflash 
+(
+	FLASH.RESet
+
+	FLASH.Create 1. 0x00000000--0x0007FFFF 0x1000 TARGET Quad
+	FLASH.Create 2. 0x10000000--0x1000FFFF 0x1000 TARGET Quad
+
+	FLASH.TARGET 0x1FFF8000 0x20000000 0x1000 ~~/demo/arm/flash/quad/s32k_quad.bin
+
+	FLASH.Erase ALL
+	FLASH.Program ALL
+	Data.LOAD.Elf ../../../output/bin/*.elf /Quad /Verify
+	FLASH.Program OFF
+	SYStem.Down
+	SYStem.Up
+)
+ELSE
+(
+	Data.LOAD.Elf ../../../output/bin/*.elf /NOCODE
+)
+r.s pc boardResetStart
+List.auto
+
+ENDDO

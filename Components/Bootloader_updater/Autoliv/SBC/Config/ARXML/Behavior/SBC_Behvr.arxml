@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="570fc498-671f-40b6-b0e4-97aaddf90018">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="425864d4-434d-4658-84a8-6ef34ed48745">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2017-03-14T16:07:12+02:00" UUID="DCE:e406a793-92e8-4b3b-bfd5-0e9e2cedf1f5">
+              <SHORT-NAME>SBC</SHORT-NAME>
+              <ELEMENTS>
+                <COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE UUID="d660a680-8f9f-489a-9ea1-d3b3f99300fd">
+                  <SHORT-NAME>SBC</SHORT-NAME>
+                  <CATEGORY>MCAL_Communication_Abstraction</CATEGORY>
+                  <INTERNAL-BEHAVIORS>
+                    <SWC-INTERNAL-BEHAVIOR T="2023-04-07T16:11:46+03:00" UUID="3c4b5720-1149-4c7e-b14b-534fb2309419">
+                      <SHORT-NAME>SBC_IB</SHORT-NAME>
+                      <CONSTANT-VALUE-MAPPING-REFS>
+                        <CONSTANT-VALUE-MAPPING-REF DEST="CONSTANT-SPECIFICATION-MAPPING-SET">/AUTOLIV/SBC_DataDictionnary/ConstantsMappingSet/ConstantsMappingSet_SBC</CONSTANT-VALUE-MAPPING-REF>
+                      </CONSTANT-VALUE-MAPPING-REFS>
+                      <DATA-TYPE-MAPPING-REFS>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/RCM_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_RCM</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/SBC_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_SBC</DATA-TYPE-MAPPING-REF>
+                        <DATA-TYPE-MAPPING-REF DEST="DATA-TYPE-MAPPING-SET">/AUTOLIV/SpiIf_DataDictionnary/DataTypeMappingSet/DataTypeMappingSet_SpiIf</DATA-TYPE-MAPPING-REF>
+                      </DATA-TYPE-MAPPING-REFS>
+                      <EVENTS>
+                        <TIMING-EVENT T="2017-03-08T08:45:33+01:00" UUID="d849d5c2-5d57-4250-84ee-d2de3fd25d6b">
+                          <SHORT-NAME>SBC_evMainFunction</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_runMainFunction</START-ON-EVENT-REF>
+                          <PERIOD>0.01</PERIOD>
+                        </TIMING-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2023-01-27T10:18:12+02:00" UUID="d96badbe-629d-439f-8723-a52a1e812591">
+                          <SHORT-NAME>oie_pseCheckSbcStatusInfo_AutotestCallback</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_Autotest_CheckStatusInformation</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2023-01-27T10:18:12+02:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pseCheckSbcStatusInfo</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2023-02-22T11:06:23+02:00" UUID="52d99921-3a36-4dc3-81e1-64449278fc0f">
+                          <SHORT-NAME>oie_pseSbcServices_SBC_SetToLowPower</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_SetToLowPower</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2023-02-22T11:06:23+02:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pseSbcServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_SetToLowPower</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2023-02-22T11:06:49+02:00" UUID="383c8efd-1bd3-4b68-9f01-b6ccf3f66822">
+                          <SHORT-NAME>oie_pseSbcServices_SBC_SetToNormal</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_SetToNormal</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2023-02-22T11:06:49+02:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pseSbcServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_SetToNormal</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2023-02-22T11:05:58+02:00" UUID="dbe633ee-36a2-47d5-a7d5-318750283829">
+                          <SHORT-NAME>oie_pseSbcServices_SBC_sleepTriggerWatchdog</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_sleepTriggerWatchdog</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2023-02-22T11:05:58+02:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pseSbcServices</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_sleepTriggerWatchdog</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2022-08-26T15:04:39+03:00" UUID="f2dc37d8-624d-44d1-85da-3a1345970128">
+                          <SHORT-NAME>oie_pseSbcStatus_GetSbcStatus</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_GetSBCStatusInformation</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2022-08-26T16:37:13+03:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pseSbcStatus</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/GetSbcStatus</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT UUID="c0d2861a-fef8-4254-a6f2-d87baf59ce8e">
+                          <SHORT-NAME>oie_pseSbcStatus_SBC_Reset</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_Reset</START-ON-EVENT-REF>
+                          <OPERATION-IREF>
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pseSbcStatus</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/SBC_Reset</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT UUID="cc7dd956-33f8-477a-a1c3-b47af35bd696">
+                          <SHORT-NAME>oie_pseSbcStatus_SBC_Shutdown</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_Shutdown</START-ON-EVENT-REF>
+                          <OPERATION-IREF>
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pseSbcStatus</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcDeviceServices/SBC_Shutdown</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <OPERATION-INVOKED-EVENT T="2023-04-07T16:11:46+03:00" UUID="54074e20-6e6a-4825-84ff-13af09dfccf2">
+                          <SHORT-NAME>oie_pseSbcWdgAutotest_AutotestCallback</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_Autotest_WdgTest</START-ON-EVENT-REF>
+                          <OPERATION-IREF T="2023-04-07T16:11:46+03:00">
+                            <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pseSbcWdgAutotest</CONTEXT-P-PORT-REF>
+                            <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ATM_DataDictionnary/ClientServerInterfaces/icsAutotestCallback/AutotestCallback</TARGET-PROVIDED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </OPERATION-INVOKED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T10:17:08+02:00" UUID="0e1bb65d-aec5-42b0-8a5b-9e188153e870">
+                          <SHORT-NAME>trSpiIf_spiReadIBFromChannel_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_Init</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T19:24:57+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/ptrrSpiIfServices</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/SpiIf_DataDictionnary/TriggerInterfaces/itrSpiIfServices/SpiIf_spiReadIBFromChannel</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T10:17:46+02:00" UUID="591210f4-890e-4348-a7c2-5c0e2642bd95">
+                          <SHORT-NAME>trSpiIf_spiReadIBFromChannel_runMainFunction</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_runMainFunction</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T19:24:57+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/ptrrSpiIfServices</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/SpiIf_DataDictionnary/TriggerInterfaces/itrSpiIfServices/SpiIf_spiReadIBFromChannel</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T10:17:15+02:00" UUID="32de3258-294e-4b43-8e94-790d656651e1">
+                          <SHORT-NAME>trSpiIf_spiSyncTransmitSequence_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_Init</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T19:25:20+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/ptrrSpiIfServices</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/SpiIf_DataDictionnary/TriggerInterfaces/itrSpiIfServices/SpiIf_spiSyncTransmitSequence</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T10:17:52+02:00" UUID="26d51d68-9ae8-4ed4-a24e-9c6f73886b8f">
+                          <SHORT-NAME>trSpiIf_spiSyncTransmitSequence_runMainFunction</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_runMainFunction</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T19:25:20+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/ptrrSpiIfServices</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/SpiIf_DataDictionnary/TriggerInterfaces/itrSpiIfServices/SpiIf_spiSyncTransmitSequence</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T10:17:19+02:00" UUID="a28f4aee-b760-41e5-a585-7055a529bfa3">
+                          <SHORT-NAME>trSpiIf_writeSpiData_Init</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_Init</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T20:39:28+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/ptrrSpiIfServices</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/SpiIf_DataDictionnary/TriggerInterfaces/itrSpiIfServices/SpiIf_writeSpiData</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                        <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2023-02-16T10:17:57+02:00" UUID="1399a2b1-fafd-4e1c-864d-15e7ee20038b">
+                          <SHORT-NAME>trSpiIf_writeSpiData_runMainFunction</SHORT-NAME>
+                          <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/AUTOLIV/SoftwareComponents/SBC/SBC/SBC_IB/SBC_runMainFunction</START-ON-EVENT-REF>
+                          <TRIGGER-IREF T="2022-08-26T20:39:28+03:00">
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/ptrrSpiIfServices</CONTEXT-R-PORT-REF>
+                            <TARGET-TRIGGER-REF DEST="TRIGGER">/AUTOLIV/SpiIf_DataDictionnary/TriggerInterfaces/itrSpiIfServices/SpiIf_writeSpiData</TARGET-TRIGGER-REF>
+                          </TRIGGER-IREF>
+                        </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                      </EVENTS>
+                      <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                      <RUNNABLES>
+                        <RUNNABLE-ENTITY T="2023-03-01T13:44:20+02:00" UUID="DCE:742a4603-441a-420e-a744-6773fc2edb0c">
+                          <SHORT-NAME>SBC_Autotest_CheckStatusInformation</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-SEND-POINTS>
+                            <VARIABLE-ACCESS UUID="054766c1-b422-4df0-8eb2-5f99e231d88a">
+                              <SHORT-NAME>dsp_u32SbcReg1Status</SHORT-NAME>
+                              <ACCESSED-VARIABLE>
+                                <AUTOSAR-VARIABLE-IREF>
+                                  <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/psrSbcStatusFailiureSource</PORT-PROTOTYPE-REF>
+                                  <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/isrSbcFailiureSource/u32SbcReg1Status</TARGET-DATA-PROTOTYPE-REF>
+                                </AUTOSAR-VARIABLE-IREF>
+                              </ACCESSED-VARIABLE>
+                            </VARIABLE-ACCESS>
+                          </DATA-SEND-POINTS>
+                          <SYMBOL>SBC_Autotest_CheckStatusInformation</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-04-11T08:07:06+03:00" UUID="DCE:4b8d3865-9347-4030-8bd5-640dae0ce20a">
+                          <SHORT-NAME>SBC_Autotest_WdgTest</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>SBC_Autotest_WdgTest</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-28T17:04:20+02:00" UUID="DCE:2910603c-ea94-491a-9390-974b52879b9f">
+                          <SHORT-NAME>SBC_GetSBCStatusInformation</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>SBC_GetSBCStatusInformation</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-28T17:04:50+02:00" UUID="e02aa995-f628-43a8-8245-4a059a7657d9">
+                          <SHORT-NAME>SBC_Init</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/ptrpSbcServicesEcuM</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrEcuMServices/EcuM_AL_DriverInitOne</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SYMBOL>SBC_Init</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-28T17:04:55+02:00" UUID="DCE:a16ea408-73c0-4f1e-b6fe-011cef4991a1">
+                          <SHORT-NAME>SBC_Reset</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>SBC_Reset</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-28T17:05:50+02:00" UUID="DCE:bc452e46-eef8-4049-a4c3-6b75d1677bb5">
+                          <SHORT-NAME>SBC_SetToLowPower</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>SBC_SetToLowPower</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-22T11:06:31+02:00" UUID="DCE:b4d7050a-68ce-4f9b-94d7-235a44ad60b6">
+                          <SHORT-NAME>SBC_SetToNormal</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>SBC_SetToNormal</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2022-08-26T19:26:51+03:00" UUID="060f0404-15cb-4adb-8882-468e01fd3765">
+                          <SHORT-NAME>SBC_Shutdown</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>SBC_Shutdown</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-04-06T13:46:15+03:00" UUID="86f0994c-b897-41af-8a9d-c86f35bd0d59">
+                          <SHORT-NAME>SBC_runMainFunction</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <SW-ADDR-METHOD-REF DEST="SW-ADDR-METHOD">/AUTOLIV/AUTOSAR_MemMap/SwAddrMethods/CODE_ASIL_A</SW-ADDR-METHOD-REF>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <EXTERNAL-TRIGGERING-POINTS>
+                            <EXTERNAL-TRIGGERING-POINT>
+                              <TRIGGER-IREF>
+                                <P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                                  <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/ptrpAsrOsServicesSBC</CONTEXT-P-PORT-REF>
+                                  <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrOsServices/SBC_runMainFunction</TARGET-TRIGGER-REF>
+                                </P-TRIGGER-IN-ATOMIC-SWC-TYPE-INSTANCE-REF>
+                              </TRIGGER-IREF>
+                            </EXTERNAL-TRIGGERING-POINT>
+                          </EXTERNAL-TRIGGERING-POINTS>
+                          <SERVER-CALL-POINTS>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-06T13:46:15+03:00" UUID="c07f8f37-8559-48a2-9224-be69e2594625">
+                              <SHORT-NAME>scp_GetResetCause</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pclResetCause</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCause/GetResetCause</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                            <SYNCHRONOUS-SERVER-CALL-POINT T="2023-04-06T13:39:14+03:00" UUID="67c1c6d5-9f26-4b5e-a448-1c3117adc500">
+                              <SHORT-NAME>scp_NotifyResetCause</SHORT-NAME>
+                              <OPERATION-IREF>
+                                <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/AUTOLIV/SoftwareComponents/SBC/SBC/pclResetCauseNotification</CONTEXT-R-PORT-REF>
+                                <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/RCM_DataDictionnary/ClientServerInterfaces/icsResetCauseNotification/NotifyResetCause</TARGET-REQUIRED-OPERATION-REF>
+                              </OPERATION-IREF>
+                              <TIMEOUT>0.0</TIMEOUT>
+                            </SYNCHRONOUS-SERVER-CALL-POINT>
+                          </SERVER-CALL-POINTS>
+                          <SYMBOL>SBC_runMainFunction</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                        <RUNNABLE-ENTITY T="2023-02-22T11:05:29+02:00" UUID="DCE:b9c349ad-3ce7-499d-b737-8081444c3f58">
+                          <SHORT-NAME>SBC_sleepTriggerWatchdog</SHORT-NAME>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                          <SYMBOL>SBC_sleepTriggerWatchdog</SYMBOL>
+                        </RUNNABLE-ENTITY>
+                      </RUNNABLES>
+                      <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                    </SWC-INTERNAL-BEHAVIOR>
+                  </INTERNAL-BEHAVIORS>
+                </COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES></AUTOSAR>

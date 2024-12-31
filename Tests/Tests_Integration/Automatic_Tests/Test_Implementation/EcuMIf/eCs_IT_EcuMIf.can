@@ -1,0 +1,1227 @@
+/*@!Encoding:1252*/
+/*------------------------------------------------------------------------------
+                                IMPORT LIBRARY
+ ------------------------------------------------------------------------------*/
+/* To include all the libraries used by the .capl script. */
+/* WARNING: Some things such as diagnostic functions are different from project
+to project, change those according to your project requirements */
+includes
+{
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Defines.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Project_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Diagnostic_Functions.cin"
+}
+
+/*------------------------------------------------------------------------------
+                                    GLOBALS
+ ------------------------------------------------------------------------------*/
+/* To declare the constants used throurough the entire module, and global variables */
+variables
+{
+
+/*----------------------------Global Variables---------------------------------*/
+  float sEcs_HW_defekt;
+ 
+}
+
+
+/*------------------------------------------------------------------------------
+                                TEST FUNCTIONS
+------------------------------------------------------------------------------*/
+/*------------------------- Test Preconditions ------------------------------*/
+/* For operations to ensure the correct execution of the test case, such as IGN_ON,
+checking that CAN communication is present, etc.
+/* Varies from module to module, use from Helper_Functions.cin only the ones you need */
+testfunction RunPreTs()
+{
+  DisplayRequirementsInfo();
+  AddTestSetupInformation();
+  PreTS_StartLogging();
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization");
+  
+  testStep("", "Delete all breakpoint from debugger.");
+  debugger_deleteAllBreakpoints();
+  
+  testStep("", "Reset the debugger.");
+  debugger_reset();
+  
+  testStep("", "Run the debugger.");
+  debugger_run();
+}
+
+/*------------------------- Test Postconditions ------------------------------*/
+/* For operations to ensure that after the test case was executed, the enviroment
+would go back to a blank state, to be ready for the next test step in queue. Call it a Cleanup phase. */
+testfunction RunPostTs()
+{
+  stopLogging("TestCaseLogASC");
+  stopLogging("TestCaseLogBLF");
+}
+testcase InitTestModule()
+{
+  ConfigureTestModuleInformation();
+  strncpy(cLogPathAndName, "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Logs\\",  elcount(cLogPathAndName));
+}
+/*------------------------------------------------------------------------------
+                                TEST EXECUTION
+------------------------------------------------------------------------------*/
+testcase Sw_Int_EcuMIf_ptrrAsrEcuMServicesEcuMIf_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrrAsrEcuMIfServicesEcuMIf_EcuM_DefaultInitListOne");
+  AddRequirementInfo("ARCH_SW_EcuMIf_ptrrAsrEcuMIfServicesEcuMIf_EcuM_DefaultInitListOne", "-  The EcuM_DefaultInitListOne runnable shall be called in the EcuM_DriverInitListOne runnable in order to initialize list one with modules.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrrAsrEcuMIfServicesEcuMIf_EcuM_DefaultInitListOne");  
+   testStep("STEP", "Set a breakpoint in function EcuM_DriverInitListOne for call EcuM_DefaultInitListOne. --> Breakpoint is set");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DriverInitListOne", "5");
+   debugger_reset(); 
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_DefaultInitListOne in order to check if runnable was called in function EcuM_DriverInitListOne.");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DefaultInitListOne", "2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_EcuMIf_ptrrEcuMIfServicesAdcIf_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpEcuMIfServicesAdcIf_EcuM_DriverInitListOne");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpEcuMIfServicesAdcIf_EcuM_DriverInitListOne", "- The AdcIf_Calib runnable shall be called in the EcuM_DriverInitListOne runnable in order to initialize AdcIf module");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpEcuMIfServicesAdcIf_EcuM_DriverInitListOne");
+   testStep("STEP", "Set a breakpoint in function EcuM_DriverInitListOne in order to go in EcuM_DefaultInitListOne function");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DriverInitListOne", "5");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function EcuM_DefaultInitListOne in order to call AdcIf_Calib runnable");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DefaultInitListOne", "18");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function AdcIf_Calib in order to check if runnable was called in function EcuM_DefaultInitListOne");
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Calib", "2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+     
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_EcuMIf_ptrrEcuMIfServicesDioIf_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpEcuMIfServicesDioIf_EcuM_DriverInitListOne, ARCH_SW_DioIf_ptrpEcuMIfServicesDioIf");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpEcuMIfServicesDioIf_EcuM_DriverInitListOne", "-  The DioIf_Init runnable shall be called in the EcuM_DriverInitListOne runnable in order to initialize DioIf module");
+   AddRequirementInfo("ARCH_SW_DioIf_ptrpEcuMIfServicesDioIf", "- The DioIf_Init runnable shall be called during the initialization in the EcuM_DefaultInitListOne runnable - The init function shall set the following pins: - PWM EN 1 set to HIGH	- PWM EN 2 set to HIGH	- PWM EN 3 set to HIGH	- PWM EN 4 set to HIGH	- WAKE Cyclic Power set to HIGH	- Sleep Off set to HIGH	- On Off Power set to HIGH");
+ //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+  
+    testCaseComment("Action: ARCH_SW_EcuMIf_ptrpEcuMIfServicesAdcIf_EcuM_DriverInitListOne");
+   testStep("STEP", "Set a breakpoint in function EcuM_DriverInitListOne in order to call EcuM_DefaultInitListOnefunction");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DriverInitListOne", "5");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_DefaultInitListOne in order to call DioIf_Init runnable");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DefaultInitListOne", "22");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_deleteAllBreakpoints();
+   
+   testStep("STEP", "Set a breakpoint in function DioIf_Init in order to check if runnable was called in function EcuM_DefaultInitListOne");
+   debugger_setRelativeFunctionBpAtLine("DioIf_Init", "2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_deleteAllBreakpoints();  
+  
+   testCaseComment("Action: ARCH_SW_DioIf_ptrpEcuMIfServicesDioIf");
+   testStep("STEP", "Set a breakpoint in function EcuM_DefaultInitListOne in order to call DioIf_Init runnable");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DefaultInitListOne", "22");
+   debugger_reset(); 
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+     
+   testStep("STEP", "Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_EN_CS1");
+   debugger_setRelativeFunctionBpAtLine("DioIf_Init", "5");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_EN_CS2");
+   debugger_setRelativeFunctionBpAtLine("DioIf_Init", "6");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_deleteAllBreakpoints();
+
+   testStep("STEP", "Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_EN_CS3");
+   debugger_setRelativeFunctionBpAtLine("DioIf_Init", "7");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_deleteAllBreakpoints();
+
+   testStep("STEP", "Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_EN_CS4");
+   debugger_setRelativeFunctionBpAtLine("DioIf_Init", "8");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_Sleep_Off");
+   debugger_setRelativeFunctionBpAtLine("DioIf_Init", "9");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+  testStep("STEP", "Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_ON_OFF_Power");
+   debugger_setRelativeFunctionBpAtLine("DioIf_Init", "10");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_Wake_Cyclic_Power");
+   debugger_setRelativeFunctionBpAtLine("DioIf_Init", "11");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrrAsrMcuServicesEcuMIf_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrrAsrMcuServicesEcuMIf_Mcu_PerformReset_EcuM_AL_Reset");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrrAsrMcuServicesEcuMIf_Mcu_PerformReset_EcuM_AL_Reset", "The Mcu_PerformReset runnable shall be called in the EcuM_AL_Reset runnable in order to reset de MCU.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrrAsrMcuServicesEcuMIf_Mcu_PerformReset_EcuM_AL_Reset");
+   testStep("STEP", "Set a breakpoint in function EcuM_AL_Reset in order to go in function");
+   debugger_setRelativeFunctionBpAtLine("EcuM_AL_Reset", "1");
+   debugger_reset();
+   debugger_run();
+  
+  testStep("STEP", "Send diagnostic request in order to do soft Reset");
+   SendDiagnosticRequest(dSoftResetRequest, dSoftResetResponse);
+  
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_writeLocalVariable("reset", "0"); 
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_AL_Reset in order to call Mcu_PerformReset runnable");
+   debugger_setRelativeFunctionBpAtLine("EcuM_AL_Reset", "20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+     
+   testStep("STEP", "Set a breakpoint in function Mcu_PerformReset in order check the interface.");
+   debugger_setRelativeFunctionBpAtLine("Mcu_PerformReset", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+//  
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_EcuMIf_ptrrAsrCanIfServicesEcuMIf_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrrAsrCanIfServicesEcuMIf_CanIf_SetControllerMode_EcuM_StartWakeupSources");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrrAsrCanIfServicesEcuMIf_CanIf_SetControllerMode_EcuM_StartWakeupSources", "-  The CanIf_SetControllerMode runnable shall be called in the EcuM_StartWakeupSources runnable in order to set the CAN Controller mode.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+ 
+   testCaseComment("Requirement Under Test: ARCH_SW_EcuMIf_ptrrAsrCanIfServicesEcuMIf_CanIf_SetControllerMode_EcuM_StartWakeupSources");
+   testStep("STEP", "Set a breakpoint in function EcuM_StartWakeupSources in order to set the CAN Controller mode");
+   debugger_setRelativeFunctionBpAtLine("EcuM_StartWakeupSources", "4");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function CanIf_SetControllerMode in order to check the interface");
+   debugger_setRelativeFunctionBpAtLine("CanIf_SetControllerMode", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_deleteAllBreakpoints();
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_StartWakeupSources in order to set the CAN Controller mode");
+   debugger_setRelativeFunctionBpAtLine("EcuM_StartWakeupSources", "5");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+ 
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\CanIf_TS_TxDxM6I9R0\\src\\CanIf.c", "1285");
+   testStep("STEP", "Set a breakpoint in function CanIf_SetControllerMode in order to check the interface");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_DriverInitOne");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_DriverInitOne", "- The EcuM_AL_DriverInitOne runnable shall be called by the Autosar EcuM at startup procedure to initializes all the EcuM configured modules.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Requirement Under Test: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_DriverInitOne");
+   testStep("STEP", "Set a breakpoint in function EcuM_Init in order to go in EcuM_StartPreOS function");
+   debugger_setRelativeFunctionBpAtLine("EcuM_Init", "21");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function EcuM_StartPreOS in order to call ECUM_AL_DRIVERINITONE function");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "1104");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_AL_DriverInitOne im order to initializes all the EcuM configured modules");
+   debugger_setRelativeFunctionBpAtLine("EcuM_AL_DriverInitOne", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+   testStep("STEP", "Set a breakpoint in function EcuM_StartPreOS in order to check the interface");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "1107");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_02()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DriverInitListOne, ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DeterminePbConfiguration");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DriverInitListOne", "- The EcuM_DriverInitListOne runnable shall be called by the Autosar EcuM at startup procedure to initialize default list one: - Dem - Mcu - McuArchClock - Port - Can - Fls - Fee - Adc - AdcIf - Pwm - DioIf - Spi - Sbc");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DeterminePbConfiguration", "- The EcuM_DeterminePbConfiguration runnable shall be called by the Autosar EcuM at startup procedure to evaluate some condition, like port pin or NVRAM value, to determine which post-build configuration shall be used.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DriverInitListOne");
+   testStep("STEP", "Set a breakpoint in function EcuM_Init in order to call EcuM_DeterminePbConfiguration function");
+   debugger_setRelativeFunctionBpAtLine("EcuM_Init", "19");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testCaseComment("Requirement Under Test: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DeterminePbConfiguration");
+   testStep("STEP", "Set a breakpoint in function EcuM_DeterminePbConfiguration in order to check if runnable was called by Autosar");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DeterminePbConfiguration", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_DriverInitListOne in order to go in function EcuM_DefaultInitListOne");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DriverInitListOne", "5");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function EcuM_DefaultInitListOne in order to check if runnable was called in EcuM_DriverInitListOne function");
+   debugger_setRelativeFunctionBpAtLine("EcuM_DefaultInitListOne", "2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_03()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_SwitchOff");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_SwitchOff", "- The EcuM_AL_SwitchOff runnable shall be called by the Autosar EcuM as the last activity in the OffPostOS Sequence.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+    testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_SwitchOff");    
+  debugger_setRelativeFunctionBpAtLine("BswM_Cyclic_10msTimer", "5");
+
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+   TestWaitForTimeout(500);
+   
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send request for press ECUUnlock button");
+   @Platform::DIAG_ECUUnlock = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to write eCS Variant to disable buckle and seat sensors");
+   diagSetParameter(dEcsVariant_WriteRequest, "eCS_Variant/NVP_u32eCSVariant", 7680);
+  SendDiagnosticRequest(dEcsVariant_WriteRequest, dEcsVariant_WriteResponse);
+  TestWaitForTimeout(5000);
+  
+  testStep("STEP", "Disable comunication --> Comunicatin disable");
+  TestDisableMsg(Airbag_01);
+  TestDisableMsg(Airbag_02);
+  TestDisableMsg(Airbag_eCS_01);
+  TestWaitForTimeout(5000);
+  
+  testStep("STEP", "Set a BP in function BswM_Cyclic_10msTimer in order to change post run timer value --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  debugger_deleteAllBreakpoints();  
+  
+  testStep("STEP", "Change value for Post Run Timer in order to go in EcuM_Shutdown function --> Succesfully changed");
+  debugger_writeVariable("uint16","bswmif_u16TPostRunTimer", "0", "1770");
+  TestWaitForTimeout(1000);
+  
+    debugger_setRelativeFunctionBpAtLine("BswM_Cyclic_10msTimer", "35");
+  testStep("", "Run the debugger.");
+   debugger_run();
+   debugger_waitUntilBPisReached("6000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "1254");
+  testStep("", "Run the debugger.");
+   debugger_run();
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function EcuM_Shutdown in order to call EcuM_AL_SwitchOff function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("EcuM_AL_SwitchOff", "2");
+  testStep("", "Run the debugger.");
+   debugger_run();
+  testStep("STEP", "Set a BP in function EcuM_AL_SwitchOff in order to check if is called as the last activity in the OffPostOS Sequence --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_04()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_SetProgrammableInterrupts");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_SetProgrammableInterrupts", "- The EcuM_AL_SetProgrammableInterrupts runnable shall be called by the Autosar EcuM at startup phase and shall set the interrupts on ECUs with programmable interrupts.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_SetProgrammableInterrupts");
+   testStep("STEP", "Set a breakpoint in function EcuM_StartPreOS in order to go in EcuM_AL_SetProgrammableInterrupts function");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "1099");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function EcuM_AL_SetProgrammableInterrupts in order to check the interface");
+   debugger_setRelativeFunctionBpAtLine("EcuM_AL_SetProgrammableInterrupts", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+      
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_05()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_ErrorHook");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_ErrorHook", "- The EcuM_ErrorHook runnable shall be called by the Autosar EcuM to handle the production error ECUM_RAM_CHECK_FAILED when RAM Check fails on wakeup.");
+ //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_ErrorHook");
+   testStep("STEP", "Set a breakpoint in function EcuM_HaltSequence in order to call EcuM_ErrorHook function");
+    debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "924");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_ErrorHook in order to check the interface");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Application\\Autoliv\\ECUMIf\\Implementation\\src\\EcuM_Callout_Stubs.c", "252");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+      
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_06()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_GenerateRamHash, ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckRamHash");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_GenerateRamHash", "- The EcuM_GenerateRamHash runnable shall be called by the Autosar EcuM for writing a RAM hash just before putting the ECU physically to sleep.");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckRamHash", "- The EcuM_CheckRamHash runnable shall be called by the Autosar EcuM to provide a RAM integrity test.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_GenerateRamHash");
+   testStep("STEP", "Set a breakpoint in function EcuM_HaltSequence in order to call EcuM_GenerateRamHash function");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "887");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+ 
+   testStep("STEP", "Set a breakpoint in function EcuM_GenerateRamHash in order to check the interface ");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Application\\Autoliv\\ECUMIf\\Implementation\\src\\EcuM_Callout_Stubs.c", "284");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_deleteAllBreakpoints();
+  
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckRamHash");
+   testStep("STEP", "Set a breakpoint in function EcuM_HaltSequence in order to call EcuM_CheckRamHash function");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "907");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully"); 
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_CheckRamHash in order to check the interface");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Application\\Autoliv\\ECUMIf\\Implementation\\src\\EcuM_Callout_Stubs.c", "315");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   
+   testStep("STEP", "Read RamTestResult return value.");
+   debugger_readLocalVariable("u8RamTest");
+  
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_07()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffOne, ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffTwo");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffOne", "- The EcuM_OnGoOffOne runnable shall be called by the Autosar EcuM when ECU state manager module perform a power off or a reset depending on the selected shutdown target.");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffTwo", "- The EcuM_OnGoOffTwo runnable shall be called by the Autosar EcuM when ECU state manager module perform a power off or a reset depending on the selected shutdown target but after EcuM_OnGoOffOne was executed");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffOne");
+   testStep("STEP", "Set a breakpoint in function EcuM_GoDown in order to call EcuM_OnGoOffOne function");
+   debugger_setRelativeFunctionBpAtLine("EcuM_GoDown", "0");
+   debugger_reset();
+   debugger_run();
+  
+    testStep("STEP", "Send diagnostic request in order to do soft Reset");
+   SendDiagnosticRequest(dHardResetRequest, dHardResetResponse);
+  
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_OnGoOffOne in order to check the interface");
+   debugger_setRelativeFunctionBpAtLine("EcuM_OnGoOffOne", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_deleteAllBreakpoints();
+  
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_OnGoOffTwo");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "1243");
+   testStep("STEP", "Set a breakpoint in function EcuM_Shutdown in order to call  EcuM_OnGoOffTwo function");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully"); 
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_OnGoOffTwo in order to check the interface");
+   debugger_setRelativeFunctionBpAtLine("EcuM_OnGoOffTwo", "1");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_09()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_Reset");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_Reset", "- The EcuM_AL_Reset runnable shall be called by the Autosar EcuM when the shutdown target is RESET, and the shutdown procedure is made.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/  
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_Reset");
+   testStep("STEP", "Set a breakpoint in function OS_Shutdown in order to call ShutdownHook function ");
+   debugger_setRelativeFunctionBpAtLine("OS_Shutdown", "50");
+   debugger_reset();
+   debugger_run();
+  
+   testStep("STEP", "Send diagnostic request in order to do soft Reset");
+   SendDiagnosticRequest(dSoftResetRequest, dSoftResetResponse);
+  
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function ShutdownHook in order to call EcuM_Shutdown function ");
+   debugger_setRelativeFunctionBpAtLine("ShutdownHook", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_writeVariable("uint8","EcuM_ShutdownTarget,,app.elf", "1", "90");
+
+   testStep("STEP", "Set a breakpoint in function EcuM_Shutdown in order to call EcuM_AL_Reset function ");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "1250");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_AL_Reset in order to check the interface");
+   debugger_setRelativeFunctionBpAtLine("EcuM_AL_Reset", "1");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   debugger_deleteAllBreakpoints();
+  
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_10()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_SleepActivity");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_SleepActivity", "- The EcuM_SleepActivity runnable shall be called by the Autosar EcuM in Poll sequence in a blocking loop at maximum frequencyuntil a pending wakeup event is reported if the MCU is not halted");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_SleepActivity");
+   testStep("STEP", "Set a breakpoint in function EcuM_GoPoll in order to call EcuM_SleepActivity function ");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "1012");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function EcuM_SleepActivity in order to check the interface");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Application\\Autoliv\\ECUMIf\\Implementation\\src\\EcuM_Callout_Stubs.c", "438");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_11()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_PreHalt");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_PreHalt", "- The EcuM_PreHalt runnable shall be called by the Autosar EcuM during sleep state before to put the ECU in Halt State.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/    
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_PreHalt");
+   testStep("STEP", "Set a breakpoint in function EcuM_GoHalt in order to call EcuM_HaltSequence function ");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "853");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+ 
+   testStep("STEP", "Set a breakpoint in function EcuM_HaltSequence in order to call EcuM_PreHalt function");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "884");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+
+   testStep("STEP", "Set a breakpoint in function EcuM_PreHalt in order to check the interface");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Application\\Autoliv\\ECUMIf\\Implementation\\src\\EcuM_Callout_Stubs.c", "463");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_12()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_PostHalt");
+  AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_PostHalt", "- The EcuM_PostHalt runnable shall be called by the Autosar EcuM during sleep state after ECU exited Halt State.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_PostHalt");
+   testStep("STEP", "Set a breakpoint in function EcuM_GoHalt in order to call EcuM_HaltSequence function ");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "853");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+ 
+  testStep("STEP", "Set a breakpoint in function EcuM_HaltSequence in order to call EcuM_PostHalt function");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "904");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+   testStep("STEP", "Set a breakpoint in function EcuM_PostHalt in order to check the interface");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Application\\Autoliv\\ECUMIf\\Implementation\\src\\EcuM_Callout_Stubs.c", "484");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_13()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_StartWakeupSources");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_StartWakeupSources", "- The EcuM_StartWakeupSources runnable shall be called by the Autosar EcuM to start the pending wakeup sources");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_StartWakeupSources");
+   testStep("STEP", "Set a breakpoint in function EcuM_MainFunction in order to call EcuM_StartWakeupSources function ");
+   debugger_setRelativeFunctionBpAtLine("EcuM_MainFunction", "72");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+   testStep("STEP", "Set a breakpoint in function EcuM_StartWakeupSources in order to call CanIf_SetTrcvMode function");
+   debugger_setRelativeFunctionBpAtLine("EcuM_StartWakeupSources", "4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_14()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_StopWakeupSources");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_StopWakeupSources", "- The EcuM_StopWakeupSources runnable shall be called by the Autosar EcuM to stop the pending wakeup sources");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_StopWakeupSources");
+   testStep("STEP", "Set a breakpoint in function EcuM_MainFunction in order to step in if");
+   debugger_setRelativeFunctionBpAtLine("EcuM_MainFunction", "49");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   debugger_writeLocalVariable("wksPending", "2");
+   debugger_writeLocalVariable("wksValCounter", "0");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_MainFunction in order to call EcuM_StopWakeupSources  function ");
+   debugger_setRelativeFunctionBpAtLine("EcuM_MainFunction", "62");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+   testStep("STEP", "Set a breakpoint in function EcuM_StopWakeupSources in order to check the interface");
+   debugger_setRelativeFunctionBpAtLine("EcuM_StopWakeupSources", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_15()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_EnableWakeupSources");
+  AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_EnableWakeupSources", "- The EcuM_EnableWakeupSources runnable shall be called by the Autosar EcuM to enable wakeup sources");
+ //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_EnableWakeupSources");
+   testStep("STEP", "Set a breakpoint in function EcuM_GoPoll in order to call EcuM_GoSleep function ");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "995");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_GoSleep in order to call EcuM_EnableWakeupSources  function ");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "2826");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+ 
+   testStep("STEP", "Set a breakpoint in function EcuM_EnableWakeupSources in order to check the interface");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Application\\Autoliv\\ECUMIf\\Implementation\\src\\EcuM_Callout_Stubs.c", "590");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_16()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DisableWakeupSources");
+  AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DisableWakeupSources", "- The EcuM_DisableWakeupSources runnable shall be called by the Autosar EcuM to disable wakeup sources");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DisableWakeupSources");
+   testStep("STEP", "Set a breakpoint in function EcuM_GoPoll in order to call EcuM_WakeupRestart function ");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "1034");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_WakeupRestart in order to call EcuM_DisableWakeupSources function ");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "2912");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+   testStep("STEP", "Set a breakpoint in function EcuM_DisableWakeupSources in order to check the interface");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Application\\Autoliv\\ECUMIf\\Implementation\\src\\EcuM_Callout_Stubs.c", "632");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_17()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckValidation");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckValidation", "- The EcuM_CheckValidation runnable shall be called by the Autosar EcuM to check for pending wakeup sources");
+   //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+  /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckValidation");
+   testStep("STEP", "Set a breakpoint in function EcuM_MainFunction in order to step in if");
+   debugger_setRelativeFunctionBpAtLine("EcuM_MainFunction", "78");
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+  
+   debugger_writeLocalVariable("wksPending", "2");
+  
+   testStep("STEP", "Set a breakpoint in function EcuM_MainFunction in order to call EcuM_StopWakeupSources function ");
+   debugger_setRelativeFunctionBpAtLine("EcuM_MainFunction", "81");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+   testStep("STEP", "Set a breakpoint in function EcuM_CheckValidation in order to check the interface");
+   debugger_setRelativeFunctionBpAtLine("EcuM_CheckValidation", "2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_18()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckWakeup");
+   AddRequirementInfo("ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckWakeup", "- The EcuM_CheckWakeup runnable shall be called by the Autosar EcuM to check all wakeup sources");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_CheckWakeup");
+   testStep("STEP", "Set a breakpoint in function EcuM_GoPoll in order to call EcuM_CheckWakeup function");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Tools\\EB_BSW_8.5.1\\Workspace\\plugins\\EcuM_TS_TxDxM5I14R0\\src\\EcuM.c", "1015");
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+    
+   testStep("STEP", "Set a breakpoint in function EcuM_CheckWakeup in order to check the interface");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Application\\Autoliv\\ECUMIf\\Implementation\\src\\EcuM_Callout_Stubs.c", "723");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP was set successfully");
+   //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+void MainTest()
+{
+  InitTestModule();
+//  Sw_Int_EcuMIf_ptrrAsrEcuMServicesEcuMIf_01();
+//  Sw_Int_EcuMIf_ptrrEcuMIfServicesAdcIf_01();
+//  Sw_Int_EcuMIf_ptrrEcuMIfServicesDioIf_01();
+  Sw_Int_EcuMIf_ptrrAsrMcuServicesEcuMIf_01();
+//  Sw_Int_EcuMIf_ptrrAsrCanIfServicesEcuMIf_01();
+//  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_01();
+//  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_02();
+//  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_03();   // Asta 
+//  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_04();
+//////  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_05();   // din cauza optimizarilor nu pot pune bp
+//////  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_06();   // din cauza optimizarilor nu pot pune bp
+//////  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_07();   // lipseste corpul fnctiei
+//  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_09();
+//////  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_10();   // din cauza optimizarilor nu pot pune bp
+//////  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_11();   // din cauza optimizarilor nu pot pune bp
+//////  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_12();   // din cauza optimizarilor nu pot pune bp
+//  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_13();
+//  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_14();
+//////  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_15();   // din cauza optimizarilor nu pot pune bp
+//////  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_16();   // din cauza optimizarilor nu pot pune bp
+//  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_17();
+//////  Sw_Int_EcuMIf_ptrpAsrEcuMServicesEcuMIf_18();   // din cauza optimizarilor nu pot pune bp
+}

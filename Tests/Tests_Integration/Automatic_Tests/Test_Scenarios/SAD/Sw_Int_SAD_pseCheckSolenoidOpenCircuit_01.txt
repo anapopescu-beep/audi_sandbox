@@ -1,0 +1,43 @@
+					Autoliv Electronics Document
+
+Preconditions
+
+	Step 0: Bench Initialization
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_SAD_pseCheckSolenoidOpenCircuit_SAD_CheckSolenoidOpenCircuitAutotest
+ARCH_SW_SAD_pseCheckSolenoidOpenCircuit_SAD_CheckSolenoidOpenCircuitAutotest: The auto-test shall detect for all conected and configured solenoids if they are electrically conected. - In order to detect an open-circuit hardware fault, all measurements on solenoid ADC lines shall be done with unlock profile or diagnostic profile active. - If the measured solenoid voltage is in range between +20% of NVP_u16OpenCircuitUnlockProfThrs and -20% of NVP_u16OpenCircuitUnlockProfThrs when unlock profile is active, than autotest shall return OK. - If the measured solenoid voltage is not in range between +20% of NVP_u16OpenCircuitUnlockProfThrs and -20% of NVP_u16OpenCircuitUnlockProfThrs when unlock profile is active, than autotest shall return NOK. - If the measured solenoid voltage is in range between +20% of {NVP_u16OpenCircuitDiagProfThrs} and -20% of {NVP_u16OpenCircuitDiagProfThrs} when diagnostic profile is active, than autotest shall return OK. - If the measured solenoid voltage is not in range between +20% of {NVP_u16OpenCircuitDiagProfThrs} and -20% of {NVP_u16OpenCircuitDiagProfThrs} when diagnostic profile is active, than autotest shall NOK. - If unlock profile or diagnostic profile is not active, than autotest shall return last valid autotest result.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_SAD_pseCheckSolenoidOpenCircuit_SAD_CheckSolenoidOpenCircuitAutotest
+
+	Step 2: Set a BP in function SAD_CheckSolenoidOpenCircuitAutotest in order to call sad_CheckSolenoidOpenCircuitAutotest function 
+		Expected result:  BP was set
+
+	Step 3: Send diagnostic request in order to go in Supplier Session
+
+	Step 4: Send request for press Supplier Security Access button
+
+	Step 5: Send request for press ECUUnlock button
+
+	Step 6: Set a BP in function sad_CheckSolenoidOpenCircuitAutotest in order to check if Solenoid is in open circuit and read the auto test result
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function SAD_CheckSolenoidOpenCircuitAutotest in order to check if auto test result is not ok
+		Expected result:  BP was set
+
+	Step 8: Read Result of Test value  
+		Expected result:  Result Of Test succesfully read
+
+Postcondition
+
+	Step 9: Return ECU to default values

@@ -1,0 +1,47 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_EcuMIf_ptrpEcuMIfServicesDioIf_EcuM_DriverInitListOne, ARCH_SW_DioIf_ptrpEcuMIfServicesDioIf
+ARCH_SW_EcuMIf_ptrpEcuMIfServicesDioIf_EcuM_DriverInitListOne: -  The DioIf_Init runnable shall be called in the EcuM_DriverInitListOne runnable in order to initialize DioIf module
+ARCH_SW_DioIf_ptrpEcuMIfServicesDioIf: - The DioIf_Init runnable shall be called during the initialization in the EcuM_DefaultInitListOne runnable - The init function shall set the following pins: - PWM EN 1 set to HIGH	- PWM EN 2 set to HIGH	- PWM EN 3 set to HIGH	- PWM EN 4 set to HIGH	- WAKE Cyclic Power set to HIGH	- Sleep Off set to HIGH	- On Off Power set to HIGH
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_EcuMIf_ptrpEcuMIfServicesAdcIf_EcuM_DriverInitListOne
+
+	Step 2: Set a breakpoint in function EcuM_DriverInitListOne in order to call EcuM_DefaultInitListOnefunction
+
+	Step 3: Set a breakpoint in function EcuM_DefaultInitListOne in order to call DioIf_Init runnable
+
+	Step 4: Set a breakpoint in function DioIf_Init in order to check if runnable was called in function EcuM_DefaultInitListOne
+
+Action: ARCH_SW_DioIf_ptrpEcuMIfServicesDioIf
+
+	Step 5: Set a breakpoint in function EcuM_DefaultInitListOne in order to call DioIf_Init runnable
+
+	Step 6: Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_EN_CS1
+
+	Step 7: Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_EN_CS2
+
+	Step 8: Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_EN_CS3
+
+	Step 9: Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_EN_CS4
+
+	Step 10: Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_Sleep_Off
+
+	Step 11: Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_ON_OFF_Power
+
+	Step 12: Set a breakpoint in function DioIf_Init in order to call Dio_WriteChannel function for DioConf_DioChannel_Dio_Wake_Cyclic_Power
+
+Postcondition
+
+	Step 13: Return ECU to default values

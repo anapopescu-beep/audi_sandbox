@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?module ComM?>
+
+<xgen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.elektrobit.com/2013/xgen" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+
+
+
+  <!-- This is the configuration of module ComM -->
+  <module name="ComM">
+
+    <!-- This is the Precompile-time configuration of the module. -->
+    <configuration class="PreCompile">
+
+      <?artifact directory="include" file="ComM_Types_Int.h" type="types-h"?>
+
+      <!-- !LINKSTO ComM.PB.Impl.Relocatable,1 -->
+      <parameter name="relocatable-enable">
+        <boolean-value>true</boolean-value>
+      </parameter>
+
+      <!-- This is the type definition of the root structure -->
+      <type name="ComM_ConfigType">
+        <struct>
+          <!-- !LINKSTO ComM.PB.Impl.Hash,1 -->
+          <member name="PlatformSignature" type="uint32" comment="Used to validate the platform"/>
+          <member name="LcfgSignature" type="uint32" comment="Used to validate the post build configuration against the link time configuration"/>
+          <member name="CfgSignature" type="uint32" comment="Used to validate the post build configuration against the precompile time configuration"/>
+          <member name="PublicInfoSignature" type="uint32" comment="Used to validate Public information"/>
+          <member name="pUsersOfAllChannel" type="uint8" comment="Reference to COMM_ConfigLayoutType.aUsersOfAllChannel">
+            <compiler-abstraction>
+              <ref2cfg />
+            </compiler-abstraction>
+          </member>
+          <member name="NumUsersOfAllChannel" type="uint16" count="2" comment="Index of first user of a channel in COMM_ConfigLayoutType.aUsersOfAllChannel"/>
+          <member name="pChannelsOfAllUser" type="uint8" comment="Reference to COMM_ConfigLayoutType.aChannelsOfAllUser">
+            <compiler-abstraction>
+              <ref2cfg />
+            </compiler-abstraction>
+          </member>
+          <member name="NumChannelsOfAllUser" type="uint16" count="2" comment="Index of first channel of a user in COMM_ConfigLayoutType.aChannelsOfAllUser"/>
+          <member name="DirectNumChannelsOfAllUser" type="uint16" count="2" comment="Index of first channel of a user in COMM_ConfigLayoutType.aChannelsOfAllUser"/>
+
+        </struct>
+      </type>
+
+    </configuration>  <!-- PreCompile -->
+  </module>
+
+  <!-- include the AUTOSAR standard data types, etc. -->
+  <!-- The xpointer atribute shouldrather be something like "xpointer(//module[name='...'])",
+       but unfortunately our XML parser does not support the XPointer xpointer() Scheme.
+       This is also the reason why all these xincludes must be at the end of the file rather
+       than at the beginning, because that way the other xgen files that include this one can
+       be sure that "element(/1/1)" is the ComM module element.
+  -->
+  <xi:include href="Base.xgen" xpointer="element(/1/1)"/>
+
+</xgen>
+

@@ -1,0 +1,55 @@
+1. Example Description
+    This application demonstrates the usage of the Mcl Driver.
+    The application includes a S32CT project that configures the Mcu and Platform drivers.
+    1.1 The application software functionality
+            - Mcu_Init, Mcu_InitClock, Mcu_SetMode
+                    Initialize the clock sources, the clock tree and to configure the clock gating of the peripherals.
+                    The clock configuration that is used will enable and use the PLL as source clock.
+            - Platform_Init
+                    Initialize the interrupt controller and to apply the interrupt configuration according to the Platform configuration.
+            - Platform_InstallIrqHandler
+                    Install the ISR for the DMA Logic Channel 0, Logic Channel 1 and Logic Channel 2.
+            - Mcl_Init
+                    Initialize the Mcl Driver: Initialize the DMA Logic Instance and DMA Logic Channel 0, Logic Channel 1 and Logic Channel 2.
+                    Logic Channel 0 is configured in S32CT to run in Normal Transfer Mode.
+                    Logic Channel 1 is configured in S32CT to run in Scatter/Gather Mode.
+                    Logic Channel 2 is configured during runtime to run in Normal Transfer Mode.
+            - Mcl_SetDmaChannelTransferList
+                    Configures at runtime, the selected Logic Channel, with Normal Transfer Mode Source Address and Destination Address parameters.
+            - Mcl_SetDmaChannelScatterGatherList
+                    Configures at runtime, the selected Logic Element of the selected Logic Channel, with Scatter/Gather Mode Source Address and Destination Address parameters.
+            - Mcl_SetDmaChannelCommand
+                    Sets specific command for the selected Logic Channel.
+            - Mcl_CacheInvalidateByAddr
+                    Invalidates the specified buffer in Cache. The buffer shall be 32 bytes aligned.
+    1.2 Expected behavior:
+        The destination buffer is the same with the source buffer.
+2. Installation steps
+    2.1 Hardware installation
+        2.1.1 Supported boards
+            - XS32K14WEVB-Q064 PCB 46873 RevA SCH RevB
+        2.1.2 Connections
+        2.1.3 Debugger
+            The application can be debugged using the on board OpenSDA debugger
+    2.2 Software installation
+        2.2.1 Importing the S32 Design Studio project
+            After opening S32 Design Studio, go to "File -> New -> S32DS Project From Example" and select this example. Then click on "Finish".
+            The project should now be copied into you current workspace.
+         
+3. Generating, building and running the example application
+    3.1 Generating the S32 configuration
+        Before running the example a configuration needs to be generated.  First go to Project Explorer View in S32 DS and select the current project. Select the "S32 Configuration Tool" menu then click on the desired configuration tool (Pins, Cocks, Peripherals etc...). Clicking on any one of those will generate all the components. Make the desired changes(if any) then click on the "S32 Configuration Tool->Update Code" button.
+    3.2 Compiling the application
+        Select the configuration to be built: FLASH (Debug_FLASH) by left clicking on the downward arrow corresponding to the build button in S32 Design Studio. 
+        Use Project > Build to build the project.
+        Wait for the build action to be completed before continuing to the next step. Check the compiler console for error messages; upon completion, the *.elf binary file
+        should be created.
+    3.3 Running the application on the board
+        Go to Run and select Debug Configurations. There will be a debug configuration for this project:
+        
+        Configuration Name                               Description
+        -------------------------------                  -----------------------
+        Mcl_DmaTransfer_S32K144W_debug_flash_pemicro      Debug the FLASH configuration using PEmicro probe
+        
+        Select the desired debug configuration and click on Launch. Now the perspective will change to the Debug Perspective.
+        Use the controls to control the program flow.

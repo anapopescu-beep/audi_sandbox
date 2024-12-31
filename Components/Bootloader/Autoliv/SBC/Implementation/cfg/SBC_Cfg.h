@@ -1,0 +1,283 @@
+#ifndef SBC_CFG_H_
+#define SBC_CFG_H_ 1
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+H-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+*******************************************************************************
+
+Overview of the interfaces:
+   SBC Interface configuration
+
+******************************************************************************/
+/*
+ * Explanation:
+ *    Disabled for MKS keywords
+ */
+/*
+$Revision: 1.6 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Bootloader/Autoliv/SBC/Implementation/cfg/project.pj $
+*/
+/*****************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+/******************************************************************************
+DEFINITION OF CONSTANTS
+******************************************************************************/
+
+/* Address of SBC Status Registers */
+/**
+ * \brief
+ *       SUP_STAT_1 register address of SBC.
+ */
+#define KU8_SBC_REG_SUP_STAT_1                              ((uint8)0x40)
+/**
+ * \brief
+ *       SUP_STAT_0 register address of SBC.
+ */
+#define KU8_SBC_REG_SUP_STAT_0                              ((uint8)0x41)
+/**
+ * \brief
+ *       THERMAL_STAT register address of SBC.
+ */
+#define KU8_SBC_REG_THERMAL_STAT                            ((uint8)0x42)
+/**
+ * \brief
+ *       DEV_STAT register address of SBC.
+ */
+#define KU8_SBC_REG_DEV_STAT                                ((uint8)0x43)
+/**
+ * \brief
+ *       BUS_STAT register address of SBC.
+ */
+#define KU8_SBC_REG_BUS_STAT                                ((uint8)0x44)
+/**
+ * \brief
+ *       WK_STAT_0 register address of SBC.
+ */
+#define KU8_SBC_REG_WK_STAT_0                               ((uint8)0x46)
+/**
+ * \brief
+ *       WK_STAT_1 register address of SBC.
+ */
+#define KU8_SBC_REG_WK_STAT_1                               ((uint8)0x47)
+/**
+ * \brief
+ *       GPIO_OC_STAT register address of SBC.
+ */
+#define KU8_SBC_REG_GPIO_OC_STAT                            ((uint8)0x54)
+/**
+ * \brief
+ *       GPIO_OL_STAT register address of SBC.
+ */
+#define KU8_SBC_REG_GPIO_OL_STAT                            ((uint8)0x55)
+
+/* Commands type to the SBC Registers */
+/**
+ * \brief
+ *       This define is used to tell us that it's a READ and CLEAR command to the status registers.
+ */
+#define KU8_SBC_READ_CLEAR_REG_COMMAND_TYPE                 ((uint8)0x80)
+
+/* Change values of control registers */
+/**
+ * \brief
+ *       SBC WD_CTRL register value to enable watchdog and set period to 500 ms.
+ */
+#define KU8_SBC_SET_WD_CTRL_WD_EN_AND_PERIOD_500MS          ((uint8)0x95)
+/**
+ * \brief
+ *       SBC WD_CTRL register value to enable watchdog and set a specific period.
+ */
+#define KU8_SBC_SET_WD_CTRL   KU8_SBC_SET_WD_CTRL_WD_EN_AND_PERIOD_500MS
+
+/**
+ * \brief
+ *       SBC M_S_CTRL register value to set SBC in Stop Mode
+ *       and set Reset Threshold Control to Vrt2.
+ */
+#define KU8_SBC_SET_M_S_CTRL_STOP_MODE_AND_VCC1_RES_TH_VRT2 ((uint8)0x81)
+/**
+ * \brief
+ *       SBC BUS_CTRL register value to set CAN Module in Normal Mode.
+ */
+#define KU8_SBC_SET_BUS_CTRL_CAN_NORMAL                     ((uint8)0x03)
+/**
+ * \brief
+ *       SBC BUS_CTRL register value to set CAN Module in wake capable mode.
+ */
+#define KU8_SBC_SET_BUS_CTRL_CAN_WAKABLE                    ((uint8)0x01)
+/**
+ * \brief
+ *       SBC M_S_CTRL register value to set VCC2 ON in Normal Mode.
+ */
+#define KU8_SBC_SET_M_S_CTRL_VCC2_NORMAL                    ((uint8)0x08)
+/**
+ * \brief
+ *       SBC M_S_CTRL register value to set SBC in Sleep Mode
+ *       and set Reset Threshold Control to Vrt2.
+ */
+#define KU8_SBC_SET_M_S_CTRL_SBC_SLEEP_AND_VCC1_RES_TH_VRT2 ((uint8)0x41)
+/**
+ * \brief
+ *       SBC HW_CTRL register value to set VCC1 Active Peak Threshold to high.
+ */
+#define KU8_SBC_SET_HW_CTRL_2_HI_VCC1_ACTIVE_PEAK           ((uint8)0x50)
+
+/* IDs for all registers represented in the Status Information Field  */
+/**
+ * \brief
+ *       ID for SUP_STAT_1 refister status information.
+ */
+#define KU8_SBC_ID_SUP_STAT_1                               ((uint8) 0x03)
+/**
+ * \brief
+ *       ID for WK_STAT_0 refister status information.
+ */
+#define KU8_SBC_ID_WK_STAT_0                                ((uint8) 0x04)
+/**
+ * \brief
+ *       ID for DEV_STAT refister status information.
+ */
+#define KU8_SBC_ID_DEV_STAT                                 ((uint8) 0x07)
+/**
+ * \brief
+ *       ID for SUP_STAT_0 refister status information.
+ */
+#define KU8_SBC_ID_SUP_STAT_0                               ((uint8) 0x09)
+
+/* Masks to read useful bits from Status Registers */
+/**
+ * \brief
+ *      GPIO_OL_STAT Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_GPIO_OL_STAT_USED_BITS_MASK                 ((uint8)0x40)
+/**
+ * \brief
+ *      GPIO_OC_STAT Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_GPIO_OC_STAT_USED_BITS_MASK                 ((uint8)0x40)
+/**
+ * \brief
+ *      SUP_STAT_0 Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_SUP_STAT_0_GR1_USED_BITS_MASK               ((uint8)0x80)
+/**
+ * \brief
+ *      SUP_STAT_0 Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_SUP_STAT_0_GR2_USED_BITS_MASK               ((uint8)0x1C)
+/**
+ * \brief
+ *      SUP_STAT_0 Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_SUP_STAT_0_GR3_USED_BITS_MASK               ((uint8)0x01)
+/**
+ * \brief
+ *      SUP_STAT_1 Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_SUP_STAT_1_GR1_USED_BITS_MASK               ((uint8)0x60)
+/**
+ * \brief
+ *      SUP_STAT_1 Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_SUP_STAT_1_GR2_USED_BITS_MASK               ((uint8)0x03)
+/**
+ * \brief
+ *      BUS_STAT Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_BUS_STAT_USED_BITS_MASK                     ((uint8)0x1F)
+/**
+ * \brief
+ *      DEV_STAT Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_DEV_STAT_GR1_USED_BITS_MASK                 ((uint8)0xC0)
+/**
+ * \brief
+ *      DEV_STAT Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_DEV_STAT_GR2_USED_BITS_MASK                 ((uint8)0x0F)
+/**
+ * \brief
+ *      THERM_STAT Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_THERM_STAT_USED_BITS_MASK                   ((uint8)0x0F)
+/**
+ * \brief
+ *      WK_STAT_0 Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_WK_STAT_0_GR1_USED_BITS_MASK                ((uint8)0x30)
+/**
+ * \brief
+ *      WK_STAT_0 Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_WK_STAT_0_GR2_USED_BITS_MASK                ((uint8)0x01)
+/**
+ * \brief
+ *      WK_STAT_1 Register
+ *      Value to mask useful bits.
+ */
+#define KU8_SBC_WK_STAT_1_USED_BITS_MASK                    ((uint8)0x10)
+/**
+ * \brief
+ *      Define used to mask DEV_STAT value that tells the restart was
+ *      triggered by a failure.
+ */
+#define KU32_SBC_STAT_REGS_RESTART_DUE_TO_FAIL_MASK         ((uint32)0x8000)
+
+/******************************************************************************
+DECLARATION OF TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTION-LIKE MACROS
+******************************************************************************/
+
+#ifdef __cplusplus
+           }
+#endif
+/******************************************************************************
+End Of File
+*****************************************************************************/
+
+#endif /* SBC_CFG_H_ */

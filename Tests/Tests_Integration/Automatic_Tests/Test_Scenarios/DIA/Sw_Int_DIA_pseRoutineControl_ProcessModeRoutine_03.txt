@@ -1,0 +1,42 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_DIA_pseRoutineControl_ProcessMode_RequestRes
+ARCH_SW_DIA_pseRoutineControl_ProcessMode_RequestRes: Interfacen used to read the Process Mode Status.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_DIA_pseRoutineControl_ProcessMode_RequestRes
+
+	Step 2: Set a BP in function Dcm_DcmDspRoutineProcessMode_RequestResults in order to call Rte_Call_RoutineServices_DcmDspRoutineProcessMode_RequestResults function 
+		Expected result:  BP was set
+
+	Step 3: Send diagnostic request in order to go in Supplier Session
+
+	Step 4: Send request for press Supplier Security Access button
+
+	Step 5: Send request for press ECUUnlock button
+
+	Step 6: Send diagnostic request in order to start the Process Mode 
+
+	Step 7: Send diagnostic request in order to stop the Process Mode 
+
+	Step 8: Send diagnostic request in order to Process Mode Request Results
+
+	Step 9: Set a BP in function Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_RequestResults in order to call DIA_runRidF793_ProcessModeRequestRes. 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function DIA_runRidF793_ProcessModeRequestRes  in order to requuest result for Process Mode. 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 11: Return ECU to default values

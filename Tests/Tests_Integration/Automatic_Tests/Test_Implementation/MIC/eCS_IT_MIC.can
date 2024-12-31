@@ -1,0 +1,394 @@
+/*@!Encoding:1252*/
+/*------------------------------------------------------------------------------
+                                IMPORT LIBRARY
+ ------------------------------------------------------------------------------*/
+/* To include all the libraries used by the .capl script. */
+/* WARNING: Some things such as diagnostic functions are different from project
+to project, change those according to your project requirements */
+includes
+{
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Defines.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Project_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Diagnostic_Functions.cin"
+}
+
+/*------------------------------------------------------------------------------
+                                    GLOBALS
+ ------------------------------------------------------------------------------*/
+/* To declare the constants used throurough the entire module, and global variables */
+variables
+{
+
+/*----------------------------Global Variables---------------------------------*/
+  float sEcs_HW_defekt;
+ 
+}
+
+
+/*------------------------------------------------------------------------------
+                                TEST FUNCTIONS
+------------------------------------------------------------------------------*/
+/*------------------------- Test Preconditions ------------------------------*/
+/* For operations to ensure the correct execution of the test case, such as IGN_ON,
+checking that CAN communication is present, etc.
+/* Varies from module to module, use from Helper_Functions.cin only the ones you need */
+testfunction RunPreTs()
+{
+  DisplayRequirementsInfo();
+  AddTestSetupInformation();
+  
+  PreTS_StartLogging();
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization");
+  
+  testStep("", "Delete all breakpoint from debugger.");
+  debugger_deleteAllBreakpoints();
+  
+  testStep("", "Reset the debugger.");
+  debugger_reset();
+  
+  testStep("", "Run the debugger.");
+  debugger_run();
+}
+
+/*------------------------- Test Postconditions ------------------------------*/
+/* For operations to ensure that after the test case was executed, the enviroment
+would go back to a blank state, to be ready for the next test step in queue. Call it a Cleanup phase. */
+testfunction RunPostTs()
+{
+  stopLogging("TestCaseLogASC");
+  stopLogging("TestCaseLogBLF");
+}
+testcase InitTestModule()
+{
+  ConfigureTestModuleInformation();
+  strncpy(cLogPathAndName, "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Logs\\",  elcount(cLogPathAndName));
+}
+testcase Sw_Int_MIC_pseRunPFlashMemoryCorruption_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_MIC_pseRunPFlashMemoryCorruption_MIC_Autotest_RunPFlashMemoryCorruption");
+  AddRequirementInfo("ARCH_SW_MIC_pseRunPFlashMemoryCorruption_MIC_Autotest_RunPFlashMemoryCorruption", "The runnable shall be called to provide the result of PFlash Memory Corruption Autotest. - PFlash Memory Corruption Autotestcheck if an ECC was detected in PFLASH memory area. - If an ECC is detected in PFLASH memory area the {Test Result} will be TEST_NOK. - If an ECC is NOT detected in PFLASH memory area the {Test Result} will be TEST_OK.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+    /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_MIC_pseRunPFlashMemoryCorruption_MIC_Autotest_RunPFlashMemoryCorruption");
+  ////TestCheck OK
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest", "2");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunPFlashMemoryCorruption function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+   debugger_setRelativeFunctionBpAtLine("MIC_Autotest_RunPFlashMemoryCorruption", "5");
+  testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function MIC_Autotest_RunPFlashMemoryCorruption in order to confirm the detected reset cause --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest", "4");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest in order to check the interface --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read auto test result --> auto test result is OK");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable u8TestResult is equal to 0x1");
+  debugger_deleteAllBreakpoints();
+  
+  ///////for test nok///////////
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest", "2");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunPFlashMemoryCorruption function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+   debugger_setRelativeFunctionBpAtLine("MIC_Autotest_RunPFlashMemoryCorruption", "8");
+  testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function MIC_Autotest_RunPFlashMemoryCorruption in order to confirm the detected reset cause --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+   
+  testStep("STEP", "Modify Reset Cause value in order to detect ECC --> Reset cause value is set.");
+ debugger_writeLocalVariable("u32ResetCause", "200");
+  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest", "4");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest in order to check the interface --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read auto test result --> auto test result is Not OK");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x2", "Local variable u8TestResult is equal to 0x2");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_MIC_pseRunRamMemoryCorruption_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_MIC_pseRunRamMemoryCorruption_MIC_Autotest_RunRamMemoryCorruption");
+  AddRequirementInfo("ARCH_SW_MIC_pseRunRamMemoryCorruption_MIC_Autotest_RunRamMemoryCorruption", "The runnable shall be called to provide the result of Ram Memory Corruption Autotest. - Ram Memory Corruption Autotest check if an ECC was detected in RAM memory area. - If an ECC is detected in RAM memory area the {Test Result} will be TEST_NOK. - If an ECC is NOT detected in RAM memory area the {Test Result} will be TEST_OK.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+    /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_MIC_pseRunRamMemoryCorruption_MIC_Autotest_RunRamMemoryCorruption");
+  ////TestCheck OK
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_RunRamMemoryCorruption_MIC_Autotest", "2");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function atm_cbk_RunRamMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunRamMemoryCorruption function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+   debugger_setRelativeFunctionBpAtLine("MIC_Autotest_RunRamMemoryCorruption", "15");
+  testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function MIC_Autotest_RunRamMemoryCorruption in order to confirm the detected reset cause --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunRamMemoryCorruption_MIC_Autotest", "4");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function atm_cbk_RunRamMemoryCorruption_MIC_Autotest in order to check the interface --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read auto test result --> auto test result is OK");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable u8TestResult is equal to 0x1");
+  debugger_deleteAllBreakpoints();
+  
+  ///////for test nok///////////
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunRamMemoryCorruption_MIC_Autotest", "2");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function atm_cbk_RunRamMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunRamMemoryCorruption function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+   debugger_setRelativeFunctionBpAtLine("MIC_Autotest_RunRamMemoryCorruption", "15");
+  testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function MIC_Autotest_RunRamMemoryCorruption in order to confirm the detected reset cause --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+   
+  testStep("STEP", "Modify Reset Cause value in order to detect ECC --> Reset cause value is set.");
+ debugger_writeLocalVariable("u32ResetCause", "100");
+  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunRamMemoryCorruption_MIC_Autotest", "4");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function atm_cbk_RunRamMemoryCorruption_MIC_Autotest in order to check the interface --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read auto test result --> auto test result is Not OK");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x2", "Local variable u8TestResult is equal to 0x2");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_MIC_pseRunEepromMemoryCorruption_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_MIC_pseRunEepromMemoryCorruption_MIC_Autotest_RunEepromMemoryCorruption");
+  AddRequirementInfo("ARCH_SW_MIC_pseRunEepromMemoryCorruption_MIC_Autotest_RunEepromMemoryCorruption", "The runnable shall be called to provide the result of Eeprom Memory Corruption Autotest. - Eeprom Memory Corruption Autotest will check if an ECC was detected in Eeprom memory area. - If an ECC is detected in Eeprom memory area the {Test Result} will be TEST_NOK. - If an ECC is NOT detected in Eeprom memory area the {Test Result} will be TEST_OK.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+    /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_MIC_pseRunEepromMemoryCorruption_MIC_Autotest_RunEepromMemoryCorruption");
+  ////TestCheck OK
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_RunEepromMemoryCorruption_MIC_Autotest", "2");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function atm_cbk_RunEepromMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunEepromMemoryCorruption function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+   debugger_setRelativeFunctionBpAtLine("MIC_Autotest_RunEepromMemoryCorruption", "10");
+  testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function MIC_Autotest_RunEepromMemoryCorruption in order to confirm the detected reset cause --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunEepromMemoryCorruption_MIC_Autotest", "4");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function atm_cbk_RunEepromMemoryCorruption_MIC_Autotest in order to check the interface --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read auto test result --> auto test result is OK");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable u8TestResult is equal to 0x1");
+  debugger_deleteAllBreakpoints();
+  
+  ///////for test nok///////////
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunEepromMemoryCorruption_MIC_Autotest", "2");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function atm_cbk_RunEepromMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunEepromMemoryCorruption function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+   debugger_setRelativeFunctionBpAtLine("MIC_Autotest_RunEepromMemoryCorruption", "10");
+  testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function MIC_Autotest_RunEepromMemoryCorruption in order to confirm the detected reset cause --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+   
+  testStep("STEP", "Modify Reset Cause value in order to detect ECC --> Reset cause value is set.");
+ debugger_writeLocalVariable("u32ResetCause", "8000");
+  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunEepromMemoryCorruption_MIC_Autotest", "4");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function atm_cbk_RunEepromMemoryCorruption_MIC_Autotest in order to check the interface --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read auto test result --> auto test result is Not OK");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x2", "Local variable u8TestResult is equal to 0x2");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_MIC_pclNvmIfServices_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_MIC_pclNvmIfServices_SetRamBlockStatus");
+  AddRequirementInfo("ARCH_SW_MIC_pclNvmIfServices_SetRamBlockStatus", "The NvmIfServices_SetRamBlockStatus interface will set a flag, flag used to notify that the ECC Counters Block has to be recorded in the EEPROM during the shutdown. (The writhing procces will be done in NvM_WriteAll();)");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+    /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_MIC_pclNvmIfServices_SetRamBlockStatus");
+   debugger_setRelativeFunctionBpAtLine("MIC_Autotest_RunRamMemoryCorruption", "15");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function MIC_Autotest_RunRamMemoryCorruption in order to change value of reset cause --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+   
+  testStep("STEP", "Modify Reset Cause value in order to detect ECC --> Reset cause value is set.");
+ debugger_writeLocalVariable("u32ResetCause", "100");
+  
+  debugger_setRelativeFunctionBpAtLine("MIC_Autotest_RunRamMemoryCorruption", "30");
+  testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function MIC_Autotest_RunRamMemoryCorruption in order to call NvmIf_SetRamBlockStatus function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+   
+  debugger_setRelativeFunctionBpAtLine("NvmIf_SetRamBlockStatus", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function NvmIf_SetRamBlockStatus in order to check the interface --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+   
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+void MainTest()
+{
+  InitTestModule();
+  Sw_Int_MIC_pseRunPFlashMemoryCorruption_01();
+  Sw_Int_MIC_pseRunRamMemoryCorruption_01();
+  Sw_Int_MIC_pseRunEepromMemoryCorruption_01();
+  Sw_Int_MIC_pclNvmIfServices_01();
+  
+  
+  
+}

@@ -1,0 +1,203 @@
+/*@!Encoding:1252*/
+
+variables
+{
+    
+    // ********** To overload CAN bus *************
+    int baseID = 0x130;
+    int number_of_id = 512;
+    int RemainingBurstSample;
+    message * Msg1A = {DLC=8};
+    message * Msg1B = {DLC=8};
+    message * Msg2A = {DLC=8};
+    message * Msg2B = {DLC=8};
+    // ********************************************
+
+    const word PERIOD_TEST_STAT_1 = 2500;
+    const word PERIOD_TEST_STAT_2 = 500;
+  	// To send the NM messages
+  	const word PERIOD_TIMER = 2000;
+  	const word PERIOD_TX_500ms = 500;
+  	const word PERIOD_TX_200ms = 200;
+  	const word PERIOD_TX_50ms = 50;
+  	const word PERIOD_TX_20ms = 20;
+
+
+    //Duration between two repeated cycles, in ms
+    
+	  msTimer TSendPeriodicNM_200ms;
+    
+    /* Vehicle Dynamics timers */ 
+    msTimer TSend0x200Accel;
+
+    //0: raw status; 1: readable status, only for qualified AECs
+
+   
+    /* Devkit TX frame */
+    message AccelStub msg_Accel =
+    {
+     dlc = 8,
+  		byte(0) = 0x00,
+  		byte(1) = 0x00,
+  		byte(2) = 0x00,
+  		byte(3) = 0x00,
+  		byte(4) = 0x00,
+  		byte(5) = 0x00,
+  		byte(6) = 0x00,
+  		byte(7) = 0x00 
+    };
+    // NM TX
+    message 0x530 msg_0x530_TX =
+	{
+		dlc = 8,
+		byte(0) = 0x00,
+		byte(1) = 0x00,
+		byte(2) = 0x00,
+		byte(3) = 0x00,
+		byte(4) = 0x00,
+		byte(5) = 0x00,
+		byte(6) = 0x00,
+		byte(7) = 0x00
+	};
+        
+    // CAN TP FL
+    message 0x17FC4206x msg_0x6C0_TX =
+	{
+		dlc = 8,
+		byte(0) = 0x00,
+		byte(1) = 0x00,
+		byte(2) = 0x00,
+		byte(3) = 0x00,
+		byte(4) = 0x00,
+		byte(5) = 0x00,
+		byte(6) = 0x00,
+		byte(7) = 0x00		
+	};
+
+    // CAN TP FR
+    message 0x6C1 msg_0x6C1_TX =
+	{
+		dlc = 8,
+		byte(0) = 0x00,
+		byte(1) = 0x00,
+		byte(2) = 0x00,
+		byte(3) = 0x00,
+		byte(4) = 0x00,
+		byte(5) = 0x00,
+		byte(6) = 0x00,
+		byte(7) = 0x00		
+	};
+
+    // CAN TP RL
+    message 0x6C2 msg_0x6C2_TX =
+	{
+		dlc = 8,
+		byte(0) = 0x00,
+		byte(1) = 0x00,
+		byte(2) = 0x00,
+		byte(3) = 0x00,
+		byte(4) = 0x00,
+		byte(5) = 0x00,
+		byte(6) = 0x00,
+		byte(7) = 0x00		
+	};
+
+    // CAN TP RR
+    message 0x6C3 msg_0x6C3_TX =
+	{
+		dlc = 8,
+		byte(0) = 0x00,
+		byte(1) = 0x00,
+		byte(2) = 0x00,
+		byte(3) = 0x00,
+		byte(4) = 0x00,
+		byte(5) = 0x00,
+		byte(6) = 0x00,
+		byte(7) = 0x00		
+	};
+
+    // CAN TP Func Addressing
+    message 0x777 msg_0x777_TX =
+	{
+		dlc = 8,
+		byte(0) = 0x00,
+		byte(1) = 0x00,
+		byte(2) = 0x00,
+		byte(3) = 0x00,
+		byte(4) = 0x00,
+		byte(5) = 0x00,
+		byte(6) = 0x00,
+		byte(7) = 0x00		
+	};
+
+    message CAN1.* CAN_TP_TX;
+
+}
+
+
+// To avoid to block message transmission
+on message *
+{
+	//output (this);
+    if (RemainingBurstSample > 0)
+    {
+        if (this.ID == Msg1A.ID)
+        {
+           Msg1A.byte(0) = RemainingBurstSample >> 8;
+           Msg1A.byte(1) = RemainingBurstSample & 0xFF;
+           Output(Msg1A);
+           RemainingBurstSample--;
+        }
+        else if (this.ID == Msg1B.ID)
+        {
+           Msg1B.byte(0) = RemainingBurstSample >> 8;
+           Msg1B.byte(1) = RemainingBurstSample & 0xFF;
+           Output(Msg1B);
+           RemainingBurstSample--;
+        }
+        else if (this.ID == Msg2A.ID)
+        {
+           Msg2A.byte(0) = RemainingBurstSample >> 8;
+           Msg2A.byte(1) = RemainingBurstSample & 0xFF;
+           Output(Msg2A);
+           RemainingBurstSample--;
+        }
+        else if (this.ID == Msg2B.ID)
+        {
+           Msg2B.byte(0) = RemainingBurstSample >> 8;
+           Msg2B.byte(1) = RemainingBurstSample & 0xFF;
+           Output(Msg2B);
+           RemainingBurstSample--;
+        }
+    }
+}
+
+on start
+{
+    // By default, Front left
+    CAN_TP_TX = msg_0x6C0_TX;
+       
+    /* Start all Vehicle Dynamic frames */
+    setTimer (TSend0x200Accel, 10);
+
+    setTimer (TSendPeriodicNM_200ms, PERIOD_TX_200ms);
+
+}
+
+on timer TSend0x200Accel
+{
+  msg_Accel.bSensitivityOptimization = @eCS::bSensitivityOptimization;
+  output(msg_Accel);
+  setTimer (TSend0x200Accel, 10);
+}
+
+on timer TSendPeriodicNM_200ms
+{
+
+    if (SysGetVariableInt(sysvar::Platform::Button_NM_On))
+    {
+        output(msg_0x530_TX);
+    }
+
+    setTimer (TSendPeriodicNM_200ms, PERIOD_TX_200ms);
+}

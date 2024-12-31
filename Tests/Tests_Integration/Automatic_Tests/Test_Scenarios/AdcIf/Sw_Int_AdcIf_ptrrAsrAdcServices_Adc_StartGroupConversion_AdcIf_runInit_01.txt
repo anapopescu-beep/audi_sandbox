@@ -1,0 +1,96 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_runInit, ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_GPTOnTimer_Expiration, ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_Calibrate, ARCH_SW_AdcIf_ptrrAsrAdcServices_AdcIf_runDeInit, ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_ReadGroup
+ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_runInit: The Adc_StartGroupConversion runnable shall be called in the AdcIf_runInit runnable in order to start the first conversion.
+ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_GPTOnTimer_Expiration: The Adc_StartGroupConversion runnable shall be called in the AdcIf_GPTOnTimer_Expiration runnable in order to start the periodic conversion.
+ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_Calibrate: The Adc_Calibrate runnable shall be called in the AdcIf_Calib runnable in order to calibrate the Adc hw units according to the S32k datasheet. The runnable shall store the calibration status for both hw units.
+ARCH_SW_AdcIf_ptrrAsrAdcServices_AdcIf_runDeInit: The Adc_StopGroupConversion runnable shall be called in the AdcIf_runDeInit runnable in order to stop the group conversion before ECU shutdown.
+ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_ReadGroup: The Adc_ReadGroup runnable shall be called in the AdcIf_GPTOnTimer_Expiration runnable in order to get the lsb value from the Adc groups.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_runInit
+
+	Step 2: Set a breakpoint in function AdcIf_runInit at the first Adc_StartGroupConversion function call 
+		Expected result:  BP is reached.
+
+	Step 3: Set a breakpoint in function AdcIf_runInit at the second Adc_StartGroupConversion function call 
+		Expected result:  BP is reached.
+
+	Step 4: Step in function Adc_StartGroupConversion and run until return of the function.
+
+Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_GPTOnTimer_Expiration
+
+	Step 5: Set a breakpoint in function AdcIf_GPTOnTimer_Expiration at the first Adc_StartGroupConversion function call 
+		Expected result:  BP is reached.
+
+	Step 6: Step in function Adc_StartGroupConversion and run until return of the function.
+
+	Step 7: Set a breakpoint in function AdcIf_GPTOnTimer_Expiration at the first Adc_StartGroupConversion function call 
+		Expected result:  BP is reached.
+
+Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_Calibrate
+
+	Step 8: Set a breakpoint in function AdcIf_Calib at Adc_Calibrate function call 
+		Expected result:  BP is reached.
+
+	Step 9: Read the calibration status for HW units 1 
+		Expected result:  0x1.
+
+	Step 10: Set a breakpoint in function Adc_Calibrate after pStatus assignment 
+		Expected result:  BP is reached.
+
+	Step 11: Modify pStatus with E_OK. -> 0x0
+
+	Step 12: Set a breakpoint in function AdcIf_Calib after Adc_Calibrate function call 
+		Expected result:  BP is reached.
+
+	Step 13: Read the calibration status for HW units 1. 
+		Expected result:  0x0
+
+Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_Calibrate
+
+	Step 14: Set a breakpoint in function AdcIf_Calib at Adc_Calibrate function call 
+		Expected result:  BP is reached.
+
+	Step 15: Read the calibration status for HW units 0 
+		Expected result:  0x1.
+
+	Step 16: Set a breakpoint in function Adc_Calibrate after pStatus assignment. 
+		Expected result:  BP is reached
+
+	Step 17: Modify pStatus with E_OK. 
+		Expected result:  0x0
+
+	Step 18: Set a breakpoint in function AdcIf_Calib after Adc_Calibrate function call 
+		Expected result:  BP is reached.
+
+	Step 19: Read the calibration status for HW units 1 
+		Expected result:  0x0.
+
+Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_AdcIf_runDeInit
+
+	Step 20: Set a breakpoint in function AdcIf_runDeInit at Adc_StopGroupConversion function call 
+		Expected result:  BP is reached.
+
+Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_ReadGroup
+
+	Step 21: Set a breakpoint in function ADCIF_EndOfConvGroup0 at Adc_ReadGroup function call 
+		Expected result:  BP is reached.
+
+	Step 22: Set a breakpoint in function ADCIF_EndOfConvGroup1 at Adc_ReadGroup function call 
+		Expected result:  BP is reached.
+
+Postcondition
+
+	Step 23: Return ECU to default values

@@ -1,0 +1,36 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnPostRunFromRun
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnPostRunFromRun: The BswM_OnPostRunFromRun runnable shall be called by the Autosar BswM in case of: - The current state of ECU is RUN AND Bus communication timeout is received
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnPostRunFromRun
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Action_BswMAction_BswM_PostRunStateFromRun in order to call BswM_OnPostRunFromRun function 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_OnPostRunFromRun in order to check if The current state of ECU is RUN AND Bus communication timeout was received 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function BswM_Action_BswMAction_BswM_PostRunStateFromRun in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 7: Return ECU to default values

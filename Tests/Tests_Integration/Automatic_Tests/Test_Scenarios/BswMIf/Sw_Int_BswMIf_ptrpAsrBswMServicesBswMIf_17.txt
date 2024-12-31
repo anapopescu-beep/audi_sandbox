@@ -1,0 +1,31 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnWakeupExpired
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnWakeupExpired: The BswM_OnWakeupExpired runnable shall be called by the Autosar BswM in case of: - wakeup validation expired and wakeup status expired after 5000ms
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnWakeupExpired
+
+	Step 2: Send diagnostic request in order to do ProcessMode Start 
+
+	Step 3: Send diagnostic request in order to do soft Reset
+
+	Step 4: Set a BP in function BswM_Action_BswMAction_OnWakeupExpired in order to call BswM_RequestMode function 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_OnWakeupExpired in order to check if wakeup validation expired and wakeup status expired after 5000ms 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 6: Return ECU to default values

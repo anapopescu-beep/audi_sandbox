@@ -1,0 +1,192 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+H-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+*******************************************************************************
+
+This file provides external services prototypes from MIC component
+
+******************************************************************************/
+/*
+$Revision: 1.3 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/MIC/Design/project.pj $
+*/
+/*****************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#ifndef _MIC_LLD_H_
+#define _MIC_LLD_H_ 1
+
+#include "Std_Types.h"
+/******************************************************************************
+DEFINITION OF CONSTANTS
+******************************************************************************/
+/***** CPU register definitions *****/
+
+/**
+ * \brief
+ *      Base address of CPU registers
+ */
+#define KU32_MIC_ARMCM4_BASE_ADDRESS ((uint32)0)
+
+/**
+ * \brief
+ *      BUS_FAULT status register
+ */
+#define KU32_MIC_ARMCM4_BFSR_REG     ((uint32)0xE000ED29)
+
+/**
+ * \brief
+ *      BUS_FAULT address register
+ */
+#define KU32_MIC_ARMCM4_BFAR_REG     ((uint32)0xE000ED38)
+
+/**
+ * \brief
+ *      System Handler Control and State Register
+ */
+#define KU32_MIC_ARMCM4_SHCSR_REG    ((uint32)0xE000ED24)
+
+/***** Flags for BFSR register *****/
+
+/**
+ * \brief
+ *      BusFault Address Register (BFAR) valid flag
+ */
+#define KU8_MIC_BFSR_BFARVALID_BIT   ((uint8)0x80)
+
+/***** ERM module defines *****/
+
+/**
+ * \brief
+ *      Base address of ERM module in the memory address space
+ */
+#define KU32_MIC_ERM_BASE_ADDRESS    ((uint32)0x40018000)
+
+/**
+ * \brief
+ *      ERM Status Register 0
+ */
+#define KU32_MIC_ERM_SR0_REG         ((uint32)0x00000010)
+
+/**
+ * \brief
+ *      ERM Memory 0 Error Address Register
+ */
+#define KU32_MIC_ERM_EAR0_REG        ((uint32)0x00000100)
+
+/**
+ * \brief
+ *      ERM Memory 1 Error Address Register
+ */
+#define KU32_MIC_ERM_EAR1_REG        ((uint32)0x00000110)
+
+/**
+ * \brief
+ *      Memory 0 Non-Correctable Error Event
+ */
+#define KU32_MIC_SR0_NCE0_BIT        ((uint32)0x40000000)
+
+/**
+ * \brief
+ *      Memory 1 Non-Correctable Error Event
+ */
+#define KU32_MIC_SR0_NCE1_BIT        ((uint32)0x04000000)
+
+/***** Flags for SHCSR register *****/
+
+/**
+ * \brief
+ *      Bus Fault Enable Bit
+ */
+#define KU32_MIC_SHCSR_BUSFAULTENA   ((uint32)0x00020000)
+/******************************************************************************
+DECLARATION OF TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTIONS
+******************************************************************************/
+
+
+extern boolean  MIC_LLD_CheckEccFault ( void );
+extern void MIC_LLD_GetFaultAddress ( void );
+extern void MIC_LLD_Init ( void );
+
+
+
+/******************************************************************************
+DECLARATION OF FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/**
+ * \brief
+ *      Macros for Writing in HW mapped registers
+ *      module  - module base address
+ *      reg     - register address within module
+ *      value   - value to be written in the register
+ */
+#define REG_WRITE32(module, reg, value)       ((*(volatile uint32*)(module+reg))=  (value))
+
+/**
+ * \brief
+ *      Macros for reading from HW mapped registers
+ *      module  - module base address
+ *      reg     - register address within module
+ */
+#define REG_READ8(module, reg)                (*(volatile uint8*)(module+reg))
+
+/**
+ * \brief
+ *      Macros for reading from HW mapped registers
+ *      module  - module base address
+ *      reg     - register address within module
+ */
+#define REG_READ32(module, reg)               (*(volatile uint32*)(module+reg))
+
+/******************************************************************************
+End Of File
+*****************************************************************************/
+#endif /* _MIC_PUBLIC_H_ */
+/*************************************************************************
+Evolution of the component
+
+Created by : C. Sauvage
+
+$Log: MIC_LLD.h_template  $
+Revision 1.3 2023/03/17 13:05:41CET Razvan Badiu (razvan.badiu) 
+fixes after review
+Revision 1.1.6.7 2023/02/28 17:34:36EET Septimiu Vintila (septimiu.vintila) 
+Memory sections changed to FuSa memory sections.
+Revision 1.1.6.6 2023/02/22 21:53:00EET Razvan Badiu (razvan.badiu) 
+Mic interface
+Revision 1.1.6.5 2022/11/22 15:27:39EET Andrei Anca (andrei.anca) 
+Update after review
+Revision 1.1 2014/09/30 15:41:35CEST Cedric Sauvage (csauvage) 
+Initial revision
+Member added to project e:/MKSProjects/err_generic/Platform/ECU_PP_4G/Mainstream/Phase_01/Development_View/Source/Application/_MIC/inc/project.pj
+
+
+*****************************************************************************/
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

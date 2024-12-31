@@ -1,0 +1,346 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+******************************************************************************/
+/* PRQA S 0288 ++ */
+/*
+ * Explanation:
+ *    Disabled for MKS keywords
+ */
+/*
+$Revision: 1.15 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Tools/Build_Env/Workspace/Build/Makefile/Application/project.pj $
+*/
+/* PRQA S 0288 -- */
+/*!****************************************************************************
+
+@details
+   Linker file for Steering Wheel application on NXP S32K144 MCU derivative 
+   for IAR build toolchain.
+
+******************************************************************************/
+
+/* ************************************************************************** */
+/* Some address key values                                                    */
+/* ************************************************************************** */
+/****************/
+/* Block Size   */
+/****************/
+define symbol SYM_SIZE_RESERVED_BLOCK_1  = 64;   /* 64 bytes - Reserved for Vector FBL presence pattern */
+define symbol SYM_SIZE_RESERVED_BLOCK_2  = 32;   /* 32 bytes - Reserved for Vector FBL validation structure */
+define symbol SYM_SIZE_RESERVED_BLOCK_3  = 4;    /* 4 bytes - Reserved for CRC calculation */
+define symbol SYM_SIZE_LAYOUT_VERS       = 4;    /* 4 bytes  */
+define symbol SYM_SIZE_VECT_TABLE        = 4096; /* 4 KB     */
+define symbol SYM_SIZE_FLASH_CFG         = 16;   /* 16 Byte  */
+
+/****************/
+/* Program FLASH */
+/****************/
+/* NVM default block */
+define symbol SYM_FLS_BLOCK_NVM_DFLT_START   = 0x000FF000; /* 4 kB of Flex NV ROM default values - E2P Param */ 
+define symbol SYM_FLS_BLOCK_NVM_DFLT_END     = 0x000FFFFF; /* 4 kB of Flex NV ROM default values - E2P Param */ 
+define symbol SYM_FLS_NVM_DFLT_RESERVED_1    = (SYM_FLS_BLOCK_NVM_DFLT_END - SYM_SIZE_RESERVED_BLOCK_2 + 1); /* Reserved for Presence pattern used by the FBL */
+define symbol SYM_FLS_NVM_DFLT_RESERVED_2    = (SYM_FLS_NVM_DFLT_RESERVED_1 - SYM_SIZE_RESERVED_BLOCK_1);   /* Reserved for Validation structure used by the FBL */
+define symbol SYM_FLS_NVM_DFLT_RESERVED_3    = (SYM_FLS_NVM_DFLT_RESERVED_2 - SYM_SIZE_RESERVED_BLOCK_3); /* Reserved for CRC-32 */
+define symbol SYM_FLS_NVM_DFLT_DATA_END      = (SYM_FLS_NVM_DFLT_RESERVED_3 - SYM_SIZE_LAYOUT_VERS - 1); /* End address of NVM default useable space. */
+/* Calibration block */
+define symbol SYM_FLS_BLOCK_CALIB_START      = 0x000FE000; /* 4 kB of Calibration values */ 
+define symbol SYM_FLS_BLOCK_CALIB_END        = 0x000FEFFF; /* 4 kB of Calibration values */ 
+define symbol SYM_FLS_NVM_CALIB_RESERVED_1   = (SYM_FLS_BLOCK_CALIB_END - SYM_SIZE_RESERVED_BLOCK_2 + 1); /* Reserved for Presence pattern used by the FBL */
+define symbol SYM_FLS_NVM_CALIB_RESERVED_2   = (SYM_FLS_NVM_CALIB_RESERVED_1 - SYM_SIZE_RESERVED_BLOCK_1);   /* Reserved for Validation structure used by the FBL */
+define symbol SYM_FLS_NVM_CALIB_RESERVED_3   = (SYM_FLS_NVM_CALIB_RESERVED_2 - SYM_SIZE_RESERVED_BLOCK_3); /* Reserved for CRC-32 */
+define symbol SYM_FLS_CALIB_DATA_END         = (SYM_FLS_NVM_CALIB_RESERVED_3 - SYM_SIZE_LAYOUT_VERS - 1); /* End address of NVM default useable space. */
+/* Application block */
+define symbol SYM_FLS_BLOCK_APP_START        = 0x00020000;
+define symbol SYM_FLS_BLOCK_APP_END          = 0x000FCFFF;
+
+define symbol SYM_FLS_APP_VECT_TABLE_START   = SYM_FLS_BLOCK_APP_START;
+define symbol SYM_FLS_APP_VECT_TABLE_END     = (SYM_FLS_BLOCK_APP_START + SYM_SIZE_VECT_TABLE - 1);
+//ToDo: check SYM_FLS_APP_FLASH_CFG_START
+define symbol SYM_FLS_APP_FLASH_CFG_START    = (SYM_FLS_BLOCK_APP_START + SYM_SIZE_VECT_TABLE); /* Flash memory protection configuration (Shall be stored in 0x00000400) */
+define symbol SYM_FLS_APP_FLASH_CFG_END      = (SYM_FLS_APP_FLASH_CFG_START - SYM_SIZE_FLASH_CFG - 1);
+
+define symbol SYM_FLS_APP_CODE_START         = 0x00021000; /* 880 kB of Application Code */
+define symbol SYM_FLS_NVM_APP_RESERVED_1     = (SYM_FLS_BLOCK_APP_END - SYM_SIZE_RESERVED_BLOCK_2 + 1); /* Reserved for Presence pattern used by the FBL */
+define symbol SYM_FLS_NVM_APP_RESERVED_2     = (SYM_FLS_NVM_APP_RESERVED_1 - SYM_SIZE_RESERVED_BLOCK_1);   /* Reserved for Validation structure used by the FBL */
+define symbol SYM_FLS_NVM_APP_RESERVED_3     = (SYM_FLS_NVM_APP_RESERVED_2 - SYM_SIZE_RESERVED_BLOCK_3); /* Reserved for CRC-32 */
+define symbol SYM_FLS_APP_CODE_CALIB_VERS    = (SYM_FLS_NVM_APP_RESERVED_3 - SYM_SIZE_LAYOUT_VERS); /* Calibration layout versioning in APP. */
+define symbol SYM_FLS_APP_CODE_NVM_DFLT_VERS = (SYM_FLS_APP_CODE_CALIB_VERS - SYM_SIZE_LAYOUT_VERS); /* NVM default layout versioning in APP. */
+define symbol SYM_FLS_APP_CODE_END           = (SYM_FLS_APP_CODE_NVM_DFLT_VERS - 1);
+
+/*********************/
+/* SRAM_L and SRAM_U */
+/*********************/
+define symbol SYM_RAM_START                  = 0x1FFF0000; /* Application RAM data - 72 kB */
+define symbol SYM_RAM_END                    = 0x20001FFF;
+define symbol SYM_STACK_START                = 0x20002000; /* Stack - 19 kB RAM Up */
+define symbol SYM_STACK_END                  = 0x20006CFF; /* keep in mind that 16 bytes shall be available just after this address */
+                                                           /* due to OS stack memory protection feature */
+
+define symbol SYM_RAM_NOINIT_START           = 0x20006F00; /* 256 bytes of RAM No init */
+define symbol SYM_RAM_NOINIT_END             = 0x20006FFF;
+
+define symbol SYM_RAM_NVFLEX_START           = 0x14000000; /* 4 kB of Flex NV RAM available since E2P is not used */ 
+define symbol SYM_RAM_NVFLEX_END             = 0x14000DFF;
+
+define symbol _OS_STACK_SIZE_                = 0x4D00;     /* Os stack size */
+
+/* ************************************************************************** */
+/* Addressing memories range for S32K MCU                                     */
+/* ************************************************************************** */
+define memory Mem with size = 4G;
+
+/* ************************************************************************** */
+/* Memory region definition                                                   */
+/* ************************************************************************** */
+define region region_fls_vect_table            = Mem:[from SYM_FLS_APP_VECT_TABLE_START to SYM_FLS_APP_VECT_TABLE_END];  /* default location for interrupt vector table */
+/* define region flash_rsvd2_region                = Mem:[from 0x000003C0 to 0x000003FF];  *//* IFR program once field */
+define region region_fls_app_flash_cfg             = Mem:[from SYM_FLS_APP_FLASH_CFG_START to SYM_FLS_APP_FLASH_CFG_END];  /* flash configuration area : Critical data */
+define region region_fls_nvm_default               = Mem:[from SYM_FLS_BLOCK_NVM_DFLT_START to SYM_FLS_NVM_DFLT_DATA_END];
+define region region_fls_calib                     = Mem:[from SYM_FLS_BLOCK_CALIB_START to SYM_FLS_CALIB_DATA_END];
+define region region_fls_code                      = Mem:[from SYM_FLS_APP_CODE_START to SYM_FLS_APP_CODE_END];
+
+define region region_iram_data          = Mem:[from SYM_RAM_START to SYM_RAM_END];
+define region region_iram_stack         = Mem:[from SYM_STACK_START to SYM_STACK_END];
+define region region_iram_noinit        = Mem:[from SYM_RAM_NOINIT_START to SYM_RAM_NOINIT_END];
+define region region_iram_flexram       = Mem:[from SYM_RAM_NVFLEX_START to SYM_RAM_NVFLEX_END];
+
+define region aee_traceability	       = Mem:[from 0xF00 size 0x100];	/* Location of AEE traceability number	*/
+/* ************************************************************************** */
+/* Initialization strategy                                                    */
+/* ************************************************************************** */
+initialize manually { 
+   section .data, 
+   section .data_asil_a, 
+   section .data.shared.os.*,
+   section .data.core*.*,
+   section .mcal_data,                       
+   section .mcal_data_spi,                       
+   section .mcal_data_adc,                       
+   section .fls_ram_code_text,    
+   section .m4_scst_test_shell_data,             
+   section .m4_scst_ram_test_code,          
+};
+
+do not initialize {   
+   readwrite,
+   section .flash_config,
+   section .noinit,
+   section .bss,
+   section .bss_asil_a,
+   section .mcal_bss,
+   section .mcal_bss_no_cacheable,
+   section .osstack,
+   section .bss.os_*,
+   section .bss.core*.*,
+};
+
+/* ************************************************************************** */
+/* Blocks definition                                                          */
+/* ************************************************************************** */
+define block OSSTACK  with fixed order, alignment =8, size = _OS_STACK_SIZE_ {
+   section .bss.core0.priorityQueueDynamic,
+   section .bss.core0.os_taskstack0_slot13,
+   section .bss.core0.os_taskstack0_slot12,
+   section .bss.core0.os_taskstack0_slot11,
+   section .bss.core0.os_taskstack0_slot10,
+   section .bss.core0.os_taskstack0_slot9,
+   section .bss.core0.os_taskstack0_slot8,
+   section .bss.core0.os_taskstack0_slot7,
+   section .bss.core0.os_taskstack0_slot6,
+   section .bss.core0.os_taskstack0_slot5,
+   section .bss.core0.os_taskstack0_slot4,
+   section .bss.core0.os_taskstack0_slot3,
+   section .bss.core0.os_taskstack0_slot2,
+   section .bss.core0.os_taskstack0_slot1,
+   section .bss.core0.os_taskstack0_slot0,
+   section .bss.core0.os_kernstack0,
+   
+}; 
+
+define block AppIntVec with fixed order, alignment = 4  {
+   section ExceptionTable_C0, 
+   section InterruptTable_C0,
+};
+
+define block AppStartup with fixed order           { 
+   section .startup 
+};
+
+define block AppCode_ASIL_A                        {
+   section .text_asil_a,
+   section .mcal_text, 
+   section .os_text, 
+   section .m4_scst_test_code,
+   section .m4_scst_test_code_unprivileged,
+   section .m4_scst_test_code1_unprivileged,
+   section .m4_scst_test_shell_code,
+   section .m4_scst_exception_wrappers,
+   section .m4_scst_vector_table,
+   section .m4_scst_rom_data,
+};
+
+define block AppCode with fixed order              { 
+   section .text, 
+   section .T1_code, 
+   section .T1_codeFast, 
+   section .T1_const, 
+   section .T1_constCore0,
+};
+
+define block AppBSS_ASIL_A with fixed order, alignment = 4        { 
+   section .m4_scst_ram_data,
+   section .m4_scst_ram_data_target0,
+   section .m4_scst_ram_data_target1,
+   section .bss_asil_a,
+   section .mcal_bss, 
+   section .bss.shared.os.*,
+   section .bss.core0.*,
+   section .bss.os_*,
+};
+
+define block AppBSS with fixed order               { 
+   section .bss, 
+   section .T1_bss,
+   section .T1_bssCoreComms,
+   section .T1_bssCheckedCore0,
+   section .T1_bssCore0,
+   section .T1_clear, 
+   section .T1_traceBufferCore0
+};
+
+define block AppData_ASIL_A with fixed order       { 
+   section .data.shared.os.*,
+   section .data.core*.*,
+   section .data_asil_a,
+   section .mcal_data,
+   section .mcal_data_spi,
+   section .mcal_data_adc,
+   section .fls_ram_code_text,
+   section .m4_scst_test_shell_data,
+   section .m4_scst_ram_test_code
+};
+
+define block AppData_Init_ASIL_A with fixed order         { 
+   section .data.shared.os.*_init,
+   section .data.core*.*_init,
+   section .data_asil_a_init,
+   section .mcal_data_init,
+   section .mcal_data_spi_init,
+   section .mcal_data_adc_init,
+   section .fls_ram_code_text_init,
+   section .m4_scst_test_shell_data_init,
+   section .m4_scst_ram_test_code_init
+};
+
+define block AppData with fixed order              { 
+   section .data, 
+};
+
+define block AppData_Init with fixed order         { 
+   section .data_init 
+};
+
+define block AppROData_ASIL_A with fixed order     { 
+   section .rodata_asil_a,
+   section .mcal_const_cfg, 
+   section .mcal_const
+};
+
+define block AppROData with fixed order            { 
+   section .rodata, 
+};
+
+define block AppFlashConfig                        { 
+   section .flash_config
+};
+
+define block AppNoInitData                         { 
+   section .noinit
+};
+/* ************************************************************************** */
+/* Memory blocks allocation                                                   */
+/* ************************************************************************** */
+
+/* Base location for Interrup vector table */
+place in region_fls_vect_table      { 
+   block AppIntVec 
+};
+
+/* Flash config location : HW defined by S32K144 target */
+place in region_fls_app_flash_cfg      { 
+   block AppFlashConfig 
+}; 
+
+/* Application Flash layout refer to Architecture document for more details */
+place in region_fls_code   { 
+   block AppStartup, 
+   block AppCode, 
+   block AppCode_ASIL_A, 
+   block AppROData_ASIL_A, 
+   block AppROData, 
+   block AppData_Init_ASIL_A, 
+   block AppData_Init
+};
+
+/* Application RAM layout refer to Architecture document for more details */
+place in region_iram_data        { 
+   block AppData_ASIL_A, 
+   block AppData, 
+   block AppBSS_ASIL_A, 
+   block AppBSS
+};
+
+/* Application Stack located in SRAM Upper */
+place in region_iram_stack       { 
+   block OSSTACK 
+};
+
+/* NoInit RAM data not erased by startup */
+place in region_iram_noinit      { 
+   block AppNoInitData 
+};
+
+/* ************************************************************************** */
+/* Definition of Symbols for Startup code                                     */
+/* ************************************************************************** */
+
+define exported symbol _Stack_end         = start(region_iram_stack);
+define exported symbol _Stack_start       = start(region_iram_stack) + size(region_iram_stack); 
+define exported symbol _PFlash_Start      = SYM_FLS_APP_CODE_START;
+define exported symbol _PFlash_End        = SYM_FLS_APP_CODE_END;
+define exported symbol _EEP_Def_Start     = SYM_FLS_BLOCK_NVM_DFLT_START;
+define exported symbol _EEP_Def_End       = SYM_FLS_NVM_DFLT_DATA_END;
+define exported symbol _Calib_Start       = SYM_FLS_BLOCK_CALIB_START;
+define exported symbol _Calib_End         = SYM_FLS_CALIB_DATA_END;
+define exported symbol _Ram_Start         = SYM_RAM_START;
+define exported symbol _Ram_End           = SYM_RAM_END;
+define exported symbol _NoInitRam_Start   = SYM_RAM_NOINIT_START;
+define exported symbol _NoInitRam_End     = SYM_RAM_NOINIT_END;
+define exported symbol _FlexRam_Start     = SYM_RAM_NVFLEX_START;
+define exported symbol _FlexRam_End       = SYM_RAM_NVFLEX_END;
+
+/* EB OS ROM/RAM symbols */
+define exported symbol __GLBL_ROM_START   = SYM_FLS_APP_CODE_START;
+define exported symbol __GLBL_ROM_END     = SYM_FLS_APP_CODE_END;
+define exported symbol __GLBL_RAM_START   = SYM_RAM_START;
+define exported symbol __GLBL_RAM_END     = SYM_RAM_END;
+keep { block AppNoInitData, block OSSTACK};
+
+define exported symbol __Flash_AEE_TRACEABILITY_ADDR	= start(aee_traceability);
+
+/* Begin of the RAM area for applications. Do not edit or delete this comment: it is used by the SysGen for IAR */ 
+/* End of the RAM area for applications. Do not edit or delete this comment: it is used by the SysGen for IAR */
+
+
+
+
+
+

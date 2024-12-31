@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE>
+              <SHORT-NAME>EIM</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2023-04-06T11:05:30+03:00">
+                  <SHORT-NAME>EIM</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 T="2023-03-21T10:44:09+02:00" L="FOR-ALL">EIM_AC_ErrorInjectionFault</L-4>
+                  </LONG-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <PORTS>
+                    <R-PORT-PROTOTYPE T="2023-06-20T11:45:40+03:00" UUID="a34964e7-8d33-4cda-9239-647a7871336c">
+                      <SHORT-NAME>pclDemDiagMonitor</SHORT-NAME>
+                      <ADMIN-DATA T="2023-06-20T11:45:40+03:00">
+                        <DOC-REVISIONS>
+                          <DOC-REVISION>
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-06-20T11:45:22.015+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/SetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ResetEventDebounceStatus</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/PrestoreFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor/ClearPrestoredFreezeFrame</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOSAR_Dem/ASR42/PortInterfaces/Dem_ASR42_DiagnosticMonitor</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-20T11:45:11+03:00" UUID="fcb4214c-a745-407d-aa22-c98a1b623bd4">
+                      <SHORT-NAME>prrFSMSolenoidProfile</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_EIM_prrFSMSolenoidProfile&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall read the solenoid profile for each solenoid&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+	- {Solenoid Profile for Solenoid 1, 2, 3, 4, 5, 6}&#xD;
+&#xD;
+#Linked Runnable &#xD;
+	- EIM_ManageAecStatus&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:52:35+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T13:52:15+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-06-20T11:44:53.444+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:52:35+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T13:52:15+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <NONQUEUED-RECEIVER-COM-SPEC T="2023-04-06T11:05:30+03:00">
+                          <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidProfile/au8SelectedProfile</DATA-ELEMENT-REF>
+                          <HANDLE-OUT-OF-RANGE>NONE</HANDLE-OUT-OF-RANGE>
+                          <USES-END-TO-END-PROTECTION T="2023-04-06T11:05:30+03:00">false</USES-END-TO-END-PROTECTION>
+                          <ALIVE-TIMEOUT>0.0</ALIVE-TIMEOUT>
+                          <HANDLE-TIMEOUT-TYPE>NONE</HANDLE-TIMEOUT-TYPE>
+                          <INIT-VALUE>
+                            <ARRAY-VALUE-SPECIFICATION>
+                              <ELEMENTS>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_0</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_1</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_2</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_3</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_4</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                                <APPLICATION-VALUE-SPECIFICATION>
+                                  <SHORT-LABEL>au8RequestedProfileType_Appl_5</SHORT-LABEL>
+                                  <CATEGORY>VALUE</CATEGORY>
+                                  <SW-VALUE-CONT>
+                                    <UNIT-REF DEST="UNIT">/AUTOSAR/AISpecification/Units/NoUnit</UNIT-REF>
+                                    <SW-VALUES-PHYS>
+                                      <VT>KU8_PROFILE_UNLOCK</VT>
+                                    </SW-VALUES-PHYS>
+                                  </SW-VALUE-CONT>
+                                </APPLICATION-VALUE-SPECIFICATION>
+                              </ELEMENTS>
+                            </ARRAY-VALUE-SPECIFICATION>
+                          </INIT-VALUE>
+                        </NONQUEUED-RECEIVER-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/AUTOLIV/FSM_DataDictionnary/SenderReceiverInterfaces/isrSolenoidProfile</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-06-20T11:44:41+03:00" UUID="344f7a09-28aa-486f-a28d-dfddd55c4691">
+                      <SHORT-NAME>pseInjectError</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL"># Architecture Element ID &#xD;
+ARCH_SW_EIM_pseInjectError&#xD;
+&#xD;
+# Description&#xD;
+- The EIM_ManageAecStatus shall be called cyclic in order to manage error injection&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs:&#xD;
+- None&#xD;
+## Outputs:&#xD;
+- None&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- EIM_ManageAecStatus &#xD;
+&#xD;
+# Traceability&#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:52:08+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T13:59:26+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>ioan.repede</ISSUED-BY>
+                            <DATE>2023-06-20T11:44:02.006+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">Update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:52:08+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T13:59:26+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC T="2023-03-23T15:00:00+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/EIM_DataDictionary/ClientServerInterfaces/icsInjectError/EIM_ManageAecStatus</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/EIM_DataDictionary/ClientServerInterfaces/icsInjectError</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

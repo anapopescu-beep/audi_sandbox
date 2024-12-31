@@ -1,0 +1,159 @@
+; t32.cmm - Trace32 flash programming script for TC297 on TriboardTC297
+;
+; Copyright 1998-2013 Elektrobit Automotive GmbH
+; All rights exclusively reserved for Elektrobit Automotive GmbH,
+; unless expressly agreed to otherwise.
+;
+; Example script for flash declaration and programming of Infineon
+; TriCore TC29x internal flash.
+;
+; Supported devices: All TC29x and TC29xED devices, e.g.: TC297.
+;
+; Flash:
+;   8 MByte on-chip program flash      at 0x80000000--0x807fffff (cached)
+;                                      or 0xa0000000--0xa07fffff (non cached)
+;   2 * 288 kByte data flash EEPROM    at 0xaf000000--0xaf047fff
+;                                     and 0xaf100000--0xaf147fff
+;   2 * 8 kByte data flash UCB sectors at 0xaf080000--0xaf081fff
+;                                     and 0xaf180000--0xaf181fff
+;   2 * 8 kByte data flash HSM sectors at 0xaf082000--0xaf083fff
+;                                     and 0xaf182000--0xaf183fff
+;
+; RAM:
+;   112 kByte Data Scratch-Pad RAM (DSPR) at        0xd0000000--0xd001bfff
+;    24 kByte Instruction Scratch-Pad RAM (PSPR) at 0xc0000000--0xc0005fff
+;
+; HINTS:
+;
+;   Erased flash is showing bus error caused by ECC error. ECC width is one
+;   page. In the PFlash a page is an aligned group of 32 bytes and in DFlash
+;   of 8 bytes.
+;
+;   The flash algorithm is programming PFlash in an aligned group of 32 bytes.
+;   When using FLASH.Program command the download has to care about this
+;   alignment.
+;
+;   To avoid any aligment issues FLASH.ReProgram is recommended. Unused flash
+;   data of affected sectors is programmed to 0x0.
+;
+;   FLASH.AUTO is not working for sectors with enabled ECC and uncorrectable
+;   ECC error (showing bus error).
+;
+
+entry &elffile &ParametersID &Param1 &Param2 &Param3 &Param4 &Param5
+
+;========================================================================
+; Parameters Preparation
+LOCAL &FlashBinary &BinaryFile &BinaryStartAdd &EraseAll
+
+&FlashBinary=0
+&BinaryFile=0
+&BinaryStartAdd=0
+&firstcall=0
+&BinaryFile1=0
+&BinaryStartAdd1=0
+&BinaryFile2=0
+&BinaryStartAdd2=0
+&BinaryFile3=0
+&BinaryStartAdd3=0
+
+IF "&ParametersID"==""
+(
+    &ParametersID=0xFF
+)
+ELSE IF &ParametersID==0x1
+(
+  &FlashBinary=0x1
+  &BinaryFile="&Param1"
+  &BinaryStartAdd="&Param2"
+)
+ELSE IF &ParametersID==0x2
+(
+   &firstcall=0x1
+)
+ELSE IF &ParametersID==0x3
+(
+  &FlashBinary=0x3
+  &BinaryFile1="&elffile"
+  &BinaryStartAdd1="&Param1"
+  &BinaryFile2="&Param2"
+  &BinaryStartAdd2="&Param3"
+  &BinaryFile3="&Param4"
+  &BinaryStartAdd3="&Param5"
+)
+
+;========================================================================
+; Initialize and start debugging
+RESet
+SYStem.CPU S32K144
+SYStem.CONFIG.DEBUGPORTTYPE SWD 
+SYStem.Up
+
+;========================================================================
+; Flash Declaration
+FLASH.RESet
+
+FLASH.Create 1. 0x00000000--0x0007FFFF 0x1000 TARGET Quad /CENSORSHIP 0x400++0xf
+FLASH.Create 2. 0x10000000--0x1000FFFF 0x1000 TARGET Quad
+
+FLASH.TARGET 0x1FFF8000 0x20000000 0x1000 ~~/demo/arm/flash/quad/s32k_quad.bin
+
+;========================================================================
+; Example for download
+
+IF &firstcall==0x1
+(
+   FLASH.ReProgram.ALL /Erase
+   Data.LOAD.Elf "&elffile" /Quad /Verify
+   FLASH.Program OFF
+)
+ELSE IF (&ParametersID==0x1)
+(
+  FLASH.ReProgram ALL
+  if &FlashBinary==0x1
+  (
+    Data.LOAD.binary "&BinaryFile" E:&BinaryStartAdd
+  )
+  Data.LOAD.elf "&elffile" /verify
+  FLASH.ReProgram off
+)
+ELSE IF (&ParametersID==0x3)
+(
+  FLASH.ReProgram ALL
+  Data.LOAD.binary "&BinaryFile1" E:&BinaryStartAdd1
+  Data.LOAD.binary "&BinaryFile2" E:&BinaryStartAdd2
+  ; Data.LOAD.binary "&BinaryFile3" E:&BinaryStartAdd3
+  FLASH.ReProgram off
+)
+ELSE
+(
+  FLASH.ReProgram ALL
+  Data.LOAD.elf "&elffile" /verify
+  FLASH.ReProgram off
+)
+
+; Initialize internal SRAM (only partially used)
+Data.Set EA:0x1FFF8000--0x20006FFF %Quad 0
+  
+WAIT 1.s
+Print "Flash Programming successful! Run the GO command to start."
+
+SYStem.Down
+; Avoid t32 to stop the debug after software reset
+TrOnchip.Set CORERESET OFF
+SYStem.Up
+
+
+
+;========================================================================
+; Load symbols
+IF (&ParametersID!=0x3)
+(
+Data.LOAD.elf "&elffile" /nocode
+
+)
+
+; open some windows
+List.auto
+
+ENDDO

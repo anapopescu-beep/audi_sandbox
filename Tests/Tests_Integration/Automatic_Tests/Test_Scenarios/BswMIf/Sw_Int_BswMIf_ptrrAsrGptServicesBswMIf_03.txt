@@ -1,0 +1,35 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrGptServicesBswMIf_Gpt_StopTimer_BswM_OnRunFromPostRunBusAvailable
+ARCH_SW_BswMIf_ptrrGptServicesBswMIf_Gpt_StopTimer_BswM_OnRunFromPostRunBusAvailable: The Gpt_StopTimer runnable shall be called in the BswM_OnRunFromPostRunBusAvailable runnable in order to stop GPT timer on LPIT2 if: - Ecu enters in RUN State {from POST RUN}
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrGptServicesBswMIf_Gpt_StopTimer_BswM_OnRunFromPostRunBusAvailable
+
+	Step 2: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 3: Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function 
+		Expected result:  BP was set
+
+	Step 4: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 5: Set a BP in function BswM_OnRunFromPostRunBusAvailable in order to call Gpt_StopTimer function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function Gpt_StopTimer n order to stop GPT timer on LPIT2 if: - Ecu enters in RUN State {from POST RUN}
+
+Postcondition
+
+	Step 7: Return ECU to default values

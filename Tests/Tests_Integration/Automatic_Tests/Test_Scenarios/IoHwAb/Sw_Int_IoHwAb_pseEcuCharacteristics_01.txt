@@ -1,0 +1,37 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_pseEcuCharacteristics, ARCH_SW_CIL_pclEcuCharacterstics
+ARCH_SW_IoHwAb_pseEcuCharacteristics: The runnable shall read the {MCU Sensor Temperature *C}. The runnable shall read the {Accelerometer Sensor Temperature *C}. The runnable shall read the {PTC Sensor Temperature *C}. The runnable shall read the temperature offsets from the NvM memory ({NVP_s8PtcTempOffset}, {NVP_s8McuTempOffset}, {NVP_s8AccTempOffset}). The runnable shall read the temperature offsets from the NvM memory ({NVP_s8PtcTempOffset}, {NVP_s8McuTempOffset}, {NVP_s8AccTempOffset}.
+ARCH_SW_CIL_pclEcuCharacterstics: Interface used to receive the temperature of the ECU PCB.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+	Step 2: Start MF 01 
+		Expected result:  MF Started.
+
+Action: ARCH_SW_IoHwAb_pseEcuCharacteristics, ARCH_SW_CIL_pclEcuCharacterstics
+
+	Step 3: Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at RTE Call for GetTemperature 
+		Expected result:  BP reached.
+
+	Step 4: Set a breakpoint in function IoHwAb_GetEcuTemperature at *ps16EcuTemperature assignment 
+		Expected result:  BP reached.
+
+	Step 5: Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at Rte_Call for runGetMeasure 
+		Expected result:  BP reached.
+
+	Step 6: Evaluate ECU characteristics data flow
+
+Postcondition
+
+	Step 7: Return ECU to default values

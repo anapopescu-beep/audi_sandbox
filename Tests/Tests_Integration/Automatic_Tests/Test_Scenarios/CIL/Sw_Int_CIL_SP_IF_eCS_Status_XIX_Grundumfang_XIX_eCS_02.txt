@@ -1,0 +1,50 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_CIL_SP_IF_eCS_Status_XIX_Grundumfang_XIX_eCS
+ARCH_SW_CIL_SP_IF_eCS_Status_XIX_Grundumfang_XIX_eCS: The runnable shall write the status of the eCS ECU on the CAN bus - The runnable shall read the current output of the virtual ball algorithm - The runnable shall read the critical auto-test status via the mode management interface - The runnable shall read the permanent and sporadic error status via the mode management interface - If the critical auto-tests have not been run then the INIT value shall be transmitted on the CAN Bus - If the permanent HW error mode is set then the ERROR value shall be transmitted on the CAN Bus - If the sporadic error mode is set then the ERROR value shall be transmitted on the CAN Bus - If the ball algorithm outputs the LOCK state then this value shall be transmitted on the CAN bus - If the ball algorithm outputs the UNLOCK state then this value shall be transmitted on the CAN bus
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_CIL_SP_IF_eCS_Status_XIX_Grundumfang_XIX_eCS
+
+	Step 2: Start DevKit_01 Frame 
+		Expected result:  Frame started.
+
+	Step 3: Send request for Supplier session
+
+	Step 4: Send request for  Supplier Security Access
+
+	Step 5: Send request for press ECUUnlock button
+
+	Step 6: Send request for Activate measurement frame
+
+	Step 7: Set a breakpoint in function CIL_runAppliToCAN at the execution for the current time slot 
+		Expected result:  BP reached.
+
+	Step 8: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot02 at the 2nd timeslot 
+		Expected result:  BP reached.
+
+	Step 9: Run the debugger 2 times, in order to reach the 2nd timeslot.
+
+	Step 10: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot02 after RTE Read for ball position in mm 
+		Expected result:  BP reached.
+
+	Step 11: Read Ball_Position in mm from debugger 
+		Expected result:  Variable read.
+
+	Step 12: Read value of signal Ball_Position 
+		Expected result:  Signal value read.
+
+Postcondition
+
+	Step 13: Return ECU to default values

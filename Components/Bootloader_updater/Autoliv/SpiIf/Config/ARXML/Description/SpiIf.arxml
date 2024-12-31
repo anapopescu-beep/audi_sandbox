@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="54d424cb-6af5-4a6b-986a-a504a3b64d9b">
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2018-04-26T11:21:28+02:00" UUID="1f9671fe-205e-4713-8d1f-d5fb53d7bc76">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2022-09-21T09:04:55+03:00" UUID="DCE:f33e24f4-f5a3-4443-9d9d-ad66b1d31639">
+              <SHORT-NAME>SpiIf</SHORT-NAME>
+              <ELEMENTS>
+                <ECU-ABSTRACTION-SW-COMPONENT-TYPE T="2022-08-26T20:51:12+03:00" UUID="a569322d-9533-4061-9eea-e87e2a4ab999">
+                  <SHORT-NAME>SpiIf</SHORT-NAME>
+                  <CATEGORY>MCAL_Communication_Drivers</CATEGORY>
+                  <PORTS>
+                    <P-PORT-PROTOTYPE T="2022-09-21T13:04:57+03:00" UUID="bed31161-4c20-4d56-88b8-84d65b91ec98">
+                      <SHORT-NAME>ptrpSpiIfServicesACC</SHORT-NAME>
+                      <DESC T="2023-02-16T08:58:13+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrpSpiIfServicesACC_writeSpiData&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall write the {Spi Data} content on the Spi internal buffer of the selected {Spi Channel Id}&#xD;
+	- The runnable shall send the {Spi Sequence} on the Spi bus&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Channel Sequence}&#xD;
+	- {Spi Data}&#xD;
+	&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_writeSpiData&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrpSpiIfServicesACC_spiSyncTransmitSequence&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall transmit the selected {Spi Sequence} on the Spi bus&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Sequence}&#xD;
+	&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_spiSyncTransmitSequence&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+ Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrpSpiIfServicesACC_spiReadIBFromChannel&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall read the Spi data response from the accelerometer on the {Spi Response Data} output parameter&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Channel Id}&#xD;
+	&#xD;
+## Outputs&#xD;
+	- {Spi Response Data}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_spiReadIBFromChannel&#xD;
+	&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:52:48+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T13:16:20+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-02-20T10:52:03.801+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:52:48+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:16:20+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/SpiIf_DataDictionnary/TriggerInterfaces/itrSpiIfServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2022-09-21T13:05:09+03:00" UUID="b848b74c-57d8-4ac6-9f22-5dfb3f92737a">
+                      <SHORT-NAME>ptrpSpiIfServicesSBC</SHORT-NAME>
+                      <DESC T="2023-02-16T09:01:12+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrpSpiIfServicesSBC_writeSpiData&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall write the {Spi Data} content on the Spi internal buffer of the selected {Spi Channel Id}&#xD;
+	- The runnable shall send the {Spi Sequence} on the Spi bus&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Channel Sequence}&#xD;
+	- {Spi Data}&#xD;
+	&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_writeSpiData&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrpSpiIfServicesSBC_spiSyncTransmitSequence&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall transmit the selected {Spi Sequence} on the Spi bus&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Sequence}&#xD;
+	&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_spiSyncTransmitSequence&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+ Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrpSpiIfServicesSBC_spiReadIBFromChannel&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall read the Spi data response from the SBC chip on the {Spi Response Data} output parameter&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Channel Id}&#xD;
+	&#xD;
+## Outputs&#xD;
+	- {Spi Response Data}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_spiReadIBFromChannel&#xD;
+	&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:52:57+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-13T13:17:13+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-02-20T10:52:29.043+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:52:57+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:17:13+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/SpiIf_DataDictionnary/TriggerInterfaces/itrSpiIfServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2022-09-21T13:04:45+03:00" UUID="ba7676f4-afea-4653-ab76-205464034032">
+                      <SHORT-NAME>ptrrAsrSpiServicesSpiIf</SHORT-NAME>
+                      <DESC T="2023-07-31T14:37:25+03:00">
+                        <L-2 L="FOR-ALL">Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrrAsrSpiServices_Spi_WriteIB_SpiIf_writeSpiData&#xD;
+	&#xD;
+# Description&#xD;
+	- The runnable shall pass the {Spi Channel Id} and {Spi Data} input parameters to the Spi_WriteIB interface in order to send data on the Spi bus&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Channel Sequence}&#xD;
+	- {Spi Data}&#xD;
+	&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_writeSpiData&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrrAsrSpiServices_Spi_SyncTransmit_SpiIf_writeSpiData&#xD;
+	&#xD;
+# Description&#xD;
+	- The Spi_SyncTransmit interface shall be called in order to transmit the selected {Spi Sequence} on the Spi bus&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Channel Sequence}&#xD;
+	- {Spi Data}&#xD;
+	&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_writeSpiData&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrrAsrSpiServices_Spi_SyncTransmit_SpiIf_spiSyncTransmitSequence&#xD;
+	&#xD;
+# Description&#xD;
+	- The Spi_SyncTransmit interface shall be called in order to transmit the selected {Spi Sequence} on the Spi bus&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Sequence}&#xD;
+	&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_spiSyncTransmitSequence&#xD;
+	&#xD;
+#Traceability &#xD;
+&#xD;
+------------------------------------------------------------------------------------&#xD;
+&#xD;
+ Architecture Element ID&#xD;
+	- ARCH_SW_SpiIf_ptrrAsrSpiServices_spiReadIBFromChannel&#xD;
+	&#xD;
+# Description&#xD;
+	- The Spi_ReadIB interface will be called in order to read the Spi data response from the slave and forward in to the rest of the Application BSW modules(e.g. SBC/ACC) on the {Spi Response Data} output parameter&#xD;
+	&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+	- {Spi Channel Id}&#xD;
+	&#xD;
+## Outputs&#xD;
+	- {Spi Response Data}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- SpiIf_spiReadIBFromChannel&#xD;
+	&#xD;
+#Traceability </L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:53:09+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-31T14:37:42+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_InReviewByTestTeam</STATE>
+                            <ISSUED-BY>david.puscasu</ISSUED-BY>
+                            <DATE>2023-02-20T10:51:45.352+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:53:09+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-13T13:15:10+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_13.07.2023] reviewed by IT team, set to ToBeClarified</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">Unclear description</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-31T14:37:42+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_31.07.2023]: Fixed</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL"></L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrSpiServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                  </PORTS>
+                </ECU-ABSTRACTION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES></AUTOSAR>

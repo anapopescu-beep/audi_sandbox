@@ -1,0 +1,45 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_WriteData, ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_ReadData
+ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_WriteData: Interface used to write the eCS variant used.
+ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_ReadData: Interface used to read accelerometer offsets(6 bytes of data, 2 for each axis, OffsetAx, OffsetAy, OffsetAz).
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_WriteData
+
+	Step 2: Send diagnostic request in order to go in Supplier Session
+
+	Step 3: Send request for press Supplier Security Access button
+
+	Step 4: Send diagnostic request in order to write accelerometer offsets 
+
+	Step 5: Set a BP in function DIA_runDidFDE1_EcsParametersWrite in order to write eCS variant used 
+		Expected result:  BP was set
+
+Action: ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_ReadData
+
+	Step 6: Send diagnostic request in order to go in Supplier Session
+
+	Step 7: Send request for press Supplier Security Access button
+
+	Step 8: Send diagnostic request in order to read accelerometer offsets
+
+	Step 9: Set a BP in function DIA_runDidFDE2_EcsAccOffsetsRead in order to read read accelerometer offsets 
+		Expected result:  BP was set
+
+	Step 10: Read Offset Ax value 
+		Expected result:  Offset Ax succesfully read
+
+Postcondition
+
+	Step 11: Return ECU to default values

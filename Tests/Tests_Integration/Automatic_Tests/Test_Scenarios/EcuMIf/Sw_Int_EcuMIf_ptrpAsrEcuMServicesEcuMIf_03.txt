@@ -1,0 +1,45 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_SwitchOff
+ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_SwitchOff: - The EcuM_AL_SwitchOff runnable shall be called by the Autosar EcuM as the last activity in the OffPostOS Sequence.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_AL_SwitchOff
+
+	Step 2: Send diagnostic request in order to go in Supplier Session
+
+	Step 3: Send request for press Supplier Security Access button
+
+	Step 4: Send request for press ECUUnlock button
+
+	Step 5: Send diagnostic request in order to write eCS Variant to disable buckle and seat sensors
+
+	Step 6: Disable comunication 
+		Expected result:  Comunicatin disable
+
+	Step 7: Set a BP in function BswM_Cyclic_10msTimer in order to change post run timer value 
+		Expected result:  BP was set
+
+	Step 8: Change value for Post Run Timer in order to go in EcuM_Shutdown function 
+		Expected result:  Succesfully changed
+
+	Step 9: Set a BP in function EcuM_Shutdown in order to call EcuM_AL_SwitchOff function 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function EcuM_AL_SwitchOff in order to check if is called as the last activity in the OffPostOS Sequence 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 11: Return ECU to default values

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2015-09-29T16:42:13+02:00">
+              <SHORT-NAME>DcmIf</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2022-09-09T10:11:13+03:00">
+                  <SHORT-NAME>DcmIf</SHORT-NAME>
+                  <CATEGORY>BSW_Communication_Services</CATEGORY>
+                  <PORTS>
+                    <P-PORT-PROTOTYPE T="2023-02-21T20:57:08+02:00" UUID="cb9cd185-1c75-4a35-92c5-72dcaa6061aa">
+                      <SHORT-NAME>ptrpAsrDcmServicesDcmIf</SHORT-NAME>
+                      <DESC T="2023-02-21T21:03:09+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_DcmIf_ptrpAsrDcmServices_Rte_DcmConfirmation&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called in order to know if the Dcm confirmation is made&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+     {Sid} - The Id of service&#xD;
+     {ReqType} - Request type&#xD;
+     {SourceAddress} - Address of request source&#xD;
+     {ConfirmationStatus} - Confirmation status&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- Rte_DcmConfirmation&#xD;
+&#xD;
+#Traceability &#xD;
+&#xD;
+---------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_DcmIf_ptrpAsrDcmServices_Dcm_GetProgConditions&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called in order to know if the Dcm initialization is the consequence of a jump from the bootloader&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- Dcm_GetProgConditions&#xD;
+&#xD;
+#Traceability &#xD;
+&#xD;
+---------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_DcmIf_ptrpAsrDcmServices_Dcm_SetProgConditions&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called in order to know if the Dcm can jump to the Bootloader&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+## Outputs&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- Dcm_SetProgConditions&#xD;
+&#xD;
+#Traceability &#xD;
+&#xD;
+---------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_DcmIf_ptrpAsrDcmServices_WriteMemory&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called by the Autosar Dcm module when a diagnostic request for write memory by address has been received&#xD;
+	- The runnable shall write the memory data located at the {Start address} input parameter value with a length of  {Number of bytes to be written} with the data contained in the diagnostic buffer located at {Pointer to the buffer in Dcm}&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Operation status}&#xD;
+- {Identifier of the memory device}&#xD;
+- {Start address} (of the memory from which data is to be written)&#xD;
+- {Number of bytes to be written}&#xD;
+- {Pointer to the buffer in Dcm}&#xD;
+&#xD;
+## Outputs&#xD;
+- {Return Status}&#xD;
+	- Can be: DCM_WRITE_OK, DCM_WRITE_PENDING or DCM_WRITE_FAILED.&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- Dcm_WriteMemory&#xD;
+&#xD;
+#Traceability &#xD;
+&#xD;
+&#xD;
+---------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_DcmIf_ptrpAsrDcmServices_ReadMemory&#xD;
+&#xD;
+# Description&#xD;
+	- The runnable shall be called by the Autosar Dcm module when a diagnostic request for read memory by address has been received&#xD;
+	- The runnable shall return the memory data located at the {Start address} input parameter value with a length of {Number of bytes to be read}&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Operation status}&#xD;
+- {Identifier of the memory device}&#xD;
+- {Start address} (of the memory from which data is to be retrieved)&#xD;
+- {Number of bytes to be read}&#xD;
+&#xD;
+## Outputs&#xD;
+- {Pointer to the buffer in Dcm}&#xD;
+- {Return Status}&#xD;
+	- Can be: DCM_WRITE_OK, DCM_WRITE_PENDING or DCM_WRITE_FAILED.&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- Dcm_ReadMemory&#xD;
+&#xD;
+#Traceability &#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:27:22+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T13:21:10+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T20:56:41.515+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality was updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:28:02+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T13:21:10+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrDcmServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

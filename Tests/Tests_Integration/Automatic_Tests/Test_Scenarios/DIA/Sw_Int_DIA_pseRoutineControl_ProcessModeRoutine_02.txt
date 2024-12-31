@@ -1,0 +1,40 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_DIA_pseRoutineControl_ProcessMode_Stop
+ARCH_SW_DIA_pseRoutineControl_ProcessMode_Stop: Interface used to stop the Process Mode.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_DIA_pseRoutineControl_ProcessMode_Stop
+
+	Step 2: Set a BP in function Dcm_DcmDspRoutineProcessMode_Stop in order to call Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_Stop function 
+		Expected result:  BP was set
+
+	Step 3: Send diagnostic request in order to go in Supplier Session
+
+	Step 4: Send request for press Supplier Security Access button
+
+	Step 5: Send request for press ECUUnlock button
+
+	Step 6: Send diagnostic request in order to start the Process Mode 
+
+	Step 7: Send diagnostic request in order to stop the Process Mode 
+
+	Step 8: Set a BP in function Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_Stop in order to call DIA_runRidF793_ProcessModeStop. 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function DIA_runRidF793_ProcessModeStop  in order to stop the Process Mode. 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 10: Return ECU to default values

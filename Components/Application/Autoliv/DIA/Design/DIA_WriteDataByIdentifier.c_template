@@ -1,0 +1,2932 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+ *******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+ ******************************************************************************/
+/**
+ *    $Revision: 1.5 $
+ *    $ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/DIA/Design/project.pj $
+ */
+
+/******************************************************************************
+
+details
+   This file is intended to handle Write Data By Identifier services.
+
+ ******************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+ ******************************************************************************/
+#include "Rte_DIA.h"
+#include "DIA.h"
+#include "Dcm.h"
+/******************************************************************************
+MODULE DEFINES
+ ******************************************************************************/
+/**
+ * \brief
+ *    Constant used to check the write status of eCS coding variant.
+ */
+#define KU32_DIA_BIT_MASK_023E                                 (KU32_MASK_BIT_6)
+/**
+ * \brief
+ *    Constant used to check the write status of eCS parameters.
+ */
+#define KU32_DIA_BIT_MASK_0236                                 (KU32_MASK_BIT_7)
+/**
+ * \brief
+ *    Constant used to check the write status of mesurement frame config.
+ */
+#define KU32_DIA_BIT_MASK_MEASUREMENT_FRAME_CONFIG            (KU32_MASK_BIT_8)
+/**
+ * \brief
+ *    Constant used to check the write status of part number.
+ */
+#define KU32_DIA_BIT_MASK_HW_PART_NUMBER                      (KU32_MASK_BIT_9)
+/**
+ * \brief
+ *    Constant used to check the write status of Acc angles offset calibration.
+ */
+#define KU32_DIA_BIT_MASK_ACC_ANGLE_OFFSET                    (KU32_MASK_BIT_10)
+/**
+ * \brief
+ *    Constant used to check the write status of ecu assembly serial number.
+ */
+#define KU32_DIA_BIT_MASK_ECU_ASSEMBLY_SERIAL_NUMBER          (KU32_MASK_BIT_11)
+/**
+ * \brief
+ *    Constant used to check the write status of manufacturing date.
+ */
+#define KU32_DIA_BIT_MASK_FD8B                                (KU32_MASK_BIT_12)
+/**
+ * \brief
+ *    Constant used to check the write status of ecs variant.
+ */
+#define KU32_DIA_BIT_MASK_ECS_VARIANT                         (KU32_MASK_BIT_13)
+/**
+ * \brief
+ *    Constant used to check the write status of ecs parameters.
+ */
+#define KU32_DIA_BIT_MASK_ECS_PARAMETERS                      (KU32_MASK_BIT_14)
+/**
+ * \brief
+ *    Constant used to check the write status of ecs acc offsets.
+ */
+#define KU32_DIA_BIT_MASK_ECS_ACC_OFFSETS                     (KU32_MASK_BIT_15)
+/**
+ * \brief
+ *    Constant used to check the write status of ecs profiles.
+ */
+#define KU32_DIA_BIT_MASK_ECS_PROFILES                        (KU32_MASK_BIT_16)
+/**
+ * \brief
+ *    Constant used to check the write status of ecs steps.
+ */
+#define KU32_DIA_BIT_MASK_ECS_STEPS                           (KU32_MASK_BIT_17)
+/**
+ * \brief
+ *    Constant used to check the write status of ecs acc lowpass.
+ */
+#define KU32_DIA_BIT_MASK_ECS_ACC_LOWPASS                     (KU32_MASK_BIT_18)
+/**
+ * \brief
+ *    Constant used to check the write status of Ecu serial number.
+ */
+#define KU32_DIA_BIT_MASK_F18C                                (KU32_MASK_BIT_19)
+/**
+ * \brief
+ *    Constant used to check the write status of ecs algo output delay.
+ */
+#define KU32_DIA_BIT_MASK_ECS_ALGO_OUTPUT_DELAY               (KU32_MASK_BIT_20)
+/**
+ * \brief
+ *    Constant used to check the write status of ecs sensitivity lut.
+ */
+#define KU32_DIA_BIT_MASK_ECS_SENSITIVITY_LUT                 (KU32_MASK_BIT_21)
+/**
+ * \brief
+ *    Constant used to check the write status of ecs sensitivity opt.
+ */
+#define KU32_DIA_BIT_MASK_ECS_SENSITIVITY_OPT                 (KU32_MASK_BIT_22)
+/**
+ * \brief
+ *    Constant used to check the write status of Ecu Hw version number.
+ */
+#define KU32_DIA_BIT_MASK_F1A3                                (KU32_MASK_BIT_23)
+/**
+ * \brief
+ *    Constant used to check the write status of Ecu Hw version number.
+ */
+#define KU32_DIA_BIT_MASK_FD03                                (KU32_MASK_BIT_24)
+/**
+ * \brief
+ *    Constant used to check the write status of measurement frame ram config.
+ */
+#define KU32_DIA_BIT_MASK_MEAS_FRAME_RAM_ADDR_CFG             (KU32_MASK_BIT_25)
+/**
+ * \brief
+ *    Constant used to check the write status of spare part number.
+ */
+#define KU32_DIA_BIT_MASK_F187                                (KU32_MASK_BIT_26)
+/**
+ * \brief
+ *    Constant used to check the write status of application Sw version number.
+ */
+#define KU32_DIA_BIT_MASK_F189                                (KU32_MASK_BIT_27)
+/**
+ * \brief
+ *    Constant used to check the write status of Ecu Hw number.
+ */
+#define KU32_DIA_BIT_MASK_F191                                (KU32_MASK_BIT_28)
+/**
+ * \brief
+ *    Constant used to check the write status of system name.
+ */
+#define KU32_DIA_BIT_MASK_F197                                (KU32_MASK_BIT_29)
+/**
+ * \brief
+ *    Constant used to check the write status of ASAM ODX file identifier.
+ */
+#define KU32_DIA_BIT_MASK_F19E                                (KU32_MASK_BIT_30)
+/**
+ * \brief
+ *    Constant used to check the write status of ASAM ODX file version.
+ */
+#define KU32_DIA_BIT_MASK_F1A2                                (KU32_MASK_BIT_31)
+
+/* ASCII codes constants */
+/**
+ * \brief
+ *    ASCII value 0.
+ */
+#define KU8_DIA_ASCII_0               ((uint8)'0')
+/**
+ * \brief
+ *    ASCII value 1.
+ */
+#define KU8_DIA_ASCII_1               ((uint8)'1')
+/**
+ * \brief
+ *    ASCII value 9.
+ */
+#define KU8_DIA_ASCII_9               ((uint8)'9')
+/**
+ * \brief
+ *    ASCII value A.
+ */
+#define KU8_DIA_ASCII_A               ((uint8)'A')
+/**
+ * \brief
+ *    ASCII value Z.
+ */
+#define KU8_DIA_ASCII_Z               ((uint8)'Z')
+/**
+ * \brief
+ *    ASCII value for space.
+ */
+#define KU8_DIA_ASCII_SPACE           ((uint8)' ')
+/**
+ * \brief
+ *    ASCII value for hyphen.
+ */
+#define KU8_DIA_ASCII_HYPHEN          ((uint8)'-')
+/**
+ * \brief
+ *    ASCII value E.
+ */
+#define KU8_DIA_ASCII_E               ((uint8)'E')
+/**
+ * \brief
+ *    ASCII value V.
+ */
+#define KU8_DIA_ASCII_V               ((uint8)'V')
+/**
+ * \brief
+ *    ASCII value underscore.
+ */
+#define KU8_DIA_ASCII_UNDERSCORE      ((uint8)'_')
+/**
+ * \brief
+ *    Maximum ASCII value.
+ */
+#define KU8_DIA_ASCII_MAX             ((uint8)0x7F)
+/**
+ * \brief
+ *    Constant used as parameter for bIsAsciiCharAllowedAUDI function to check F1A3 service restrictions.
+ */
+#define KU8_DIA_DID_F1A3              ((uint8)0x01)
+/**
+ * \brief
+ *    Constant used as parameter for bIsAsciiCharAllowedAUDI function to check F191 and F187 services restrictions.
+ */
+#define KU8_DIA_DID_F187_DID_F191     ((uint8)0x02)
+/**
+ * \brief
+ *    Constant used as parameter for bIsAsciiCharAllowedAUDI function to check F197 and F18C services restrictions.
+ */
+#define KU8_DIA_DID_F18C_DID_F197     ((uint8)0x03)
+/**
+ * \brief
+ *    Constant used as parameter for bIsAsciiCharAllowedAUDI function to check F19E service restrictions.
+ */
+#define KU8_DIA_DID_F19E              ((uint8)0x04)
+/**
+ * \brief
+ *    Constant used as parameter for bIsAsciiCharAllowedAUDI function to check F1A2 service restrictions.
+ */
+#define KU8_DIA_DID_F1A2              ((uint8)0x05)
+/**
+ * \brief
+ *    Constant used as parameter for bIsAsciiCharAllowedAUDI function to check F189 service restrictions.
+ */
+#define KU8_DIA_DID_F189              ((uint8)0x06)
+/**
+ * \brief
+ *    Maximum value for LSB in BCD format.
+ */
+#define KU8_DIA_LSB_BCD_DIGIT_MAX_VALUE  ((uint8)0x09)
+/**
+ * \brief
+ *    Maximum value for MSB in BCD format.
+ */
+#define KU8_DIA_MSB_BCD_DIGIT_MAX_VALUE  ((uint8)0x90)
+/**
+ * \brief
+ *    Manufacturing date year index.
+ */
+#define KU8_DIA_MANUFACTURING_DATE_YEAR_INDEX        ((uint8)0)
+/**
+ * \brief
+ *    Manufacturing date month index.
+ */
+#define KU8_DIA_MANUFACTURING_DATE_MONTH_INDEX       ((uint8)1)
+/**
+ * \brief
+ *    Manufacturing date day index.
+ */
+#define KU8_DIA_MANUFACTURING_DATE_DAY_INDEX         ((uint8)2)
+/**
+ * \brief
+ *    Manufacturing date day maximum value.
+ */
+#define KU8_DIA_MANUFACTURING_DATE_MAX_DAY_VALUE     ((uint8)0x31)
+/**
+ * \brief
+ *    Manufacturing date month maximum value.
+ */
+#define KU8_DIA_MANUFACTURING_DATE_MAX_MONTH_VALUE   ((uint8)0x12)
+/**
+ * \brief
+ *    NVP_au16Var1AdcRange and NVP_au16Var2AdcRange size.
+ */
+#define KU8_DIA_NVP_VAR_ADC_RANGE_ARRAY_SIZE         (KU8_TWENTY)
+/**
+ * \brief
+ *    NVP_au16Angle2_Idx block size.
+ */
+#define KU8_DIA_NVP_ANGLE_2_IDX_BLOCK_SIZE           ((uint8) 4)
+/**
+ * \brief
+ *    NVP_au16Angle1_Idx block size.
+ */
+#define KU8_DIA_NVP_ANGLE_1_IDX_BLOCK_SIZE           ((uint8) 3)
+/**
+ * \brief
+ *    NVP_AEE_TRACEABILITY_NUMBER block size.
+ */
+#define KU8_DIA_NVP_AEE_TRACEABILITY_NB_BLOCK_SIZE   ((uint8) 12)
+/******************************************************************************
+MODULE TYPES
+ ******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+ ******************************************************************************/
+LOCAL boolean dia_IsAsciiCharAllowedAUDI(const uint8* kpu8Data , const uint16 ku16Length, const uint8 ku8DiaAsciiToCheck);
+LOCAL boolean dia_CheckBCD (const uint8 ku8Value);
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+ ******************************************************************************/
+/**
+ * \brief
+ *    Variable used to avoid multiple writing in the NVM buffer.
+ * \initialization
+ *    KU32_ZERO (0)
+ * \range
+ *    0..KU32_MAX
+ */
+LOCAL uint32 dia_u32WriteNVPBlockStatusFlag = KU32_ZERO;
+/**
+ * \brief
+ *    Variable used to write the eCS variant.
+ * \initialization
+ *    KU32_ZERO (0)
+ * \range
+ *    0..KU32_MAX
+ */
+LOCAL uint32 dia_u32eCSVariantData = KU32_ZERO;
+/**
+ * \brief
+ *    Variable used to check the writing status for NVPAccAxis Block
+ * \initialization
+ *    E_NOT_OK
+ * \range
+ *    E_NOT_OK
+ *    NVM_REQ_OK
+ *    NVM_REQ_PENDING;
+ */
+LOCAL uint8 dia_u8ManageNVPAccAxisBlockWritingResult = E_NOT_OK;
+/**
+ * \brief
+ *    Variable used to check the writing status for NVPeCSVariant Block
+ * \initialization
+ *    E_NOT_OK
+ * \range
+ *    E_NOT_OK
+ *    NVM_REQ_OK
+ *    NVM_REQ_PENDING;
+ */
+LOCAL uint8 dia_u8ManageNVPeCSVariantBlockWritingResult = E_NOT_OK;
+/**
+ * \brief
+ *    Variable used to check the writing status for NVPEcuTimingParameters Block
+ * \initialization
+ *    E_NOT_OK
+ * \range
+ *    E_NOT_OK
+ *    NVM_REQ_OK
+ *    NVM_REQ_PENDING;
+ */
+LOCAL uint8 dia_u8ManageNVPEcuTimingParametersBlockWritingResult = E_NOT_OK;
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+ ******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+ ******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+ ******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+ ******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+ ******************************************************************************/
+/**
+ * \brief
+ *       Function used to check if a data set contains only ASCII values for
+ *       letters, digits, point, hyphen, underscore or space.
+ * \inputparam
+ *       Name: kpu8Data;
+ *       Type: const uint8*;
+ *       Description: Data set;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: ku16Length;
+ *       Type: const uint16;
+ *       Description: Length of the data set;
+ *       Range: 0..KU16_MAX;
+ * \inputparam
+ *       Name: ku8DiaAsciiToCheck;
+ *       Type: const uint8;
+ *       Description: Diagnostic service;
+ *       Range: 0..KU8_MAX;
+ * \return
+ *       bCr:
+ *          o KB_TRUE - all bytes are ASCII values for supported characters;
+ *          o KB_FALSE - one or several bytes aren't ASCII values for supported characters;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \dynamicaspectcaller
+ *       Called by WriteDataByIdentifier functions.
+ * \dynamicaspectdescription
+ *       Functions used to write data by 2E service.
+ * \ddesignrequirement
+ *		   DSG_DIA_dia_IsAsciiCharAllowedAUDI
+ * \archrequirement
+ *       None.
+ **/
+LOCAL boolean dia_IsAsciiCharAllowedAUDI(const uint8* kpu8Data , const uint16 ku16Length, const uint8 ku8DiaAsciiToCheck)
+{
+
+   /* Check that there are some bytes to analyze. */
+   if (Data length is greater than zero)
+   {
+      Set the result to True;
+
+      /* Switch case to write restrictions for Identification services */
+      switch (DID to check)
+      {
+         /* This case covers DID F1A3 */
+         case F1A3 DID:
+         {
+            /*  Byte 0 should be: H, X, Y, Z or in the interval 0-9 (ASCII) */
+            if (Byte 0 is not between 0 and 9 and between A and Z)
+            {
+               Set the result to False;
+            }
+            /*  Byte 1 should be in the interval 0-9 (ASCII) */
+            else if (Byte 1 is not between 0 and 9)
+            {
+               Set the result to False;
+            }
+            /*  Byte 2 should be in the interval 1-9 (ASCII) */
+            else if (Byte 2 is not between 1 and 9)
+            {
+               Set the result to False;
+            }
+            else
+            {
+               Do nothing;
+            }
+            break;
+         }
+         /* This case covers DIDs F187 and F191 */
+         case F187 and F191 DIDs:
+         { 
+            /* Roll over all bytes of the buffer. */
+            for (Each data byte of the diagnostic buffer)
+            {
+               /* For the first 3 bytes of the buffer check if bytes are either:
+                  digit or upper case letter */
+               if (Data bytes are less than 3)
+               {
+                  if (Bytes are not between 0 and 9 and between A and Z)
+                  {
+                     Set the result to False;
+                  }
+               }
+               /* The following six bytes should be digits */
+               else if (Data bytes are between 2 and 8)
+               {
+                  if (Bytes are not between 0 and 9)
+                  {
+                     Set the result to False;
+                  }
+               }
+               /* The last two bytes should be either upper case letters or space */
+               else
+               {
+                  if (Bytes are not between A and Z and bytes are not Space character)
+                  {
+                     Set the result to False;
+                  }
+               }
+            }
+            break;
+         }
+
+         /* This case covers DIDs F18C and F197 */
+         case F18C and F197 DIDs:
+         { 
+            /* Roll over all bytes of the buffer. */
+            for (Each data byte of the diagnostic buffer)
+            {
+               /* The bytes of the buffer should be ASCII characters with values between '0'-'DEL' */
+               if (Bytes are greater than the maximum ascii value)
+               {
+                  Set the result to False;
+               }
+            }
+            break;
+         }
+
+         /* This case covers DID F19E */
+         case F19E:
+         {
+            /* Roll over all bytes of the buffer. */
+            for (Each data byte of the diagnostic buffer)
+            {
+               /* The first byte of the buffer should be 'E' */
+               if (Byte is equal to 0)
+               {
+                  if (Byte is not equal to 'E' character)
+                  {
+                     Set the result to False;
+                  }
+               }
+               /* The second byte of the buffer should be 'V' */
+               else if (Byte is equal to 1)
+               {
+                  if (Byte is not equal to 'V' character)
+                  {
+                     Set the result to False;
+                  }
+               }
+               /* The third byte of the buffer should be '_' */
+               else if (Byte is equal to 2)
+               {
+                  if (Byte is not equal to '_' character)
+                  {
+                     Set the result to False;
+                  }
+               }
+               /* The final byte of the buffer should be 0x00 */
+               else if (Byte is equal to 23)
+               {
+                  if (Byte is not equal to 0x00)
+                  {
+                     Set the result to False;
+                  }
+               }
+               /* The rest of bytes should be ASCII characters with values between '0'-'DEL' */
+               else
+               {
+                  if (Bytes are greater than the maximum ascii value)
+                  {
+                     Set the result to False;
+                  }
+               }
+
+            }
+            break;
+         }
+
+         /* This case covers DID F1A2 */
+         case F1A2:
+         {
+            /* Roll over all bytes of the buffer. */
+            for (Each data byte of the diagnostic buffer)
+            {
+               /*  Byte 3 and byte 6 should be in the interval 1-9 (ASCII) */
+               if(Data bytes are between 3 and 6)
+               {
+                  if (Bytes are not between 1 and 9)
+                  {
+                     Set the result to False;
+                  }
+               }
+               else
+               {
+                  /*  The rest of bytes should be in the interval 0-9 (ASCII) */
+                  if(Bytes are not between 0 and 9)
+                  {
+                     Set the result to False;
+                  }
+               }
+            }
+            break;
+         }
+         /* This case covers DID F189 */
+         case F189:
+         {
+            /* Roll over all bytes of the buffer. */
+            for (Each data byte of the diagnostic buffer)
+            {
+               /* The bytes of the buffer should be ASCII characters with values between 0-9, A-Z and hyphen */
+               if(Bytes are not between 0 and 9 and bytes are not between A and Z and bytes are not hyphen)
+               {
+                  Set the result to False;
+               }
+            }
+            break;
+         }
+         /* byte value is not part of allowed range */  
+         default:
+         {
+            Set the result to False;
+            break;
+         }
+      }
+
+   }
+   else
+   {
+      /* byte value is not part of allowed range */
+      Set the result to False;
+   }
+
+   Return result;
+}
+
+/**
+ * \brief
+ *       Function used to check if a data set is in BCD format.
+ * \inputparam
+ *       Name: ku8Data;
+ *       Type: const uint8;
+ *       Description: Data set;
+ *       Range: 0..KU8_MAX;
+ * \return
+ *       bReturn:
+ *          o KB_TRUE - all bytes are in BCD format;
+ *          o KB_FALSE - one or several bytes aren't in BCD format;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \dynamicaspectcaller
+ *       Called by DIA_runDidFD8B_ECUManufacturingDateWrite function.
+ * \dynamicaspectdescription
+ *       Function used to write data by 2E service.
+ * \ddesignrequirement
+ *       DSG_DIA_dia_CheckBCD
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FD8B_ECUManufacturingDateWrite
+ **/
+LOCAL boolean dia_CheckBCD (const uint8 ku8Value)
+{
+   /* Check if both quartets of the value are BCD (in the range [0..9]) */
+   if (Check if the right digits is lower than 0x0F or if the left digit is lower than 0xF0) 
+   {
+      /* The value is not in BCD format */
+      Set the result to False;
+   }
+   else
+   {
+      /* The value is in BCD format */
+      Set the result to True;
+   }
+
+   Return result;
+}
+/******************************************************************************
+DEFINITION OF APIs
+ ******************************************************************************/
+/**
+ * \brief
+ *       Write Hardware Version Number.
+ * \inputparam
+ *       Name: kpu8Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FD00_HWVersionData_WriteData
+ * \dynamicaspectdescription
+ *       Write Hardware Version Number.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFD00_HWVersionWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FD00_HWVersion_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_runDidFD00_HWVersionWrite(const uint8 * kpu8Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType *ErrorCode)
+{
+   /* Check if ECU is locked. */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Write all bytes in the RAM buffer;
+      }
+
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else
+      {
+         if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to inidcate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write Measurement Frames RAM parameters.
+ * \inputparam
+ *       Name: pu8Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDFF_MeasurementFrameConfDataRam_WriteData
+ * \dynamicaspectdescription
+ *       Read Measurement Frames parameters.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFDFF_MeasurementFrameRamConfWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDFF_MeasurementFrameRamConf_WriteData
+ **/
+
+EXPORTED Std_ReturnType DIA_runDidFDFF_MeasurementFrameRamConfWrite(const uint8 * pu8Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType *ErrorCode)
+{
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      if(There is no writing process for this NVM buffer)
+      {
+        Set the flag to indicate that the writing process is ongoing;
+         /* Write Data in RAM */
+         /* Cast 4 uint8 to an uint32 */
+         for(Each data byte in the diagnostic buffer)
+         {
+            Write all bytes in the RAM buffer;
+         }
+      }
+
+      /* Write Data in EEPROM */
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+
+         /* Retrieve initial status of Measurement Frame RAM Config Block */
+         for(Each byte in the NvM Buffer)
+         {
+            Write initial values;
+         }
+      }
+   }
+
+   Return the result status;
+}
+
+
+/**
+ * \brief
+ *       Function used to write Measurement Frames parameters.
+ * \inputparam
+ *       Name: pu8Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FEFF_MeasurementFramesConfData_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write Measurement Frames parameters.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFEFF_MeasurementFramesConfWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FEFF_MeasurementFramesConf_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_runDidFEFF_MeasurementFramesConfWrite(const uint8 * pu8Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType *ErrorCode)
+{
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* Write Data in EEPROM */
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+
+         /* Retrieve initial status of Measurement Frame RAM Config Block */
+         for(Each byte in the NvM Buffer)
+         {
+            Write initial values;
+         }
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the ECU Assembly Serial Number
+ * \inputparam
+ *       Name: pu8Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_F18C_AssemblySerialNumber_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write the ECU Assembly Serial Number.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidF18C_AssemblySerialNumberWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_F18C_AssemblySerialNumber_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_runDidFD8C_AssemblySerialNumberWrite(const uint8 * pu8Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType *ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the eCS variant used.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDE0_EcsVariantData_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write the eCS variant used.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFDE0_EcsVariantWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDE0_EcsVariant_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_runDidFDE0_EcsVariantWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the eCS parameters.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDE1_EcsParametersData_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write the eCS parameters.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFDE1_EcsParametersWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDE1_EcsParameters_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_runDidFDE1_EcsParametersWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the eCS ACC offsets
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDE2_AccOffsetData_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write the eCS ACC offsets.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFDE2_EcsAccOffsetsWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidFDE2_EcsAccOffsetsWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Get the NvM block length;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the eCS profiles definition.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDE3_EcsProfilesData_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write the eCS profiles definition.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFDE3_EcsProfilesWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ *       ARCH_SW_DIA_pclFsmServices
+ **/
+EXPORTED Std_ReturnType DIA_runDidFDE3_EcsProfilesWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Get the NvM block length;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Get the unlocking timeout period;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the eCS steps definition.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType (uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDE4_EcsStepsData_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write the eCS steps definition.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFDE4_EcsStepsWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDE4_EcsSteps_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ *       ARCH_SW_DIA_pclFsmServices
+ **/
+EXPORTED Std_ReturnType DIA_runDidFDE4_EcsStepsWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType* ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Get the NvM block length;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Get the unlocking timeout period;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the eCS XYZ lowpass filter.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDE5_EcsAccLowPassData_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write the eCS XYZ lowpass filter.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFDE5_EcsAccLowPassWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDE5_EcsAccLowPass_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_runDidFDE5_EcsAccLowPassWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Write the algo output delay (1 lsb = 1 ms).
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDE7_AlgoOutputDelayData_WriteData
+ * \dynamicaspectdescription
+ *       Write the algo output delay (1 lsb = 1 ms).
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDIDFDE7_EcsAlgoOutputDelayWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDE7_EcsAlgoOutputDelay_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_runDIDFDE7_EcsAlgoOutputDelayWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the eCS sensitivity LuT.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDE9_SensitivityLutData_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write the eCS sensitivity LuT.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		DSG_DIA_runDidFDE9_EcsSensitivityLutWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDE9_EcsSensitivityLut_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidFDE9_EcsSensitivityLutWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Get the NvM block length;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the eCS sensitivity optimization.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FDEA_SensitivityOptData_WriteData
+ * \dynamicaspectdescription
+ *       Function used to write the eCS sensitivity optimization.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidFDEA_EcsSensitivityOptWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidFDEA_EcsSensitivityOptWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+/**
+ * \brief
+ *       Function used to write the VW Spare Part Number.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_F187_VWSparePartNumberData_WriteData
+ * \dynamicaspectdescription
+ *       Write the VW Spare Part Number.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidF187_VWSparePartNumberWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_F187_VWSparePartNumber_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidF187_VWSparePartNumberWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      Verify if all the values are in ASCII codes interval;
+      if(Values are not in ASCII codes interval)
+      {
+         Set the appropriate NRC and set the result status to NOK;
+      }
+      else
+      {
+         /* Verify that no writing is already ongoing */
+         if(There is no writing process for this NVM buffer)
+         {
+         Set the flag to indicate that the writing process is ongoing;
+         Get the NvM block length;
+         Write all bytes in the RAM buffer;
+         }
+
+         /* launch writing data to ram shadow*/
+         Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+         /* Writing return parse*/
+         if(The writing process is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to indicate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+/**
+ * \brief
+ *       Function used to write the VW Application SW Version Number.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_F189_VWApplicationSoftwareVersionNumberData_WriteData
+ * \dynamicaspectdescription
+ *       Write the VW Application SW Version Number.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidF189_VWApplicationSoftwareVersionNumberWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_F189_VWApplicationSoftwareVersionNumber_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidF189_VWApplicationSoftwareVersionNumberWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      Verify if all the values are in ASCII codes interval;
+      if(Values are not in ASCII codes interval)
+      {
+         Set the appropriate NRC and set the result status to NOK;
+      }
+      else
+      {
+         /* Verify that no writing is already ongoing */
+         if(There is no writing process for this NVM buffer)
+         {
+         Set the flag to indicate that the writing process is ongoing;
+         Get the NvM block length;
+         Write all bytes in the RAM buffer;
+         }
+
+         /* launch writing data to ram shadow*/
+         Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+         /* Writing return parse*/
+         if(The writing process is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to indicate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+/**
+ * \brief
+ *       Function used to write the VW ECU Hardware Number.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_F191_VWECUHardwareNumberData_WriteData
+ * \dynamicaspectdescription
+ *       Write VW ECU Hardware Number.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidF191_VWECUHardwareNumberWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_F191_VWECUHardwareNumber_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidF191_VWECUHardwareNumberWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and return NOK;
+   }
+   else
+   {
+      Verify if all the values are in ASCII codes interval;
+      if(Values are not in ASCII codes interval)
+      {
+         Set the appropriate NRC and set the result status to NOK;
+      }
+      else
+      {
+         /* Verify that no writing is already ongoing */
+         if(There is no writing process for this NVM buffer)
+         {
+         Set the flag to indicate that the writing process is ongoing;
+         Get the NvM block length;
+         Write all bytes in the RAM buffer;
+         }
+
+         /* launch writing data to ram shadow*/
+         Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+         /* Writing return parse*/
+         if(The writing process is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to indicate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+/**
+ * \brief
+ *       Function used to write the VW System Name.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_F197_VWSystemNameOrEngineTypeData_WriteData
+ * \dynamicaspectdescription
+ *       Write VW System Name.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidF197_VWSystemNameOrEngineTypeWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_F197_VWSystemNameOrEngineType_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidF197_VWSystemNameOrEngineTypeWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      Verify if all the values are in ASCII codes interval;
+      if(Values are not in ASCII codes interval)
+      {
+         Set the appropriate NRC and set the result status to NOK;
+      }
+      else
+      {
+         /* Verify that no writing is already ongoing */
+         if(There is no writing process for this NVM buffer)
+         {
+         Set the flag to indicate that the writing process is ongoing;
+         Get the NvM block length;
+         Write all bytes in the RAM buffer;
+         }
+
+         /* launch writing data to ram shadow*/
+         Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+         /* Writing return parse*/
+         if(The writing process is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to indicate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+/**
+ * \brief
+ *       Function used to write the Bootloader TP size.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_0410_BootloaderTPBlocksizeData_WriteData
+ * \dynamicaspectdescription
+ *       Write Bootloader TP size.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDid0410_BootloaderTPBlocksizeWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_0410_BootloaderTPBlocksize_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_runDid0410_BootloaderTPBlocksizeWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   Write all bytes in RAM buffer;
+   Return OK;
+}
+/**
+ * \brief
+ *       Function used to write the ASAM ODX file identifier.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_F19E_ASAMODXFileIdentifierData_WriteData
+ * \dynamicaspectdescription
+ *       Write ASAM ODX file identifier.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidF19E_ASAMODXFileIdentifierWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_F19E_ASAMODXFileIdentifier_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidF19E_ASAMODXFileIdentifierWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      Verify if all the values are in ASCII codes interval;
+      if(Values are not in ASCII codes interval)
+      {
+         Set the appropriate NRC and set the result status to NOK;
+      }
+      else
+      {
+         /* Verify that no writing is already ongoing */
+         if(There is no writing process for this NVM buffer)
+         {
+            Set the flag to indicate that the writing process is ongoing;
+            Get the NvM block length;
+            Write all bytes in the RAM buffer;
+         }
+
+         /* launch writing data to ram shadow*/
+         Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+         /* Writing return parse*/
+         if(The writing process is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to indicate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+/**
+ * \brief
+ *       Function used to write the ASAM ODX file version.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_F1A2_ASAMODXFileVersionData_WriteData
+ * \dynamicaspectdescription
+ *       Write ASAM ODX file version.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidF1A2_ASAMODXFileVersionWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_F1A2_ASAMODXFileVersion_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidF1A2_ASAMODXFileVersionWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      Verify if all the values are in ASCII codes interval;
+      if(Values are not in ASCII codes interval)
+      {
+         Set the appropriate NRC and set the result status to NOK;
+      }
+      else
+      {
+         /* Verify that no writing is already ongoing */
+         if(There is no writing process for this NVM buffer)
+         {
+            Set the flag to indicate that the writing process is ongoing;
+            Get the NvM block length;
+            Write all bytes in the RAM buffer;
+         }
+
+         /* launch writing data to ram shadow*/
+         Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+         /* Writing return parse*/
+         if(The writing process is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to indicate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+/**
+ * \brief
+ *       Function used to write the ECU Serial Number.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_F18C_ECUSerialNumberData_WriteData
+ * \dynamicaspectdescription
+ *       Write ECU Serial Number.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidF18C_ECUSerialNumberWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_F18C_ECUSerialNumberData_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidF18C_ECUSerialNumberWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      Verify if all the values are in ASCII codes interval;
+      if(Values are not in ASCII codes interval)
+      {
+         Set the appropriate NRC and return NOK;
+      }
+      else
+      {
+         /* Verify that no writing is already ongoing */
+         if(There is no writing process for this NVM buffer)
+         {
+            Set the flag to indicate that the writing process is ongoing;
+            Get the NvM block length;
+            Write all bytes in the RAM buffer;
+         }
+
+         /* launch writing data to ram shadow*/
+         Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+         /* Writing return parse*/
+         if(The writing process is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to indicate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+/**
+ * \brief
+ *       Function used to write the HW version number.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_F1A3_VWECUHardwareVersionNumberData_WriteData
+ * \dynamicaspectdescription
+ *       Write HW version number.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *		   DSG_DIA_runDidF1A3_VWECUHardwareVersionNumberWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_F1A3_VWECUHardwareVersionNumber_WriteData
+ *       ARCH_SW_DIA_pclNvmIfServices_GetNvmBlockLength
+ **/
+EXPORTED Std_ReturnType DIA_runDidF1A3_VWECUHardwareVersionNumberWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      Verify if all the values are in ASCII codes interval;
+      if(Values are not in ASCII codes interval)
+      {
+         Set the appropriate NRC and set the result status to NOK;
+      }
+      else
+      {
+         /* Verify that no writing is already ongoing */
+         if(There is no writing process for this NVM buffer)
+         {
+            Set the flag to indicate that the writing process is ongoing;
+            Get the NvM block length;
+            Write all bytes in the RAM buffer;
+         }
+
+         /* launch writing data to ram shadow*/
+         Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+         /* Writing return parse*/
+         if(The writing process is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to indicate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the Manufacturing Date.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FD8B_ECUManufacturingDateData_WriteData
+ * \dynamicaspectdescription
+ *       Write HW version number.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *       DSG_DIA_runDidFD8B_ECUManufacturingDateWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FD8B_ECUManufacturingDateWrite
+ **/
+EXPORTED Std_ReturnType DIA_runDidFD8B_ECUManufacturingDateWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify if the format of date is in BCD format */
+      if(Values are not in BCD code format)
+      {
+         Set the appropriate NRC and set the result status to NOK;
+      }
+      else
+      {
+         /* Verify that no writing is already ongoing */
+         if(There is no writing process for this NVM buffer)
+         {
+            Set the flag to indicate that the writing process is ongoing;
+            Get the NvM block length;
+            Write all bytes in the RAM buffer;
+         }
+
+         /* launch writing data to ram shadow*/
+         Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+         /* Writing return parse*/
+         if(The writing process is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else if(The writing process is done)
+         {
+            Set the result status to OK;
+            Clear the flag to indicate that the writing process is done;
+         }
+         else
+         {
+            Clear the flag to indicate that the writing process is done;
+            Set the appropriate NRC and set the result status to NOK;
+         }
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the AEE Traceability Nb.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_FD03_AEETraceabilityNumberData_WriteData
+ * \dynamicaspectdescription
+ *       Write AEE traceability number.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *       DSG_DIA_runDidFD03_AEETraceabilityNumberWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_FD03_AEETraceabilityNumberWrite
+ **/
+EXPORTED Std_ReturnType DIA_runDidFD03_AEETraceabilityNumberWrite (const uint8* Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Check ECU LOCK before processing */
+   if(The Ecu is locked)
+   {
+      Set the appropriate NRC and set the result status to NOK;
+   }
+   else
+   {
+      /* Verify that no writing is already ongoing */
+      if(There is no writing process for this NVM buffer)
+      {
+         Set the flag to indicate that the writing process is ongoing;
+         Get the NvM block length;
+         Write all bytes in the RAM buffer;
+      }
+
+      /* launch writing data to ram shadow*/
+      Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+      /* Writing return parse*/
+      if(The writing process is ongoing)
+      {
+         Set the result status to Pending;
+      }
+      else if(The writing process is done)
+      {
+         Set the result status to OK;
+         Clear the flag to indicate that the writing process is done;
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to write the eCS parameters.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_0236_ProgrammingDataElockEcuData_WriteData
+ * \dynamicaspectdescription
+ *       Write eCS parameters.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *       DSG_DIA_run_Did0236_ProgrammingDataElockEcuWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_0236_ProgrammingDataElockEcu_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_run_Did0236_ProgrammingDataElockEcuWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Verify that no writing is already ongoing */
+   if(There is no writing process for this NVM buffer)
+   {
+      Set the flag to indicate that the writing process is ongoing;
+      Write all bytes in the RAM buffers in which are stored the calibration of angle (x and y axis) value, the ECS variant and the timing parameters;
+   }
+   /* launch writing data to ram shadow*/
+   if(The writing process result for the NVM angle calibration block is not equal to OK)
+   {
+      Set the block ID and write all bytes from the RAM buffer in which is stored the calibration angle value in the NVM angle calibration block (EEPROM memory);
+   }
+
+   /* Writing return parse*/
+   if(The writing process for the NVM angle calibration block is ongoing)
+   {
+      Set the result status to Pending;
+   }
+   else
+   {
+      if(The writing process for the NVM angle calibration block is done)
+      {
+         if(The writing process result for the NVM ECS variant block is not equal to OK)
+         {
+            /* NVM_BLOCK_ACC_AXIS_ANGLE_CALIBRATION write done, continue with the next block */
+            Set the block ID and write all bytes from the RAM buffer in which is stored the ECS variant value in the NVM ECS variant block (EEPROM memory);
+         }
+
+         /* Writing return parse*/
+         if(The writing process for the NVM ECS variant block is ongoing)
+         {
+            Set the result status to Pending;
+         }
+         else
+         {
+            if(The writing process for the NVM ECS variant block is done)
+            {
+               /*trigger last block*/
+               //u8Result = E_OK;
+               if(The writing process result for the NVM timing parameters block is not equal to OK)
+               {
+                  /* NVM_BLOCK_ACC_AXIS_ANGLE_CALIBRATION write done, continue with the next block */
+                  Set the block ID and write all bytes from the RAM buffer in which are stored the timing parameters in the NVM timing block (EEPROM memory);
+               }
+               /* Writing return parse*/
+               if(The writing process VM timing parameters block is ongoing)
+               {
+                  Set the result status to Pending;
+               }
+               else
+               {
+                  if(The writing process VM timing parameters block is done)
+                  {
+                     Set the result status to OK;
+                     Clear the flag to indicate that the writing process is done;
+                  }
+                  else
+                  {
+                     Set the writing status to NOT_OK;
+                     Clear the flag to indicate that the writing process is done;
+                     Set the appropriate NRC and set the result status to NOK;
+                  }
+               }
+
+            }
+            else
+            {
+               Set the writing status to NOT_OK;
+               Clear the flag to indicate that the writing process is 	done;
+               Set the appropriate NRC and set the result status to NOK;
+            }
+         }
+      }
+      else
+      {
+         Clear the flag to indicate that the writing process is done;
+         Set the appropriate NRC and set the result status to NOK;
+      }
+   }
+
+   Return the result status;
+}
+
+/**
+ * \brief
+ *       Function used to Function used to write the eCS variant.
+ * \inputparam
+ *       Name: Data;
+ *       Type: const uint8*;
+ *       Description: Data to be written;
+ *       Range: 0..KU8_MAX;
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType(uint8);
+ *       Description: This parameter is not used (default generated by autosar);
+ *       Range: 0..KU8_MAX;
+ * \outputparam
+ *       Name: ErrorCode;
+ *       Type: Dcm_NegativeResponseCodeType*(uint8*);
+ *       Description: DCM error code;
+ *       Range: 0..KU8_MAX;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       Service result.
+ * \dynamicaspectcaller
+ *       Rte_Call_Dcm_DataServices_DID_023E_WSCForProgrammingElockEcuData_WriteData
+ * \dynamicaspectdescription
+ *       Write eCS variant.
+ * \constrains
+ *       Service result is:
+ *          o E_OK;
+ *          o E_NOT_OK;
+ *          o DCM_E_PENDING;
+ * \ddesignrequirement
+ *       DSG_DIA_run_Did023E_WSCForProgrammingElockEcuWrite
+ * \archrequirement
+ *       ARCH_SW_DIA_pseDID_023E_WSCForProgrammingElockEcu_WriteData
+ **/
+EXPORTED Std_ReturnType DIA_run_Did023E_WSCForProgrammingElockEcuWrite (const uint8 * Data, Dcm_OpStatusType OpStatus, Dcm_NegativeResponseCodeType * ErrorCode)
+{
+   /* Verify that no writing is already ongoing */
+   if(There is no writing process for this NVM buffer)
+   {
+      Set the flag to indicate that the writing process is ongoing;
+      /* update RAM */
+      Write all bytes in the RAM buffer;
+   }
+
+   /* launch writing data to ram shadow*/
+   Set the block ID and write all bytes in the NVM block (EEPROM memory);
+
+   /* Writing return parse*/
+   if(The writing process is ongoing)
+   {
+      Set the result status to Pending;
+   }
+   else if(The writing process is done)
+   {
+      Set the result status to OK;
+      Clear the flag to indicate that the writing process is done;
+   }
+   else
+   {
+      Clear the flag to indicate that the writing process is done;
+      Set the appropriate NRC and set the result status to NOK;
+   }
+
+   Return the result status;
+}
+/*************************************************************************
+ Evolution of the component
+
+ created by : T. DEMIREL
+
+ $Log: DIA_WriteDataByIdentifier.c_template  $
+ Revision 1.5 2023/07/17 13:37:34CEST Andreea Suiu (andreea.suiu) 
+ update templates
+ Revision 1.4 2023/07/14 14:21:00EEST Andreea Suiu (andreea.suiu) 
+ add template files for detailed design
+ Revision 1.3.11.44 2023/06/29 12:47:18EEST Andreea Suiu (andreea.suiu) 
+ change indentation
+ Revision 1.3.11.43 2023/06/28 16:00:26EEST Andreea Suiu (andreea.suiu) 
+ change block id for 023e
+ Revision 1.3.11.42 2023/06/28 15:17:21EEST Andreea Suiu (andreea.suiu) 
+ change NVP variable for 023e did
+ Revision 1.3.11.41 2023/06/28 10:44:20EEST Andreea Suiu (andreea.suiu) 
+ fix fd8c did
+ Revision 1.3.11.40 2023/06/27 10:43:18EEST Andreea Suiu (andreea.suiu) 
+ add 2 variables for ECS_PARAMETERS block
+ Revision 1.3.11.39 2023/06/22 14:07:13EEST Andreea Suiu (andreea.suiu) 
+ update src files (fix findings) after review
+ Revision 1.3.11.38 2023/06/21 14:45:51EEST Andreea Suiu (andreea.suiu) 
+ cast to uint32 to avoid the qac warnings
+ Revision 1.3.11.37 2023/06/21 14:14:52EEST Andreea Suiu (andreea.suiu) 
+ add write for dids 0236, 023e
+ Revision 1.3.11.35 2023/06/15 16:13:19EEST Andreea Suiu (andreea.suiu) 
+ add AEE traceability Nb for write
+ change AEE traceability Nb for read
+ Revision 1.3.11.34 2023/06/12 09:17:02EEST Mihai Motoc (mihai.motoc) 
+ Doxygen comments updates
+ Revision 1.3.11.33 2023/06/08 09:35:46EEST Mihai Motoc (mihai.motoc) 
+ Doxygen comments updates
+ Revision 1.3.11.32 2023/05/11 14:21:27EEST Ioan Repede (ioan.repede) 
+ Delete pragma optimize
+ Revision 1.3.11.31 2023/05/03 10:03:10EEST Andreea Suiu (andreea.suiu) 
+ change data access interface for fd8b
+ Revision 1.3.11.30 2023/05/02 15:34:25EEST Andreea Suiu (andreea.suiu) 
+ change B_TRUE/B_FALSE to KB_TRUE/KB_FALSE
+ Revision 1.3.11.29 2023/05/02 13:55:07EEST Andreea Suiu (andreea.suiu) 
+ add write subfunction for did fd8b, add local functin to check if data is BCD fomrat
+ Revision 1.3.11.28 2023/04/28 14:59:12EEST Andreea Suiu (andreea.suiu) 
+ update fd10 did
+ Revision 1.3.11.27 2023/04/25 09:13:03EEST Andreea Suiu (andreea.suiu) 
+ Fix DIA after review
+ Revision 1.3.11.26 2023/04/18 18:22:01EEST Andreea Suiu (andreea.suiu) 
+ Update DIA module according to the coding rules
+ Revision 1.3.11.25 2023/04/18 18:08:09EEST Andreea Suiu (andreea.suiu) 
+ Update DIA module according to the coding rules
+ Revision 1.3.11.24 2023/04/18 16:39:04EEST Andreea Suiu (andreea.suiu) 
+ Fix DIA module after review
+ Revision 1.3.11.23 2023/04/18 14:22:05EEST Andreea Suiu (andreea.suiu) 
+ add parantheses to fix qac warning
+ Revision 1.3.11.22 2023/04/13 16:44:17EEST Andreea Suiu (andreea.suiu) 
+ add byte swapping
+ Revision 1.3.11.21 2023/04/10 15:51:59EEST Andreea Suiu (andreea.suiu) 
+ - change SW version
+ - change ascii conditions for F1A3, F189
+ Revision 1.3.11.20 2023/04/06 13:26:31EEST Andreea Suiu (andreea.suiu) 
+ Add ascii restrictions (first version)
+ Revision 1.3.11.18 2023/03/30 07:43:41EEST Dan Dustinta (dan.dustinta) 
+ fix variable definition
+ Revision 1.3.11.17 2023/03/16 14:25:32EET Andreea Suiu (andreea.suiu) 
+ Update F1A2 DID
+ Revision 1.3.11.16 2023/03/16 14:22:05EET Andreea Suiu (andreea.suiu) 
+ Update F1A3 DID
+ Revision 1.3.11.15 2023/03/16 10:45:12EET Andreea Suiu (andreea.suiu) 
+ Update F18C DID
+ Revision 1.3.11.14 2023/03/15 10:15:20EET Andreea Suiu (andreea.suiu) 
+ Add OEM diagnostics
+ Revision 1.3.11.13 2023/02/28 18:06:43EET Septimiu Vintila (septimiu.vintila) 
+ FuSa section reverted to normal one.
+ Revision 1.3.11.12 2023/02/28 17:15:02EET Septimiu Vintila (septimiu.vintila) 
+ Data sections changed to FuSa data sections.
+ Revision 1.3.11.11 2023/02/28 16:35:52EET Septimiu Vintila (septimiu.vintila) 
+ Code sections changed to FuSa code sections.
+ Revision 1.3.11.10 2023/02/24 13:58:54EET Andreea Suiu (andreea.suiu) 
+ Update DIA after QAC
+ Revision 1.3.11.9 2023/02/23 16:17:51EET Andreea Suiu (andreea.suiu) 
+ Update diagnostic services (add NRCs)
+ Revision 1.3.11.8 2023/01/23 16:10:26EET Denis Folea (denis.folea) 
+ DIA fix after review
+ Revision 1.3.11.7 2023/01/20 15:24:05EET Denis Folea (denis.folea) 
+ DIA fix after review
+ Revision 1.3.11.6 2023/01/13 09:08:39EET Dan Dustinta (dan.dustinta) 
+ update byte swap
+ Revision 1.3.11.5 2023/01/12 13:54:27EET Ioan Repede (ioan.repede) 
+ Add RTE callback to FSM_runCalculateProfileTimeout from FSM in FDE3 and FDE4.
+ Revision 1.3.11.4 2022/12/22 16:28:53EET Andrei Anca (andrei.anca) 
+ Dia cleanup
+ Revision 1.3.11.3 2022/11/25 12:47:57EET Dan Dustinta (dan.dustinta) 
+ update DCM integration code
+ Revision 1.1 2021/09/06 10:17:26EEST Pierre-Olivier Pilot (pierre-olivier.pilot) 
+ Initial revision
+
+
+ *************************************************************************/
+
+/******************************************************************************
+End Of File
+ *****************************************************************************/

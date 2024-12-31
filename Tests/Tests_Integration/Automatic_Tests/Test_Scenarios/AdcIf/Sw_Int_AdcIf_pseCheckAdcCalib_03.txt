@@ -1,0 +1,38 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration
+ARCH_SW_AdcIf_pseRawAdcService: The autotest shall read the calibration status provided by the AdcIf_Calib runnable(OK or NOK) and will output the result.
+ARCH_SW_pclEvtAdcCalibration: This is the ADC calib autotest. It consists of checking that the ADC calibration is OK.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration
+
+	Step 2: Set a breakpoint in function ADC_cbk_CheckAdcCalib at the RTE call for the autotest to check ADC callibration 
+		Expected result:  BP reached.
+
+	Step 3: Set a breakpoint in function AdcIf_Autotest_CheckAdcCalib at the if statement 
+		Expected result:  BP reached.
+
+	Step 4: Modify the ADC Calibration Status 0 variable 
+		Expected result:  Variable is modified with 0x0.
+
+	Step 5: Modify the ADC Calibration Status 1 variable 
+		Expected result:  Variable is modified with 0x1.
+
+	Step 6: Run until return of the function, and read the test result 
+		Expected result:  Variable is set to 0x2.
+
+Postcondition
+
+	Step 7: Return ECU to default values

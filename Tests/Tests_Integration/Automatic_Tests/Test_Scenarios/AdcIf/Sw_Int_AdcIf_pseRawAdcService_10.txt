@@ -1,0 +1,36 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_AdcIf_pseRawAdcService
+ARCH_SW_AdcIf_pseRawAdcService: The runnable shall read the lsb value for the following channels: MCU Temp sensor: internal uC channel
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_AdcIf_pseRawAdcService
+
+	Step 2: Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call 
+		Expected result:  BP reached.
+
+	Step 3: Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement 
+		Expected result:  BP reached.
+
+	Step 4: Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_V_ECU_TEMP_MCU 
+		Expected result:  Variable overwritten with 0x13.
+
+	Step 5: Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_V_ECU_TEMP_MCU 
+		Expected result:  BP reached.
+
+	Step 6: Read the Adc Value.
+
+Postcondition
+
+	Step 7: Return ECU to default values

@@ -1,0 +1,1885 @@
+/*@!Encoding:1252*/
+/*------------------------------------------------------------------------------
+                                IMPORT LIBRARY
+ ------------------------------------------------------------------------------*/
+/* To include all the libraries used by the .capl script. */
+/* WARNING: Some things such as diagnostic functions are different from project
+to project, change those according to your project requirements */
+includes
+{
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Defines.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Project_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Diagnostic_Functions.cin"
+}
+
+/*------------------------------------------------------------------------------
+                                    GLOBALS
+ ------------------------------------------------------------------------------*/
+/* To declare the constants used throurough the entire module, and global variables */
+variables
+{
+
+/*----------------------------Global Variables---------------------------------*/
+  float sEcs_HW_defekt;
+ int64 variable_value;
+}
+
+
+/*------------------------------------------------------------------------------
+                                TEST FUNCTIONS
+------------------------------------------------------------------------------*/
+/*------------------------- Test Preconditions ------------------------------*/
+/* For operations to ensure the correct execution of the test case, such as IGN_ON,
+checking that CAN communication is present, etc.
+/* Varies from module to module, use from Helper_Functions.cin only the ones you need */
+testfunction RunPreTs()
+{
+  DisplayRequirementsInfo();
+  AddTestSetupInformation();
+  
+  PreTS_StartLogging();
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization");
+  
+  testStep("", "Delete all breakpoint from debugger.");
+  debugger_deleteAllBreakpoints();
+  
+  testStep("", "Reset the debugger.");
+  debugger_reset();
+  
+  testStep("", "Run the debugger.");
+  debugger_run();
+}
+
+/*------------------------- Test Postconditions ------------------------------*/
+/* For operations to ensure that after the test case was executed, the enviroment
+would go back to a blank state, to be ready for the next test step in queue. Call it a Cleanup phase. */
+testfunction RunPostTs()
+{
+  stopLogging("TestCaseLogASC");
+  stopLogging("TestCaseLogBLF");
+}
+testcase InitTestModule()
+{
+  ConfigureTestModuleInformation();
+  strncpy(cLogPathAndName, "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Logs\\",  elcount(cLogPathAndName));
+}
+/*------------------------------------------------------------------------------
+                                TEST EXECUTION
+------------------------------------------------------------------------------*/
+
+testcase Sw_Int_IoHwAb_pclAccSpiData_01()
+{
+    //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_ACC_pseAccTemperatureSpiData, ARCH_SW_IoHwAb_pclAccSpiData");
+  AddRequirementInfo("ARCH_SW_ACC_pseAccTemperatureSpiData", "The runnable shall communicate the raw register value for the temperature that is read from the TDK accelerometer from the SPI bus."); 
+  AddRequirementInfo("ARCH_SW_IoHwAb_pclAccSpiData", "The interface shall read the {Raw Accelerometer Temperature} from the SPI bus according to the TDK accelerometer data-sheet");
+  //***************************************************************************************
+  
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_ACC_pseAccTemperatureSpiData");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_GetAccelerometerTemperature at the called Rte_Call_pclAccSpiData_GetTemperatureData interface --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_GetAccelerometerTemperature", "4");
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Set a breakpoint in function ACC_GetAccelerometerTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("ACC_GetAccelerometerTemperature", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_pclAccSpiData");
+   testStep("STEP", "Set a breakpoint in function IoHwAb_GetAccelerometerTemperature after the Rte_Call_pclAccSpiData_GetTemperatureData call --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_GetAccelerometerTemperature","8");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Check dataflow from ACC to IoHwAb");
+   debugger_readLocalVariable("u16TmpSpiVal");
+   ExpectedTestResult(debugger_result, "", "Local variable u16TmpSpiVal");
+  
+  //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  
+
+}
+
+testcase Sw_Int_IoHwAb_pclEfxServices_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pclEfxServices_IoHwAb_runFilterMeasurements10ms, ARCH_SW_IoHwAb_pclEfxServices_IoHwAb_runFilterMeasurements100ms");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pclEfxServices_IoHwAb_runFilterMeasurements10ms", "The interface shall read the {Instantaneous value} and filter it via a first order low pass filter.");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pclEfxServices_IoHwAb_runFilterMeasurements100ms", "The interface shall read the {Instantaneous value} and filter it via a first order low pass filter.");
+  //***************************************************************************************
+   
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+  /*------------------------- Test scenario start ------------------------------*/
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_pclEfxServices_IoHwAb_runFilterMeasurements10ms");
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runFilterMeasurements10ms --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runFilterMeasurements10ms","12");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Check data flow from EFX - IoHwAb interface.");
+   debugger_readVariable("uint16","iohwab_au16FilteredValue10ms", "1");
+   ExpectedTestResult(debugger_result, "0x", "Variable iohwab_au16FilteredValue10ms");
+//   variable_value = debugger_readVariableForBoundary("uint16","iohwab_au16FilteredValue10ms", "1"); 
+//   EvalManStepRange("Verify that received result is within boundaries: -40 - 125", variable_value, -0x28, 0x7D);
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_pclEfxServices_IoHwAb_runFilterMeasurements100ms");
+   testStep("STEP","Set a breakpoint in function IoHwAb_runFilterMeasurements100ms --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runFilterMeasurements100ms","8");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Check data flow from EFX - IoHwAb interface.");
+   debugger_readVariable("uint16","iohwab_au16FilteredValue100ms", "1");
+   ExpectedTestResult(debugger_result, "0x", "Variable iohwab_au16FilteredValue100ms");
+//   variable_value = debugger_readVariableForBoundary("uint16","iohwab_au16FilteredValue100ms", "1"); 
+//   EvalManStepRange("Verify that received result is within boundaries: -40 - 125", variable_value, -0x28, 0x7D);
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseCheckPowerSupplyOV_01()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based test, Interface Tes");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseCheckPowerSupplyOV, ARCH_SW_pclCheckPowerSupplyOV");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseCheckPowerSupplyOV", "The auto-test shall read the {KL30 Supply Voltage} and compare it to the {NVP_u16OverKL30QualificationThrs} threshold from the NvM memory.  Comparison shall be done in mV. If the {Adc Auto-test Result} is NOK then the comparison cannot be done and the {Autotest Result} must be NOK.  If the {KL 30 Supply Voltage} is greater than {NVP_u16OverKL30QualificationThrs} then the {Autotest Result} must be NOK. If the If the {KL 30 Supply Voltage} is lower or equal than {NVP_u16OverKL30QualificationThrs} then the {Autotest Result} must be OK");
+  AddRequirementInfo("ARCH_SW_pclCheckPowerSupplyOV", "This is the test function for overvoltage on the Power stage battery voltage.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseCheckPowerSupplyOV, ARCH_SW_pclCheckPowerSupplyOV");
+  
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyOV at the RTE Call for CheckPowerSupplyOvervoltageAutotest --> BP reached");
+   debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "522");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyOV","2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   debugger_stepIn();
+   testStep("STEP", "Set a breakpoint in function IoHwAb_CheckPowerSupplyOvervoltageAutotest at the previous ADC autotest evaluation. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyOvervoltageAutotest","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Modify previous ADC test result with value KU8_ATM_TEST_NOT_DECIDED --> Variable was written with 0x4");
+   debugger_writeLocalVariable("u8PreviousADCTestResult", "4");
+  ExpectedTestResult(debugger_result, "4", "Variable was modified with 0x4");
+   
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyOV in order to check if test result is NOT DECIDED --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "524");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyOV","5");
+   debugger_run();
+   debugger_waitUntilBPisReached("500");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate autotest result. --> Variable is equal to 0x4");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "4", "Variable is equal to 0x4");
+  
+  //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseCheckPowerSupplyOV_02()
+{ 
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseCheckPowerSupplyOV, ARCH_SW_pclCheckPowerSupplyOV");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseCheckPowerSupplyOV", "The auto-test shall read the {KL30 Supply Voltage} and compare it to the {NVP_u16OverKL30QualificationThrs} threshold from the NvM memory. Comparison shall be done in mV. If the {Adc Auto-test Result} is NOK then the comparison cannot be done and the {Autotest Result} must be NOK. If the {KL 30 Supply Voltage} is greater than {NVP_u16OverKL30QualificationThrs} then the {Autotest Result} must be NOK. If the If the {KL 30 Supply Voltage} is lower or equal than {NVP_u16OverKL30QualificationThrs} then the {Autotest Result} must be OK.");
+  AddRequirementInfo("ARCH_SW_pclCheckPowerSupplyOV", "This is the test function for overvoltage on the Power stage battery voltage.");
+  //***************************************************************************************
+  
+   testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseCheckPowerSupplyOV, ARCH_SW_pclCheckPowerSupplyOV");
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyOV at the RTE Call for CheckPowerSupplyOvervoltageAutotest --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "522");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyOV","2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   debugger_stepIn();
+   testStep("STEP", "Set a breakpoint in function IoHwAb_CheckPowerSupplyOvervoltageAutotest at the previous ADC autotest evaluation. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyOvervoltageAutotest","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Overwrite previous ADC test result with KU8_ATM_TEST_OK. --> Variable overwritten with 0x1");
+   debugger_writeLocalVariable("u8PreviousADCTestResult","1");
+  ExpectedTestResult(debugger_result, "1", "Variable was modified with 0x1");
+  
+   debugger_deleteAllBreakpoints();
+   testStep("STEP","Set a breakpoint in function IoHwAb_CheckPowerSupplyUndervoltageAutotest at the check of last autotest status. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyOvervoltageAutotest","31");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Overwrite battery voltage with 5000. --> Variable overwritten with 5000.");
+   debugger_writeLocalVariable("u16VbatPowerVoltage","160");
+  ExpectedTestResult(debugger_result, "160", "Successfully overwritten local variableu16VbatPowerVoltage with value 160");
+   
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyOV at return of test result --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "524");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyOV", "4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Evaluate test result --> KU8_ATM_TEST_OK");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable u8TestResult is equal to 0x1");
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+
+}
+
+testcase Sw_Int_IoHwAb_pseCheckPowerSupplyOV_03()
+{
+
+   //***********************************Test report header*********************************
+   testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+   TestReportAddMiscInfo("Nightly test", "No");
+   TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+   TestReportAddMiscInfo("Regression Test", "No");
+   TestReportAddMiscInfo("Fault injection method used", "No");
+   TestReportAddMiscInfo("Resource usage evaluation", "No");
+   TestReportAddMiscInfo("Priority", "No");
+   TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseCheckPowerSupplyOV, ARCH_SW_pclCheckPowerSupplyOV");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseCheckPowerSupplyOV", "The auto-test shall read the {KL30 Supply Voltage} and compare it to the {NVP_u16OverKL30QualificationThrs} threshold from the NvM memory. Comparison shall be done in mV. If the {Adc Auto-test Result} is NOK then the comparison cannot be done and the {Autotest Result} must be NOK. If the {KL 30 Supply Voltage} is greater than {NVP_u16OverKL30QualificationThrs} then the {Autotest Result} must be NOK. If the If the {KL 30 Supply Voltage} is lower or equal than {NVP_u16OverKL30QualificationThrs} then the {Autotest Result} must be OK.");
+  AddRequirementInfo("ARCH_SW_pclCheckPowerSupplyOV", "This is the test function for overvoltage on the Power stage battery voltage.");
+   //***************************************************************************************
+  
+   testCaseComment("Preconditions");
+   testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+   RunPreTs();
+   //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseCheckPowerSupplyOV, ARCH_SW_pclCheckPowerSupplyOV");
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyOV at the RTE Call for CheckPowerSupplyOvervoltageAutotest --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "522");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyOV","2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   debugger_stepIn();
+   testStep("STEP", "Set a breakpoint in function IoHwAb_CheckPowerSupplyOvervoltageAutotest at the previous ADC autotest evaluation. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyOvervoltageAutotest","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Overwrite previous ADC test result with KU8_ATM_TEST_OK. --> Variable overwritten with 0x1");
+   debugger_writeLocalVariable("u8PreviousADCTestResult","1");
+  ExpectedTestResult(debugger_result, "1", "Successfully overwritten local variableu8PreviousADCTestResult with value 1");
+  
+   debugger_deleteAllBreakpoints();
+   testStep("STEP","Set a breakpoint in function IoHwAb_CheckPowerSupplyOvervoltageAutotest at the check of last autotest status. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyOvervoltageAutotest","31");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Overwrite battery voltage with 1000. --> Variable overwritten with 1000.");
+   debugger_writeLocalVariable("u16VbatPowerVoltage","3E80");
+  ExpectedTestResult(debugger_result, "3E80", "	Successfully overwritten local variableu16VbatPowerVoltage with value 3E80");
+   
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyOV at return of test result --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "524");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyOV", "4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Evaluate test result --> KU8_ATM_TEST_NOK");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x2", "Local variable u8TestResult is equal to 0x2");
+
+   
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseCheckPowerSupplyUV_01()
+{
+  
+   //***********************************Test report header*********************************
+   testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+   TestReportAddMiscInfo("Nightly test", "No");
+   TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+   TestReportAddMiscInfo("Regression Test", "No");
+   TestReportAddMiscInfo("Fault injection method used", "No");
+   TestReportAddMiscInfo("Resource usage evaluation", "No");
+   TestReportAddMiscInfo("Priority", "No");
+   TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseCheckPowerSupplyUV, ARCH_SW_pclCheckPowerSupplyUV");
+   AddRequirementInfo("ARCH_SW_IoHwAb_pseCheckPowerSupplyUV", "The auto-test shall read the {KL30 Supply Voltage} and compare it to the {NVP_u16UnderKL30QualificationThrs} threshold from the NvM memory. Comparison shall be done in mV. If the {Adc Auto-test Result} is NOK then the comparison cannot be done and the {Autotest Result} must be NOK. If the {KL 30 Supply Voltage} is lower or equal to {NVP_u16UnderKL30QualificationThrs} then the {Autotest Result} must be NOK. If the If the {KL 30 Supply Voltage} is greater than {NVP_u16UnderKL30QualificationThrs} then the {Autotest Result} must be OK.");
+   AddRequirementInfo("ARCH_SW_pclCheckPowerSupplyUV", "This is the test function for undervoltage on the Power stage battery voltage.");
+   //***************************************************************************************
+  
+   testCaseComment("Preconditions");
+   testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+   RunPreTs();
+   //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseCheckPowerSupplyUV, ARCH_SW_pclCheckPowerSupplyUV");
+  
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyUV at the RTE Call for CheckPowerSupplyUndervoltageAutotest --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "502");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyUV","2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   debugger_stepIn();
+   testStep("STEP", "Set a breakpoint in function IoHwAb_CheckPowerSupplyUndervoltageAutotest at the previous ADC autotest evaluation. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyUndervoltageAutotest","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Modify previous ADC test result with value KU8_ATM_TEST_NOT_DECIDED --> Variable was written with 0x4");
+   debugger_writeLocalVariable("u8PreviousADCTestResult", "4");
+   ExpectedTestResult(debugger_result, "4", "Successfully overwritten local variableu8PreviousADCTestResult with value 4");
+   
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyUV --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "504");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyUV","5");
+   debugger_run();
+   debugger_waitUntilBPisReached("500");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate autotest result. --> Variable is equal to 0x4");
+   debugger_readLocalVariable("u8TestResult");
+   ExpectedTestResult(debugger_result, "4", "Local variable u8TestResult is equal to 0x4");
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseCheckPowerSupplyUV_02()
+{
+  
+   //***********************************Test report header*********************************
+   testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+   TestReportAddMiscInfo("Nightly test", "No");
+   TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+   TestReportAddMiscInfo("Regression Test", "No");
+   TestReportAddMiscInfo("Fault injection method used", "No");
+   TestReportAddMiscInfo("Resource usage evaluation", "No");
+   TestReportAddMiscInfo("Priority", "No");
+   TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseCheckPowerSupplyUV, ARCH_SW_pclCheckPowerSupplyUV");
+   AddRequirementInfo("ARCH_SW_IoHwAb_pseCheckPowerSupplyUV", "The auto-test shall read the {KL30 Supply Voltage} and compare it to the {NVP_u16UnderKL30QualificationThrs} threshold from the NvM memory. Comparison shall be done in mV. If the {Adc Auto-test Result} is NOK then the comparison cannot be done and the {Autotest Result} must be NOK. If the {KL 30 Supply Voltage} is lower or equal to {NVP_u16UnderKL30QualificationThrs} then the {Autotest Result} must be NOK. If the If the {KL 30 Supply Voltage} is greater than {NVP_u16UnderKL30QualificationThrs} then the {Autotest Result} must be OK.");
+   AddRequirementInfo("ARCH_SW_pclCheckPowerSupplyUV", "This is the test function for undervoltage on the Power stage battery voltage.");
+   //***************************************************************************************
+  
+   testCaseComment("Preconditions");
+   testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+   RunPreTs();
+   //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseCheckPowerSupplyUV, ARCH_SW_pclCheckPowerSupplyUV");
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyUV at the RTE Call for CheckPowerSupplyUndervoltageAutotest --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "502");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyUV","2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   debugger_stepIn();
+   testStep("STEP", "Set a breakpoint in function IoHwAb_CheckPowerSupplyUndervoltageAutotest at the previous ADC autotest evaluation. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyUndervoltageAutotest","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Overwrite previous ADC test result with KU8_ATM_TEST_OK. --> Variable overwritten with 0x1");
+   debugger_writeLocalVariable("u8PreviousADCTestResult","1");
+   ExpectedTestResult(debugger_result, "1", "Successfully overwritten local variableu8PreviousADCTestResult with value 1");
+  
+   debugger_deleteAllBreakpoints();
+   testStep("STEP","Set a breakpoint in function IoHwAb_CheckPowerSupplyUndervoltageAutotest at the check of last autotest status. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyUndervoltageAutotest","30");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Overwrite battery voltage with 2600. --> Variable overwritten with 2600.");
+   debugger_writeLocalVariable("u16VbatPowerVoltage","2600");
+   ExpectedTestResult(debugger_result, "2600", "Successfully overwritten local variableu16VbatPowerVoltage with value 2600");
+   
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyUV at return of test result --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "504");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyUV", "4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Evaluate test result --> KU8_ATM_TEST_OK");
+   debugger_readLocalVariable("u8TestResult");
+   ExpectedTestResult(debugger_result, "0x1", "Local variable u8TestResult is equal to 0x1");
+
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseCheckPowerSupplyUV_03()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseCheckPowerSupplyUV, ARCH_SW_pclCheckPowerSupplyUV");
+   AddRequirementInfo("ARCH_SW_IoHwAb_pseCheckPowerSupplyUV", "The auto-test shall read the {KL30 Supply Voltage} and compare it to the {NVP_u16UnderKL30QualificationThrs} threshold from the NvM memory. Comparison shall be done in mV. If the {Adc Auto-test Result} is NOK then the comparison cannot be done and the {Autotest Result} must be NOK. If the {KL 30 Supply Voltage} is lower or equal to {NVP_u16UnderKL30QualificationThrs} then the {Autotest Result} must be NOK. If the If the {KL 30 Supply Voltage} is greater than {NVP_u16UnderKL30QualificationThrs} then the {Autotest Result} must be OK.");
+   AddRequirementInfo("ARCH_SW_pclCheckPowerSupplyUV", "This is the test function for undervoltage on the Power stage battery voltage.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseCheckPowerSupplyUV, ARCH_SW_pclCheckPowerSupplyUV");
+
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyUV at the RTE Call for CheckPowerSupplyUndervoltageAutotest --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "502");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyUV","2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached"); 
+  
+   debugger_stepIn();
+   testStep("STEP", "Set a breakpoint in function IoHwAb_CheckPowerSupplyUndervoltageAutotest at the previous ADC autotest evaluation. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyUndervoltageAutotest","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached"); 
+  
+   testStep("STEP", "Overwrite previous ADC test result with KU8_ATM_TEST_OK. --> Variable overwritten with 0x1");
+   debugger_writeLocalVariable("u8PreviousADCTestResult","1");
+   ExpectedTestResult(debugger_result, "1", "Successfully overwritten local variableu8PreviousADCTestResult with value 1");
+  
+   debugger_deleteAllBreakpoints();
+   testStep("STEP","Set a breakpoint in function IoHwAb_CheckPowerSupplyUndervoltageAutotest at the check of last autotest status. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyUndervoltageAutotest","30");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached"); 
+  
+   testStep("STEP", "Overwrite battery voltage with 0. --> Variable overwritten with 0.");
+   debugger_writeLocalVariable("u16VbatPowerVoltage","0");
+   ExpectedTestResult(debugger_result, "0", "Successfully overwritten local variableu16VbatPowerVoltage with value 0"); 
+  
+   testStep("STEP","Set a breakpoint in function ATM_Cbk_CheckPowerSupplyUV at return of test result --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\ATM\\Implementation\\src\\ATM_cfg.c", "504");
+//   debugger_setRelativeFunctionBpAtLine("ATM_Cbk_CheckPowerSupplyUV", "4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Evaluate test result --> KU8_ATM_TEST_NOK");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x2", "Local variable u8TestResult is equal to 0x2"); 
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseEcuOverTemperature_01()
+{
+  
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseEcuOverTemperature, ARCH_SW_pclEcuOverTemperature");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseEcuOverTemperature", "The auto-test shall read the {ECU Temperature} and compare it to the threshold from the NvM memory ({NVP_s16TemperatureSensorLowThrs} and {NVP_s16TemperatureSensorHighThrs}). Comparison shall be done in *C. If the {ECU Temperature} is lower or equal to {NVP_s16TemperatureSensorLowThrs} then the {Autotest Result} must be NOK. If the {ECU Temperature} is greater or equal to {NVP_s16TemperatureSensorHighThrs} then the {Autotest Result} must be NOK. If the {ECU Temperature} is greater or equal to {NVP_s16TemperatureSensorHighThrs} then the {Autotest Result} must be NOK.");
+  AddRequirementInfo("ARCH_SW_pclEcuOverTemperature", "This is the autotest to check over temperature of MCU.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseEcuOverTemperature, ARCH_SW_pclEcuOverTemperature");
+
+   testStep("STEP","Set a breakpoint in function atm_cbk_runOverTemperature at the RTE Call for CheckEcuOverTemperatureAutotest --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature","2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+       
+   debugger_stepIn();
+   testStep("STEP", "Set a breakpoint in function IoHwAb_CheckEcuOverTemperatureAutotest at the previous ADC autotest evaluation. --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\IoHwAb\\Implementation\\src\\IoHwAb_AdcIf_Autotests.c", "123");
+//   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckEcuOverTemperatureAutotest","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Modify previous ADC test result with value KU8_ATM_TEST_NOT_DECIDED --> Variable was written with 0x4");
+   debugger_writeLocalVariable("u8PreviousADCTestResult", "4");
+  ExpectedTestResult(debugger_result, "4", "Successfully overwritten local variableu8PreviousADCTestResult with value 4");
+   
+   testStep("STEP","Set a breakpoint in function atm_cbk_runOverTemperature --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature","4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate autotest result. --> Variable is equal to 0x4");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x4", "	Local variable u8TestResult is equal to 0x4");
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseEcuOverTemperature_02()
+{
+ 
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseEcuOverTemperature, ARCH_SW_pclEcuOverTemperature");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseEcuOverTemperature", "The auto-test shall read the {ECU Temperature} and compare it to the threshold from the NvM memory ({NVP_s16TemperatureSensorLowThrs} and {NVP_s16TemperatureSensorHighThrs}). Comparison shall be done in *C. If the {ECU Temperature} is lower or equal to {NVP_s16TemperatureSensorLowThrs} then the {Autotest Result} must be NOK. If the {ECU Temperature} is greater or equal to {NVP_s16TemperatureSensorHighThrs} then the {Autotest Result} must be NOK. If the {ECU Temperature} is greater or equal to {NVP_s16TemperatureSensorHighThrs} then the {Autotest Result} must be NOK.");
+  AddRequirementInfo("ARCH_SW_pclEcuOverTemperature", "This is the autotest to check over temperature of MCU.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseEcuOverTemperature, ARCH_SW_pclEcuOverTemperature");
+  
+   testStep("STEP","Set a breakpoint in function atm_cbk_runOverTemperature at the RTE Call for IoHwAb_CheckEcuOverTemperatureAutotest --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature","2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   debugger_stepIn();
+   testStep("STEP", "Set a breakpoint in function IoHwAb_CheckEcuOverTemperatureAutotest at the previous ADC autotest evaluation. --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\IoHwAb\\Implementation\\src\\IoHwAb_AdcIf_Autotests.c", "123");
+//   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckEcuOverTemperatureAutotest","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Overwrite previous ADC test result with KU8_ATM_TEST_OK. --> Variable overwritten with 0x1");
+   debugger_writeLocalVariable("u8PreviousADCTestResult","1");
+  ExpectedTestResult(debugger_result, "1", "Successfully overwritten local variable u8PreviousADCTestResult with value 1");
+  
+   debugger_deleteAllBreakpoints();
+   testStep("STEP","Set a breakpoint in function IoHwAb_CheckEcuOverTemperatureAutotest at the check of last autotest status. --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\IoHwAb\\Implementation\\src\\IoHwAb_AdcIf_Autotests.c", "127");
+//   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckEcuOverTemperatureAutotest","24");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Overwrite MCU temperature with FFD8. --> Variable overwritten with FFD8.");
+   debugger_writeLocalVariable("s16MCUTemperature","FFD8");
+   ExpectedTestResult(debugger_result, "FFD8", "Successfully overwritten local variables16MCUTemperature with value FFD8");
+  
+   testStep("STEP","Set a breakpoint in function atm_cbk_runOverTemperature at return of test result --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature", "4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Evaluate test result --> KU8_ATM_TEST_OK");
+   debugger_readLocalVariable("u8TestResult");
+   ExpectedTestResult(debugger_result, "1", "Local variable u8TestResult is equal to 0x1");
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseEcuOverTemperature_03()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseEcuOverTemperature, ARCH_SW_pclEcuOverTemperature");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseEcuOverTemperature", "The auto-test shall read the {ECU Temperature} and compare it to the threshold from the NvM memory ({NVP_s16TemperatureSensorLowThrs} and {NVP_s16TemperatureSensorHighThrs}). Comparison shall be done in *C. If the {ECU Temperature} is lower or equal to {NVP_s16TemperatureSensorLowThrs} then the {Autotest Result} must be NOK. If the {ECU Temperature} is greater or equal to {NVP_s16TemperatureSensorHighThrs} then the {Autotest Result} must be NOK. If the {ECU Temperature} is greater or equal to {NVP_s16TemperatureSensorHighThrs} then the {Autotest Result} must be NOK.");
+  AddRequirementInfo("ARCH_SW_pclEcuOverTemperature", "This is the autotest to check over temperature of MCU.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseEcuOverTemperature, ARCH_SW_pclEcuOverTemperature");
+  
+   testStep("STEP","Set a breakpoint in function atm_cbk_runOverTemperature at the RTE Call for IoHwAb_CheckEcuOverTemperatureAutotest --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature","2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   debugger_stepIn();
+   testStep("STEP", "Set a breakpoint in function IoHwAb_CheckEcuOverTemperatureAutotest at the previous ADC autotest evaluation. --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\IoHwAb\\Implementation\\src\\IoHwAb_AdcIf_Autotests.c", "123");
+//   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckEcuOverTemperatureAutotest","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Overwrite previous ADC test result with KU8_ATM_TEST_OK. --> Variable overwritten with 0x1");
+   debugger_writeLocalVariable("u8PreviousADCTestResult","1");
+  ExpectedTestResult(debugger_result, "1", "	Successfully overwritten local variableu8PreviousADCTestResult with value 1");
+  
+   debugger_deleteAllBreakpoints();
+   testStep("STEP","Set a breakpoint in function IoHwAb_CheckEcuOverTemperatureAutotest at the check of last autotest status. --> BP reached");
+  debugger_setBpAtLine("c:\\Projects\\eCS_R1.2\\Components\\Application\\Autoliv\\IoHwAb\\Implementation\\src\\IoHwAb_AdcIf_Autotests.c", "127");
+//   debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckEcuOverTemperatureAutotest","24");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Overwrite MCU temperature with 6A. --> Variable overwritten with 6A.");
+   debugger_writeLocalVariable("s16MCUTemperature","6A");
+   ExpectedTestResult(debugger_result, "6A", "Successfully overwritten local variables16MCUTemperature with value 6A");
+  
+   testStep("STEP","Set a breakpoint in function atm_cbk_runOverTemperature at return of test result --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature", "4");
+   debugger_run();
+  debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Evaluate test result --> KU8_ATM_TEST_NOK");
+   debugger_readLocalVariable("u8TestResult");
+   ExpectedTestResult(debugger_result, "0x2", "Local variable u8TestResult is equal to 0x2");
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+
+
+testcase Sw_Int_IoHwAb_prrSolenoidPwm_01()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_SAD_pseSolenoidPWM, ARCH_SW_IoHwAb_prrSolenoidPwm_IoHwAb_runGetMeasure");
+  AddRequirementInfo("ARCH_SW_IoHwAb_prrSolenoidPwm_IoHwAb_runGetMeasure", "The runnable shall be used to compute the target PWM value and report it to the rest of the Application. The target PWM value shall be computed based on the KL30 Voltage and step definiton.");
+  AddRequirementInfo("ARCH_SW_IoHwAb_prrSolenoidPwm", "The interface shall read the {Solenoid PWM} that is set in the Application in order to compute the current.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_SAD_pseSolenoidPWM, ARCH_SW_IoHwAb_prrSolenoidPwm_IoHwAb_runGetMeasure");
+   testStep("STEP","Set a breakpoint in function SAD_runMainFunction at Rte_Write_pseSolenoidPWM_au16Pwm. --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("SAD_runMainFunction","75");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Overwrite DutyCycle variable with value 0x55. --> Variabe written with 0x55");
+   debugger_writeVariable("uint8","sad_au16DutyCycle", "1", "0x55"); 
+   ExpectedTestResult(debugger_result, "0x55", "Successfully overwritten variable sad_au16DutyCycle offset: 1 with value 0x55");
+  debugger_deleteAllBreakpoints();
+  
+   testStep("STEP","Set a breakpoint in function IoHwAb_runGetMeasure at RTE Read for Rte_Read_prrSolenoidPwm_au16Pwm");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure","12");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate the interface data flow case --> Variable is set to 0xae20");
+   debugger_readLocalVariable("(au16SolenoidPWM)[0]");
+  ExpectedTestResult(debugger_result, "0xae20", "Local variable (au16SolenoidPWM)[0] is equal to 0xae20"); 
+  
+  testStep("STEP","Evaluate the interface data flow case --> Variable is set to 0x1fff");
+   debugger_readLocalVariable("(au16SolenoidPWM)[1]");
+  ExpectedTestResult(debugger_result, "0x1fff", "Local variable (au16SolenoidPWM)[1] is equal to 0x1fff"); 
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseAccSensor_01()
+{
+   
+   //***********************************Test report header*********************************
+   testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+   TestReportAddMiscInfo("Nightly test", "No");
+   TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Tes");
+   TestReportAddMiscInfo("Regression Test", "No");
+   TestReportAddMiscInfo("Fault injection method used", "No");
+   TestReportAddMiscInfo("Resource usage evaluation", "No");
+   TestReportAddMiscInfo("Priority", "No");
+   TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseAccSensor, ARCH_SW_CIL_pclAccSensor");
+   AddRequirementInfo("ARCH_SW_IoHwAb_pseAccSensor", "The runnable shall read the {Raw Accelerometer Temperature} from the SPI bus and convert it to *C.");
+   AddRequirementInfo("ARCH_SW_CIL_pclAccSensor", "Interface used to receive temperature for the accelerometer sensor.");
+  //***************************************************************************************
+  
+   testCaseComment("Preconditions");
+   testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+   RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send request for press ECUUnlock button");
+   @Platform::DIAG_ECUUnlock = 1;
+  TestWaitForTimeout(500);
+  
+    testStep("STEP","Start Measurement Frame 01. --> MF Started");
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8EnableDevFrame",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8MeasFrameTiming",0x0A);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_0",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_1",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_2",0x01);
+   diagSendRequest(dMeaurementFrameStart);
+  TestWaitForTimeout(500);
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseAccSensor, ARCH_SW_CIL_pclAccSensor");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_GetAccelerometerTemperature at ps16AccTemperature assignment --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_GetAccelerometerTemperature", "16");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Write Acc Temperature with value 0. --> Variable overwritten with value 0");
+   debugger_writeLocalVariable("*ps16AccTemperature","0");
+   ExpectedTestResult(debugger_result, "0", "Successfully overwritten local variable*ps16AccTemperature with value 0");
+  
+   testStep("STEP", "Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at RTE Call for GetSensorTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("cil_Update_07Cx_Block01_InfosToSend", "36");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Evaluate the interface data flow case.");
+   debugger_readLocalVariable("s16PtcSensorTemperature");
+  ExpectedTestResult(debugger_result, "0x0", "	Local variable s16PtcSensorTemperature is equal to 0x0"); 
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseAccSensor_02()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseAccSensor, ARCH_SW_DIA_pclAccSensor");
+   AddRequirementInfo("ARCH_SW_IoHwAb_pseAccSensor", "The runnable shall read the {Raw Accelerometer Temperature} from the SPI bus and convert it to *C.");
+   AddRequirementInfo("ARCH_SW_DIA_pclAccSensor", "Interface used to get the output temperature of the accelerometer in ?");
+  //***************************************************************************************
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseAccSensor, ARCH_SW_DIA_pclAccSensor");
+   testStep("STEP","Set a breakpoint in function DIA_runRidF796_EcuTempCalibration --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("DIA_runRidF796_EcuTempCalibration","25");
+   debugger_run();
+  
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to start the Temp Calibration");
+   SendDiagnosticRequestNegativeResponse(dECUTempCalibStartRequest, dECUTempCalibStartRespnse, TRUE);
+  testWaitForTimeout(500);
+  
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+
+   testStep("STEP", "Set a breakpoint in function IoHwAb_GetAccelerometerTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_GetAccelerometerTemperature", "16");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Set a breakpoint in function DIA_runRidF796_EcuTempCalibration in order to read Acc Temperature--> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("DIA_runRidF796_EcuTempCalibration","27");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate the interface data flow case");
+   variable_value = debugger_readLocalVariableForBoundary("s16AccTemperature"); 
+   EvalManStepRange("Verify that received result is within boundaries: -40 - 125", variable_value, -0x28, 0x7D);
+  //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+   
+}
+
+testcase Sw_Int_IoHwAb_pseConvAdcServicer_01()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseConvAdcService, ARCH_SW_DIA_pclConvAdcService");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseConvAdcService", "The runnable shall read the {Raw value} in LSB via the AdcIf_runGetChannelValue interface for the selected {Measurement Index}");
+  AddRequirementInfo("ARCH_SW_DIA_pclConvAdcService", "Interface used to get current value form solenoid in mV or ?");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+
+   /*------------------------- Test scenario start ------------------------------*/
+   
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseConvAdcService, ARCH_SW_DIA_pclConvAdcService");
+  
+   testStep("STEP","Set a breakpoint in function DIA_run_DidFD10_MCUTemperatureRead at Rte_Call_pclConvAdcService_getMeasure interface call --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("DIA_run_DidFD10_MCUTemperatureRead","4");
+   debugger_run();
+  
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to start the Temp Calibration");
+   SendDiagnosticRequestNegativeResponse(dMCUTempReadRequest, dMCUTempReadResponse, TRUE);
+  testWaitForTimeout(500);
+ 
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Set a breakpoint in function IoHwAb_runGetMeasure. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure","0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP","Set a breakpoint in function DIA_run_DidFD10_MCUTemperatureRead at return --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("DIA_run_DidFD10_MCUTemperatureRead","7");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseConvAdcServicer_02()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseConvAdcService, ARCH_SW_CIL_pclConvAdcService");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseConvAdcService", "The runnable shall read the {Raw value} in LSB via the AdcIf_runGetChannelValue interface for the selected {Measurement Index}");
+  AddRequirementInfo("ARCH_SW_CIL_pclConvAdcService", "Interface is used to read physical measurements in SI units - Interface will be used to read the voltage (mV) on each solenoid - Interface will be used to read the current (mA) on each solenoid");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+   /*------------------------- Test scenario start ------------------------------*/
+   testStep("STEP","Start MF 01 --> MF Started");
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8EnableDevFrame",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8MeasFrameTiming",0x0A);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_0",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_1",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_2",0x01);
+   diagSendRequest(dMeaurementFrameStart);
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseConvAdcService, ARCH_SW_CIL_pclConvAdcService");
+   testStep("STEP","Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at Rte_Call for runGetMeasure. --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("cil_Update_07Cx_Block01_InfosToSend","35");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Set a breakpoint in function IoHwAb_runGetMeasure --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure","376");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("cil_Update_07Cx_Block01_InfosToSend","36");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");  
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseEcuCharacteristics_01()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseEcuCharacteristics, ARCH_SW_CIL_pclEcuCharacterstics");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseEcuCharacteristics", "The runnable shall read the {MCU Sensor Temperature *C}. The runnable shall read the {Accelerometer Sensor Temperature *C}. The runnable shall read the {PTC Sensor Temperature *C}. The runnable shall read the temperature offsets from the NvM memory ({NVP_s8PtcTempOffset}, {NVP_s8McuTempOffset}, {NVP_s8AccTempOffset}). The runnable shall read the temperature offsets from the NvM memory ({NVP_s8PtcTempOffset}, {NVP_s8McuTempOffset}, {NVP_s8AccTempOffset}.");
+  AddRequirementInfo("ARCH_SW_CIL_pclEcuCharacterstics", "Interface used to receive the temperature of the ECU PCB.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+  
+   testStep("STEP","Start MF 01 --> MF Started.");
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8EnableDevFrame",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8MeasFrameTiming",0x0A);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_0",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_1",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_2",0x01);
+   diagSendRequest(dMeaurementFrameStart);
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseEcuCharacteristics, ARCH_SW_CIL_pclEcuCharacterstics");
+  
+   testStep("STEP","Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at RTE Call for GetTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("cil_Update_07Cx_Block01_InfosToSend","37");
+   testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Set a breakpoint in function IoHwAb_GetEcuTemperature at *ps16EcuTemperature assignment --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_GetEcuTemperature","4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP","Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at Rte_Call for runGetMeasure --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("cil_Update_07Cx_Block01_InfosToSend","40");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Evaluate ECU characteristics data flow");  
+   variable_value = debugger_readLocalVariableForBoundary("s16EcuTemperature"); 
+   EvalManStepRange("Verify that received result is within boundaries: -40 - 125", variable_value, -0x28, 0x7D);
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_psePtcSensor_01()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Tes");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_psePtcSensor, ARCH_SW_pclPtcSensor");
+  AddRequirementInfo("ARCH_SW_IoHwAb_psePtcSensor", "The runnable shall read the {Raw PTC Sensor Temperature} via the AdcIf_runGetChannelValue interface in LSB and convert it to *C.");
+  AddRequirementInfo("ARCH_SW_pclPtcSensor", "Function used to get the output temperature of the resistor sensor and then transmit it to CAN.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+   
+   /*------------------------- Test scenario start ------------------------------*/
+   
+   testStep("STEP","Start MeasurementFrame 01 --> MF Started.");
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8EnableDevFrame",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8MeasFrameTiming",0x0A);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_0",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_1",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_2",0x01);
+   diagSendRequest(dMeaurementFrameStart);
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_psePtcSensor, ARCH_SW_pclPtcSensor");
+  
+   testStep("STEP","Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at RTE Call for GetTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("cil_Update_07Cx_Block01_InfosToSend","36");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Set a breakpoint in function IoHwAb_GetPtcTemperature at ps16EcuTemperature assignment --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_GetPtcTemperature", "8");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Write Local Tmp Intermediate Value with value 8 --> Variable overwritten with 8.");
+   debugger_writeLocalVariable("s16TmpIntermediateValue", "8");
+  ExpectedTestResult(debugger_result, "8", "Successfully overwritten local variables16TmpIntermediateValue with value 8");
+  
+   testStep("STEP","Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend after RTE Call for GetTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("cil_Update_07Cx_Block01_InfosToSend","37");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");  
+  
+   testStep("STEP","Evaluate PTC sensor data flow");
+   debugger_readLocalVariable("s16PtcSensorTemperature");
+  ExpectedTestResult(debugger_result, "0x8", "Local variable s16PtcSensorTemperature is equal to 0x8"); 
+   
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_psePtcSensor_02()
+{
+  
+   //***********************************Test report header*********************************
+   testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+   TestReportAddMiscInfo("Nightly test", "No");
+   TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+   TestReportAddMiscInfo("Regression Test", "No");
+   TestReportAddMiscInfo("Fault injection method used", "No");
+   TestReportAddMiscInfo("Resource usage evaluation", "No");
+   TestReportAddMiscInfo("Priority", "No");
+   TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_psePtcSensor, ARCH_SW_DIA_pclPtcSensor");
+  AddRequirementInfo("ARCH_SW_IoHwAb_psePtcSensor", "The runnable shall read the {Raw PTC Sensor Temperature} via the AdcIf_runGetChannelValue interface in LSB and convert it to *C.");
+  AddRequirementInfo("ARCH_SW_DIA_pclPtcSensor", "Interface used to get the output temperature of the resistor sensor");
+   //***************************************************************************************
+  
+   testCaseComment("Preconditions");
+   testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+   RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+  
+   testStep("STEP","Send ECU Unlock Start request --> Request Sent.");
+   SendDiagnosticRequest(dEcuUnlockStartRequest, dEcuUnlockStartResponse);
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_psePtcSensor, ARCH_SW_DIA_pclPtcSensor");
+   testStep("STEP","Set a breakpoint in function DIA_runRidF796_EcuTempCalibration at RTE Call for pclPtcSensor_GetTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("DIA_runRidF796_EcuTempCalibration","27");
+   debugger_run();
+  
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to start the Temp Calibration");
+   SendDiagnosticRequestNegativeResponse(dECUTempCalibStartRequest, dECUTempCalibStartRespnse, TRUE);
+  testWaitForTimeout(500);
+  
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Set a breakpoint in function IoHwAb_GetPtcTemperature at ps16EcuTemperature assignment --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_GetPtcTemperature","8");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+ testStep("STEP", "Write Local Tmp Intermediate Value with value 8 --> Variable overwritten with 8.");
+   debugger_writeLocalVariable("s16TmpIntermediateValue", "8");
+  ExpectedTestResult(debugger_result, "8", "Successfully overwritten local variables16TmpIntermediateValue with value 8");
+  
+   testStep("STEP","Set a breakpoint in function DIA_runRidF796_EcuTempCalibration after RTE Call for pclPtcSensor_GetTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("DIA_runRidF796_EcuTempCalibration","30");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate the interface data flow case");
+   debugger_readLocalVariable("s16PtcSensorTemperature");
+  ExpectedTestResult(debugger_result, "0x8", "Local variable s16PtcSensorTemperature is equal to 0x8"); 
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseSolenoidCharacterstics_01()
+{
+  
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseSolenoidCharacterstics, ARCH_SW_CIL_pclSolenoidCharacteristics");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pseSolenoidCharacterstics", "The runnable shall read the {Filtered Voltage Solenoid 100ms} for the selected solenoid on the {Solenoid Index} input parameter. The runnable shall read the {Current Solenoid} for the selected solenoid on the {Solenoid Index} input parameter. The runnable must compute the temperature of the solenoid.");
+  AddRequirementInfo("ARCH_SW_CIL_pclSolenoidCharacteristics", "This interface read the solenoid temperature.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+   
+   /*------------------------- Test scenario start ------------------------------*/
+  
+   testStep("STEP","Start MF 01 --> MF started.");
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8EnableDevFrame",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_u8MeasFrameTiming",0x0A);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_0",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_1",0x01);
+   diagSetParameter(dMeaurementFrameStart,"NVP_au8MeasFrameBlockConfig_2",0x01);
+   diagSendRequest(dMeaurementFrameStart);
+   testWaitForTimeout(200);
+  
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseSolenoidCharacterstics, ARCH_SW_CIL_pclSolenoidCharacteristics");
+   testStep("STEP","Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at Rte_Call_pclSolenoidCharacteristics_GetTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("cil_Update_07Cx_Block01_InfosToSend","132");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Set a breakpoint in function IoHwAb_GetSolenoidTemperature --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_GetSolenoidTemperature","103");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+    
+   testStep("STEP","Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend after Rte_Call_pclSolenoidCharacteristics_GetTemperature --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("cil_Update_07Cx_Block01_InfosToSend","139");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");  
+   
+   testStep("STEP","Evaluate Solenoid characteristics data flow");
+   debugger_readLocalVariable("as16SolenoidTemp[1]");
+  ExpectedTestResult(debugger_result, "0x0", "Local variable as16SolenoidTemp[1] is equal to 0x0"); 
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_psrBuckleStatus_01()
+{
+
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_psrBuckleStatus, ARCH_SW_CIL_prrBuckleStatus");
+  AddRequirementInfo("ARCH_SW_IoHwAb_psrBuckleStatus", "The runnable shall the voltage level of the {Wake channel 1} and {Wake channel 2} via the input parameters. The runnable shall set the {Buckle Status Seat 1} and {Buckle Status Seat 2} depending on the resistance values computed from the input parameters.");
+  AddRequirementInfo("ARCH_SW_CIL_prrBuckleStatus", "Interface used to read the buckle sensor status for the second row.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+   
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_psrBuckleStatus, ARCH_SW_CIL_prrBuckleStatus");
+  
+   testStep("STEP","Set a breakpoint in function IoHwAb_DetectSeatOccupancy at Rte_Write_psrBuckleStatus_au8BuckleStatus --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_DetectSeatOccupancy","76");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Write Local au8RteBelt with value 2 --> Variable overwritten with 2.");
+   debugger_writeLocalVariable("(au8RteBelt)[1]", "2");
+  ExpectedTestResult(debugger_result, "2", "Successfully overwritten local variable(au8RteBelt)[1] with value 2");
+  
+   testStep("STEP", "Set a breakpoint in function CIL_runAppliToCAN at the execution of the current time slot");
+   debugger_setRelativeFunctionBpAtLine("CIL_runAppliToCAN","5");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Set a breakpoint in function cil_ManagePeriodicData_TimeSlot01 after getting the status for all buckles.");
+   debugger_setRelativeFunctionBpAtLine("cil_ManagePeriodicData_TimeSlot01","20");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate buckle state data flow");
+   debugger_readLocalVariable("u8BuckleStatusRx[1]");
+  ExpectedTestResult(debugger_result, "0x2", "Local variable u8TestResult is equal to 0x2"); 
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_psrSeatOccupancySensorStatus_01()
+{
+  
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_CIL_rrSeatOccupancySensorStatus, ARCH_SW_IoHwAb_psrSeatOccupancySensorStatus");
+  AddRequirementInfo("ARCH_SW_CIL_rrSeatOccupancySensorStatus", "Interface used to read the seat sensor status for the second row.");
+  AddRequirementInfo("ARCH_SW_IoHwAb_psrSeatOccupancySensorStatus", "The runnable shall the voltage level of the {Wake channel 1} and {Wake channel 2} via the input parameters. The runnable shall set the {Seat Occupancy Status 1} and {Seat Occupancy Status 2} depending on the resistance values computed from the input parameters.");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+  
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_CIL_rrSeatOccupancySensorStatus, ARCH_SW_IoHwAb_psrSeatOccupancySensorStatus");
+
+   testStep("STEP","Set a breakpoint in function IoHwAb_DetectSeatOccupancy --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_DetectSeatOccupancy", "77");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Write Local au8RteSeat with value 1 --> Variable overwritten with 0x1.");
+   debugger_writeLocalVariable("(au8RteSeat)[1]", "1");
+  ExpectedTestResult(debugger_result, "1", "Successfully overwritten local variable(au8RteSeat)[1] with value 1");
+  
+   testStep("STEP", "Set a breakpoint in function CIL_runAppliToCAN at the execution of the current time slot");
+   debugger_setRelativeFunctionBpAtLine("CIL_runAppliToCAN","5");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Set a breakpoint in function cil_ManagePeriodicData_TimeSlot04 after getting getting feedback from Seat Occupancy Sensors.");
+   debugger_setRelativeFunctionBpAtLine("cil_ManagePeriodicData_TimeSlot04","22");
+   debugger_run();
+   debugger_run();
+   debugger_run();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate seat sensor data flow");
+   debugger_readLocalVariable("u8SeatOccupancySensorRx[1]");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable u8SeatOccupancySensorRx[1] is equal to 0x1"); 
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_pseLowPowerWakeUp_01()
+{
+  
+   //***********************************Test report header*********************************
+   testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+   TestReportAddMiscInfo("Nightly test", "No");
+   TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+   TestReportAddMiscInfo("Regression Test", "No");
+   TestReportAddMiscInfo("Fault injection method used", "No");
+   TestReportAddMiscInfo("Resource usage evaluation", "No");
+   TestReportAddMiscInfo("Priority", "No");
+   TestReportAddMiscInfo("Safety relevant", "No");
+  
+   AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pseLowPowerWakeUp");
+   AddRequirementInfo("ARCH_SW_IoHwAb_pseLowPowerWakeUp", "The runnable shall the voltage level of the {Wake channel 1} and {Wake channel 2} via the input parameters. The runnable shall set the {Wake Up Status} output parameter to B_TRUE if any transition of buckle and seat sensor status is detected. The runnable shall report the {Wake Up Status} on the output parameter if the {Report Wake Up Status} input parametr is se to B_TRUE.");
+   //***************************************************************************************
+  
+   testCaseComment("Preconditions");
+   testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+   RunPreTs();
+   //====================================================
+   
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pseLowPowerWakeUp");
+  
+  testStep("STEP","Set a breakpoint in function IoHwAb_DetectSeatOccupancy --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_DetectSeatOccupancy", "77");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Write Local au8RteSeat with value 1 --> Variable overwritten with 0x1.");
+   debugger_writeLocalVariable("(au8RteSeat)[1]", "1");
+  ExpectedTestResult(debugger_result, "1", "Successfully overwritten local variable(au8RteSeat)[1] with value 1");
+  
+   testStep("STEP", "Set a breakpoint in function CIL_runAppliToCAN at the execution of the current time slot");
+   debugger_setRelativeFunctionBpAtLine("CIL_runAppliToCAN","5");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Set a breakpoint in function cil_ManagePeriodicData_TimeSlot04 after getting getting feedback from Seat Occupancy Sensors.");
+   debugger_setRelativeFunctionBpAtLine("cil_ManagePeriodicData_TimeSlot04","22");
+   debugger_run();
+   debugger_run();
+   debugger_run();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate seat sensor data flow");
+   debugger_readLocalVariable("u8SeatOccupancySensorRx[1]");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable u8SeatOccupancySensorRx[1] is equal to 0x1"); 
+  
+   //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_IoHwAb_psrSolenoidConfirmation_01()
+{
+
+   //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_psrSolenoidConfirmation");
+  AddRequirementInfo("ARCH_SW_IoHwAb_psrSolenoidConfirmation", "The runnable shall read the {Current Executed Profile} for each solenoid(can be NONE/UNLOCK/BACKUP) - The runnable shall read the {Unfiltered Voltage Solenoid} for each solenoid in mV - The runnable shall compute the {Unlock detection timeout Threshold} from the step definition of the first cycle (it will add the duration for each step that is not infinite) - If a voltage spike greater than 8V is detected in the first 6ms since the profile was launched the maximum and minimum voltage values during this period will be saved - If a voltage greater than the minimum voltage value +2V is detected than the unlock has been confirmed - If the unlock has not been confirmed until the {Unlock detection timeout Threshold} has been reached then the status will be not determined");
+  //***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+  //====================================================
+   
+   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_psrSolenoidConfirmation");
+   testStep("STEP","Set a breakpoint in function IoHwAb_DetectSeatOccupancy --> BP reached");
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_DetectSeatOccupancy","76");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+   
+   testStep("STEP", "Write Local au8RteBelt with value 2 --> Variable overwritten with 2.");
+   debugger_writeLocalVariable("(au8RteBelt)[1]", "2");
+  ExpectedTestResult(debugger_result, "2", "Successfully overwritten local variable(au8RteBelt)[1] with value 2");
+  
+   testStep("STEP", "Set a breakpoint in function CIL_runAppliToCAN at the execution of the current time slot");
+   debugger_setRelativeFunctionBpAtLine("CIL_runAppliToCAN","5");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP", "Set a breakpoint in function cil_ManagePeriodicData_TimeSlot01 after getting the status for all buckles.");
+   debugger_setRelativeFunctionBpAtLine("cil_ManagePeriodicData_TimeSlot01","17");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "BP reached");
+  
+   testStep("STEP","Evaluate Solenoid state data flow");
+   debugger_readLocalVariable("au8SelectedProfile[1]");
+  ExpectedTestResult(debugger_result, "0xff", "Local variable au8SelectedProfile[1] is equal to 0xff"); 
+  
+   //====================================================
+   testCaseComment("Postcondition");
+   testStep("STEP", "Return ECU to default values");
+   RunPostTs();
+}
+testcase Sw_Int_IoHwAb_pclAutotestServices_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckPowerSupplyUndervoltageAutotest");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckPowerSupplyUndervoltageAutotest", "The interface shall return the {Auto-test Result} for the selected {Auto-test ID}");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckPowerSupplyUndervoltageAutotest");  
+  debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyUndervoltageAutotest", "27");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function IoHwAb_CheckPowerSupplyUndervoltageAutotest in order to call ATM_runGetTestResult function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("ATM_runGetTestResult", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function ATM_runGetTestResult in order to get auto test result --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyUndervoltageAutotest", "62");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function IoHwAb_CheckPowerSupplyUndervoltageAutotest in order to read auto test result --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read aoto test result --> Auto test result succesfully read");
+   debugger_readLocalVariable("u8ResultOfAutoTest");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable u8ResultOfAutoTest is equal to 0x1");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_IoHwAb_pclAutotestServices_02()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckPowerSupplyOvervoltageAutotest");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckPowerSupplyOvervoltageAutotest", "The interface shall return the {Auto-test Result} for the selected {Auto-test ID}");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckPowerSupplyOvervoltageAutotest");  
+  debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyOvervoltageAutotest", "28");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function IoHwAb_CheckPowerSupplyOvervoltageAutotest in order to call ATM_runGetTestResult function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("ATM_runGetTestResult", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function ATM_runGetTestResult in order to get auto test result --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckPowerSupplyOvervoltageAutotest", "62");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function IoHwAb_CheckPowerSupplyOvervoltageAutotest in order to read auto test result --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read aoto test result --> Auto test result succesfully read");
+   debugger_readLocalVariable("u8ResultOfAutoTest");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable u8ResultOfAutoTest is equal to 0x1");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_IoHwAb_pclAutotestServices_03()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest", "The interface shall return the {Auto-test Result} for the selected {Auto-test ID}");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  //Test OK
+   testCaseComment("Action: ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest");  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature", "2");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function atm_cbk_runOverTemperature in order to call IoHwAb_CheckEcuOverTemperatureAutotest function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckEcuOverTemperatureAutotest", "19");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function IoHwAb_CheckEcuOverTemperatureAutotest in order to change MCU Temperature --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckEcuOverTemperatureAutotest", "23");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function IoHwAb_CheckEcuOverTemperatureAutotest in order check if the auto test result is OK --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature", "4");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function atm_cbk_runOverTemperature in order check the auto test result is OK --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read aoto test result --> Auto test result succesfully read");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable u8TestResult is equal to 0x1");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_IoHwAb_pclAutotestServices_04()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest", "The interface shall return the {Auto-test Result} for the selected {Auto-test ID}");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  //Test NOK
+   testCaseComment("Action: ARCH_SW_IoHwAb_pclAutotestServices_IoHwAb_CheckEcuOverTemperatureAutotest");  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature", "2");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function atm_cbk_runOverTemperature in order to call IoHwAb_CheckEcuOverTemperatureAutotest function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckEcuOverTemperatureAutotest", "19");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function IoHwAb_CheckEcuOverTemperatureAutotest in order to change MCU Temperature --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Write MCU Temperature --> MCU Temperature succesfully write");
+  debugger_writeLocalVariable("s16MCUTemperature", "106");
+  ExpectedTestResult(debugger_result, "106", "Successfully overwritten local variables16MCUTemperature with value 106");
+  
+  debugger_setRelativeFunctionBpAtLine("IoHwAb_CheckEcuOverTemperatureAutotest", "23");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function IoHwAb_CheckEcuOverTemperatureAutotest in order check if the auto test result is OK --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_runOverTemperature", "4");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function atm_cbk_runOverTemperature in order check the auto test result is OK --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read aoto test result --> Auto test result succesfully read");
+   debugger_readLocalVariable("u8TestResult");
+  ExpectedTestResult(debugger_result, "0x2", "Local variable u8TestResult is equal to 0x2");
+    
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+void MainTest()
+{
+  InitTestModule();
+  Sw_Int_IoHwAb_pclAccSpiData_01();
+////  Sw_Int_IoHwAb_pclEfxServices_01();
+////  Sw_Int_IoHwAb_pseCheckPowerSupplyOV_01();
+////  Sw_Int_IoHwAb_pseCheckPowerSupplyOV_02();
+////  Sw_Int_IoHwAb_pseCheckPowerSupplyOV_03();
+////  Sw_Int_IoHwAb_pseCheckPowerSupplyUV_01();
+////  Sw_Int_IoHwAb_pseCheckPowerSupplyUV_02();
+////  Sw_Int_IoHwAb_pseCheckPowerSupplyUV_03();
+////  Sw_Int_IoHwAb_pseEcuOverTemperature_01();
+////  Sw_Int_IoHwAb_pseEcuOverTemperature_02();
+////  Sw_Int_IoHwAb_pseEcuOverTemperature_03();
+////  Sw_Int_IoHwAb_prrSolenoidPwm_01();
+////  Sw_Int_IoHwAb_pseAccSensor_01();
+////  Sw_Int_IoHwAb_pseAccSensor_02();
+////  Sw_Int_IoHwAb_pseConvAdcServicer_01();
+////  Sw_Int_IoHwAb_pseConvAdcServicer_02();
+////  Sw_Int_IoHwAb_pseEcuCharacteristics_01();
+////  Sw_Int_IoHwAb_psePtcSensor_01();
+////  Sw_Int_IoHwAb_psePtcSensor_02();
+////  Sw_Int_IoHwAb_pseSolenoidCharacterstics_01();
+////  Sw_Int_IoHwAb_psrBuckleStatus_01();
+////  Sw_Int_IoHwAb_psrSeatOccupancySensorStatus_01();
+////  Sw_Int_IoHwAb_pseLowPowerWakeUp_01();
+////  Sw_Int_IoHwAb_psrSolenoidConfirmation_01();
+////  Sw_Int_IoHwAb_pclAutotestServices_01();
+////  Sw_Int_IoHwAb_pclAutotestServices_02();
+////  Sw_Int_IoHwAb_pclAutotestServices_03();
+////  Sw_Int_IoHwAb_pclAutotestServices_04();
+  
+  
+}

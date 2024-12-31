@@ -1,0 +1,395 @@
+/*@!Encoding:1252*/
+includes
+{
+  #pragma library("..\..\Includes\AER_SA.dll")
+}
+
+
+variables
+{
+  const CMEM_BLOCK_SIZE = 41;
+  char bReadMemByAddressBuf[500];
+  char cEpvBlockName[CMEM_BLOCK_SIZE][50] = 
+  {
+    "RAM_BLOCK_ECC_COUNTERS",
+    "RAM_BLOCK_WARM_RESET_COUNTERS",
+    "RAM_BLOCK_RESERVED_2",
+    "RAM_BLOCK_AUTOTEST_ENABLE_PARAM",
+    "RAM_BLOCK_LOCK_UNLOCK_ECU",
+    "RAM_BLOCK_MEASUREMENT_FRAME_CONFIG",
+    "RAM_BLOCK_HW_PART_NUMBER",
+    "RAM_BLOCK_AEE_TRACEABILITY_NUMBER",
+    "RAM_BLOCK_ECU_ASSEMBLY_SERIAL_NUMBER",
+    "RAM_BLOCK_PROCESS_MODE",
+    "RAM_BLOCK_ECS_VARIANT",
+    "RAM_BLOCK_ECS_PARAMETERS",
+    "RAM_BLOCK_ECS_ACC_OFFSETS",
+    "RAM_BLOCK_RESERVED_3",
+    "RAM_BLOCK_ECS_STEPS",
+    "RAM_BLOCK_ECS_ACC_LOWPASS",
+    "RAM_BLOCK_RESERVED_1",
+    "RAM_BLOCK_ECS_ALGO_OUTPUT_DELAY",
+    "RAM_BLOCK_ECS_SENSITIVITY_LUT",
+    "RAM_BLOCK_ECS_SENSITIVITY_OPT",
+    "RAM_BLOCK_ECU_TEMP_CALIBRATION",
+    "RAM_BLOCK_ALV_NVM_VERSION",
+    "RAM_BLOCK_MEAS_FRAME_RAM_ADDR_CFG",
+    "RAM_BLOCK_ACC_AXIS_ANGLE_CALIBRATION",
+    "RAM_BLOCK_EOL_COUNTERS",
+    "RAM_BLOCK_RESERVED_4",
+    "RAM_BLOCK_AUTOTEST_PARAM",
+    "RAM_BLOCK_PHYS_MEASUREMENTS",
+    "RAM_BLOCK_SOLENOID_PARAM",
+    "RAM_BLOCK_ECS_PROFILES",
+    "RAM_BLOCK_ECU_STATE_TIMING_PARAMETERS",
+    "RAM_BLOCK_SPARE_PART_NUMBER",
+    "RAM_BLOCK_HARDWARE_NUMBER",
+    "RAM_BLOCK_SYSTEM_NAME_OR_ENGINE_TYPE",
+    "RAM_BLOCK_BLOCK_FBL",
+    "RAM_BLOCK_ODX_FILE_IDENTIFIER",
+    "RAM_BLOCK_ODX_FILE_VERSION",
+    "RAM_BLOCK_ECU_SERIAL_NUMBER",
+    "RAM_BLOCK_LOGICAL_SW_BLOCK_VERSION",
+    "RAM_BLOCK_HARDWARE_VERSION_NUMBER",
+    "RAM_BLOCK_APP_SOFTWARE_VERSION_NUMBER"
+};
+  byte cEpvBlockData[CMEM_BLOCK_SIZE][500];
+  int cEpvCurrentBlockData = 0;
+  int cEpvCurrentBlockDataSize = 0;
+  long cEpvBlockAddr[CMEM_BLOCK_SIZE] = {
+    0x14000000,
+    0x14000010,
+    0x14000018,
+    0x14000024,
+    0x14000044,
+    0x14000048,
+    0x14000050,
+    0x1400005C,
+    0x14000068,
+    0x14000080,
+    0x14000084,
+    0x14000088,
+    0x140000B8,
+    0x140000C0,
+    0x140000D8,
+    0x140000F8,
+    0x140000FC,
+    0x14000100,
+    0x14000104,
+    0x14000118,
+    0x1400011C,
+    0x14000120,
+    0x14000124,
+    0x14000170,
+    0x14000178,
+    0x140001C0,
+    0x140001E4,
+    0x14000200,
+    0x14000208,
+    0x14000214,
+    0x14000244,
+    0x140002A0,
+    0x140002Ac,
+    0x140002B8,
+    0x140002C8,
+    0x14000364,
+    0x1400037C,
+    0x14000384,
+    0x14000398,
+    0x140003A4,
+    0x140003A8
+  };
+  int cEpvBlockSize[CMEM_BLOCK_SIZE] = {
+    16,
+    8,
+    12,
+    32,
+    2,
+    5,
+    10,
+    12,
+    23,
+    1,
+    4,
+    45,
+    6,
+    24,
+    32,
+    3,
+    4,
+    2,
+    20,
+    1,
+    3,
+    4,
+    75,
+    6,
+    72,
+    36,
+    28,
+    6,
+    11,
+    48,
+    92,
+    11,
+    11,
+    13,
+    156,
+    24,
+    6,
+    20,
+    12,
+    3,
+    4
+  };
+  
+  msTimer P2ExtendedTimeout;
+  
+  diagRequest eCS.Memory_Read Req_Read_Memory_By_Address;
+  diagResponse eCS.Memory_Read Resp_Read_Memory_By_Address;
+  
+  diagRequest eCS.Memory_Write Req_Write_Memory_By_Address;
+  diagResponse eCS.Memory_Write Resp_Write_Memory_By_Address;
+  
+  diagRequest eCS.Supplier_Diagnostic_Session_Start Req_Supplier_Diagnostic_Session_Start;
+  
+  diagRequest eCS.Supplier_RequestSeed_Request Req_Supplier_Application_Request;
+  diagResponse eCS.Supplier_RequestSeed_Request Resp_Supplier_Application_Request;
+  diagRequest eCS.Supplier_SendKey_Send Req_Supplier_Application_Send;
+  diagResponse eCS.Supplier_SendKey_Send Resp_Supplier_Application_Send;
+  
+  diagRequest eCS.EcuUnlock_Start Req_EcuUnlock_Start;
+  diagRequest eCS.EcuUnlock_Stop Req_EcuUnlock_Stop; 
+  diagRequest eCS.EcuUnlock_RequestResults Req_EcuUnlock_RequestResults;
+  
+  diagRequest eCS.Hard_Reset_Reset Req_Hard_Reset;
+  diagRequest eCS.Soft_Reset_Reset Req_Soft_Reset;
+  
+  diagRequest eCS.FaultMemory_Clear Req_FaultMemory_Clear; 
+}
+
+on timer P2ExtendedTimeout
+{
+  // do nothing, just wait for diag response, go for a walk outside and enjoy life
+  testStepFail("STEP","Timeout received for diagnostic request");
+}
+
+on diagResponse eCS.Memory_Read
+{
+  int idx;
+  long len;
+  char bTempReadMemByAddressBuf[500];
+  char cTestStepDescription[500];
+  
+  cancelTimer(P2ExtendedTimeout);
+  
+  if( diagIsNegativeResponse ( this ) )
+  {
+    snprintf(cTestStepDescription,elcount(cTestStepDescription),"Received negative response for service 0x%x, code 0x%x",
+    this.GetPrimitiveByte(1),
+    this.GetPrimitiveByte(2) );
+    testStepFail("STEP",cTestStepDescription);
+  }
+  else
+  {
+    snprintf(cTestStepDescription,elcount(cTestStepDescription),"Positive response received for service 0x%x",
+    this.GetPrimitiveByte(0));
+    testStepPass("STEP",cTestStepDescription);
+  }
+  
+  // clear buffer
+  for(idx=0; idx < 500;idx++)
+  {
+    bReadMemByAddressBuf[idx] = 0;
+  }
+  
+  len=this.GetPrimitiveSize();
+  // add padding for first two bytes since size is calculated automatically for WMBA
+  cEpvCurrentBlockDataSize = this.GetPrimitiveSize() + 1; 
+  cEpvBlockData[cEpvCurrentBlockData][0] = 255;
+  cEpvBlockData[cEpvCurrentBlockData][1] = 255;
+  
+  // convert to char for printing to .ini file
+  for(idx=1; idx < len; idx++)
+  {
+    snprintf(bTempReadMemByAddressBuf,3,"%02x", this.GetPrimitiveByte(idx));
+    strncat(bReadMemByAddressBuf,bTempReadMemByAddressBuf,idx*2+2+1);
+    // save data for WMBA
+    cEpvBlockData[cEpvCurrentBlockData][idx+1] = this.GetPrimitiveByte(idx);
+  }  
+}
+
+on diagResponse eCS.Supplier_RequestSeed_Request
+{
+  byte seedArray[8];
+  int idx;
+  byte SAkey[8];
+  char byteChar[8];
+  char out[300];
+  char out2[300];
+  char tempOut[300];  
+  
+  DiagGetParameterRaw(this, "SecuritySeed", seedArray, elcount(seedArray));
+  
+  //contsruct frame
+  getALVkey(elcount(seedArray),seedArray,SAkey);
+  
+  Req_Supplier_Application_Send.SetParameterRaw("SecurityKey", SAkey, 8);
+  Req_Supplier_Application_Send.SendRequest();
+}
+
+on diagResponse *
+{
+  char cTestStepDescription[500];
+  
+  cancelTimer(P2ExtendedTimeout);
+
+  // Handle the ambiguity of neg responses by treating them as '*'
+  if( diagIsNegativeResponse ( this ) )
+  {
+    snprintf(cTestStepDescription,elcount(cTestStepDescription),"Received negative response for service 0x%x, code 0x%x",
+    this.GetPrimitiveByte(1),
+    this.GetPrimitiveByte(2) );
+    testStepFail("STEP",cTestStepDescription);
+  }
+  else
+  {
+    snprintf(cTestStepDescription,elcount(cTestStepDescription),"Positive response received for service 0x%x",
+    this.GetPrimitiveByte(0));
+
+    testStepPass("STEP",cTestStepDescription);
+  }
+}
+
+void waitForDiagResponse()
+{
+  setTimer(P2ExtendedTimeout, diagGetP2Extended ("eCS",1,0)); // wait for response
+
+  while(isTimerActive(P2ExtendedTimeout) != 0)
+  {
+    /* timer is active, wait */
+      testWaitForTimeout(50);
+  }
+}
+
+testcase ReadMemByAddress1()
+{
+  int idx;
+  char cFileName[13];
+  char cTestStepDescription[500];
+  
+  testCaseComment("Enter supplier session");
+  Req_Supplier_Diagnostic_Session_Start.SendRequest();
+  
+  waitForDiagResponse();
+  
+  testCaseComment("Issue supplier security access");
+  Req_Supplier_Application_Request.SendRequest();
+  
+  waitForDiagResponse();
+  
+  snprintf(cFileName,elcount(cFileName)+1,"eCS_EPV_%d.ini",1);
+  
+  for( idx = 0; idx < CMEM_BLOCK_SIZE; idx++)
+  {
+    cEpvCurrentBlockData = idx;
+    
+    snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send WriteMemByAddress Request for EEP block nb. %x",idx);
+
+    testCaseComment("STEP",cTestStepDescription);
+
+    Req_Read_Memory_By_Address.SetParameter("addressAndSize/Address",cEpvBlockAddr[idx]);
+    Req_Read_Memory_By_Address.SetParameter("addressAndSize/Size",cEpvBlockSize[idx]);
+    Req_Read_Memory_By_Address.SetParameter("addressAndLengthFormatIdentifier",0x24);
+    Req_Read_Memory_By_Address.SendRequest();
+    
+    waitForDiagResponse();
+    
+    writeProfileString(cEpvBlockName[idx], "MemoryDump", bReadMemByAddressBuf, cFileName);
+  }  
+}
+
+
+testcase ReadMemByAddress2()
+{
+  int idx;
+  char cFileName[13];
+  char cTestStepDescription[500];
+  
+  testCaseComment("Enter supplier session");
+  Req_Supplier_Diagnostic_Session_Start.SendRequest();
+  
+  waitForDiagResponse();
+  
+  testCaseComment("Issue supplier security access");
+  Req_Supplier_Application_Request.SendRequest();
+  
+  waitForDiagResponse();
+
+  for( idx = 0; idx < CMEM_BLOCK_SIZE; idx++)
+  {
+    cEpvCurrentBlockData = idx;
+    
+    snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send WriteMemByAddress Request for EEP block nb. %x",
+    idx);
+    testCaseComment("STEP",cTestStepDescription);
+
+    Req_Read_Memory_By_Address.SetParameter("addressAndSize/Address",cEpvBlockAddr[idx]);
+    Req_Read_Memory_By_Address.SetParameter("addressAndSize/Size",cEpvBlockSize[idx]);
+    Req_Read_Memory_By_Address.SetParameter("addressAndLengthFormatIdentifier",0x24);
+    Req_Read_Memory_By_Address.SendRequest();
+
+    waitForDiagResponse();
+    
+    writeProfileString(cEpvBlockName[idx], "MemoryDump", bReadMemByAddressBuf, "eCS_EPV_2.ini");
+  }  
+}
+
+testcase WriteMemByAddress()
+{
+  int idx;
+  char cTestStepDescription[500];
+  
+  testCaseComment("Enter supplier session");
+  Req_Supplier_Diagnostic_Session_Start.SendRequest();
+  
+  waitForDiagResponse();
+  
+  testCaseComment("Issue supplier security access");
+  Req_Supplier_Application_Request.SendRequest();
+  
+  waitForDiagResponse();
+  
+  testCaseComment("Issue factory unlock routine");
+  Req_EcuUnlock_Start.SendRequest();
+  
+  waitForDiagResponse();
+  
+  for( idx = 0; idx < CMEM_BLOCK_SIZE; idx++)
+  {
+    snprintf(cTestStepDescription,elcount(cTestStepDescription),"Send WriteMemByAddress Request for EEP block nb. %x", idx);
+    
+    testCaseComment("STEP",cTestStepDescription);
+ 
+    Req_Write_Memory_By_Address.SetParameter("addressAndSizeAndData/Address",cEpvBlockAddr[idx]);
+    Req_Write_Memory_By_Address.SetParameterRaw("addressAndSizeAndData/Memory",cEpvBlockData[idx],cEpvBlockSize[idx]+2);  
+    Req_Write_Memory_By_Address.SetParameter("addressAndLengthFormatIdentifier",0x24);
+    Req_Write_Memory_By_Address.SendRequest();
+    
+    waitForDiagResponse();
+    
+  } 
+}
+
+void MainTest ()
+{
+  // read all EEP parameters
+  ReadMemByAddress1();
+  // write back all EEP parameters
+  WriteMemByAddress();
+  // read back all EEP parameters
+  ReadMemByAddress2();
+  
+  /* wait test close-out */
+  testWaitForTimeout(250);
+}

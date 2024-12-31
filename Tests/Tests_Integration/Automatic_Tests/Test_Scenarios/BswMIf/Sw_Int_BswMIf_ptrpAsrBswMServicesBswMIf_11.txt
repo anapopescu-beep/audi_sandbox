@@ -1,0 +1,33 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnStartupTwoB
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnStartupTwoB: The BswM_OnStartupTwoB runnable shall be called by the Autosar BswM in case of: - ReadAll NvM procedure is made {After second part of ECU initialization - BswM_OnStartupTwoB}
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnStartupTwoB
+
+	Step 2: Set a BP in function BswM_Action_BswMAction_BswM_OnStartupTwoB in order execute ReadAll NvM procedure 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function BswM_Action_BswMAction_BswM_OnStartupTwoB in order to call BswM_OnStartupTwoB function 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_OnStartupTwoB in order to check if ReadAll NvM procedure was made
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_Action_BswMAction_BswM_OnStartupTwoB in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 6: Return ECU to default values

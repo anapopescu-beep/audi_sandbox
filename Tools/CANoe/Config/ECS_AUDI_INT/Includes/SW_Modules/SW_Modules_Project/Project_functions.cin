@@ -1,0 +1,179 @@
+/*@!Encoding:1252*/
+includes
+{
+ 
+}
+
+variables
+{ 
+  
+}
+
+testfunction RunPreTS()
+{
+  
+  DisplayRequirementsInfo();
+  AddTestSetupInformation();
+  
+  //Start .blf and .asc logging of whole test case.
+  testStep(@sysvar::CORE::sysLevelOfDetailStep, "", "Start .ASC and .BLF test case logging.");
+  PreTS_StartLogging();
+  
+  debugger_deleteAllBreakpoints();
+  testStep("", "Reset the debugger.");
+  debugger_reset(); 
+  
+   testStep("", "Run the debugger.");
+  debugger_run();
+  
+//  //Configure power suppply.
+//  testStep(@sysvar::CORE::sysLevelOfDetailStep, "", "Configure power supply Voltage to %.2f V / Current limit to %.2f A then set the output on.", 12.5, 10.0);
+//  SetVoltage(SystemNominalVoltage);
+//  SetCurrent(SystemNominalAmps);
+  ClearAll();
+  ResetECU("Soft");
+  Wait(2000);
+  
+//  //DPOT config
+//  InitDigitalPotentiometer();
+  
+  //Activate Measurement Frame and DEV Frames, periodicity 10ms  
+  ActivateMeasurementFrame(2,1);
+  
+  //Check current SW version
+  CheckSWVersion();
+  
+////      Set Solenoid to unlocked state
+//  testStep(@sysvar::CORE::sysLevelOfDetailStep, "", "Set solenoid to --> Unlocked state");
+//  SetSolenoidState("unlocked");
+//  Wait(1500);
+//  
+//   //  Set Solenoid to lock state
+//  testStep(@sysvar::CORE::sysLevelOfDetailStep, "", "Set solenoid to --> Lock state");
+//  SetSolenoidState("lock");
+//  Wait(1500);
+  
+//  testStep(@sysvar::CORE::sysLevelOfDetailStep, "", "Set solenoid to --> Lock state");
+//   @Platform::DIAG_ECUUnlock = 1;
+  
+
+  
+//   Wait(2000);
+  
+  //Check AEC Presence
+  CheckAECPresence();
+   
+
+}
+
+testfunction RunPostTS()
+{
+  
+//  //Configure power suppply.
+//  testStep(@sysvar::CORE::sysLevelOfDetailStep, "", "Configure power supply Voltage to %.2f V / Current limit to %.2f A then set the output on.", 12.5, 10.0);
+//  SetVoltage(SystemNominalVoltage);
+//  SetCurrent(SystemNominalAmps);
+  debugger_deleteAllBreakpoints();
+  testStep("", "Reset the debugger.");
+  debugger_reset(); 
+   testStep("", "Run the debugger.");
+  debugger_run();
+  
+  ClearAll();
+  ResetECU("Soft");
+  Wait(2000);
+  
+//    //  Set Solenoid to unlocked state
+//  testStep(@sysvar::CORE::sysLevelOfDetailStep, "", "Set solenoid to --> Unlocked state");
+//  SetSolenoidState("unlocked");
+//  
+//   //  Set Solenoid to lock state
+//  testStep(@sysvar::CORE::sysLevelOfDetailStep, "", "Set solenoid to --> Lock state");
+//  SetSolenoidState("lock");
+  
+  //Check AEC Presence
+  CheckAECPresence();
+  
+    PostTS_StopLogging();
+  
+}
+
+//Write required data at a desired memmory address using diagnostic request dWriteMemoryByAddressRequest ( 0x3D 0x24 )
+// -> bAddress[] = RAM or EEPROM address where data is written (byte array)
+// -> iSize = size of data bytes to be written (integer)
+// -> bValue[] = data to be written (byte array)
+// Example: WriteMemoryByAddress({0x14, 0x00, 0x00, 0x84}, 2, {0xE2, 0x00});
+void WriteMemoryByAddress(byte bAddress[], int iSize, byte bValue[])
+{
+  
+  stack byte bSize[2];
+  stack byte bWriteMemoryByAddressSID[2] = {0x3D, 0x24};
+  stack int iInitialRequestSize = 8;
+  stack int iRequestSize;
+  byte bRequest[50];
+  int index;
+  
+  //convert iSize from int to 2 byte array ( 2 -> {0x00, 0x02} )
+  bSize [0] = (iSize & 0xFF00) >> 8;
+  bSize [1] = iSize & 0x00FF;
+  
+  iRequestSize = iInitialRequestSize + iSize;
+ 
+  diagResize(dWriteMemoryByAddressRequest, iRequestSize);                  //UDS request size
+  diagSetPrimitiveByte(dWriteMemoryByAddressRequest, 0, bWriteMemoryByAddressSID[0]); //SID
+  diagSetPrimitiveByte(dWriteMemoryByAddressRequest, 1, bWriteMemoryByAddressSID[1]); 
+  diagSetPrimitiveByte(dWriteMemoryByAddressRequest, 2, bAddress[0]); //Adress Byte 0
+  diagSetPrimitiveByte(dWriteMemoryByAddressRequest, 3, bAddress[1]); //Adress Byte 1
+  diagSetPrimitiveByte(dWriteMemoryByAddressRequest, 4, bAddress[2]); //Adress Byte 2
+  diagSetPrimitiveByte(dWriteMemoryByAddressRequest, 5, bAddress[3]); //Adress Byte 3
+  diagSetPrimitiveByte(dWriteMemoryByAddressRequest, 6, bSize[0]); //Size Byte 1
+  diagSetPrimitiveByte(dWriteMemoryByAddressRequest, 7, bSize[1]); //Size Byte 2
+  
+  for(index = 0; index < iSize; index++)
+  {
+    diagSetPrimitiveByte(dWriteMemoryByAddressRequest, index+8, bValue[index]); //Adress Byte index    
+  }
+  
+  GetSecurityAccess("supplier");
+  SetECUMode("unlock");
+  SendDiagnosticRequest(dWriteMemoryByAddressRequest, dWriteMemoryByAddressResponse);
+  CheckPositiveResponse("Check positive response for writing memory by address.", dWriteMemoryByAddressRequest, dWriteMemoryByAddressResponse);
+  SetECUMode("lock");
+}
+
+//Read data from a desired memmory address using diagnostic request dReadMemoryByAddressRequest ( 0x23 0x24 ) and store it in dReadMemoryByAddressResponse
+// -> bAddress[] = RAM or EEPROM address from where data is read (byte array)
+// -> iSize = size of data bytes to be read (integer)
+// Example: ReadMemoryByAddress({0x14, 0x00, 0x00, 0x84}, 2);
+// Output is stored in dReadMemoryByAddressResponse global variable and can be used afterwards
+void ReadMemoryByAddress(byte bAddress[], int iSize)
+{
+  stack byte bSize[2];
+  stack byte bReadMemoryByAddressSID[2] = {0x23, 0x24};
+  stack int iRequestSize = 8;
+  byte bResponse [3];
+  byte bExtractedBytes;
+  int index;
+  
+  //convert iSize from int to 2 byte array ( 2 -> {0x00, 0x02} )
+  bSize [0] = (iSize & 0xFF00) >> 8;
+  bSize [1] = iSize & 0x00FF;
+   
+  diagResize(dReadMemoryByAddressRequest, iRequestSize);                  //UDS request size
+  diagSetPrimitiveByte(dReadMemoryByAddressRequest, 0, bReadMemoryByAddressSID[0]); //SID
+  diagSetPrimitiveByte(dReadMemoryByAddressRequest, 1, bReadMemoryByAddressSID[1]); 
+  diagSetPrimitiveByte(dReadMemoryByAddressRequest, 2, bAddress[0]); //Adress Byte 0
+  diagSetPrimitiveByte(dReadMemoryByAddressRequest, 3, bAddress[1]); //Adress Byte 1
+  diagSetPrimitiveByte(dReadMemoryByAddressRequest, 4, bAddress[2]); //Adress Byte 2
+  diagSetPrimitiveByte(dReadMemoryByAddressRequest, 5, bAddress[3]); //Adress Byte 3
+  diagSetPrimitiveByte(dReadMemoryByAddressRequest, 6, bSize[0]); //Size Byte 1
+  diagSetPrimitiveByte(dReadMemoryByAddressRequest, 7, bSize[1]); //Size Byte 2
+  
+  GetSecurityAccess("supplier");
+  SetECUMode("unlock");
+  SendDiagnosticRequest(dReadMemoryByAddressRequest, dReadMemoryByAddressResponse);
+  CheckPositiveResponse("Check positive response for read memory by address.", dReadMemoryByAddressRequest, dReadMemoryByAddressResponse);
+  diagGetLastResponse(dReadMemoryByAddressRequest, dReadMemoryByAddressResponse);
+  SetECUMode("lock");
+
+}

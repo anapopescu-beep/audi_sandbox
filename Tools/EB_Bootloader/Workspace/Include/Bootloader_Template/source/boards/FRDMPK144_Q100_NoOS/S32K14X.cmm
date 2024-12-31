@@ -1,0 +1,39 @@
+SYStem.RESet
+SYStem.CPU S32K144
+SYStem.Up
+
+;	S32K144 Flash Regions:
+;	PFlashSize=0x80000	=	512 KB
+;	DFlashSize=0x10000	=	64 KB
+
+ENTRY &elffile
+
+FLASH.RESet
+
+FLASH.Create 1. 0x00000000--0x0007FFFF 0x1000 TARGET Quad /CENSORSHIP 0x400++0xf
+FLASH.Create 2. 0x10000000--0x1000FFFF 0x1000 TARGET Quad
+
+	FLASH.TARGET 0x1FFF8000 0x20000000 0x1000 ~~/demo/arm/flash/quad/s32k_quad.bin
+
+if "&elffile"!=""
+(
+    FLASH.ReProgram.ALL /Erase
+    Data.LOAD.Elf &elffile /Quad /Verify
+    FLASH.Program OFF
+)
+else
+(
+    FLASH.ReProgram.ALL /Erase
+    Data.LOAD.Elf * /Quad /Verify
+    FLASH.Program OFF
+)
+
+SYStem.Down
+; Avoid t32 to stop the debug after software reset
+TrOnchip.Set CORERESET OFF
+SYStem.Option Dualport ON
+SYStem.Up
+
+List.auto
+
+ENDDO

@@ -1,0 +1,1 @@
+C:\Users\U2O8NH0\OdxCreate_V263\ODXCreate.exe -od "C:\Users\U2O8NH0\OdxCreate_V263\Container\..\Container\Container space" -spn 571035284 -s X002 -pc [0,5,10,11,154] -id C:\Temp\_problem\IJ_CompressUncompress\ocnf+bin\ C:\Users\U2O8NH0\OdxCreate_V263\Config\v252-configV262.ocnf

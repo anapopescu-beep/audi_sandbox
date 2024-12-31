@@ -1,0 +1,40 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_pseAccSensor, ARCH_SW_DIA_pclAccSensor
+ARCH_SW_IoHwAb_pseAccSensor: The runnable shall read the {Raw Accelerometer Temperature} from the SPI bus and convert it to *C.
+ARCH_SW_DIA_pclAccSensor: Interface used to get the output temperature of the accelerometer in ?
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_IoHwAb_pseAccSensor, ARCH_SW_DIA_pclAccSensor
+
+	Step 2: Set a breakpoint in function DIA_runRidF796_EcuTempCalibration 
+		Expected result:  BP reached.
+
+	Step 3: Send diagnostic request in order to go in Supplier Session
+
+	Step 4: Send request for press Supplier Security Access button
+
+	Step 5: Send diagnostic request in order to start the Temp Calibration
+
+	Step 6: Set a breakpoint in function IoHwAb_GetAccelerometerTemperature 
+		Expected result:  BP reached.
+
+	Step 7: Set a breakpoint in function DIA_runRidF796_EcuTempCalibration in order to read Acc Temperature
+		Expected result:  BP reached.
+
+	Step 8: Evaluate the interface data flow case
+
+Postcondition
+
+	Step 9: Return ECU to default values

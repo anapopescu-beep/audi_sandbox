@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?module CanTp?>
+
+<xgen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.elektrobit.com/2013/xgen" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+
+
+
+
+
+
+
+
+    
+    
+    
+         
+         
+    
+    
+
+    
+    
+    
+         
+         
+    
+    
+
+
+
+
+ 
+
+ 
+ 
+ 
+     
+     
+     
+          
+          
+     
+     
+ 
+     
+     
+     
+          
+          
+     
+     
+ 
+
+
+
+
+
+
+  <!-- This is the configuration of module CanTp -->
+  <module name="CanTp">
+    <!-- This is the precompile-time configuration of the module. -->
+    <configuration class="PreCompile">
+      <?artifact directory="include" file="CanTp_Types_Int.h" type="types-h"?>
+
+
+
+      <parameter name="relocatable-enable">
+        <boolean-value>true</boolean-value>
+      </parameter>
+
+
+      <!-- This is the type definition of the root structure -->
+      <type name="CanTp_ConfigType">
+        <struct>
+          <comment><![CDATA[Post-build configuration type]]></comment>
+          <member name="PlatformSignature" type="uint32">
+            <comment><![CDATA[Used to validate the platform]]></comment>
+          </member>
+          <member name="LcfgSignature" type="uint32">
+            <comment><![CDATA[Used to validate the post build configuration against the link time configuration.]]></comment>
+          </member>
+          <member name="CfgSignature" type="uint32">
+            <comment><![CDATA[Used to validate the post build configuration against the precompile time configuration.]]></comment>
+          </member>
+          <member name="PublicInfoSignature" type="uint32">
+            <comment>
+               <![CDATA[Used to validate the post build configuration against the precompile time published info
+                        configuration.
+               ]]>
+            </comment>
+          </member>
+          <!-- Pointers to post build data structures -->
+          <member name="RxNPduLookupTablePtr" type="CanTp_RxNPduLookupEntryType">
+            <comment><![CDATA[This pointer contains the address to the N-PDU lookup table.]]></comment>
+            <compiler-abstraction>
+              <ref2cfg />
+            </compiler-abstraction>
+          </member>
+          <member name="RxNPduTablePtr" type="CanTp_RxNPduTableType">
+            <comment><![CDATA[This pointer contains the address to the RX N-PDU table if available.]]></comment>
+            <compiler-abstraction>
+              <ref2cfg />
+            </compiler-abstraction>
+          </member>
+          <member name="RxNSduConfigPtr" type="CanTp_RxNSduConfigType">
+            <comment><![CDATA[This pointer contains the address to the RX N-SDU config array if available.]]></comment>
+            <compiler-abstraction>
+              <ref2cfg />
+            </compiler-abstraction>
+          </member>
+          <member name="TxNSduConfigPtr" type="CanTp_TxNSduConfigType">
+            <comment><![CDATA[This pointer contains the address to the TX N-SDU config array if available.]]></comment>
+            <compiler-abstraction>
+              <ref2cfg />
+            </compiler-abstraction>
+          </member>
+          <member name="MfCtrConfigPtr" type="CanTp_MfCtrConfigType">
+            <comment><![CDATA[This pointer contains the address to the main function control config array if available.]]></comment>
+            <compiler-abstraction>
+              <ref2cfg />
+            </compiler-abstraction>
+          </member>
+          
+          <member name="TxNPduToTpChannelPtr" type="uint8">
+            <comment><![CDATA[Array to translate CanIf Tx Confirmation PDU IDs into the CanTp channel.]]></comment>
+            <compiler-abstraction>
+              <ref2cfg />
+            </compiler-abstraction>
+          </member>
+          
+          <member name="NumberRxNPdus" type="uint16">
+            <comment><![CDATA[Number of unequal Rx N-PDU elements.]]></comment>
+          </member>
+          <member name="NumberTxNSdus" type="uint16">
+            <comment><![CDATA[Configured number of TxNSdus.]]></comment>
+          </member>
+          <member name="NumberRxNSdus" type="uint16">
+            <comment><![CDATA[Configured number of RxNSdus.]]></comment>
+          </member>
+          
+          
+          <member name="NumberTxConfNPdus" type="uint16">
+            <comment><![CDATA[Configured number of Tx confirmation NPdus (Tx ConfNPdus + RxFcNPdus).]]></comment>
+          </member>
+          
+          
+           <member name="NumberOfChannels" type="uint8">
+             <comment><![CDATA[Number of Tx and Rx channels.]]></comment>
+           </member>
+          
+           <member name="NumberOfTxChannels" type="uint8">
+             <comment><![CDATA[Number of Tx channels.]]></comment>
+           </member>
+          
+        </struct>
+      </type>
+
+      <!-- This is the type definition of the Tx PDU config structure -->
+      <type name="CanTp_RxNPduLookupEntryType">
+          <comment><![CDATA[Type for the N-PDU Lookup Table.]]></comment>
+        <reference type="uint16" />
+      </type>
+
+      <!--  Type for List of CanTp Rx N-PDUs. -->
+      <type name="CanTp_RxNPduTableType">
+       <struct>
+        <comment><![CDATA[Type for CanTp List of all receivable N-PDUs.]]></comment>
+        <member name="Next" type="uint16">
+          <comment><![CDATA[index of next element with the same N-PDU Id, zero terminates]]></comment>
+        </member>
+        <member name="Index" type="PduIdType">
+          <comment><![CDATA[index in Tx or Rx array]]></comment>
+        </member>
+        <member name="AddressingFormat" type="uint8">
+          <comment><![CDATA[address format of this N-PDU]]></comment>
+        </member>
+        <member name="N_SA_AE" type="uint8">
+          <comment>
+             <![CDATA[expected source address in extended addressing mode or address extension
+                     (N_AE) in mixed addressing mode.
+             ]]>
+          </comment>
+        </member>
+        <member name="Direction" type="uint8">
+          <comment><![CDATA[direction (tx or rx)]]></comment>
+        </member>
+       </struct>
+      </type>
+
+      <!-- Type for CanTp Rx N-SDU configuration. -->
+      <type name="CanTp_RxNSduConfigType">
+        <struct>
+        <comment><![CDATA[Type for CanTp Rx N-SDU configuration.]]></comment>
+        <member name="N_Ar" type="uint16">
+          <comment><![CDATA[time to transmit N-PDU]]></comment>
+        </member>
+        <member name="N_Br" type="uint16">
+          <comment><![CDATA[time between two FCs]]></comment>
+        </member>
+        <member name="N_Cr" type="uint16">
+          <comment><![CDATA[time until CF receive]]></comment>
+        </member>
+                <member name="NPduConfIdFc" type="PduIdType">
+          <comment><![CDATA[N-Pdu confirmation Id for sent FC frames]]></comment>
+        </member>
+        <member name="LSduIdFc" type="PduIdType">
+          <comment><![CDATA[L-Sdu Id for sending FC frames]]></comment>
+        </member>
+        <member name="IPduId" type="PduIdType">
+          <comment><![CDATA[I-Pdu Id for Rx-UL communication (PduR_CanTpRxIndication)]]></comment>
+        </member>
+        <member name="NPduIdxF" type="PduIdType">
+          <comment><![CDATA[N-Pdu Id for receiving frames from lower layer]]></comment>
+        </member>
+        <member name="Channel" type="uint8">
+          <comment><![CDATA[associated Rx channel ID]]></comment>
+        </member>
+        <member name="AddressingFormat" type="uint8">
+          <comment><![CDATA[addressing format - standard, extended]]></comment>
+        </member>
+        <member name="Tatype" type="uint8">
+          <comment><![CDATA[physical, functional]]></comment>
+        </member>
+        <member name="PaddingActivation" type="uint8">
+          <comment><![CDATA[padding of N-PDUs]]></comment>
+        </member>
+        <member name="FcCanIdType" type="uint8">
+          <comment><![CDATA[CANTP_TX_STANDARD_CAN, CANTP_TX_EXTENDED_CAN, CANTP_TX_STANDARD_FD_CAN, CANTP_TX_EXTENDED_FD_CAN]]></comment>
+        </member>
+        <member name="N_TA_AE" type="uint8">
+          <comment><![CDATA[extended target address (N_TA) or mixed address extension (N_AE)]]></comment>
+        </member>
+        <member name="WftMax" type="uint8">
+          <comment><![CDATA[max number of FC wait]]></comment>
+        </member>
+        <member name="BS" type="uint8">
+          <comment><![CDATA[block size]]></comment>
+        </member>
+        <member name="ChannelMode" type="uint8">
+          <comment><![CDATA[associated channel mode]]></comment>
+        </member>
+        <member name="STmin" type="uint8">
+          <comment><![CDATA[STmin value to be used for the sender]]></comment>
+        </member>
+        <member name="NPduMaxLength" type="uint8">
+          <comment><![CDATA[Maximum length of N-PDU]]></comment>
+        </member>
+       </struct>
+      </type>
+
+      <!-- Type for Tx N-SDU configuration. -->
+      <type name="CanTp_TxNSduConfigType">
+       <struct>
+        <comment><![CDATA[Type for CanTp Tx N-SDU configuration.]]></comment>
+        <member name="N_As" type="uint16">
+          <comment><![CDATA[time to transmit N-PDU]]></comment>
+        </member>
+        <member name="N_Bs" type="uint16">
+          <comment><![CDATA[time to next FC]]></comment>
+        </member>
+        <member name="N_Cs" type="uint16">
+          <comment><![CDATA[time to next CF]]></comment>
+        </member>
+        <member name="NPduIdFc" type="PduIdType">
+          <comment><![CDATA[N-Pdu Id for incoming FC frames]]></comment>
+        </member>
+        <member name="NPduConfIdxF" type="PduIdType">
+          <comment><![CDATA[N-Pdu confirmation Id for sent SF, FF, CF]]></comment>
+        </member>
+        <member name="LSduIdxF" type="PduIdType">
+          <comment><![CDATA[L-Sdu Id for SF, FF, CF]]></comment>
+        </member>
+        <member name="IPduConfId" type="PduIdType">
+          <comment><![CDATA[I-PDU Id for Tx-UL communication (CopyTxData, TxConfirmation)]]></comment>
+        </member>
+        <member name="Channel" type="uint8">
+          <comment><![CDATA[associated Tx channel ID]]></comment>
+        </member>
+        <member name="AddressingFormat" type="uint8">
+          <comment><![CDATA[defines address format (standard, extended)]]></comment>
+        </member>
+        <member name="Tatype" type="uint8">
+          <comment><![CDATA[physical, functional]]></comment>
+        </member>
+        <member name="PaddingActivation" type="uint8">
+          <comment><![CDATA[padding of N-PDUs]]></comment>
+        </member>
+        <member name="CanIdType" type="uint8">
+          <comment><![CDATA[CANTP_TX_STANDARD_CAN, CANTP_TX_EXTENDED_CAN, CANTP_TX_STANDARD_FD_CAN, CANTP_TX_EXTENDED_FD_CAN]]></comment>
+        </member>
+        <member name="N_TA_AE" type="uint8">
+          <comment><![CDATA[extended target address (N_TA) or mixed address extension (N_AE)]]></comment>
+        </member>
+        <member name="ChannelMode" type="uint8">
+          <comment><![CDATA[associated channel mode]]></comment>
+        </member>
+        <member name="LSduMaxLength" type="uint8">
+          <comment><![CDATA[Maximum length of L-SDU]]></comment>
+        </member>
+        <member name="CanTpTc" type="boolean">
+          <comment><![CDATA[parameter for enabling Tx cancellation]]></comment>
+        </member>
+       </struct>
+      </type>
+
+
+      <!-- Type of MainFunction counter config for Tx channels. -->
+      <type name="CanTp_MfCtrConfigType">
+       <struct>
+        <comment><![CDATA[Type of MainFunction counter config, needed for all Tx channels.]]></comment>
+        <member name="Resolution" type="uint32">
+          <comment><![CDATA[Resolution of GPT in ns per ticks.]]></comment>
+        </member>
+        <member name="CallbackType" type="uint8">
+          <comment><![CDATA[GPT or MainFunction callback.]]></comment>
+        </member>
+       </struct>
+      </type>
+
+    </configuration>  <!-- PreCompile -->
+  </module>
+
+    <!-- include the AUTOSAR standard data types, etc. -->
+  <xi:include href="Base.xgen" xpointer="element(/1/1)"/>
+</xgen>
+

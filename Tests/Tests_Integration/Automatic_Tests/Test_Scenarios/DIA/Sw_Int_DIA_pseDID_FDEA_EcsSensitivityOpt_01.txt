@@ -1,0 +1,42 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_WriteData, ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_ReadData
+ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_WriteData: Interface used to write accelerometer sensitivity optimization(10 bytes of data).
+ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_ReadData: Interface used to read accelerometer sensitivity optimization(10 bytes of data).
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_WriteData
+
+	Step 2: Send diagnostic request in order to go in Supplier Session
+
+	Step 3: Send request for press Supplier Security Access button
+
+	Step 4: Send diagnostic request in order to write accelerometer sensitivity opt with value 0x3e
+
+Action: ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_ReadData
+
+	Step 5: Send diagnostic request in order to go in Supplier Session
+
+	Step 6: Send request for press Supplier Security Access button
+
+	Step 7: Send diagnostic request in order to read accelerometer sensitivity opt
+
+	Step 8: Set a BP in function DIA_runDidFDEA_EcsSensitivityOptRead in order to read accelerometer sensitivity opt 
+		Expected result:  BP was set
+
+	Step 9: Read accelerometer sensitivity opt value  
+		Expected result:  Accelerometer sensitivity opt succesfully read
+
+Postcondition
+
+	Step 10: Return ECU to default values

@@ -1,0 +1,4352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!--
+*   @file    plugin.xml
+*   @version 1.0.0
+*
+*   @brief   AUTOSAR McalExt_TS_T40DxM1I0R0 - tresos Studio plugin configuration file.
+*   @details This file contains the configuration for the McalExt_TS_T40DxM1I0R0 tresos Studio plugin.
+-->
+<!--
+====================================================================================================
+*   Project              : ACM-MCAL: AUTOSAR MCAL Wrapper
+*   Platform             : CORTEXM
+*   Peripheral           : S32K14X
+*   Dependencies         : none
+*
+*   This file is part of MCAL integration. Elektrobit included or updated extentions.
+*   (c) 2005-2022 Elektrobit Automotive GmbH
+*   All rights exclusively reserved for Elektrobit Automotive GmbH,
+*   unless expressly agreed to otherwise.
+====================================================================================================
+====================================================================================================
+====================================================================================================
+-->
+
+<plugin>
+
+  <!--
+  ** AutoCore McalExt_TS_T40DxM1I0R0 plugin
+  **
+  ** All rights exclusively reserved for Elektrobit Automotive GmbH,
+  ** unless expressly agreed to otherwise.
+  -->
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+             id="McalExt_TS_T40DxM1I0R0_ModuleId"
+             name="McalExt_TS_T40DxM1I0R0 Module">
+
+    <module id="McalExt_TS_T40DxM1I0R0"
+            label="McalExt"
+            mandatory="true"
+            allowMultiple="false"
+            description="ACM-MCAL: AUTOSAR MCAL Wrapper"
+            copyright="(c) 2005-2022 Elektrobit Automotive GmbH"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="0"
+            swVersionSuffix="B632837"
+            specVersionMajor="0"
+            specVersionMinor="0"
+            specVersionPatch="0"
+            specVersionSuffix="0000"
+            relVersionMajor="4"
+            relVersionMinor="0"
+            relVersionPatch="3"
+            categoryType="McalExt"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+      
+    </module>
+  </extension>
+
+  
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="McalExt_TS_T40DxM1I0R0_GeneratorId"
+             name="McalExt_TS_T40DxM1I0R0 Generator">
+    <generator class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator"
+               id="McalExt_TS_T40DxM1I0R0_TemplateBasedCodeGeneratorId"
+               moduleId="McalExt_TS_T40DxM1I0R0">
+
+      <!-- common template path parameters -->
+      <parameter name="templates"
+                 mode="generate,verify" value="generate"/>
+      <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type"
+                 mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type"
+                 mode="verify_swcd" value="verify"/>
+      <parameter name="templates"
+                 mode="generate_swcd,verify_swcd" value="swcd/McalExt_Bswmd.arxml"/>
+    </generator>
+  </extension>
+
+
+    <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+             id="McalExt_TS_T40DxM1I0R0_ConfigId"
+             name="McalExt_TS_T40DxM1I0R0 Configuration">
+    <configuration moduleId="McalExt_TS_T40DxM1I0R0">
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+        <resource value="config/McalExt.xdm" type="xdm" id="res_default"/>
+      </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40DxM1I0R0/McalExt"/>
+      </data>
+
+      <editor id="McalExt_TS_T40DxM1I0R0_EditorId"
+              label="Default"
+              tooltip="ACG-Mcal: AUTOSAR MCAL Wrapper">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40DxM1I0R0/McalExt"/>
+          <parameter name="title" value="McalExt"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+    
+            
+  <!--
+  ** Start of  Adc_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Adc_TS_T40D2M10I1R0_ModuleId"
+          name="Adc_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Adc_TS_T40D2M10I1R0"
+            label="Adc"
+            mandatory="false"
+            allowMultiple="false"
+            description="Adc Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Adc"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Adc_TS_T40D2M10I1R0_ConfigId"
+              name="Adc_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Adc_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Adc_TS_T40D2M10I1R0/config/Adc.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Adc"/>
+      </data>
+
+      <editor id="Adc_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Adc Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Adc"/>
+          <parameter name="title" value="Adc_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Adc_TS_T40D2M10I1R0"
+               id="Adc_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Adc_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Adc_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Adc_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Adc_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Adc_TS_T40D2M10I1R0_GeneratorId"
+              name="Adc_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Adc_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Adc_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Adc_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Adc_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Adc_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Adc_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Adc_TS_T40D2M10I1R0"
+            name="Adc service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Adc" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Adc_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Adc_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Adc_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Adc_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+               
+  <!--
+  ** Start of  BaseNXP_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="BaseNXP_TS_T40D2M10I1R0_ModuleId"
+          name="BaseNXP_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="BaseNXP_TS_T40D2M10I1R0"
+            label="BaseNXP"
+            mandatory="true"
+            allowMultiple="false"
+            description="Base Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="BaseNXP"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="BaseNXP_TS_T40D2M10I1R0_ConfigId"
+              name="BaseNXP_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="BaseNXP_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Base_TS_T40D2M10I1R0/config/BaseNXP.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/BaseNXP"/>
+      </data>
+
+      <editor id="BaseNXP_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Base Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/BaseNXP"/>
+          <parameter name="title" value="BaseNXP_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="BaseNXP_TS_T40D2M10I1R0"
+               id="BaseNXP_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="BaseNXP_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="BaseNXP_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="BaseNXP_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Base_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="BaseNXP_TS_T40D2M10I1R0_GeneratorId"
+              name="BaseNXP_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="BaseNXP_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                                      <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Base_TS_T40D2M10I1R0/generate_PC"/>
+                <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Base_TS_T40D2M10I1R0/generate_PC"/>
+         <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+            <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/BaseNXP_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_BaseNXP_TS_T40D2M10I1R0"
+            name="BaseNXP service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="BaseNXP" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/BaseNXP_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/BaseNXP_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/BaseNXP_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.BaseNXP_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Can_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Can_TS_T40D2M10I1R0_ModuleId"
+          name="Can_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Can_TS_T40D2M10I1R0"
+            label="Can"
+            mandatory="false"
+            allowMultiple="false"
+            description="Can Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="0"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0003"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Can"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Can_TS_T40D2M10I1R0_ConfigId"
+              name="Can_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Can_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Can_TS_T40D2M10I1R0/config/Can.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/Can_TS_T40D2M10I1R0/Can"/>
+      </data>
+
+      <editor id="Can_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Can Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/Can_TS_T40D2M10I1R0/Can"/>
+          <parameter name="title" value="Can_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Can_TS_T40D2M10I1R0"
+               id="Can_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Can_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Can_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Can_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Can_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Can_TS_T40D2M10I1R0_GeneratorId"
+              name="Can_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Can_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Can_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Can_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Can_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Can_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Can_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+       <!--special handling of Can, Lin and FlexRay-->
+  <extension point="dreisoft.tresos.comimporter.api.plugin.comtransformer">
+    <comtransformer
+      id="ComTransformer_Can_TS_T40D2M10I1R0"
+      moduleId="Can_TS_T40D2M10I1R0">
+      <transformer
+        class="dreisoft.tresos.comimporter.api.transformer.asr40.CanTransformer">
+      </transformer>
+    </comtransformer>
+  </extension>
+    <!-- handle id calculator for CanControllerId -->
+  <extension
+    point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+    <pushoperation id="CanControllerId_Can_TS_T40D2M10I1R0"
+    name="Can/CanControllerId"
+    desc="">
+        <operationclass class="dreisoft.tresos.guidedconfig.api.pushservice.operations.handleid.SimpleHandleIdPushOperation">
+            <parameter name="moduleId" value="Can_TS_T40D2M10I1R0"/>
+            <parameter name="listPath" value="/AUTOSAR/TOP-LEVEL-PACKAGES/Can_TS_T40D2M10I1R0/ELEMENTS/Can/CanConfigSet/CanController/"/>
+            <parameter name="idPath" value="CanControllerId"/>
+            <parameter name="zbcGroups" value="true"/>
+        </operationclass>
+        <event>
+            <and>
+                <with variable="class">
+                    <equals value="dreisoft.tresos.guidedconfig.api.pushservice.operations.handleid.HandleIdEvent"/>
+                </with>
+                <with variable="target">
+                    <equals value="CORTEXM"/>
+                </with>
+                <with variable="moduleId.Can_TS_T40D2M10I1R0">
+                   <equals value="true"/>
+                </with>
+                <with variable="relVersion">
+               <equals value="4.4"/>
+            </with>
+            </and>
+        </event>
+    </pushoperation>
+  </extension>
+
+  <!-- handle id calculator for CanObjectId -->
+  <extension
+    point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+    <pushoperation id="CanObjectId_Can_TS_T40D2M10I1R0"
+    name="Can/CanObjectId"
+    desc="">
+        <operationclass class="dreisoft.tresos.guidedconfig.api.pushservice.operations.handleid.SimpleHandleIdPushOperation">
+            <parameter name="moduleId" value="Can_TS_T40D2M10I1R0"/>
+            <parameter name="listPath" value="/AUTOSAR/TOP-LEVEL-PACKAGES/Can_TS_T40D2M10I1R0/ELEMENTS/Can/CanConfigSet/CanHardwareObject/"/>
+            <parameter name="idPath" value="CanObjectId"/>
+            <parameter name="zbcGroups" value="false"/>
+            <parameter name="groupBy" value="CanObjectType"/>
+            <parameter name="sortOrder" value="RECEIVE,TRANSMIT"/>
+        </operationclass>
+        <event>
+            <and>
+                <with variable="class">
+                    <equals value="dreisoft.tresos.guidedconfig.api.pushservice.operations.handleid.HandleIdEvent"/>
+                </with>
+                <with variable="target">
+                    <equals value="CORTEXM"/>
+                </with>
+                <with variable="moduleId.Can_TS_T40D2M10I1R0">
+                   <equals value="true"/>
+                </with>
+                <with variable="relVersion">
+               <equals value="4.4"/>
+            </with>
+            </and>
+        </event>
+    </pushoperation>
+  </extension>
+ 
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Can_TS_T40D2M10I1R0"
+            name="Can service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Can" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Can_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Can_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Can_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Can_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+              
+  <!--
+  ** Start of  Crc_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Crc_TS_T40D2M10I1R0_ModuleId"
+          name="Crc_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Crc_TS_T40D2M10I1R0"
+            label="Crc"
+            mandatory="false"
+            allowMultiple="false"
+            description="Crc Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Crc"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Crc_TS_T40D2M10I1R0_ConfigId"
+              name="Crc_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Crc_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Crc_TS_T40D2M10I1R0/config/Crc.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Crc"/>
+      </data>
+
+      <editor id="Crc_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Crc Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Crc"/>
+          <parameter name="title" value="Crc_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Crc_TS_T40D2M10I1R0"
+               id="Crc_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Crc_TS_T40D2M10I1R0_GeneratorId"
+              name="Crc_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Crc_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                                      <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Crc_TS_T40D2M10I1R0/generate_PC"/>
+                <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Crc_TS_T40D2M10I1R0/generate_PC"/>
+         <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+            <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Crc_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Crc_TS_T40D2M10I1R0"
+            name="Crc service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Crc" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Crc_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Crc_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Crc_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Crc_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+              
+  <!--
+  ** Start of  Crypto_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Crypto_TS_T40D2M10I1R0_ModuleId"
+          name="Crypto_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Crypto_TS_T40D2M10I1R0"
+            label="Crypto"
+            mandatory="false"
+            allowMultiple="false"
+            description="Crypto Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Crypto"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Crypto_TS_T40D2M10I1R0_ConfigId"
+              name="Crypto_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Crypto_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Crypto_TS_T40D2M10I1R0/config/Crypto.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Crypto"/>
+      </data>
+
+      <editor id="Crypto_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Crypto Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Crypto"/>
+          <parameter name="title" value="Crypto_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Crypto_TS_T40D2M10I1R0"
+               id="Crypto_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Crypto_TS_T40D2M10I1R0_GeneratorId"
+              name="Crypto_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Crypto_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                                      <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Crypto_TS_T40D2M10I1R0/generate_PC"/>
+                <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Crypto_TS_T40D2M10I1R0/generate_PC"/>
+         <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+            <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Crypto_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Crypto_TS_T40D2M10I1R0"
+            name="Crypto service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Crypto" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Crypto_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Crypto_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Crypto_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Crypto_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+              
+  <!--
+  ** Start of  Dio_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Dio_TS_T40D2M10I1R0_ModuleId"
+          name="Dio_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Dio_TS_T40D2M10I1R0"
+            label="Dio"
+            mandatory="false"
+            allowMultiple="false"
+            description="Dio Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Dio"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Dio_TS_T40D2M10I1R0_ConfigId"
+              name="Dio_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Dio_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Dio_TS_T40D2M10I1R0/config/Dio.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Dio"/>
+      </data>
+
+      <editor id="Dio_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Dio Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Dio"/>
+          <parameter name="title" value="Dio_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Dio_TS_T40D2M10I1R0"
+               id="Dio_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Dio_TS_T40D2M10I1R0_GeneratorId"
+              name="Dio_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Dio_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                                      <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Dio_TS_T40D2M10I1R0/generate_PC"/>
+                <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Dio_TS_T40D2M10I1R0/generate_PC"/>
+         <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+            <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Dio_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Dio_TS_T40D2M10I1R0"
+            name="Dio service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Dio" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Dio_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Dio_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Dio_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Dio_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Eep_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Eep_TS_T40D2M10I1R0_ModuleId"
+          name="Eep_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Eep_TS_T40D2M10I1R0"
+            label="Eep"
+            mandatory="false"
+            allowMultiple="false"
+            description="Eep Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0001"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Eep"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Eep_TS_T40D2M10I1R0_ConfigId"
+              name="Eep_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Eep_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Eep_TS_T40D2M10I1R0/config/Eep.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Eep"/>
+      </data>
+
+      <editor id="Eep_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Eep Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Eep"/>
+          <parameter name="title" value="Eep_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Eep_TS_T40D2M10I1R0"
+               id="Eep_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Eep_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Eep_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Eep_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Eep_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Eep_TS_T40D2M10I1R0_GeneratorId"
+              name="Eep_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Eep_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Eep_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Eep_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Eep_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Eep_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Eep_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Eep_TS_T40D2M10I1R0"
+            name="Eep service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Eep" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Eep_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Eep_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Eep_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Eep_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Eth_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Eth_TS_T40D2M10I1R0_ModuleId"
+          name="Eth_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Eth_TS_T40D2M10I1R0"
+            label="Eth"
+            mandatory="false"
+            allowMultiple="false"
+            description="Eth Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Eth"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Eth_TS_T40D2M10I1R0_ConfigId"
+              name="Eth_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Eth_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Eth_TS_T40D2M10I1R0/config/Eth.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/Eth_TS_T40D2M10I1R0/Eth"/>
+      </data>
+
+      <editor id="Eth_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Eth Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/Eth_TS_T40D2M10I1R0/Eth"/>
+          <parameter name="title" value="Eth_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Eth_TS_T40D2M10I1R0"
+               id="Eth_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Eth_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Eth_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Eth_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Eth_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Eth_TS_T40D2M10I1R0_GeneratorId"
+              name="Eth_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Eth_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Eth_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Eth_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Eth_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Eth_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Eth_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+       <!--special handling of Can, Lin and FlexRay-->
+  <extension point="dreisoft.tresos.comimporter.api.plugin.comtransformer">
+    <comtransformer
+      id="ComTransformer_Eth_TS_T40D2M10I1R0"
+      moduleId="Eth_TS_T40D2M10I1R0">
+      <transformer
+        class="dreisoft.tresos.comimporter.api.transformer.asr40.EthTransformer">
+      </transformer>
+    </comtransformer>
+  </extension>
+  
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Eth_TS_T40D2M10I1R0"
+            name="Eth service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Eth" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Eth_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Eth_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Eth_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Eth_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+              
+  <!--
+  ** Start of  Fee_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Fee_TS_T40D2M10I1R0_ModuleId"
+          name="Fee_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Fee_TS_T40D2M10I1R0"
+            label="Fee"
+            mandatory="false"
+            allowMultiple="false"
+            description="Fee Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="2"
+            specVersionMinor="0"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0003"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Fee"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Fee_TS_T40D2M10I1R0_ConfigId"
+              name="Fee_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Fee_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Fee_TS_T40D2M10I1R0/config/Fee.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Fee"/>
+      </data>
+
+      <editor id="Fee_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Fee Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Fee"/>
+          <parameter name="title" value="Fee_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Fee_TS_T40D2M10I1R0"
+               id="Fee_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Fee_TS_T40D2M10I1R0_GeneratorId"
+              name="Fee_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Fee_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                                      <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Fee_TS_T40D2M10I1R0/generate_PC"/>
+                <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Fee_TS_T40D2M10I1R0/generate_PC"/>
+         <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+            <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Fee_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Fee_TS_T40D2M10I1R0"
+            name="Fee service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Fee" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Fee_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Fee_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Fee_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Fee_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Fls_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Fls_TS_T40D2M10I1R0_ModuleId"
+          name="Fls_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Fls_TS_T40D2M10I1R0"
+            label="Fls"
+            mandatory="false"
+            allowMultiple="false"
+            description="Fls Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Fls"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Fls_TS_T40D2M10I1R0_ConfigId"
+              name="Fls_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Fls_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Fls_TS_T40D2M10I1R0/config/Fls.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Fls"/>
+      </data>
+
+      <editor id="Fls_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Fls Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Fls"/>
+          <parameter name="title" value="Fls_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Fls_TS_T40D2M10I1R0"
+               id="Fls_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Fls_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Fls_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Fls_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Fls_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Fls_TS_T40D2M10I1R0_GeneratorId"
+              name="Fls_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Fls_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Fls_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Fls_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Fls_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Fls_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Fls_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Fls_TS_T40D2M10I1R0"
+            name="Fls service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Fls" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Fls_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Fls_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Fls_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Fls_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Gpt_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Gpt_TS_T40D2M10I1R0_ModuleId"
+          name="Gpt_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Gpt_TS_T40D2M10I1R0"
+            label="Gpt"
+            mandatory="false"
+            allowMultiple="false"
+            description="Gpt Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Gpt"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Gpt_TS_T40D2M10I1R0_ConfigId"
+              name="Gpt_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Gpt_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Gpt_TS_T40D2M10I1R0/config/Gpt.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Gpt"/>
+      </data>
+
+      <editor id="Gpt_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Gpt Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Gpt"/>
+          <parameter name="title" value="Gpt_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Gpt_TS_T40D2M10I1R0"
+               id="Gpt_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Gpt_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Gpt_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Gpt_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Gpt_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Gpt_TS_T40D2M10I1R0_GeneratorId"
+              name="Gpt_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Gpt_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Gpt_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Gpt_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Gpt_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Gpt_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Gpt_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Gpt_TS_T40D2M10I1R0"
+            name="Gpt service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Gpt" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Gpt_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Gpt_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Gpt_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Gpt_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  I2c_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="I2c_TS_T40D2M10I1R0_ModuleId"
+          name="I2c_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="I2c_TS_T40D2M10I1R0"
+            label="I2c"
+            mandatory="false"
+            allowMultiple="false"
+            description="I2c Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="I2c"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="I2c_TS_T40D2M10I1R0_ConfigId"
+              name="I2c_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="I2c_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/I2c_TS_T40D2M10I1R0/config/I2c.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/I2c"/>
+      </data>
+
+      <editor id="I2c_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="I2c Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/I2c"/>
+          <parameter name="title" value="I2c_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="I2c_TS_T40D2M10I1R0"
+               id="I2c_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="I2c_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="I2c_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="I2c_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/I2c_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="I2c_TS_T40D2M10I1R0_GeneratorId"
+              name="I2c_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="I2c_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/I2c_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/I2c_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/I2c_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/I2c_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/I2c_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_I2c_TS_T40D2M10I1R0"
+            name="I2c service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="I2c" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/I2c_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/I2c_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/I2c_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.I2c_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  I2s_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="I2s_TS_T40D2M10I1R0_ModuleId"
+          name="I2s_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="I2s_TS_T40D2M10I1R0"
+            label="I2s"
+            mandatory="false"
+            allowMultiple="false"
+            description="I2s Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="I2s"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="I2s_TS_T40D2M10I1R0_ConfigId"
+              name="I2s_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="I2s_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/I2s_TS_T40D2M10I1R0/config/I2s.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/I2s"/>
+      </data>
+
+      <editor id="I2s_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="I2s Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/I2s"/>
+          <parameter name="title" value="I2s_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="I2s_TS_T40D2M10I1R0"
+               id="I2s_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="I2s_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="I2s_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="I2s_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/I2s_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="I2s_TS_T40D2M10I1R0_GeneratorId"
+              name="I2s_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="I2s_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/I2s_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/I2s_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/I2s_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/I2s_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/I2s_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_I2s_TS_T40D2M10I1R0"
+            name="I2s service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="I2s" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/I2s_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/I2s_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/I2s_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.I2s_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Icu_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Icu_TS_T40D2M10I1R0_ModuleId"
+          name="Icu_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Icu_TS_T40D2M10I1R0"
+            label="Icu"
+            mandatory="false"
+            allowMultiple="false"
+            description="Icu Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Icu"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Icu_TS_T40D2M10I1R0_ConfigId"
+              name="Icu_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Icu_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Icu_TS_T40D2M10I1R0/config/Icu.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Icu"/>
+      </data>
+
+      <editor id="Icu_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Icu Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Icu"/>
+          <parameter name="title" value="Icu_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Icu_TS_T40D2M10I1R0"
+               id="Icu_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Icu_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Icu_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Icu_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Icu_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Icu_TS_T40D2M10I1R0_GeneratorId"
+              name="Icu_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Icu_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Icu_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Icu_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Icu_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Icu_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Icu_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Icu_TS_T40D2M10I1R0"
+            name="Icu service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Icu" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Icu_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Icu_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Icu_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Icu_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Lin_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Lin_TS_T40D2M10I1R0_ModuleId"
+          name="Lin_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Lin_TS_T40D2M10I1R0"
+            label="Lin"
+            mandatory="false"
+            allowMultiple="false"
+            description="Lin Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Lin"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Lin_TS_T40D2M10I1R0_ConfigId"
+              name="Lin_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Lin_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Lin_TS_T40D2M10I1R0/config/Lin.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Lin"/>
+      </data>
+
+      <editor id="Lin_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Lin Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Lin"/>
+          <parameter name="title" value="Lin_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Lin_TS_T40D2M10I1R0"
+               id="Lin_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Lin_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Lin_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Lin_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Lin_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Lin_TS_T40D2M10I1R0_GeneratorId"
+              name="Lin_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Lin_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Lin_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Lin_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Lin_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Lin_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Lin_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+       <!--special handling of Can, Lin and FlexRay-->
+  <extension point="dreisoft.tresos.comimporter.api.plugin.comtransformer">
+    <comtransformer
+      id="ComTransformer_Lin_TS_T40D2M10I1R0"
+      moduleId="Lin_TS_T40D2M10I1R0">
+      <transformer
+        class="dreisoft.tresos.comimporter.api.transformer.asr40.LinTransformer">
+      </transformer>
+    </comtransformer>
+  </extension>
+  
+    <!-- handle id calculator for LinChannelId -->
+  <extension
+    point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+    <pushoperation id="LinChannelId_Lin_TS_T40D2M10I1R0"
+    name="Lin/LinChannelId"
+    desc="">
+        <operationclass class="dreisoft.tresos.guidedconfig.api.pushservice.operations.handleid.SimpleHandleIdPushOperation">
+            <parameter name="moduleId" value="Lin_TS_T40D2M10I1R0"/>
+            <parameter name="listPath" value="/AUTOSAR/TOP-LEVEL-PACKAGES/TS_T40D2M10I1R0/ELEMENTS/Lin/LinGlobalConfig/LinChannel/"/>
+    
+            <parameter name="idPath" value="LinChannelId"/>
+            <parameter name="zbcGroups" value="true"/>
+        </operationclass>
+        <event>
+            <and>
+                <with variable="class">
+                    <equals value="dreisoft.tresos.guidedconfig.api.pushservice.operations.handleid.HandleIdEvent"/>
+                </with>
+                <with variable="target">
+                    <equals value="CORTEXM"/>
+                </with>
+                <with variable="moduleId.Lin_TS_T40D2M10I1R0">
+                   <equals value="true"/>
+                </with>
+                <with variable="relVersion">
+               <equals value="4.4"/>
+            </with>
+            </and>
+        </event>
+    </pushoperation>
+  </extension>
+    <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Lin_TS_T40D2M10I1R0"
+            name="Lin service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Lin" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Lin_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Lin_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Lin_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Lin_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Mcl_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Mcl_TS_T40D2M10I1R0_ModuleId"
+          name="Mcl_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Mcl_TS_T40D2M10I1R0"
+            label="Mcl"
+            mandatory="false"
+            allowMultiple="false"
+            description="Mcl Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="3"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0003"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Mcl"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Mcl_TS_T40D2M10I1R0_ConfigId"
+              name="Mcl_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Mcl_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Mcl_TS_T40D2M10I1R0/config/Mcl.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Mcl"/>
+      </data>
+
+      <editor id="Mcl_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Mcl Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Mcl"/>
+          <parameter name="title" value="Mcl_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Mcl_TS_T40D2M10I1R0"
+               id="Mcl_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Mcl_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Mcl_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Mcl_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Mcl_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Mcl_TS_T40D2M10I1R0_GeneratorId"
+              name="Mcl_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Mcl_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Mcl_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Mcl_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Mcl_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Mcl_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Mcl_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Mcl_TS_T40D2M10I1R0"
+            name="Mcl service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Mcl" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Mcl_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Mcl_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Mcl_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Mcl_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                  
+  <!--
+  ** Start of  Mcu_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Mcu_TS_T40D2M10I1R0_ModuleId"
+          name="Mcu_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Mcu_TS_T40D2M10I1R0"
+            label="Mcu"
+            mandatory="false"
+            allowMultiple="false"
+            description="Mcu Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Mcu"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Mcu_TS_T40D2M10I1R0_ConfigId"
+              name="Mcu_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Mcu_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Mcu_TS_T40D2M10I1R0/config/Mcu.xdm"  type="xdm"/>
+           <!-- register the pre-configuration -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Mcu_TS_T40D2M10I1R0/config_ext/McuPreConfiguration.xdm"
+            id="res_McuPreConfiguration"
+            type="xdm"/>
+          <preconfig name="McuPreConfiguration"
+            default="true"
+            description="pre configuration settings: McuPreConfiguration"
+            resourceId="res_McuPreConfiguration"
+            path="ASPath:/TS_T40D2M10I1R0/McuPreConfiguration"/>
+            <!-- register the recommended configuration M4_CONFIG_EXT_REC_FILES_IT -->
+          <resource value="config_ext/McuRecConfigurationStandard_S32K14X.xdm" type="xdm"
+            id="res_McuRecConfigurationStandard_S32K14X"/>
+          <recconfig name="McuRecConfigurationStandard_S32K14X"
+            default="true"
+            description="Recommended configuration: McuRecConfigurationStandard_S32K14X"
+            resourceId="res_McuRecConfigurationStandard_S32K14X"
+            path="ASPath:/TS_T40D2M10I1R0/McuRecConfigurationStandard"/>
+       </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Mcu"/>
+      </data>
+
+      <editor id="Mcu_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Mcu Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Mcu"/>
+          <parameter name="title" value="Mcu_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Mcu_TS_T40D2M10I1R0"
+               id="Mcu_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Mcu_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Mcu_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Mcu_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Mcu_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Mcu_TS_T40D2M10I1R0_GeneratorId"
+              name="Mcu_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Mcu_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Mcu_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Mcu_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Mcu_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Mcu_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Mcu_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Mcu_TS_T40D2M10I1R0"
+            name="Mcu service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Mcu" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Mcu_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Mcu_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Mcu_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Mcu_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Ocu_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Ocu_TS_T40D2M10I1R0_ModuleId"
+          name="Ocu_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Ocu_TS_T40D2M10I1R0"
+            label="Ocu"
+            mandatory="false"
+            allowMultiple="false"
+            description="Ocu Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="0"
+            specVersionMinor="2"
+            specVersionPatch="4"
+            specVersionSuffix="Rev_0002"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Ocu"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Ocu_TS_T40D2M10I1R0_ConfigId"
+              name="Ocu_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Ocu_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Ocu_TS_T40D2M10I1R0/config/Ocu.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Ocu"/>
+      </data>
+
+      <editor id="Ocu_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Ocu Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Ocu"/>
+          <parameter name="title" value="Ocu_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Ocu_TS_T40D2M10I1R0"
+               id="Ocu_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Ocu_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Ocu_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Ocu_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Ocu_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Ocu_TS_T40D2M10I1R0_GeneratorId"
+              name="Ocu_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Ocu_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Ocu_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Ocu_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Ocu_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Ocu_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Ocu_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Ocu_TS_T40D2M10I1R0"
+            name="Ocu service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Ocu" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Ocu_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Ocu_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Ocu_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Ocu_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Port_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Port_TS_T40D2M10I1R0_ModuleId"
+          name="Port_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Port_TS_T40D2M10I1R0"
+            label="Port"
+            mandatory="false"
+            allowMultiple="false"
+            description="Port Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Port"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Port_TS_T40D2M10I1R0_ConfigId"
+              name="Port_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Port_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Port_TS_T40D2M10I1R0/config/Port.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Port"/>
+      </data>
+
+      <editor id="Port_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Port Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Port"/>
+          <parameter name="title" value="Port_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Port_TS_T40D2M10I1R0"
+               id="Port_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Port_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Port_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Port_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Port_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Port_TS_T40D2M10I1R0_GeneratorId"
+              name="Port_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Port_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Port_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Port_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Port_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Port_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Port_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Port_TS_T40D2M10I1R0"
+            name="Port service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Port" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Port_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Port_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Port_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Port_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Pwm_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Pwm_TS_T40D2M10I1R0_ModuleId"
+          name="Pwm_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Pwm_TS_T40D2M10I1R0"
+            label="Pwm"
+            mandatory="false"
+            allowMultiple="false"
+            description="Pwm Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="0"
+            specVersionMinor="2"
+            specVersionPatch="4"
+            specVersionSuffix="Rev_0002"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Pwm"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Pwm_TS_T40D2M10I1R0_ConfigId"
+              name="Pwm_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Pwm_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Pwm_TS_T40D2M10I1R0/config/Pwm.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Pwm"/>
+      </data>
+
+      <editor id="Pwm_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Pwm Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Pwm"/>
+          <parameter name="title" value="Pwm_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Pwm_TS_T40D2M10I1R0"
+               id="Pwm_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Pwm_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Pwm_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Pwm_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Pwm_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Pwm_TS_T40D2M10I1R0_GeneratorId"
+              name="Pwm_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Pwm_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Pwm_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Pwm_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Pwm_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Pwm_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Pwm_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Pwm_TS_T40D2M10I1R0"
+            name="Pwm service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Pwm" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Pwm_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Pwm_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Pwm_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Pwm_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Qdec_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Qdec_TS_T40D2M10I1R0_ModuleId"
+          name="Qdec_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Qdec_TS_T40D2M10I1R0"
+            label="Qdec"
+            mandatory="false"
+            allowMultiple="false"
+            description="Qdec Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Qdec"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Qdec_TS_T40D2M10I1R0_ConfigId"
+              name="Qdec_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Qdec_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Qdec_TS_T40D2M10I1R0/config/Qdec.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Qdec"/>
+      </data>
+
+      <editor id="Qdec_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Qdec Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Qdec"/>
+          <parameter name="title" value="Qdec_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Qdec_TS_T40D2M10I1R0"
+               id="Qdec_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Qdec_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Qdec_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Qdec_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Qdec_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Qdec_TS_T40D2M10I1R0_GeneratorId"
+              name="Qdec_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Qdec_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Qdec_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Qdec_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Qdec_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Qdec_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Qdec_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Qdec_TS_T40D2M10I1R0"
+            name="Qdec service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Qdec" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Qdec_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Qdec_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Qdec_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Qdec_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Rm_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Rm_TS_T40D2M10I1R0_ModuleId"
+          name="Rm_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Rm_TS_T40D2M10I1R0"
+            label="Rm"
+            mandatory="false"
+            allowMultiple="false"
+            description="Rm Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Rm"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Rm_TS_T40D2M10I1R0_ConfigId"
+              name="Rm_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Rm_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Rm_TS_T40D2M10I1R0/config/Rm.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Rm"/>
+      </data>
+
+      <editor id="Rm_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Rm Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Rm"/>
+          <parameter name="title" value="Rm_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Rm_TS_T40D2M10I1R0"
+               id="Rm_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Rm_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Rm_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Rm_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Rm_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Rm_TS_T40D2M10I1R0_GeneratorId"
+              name="Rm_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Rm_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Rm_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Rm_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Rm_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Rm_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Rm_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Rm_TS_T40D2M10I1R0"
+            name="Rm service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Rm" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Rm_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Rm_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Rm_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Rm_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Spi_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Spi_TS_T40D2M10I1R0_ModuleId"
+          name="Spi_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Spi_TS_T40D2M10I1R0"
+            label="Spi"
+            mandatory="false"
+            allowMultiple="false"
+            description="Spi Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="3"
+            specVersionMinor="2"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0003"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Spi"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Spi_TS_T40D2M10I1R0_ConfigId"
+              name="Spi_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Spi_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Spi_TS_T40D2M10I1R0/config/Spi.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Spi"/>
+      </data>
+
+      <editor id="Spi_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Spi Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Spi"/>
+          <parameter name="title" value="Spi_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Spi_TS_T40D2M10I1R0"
+               id="Spi_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Spi_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Spi_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Spi_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Spi_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Spi_TS_T40D2M10I1R0_GeneratorId"
+              name="Spi_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Spi_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Spi_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Spi_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Spi_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Spi_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Spi_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Spi_TS_T40D2M10I1R0"
+            name="Spi service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Spi" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Spi_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Spi_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Spi_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Spi_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                
+  <!--
+  ** Start of  Uart_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Uart_TS_T40D2M10I1R0_ModuleId"
+          name="Uart_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Uart_TS_T40D2M10I1R0"
+            label="Uart"
+            mandatory="false"
+            allowMultiple="false"
+            description="Uart Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Uart"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Uart_TS_T40D2M10I1R0_ConfigId"
+              name="Uart_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Uart_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Uart_TS_T40D2M10I1R0/config/Uart.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Uart"/>
+      </data>
+
+      <editor id="Uart_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Uart Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Uart"/>
+          <parameter name="title" value="Uart_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Uart_TS_T40D2M10I1R0"
+               id="Uart_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Uart_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Uart_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Uart_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Uart_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Uart_TS_T40D2M10I1R0_GeneratorId"
+              name="Uart_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Uart_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+                       <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Uart_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Uart_TS_T40D2M10I1R0/generate_PB"/>
+                               <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Uart_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Uart_TS_T40D2M10I1R0/generate_PB"/>
+        <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+           <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Uart_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Uart_TS_T40D2M10I1R0"
+            name="Uart service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Uart" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Uart_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Uart_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Uart_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Uart_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                  
+  <!--
+  ** Start of  Wdg_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Wdg_TS_T40D2M10I1R0_ModuleId"
+          name="Wdg_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Wdg_TS_T40D2M10I1R0"
+            label="Wdg"
+            mandatory="false"
+            allowMultiple="false"
+            description="Wdg Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Wdg"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Wdg_TS_T40D2M10I1R0_ConfigId"
+              name="Wdg_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Wdg_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/config/Wdg.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/TS_T40D2M10I1R0/Wdg"/>
+      </data>
+
+      <editor id="Wdg_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Wdg Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/TS_T40D2M10I1R0/Wdg"/>
+          <parameter name="title" value="Wdg_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Wdg_TS_T40D2M10I1R0"
+               id="Wdg_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Wdg_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Wdg_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Wdg_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Wdg_TS_T40D2M10I1R0_GeneratorId"
+              name="Wdg_TS_T40D2M10I1R0 Generator">
+     <generator moduleId="Wdg_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator">
+       <!-- common template path parameters -->
+          <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate,MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_PB,MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_LT"/>
+                                              <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_PB"/>
+        <parameter name="templates" mode="generate_LT" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_LT"/>
+       <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+        <parameter name="mode_type" mode="generate_LT" value="generate"/>
+          <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Wdg_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Wdg_TS_T40D2M10I1R0"
+            name="Wdg service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Wdg" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Wdg_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Wdg_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Wdg_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Wdg_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+                  
+  <!--
+  ** Start of  Wdg_43_Instance1_TS_T40D2M10I1R0 plugin
+  -->
+
+  <extension point="dreisoft.tresos.launcher2.plugin.module"
+          id="Wdg_43_Instance1_TS_T40D2M10I1R0_ModuleId"
+          name="Wdg_43_Instance1_TS_T40D2M10I1R0 Driver PlugIn with a TemplateGenerator">
+          <module id="Wdg_43_Instance1_TS_T40D2M10I1R0"
+            label="Wdg_43_Instance1"
+            mandatory="false"
+            allowMultiple="false"
+            description="Wdg Driver"
+            copyright="Copyright 2020-2022 NXP Semiconductors"
+            swVersionMajor="1"
+            swVersionMinor="0"
+            swVersionPatch="1"
+            swVersionSuffix="D2202"
+            specVersionMajor="4"
+            specVersionMinor="4"
+            specVersionPatch="0"
+            specVersionSuffix="Rev_0000"
+            relVersionMajor="4"
+            relVersionMinor="4"
+            relVersionPatch="0"
+            categoryType="Wdg_43_Instance1"
+            categoryLayer="MCAL"
+            categoryCategory="MCAL"
+            categoryComponent="ECUC">
+
+           <ecuType target="CORTEXM" derivate="S32K14X"/>
+         </module>
+   </extension>
+
+   <!--
+     This extension is used to register configuration specific information:
+
+     - Schemas (including pre-configuration and recommended configuration)
+     - Editors
+   -->
+   <extension point="dreisoft.tresos.launcher2.plugin.configuration"
+              id="Wdg_43_Instance1_TS_T40D2M10I1R0_ConfigId"
+              name="Wdg_43_Instance1_TS_T40D2M10I1R0 Configuration">
+    <configuration moduleId="Wdg_43_Instance1_TS_T40D2M10I1R0">
+
+      <!--
+        Register the files from which schemas and pre- an
+        recommended configuration is loaded. For Autosar Modules
+        this is normally dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager
+      -->
+      <schema>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarSchemaManager"/>
+          <!-- Define the file(s) from which to load the schemas -->
+          <resource value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/config/Wdg.xdm"  type="xdm"/>
+        </schema>
+
+      <data>
+        <manager class="dreisoft.tresos.autosar2.resourcehandling.AutosarConfigManager"/>
+        <schemaNode path="ASPath:/Wdg_43_Instance1_TS_T40D2M10I1R0/Wdg"/>
+      </data>
+
+      <editor id="Wdg_43_Instance1_TS_T40D2M10I1R0_EditorId"
+              label="Default"
+              tooltip="Wdg Driver">
+        <class class="dreisoft.tresos.launcher2.editor.GenericConfigEditor">
+          <parameter name="schema" value="ASPath:/Wdg_43_Instance1_TS_T40D2M10I1R0/Wdg"/>
+          <parameter name="title" value="Wdg_43_Instance1_TS_T40D2M10I1R0"/>
+          <parameter name="noTabs" value="false"/>
+          <parameter name="noLinks" value="true"/>
+          <parameter name="groupLinks" value="false"/>
+          <parameter name="groupContainers" value="false"/>
+          <parameter name="groupTables" value="true"/>
+          <parameter name="optionalGeneralTab" value="true"/>
+        </class>
+      </editor>
+    </configuration>
+  </extension>
+
+  <extension point="dreisoft.tresos.launcher2.plugin.generator"
+             id="EPCGenerator"
+             name="EPC Generator">
+    <generator moduleId="Wdg_43_Instance1_TS_T40D2M10I1R0"
+               id="Wdg_43_Instance1_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.autosar2.generator.EPCFileGenerator">
+      <parameter name="variantAware" value="true"/> 
+      <parameter name="cfgFilePath" value="output"/>
+      <parameter name="generateAllModules" value="false"/>
+      <parameter name="generateIntoOneFile" value="false"/>
+      <parameter name="contentType" value="asc:4.4.0"/>
+   </generator>
+ </extension>
+ 
+  <extension point="dreisoft.tresos.generator.api.plugin.generator" id="Wdg_43_Instance1_TS_T40D2M10I1R0_NGGeneratorId">
+          <generator moduleId="Wdg_43_Instance1_TS_T40D2M10I1R0"
+                     class="dreisoft.tresos.generator.ng.api.NGGenerator"
+                     id="Wdg_43_Instance1_TS_T40D2M10I1R0_UniqueNGGeneratorId"
+                     step="post"> <!-- run after code-generation -->
+              <parameter name="buildfile" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/ant_generator.xml"/>
+              <parameter name="variantAware" value="true"/> 
+          </generator>
+  </extension>
+   <extension point="dreisoft.tresos.launcher2.plugin.generator"
+              id="Wdg_43_Instance1_TS_T40D2M10I1R0_GeneratorId"
+              name="Wdg_43_Instance1_TS_T40D2M10I1R0 Generator">
+ <!-- ASCFREESCL-1320 - Parallel generation for TemplateBasedCodeGenerator needs to be disabled using canRunParallel="false"
+when two or more Wdg Instances are used in a project. -->
+    <generator moduleId="Wdg_43_Instance1_TS_T40D2M10I1R0"
+               class="dreisoft.tresos.launcher2.generator.TemplateBasedCodeGenerator" canRunParallel="false">
+       <!-- common template path parameters -->
+          <parameter name="templates" mode="generate,verify" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate,MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_PC,MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_PB,MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_LT"/>
+                                              <!-- custom generators -->
+       <parameter name="templates" mode="generate_PC" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_PC"/>
+        <parameter name="templates" mode="generate_PB" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_PB"/>
+        <parameter name="templates" mode="generate_LT" value="MCAL_Delivery/eclipse/plugins/Wdg_TS_T40D2M10I1R0/generate_LT"/>
+       <!-- custom template paths -->
+       <parameter name="mode_type" mode="generate_PC" value="generate"/>
+        <parameter name="mode_type" mode="generate_PB" value="generate"/>
+        <parameter name="mode_type" mode="generate_LT" value="generate"/>
+          <parameter name="variantAware" value="true"/>
+       <!-- swcd modes and template path parameters -->
+      <parameter name="mode_type" mode="generate_swcd" value="generate"/>
+      <parameter name="mode_type" mode="verify_swcd" value="verify"/>
+       <parameter name="templates" mode="generate_swcd,verify_swcd" value="swcd/Wdg_Bswmd.arxml"/>
+       </generator>
+  </extension>
+ 
+
+ 
+      
+     <extension point="dreisoft.tresos.guidedconfig.api.plugin.pushservice">
+      <pushoperation
+            id="SvcAsReq_Wdg_43_Instance1_TS_T40D2M10I1R0"
+            name="Wdg_43_Instance1 service need requests">
+         <operationclass
+               class="eb.tresos.svclib.api.pushservice.SvcRequestOperation">
+               <parameter name="module" value="Wdg_43_Instance1" />       
+               <parameter name="req://schm.mainFunctions:1" value="resources/Wdg_43_Instance1_SchM_MainFunctions.xml" />
+               <parameter name="req://dem.events:1" value="resources/Wdg_43_Instance1_Dem_Events.xml" />
+               <parameter name="req://ecum.initFunctions:1" value="resources/Wdg_43_Instance1_EcuM_InitFunctions.xml" />
+         </operationclass>
+         <event>
+            <and>
+               <with variable="class">
+                  <equals value="eb.tresos.svclib.api.event.SvcRequestsEvent" />
+               </with>
+               <with variable="svc.type">
+                  <equals value="request" />
+               </with>
+              <with variable="ecuConfig.moduleId.Wdg_43_Instance1_TS_T40D2M10I1R0">
+                  <equals value="true" />
+               </with>
+               <or>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="4.4" />
+                  </with>
+                  <with variable="ecuConfig.relVersion">
+                     <equals value="0.0" />
+                  </with>
+               </or>
+            </and>
+         </event>
+      </pushoperation>
+  </extension>
+      <extension point="org.eclipse.help.toc">
+    <toc file="anchors.xml" primary="true"/>
+  </extension>
+  </plugin>

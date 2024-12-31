@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2022-09-21T09:02:42+03:00">
+              <SHORT-NAME>DioIf</SHORT-NAME>
+              <ELEMENTS>
+                <COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE T="2022-08-26T19:42:59+03:00">
+                  <SHORT-NAME>DioIf</SHORT-NAME>
+                  <CATEGORY>MCAL_IO_Drivers</CATEGORY>
+                  <PORTS>
+                    <P-PORT-PROTOTYPE T="2023-02-21T19:43:52+02:00" UUID="a7ea1945-47ba-417a-b9b8-2031b3472824">
+                      <SHORT-NAME>psrDioIfServices</SHORT-NAME>
+                      <DESC T="2023-02-21T13:14:33+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_DioIf_psrDioIfServices_DioIf_runReadChannel&#xD;
+&#xD;
+# Description&#xD;
+- The DioIf_runReadChannel runnable shall be called in order to read the digital level of a pin.&#xD;
+- A configurable array will hold the mapping to Dio channels(e.g. position 1 of configuration array is Dio Channel 7).&#xD;
+- The runnable will select the Dio channel from the configuration array with the index from the {Mappend Channel Id} input parameter &#xD;
+- The runnable will return the digital value of the selected uC pin via the {Digital Pin Level} output parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Mapped Channel Id}&#xD;
+## Outptus&#xD;
+- {Digital Pin Level}&#xD;
+	- Can be STD_HIGH, STD_LOW&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- DioIf_runReadChannel&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+--------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_DioIf_psrDioIfServices_DioIf_runWriteChannel&#xD;
+&#xD;
+# Description&#xD;
+- The DioIf_runWriteChannel runnable shall be called in order to write the digital level of a pin.&#xD;
+- A configurable array will hold the mapping to Dio channels(e.g. position 1 of configuration array is Dio Channel 7).&#xD;
+- The runnable will select the Dio channel from the configuration array with the index from the {Mappend Channel Id} input parameter &#xD;
+- The runnable will set the digital value from the {Digital Pin Level} input parameter for the the selected uC pin &#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Mapped Channel Id}&#xD;
+- {Digital Pin Level}&#xD;
+	- Can be STD_HIGH, STD_LOW&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- DioIf_runWriteChannel&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:53:22+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T10:39:49+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T19:43:43.563+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">change for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">updated functionality</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:53:22+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T10:39:49+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-COM-SPECS>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/DioIf_DataDictionnary/ClientServerInterfaces/icsDioIfServices/WriteChannel</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                        <SERVER-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/DioIf_DataDictionnary/ClientServerInterfaces/icsDioIfServices/ReadChannel</OPERATION-REF>
+                          <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                        </SERVER-COM-SPEC>
+                      </PROVIDED-COM-SPECS>
+                      <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/DioIf_DataDictionnary/ClientServerInterfaces/icsDioIfServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-21T19:44:05+02:00" UUID="4e22b82c-692c-4cef-8019-0fce681820e4">
+                      <SHORT-NAME>ptrpEcuMIfServicesDioIf</SHORT-NAME>
+                      <DESC T="2023-05-10T08:49:19+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_DioIf_ptrpEcuMIfServicesDioIf_DioIf_Init&#xD;
+&#xD;
+# Description&#xD;
+- The DioIf_Init runnable shall be called during the initialization in the EcuM_DefaultInitListOne runnable&#xD;
+- The init function shall set the following pins:&#xD;
+	- EN_CS1 set to HIGH&#xD;
+	- EN_CS2 set to HIGH&#xD;
+	- EN_CS3 set to HIGH&#xD;
+	- EN_CS4 set to HIGH&#xD;
+	- EN_CS5 set to HIGH&#xD;
+	- EN_CS6 set to HIGH&#xD;
+	- Sleep_Off set to HIGH&#xD;
+	- ON_OFF_Power set to LOW&#xD;
+	- BOOST set to LOW&#xD;
+	- Wake_Cyclic_Power set to LOW&#xD;
+&#xD;
+# Data Flow&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- DioIf_Init &#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:53:30+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T10:40:43+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T19:43:55.022+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">change for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">updated functionality</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:53:30+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T10:40:43+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/EcuMIf_DataDictionary/TriggerInterfaces/itrEcuMIfServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-21T19:44:17+02:00" UUID="36722dbb-ca1b-4ea5-967e-b2d7cb210a3b">
+                      <SHORT-NAME>ptrrAsrDioServicesDioIf</SHORT-NAME>
+                      <DESC T="2023-02-21T13:20:20+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_DioIf_ptrrAsrDioServicesDioIf_Dio_ReadChannel&#xD;
+&#xD;
+# Description&#xD;
+- The Dio_ReadChannel runnable shall be called in the DioIf_runReadChannel runnable in order to read the digital level of a pin&#xD;
+- The runnable will return the digital value of a uC pin via the {Digital Pin Level} output parameter for the selected pin on the {Channel Id} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Channel Id}&#xD;
+## Outptus&#xD;
+- {Digital Pin Level}&#xD;
+	- Can be STD_HIGH, STD_LOW&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- DioIf_runReadChannel&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_DioIf_ptrrAsrDioServices_Dio_WriteChannel_DioIf_runWriteChannel&#xD;
+&#xD;
+# Description&#xD;
+- The Dio_WriteChannel runnable shall be called in the DioIf_runWriteChannel runnable in order to write a digital level to a pin&#xD;
+- The runnable will set the digital value of a uC pin with the {Digital Pin Level} input parameter for the selected pin on the {Channel Id} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Channel Id}&#xD;
+- {Digital Pin Level}&#xD;
+	- Can be STD_HIGH, STD_LOW&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- DioIf_runWriteChannel&#xD;
+&#xD;
+# Traceability&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_DioIf_ptrrAsrDioServices_Dio_WriteChannel_DioIf_Init&#xD;
+&#xD;
+# Description&#xD;
+- The Dio_WriteChannel runnable shall be called in the DioIf_Init runnable in order to write a digital level to a pin&#xD;
+- The runnable will set the digital value of a uC pin with the {Digital Pin Level} input parameter for the selected pin on the {Channel Id} input parameter&#xD;
+&#xD;
+# Data Flow&#xD;
+## Inputs&#xD;
+- {Channel Id}&#xD;
+- {Digital Pin Level}&#xD;
+	- Can be STD_HIGH, STD_LOW&#xD;
+&#xD;
+#Linked Runnable &#xD;
+- DioIf_Init&#xD;
+&#xD;
+# Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-02-23T07:53:40+02:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-06T10:37:26+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>gabriel.brasoveanu</ISSUED-BY>
+                            <DATE>2023-02-21T19:44:07.812+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">change for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">updated functionality</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-02-23T07:53:40+02:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-06T10:37:26+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[RHA_06.07.2023]: reviewed by IT team, set to approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrDioServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                  </PORTS>
+                </COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

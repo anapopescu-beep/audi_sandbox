@@ -1,0 +1,56 @@
+1. Example Description
+    This application demonstrates the progress transmit and receive in internal loopback mode.
+    1.1 The application software functionality
+            - Clock_Ip_Init
+                    Initialize the clock sources, the clock tree and to configure the clock gating of the peripherals.
+            - Siul2_Port_Ip_Init
+                    Initializes the pins used by the application using the Siul2_Port API.
+            - OsIf_Init
+                    Initialize timeout
+            - Mpu_Ip_Init
+                    Allow read, write register for bus
+            - Enet_Ip_Init
+                    Initializes controller, Tx buffer and Rx buffer.
+            - Enet_Ip_GetMacAddr
+                    Get MAC address.
+            - Enet_Ip_GetTxBuff
+                    Borrow Tx area to load frame
+            - Enet_Ip_SendFrame
+                    Trigger transmission
+            - Enet_Ip_GetTransmitStatus
+                    Get status of transmit frame.
+            - Enet_Ip_ReadFrame
+                    Get status and check error of receive frame.
+            - Enet_Ip_ProvideRxBuff
+                    Provide a empty buffer for the next receive.
+2. Installation steps
+    2.1 Hardware installation
+        2.1.1 Supported boards
+            S32K148EVB-Q176 29644 PCB RevX1 SCH RevB FS32K148HAMLU, 0N20V, QCA1916P
+        2.2.2 Connections
+            Need to connect to PHY board to get clock 50MHz for Tx, RX Clock pin.
+        2.2.3 Debugger
+            The debugger must be connected to J10 20-pin Cortex Debug D ETM connector.
+    2.2 Software installation
+        2.2.1 Importing the S32 Design Studio project
+            After opening S32 Design Studio, go to "File -> New -> S32DS Project From Example" and select "Enet_Ip_InternalLoopback_S32K148". Then click on "Finish".
+            The project should now be copied into you current workspace.
+
+3. Generating, building and running the example application
+    3.1 Generating the S32 configuration
+        Before running the example a configuration needs to be generated.  First go to Project Explorer View in S32 DS and select the current project. Select the "S32 Configuration Tool" menu then click on the desired configuration tool (Pins, Cocks, Peripherals etc...). Clicking on any one of those will generate all the components. Make the desired changes(if any) then click on the "S32 Configuration Tool->Update Code" button.
+    3.2 Compiling the application
+        Select the configuration to be built: FLASH (Debug_FLASH) by left clicking on the downward arrow corresponding to the build button in eclipse. 
+        Use Project > Build to build the project.
+        Wait for the build action to be completed before continuing to the next step. Check the compiler console for error messages; upon completion, the *.elf binary file
+        should be created.
+    3.2 Running the application on the board
+        Go to Run and select Debug Configurations. There will be a debug configuration for this project:
+        
+        Configuration Name                  Description
+        -------------------------------     -----------------------
+        $(example)_Debug_Flash              Debug the FLASH configuration using PNE
+        
+        Select the desired debug configuration and click on Launch. Now the perspective will change to the Debug Perspective.
+        Use the controls to control the program flow.
+        

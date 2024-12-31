@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<specdocument>
+  <specobjects doctype="lim">
+    <specobject>
+      <id>lim.LinIf.EB_INTREQ_LinIf_0001</id>
+      <status>approved</status>
+      <source>EB integration requirement</source>
+      <version>1</version>
+      <description>
+      
+      <para>Some LIN Driver API functions must support being called within an interrupt lock</para>
+      <para>Description:</para>
+      <para>
+        The following LIN Driver API functions must support being called by the LinIf within a
+        global interrupt lock:<pre>
+<code>Lin_Wakeup()</code>
+<code>Lin_WakeupInternal()</code></pre>
+      </para>
+      </description>
+      <rationale>
+      The LinIf makes calls to these functions in its critical section to make sure, that the
+      state is consistent to the LIN Driver.
+      As it is assumed, that the LinIf critical sections are configured as global interrupt
+      locks this means that these functions must support being called in such an interrupt lock
+      situation.
+      </rationale>
+      
+    </specobject>
+
+    <specobject>
+      <id>lim.LinIf.EB_INTREQ_LinIf_0002</id>
+      <status>approved</status>
+      <source>EB integration requirement</source>
+      <version>1</version>
+      <description>
+      
+      <para>LinIf shall not be initialized as operational</para>
+      <para>Description:</para>
+      <para>
+        The LinIf configuration parameter LinIfStartupState shall only be configured to
+        LINIF_CHANNEL_SLEEP. Configuring it to LINIF_CHANNEL_OPERATIONAL is obsolete.
+      </para>
+      </description>
+      <rationale>
+        Following bugzilla shall be respected: https://bugzilla.autosar.org/show_bug.cgi?id=73095
+      </rationale>
+      
+    </specobject>
+
+    <specobject>
+      <id>lim.LinIf.EB_INTREQ_LinIf_0003</id>
+      <status>approved</status>
+      <source>EB integration requirement</source>
+      <version>1</version>
+      <description>
+      
+      <para>Slave associated response_error signal access</para>
+      <para>Description:</para>
+      <para>
+        The configuration needs to ensure that LinIf is the only user that has
+        write-access to the response_error signal.
+      </para>
+      </description>
+      
+    </specobject>
+
+    <specobject>
+      <id>lim.LinIf.EB_INTREQ_LinIf_0004</id>
+      <status>approved</status>
+      <source>EB integration requirement</source>
+      <version>1</version>
+      <description>
+      
+      <para>Slave associated response_error signal access</para>
+      <para>Description:</para>
+      <para>
+        For a given LinTp channel associated to a LinIf Slave channel a single
+        LinTpRxNSdu has to be configured. It shares all physical and functional
+        requests.
+      </para>
+      </description>
+      
+    </specobject>
+
+    <specobject>
+      <id>lim.LinIf.EB_INTREQ_LinIf_0005</id>
+      <status>approved</status>
+      <source>EB integration requirement</source>
+      <version>1</version>
+      <description>
+      
+      <para>Expected values by LinIf_SetPIDTable</para>
+      <para>Description:</para>
+      <para>
+        When the API LinIf_SetPIDTable() is used the provided PID list shall
+        not include the PIDs for MRF and SRF.
+      </para>
+      </description>
+      
+    </specobject>
+
+    <specobject>
+      <id>lim.LinIf.EB_INTREQ_LinIf_0006</id>
+      <status>approved</status>
+      <source>EB integration requirement</source>
+      <version>1</version>
+      <description>
+      
+      <para>Incomplete wakeup and transition to sleep</para>
+      <para>Description:</para>
+      <para>The following scenario can happen: 1. A wakeup process is incomplete because the first header after wakeup request is not arriving, so the LinIfBusIdleTimeoutPeriod expires.
+            2. When LinIfBusIdleTimeoutPeriod expires, a go-to-sleep process starts that interrupts the wakeup process. If the driver returns E_NOT_OK, LinIf will end up stuck in OPERATIONAL
+            state and LinSM will end up stuck in WAKEUP state. Given that go-to-sleep has failed, latest request from ComM will be FULL_COM. so LinSM should not transition to NO_COM,
+            but considering the bus is idle for more than LinIfBusIdleTimeoutPeriod, LinSM transition to FULL_COM is not appropriate.</para>
+      <para>Rationale:</para>
+      <para>Theoretically, the driver should not reject the sleep (return E_NOT_OK) unless there's an invalid call (development error).
+            Also, not receiving a header from the master for a long period of time is also considered a problem.
+            The scenario above is considered a double-fault and if considered necesary by the project the issue can be avoided by configuring LinIfBusIdleTimeoutPeriod to a value between:
+            lowerLimit = ((LinSMModeRequestRepetitionMax + 1) * LinSMConfirmationTimeout) and upperLimit = (((LinSMModeRequestRepetitionMax + 1) * LinSMConfirmationTimeout) + LinSMSilenceAfterWakeupTimeout)
+            If LinIfBusIdleTimeoutPeriod needs to be greater than upperLimit, then make sure it is between than (n * upperLimit + lowerLimit) and ((n+1) * upperLimit) (where n is the number of times LinSMSilenceAfterWakeupTimeout expired).
+            Basically, the Bus Idle Timeout should not expire during a Wakeup request + LinSMConfirmationTimeout.</para>
+      <para>For a visual description of this integration requirement, see LinSM limitation (Incomplete wakeup and transition to sleep).</para>
+      </description>
+      
+    </specobject>
+
+  </specobjects>
+</specdocument>

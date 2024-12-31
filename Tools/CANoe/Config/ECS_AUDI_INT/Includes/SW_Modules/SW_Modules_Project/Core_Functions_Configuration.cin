@@ -1,0 +1,1007 @@
+/*@!Encoding:1252*/
+
+variables
+{
+  //                                  <TestBench 1>          <TestBench 2>          <TestBench 3>         <TestBench 4>
+  enum TestBencheIdentifier    {    CAL,                   ASP,                   GEN,                  MJE};
+  char cTesterName[4][4]     = {   "CAL",                 "ASP",                 "GEN",                "MJE"};
+  char cPCId[4][20]          = {   "ART-LA-WD3146",       "ART-OF-WD3118",       "ART-OF-WD3122",      "ART-OF-WD3113"};
+  char cCAN_CaseId[4][11]    = {   "RBE-COM-17",          "RBE-COM-**",          "RBE-COM-02",         "RBE-COM-13"};
+  char cSBC_BOARD[4][50]     = {   "N/A",                 "N/A",                 "N/A",                "N/A"};
+  char cPowerSupplyId[4][12] = {   "RBE-PWR-014",         "RBE-PWR-005",         "RBE-PWR-020",        "RBE-PWR-01"};
+  char cMOTHER_BOARD[4][50]  = {   "N/A",                 "N/A",                 "N/A",                "N/A"};
+  char cMCU[4][50]           = {   "N/A",                 "N/A",                 "N/A",                "N/A"};
+  char cDUT[4][50]           = {   "eCS ECU",             "eCS ECU",             "eCS ECU",            "eCS ECU"};
+  char cHWVersion[4][50]     = {   "V4",                  "V4",                  "V4",           	     "V4"};
+  char cSwVersion[500]       = "ES014004.B05";
+  char cSWV_Read_FD01[500]   = "ES014004.B05";
+  int iTestBenchUsed = CAL;// This value is changed through ConfigureTestModuleInformation in  <<< InitTestModule >>> testcase.
+  
+  //*********************************Event configuration parameters********************************
+  const int iNoOfAECs = 19; // Number of Events.
+  
+  // Event IDs.
+  const byte bERR_CANSM_E_BUS_OFF                   = 0x01;
+  const byte bERR_ADC_OUT_OF_ORDER                  = 0x02;
+  const byte bERR_WARM_RESET                        = 0x03;
+  const byte bERR_PFLASH_MEM_CORRUPT                = 0x04;
+  const byte bERR_EXT_WDG_OUT_OF_ORDER              = 0x05;
+  const byte bERR_NVM_NOT_PROG                      = 0x06;
+  const byte bERR_RAM_MEM_CORRUPT                   = 0x07;
+  const byte bERR_ADC_CALIB                         = 0x08;
+  const byte bERR_ECU_TEMPERATURE                   = 0x09;
+  const byte bERR_DFLASH_MEM_CORRUPT                = 0x0A;
+  const byte bERR_SBC_STATUS_FAILURE                = 0x0B;
+  const byte bERR_BAT_PWR_OVER_VOLTAGE              = 0x0C;
+  const byte bERR_BAT_PWR_UNDER_VOLTAGE             = 0x0D;
+  const byte bERR_ACTUATOR_BLOCKED                  = 0x0E;
+  const byte bERR_MCU_SELF_TEST                     = 0x0F;
+  const byte bERR_ACTUATOR_OPEN_CIRCUIT             = 0x10;
+  const byte bERR_ACTUATOR_SHORT_TO_GND             = 0x11;
+  const byte bERR_ACTUATOR_SHORT_TO_VBAT            = 0x12;  
+  const byte bERR_ACC_STATUS_FAILURE                = 0x13;
+ 
+  
+  // Event Diagnostic configuration  
+  const int AECDiagResponseWait = 150;
+  const int iReadAECsResponseSize = iNoOfAECs * 3 + 3; // Total response size.
+  byte All_AEC_Bytes[iReadAECsResponseSize];
+
+  
+  // <<< Event status definition >>>
+  const byte bAEC_Qualified 						       = 0x2F; // Event is qualified and still present
+  const byte bAEC_DeskilledFailed					     = 0x2E; // Event was qualified and is not longer present
+  const byte bAEC_DeskilledNotFailed				   = 0x2C; // Event was 0x2E and after 1 reset it is 0x2C
+  const byte bAEC_SecondDeskilledNotFailed		 = 0x28; // Event was 0x2E and after 2 resets it is 0x28
+  const byte bAEC_NotCompletedSincePowerOffOn  = 0x40; // Autotest was not run in this power cycle
+  const byte bAEC_NotCompletedSinceLastClear   = 0x50; // A clear command (14 FF FF FF) was issued and the autotest was not run in this power cycle
+  const byte bAEC_DeskilledInhibited           = 0x6D; // Event was qualified in the past and autotest is inhibited in this power cycle
+  const byte bAEC_NotFailedInhibited           = 0x6C; // Event was qualified in the past but after 1 reset, the autotes is inhibited
+  const byte bAEC_SecondDeskillInhibited       = 0x68; // Event was qualified in the past but after 2 resets, the autotes is inhibited
+  const byte bAEC_NotEverQualified				     = 0x00; // Fault free, autotest is passed
+
+  // Functions configured for the following PR Structure: PR & LID; 3 bytes  + (AEC ID; 2 bytes + AEC Status; 1 byte) * Total nr. of AECs.
+  // <<< All RDBLI AEC functions >>>
+  // Ignored AECs. Not displayed in the report. 
+  // Example use case: disabled autotests with incorrect status.
+  // Set to '0xFF' for no ignored autotest.
+  byte bIgnoredAECS[10] = {0x01, 0x03, 0x05, 0x09, 0x0B, 0x0D, 0x10, 0x11, 0x12, 0x13};
+  
+  // Structure: {AEC_ID, AEC_status}
+  // <<< CheckAECPresence >>> and <<< CheckAECStatus >>>
+  byte bAcceptedAECStatus[2]                       = {bAEC_NotEverQualified, bAEC_NotCompletedSincePowerOffOn}; // If an AEC does NOT match at least one defined status, a testStepFail will be reported.
+  
+  // <<< CheckAECPresence >>>
+  byte bSpecificAECExpectedStatus[1][2]            = {0xFF}; // If AEC_ID does not have any of the accepted statuses or the specified AEC_status, a testStepFail will be reported.
+                                                   // Set the first AEC_ID to 0xFF for no special status consideration.
+  // <<< CheckAECPresenceInBenchInit >>>
+  byte bAcceptedAECStatus_BenchInit[1]             = {bAEC_NotEverQualified}; // If an AEC does NOT match at least one defined status, a testStepFail will be reported. 
+  byte bSpecificAECExpectedStatus_BenchInit[1][2]  = {{bERR_BAT_PWR_OVER_VOLTAGE, bAEC_DeskilledFailed}}; // Specific AEC status does NOT take precedence over accepted status.
+                                                    // Set the first AEC_ID to 0xFF for no special status consideration.
+  // <<< CheckDTCPresenceAfterClear >>>
+  byte bAcceptedAECStatus_AfterClear[1]            = {bAEC_NotEverQualified}; // If an AEC does NOT match at least one defined status, a testStepFail will be reported. 
+  byte bSpecificAECExpectedStatus_AfterClear[1][2] = {{bERR_BAT_PWR_OVER_VOLTAGE, bAEC_DeskilledFailed}}; // Specific AEC status does NOT take precedence over accepted status.
+                                                    // Set the first AEC_ID to 0xFF for no special status consideration.;
+  
+  //*********************************DTC configuration parameters********************************
+  // <<< All 0x19 0x02 RDTCBST functions >>> Use AEC IDs for this.
+  byte bIgnoredDTCS[1] = {bERR_BAT_PWR_OVER_VOLTAGE};
+  
+  // DTC status definition
+  const byte bDTC_TestedNotPresent            = 0x00;
+  const byte bDTC_QualifyingInProgress        = 0x00;
+  const byte bDTC_NotCompletedSincleLastClear = 0x20;
+  const byte bDTC_Qualified                   = 0x29;
+  const byte bDTC_DeskilledFailed             = 0x28;
+  
+  const dword DTC_HARDWARE                          = 0xA28B49;
+  const dword DTC_TEMPERATURE_SELF_PROTECTION       = 0xA28B4B;
+  const dword DTC_MOTOR                             = 0xA28B71;
+  const dword DTC_BAT_PWR_UNDER_VOLTAGE             = 0xA10D00;
+  const dword DTC_BAT_PWR_OVER_VOLTAGE              = 0xA10E00;
+  const dword DTC_BAT_PWR_UNDER_VOLTAGE_DURING_TENS = 0xA28B16;
+  const dword DTC_BAT_PWR_OVER_VOLTAGE_DURING_TENS  = 0xA28B17;
+  const dword DTC_WARM_RESET                        = 0xA28B47;
+  const dword DTC_TENSIONING_END_OF_LIFE            = 0xA28B96;
+  const dword DTC_COMFORT_END_OF_LIFE               = 0xA28B97;
+  byte bAcceptedDTCStatus[1][2] = {{0xFF, 0xFF}};
+  
+//*********************************************************************************************
+//                                                                                            *
+//                                                                                            *
+//                                                                                            *
+//                                                                                            *
+//       Everything below this marker is configured in the CORE_* functions.                  *
+//                                                                                            *
+//                                                                                            *
+//                                                                                            *
+//                                                                                            *
+//*********************************************************************************************
+  
+  // <<< AEC functions >>>
+  byte _erh_au8AecStatus[4];
+  
+  char cSession_ReadAECs[30];
+  byte bEnterSessionEnabled_CheckAECStatus; 
+  byte bEnterSessionEnabled_ReturnAECStatusChangeTime;
+  byte bEnterSessionEnabled_CheckAECStatusFromRAM;
+  byte bEnterSessionEnabled_CheckAECPresence;
+  byte bGetSecurityAccess_ReadAECs;
+  byte bGetSecurityAccess_CheckAECStatusFromRAM;
+  byte bGetSecurityAccess_ReturnAECStatusChangeTime;
+  byte bGetSecurityAccess_CheckAECPresence;
+  byte bGetSecurityAccess_CheckSWVersion;
+  int iAECBytePosition;
+  
+  byte bReadAllAECsStatusRequest[3];
+  char[50] cAECName[double, iNoOfAECs]; // AEC names: CORE_AEC_Names()
+  char[50] cAEC_NotExecutedAfterReset[double, iNoOfAECs];
+  
+  // <<< DTC functions >>>
+  byte bRDTCBST_StatusMask;
+  byte bRDTCBST_StatusMask_Init;
+  byte bRDTCBST_StatusMask_AfterClear;
+  byte bDTC_AvailableStatusMask;
+  
+  char[500] cDTCName[double, iNoOfAECs];
+  dword     bDTCID[double, iNoOfAECs];
+  
+  // .CDD variables.
+  char PR_DTCAndStatusRecord[100];
+  char PR_DTCRecord[100];
+  char PR_StatusOfDTC[100];
+  char PR_StatusOfDTC_WarningIndicatorRequested[100];
+  char PR_StatusOfDTC_TestNotCompletedThisOperationCycle[100];
+  char PR_StatusOfDTC_TestFailedSinceLastClear[100];
+  char PR_StatusOfDTC_TestNotCompletedSinceLastClear[100];
+  char PR_StatusOfDTC_ConfirmedDTC[100];
+  char PR_StatusOfDTC_PendingDTC[100];
+  char PR_StatusOfDTC_TestFailedThisOperationCycle[100];
+  char PR_StatusOfDTC_TestFailed[100];
+  char PR_DTCRecordExtended[100];
+  char PR_StatusOfDTCExtended[100];
+  char PR_StatusOfDTCExtended_WarningIndicatorRequested[100];
+  char PR_StatusOfDTCExtended_TestNotCompletedThisOperationCycle[100];
+  char PR_StatusOfDTCExtended_TestFailedSinceLastClear[100];
+  char PR_StatusOfDTCExtended_TestNotCompletedSinceLastClear[100];
+  char PR_StatusOfDTCExtended_ConfirmedDTC[100];
+  char PR_StatusOfDTCExtended_PendingDTC[100];
+  char PR_StatusOfDTCExtended_TestFailedThisOperationCycle[100];
+  char PR_StatusOfDTCExtended_TestFailed[100];
+  
+  char PR_DTCAvailabilityMask[100];
+  char PR_DTCAvailabilityMask_WarningIndicatorRequested[100];
+  char PR_DTCAvailabilityMask_TestNotCompletedThisOperationCycle[100];
+  char PR_DTCAvailabilityMask_TestFailedSinceLastClear[100];
+  char PR_DTCAvailabilityMask_TestNotCompletedSinceLastClear[100];
+  char PR_DTCAvailabilityMask_ConfirmedDTC[100];
+  char PR_DTCAvailabilityMask_PendingDTC[100];
+  char PR_DTCAvailabilityMask_TestFailedThisOperationCycle[100];
+  char PR_DTCAvailabilityMask_TestFailed[100];
+  
+  char REQ_DTCStatusMask[100];
+  char REQ_DTCStatusMask_WarningIndicatorRequested[100];
+  char REQ_DTCStatusMask_TestNotCompletedThisOperationCycle[100];
+  char REQ_DTCStatusMask_TestFailedSinceLastClear[100];
+  char REQ_DTCStatusMask_TestNotCompletedSinceLastClear[100];
+  char REQ_DTCStatusMask_ConfirmedDTC[100];
+  char REQ_DTCStatusMask_PendingDTC[100];
+  char REQ_DTCStatusMask_TestFailedThisOperationCycle[100];
+  char REQ_DTCStatusMask_TestFailed[100];
+  
+  // <<< ClearAll >>>
+  byte bClearAllRequest[4]; 
+  
+  // <<< CheckDTCPresence >>>
+  byte bCheckDTCPresenceRequest[3];
+  byte bReportDTCExtendedDataByDTCNbrRequest[6];
+  byte bReportSupportedDTCsRequest[2];
+  byte bReportNbrOfDTCByStatusMaskRequest[3];
+  
+  // << Read Memory By Address >>
+  byte bRMBARequest[8];
+  
+  // << Write Memory By Address >>
+  byte bWMBARequest[8];
+  
+  
+  // <<< Basic diagnostic functions >>>
+  char cDiagnosticTarget[100];
+  dword dDiagRequestSentTimeout;
+  dword dDiagResponseReceiveTimeout;
+  dword dSessionTimeout;
+  
+  // <<< EnterDiagnosticSession >>>
+  int iSessionControlVerbosity = 0;
+  char cAvailableDiagSessions[6][12];
+  byte bSessionControlRequests[6][2];
+  
+  // <<< ResetECU >>>
+  byte bHardResetRequest[2];
+  byte bSoftResetRequest[2];
+  
+  // <<< CheckSWVersion >>> and <<< GetSWVersion >>>
+  byte bReadSWVersionRequest[3];
+  char cSession_CheckSWVersion[20];
+  char cKeepHexFormat[6];
+  
+  // <<< Logging functions >>>
+  char cLogPath[500];
+  char TestLoggingBlock[100];
+  char TestCaseLogASC[100];
+  char TestCaseLogBLF[100];
+  
+  // <<< SetECUMode >>>
+  char cSession_SetECUMode[20];
+  byte bLockECU[4];
+  byte bGetECULockState[4];
+  byte bUnlockECU[4];
+  char cUnlock[10];
+  char cLock[10];
+  byte bGetSecurityAccess_SetECUMode;
+  byte securityAlgoDataBuffer[8];
+  
+  byte bProcessModeStartRequest[4];
+  byte bProcessModeStopRequest[4];
+  byte bProcessModeRequestResRequest[4];
+  
+// <<< Diag objects >>>
+  // Dignostic session control
+  
+  //Non define Requeste for any test
+  diagRequest *dRequest;
+  diagResponse *dResponse;
+  
+  diagResponse *dDefaultValue;
+    
+  //TesterPresent
+  diagRequest eCS.TesterPresent_Send Req_TesterPresent_Send;
+  diagResponse eCS.TesterPresent_Send Resp_TesterPresent_Send;
+
+  //Rx Tx Control
+  
+//  //Enable Rx Tx
+//  diagRequest eCS.EnableRxAndEnableTx_Control Req_EnableRxAndEnableTx_Control;
+//  diagResponse eCS.EnableRxAndEnableTx_Control Resp_EnableRxAndEnableTx_Control;
+//  
+//  //Enable Rx Disable Tx
+//  diagRequest eCS.EnableRxAndDisableTx_Control Req_EnableRxAndDisableTx_Control;
+//  diagResponse eCS.EnableRxAndDisableTx_Control Resp_EnableRxAndDisableTx_Control;
+//  
+//  //Disable Rx Enable Tx
+//  diagRequest eCS.DisableRxAndEnableTx_Control Req_DisableRxAndEnableTx_Control;
+//  diagResponse eCS.DisableRxAndEnableTx_Control Resp_DisableRxAndEnableTx_Control;
+//  
+//  //Disable Rx Tx
+//  diagRequest eCS.DisableRxAndDisableTx_Control Req_DisableRxAndDisableTx_Control;
+//  diagResponse eCS.DisableRxAndDisableTx_Control Resp_DisableRxAndDisableTx_Control;
+  
+  diagRequest  * dDefaultSessionRequest;
+  diagResponse * dDefaultSessionResponse;
+  
+  diagRequest  * dExtendedSessionRequest;
+  diagResponse * dExtendedSessionResponse;
+  
+  diagRequest  * dProgrammingSessionRequest;
+  diagResponse * dProgrammingSessionResponse;
+  
+  diagRequest  * dDevelopmentSessionRequest;
+  diagResponse * dDevelopmentSessionResponse;
+  
+  diagRequest  * dSupplierSessionRequest;
+  diagResponse * dSupplierSessionResponse;
+  diagRequest  * dUpdateSessionRequest;
+  diagResponse * dUpdateSessionResponse;
+  
+  // ECU reset
+  diagRequest  * dHardResetRequest;
+  diagResponse * dHardResetResponse;
+  
+  diagRequest  * dSoftResetRequest;
+  diagResponse * dSoftResetResponse;
+  
+  // Software version
+  diagRequest  * dReadSWVersionRequest;
+  diagResponse * dReadSWVersionResponse;
+  
+  // RMBA
+  diagRequest  * dReadMemoryByAddressRequest;
+  diagResponse * dReadMemoryByAddressResponse;
+  
+  // WMBA
+  diagRequest  * dWriteMemoryByAddressRequest;
+  diagResponse * dWriteMemoryByAddressResponse;
+  
+  // Clear All DTCs
+  diagRequest  * dClearAllDTCsRequest;
+  diagResponse * dClearAllDTCsResponse;
+  
+  // Read All AEC
+  diagRequest  * dReadAllAECsStatusRequest;
+  diagResponse * dReadAllAECsStatusResponse;
+  
+  // Read DTCs.
+  diagRequest  * dReportDTCByStatusMaskRequest;
+  diagResponse * dReportDTCByStatusMaskResponse;
+  
+  diagRequest  * dReportDTCExtendedDataByDTCNbrRequest;
+  diagResponse * dReportDTCExtendedDataByDTCNbrResponse;
+  
+  diagRequest  * dReportNbrOfDTCByStatusMaskRequest;
+  diagResponse * dReportNbrOfDTCByStatusMaskResponse;
+  
+  diagRequest  * dReportSupportedDTCsRequest;
+  diagResponse * dReportSupportedDTCsResponse;
+  
+  // Lock / Unlock ECU.
+  diagRequest  * dUnlockECURequest;
+  diagResponse * dUnlockECUResponse;
+  
+  diagRequest  * dLockECURequest;
+  diagResponse * dLockECUResponse;
+  
+  diagRequest  * dGetECULockStateRequest;
+  diagResponse * dGetECULockStateResponse;
+  
+  //  Process mode.
+  //  Start Mode
+  diagRequest  * dProcessModeStartRequest;
+  diagResponse * dProcessModeStartResponse;
+    //  Stop Mode
+  diagRequest  * dProcessModeStopRequest;
+  diagResponse * dProcessModeStopResponse;
+    //  RequestRes Mode
+  diagRequest  * dProcessModeRequestResRequest;
+  diagResponse * dProcessModeRequestResResponse;
+  
+   // <<< CDD Project Diag objects >>>
+  
+  //HWVersion_Read
+  diagRequest eCS.HW_Version_Read Req_HWVersion_Read;
+  diagResponse eCS.HW_Version_Read Resp_HWVersion_Read;
+  
+  //HWVersion_Write
+  diagRequest eCS.HW_Version_Write Req_HWVersion_Write;
+  diagResponse eCS.HW_Version_Write Resp_HWVersion_Write;  
+
+  //Supplier Application
+  diagRequest eCS.Supplier_RequestSeed_Request Req_Supplier_Application_Request;
+  diagResponse eCS.Supplier_RequestSeed_Request Resp_Supplier_Application_Request;
+  
+  diagRequest eCS.Supplier_SendKey_Send Req_Supplier_Application_Send;
+  diagResponse eCS.Supplier_SendKey_Send Resp_Supplier_Application_Send;
+  
+  //Programming Bootloader
+  diagRequest eCS.Programming_RequestSeed_Request Req_Programming_Bootloader_Request;
+  diagResponse eCS.Programming_RequestSeed_Request Resp_Programming_Bootloader_Request;
+  
+  diagRequest eCS.Programming_SendKey_Send Req_Programming_Bootloader_Send;
+  diagResponse eCS.Programming_SendKey_Send Resp_Programming_Bootloader_Send;
+  
+  //LockSolenoid_Start
+  diagRequest eCS.LockSolenoid_Start Req_LockSolenoid_Start;  // Lock Solenoid
+  diagResponse eCS.LockSolenoid_Start Resp_LockSolenoid_Start;
+  
+  //LockSolenoid_Stop 
+  diagRequest eCS.LockSolenoid_Stop Req_LockSolenoid_Stop; // Unlock Solenoid
+  diagResponse eCS.LockSolenoid_Stop Resp_LockSolenoid_Stop;
+  
+  //EcuUnlock_Star
+  diagRequest eCS.EcuUnlock_Start Req_EcuUnlock_Start;
+  diagResponse eCS.EcuUnlock_Start Resp_EcuUnlock_Start;
+  
+  //EcuUnlock_Stop
+  diagRequest eCS.EcuUnlock_Stop Req_EcuUnlock_Stop; // Lock ECU
+  diagResponse eCS.EcuUnlock_Stop Resp_EcuUnlock_Stop;
+  
+  //EcuUnlock_RequestResults
+  diagRequest eCS.EcuUnlock_RequestResults Req_EcuUnlock_RequestResults;
+  diagResponse eCS.EcuUnlock_RequestResults Resp_EcuUnlock_RequestResults;
+  
+  //FaultMemory Clear
+  diagRequest eCS.FaultMemory_Clear Req_FaultMemory_Clear;  
+  
+  //EcsSensitivityOpt Read
+  diagRequest eCS.eCS_Sensitivity_Optimization_Read Req_EcsSensitivityOpt_Read;
+  diagResponse eCS.eCS_Sensitivity_Optimization_Read Resp_EcsSensitivityOpt_Read;
+  
+  //EcsSensitivityLut Write
+  diagRequest eCS.eCS_Sensitivity_LuT_Write Req_EcsSensitivityLut_Write;
+  diagResponse eCS.eCS_Sensitivity_LuT_Write Resp_EcsSensitivityLut_Write;
+  
+  //EcsSensitivityLut Read
+  diagRequest eCS.eCS_Sensitivity_LuT_Read Req_EcsSensitivityLut_Read;
+  diagResponse eCS.eCS_Sensitivity_LuT_Read Resp_EcsSensitivityLut_Read; 
+
+  //EcsPiParam Read
+  diagRequest eCS.eCS_PI_Parameters_Read Req_EcsPiParam_Read;
+  diagResponse eCS.eCS_PI_Parameters_Read Resp_EcsPiParam_Read;  
+  
+  //EcsAccLowPass Read
+  diagRequest eCS.eCS_Acc_Low_Pass_Read Req_EcsAccLowPass_Read;
+  diagResponse eCS.eCS_Acc_Low_Pass_Read Resp_EcsAccLowPass_Read;
+  
+  diagRequest eCS.eCS_Steps_Write Req_EcsSteps_Write;
+  diagResponse eCS.eCS_Steps_Write Resp_EcsSteps_Write;
+  
+  //EcsSteps_Read
+  diagRequest eCS.eCS_Steps_Read Req_EcsSteps_Read;
+  diagResponse eCS.eCS_Steps_Read Resp_EcsSteps_Read;  
+  
+  //EcsAccOffsets Read
+  diagRequest eCS.eCS_Acc_Offsets_Read Req_EcsAccOffsets_Read;
+  diagResponse eCS.eCS_Acc_Offsets_Read Resp_EcsAccOffsets_Read;  
+  
+  //EcsProfiles Read
+  diagRequest eCS.eCS_Profiles_Read Req_EcsProfiles_Read;
+  diagResponse eCS.eCS_Profiles_Read Resp_EcsProfiles_Read;
+  
+  //EcsParameter Read
+  diagRequest eCS.eCS_Parameters_Read Req_EcsParameters_Read;
+  diagResponse eCS.eCS_Parameters_Read Resp_EcsParameters_Read;  
+
+  //Ecs Variant Read
+  diagRequest eCS.eCS_Variant_Read Req_EcsVariant_Read;
+  diagResponse eCS.eCS_Variant_Read Resp_EcsVariant_Read;
+  
+  //MCU Temperature Read
+  diagRequest eCS.ECU_Temperature_Read Req_ECUTemperature_Read;
+  diagResponse eCS.ECU_Temperature_Read Resp_ECUTemperature_Read;
+  
+  //Last Warm Reset Param Read
+  diagRequest eCS.Last_Warm_Reset_Parameters_Read Req_LastWarmResetParam_Read;
+  diagResponse eCS.Last_Warm_Reset_Parameters_Read Resp_LastWarmResetParam_Read;
+  
+  //Battery Measure Read
+  diagRequest eCS.Battery_Measurement_Read Req_BatteryMeasure_Read;
+  diagResponse eCS.Battery_Measurement_Read Resp_BatteryMeasure_Read;
+  
+  //Reset Cause Read
+  diagRequest eCS.Reset_Cause_Read Req_ResetCause_Read;
+  diagResponse eCS.Reset_Cause_Read Resp_ResetCause_Read;
+  
+  //EccOccurenceNb Read
+  diagRequest eCS.ECC_Occurence_Number_Read Req_EccOccurenceNb_Read;
+  diagResponse eCS.ECC_Occurence_Number_Read Resp_EccOccurenceNb_Read;
+  
+  //All Event Statuses Read
+  diagRequest eCS.All_Event_Statuses_Read Req_AllEventStatuses_Read;
+  diagResponse eCS.All_Event_Statuses_Read Resp_AllEventStatuses_Read;
+  
+  //ECUManufacturingDate Read
+  diagRequest eCS.ECU_Manufacturing_Date_Read Req_ECUManufacturingDate_Read;
+  diagResponse eCS.ECU_Manufacturing_Date_Read Resp_ECUManufacturingDate_Read;
+  
+  //SW System Time Read Read
+  diagRequest eCS.System_Time_Read Req_SWSystemTimeRead_Read;
+  diagResponse eCS.System_Time_Read Resp_SWSystemTimeRead_Read;
+  
+  //AEE Traceability Number Read
+  diagRequest eCS.AEE_Traceability_Number_Read Req_AEETraceabilityNumber_Read;
+  diagResponse eCS.AEE_Traceability_Number_Read Resp_AEETraceabilityNumber_Read;
+  
+  //Measurement Frames Conf Read
+  diagRequest eCS.Measurement_Frames_Configuration_Read Req_MeasurementFramesConf_Read;
+  diagResponse eCS.Measurement_Frames_Configuration_Read Resp_MeasurementFramesConf_Read;
+  
+//   //Data Diagnostic Identifier_DDI_Read
+//  diagRequest eCS.DataDiagnosticIdentifier_DDI_Read Req_DataDiagnosticIdentifier_DDI_Read;
+//  diagResponse eCS.DataDiagnosticIdentifier_DDI_Read Resp_DataDiagnosticIdentifier_DDI_Read;  
+  
+//   //Spare Part Number Read
+//  diagRequest eCS.Spare_Part_Number_Read Req_Spare_Part_Number_Read;
+//  diagResponse eCS.Spare_Part_Number_Read Resp_Spare_Part_Number_Read;
+  
+     //Serial Number Read
+  diagRequest eCS.Serial_Number_Read Req_SerialNumber_Read;
+  diagResponse eCS.Serial_Number_Read Resp_SerialNumber_Read;
+
+   //Ecu Identification Read
+  diagRequest eCS.Ecu_Identification_Read Req_EcuIdentification_Read;
+  diagResponse eCS.Ecu_Identification_Read Resp_EcuIdentification_Read;
+ 
+  
+//  //Vehicle Identification Read
+//  diagRequest eCS.Vehicle_Identification_Read Req_Vehicle_Identification_Read;
+//  diagResponse eCS.Vehicle_Identification_Read Resp_Vehicle_Identification_Read;
+  
+  //Ecu Temp Calibration_Start
+  diagRequest eCS.EcuTempCalibration_Start Req_EcuTempCalibration_Start;
+  diagResponse eCS.EcuTempCalibration_Start Resp_EcuTempCalibration_Start;
+  
+  //EcsAlgoOutputDelay_Read
+  diagRequest eCS.eCS_Algo_Output_Delay_Read Req_EcsAlgoOutputDelay_Read;
+  diagResponse eCS.eCS_Algo_Output_Delay_Read Resp_EcsAlgoOutputDelay_Read;
+
+//  //Vehicle Identification Write
+//  diagRequest eCS.Vehicle_Identification_Write Req_Vehicle_Identification_Write;
+//  diagResponse eCS.Vehicle_Identification_Write Resp_Vehicle_Identification_Write;
+    
+  //Ecu Identification Write
+  diagRequest eCS.Ecu_Identification_Write Req_EcuIdentification_Write;
+  diagResponse eCS.Ecu_Identification_Write Resp_EcuIdentification_Write;
+   
+   //Serial Number Write
+  diagRequest eCS.Serial_Number_Write Req_SerialNumber_Write;
+  diagResponse eCS.Serial_Number_Write Resp_SerialNumber_Write;    
+  
+//  //Spare Part Number Write
+//  diagRequest eCS.Spare_Part_Number_Write Req_Spare_Part_Number_Write;
+//  diagResponse eCS.Spare_Part_Number_Write Resp_Spare_Part_Number_Write;  
+  
+//  //Data Diagnostic Identifier_DDI_Write
+//  diagRequest eCS.DataDiagnosticIdentifier_DDI_Write Req_DataDiagnosticIdentifier_DDI_Write;
+//  diagResponse eCS.DataDiagnosticIdentifier_DDI_Write Resp_DataDiagnosticIdentifier_DDI_Write;
+  
+  //Measurement Frames Conf Write
+  diagRequest eCS.Measurement_Frames_Configuration_Write Req_MeasurementFramesConf_Write;
+  diagResponse eCS.Measurement_Frames_Configuration_Write Resp_MeasurementFramesConf_Write;
+  
+  //EcsVariant Write
+  diagRequest eCS.eCS_Variant_Write Req_EcsVariant_Write;
+  diagResponse eCS.eCS_Variant_Write Resp_EcsVariant_Write;
+  
+  //EcsParameter Write
+  diagRequest eCS.eCS_Parameters_Write Req_EcsParameters_Write;
+  diagResponse eCS.eCS_Parameters_Write  Resp_EcsParameters_Write;
+  
+   //EcsProfileS Write
+  diagRequest eCS.eCS_Profiles_Write Req_EcsProfiles_Write;
+  diagResponse eCS.eCS_Profiles_Write  Resp_EcsProfiles_Write;
+  
+  //EcsAccOffsets Write
+  diagRequest eCS.eCS_Acc_Offsets_Write Req_EcsAccOffsets_Write;
+  diagResponse eCS.eCS_Acc_Offsets_Write Resp_EcsAccOffsets_Write;
+  
+  //EcsAccLowPass Write
+  diagRequest eCS.eCS_Acc_Low_Pass_Write Req_EcsAccLowPass_Write;
+  diagResponse eCS.eCS_Acc_Low_Pass_Write Resp_EcsAccLowPass_Write;
+  
+  //EcsPiParam Write
+  diagRequest eCS.eCS_PI_Parameters_Write Req_EcsPiParam_Write;
+  diagResponse eCS.eCS_PI_Parameters_Write Resp_EcsPiParam_Write;
+    
+  //Ecs AlgoOutputDelay Write
+  diagRequest eCS.eCS_Algo_Output_Delay_Write  Req_EcsAlgoOutputDelay_Write;
+  diagResponse eCS.eCS_Algo_Output_Delay_Write Resp_EcsAlgoOutputDelay_Write;  
+   
+  //EcsSensitivityOpt Write
+  diagRequest eCS.eCS_Sensitivity_Optimization_Write Req_EcsSensitivityOpt_Write;
+  diagResponse eCS.eCS_Sensitivity_Optimization_Write Resp_EcsSensitivityOpt_Write;
+  
+  
+}
+
+// Initializes all the configured parameters.
+// Do not modify the execution order.
+void InitParameters()
+{
+  CORE_Basic_Diagonstics();
+  
+  // Set ECU target.
+  diagSetTarget(cDiagnosticTarget);
+  
+  CORE_ECU_State();
+  
+  CORE_Logging();
+  
+  CORE_AEC_Names();
+  
+  CORE_AEC_Not_Executed_After_Reset();
+  
+  CORE_DTC_Names();
+  
+  //CORE_DTC_AEC_Association();
+  
+  CORE_Fault_Management_AECs();
+  
+  CORE_Fault_Management_DTCs();
+  
+  CORE_Test_Traceability();
+  
+  CORE_Init_DiagObjects();
+}
+
+/// <CORE_Basic_Diagnostics>
+void CORE_Basic_Diagonstics()
+{
+  strncpy(cDiagnosticTarget, "eCS", elcount(cDiagnosticTarget)); // Set ECU name.
+  
+  dDiagRequestSentTimeout     = 2500; // (ms) Timeout for diagnostic request sent .
+  dDiagResponseReceiveTimeout = 5000; // (ms) Timeout for diagnostic response.
+}
+
+/// <CORE_ECU_State>
+void CORE_ECU_State()
+{
+  dSessionTimeout = 5000; // (ms) Timeout for diagnostic session.
+  
+  // <<< EnterDiagnosticSession >>>
+  iSessionControlVerbosity = 2;  // Controls what is written in the report:
+                                 // 0 - Only negative response.
+                                 // 1 - Comment or negative response.
+                                 // 2 - A testStepPass result or negative response.
+  
+  strncpy(cAvailableDiagSessions[0], "default", elcount(cAvailableDiagSessions[0]));
+  bSessionControlRequests[0][0] = 0x10;
+  bSessionControlRequests[0][1] = 0x01;
+  
+  strncpy(cAvailableDiagSessions[1], "extended", elcount(cAvailableDiagSessions[1]));
+  bSessionControlRequests[1][0] = 0x10;
+  bSessionControlRequests[1][1] = 0x03;
+  
+  strncpy(cAvailableDiagSessions[2], "programming", elcount(cAvailableDiagSessions[2]));
+  bSessionControlRequests[2][0] = 0x10;
+  bSessionControlRequests[2][1] = 0x02;
+  
+  strncpy(cAvailableDiagSessions[3], "development", elcount(cAvailableDiagSessions[3]));
+  bSessionControlRequests[3][0] = 0x10;
+  bSessionControlRequests[3][1] = 0x7E;
+  
+  strncpy(cAvailableDiagSessions[4], "supplier", elcount(cAvailableDiagSessions[4]));
+  bSessionControlRequests[4][0] = 0x10;
+  bSessionControlRequests[4][1] = 0x7E;
+  strncpy(cAvailableDiagSessions[5], "update", elcount(cAvailableDiagSessions[4]));
+  bSessionControlRequests[5][0] = 0x10;
+  bSessionControlRequests[5][1] = 0x42;
+  
+  // <<< ResetECU >>>
+  bHardResetRequest[0] = 0x11;
+  bHardResetRequest[1] = 0x01;
+  
+  bSoftResetRequest[0] = 0x11;
+  bSoftResetRequest[1] = 0x03;
+  
+  // <<< SetECUMode >>>
+  strncpy(cSession_SetECUMode, "supplier", elcount(cSession_SetECUMode));
+  strncpy(cLock, "lock", elcount(cLock));
+  strncpy(cUnlock, "unlock", elcount(cUnlock));
+  // 1 - Obtains 'cSession_SetECUMode' security access before unlocking ECU.
+  // 0 - Security access is not obtained.
+  bGetSecurityAccess_SetECUMode = 0;
+
+  bLockECU[0] = 0x31;
+  bLockECU[1] = 0x02;
+  bLockECU[2] = 0xf7;
+  bLockECU[3] = 0x81;
+
+  bUnlockECU[0] = 0x31;
+  bUnlockECU[1] = 0x01;
+  bUnlockECU[2] = 0xf7;
+  bUnlockECU[3] = 0x81;
+  
+  bGetECULockState[0] = 0x31;
+  bGetECULockState[1] = 0x03;
+  bGetECULockState[2] = 0xf7;
+  bGetECULockState[3] = 0x81;
+  
+  // Process mode.
+  bProcessModeStartRequest[0] = 0x31;
+  bProcessModeStartRequest[1] = 0x01;
+  bProcessModeStartRequest[2] = 0xF7;
+  bProcessModeStartRequest[3] = 0x93;
+  
+  bProcessModeStopRequest[0] = 0x31;
+  bProcessModeStopRequest[1] = 0x02;
+  bProcessModeStopRequest[2] = 0xF7;
+  bProcessModeStopRequest[3] = 0x93;
+  
+  bProcessModeRequestResRequest[0] = 0x31;
+  bProcessModeRequestResRequest[1] = 0x03;
+  bProcessModeRequestResRequest[2] = 0xF7;
+  bProcessModeRequestResRequest[3] = 0x93;
+}
+
+/// <CORE_Fault_Management/CORE_AECs>
+void CORE_Fault_Management_AECs()
+{
+  iAECBytePosition = 1; // AEC ID byte position; 0 or 1 e.g. for DAI MMA = 0; for TR6 = 1;
+  
+  // 1 - enters 'cSession_ReadAECs' diagnostic session before reading AECs.
+  // 0 - Session is not entered.
+  bEnterSessionEnabled_CheckAECStatus            = 0;
+  bEnterSessionEnabled_ReturnAECStatusChangeTime = 0;
+  bEnterSessionEnabled_CheckAECStatusFromRAM     = 0;
+  bEnterSessionEnabled_CheckAECPresence          = 1;
+  
+  // 1 - Obtains 'cSession_ReadAECs' security access before reading AECs.
+  // 0 - Security access is not obtained.
+  bGetSecurityAccess_ReadAECs                  = 1;
+  bGetSecurityAccess_CheckAECStatusFromRAM     = 0;
+  bGetSecurityAccess_ReturnAECStatusChangeTime = 0;
+  bGetSecurityAccess_CheckAECPresence          = 1;
+  
+  strncpy(cSession_ReadAECs, "supplier", elcount(cSession_ReadAECs));    // Needed Session: Set to "none" if no special session is needed.
+  
+  // <<< ClearAll >>>
+  bClearAllRequest[0] = 0x14;
+  bClearAllRequest[1] = 0xFF;
+  bClearAllRequest[2] = 0xFF;
+  bClearAllRequest[3] = 0xFF;
+  
+  // << Read Memory By Address >>
+  bRMBARequest[0] = 0x23;
+  bRMBARequest[1] = 0x24;
+  bRMBARequest[2] = 0x00;
+  bRMBARequest[3] = 0x00;
+  bRMBARequest[4] = 0x00;
+  bRMBARequest[5] = 0x00;
+  bRMBARequest[6] = 0x00;
+  bRMBARequest[7] = 0x00;
+  
+  // << Write Memory By Address >>
+  bWMBARequest[0] = 0x3D;
+  bWMBARequest[1] = 0x24;
+  bWMBARequest[2] = 0x00;
+  bWMBARequest[3] = 0x00;
+  bWMBARequest[4] = 0x00;
+  bWMBARequest[5] = 0x00;
+  bWMBARequest[6] = 0x00;
+  bWMBARequest[7] = 0x00;
+  
+  // <<< ReturnAECStatusChangeTime >>>
+  _erh_au8AecStatus[0] = 0x70; // RAM address for Autotest Status.
+  _erh_au8AecStatus[1] = 0x00;
+  _erh_au8AecStatus[2] = 0xD8;
+  _erh_au8AecStatus[3] = 0xF9;
+  
+  // <<< AEC functions >>>
+  bReadAllAECsStatusRequest[0] = 0x22;
+  bReadAllAECsStatusRequest[1] = 0xFE;
+  bReadAllAECsStatusRequest[2] = 0x00;
+}
+
+/// <CORE_Logging>
+// Each of the following test logging block name variables must have their corresponding block defined and configured.
+// e.g. an .ASC logging block called "TestLoggingBlock" must be defined in the measurement setup and set to "Test trigger" mode.
+void CORE_Logging()
+{
+   strncpy(cLogPath, "c:\\\\Temp\\\\", elcount(cLogPath)); // Default location for logs if no other path is provided before any test starts.
+                                        // As a recommendation this value should be declared with the desired path at 
+                                        // the start of each test module.
+  
+  // Each of the following test logging block name variables must have their corresponding block defined and configured.
+  // e.g. an .ASC logging block called "TestLoggingBlock" must be defined in the measurement setup and set to "Test trigger" mode.
+  strncpy(TestLoggingBlock, "TestLoggingBlock", elcount(TestLoggingBlock)); // Logging block used for .ASC logging.
+  strncpy(TestCaseLogASC,   "TestCaseLogASC",   elcount(TestCaseLogASC));   // Logging block used for .ASC logging of the whole test case (Starts in PreTS, ends in PostTS).
+  strncpy(TestCaseLogBLF,   "TestCaseLogBLF",   elcount(TestCaseLogBLF));   // Logging block used for .BLF logging of the whole test case (Starts in PreTS, ends in PostTS).
+}
+
+/// <CORE_Fault_Management/CORE_AECs>
+void CORE_AEC_Names()
+{
+  // AEC names.
+  strncpy(cAECName[bERR_CANSM_E_BUS_OFF                   ], "ERR_CANSM_E_BUS_OFF"                     , 50);
+  strncpy(cAECName[bERR_ADC_OUT_OF_ORDER                  ], "ERR_ADC_OUT_OF_ORDER"           	  		 , 50);
+  strncpy(cAECName[bERR_WARM_RESET                        ], "ERR_WARM_RESET"                 	  		 , 50);
+  strncpy(cAECName[bERR_PFLASH_MEM_CORRUPT                ], "ERR_PFLASH_MEM_CORRUPT"          	  		 , 50);
+  strncpy(cAECName[bERR_NVM_NOT_PROG                      ], "ERR_NVM_NOT_PROG"               	    	 , 50);
+  strncpy(cAECName[bERR_RAM_MEM_CORRUPT                   ], "ERR_RAM_MEM_CORRUPT"             	    	 , 50);
+  strncpy(cAECName[bERR_DFLASH_MEM_CORRUPT                ], "ERR_DFLASH_MEM_CORRUPT"             	   , 50);
+  strncpy(cAECName[bERR_ADC_CALIB                         ], "ERR_ADC_CALIB"         	    	           , 50);
+  strncpy(cAECName[bERR_ECU_TEMPERATURE                   ], "ERR_ECU_TEMPERATURE"                     , 50);
+  strncpy(cAECName[bERR_BAT_PWR_OVER_VOLTAGE              ], "ERR_BAT_PWR_OVER_VOLTAGE"                , 50);
+  strncpy(cAECName[bERR_BAT_PWR_UNDER_VOLTAGE             ], "ERR_BAT_PWR_UNDER_VOLTAGE"               , 50);
+  strncpy(cAECName[bERR_ACTUATOR_BLOCKED                  ], "ERR_ACTUATOR_BLOCKED"                    , 50);
+  strncpy(cAECName[bERR_SBC_STATUS_FAILURE                ], "ERR_SBC_STATUS_FAILURE"                  , 50);
+  strncpy(cAECName[bERR_ACTUATOR_OPEN_CIRCUIT             ], "ERR_ACTUATOR_OPEN_CIRCUIT"               , 50);
+  strncpy(cAECName[bERR_ACTUATOR_SHORT_TO_VBAT            ], "ERR_ACTUATOR_SHORT_TO_VBAT"              , 50);
+  strncpy(cAECName[bERR_ACC_STATUS_FAILURE                ], "ERR_ACC_STATUS_FAILURE"                  , 50);
+  strncpy(cAECName[bERR_EXT_WDG_OUT_OF_ORDER              ], "ERR_EXT_WDG_OUT_OF_ORDER"                , 50);
+  strncpy(cAECName[bERR_MCU_SELF_TEST                     ], "ERR_MCU_SELF_TEST"                       , 50);
+  strncpy(cAECName[bERR_ACTUATOR_SHORT_TO_GND             ], "ERR_ACTUATOR_SHORT_TO_GND"               , 50);
+
+}
+
+/// <CORE_Fault_Management/CORE_AECs>
+void CORE_AEC_Not_Executed_After_Reset()
+{
+   //strncpy(cAEC_NotExecutedAfterReset[bERR_MOTOR_BLOCKED               ], "ERR_MOTOR_BLOCKED"               , 50);
+}
+
+/// <CORE_Fault_Management/CORE_DTCs>
+void CORE_DTC_Names()
+{
+  strncpy(cDTCName[DTC_HARDWARE                         ], "ERR_HARDWARE"                         , 50);
+  strncpy(cDTCName[DTC_TEMPERATURE_SELF_PROTECTION      ], "ERR_TEMPERATURE_SELF_PROTECTION"      , 50);
+  strncpy(cDTCName[DTC_MOTOR                            ], "ERR_MOTOR"                            , 50);
+  strncpy(cDTCName[DTC_BAT_PWR_UNDER_VOLTAGE            ], "ERR_BAT_PWR_UNDER_VOLTAGE"            , 50);
+  strncpy(cDTCName[DTC_BAT_PWR_OVER_VOLTAGE             ], "ERR_BAT_PWR_OVER_VOLTAGE"             , 50);
+  strncpy(cDTCName[DTC_BAT_PWR_UNDER_VOLTAGE_DURING_TENS], "ERR_BAT_PWR_UNDER_VOLTAGE_DURING_TENS", 50);
+  strncpy(cDTCName[DTC_BAT_PWR_OVER_VOLTAGE_DURING_TENS ], "ERR_BAT_PWR_OVER_VOLTAGE_DURING_TENS" , 50);
+  strncpy(cDTCName[DTC_WARM_RESET                       ], "ERR_WARM_RESET"                       , 50);
+  strncpy(cDTCName[DTC_TENSIONING_END_OF_LIFE           ], "ERR_TENSIONING_END_OF_LIFE"           , 50);
+  strncpy(cDTCName[DTC_COMFORT_END_OF_LIFE              ], "ERR_COMFORT_END_OF_LIFE"              , 50);
+}
+
+/// <CORE_Fault_Management/CORE_DTCs>
+//void CORE_DTC_AEC_Association()
+//{
+//  bDTCID[bERR_HIGH_SIDE_SWITCH                 ] = DTC_HARDWARE;
+//  bDTCID[bERR_ENABLE_OUT_OF_ORDER              ] = DTC_HARDWARE;
+//  bDTCID[bERR_MOSFET_HIGH_SC                   ] = DTC_HARDWARE;
+//  bDTCID[bERR_MOSFET_LOW_SC                    ] = DTC_HARDWARE;
+//  bDTCID[bERR_MOTOR_DISCONNECTED               ] = DTC_HARDWARE;
+//  bDTCID[bERR_MOSFET_OC                        ] = DTC_HARDWARE;
+//  bDTCID[bERR_HALL_SENSOR                      ] = DTC_HARDWARE;
+//  bDTCID[bERR_MOTOR_IN_SC                      ] = DTC_HARDWARE;
+//  
+//  bDTCID[bERR_HW_SELF_PROTECTION               ] = DTC_TEMPERATURE_SELF_PROTECTION;
+//  bDTCID[bERR_SW_SELF_PROTECTION               ] = DTC_TEMPERATURE_SELF_PROTECTION;
+//
+//  bDTCID[bERR_MOTOR_CURRENT                    ] = DTC_MOTOR;
+//  bDTCID[bERR_MOTOR_BLOCKED                    ] = DTC_MOTOR;
+//  bDTCID[bERR_MOTOR_ORDER                      ] = DTC_MOTOR;
+//  
+//  bDTCID[bERR_BAT_PWR_UNDER_VOLTAGE            ] = DTC_BAT_PWR_UNDER_VOLTAGE;
+//  bDTCID[bERR_BAT_PWR_OVER_VOLTAGE             ] = DTC_BAT_PWR_OVER_VOLTAGE;
+//  bDTCID[bERR_BAT_PWR_UNDER_VOLTAGE_DURING_TENS] = DTC_BAT_PWR_UNDER_VOLTAGE_DURING_TENS;
+//  bDTCID[bERR_BAT_PWR_OVER_VOLTAGE_DURING_TENS ] = DTC_BAT_PWR_OVER_VOLTAGE_DURING_TENS;
+//  
+//  bDTCID[bERR_WARM_RESET                       ] = DTC_WARM_RESET;
+//  
+//  bDTCID[bERR_HIGH_FORCE_END_OF_LIFE           ] = DTC_TENSIONING_END_OF_LIFE;
+//  bDTCID[bERR_LOW_FORCE_END_OF_LIFE            ] = DTC_TENSIONING_END_OF_LIFE;
+//  bDTCID[bERR_COMFORT_END_OF_LIFE              ] = DTC_COMFORT_END_OF_LIFE;
+//}
+
+
+
+/// <CORE_Fault_Management/CORE_DTCs>
+void CORE_Fault_Management_DTCs()
+{
+  // Status mask used to read DTCs.
+  bRDTCBST_StatusMask            = 0x21; // CheckDTCStatus().
+  
+  bRDTCBST_StatusMask_Init       = 0x21; // CheckDTCPresenceInBenchInit().
+  
+  bRDTCBST_StatusMask_AfterClear = 0x21; // CheckDTCPresenceAfterClear().
+  
+  bDTC_AvailableStatusMask       = 0x39; // CheckDTCStatus(char cDescription[], dword dDTC, byte bMask, char cPresence[]);
+  
+  // .CDD qualifiers:
+  strncpy(PR_DTCAndStatusRecord                             , "DTCAndStatusRecord"                            , elcount(PR_DTCAndStatusRecord));
+  strncpy(PR_DTCRecord                                      , "DTCRecord"                                     , elcount(PR_DTCRecord));
+  strncpy(PR_StatusOfDTC                                    , "StatusOfDTC"                                   , elcount(PR_StatusOfDTC));
+  strncpy(PR_StatusOfDTC_WarningIndicatorRequested          , "StatusOfDTC.WarningIndicatorRequested"         , elcount(PR_StatusOfDTC_WarningIndicatorRequested));
+  strncpy(PR_StatusOfDTC_TestNotCompletedThisOperationCycle , "StatusOfDTC.TestNotCompletedThisOperationCycle", elcount(PR_StatusOfDTC_TestNotCompletedThisOperationCycle));
+  strncpy(PR_StatusOfDTC_TestFailedSinceLastClear           , "StatusOfDTC.TestFailedSinceLastClear"          , elcount(PR_StatusOfDTC_TestFailedSinceLastClear));
+  strncpy(PR_StatusOfDTC_TestNotCompletedSinceLastClear     , "StatusOfDTC.TestNotCompletedSinceLastClear"    , elcount(PR_StatusOfDTC_TestNotCompletedSinceLastClear));
+  strncpy(PR_StatusOfDTC_ConfirmedDTC                       , "StatusOfDTC.ConfirmedDTC"                      , elcount(PR_StatusOfDTC_ConfirmedDTC));
+  strncpy(PR_StatusOfDTC_PendingDTC                         , "StatusOfDTC.PendingDTC"                        , elcount(PR_StatusOfDTC_PendingDTC));
+  strncpy(PR_StatusOfDTC_TestFailedThisOperationCycle       , "StatusOfDTC.TestFailedThisOperationCycle"      , elcount(PR_StatusOfDTC_TestFailedThisOperationCycle));
+  strncpy(PR_StatusOfDTC_TestFailed                         , "StatusOfDTC.TestFailed"                        , elcount(PR_StatusOfDTC_TestFailed));
+  
+  strncpy(PR_DTCAvailabilityMask_WarningIndicatorRequested          , "DTCAvailabilityMask.WarningIndicatorRequested"         , elcount(PR_DTCAvailabilityMask_WarningIndicatorRequested));
+  strncpy(PR_DTCAvailabilityMask_TestNotCompletedThisOperationCycle , "DTCAvailabilityMask.TestNotCompletedThisOperationCycle", elcount(PR_DTCAvailabilityMask_TestNotCompletedThisOperationCycle));
+  strncpy(PR_DTCAvailabilityMask_TestFailedSinceLastClear           , "DTCAvailabilityMask.TestFailedSinceLastClear"          , elcount(PR_DTCAvailabilityMask_TestFailedSinceLastClear));
+  strncpy(PR_DTCAvailabilityMask_TestNotCompletedSinceLastClear     , "DTCAvailabilityMask.TestNotCompletedSinceLastClear"    , elcount(PR_DTCAvailabilityMask_TestNotCompletedSinceLastClear));
+  strncpy(PR_DTCAvailabilityMask_ConfirmedDTC                       , "DTCAvailabilityMask.ConfirmedDTC"                      , elcount(PR_DTCAvailabilityMask_ConfirmedDTC));
+  strncpy(PR_DTCAvailabilityMask_PendingDTC                         , "DTCAvailabilityMask.PendingDTC"                        , elcount(PR_DTCAvailabilityMask_PendingDTC));
+  strncpy(PR_DTCAvailabilityMask_TestFailedThisOperationCycle       , "DTCAvailabilityMask.TestFailedThisOperationCycle"      , elcount(PR_DTCAvailabilityMask_TestFailedThisOperationCycle));
+  strncpy(PR_DTCAvailabilityMask_TestFailed                         , "DTCAvailabilityMask.TestFailed_1Bit"                   , elcount(PR_DTCAvailabilityMask_TestFailed));
+  
+  strncpy(REQ_DTCStatusMask                                    , "DTCStatusMask"                                   , elcount(REQ_DTCStatusMask));
+  strncpy(REQ_DTCStatusMask_WarningIndicatorRequested          , "DTCStatusMask.WarningIndicatorRequested"         , elcount(REQ_DTCStatusMask_WarningIndicatorRequested));
+  strncpy(REQ_DTCStatusMask_TestNotCompletedThisOperationCycle , "DTCStatusMask.TestNotCompletedThisOperationCycle", elcount(REQ_DTCStatusMask_TestNotCompletedThisOperationCycle));
+  strncpy(REQ_DTCStatusMask_TestFailedSinceLastClear           , "DTCStatusMask.TestFailedSinceLastClear"          , elcount(REQ_DTCStatusMask_TestFailedSinceLastClear));
+  strncpy(REQ_DTCStatusMask_TestNotCompletedSinceLastClear     , "DTCStatusMask.TestNotCompletedSinceLastClear"    , elcount(REQ_DTCStatusMask_TestNotCompletedSinceLastClear));
+  strncpy(REQ_DTCStatusMask_ConfirmedDTC                       , "DTCStatusMask.ConfirmedDTC"                      , elcount(REQ_DTCStatusMask_ConfirmedDTC));
+  strncpy(REQ_DTCStatusMask_PendingDTC                         , "DTCStatusMask.PendingDTC"                        , elcount(REQ_DTCStatusMask_PendingDTC));
+  strncpy(REQ_DTCStatusMask_TestFailedThisOperationCycle       , "DTCStatusMask.TestFailedThisOperationCycle"      , elcount(REQ_DTCStatusMask_TestFailedThisOperationCycle));
+  strncpy(REQ_DTCStatusMask_TestFailed                         , "DTCStatusMask.TestFailed"                        , elcount(REQ_DTCStatusMask_TestFailed));
+  
+  // <<< CheckDTCPresence >>>
+  bCheckDTCPresenceRequest[0] = 0x19;
+  bCheckDTCPresenceRequest[1] = 0x02;
+  bCheckDTCPresenceRequest[2] = 0x00;
+  
+    // <<< Report DTC by extended data >>>
+  bReportDTCExtendedDataByDTCNbrRequest[0] = 0x19;
+  bReportDTCExtendedDataByDTCNbrRequest[1] = 0x06;
+  
+  // <<< Report supported DTCs >>>
+  bReportSupportedDTCsRequest[0] = 0x19;
+  bReportSupportedDTCsRequest[1] = 0x0A;
+  
+  // <<< Report number of DTCs by status mask request >>>
+  bReportNbrOfDTCByStatusMaskRequest[0] = 0x19;
+  bReportNbrOfDTCByStatusMaskRequest[1] = 0x01;
+  bReportNbrOfDTCByStatusMaskRequest[2] = 0x00;
+}
+
+/// <CORE_Test_Traceability>
+void CORE_Test_Traceability()
+{
+  // <<< Read SW version >>>
+  bReadSWVersionRequest[0] = 0x22;
+  bReadSWVersionRequest[1] = 0xFD;
+  bReadSWVersionRequest[2] = 0x01;
+  bGetSecurityAccess_CheckSWVersion = 1;
+  
+  // <<< CheckSWVersion >>> and <<< GetSWVersion >>>
+  
+  strncpy(cSession_CheckSWVersion, "supplier"      , elcount(cSession_CheckSWVersion)); // Needed Session: Set to "none" if no special session is needed.
+  strncpy(cKeepHexFormat         , "false"          , elcount(cKeepHexFormat)); // If "cSwVersion" is in HEX format (e.g "0x16 0x0B 0x00"), set to "true", otherwise set to "false".
+}
+
+// These objects are not used in the CORE functions.
+// Their purpose is to avoid declaring diagnostic objects for specific test cases.
+void CORE_Init_DiagObjects()
+{
+  // EnterDiagnosticSession
+  dDefaultSessionRequest.Resize(elcount(bSessionControlRequests[0]));
+  dDefaultSessionRequest.SetPrimitiveData(bSessionControlRequests[0], elcount(bSessionControlRequests[0]));
+  
+  dExtendedSessionRequest.Resize(elcount(bSessionControlRequests[1]));
+  dExtendedSessionRequest.SetPrimitiveData(bSessionControlRequests[1], elcount(bSessionControlRequests[1]));
+  
+  dProgrammingSessionRequest.Resize(elcount(bSessionControlRequests[2]));
+  dProgrammingSessionRequest.SetPrimitiveData(bSessionControlRequests[2], elcount(bSessionControlRequests[2]));
+  
+  dDevelopmentSessionRequest.Resize(elcount(bSessionControlRequests[3]));
+  dDevelopmentSessionRequest.SetPrimitiveData(bSessionControlRequests[3], elcount(bSessionControlRequests[3]));
+  
+  dSupplierSessionRequest.Resize(elcount(bSessionControlRequests[4]));
+  dSupplierSessionRequest.SetPrimitiveData(bSessionControlRequests[4], elcount(bSessionControlRequests[4]));
+  
+  // ResetECU
+  dHardResetRequest.Resize(elcount(bHardResetRequest));
+  dHardResetRequest.SetPrimitiveData(bHardResetRequest, elcount(bHardResetRequest));
+  
+  dSoftResetRequest.Resize(elcount(bSoftResetRequest));
+  dSoftResetRequest.SetPrimitiveData(bSoftResetRequest, elcount(bSoftResetRequest));
+  
+  // Read SW version
+  dReadSWVersionRequest.Resize(elcount(bReadSWVersionRequest));
+  dReadSWVersionRequest.SetPrimitiveData(bReadSWVersionRequest, elcount(bReadSWVersionRequest));
+  
+  // RMBA
+  dReadMemoryByAddressRequest.Resize(elcount(bRMBARequest));
+  dReadMemoryByAddressRequest.SetPrimitiveData(bRMBARequest, elcount(bRMBARequest));
+  
+  // WMBA
+  dWriteMemoryByAddressRequest.Resize(elcount(bWMBARequest));
+  dWriteMemoryByAddressRequest.SetPrimitiveData(bWMBARequest, elcount(bWMBARequest));
+
+  // Clear All DTCs
+  dClearAllDTCsRequest.Resize(elcount(bClearAllRequest));
+  dClearAllDTCsRequest.SetPrimitiveData(bClearAllRequest, elcount(bClearAllRequest));
+  
+  // Read All AECs
+  dReadAllAECsStatusRequest.Resize(elcount(bReadAllAECsStatusRequest));
+  dReadAllAECsStatusRequest.SetPrimitiveData(bReadAllAECsStatusRequest, elcount(bReadAllAECsStatusRequest));
+  
+  // Read DTCs
+  dReportDTCByStatusMaskRequest.Resize(elcount(bCheckDTCPresenceRequest));
+  dReportDTCByStatusMaskRequest.SetPrimitiveData(bCheckDTCPresenceRequest, elcount(bCheckDTCPresenceRequest));
+  
+  dReportDTCExtendedDataByDTCNbrRequest.Resize(elcount(bReportDTCExtendedDataByDTCNbrRequest));
+  dReportDTCExtendedDataByDTCNbrResponse.SetPrimitiveData(bReportDTCExtendedDataByDTCNbrRequest, elcount(bReportDTCExtendedDataByDTCNbrRequest));
+  
+  dReportNbrOfDTCByStatusMaskRequest.Resize(elcount(bReportNbrOfDTCByStatusMaskRequest));
+  dReportNbrOfDTCByStatusMaskRequest.SetPrimitiveData(bReportNbrOfDTCByStatusMaskRequest, elcount(bReportNbrOfDTCByStatusMaskRequest));
+  
+  dReportSupportedDTCsRequest.Resize(elcount(bReportSupportedDTCsRequest));
+  dReportSupportedDTCsRequest.SetPrimitiveData(bReportNbrOfDTCByStatusMaskRequest, elcount(bReportSupportedDTCsRequest));
+  
+  // Lock / Unlock ECU.
+  dUnlockECURequest.Resize(elcount(bUnlockECU));
+  dUnlockECURequest.SetPrimitiveData(bUnlockECU, elcount(bUnlockECU));
+  
+  dLockECURequest.Resize(elcount(bLockECU));
+  dLockECURequest.SetPrimitiveData(bLockECU, elcount(bLockECU));
+  
+  dGetECULockStateRequest.Resize(elcount(bGetECULockState));
+  dGetECULockStateRequest.SetPrimitiveData(bGetECULockState, elcount(bGetECULockState));
+  
+  //  Process mode.
+  dProcessModeStartRequest.Resize(elcount(bProcessModeStartRequest));
+  dProcessModeStartRequest.SetPrimitiveData(bProcessModeStartRequest, elcount(bProcessModeStartRequest));
+  
+  dProcessModeStopRequest.Resize(elcount(bProcessModeStopRequest));
+  dProcessModeStopRequest.SetPrimitiveData(bProcessModeStopRequest, elcount(bProcessModeStopRequest));
+  
+  dProcessModeRequestResRequest.Resize(elcount(bProcessModeRequestResRequest));
+  dProcessModeRequestResRequest.SetPrimitiveData(bProcessModeRequestResRequest, elcount(bProcessModeRequestResRequest));
+}

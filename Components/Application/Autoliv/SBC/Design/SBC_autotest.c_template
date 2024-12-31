@@ -1,0 +1,165 @@
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version:
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.6 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/SBC/Design/project.pj $
+*/
+/*!****************************************************************************
+
+details
+   This file contains the autotests of ACC module.
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Rte_SBC.h"
+#include "SBC.h"
+#include "SBC_Cfg.h"
+#include "common.h"
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+/**
+ * \brief
+ *       This is the SBC self-test. It consists of checking the Status information section of a Spi response from the SBC chip,
+ *       if one or more bits of status information are qualified within 100ms then the result of autotest will be NOK.
+ * \outputparam
+ *       Name: *pu8TestResult;
+ *       Type: u8TestResultType;
+ *       Description: The autotest test result in uint8 range;
+ *       Range: 
+ *          KU8_ATM_TEST_OK
+ *          KU8_ATM_TEST_NOK
+ *          KU8_ATM_TEST_NOT_DECIDED;
+ * \pre
+ *       This function must be called in autotests.
+ * \dynamicaspectcaller
+ *       ATM Autotests.
+ * \dynamicaspectdescription
+ *       Called in Autotests via RTE layer.
+ * \ddesignrequirement
+ *       DSG_SBC_Autotest_CheckStatusInformation
+ * \archrequirement
+ *       ARCH_SW_SBC_pseCheckSbcStatusInfo
+ **/
+void SBC_Autotest_CheckStatusInformation(u8TestResultType *pu8TestResult)
+{
+    Autotest result = not decided;
+
+    if (check if any error is present in status information)
+    {
+        Reset the status information;
+        Autotest result = not ok;
+    }
+    else
+    {
+        Autotest result = ok;
+    }
+
+    Put the result of the autotest on output parameter of function;
+}
+
+/**
+ * \brief
+ *       This is the SBC watchdog self-test. It consists of checking the watchdog functionality from the SBC chip,
+ *       If the watchdog fails to reset the ECU then the result of autotest will be NOK.
+ * \outputparam
+ *       Name: *pu8TestResult;
+ *       Type: u8TestResultType;
+ *       Description: The autotest test result in uint8 range;
+ *       Range: 
+ *          KU8_ATM_TEST_OK 
+ *          KU8_ATM_TEST_NOK
+ *          KU8_ATM_TEST_NOT_DECIDED;
+ * \pre
+ *       This function must be called in autotests.
+ * \dynamicaspectcaller
+ *       ATM Autotests.
+ * \dynamicaspectdescription
+ *       Called in Autotests via RTE layer.
+ * \ddesignrequirement
+ *       DSG_SBC_Autotest_WdgTest
+ * \archrequirement
+ *       ARCH_SW_SBC_pseSbcWdgAutotest
+ *       ARCH_SW_SBC_pclResetCause_SBC_Autotest_WdgTest
+ **/
+void SBC_Autotest_WdgTest(u8TestResultType *pu8TestResult)
+{
+    Autotest result = not decided;
+   
+    Get SBC Status Information;
+
+    /* check Status Information */
+    if(Check if status of autotest is pending)
+    {
+        Get the Reset Cause;
+        if(The reset cause is NOT watchdog out of order or external reset or reset due to internal failure)
+        {
+            Autotest result = ok;
+            Watchdog status for autotest = ok;
+            Cear SBC status info error flag;
+        }
+        else
+        {
+            Autotest result = not OK;
+        }
+    }
+
+    /* Return the auto test status */
+    Put the result of the autotest on output parameter of function;
+}
+/******************************************************************************
+End Of File
+*****************************************************************************/

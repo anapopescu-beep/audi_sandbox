@@ -1,0 +1,1700 @@
+/*@!Encoding:1252*/
+/*------------------------------------------------------------------------------
+                                IMPORT LIBRARY
+ ------------------------------------------------------------------------------*/
+/* To include all the libraries used by the .capl script. */
+/* WARNING: Some things such as diagnostic functions are different from project
+to project, change those according to your project requirements */
+includes
+{
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Defines.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Project_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Diagnostic_Functions.cin"
+}
+
+/*------------------------------------------------------------------------------
+                                    GLOBALS
+ ------------------------------------------------------------------------------*/
+/* To declare the constants used throurough the entire module, and global variables */
+variables
+{
+
+/*----------------------------Global Variables---------------------------------*/
+  float sEcs_HW_defekt;
+ 
+}
+
+
+/*------------------------------------------------------------------------------
+                                TEST FUNCTIONS
+------------------------------------------------------------------------------*/
+/*------------------------- Test Preconditions ------------------------------*/
+/* For operations to ensure the correct execution of the test case, such as IGN_ON,
+checking that CAN communication is present, etc.
+/* Varies from module to module, use from Helper_Functions.cin only the ones you need */
+testfunction RunPreTs()
+{
+  DisplayRequirementsInfo();
+  AddTestSetupInformation();
+  
+  PreTS_StartLogging();
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization");
+  
+  testStep("", "Delete all breakpoint from debugger.");
+  debugger_deleteAllBreakpoints();
+  
+  testStep("", "Reset the debugger.");
+  debugger_reset();
+  
+  testStep("", "Run the debugger.");
+  debugger_run();
+}
+
+/*------------------------- Test Postconditions ------------------------------*/
+/* For operations to ensure that after the test case was executed, the enviroment
+would go back to a blank state, to be ready for the next test step in queue. Call it a Cleanup phase. */
+testfunction RunPostTs()
+{
+  stopLogging("TestCaseLogASC");
+  stopLogging("TestCaseLogBLF");
+}
+
+testcase InitTestModule()
+{
+  ConfigureTestModuleInformation();
+  strncpy(cLogPathAndName, "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Logs\\",  elcount(cLogPathAndName));
+}
+
+/*------------------------------------------------------------------------------
+                                TEST EXECUTION
+------------------------------------------------------------------------------*/
+testcase Sw_Int_AdcIf_ptrrAsrGptServices_01()
+{  
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_ptrrAsrGptServices, ARCH_SW_AdcIf_ptrpAsrGptServices");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrrAsrGptServices", "The Gpt_Init runnable shall be called in the AdcIf_runInit runnable in order to initialize the Gpt component. The Gpt_StartTimer runnable shall be called in the AdcIf_runInit runnable in order to start the timer that will trigger the Adc conversion. The Gpt_EnableNotification runnable shall be called in the AdcIf_runInit runnable in order to enable the notification on the timer expiration event.");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrpAsrGptServices", "The AdcIf_GPTOnTimer_Expiration runnable shall be called when the Gpt timer expires via the Gpt_InitChannelPB_TDK_4G runnable.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  
+  /*
+  STEP 1
+  1. Set breakpoint.
+*/
+  testCaseComment("Action: ARCH_SW_AdcIf_ptrrAsrGptServices");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runInit at Gpt_Init function call. --> BP is reached."); // Gpt_Init(&GptChannelConfigSet_TDK_4G);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runInit", "2");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result,W8_UNTIL_BP_SUCCESSFUL, "CPU Stopped at BP");
+ 
+  /*
+  STEP 2
+  1. Set breakpoint.
+*/
+   debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function AdcIf_runInit at Gpt_EnableNotification function call --> BP is reached."); // Gpt_EnableNotification(GPT_ADC_TIMER);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runInit", "5");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result,W8_UNTIL_BP_SUCCESSFUL, "CPU Stopped at BP");
+  
+/*
+  STEP 3
+  1. Set breakpoint.
+*/
+   debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function AdcIf_runInit at Gpt_StartTimer function call --> BP is reached."); // Gpt_StartTimer(GPT_ADC_TIMER, KU32_LPIT_CH1_RST_VALUE);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runInit", "8");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result,W8_UNTIL_BP_SUCCESSFUL, "CPU Stopped at BP");
+
+
+  testCaseComment("Action: ARCH_SW_AdcIf_ptrpAsrGptServices");
+   debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function AdcIf_runInit at Gpt_Init function call --> BP is reached."); // Gpt_Init(&GptChannelConfigSet_TDK_4G);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runInit", "2");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result,W8_UNTIL_BP_SUCCESSFUL, "CPU Stopped at BP");
+  
+   debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function AdcIf_GPTOnTimer_Expiration at ADCIF_EndOfConvGroup0 function call --> BP is reached."); // ADCIF_EndOfConvGroup0();
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runInit", "11");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result,W8_UNTIL_BP_SUCCESSFUL, "CPU Stopped at BP");
+
+    //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  
+}
+
+testcase Sw_Int_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_runInit_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_runInit, ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_GPTOnTimer_Expiration, ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_Calibrate, ARCH_SW_AdcIf_ptrrAsrAdcServices_AdcIf_runDeInit, ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_ReadGroup");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_runInit", "The Adc_StartGroupConversion runnable shall be called in the AdcIf_runInit runnable in order to start the first conversion.");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_GPTOnTimer_Expiration", "The Adc_StartGroupConversion runnable shall be called in the AdcIf_GPTOnTimer_Expiration runnable in order to start the periodic conversion.");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_Calibrate", "The Adc_Calibrate runnable shall be called in the AdcIf_Calib runnable in order to calibrate the Adc hw units according to the S32k datasheet. The runnable shall store the calibration status for both hw units.");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrrAsrAdcServices_AdcIf_runDeInit", "The Adc_StopGroupConversion runnable shall be called in the AdcIf_runDeInit runnable in order to stop the group conversion before ECU shutdown.");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_ReadGroup", "The Adc_ReadGroup runnable shall be called in the AdcIf_GPTOnTimer_Expiration runnable in order to get the lsb value from the Adc groups.");
+  //***************************************************************************************
+  
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  
+  /*------------------------- Test scenario start ------------------------------*/
+/*
+  STEP 1
+  1. Set breakpoint.
+*/ 
+  testCaseComment("Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_runInit");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runInit at the first Adc_StartGroupConversion function call --> BP is reached."); // Adc_StartGroupConversion(AdcGroup_0);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runInit", "11");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+
+   testStep("STEP", "Step in function Adc_StartGroupConversion and run until return of the function.");
+   debugger_stepIn();
+   debugger_runUntilReturn("10");
+
+   testStep("STEP", "Set a breakpoint in function AdcIf_runInit at the second Adc_StartGroupConversion function call --> BP is reached."); // Adc_StartGroupConversion(AdcGroup_1);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runInit", "12");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000"); 
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  
+   testStep("STEP", "Step in function Adc_StartGroupConversion and run until return of the function.");
+   debugger_stepIn();
+   debugger_runUntilReturn("10");
+/*
+  STEP 3
+  1. Set breakpoint.
+*/    
+  testCaseComment("Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_GPTOnTimer_Expiration");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_GPTOnTimer_Expiration at the first Adc_StartGroupConversion function call --> BP is reached.");
+   debugger_setRelativeFunctionBpAtLine("AdcIf_GPTOnTimer_Expiration", "5");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000"); 
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+/*
+  STEP 4
+  1. Set breakpoint.
+*/
+   testStep("STEP", "Step in function Adc_StartGroupConversion and run until return of the function.");
+   debugger_stepIn();
+   debugger_runUntilReturn("10");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_GPTOnTimer_Expiration at the first Adc_StartGroupConversion function call --> BP is reached.");
+   debugger_setRelativeFunctionBpAtLine("AdcIf_GPTOnTimer_Expiration", "6");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000"); 
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+/*
+  STEP 4
+  1. Set breakpoint.
+*/
+   testStep("STEP", "Step in function Adc_StartGroupConversion and run until return of the function.");
+   debugger_stepIn();
+   debugger_runUntilReturn("10");
+/*
+  STEP 5
+  1. Set breakpoint.
+*/      
+  testCaseComment("Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_Calibrate");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_Calib at Adc_Calibrate function call --> BP is reached."); //Adc_Calibrate(AdcGroup_0, &ADCIF_CalibrationStatus0);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Calib", "22");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+  testStep("STEP", "Read the calibration status for HW units 1 --> 0x1."); 
+  debugger_readVariable("uint8", "ADCIF_stCalibrationStatus1,,app.elf", "0");
+  ExpectedTestResult(debugger_result, "0x1", "Calib status is 0x1");
+  
+  testStep("STEP", "Step in function Adc_Calibrate.");
+  debugger_stepIn();
+ 
+  debugger_deleteAllBreakpoints();
+  testStep("STEP", "Set a breakpoint in function Adc_Calibrate after pStatus assignment --> BP is reached."); // Adc.c -> Adc_Ipw_Calibrate(Unit, pStatus);
+  debugger_setRelativeFunctionBpAtLine("Adc_Calibrate", "17");
+  debugger_run();
+  debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify pStatus with E_OK. -> 0x0"); 
+  debugger_writeLocalVariable("pStatus", "0");
+  ExpectedTestResult(debugger_result, "pStatus", "pStatus overwritten with 0");
+
+  debugger_deleteAllBreakpoints();
+  testStep("STEP", "Set a breakpoint in function AdcIf_Calib after Adc_Calibrate function call --> BP is reached."); //Adc_Calibrate(AdcGroup_0, &ADCIF_CalibrationStatus0);
+  debugger_setRelativeFunctionBpAtLine("AdcIf_Calib", "26");
+  debugger_run();
+  debugger_waitUntilBPisReached("5000");
+  
+  testStep("STEP", "Read the calibration status for HW units 1. --> 0x0"); 
+  debugger_readVariable("uint8", "ADCIF_stCalibrationStatus1,,app.elf", "0");
+  ExpectedTestResult(debugger_result, "0x0", "Calib status is 0x0");
+
+ testCaseComment("Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_Calibrate");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_Calib at Adc_Calibrate function call --> BP is reached."); //Adc_Calibrate(AdcGroup_1, &ADCIF_CalibrationStatus1);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Calib", "17");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+  testStep("STEP", "Read the calibration status for HW units 0 --> 0x1."); 
+  debugger_readVariable("uint8", "ADCIF_stCalibrationStatus0,,app.elf", "0");
+  ExpectedTestResult(debugger_result, "0x1", "Calib status is 0x1");
+  
+  testStep("STEP", "Step in function Adc_Calibrate.");
+  debugger_stepIn();
+ 
+  debugger_deleteAllBreakpoints();
+  testStep("STEP", "Set a breakpoint in function Adc_Calibrate after pStatus assignment. --> BP is reached"); // Adc.c -> Adc_Ipw_Calibrate(Unit, pStatus);
+  debugger_setRelativeFunctionBpAtLine("Adc_Calibrate", "17");
+  debugger_run();
+  debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify pStatus with E_OK. --> 0x0"); 
+  debugger_writeLocalVariable("pStatus", "0");
+  ExpectedTestResult(debugger_result, "pStatus", "pStatus overwritten with 0");
+
+  debugger_deleteAllBreakpoints();
+  testStep("STEP", "Set a breakpoint in function AdcIf_Calib after Adc_Calibrate function call --> BP is reached."); //Adc_Calibrate(AdcGroup_0, &ADCIF_CalibrationStatus0);
+  debugger_setRelativeFunctionBpAtLine("AdcIf_Calib", "26");
+  debugger_run();
+  debugger_waitUntilBPisReached("5000");
+  
+  testStep("STEP", "Read the calibration status for HW units 1 --> 0x0."); 
+  debugger_readVariable("uint8", "ADCIF_stCalibrationStatus1,,app.elf", "0");
+  ExpectedTestResult(debugger_result, "0x0", "Calib status is 0x0");
+/*
+  STEP 11
+  1. Set breakpoint.
+*/      
+  testCaseComment("Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_AdcIf_runDeInit");
+  
+   debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function AdcIf_runDeInit at Adc_StopGroupConversion function call --> BP is reached."); //AdcIf.c - 306 - Adc_StopGroupConversion(AdcGroup_0);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runDeInit", "1");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+ 
+   testStep("STEP", "Step in function Adc_StartGroupConversion and run until return of the function.");
+   debugger_stepIn();
+   debugger_runUntilReturn("10");
+
+  testCaseComment("Action: ARCH_SW_AdcIf_ptrrAsrAdcServices_Adc_ReadGroup");  
+  
+   debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function ADCIF_EndOfConvGroup0 at Adc_ReadGroup function call --> BP is reached."); //ADCIF_EndOfConvGroup0();
+   debugger_setRelativeFunctionBpAtLine("ADCIF_EndOfConvGroup0", "2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+   testStep("STEP", "Step in function Adc_ReadGroup and run until return of the function.");
+   debugger_stepIn();
+   debugger_runUntilReturn("10");
+
+   debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function ADCIF_EndOfConvGroup1 at Adc_ReadGroup function call --> BP is reached."); //ADCIF_EndOfConvGroup0();
+   debugger_setRelativeFunctionBpAtLine("ADCIF_EndOfConvGroup1", "2");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+   testStep("STEP", "Step in function Adc_ReadGroup and run until return of the function.");
+   debugger_stepIn();
+   debugger_runUntilReturn("10");
+
+    //====================================================
+
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+}
+
+testcase Sw_Int_AdcIf_ptrpEcuMIfServices_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_ptrpEcuMIfServices");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrpEcuMIfServices", "The AdcIf_Calib runnable shall be called during the initialization in the EcuM_DefaultInitListOne runnable.");
+  //***************************************************************************************
+  
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  
+  /*------------------------- Test scenario start ------------------------------*/
+
+   testCaseComment("Action: ARCH_SW_AdcIf_ptrpEcuMIfServices");
+   testStep("STEP", "Set a breakpoint in function EcuM_DefaultInitListOne at AdcIf_Calib function call --> BP is reached."); //EcuM_Cfg.c - 259 - AdcIf_Calib();
+   debugger_setRelativeFunctionBpAtLine("EcuM_DefaultInitListOne", "18");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+   testStep("STEP", "Step in function AdcIf_Calib and run until return of the function.");
+   debugger_stepIn();
+   ExpectedTestResult(debugger_result, "AdcIf_Calib", "CPU entered function");
+   debugger_runUntilReturn("10");
+  
+      //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+ 
+}
+
+testcase Sw_Int_AdcIf_ptrpAdcIfServices_AdcIf_runInit_01()
+{ 
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runInit, ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runDeInit");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runInit", "The AdcIf_runInit runnable shall be called during the initialization in the BswM_OnStartupTwoA runnable.");
+  AddRequirementInfo("ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runDeInit", "The AdcIf_runDeInit runnable shall be called during the de-initialization in the BswM_OnGoOffOneA runnable");
+  //***************************************************************************************
+  
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  
+  
+  /*------------------------- Test scenario start ------------------------------*/
+  
+  testCaseComment("Action: ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runInit");
+  
+   testCaseComment("Action: ARCH_SW_AdcIf_ptrpEcuMIfServices");
+   testStep("STEP", "Set a breakpoint in function BswM_OnStartupTwoA at AdcIf_runInit function call --> BP is reached."); //Gpt.c - 857 - AdcIf_runInit();
+   debugger_setRelativeFunctionBpAtLine("BswM_OnStartupTwoA", "20");
+   debugger_reset();
+   debugger_run(); 
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+   testStep("STEP", "Step in function AdcIf_runInit and run until return of the function.");
+   debugger_stepIn();
+  ExpectedTestResult(debugger_result, "AdcIf_runInit", "CPU entered function");
+   debugger_runUntilReturn("10");
+
+  testCaseComment("Action: ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runDeInit");  
+   testStep("STEP", "Set a breakpoint in function BswM_OnStartupTwoA at AdcIf_runInit function call --> BP is reached."); //Gpt.c - 857 - AdcIf_runInit();
+   debugger_setRelativeFunctionBpAtLine("BswM_OnStartupTwoA", "20");
+   debugger_reset();
+   debugger_run(); 
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+   testStep("STEP", "Step in function AdcIf_runInit and run until return of the function.");
+   debugger_stepIn();
+  ExpectedTestResult(debugger_result, "AdcIf_runInit", "CPU entered function");
+   debugger_runUntilReturn("10");
+
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+  
+}
+
+testcase Sw_Int_AdcIf_pseStartConversion_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseStartConversion, ARCH_SW_AdcIf_pseStopConversion, ARCH_SW_AdcIf_pseWaitForConversion");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseStartConversion", "The AdcIf_StartConversion shall be called in order to start GPT timer for ADC sampling operations.");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseStopConversion", "The AdcIf_StopConversion shall be called in order to stop GPT timer for ADC sampling operations.");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseWaitForConversion", "The AdcIf_WaitForConversion shall be called in order to wait  for ADC pheripheral to finish sampling operations.");
+  //***************************************************************************************
+  
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  
+  
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseStartConversion");
+  
+   testCaseComment("Action: ARCH_SW_AdcIf_ptrpEcuMIfServices");
+   testStep("STEP", "Set a breakpoint in function AdcIf_StartConversion at Gpt_StartTimer function call --> BP is reached."); //AdcIf.c - 124 - Gpt_StartTimer(GPT_ADC_TIMER, KU32_LPIT_CH1_RST_VALUE);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_StartConversion", "0");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+   testStep("STEP", "Step in function Gpt_StartTimer.");
+   debugger_stepIn();
+   ExpectedTestResult(debugger_result, "Gpt_StartTimer", "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function Gpt_StartTimer at Gpt_Ipw_StartTimer function call --> BP is reached.");
+   debugger_setRelativeFunctionBpAtLine("Gpt_Ipw_StartTimer", "26");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+ 
+  /*---------------------------------------------TEST 2 Requirement------------------------------------------------*/
+/*
+  STEP 3
+  1. Set breakpoint.
+*/    
+  testCaseComment("Action: ARCH_SW_AdcIf_pseStopConversion");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_StopConversion at Gpt_StopTimer function call --> BP is reached."); //AdcIf.c - 147 - Gpt_StopTimer(GPT_ADC_TIMER);
+   debugger_setRelativeFunctionBpAtLine("AdcIf_StopConversion", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+   testStep("STEP", "Step in function Gpt_StopTimer.");
+   debugger_stepIn();
+  
+   testStep("STEP", "Set a breakpoint in function Gpt_StopTimer at Gpt_Ipw_StopTimer function call --> BP is reached.");
+   debugger_setRelativeFunctionBpAtLine("Gpt_StartTimer", "23");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   
+  /*---------------------------------------------TEST 3 Requirement------------------------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseWaitForConversion");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_WaitForConversion at at the while statement --> BP is reached."); //AdcIf.c - 169 - while (Adc_ReadGroup(AdcGroup_0, ADCIF_u16Group0Results) == E_NOT_OK)
+   debugger_setRelativeFunctionBpAtLine("AdcIf_WaitForConversion", "11");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+   testStep("STEP", "Set a breakpoint in function AdcIf_WaitForConversion after the while statement --> BP is reached."); //AdcIf.c - 173 - while (Adc_ReadGroup(AdcGroup_1, ADCIF_u16Group1Results) == E_NOT_OK) 
+   debugger_setRelativeFunctionBpAtLine("AdcIf_WaitForConversion", "13");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+ 
+    //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService, ARCH_SW_IoHwAb_pclRawAdcService, ");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: PTC sensor: PTC6 uC pin ");
+  AddRequirementInfo("ARCH_SW_IoHwAb_pclRawAdcService", "The interface shall read the {Raw value} in LSB in order to compute the value in  physical units. ");
+  //***************************************************************************************
+
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  
+  
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService, ARCH_SW_IoHwAb_pclRawAdcService");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_PTC_TEMP. --> Value modified with 0x11");
+  debugger_writeLocalVariable("u8ChannelID", "11");
+  ExpectedTestResult(debugger_result, "11", "Variable overwritten with 0x11");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_PTC_TEMP. -->  BP was reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "3");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_02()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: KL30 (V_BAT): PTA2 uC pin ");
+  //***************************************************************************************
+
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_V_BATT. --> Variable overwritten with 0x8");
+  debugger_writeLocalVariable("u8ChannelID", "8");
+  ExpectedTestResult(debugger_result, "8", "Variable overwritten with 0x8");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_V_BATT. --> BP reached"); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "6");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_03()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: MAG_V_1: PTB13 uC pin ");
+  //***************************************************************************************
+
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_MAG_V_1. --> Variable overwritten with 0x0");
+  debugger_writeLocalVariable("u8ChannelID", "0");
+  ExpectedTestResult(debugger_result, "0", "Variable overwritten with 0x0");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_MAG_V_1 --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "9");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_04()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: MAG_V_2: PTB12 uC pin ");
+  //***************************************************************************************
+
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_MAG_V_2. --> Variable overwritten with 0x1");
+  debugger_writeLocalVariable("u8ChannelID", "1");
+  ExpectedTestResult(debugger_result, "1", "Variable overwritten with 0x1");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_MAG_V_2. --> BP reached"); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "12");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_05()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: MAG_V_3: PTD4 uC pin ");
+  //***************************************************************************************
+
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_MAG_V_3 --> Variable overwritten with 0x2.");
+  debugger_writeLocalVariable("u8ChannelID", "2");
+  ExpectedTestResult(debugger_result, "2", "Variable overwritten with 0x2");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_MAG_V_3 --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  RunPostTs();
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_06()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: MAG_V_4: PTD3 uC pin ");
+  //***************************************************************************************
+
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_MAG_V_4 --> Variable overwritten with 0x3.");
+  debugger_writeLocalVariable("u8ChannelID", "3");
+  ExpectedTestResult(debugger_result, "3", "Variable overwritten with 0x3");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_MAG_V_4 --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "18");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_07()
+{
+    //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: ADC REF High.");
+  //***************************************************************************************
+
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_V_REF_HIGH --> Variable overwritten with 0x9.");
+  debugger_writeLocalVariable("u8ChannelID", "9");
+  ExpectedTestResult(debugger_result, "9", "Variable overwritten with 0x9");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_V_REF_HIGH --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "21");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_08()
+{
+    //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: ADC REF Low.");
+  //***************************************************************************************
+
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_V_REF_HIGH --> Variable overwritten with 0x10.");
+  debugger_writeLocalVariable("u8ChannelID", "10");
+  ExpectedTestResult(debugger_result, "10", "Variable overwritten with 0x10");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_V_REF_LOW --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "24");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_09()
+{
+    //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: MCU BAND GAP: internal uC channel");
+  //***************************************************************************************
+
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_V_ECU_TEMP_MCU_BAND_GAP --> Variable overwritten with 0x12.");
+  debugger_writeLocalVariable("u8ChannelID", "12");
+  ExpectedTestResult(debugger_result, "12", "Variable overwritten with 0x12");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_V_ECU_TEMP_MCU_BAND_GAP --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "27");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_10()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: MCU Temp sensor: internal uC channel");
+  //***************************************************************************************
+
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_V_ECU_TEMP_MCU --> Variable overwritten with 0x13.");
+  debugger_writeLocalVariable("u8ChannelID", "13");
+  ExpectedTestResult(debugger_result, "13", "Variable overwritten with 0x13");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_V_ECU_TEMP_MCU --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "30");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_AdcIf_pseRawAdcService_11()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseRawAdcService");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The runnable shall read the lsb value for the following channels: Wake 1: PTA0 uC pin");
+  //***************************************************************************************
+
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+
+  /*------------------------- Test scenario start ------------------------------*/
+
+  testCaseComment("Action: ARCH_SW_AdcIf_pseRawAdcService");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call --> BP reached."); // IoHwAb_AdcIf.c - 1122 - AdcIf_runGetChannelValue(u8TypeOfMeasure, &u16AdcValue ); 
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "15");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+  
+  testStep("STEP", "Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_WAKE_1 --> Variable overwritten with 0x6.");
+  debugger_writeLocalVariable("u8ChannelID", "6");
+  ExpectedTestResult(debugger_result, "6", "Variable overwritten with 0x6");
+  
+   testStep("STEP", "Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_WAKE_1 --> BP reached."); // AdcIf.c - 347 - switch( u8ChannelID )
+   debugger_setRelativeFunctionBpAtLine("IoHwAb_runGetMeasure", "33");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU stopped at BP");
+
+  testStep("STEP", "Read the Adc Value.");
+  debugger_readLocalVariable("*pu16Value");
+  ExpectedTestResult(debugger_result, "pu16Value", "Variable read.");
+
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_AdcIf_pseCheckAdcCalib_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The autotest shall read the calibration status provided by the AdcIf_Calib runnable(OK or NOK) and will output the result.");
+  AddRequirementInfo("ARCH_SW_pclEvtAdcCalibration", "This is the ADC calib autotest. It consists of checking that the ADC calibration is OK.");
+  //***************************************************************************************
+  
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  
+  /*------------------------- Test scenario start -----------------------------------*/
+
+/*
+  STEP 1
+  1. Set breakpoint.
+*/  
+  testCaseComment("Action: ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration");
+  
+   testStep("STEP", "Set a breakpoint in function ADC_cbk_CheckAdcCalib at the RTE call for the autotest to check ADC callibration --> BP reached."); //   ATM_cfg.c - 212 -Rte_Call_pclCheckAdcCalib_AutotestCallback(&u8TestResult);
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_CheckAdcCalib", "2");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+/*
+  STEP 2
+  1. Set breakpoint.
+*/
+   debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function AdcIf_Autotest_CheckAdcCalib at the if statement --> BP reached."); //  AdcIf_autotest.c - 164 - if ((E_OK == ADCIF_stCalibrationStatus0.Adc_UnitSelfTestStatus) && (E_OK == ADCIF_stCalibrationStatus1.Adc_UnitSelfTestStatus ))
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdcCalib", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+/*
+  STEP 3
+  1. Write variable ADCIF_CalibrationStatus0.
+*/
+  testStep("STEP", "Modify the ADC Calibration Status 0 variable --> Variable modified with 0x1.");
+  debugger_writeVariable("uint8", "ADCIF_stCalibrationStatus0,,app.elf", "2", "1");
+  ExpectedTestResult(debugger_result, "1", "Variable modified with 0x1");
+/*
+  STEP 4
+  1. Write variable ADCIF_CalibrationStatus1.
+*/
+  testStep("STEP", "Modify the ADC Calibration Status 1 variable --> Variable modified with 0x1.");
+  debugger_writeVariable("uint8", "ADCIF_stCalibrationStatus1,,app.elf", "2", "1");
+  ExpectedTestResult(debugger_result, "1", "Variable modified with 0x1");
+/*
+  STEP 5
+  1. Set breakpoint.
+*/
+  debugger_deleteAllBreakpoints();
+   testStep("STEP", "Run until return of the function, and read the test result --> Variable set to with 0x2.");
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdcCalib", "13"); // ATM_cfg.c - 214 - return u8TestResult;
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   debugger_readLocalVariable("*pu8TestResult"); // =NOK (2)
+  ExpectedTestResult(debugger_result, "0x2", "Variable equal to 0x2");
+  
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+
+}
+
+testcase Sw_Int_AdcIf_pseCheckAdcCalib_02()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The autotest shall read the calibration status provided by the AdcIf_Calib runnable(OK or NOK) and will output the result.");
+  AddRequirementInfo("ARCH_SW_pclEvtAdcCalibration", "This is the ADC calib autotest. It consists of checking that the ADC calibration is OK.");
+  //***************************************************************************************
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start -----------------------------------*/
+
+/*
+  STEP 1
+  1. Set breakpoint.
+*/  
+  testCaseComment("Action: ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration");
+  
+  debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function ADC_cbk_CheckAdcCalib at the RTE call for the autotest to check ADC callibration --> BP reached."); //   ATM_cfg.c - 212 -Rte_Call_pclCheckAdcCalib_AutotestCallback(&u8TestResult);
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_CheckAdcCalib", "2");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+/*
+  STEP 2
+  1. Set breakpoint.
+*/     
+  debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function AdcIf_Autotest_CheckAdcCalib at the if statement --> BP reached."); //  AdcIf_autotest.c - 164 - if ((E_OK == ADCIF_stCalibrationStatus0.Adc_UnitSelfTestStatus) && (E_OK == ADCIF_stCalibrationStatus1.Adc_UnitSelfTestStatus ))
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdcCalib", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  
+/*
+  STEP 3
+  1. Write variable ADCIF_CalibrationStatus0.
+*/
+  testStep("STEP", "Modify the ADC Calibration Status 0 variable --> Variable modified with 0x0.");
+  debugger_writeVariable("uint8", "ADCIF_stCalibrationStatus0,,app.elf", "2", "0");
+  ExpectedTestResult(debugger_result, "0", "Variable modified with 0x0");
+/*
+  STEP 4
+  1. Write variable ADCIF_CalibrationStatus1.
+*/
+  testStep("STEP", "Modify the ADC Calibration Status 1 variable --> Variable modified with 0x0.");
+  debugger_writeVariable("uint8", "ADCIF_stCalibrationStatus1,,app.elf", "2", "0");
+  ExpectedTestResult(debugger_result, "0", "Variable modified with 0x0");
+/*
+  STEP 5
+  1. Set breakpoint.
+*/
+  debugger_deleteAllBreakpoints();
+   testStep("STEP", "Run until return of the function, and read the test result --> Variable is equal to 1.");
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdcCalib", "13"); // ATM_cfg.c - 214 - return u8TestResult;
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   debugger_readLocalVariable("*pu8TestResult"); // =OK (1)
+  ExpectedTestResult(debugger_result, "1", "Variable is equal to 1");
+  
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+
+}
+
+testcase Sw_Int_AdcIf_pseCheckAdcCalib_03()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The autotest shall read the calibration status provided by the AdcIf_Calib runnable(OK or NOK) and will output the result.");
+  AddRequirementInfo("ARCH_SW_pclEvtAdcCalibration", "This is the ADC calib autotest. It consists of checking that the ADC calibration is OK.");
+  //***************************************************************************************
+  
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  
+  /*------------------------- Test scenario start -----------------------------------*/
+
+/*
+  STEP 1
+  1. Set breakpoint.
+*/  
+  testCaseComment("Action: ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration");
+  
+   testStep("STEP", "Set a breakpoint in function ADC_cbk_CheckAdcCalib at the RTE call for the autotest to check ADC callibration --> BP reached."); //   ATM_cfg.c - 212 -Rte_Call_pclCheckAdcCalib_AutotestCallback(&u8TestResult);
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_CheckAdcCalib", "2");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+/*
+  STEP 2
+  1. Set breakpoint.
+*/     
+  debugger_deleteAllBreakpoints();
+   testStep("STEP", "Set a breakpoint in function AdcIf_Autotest_CheckAdcCalib at the if statement --> BP reached."); //  AdcIf_autotest.c - 164 - if ((E_OK == ADCIF_stCalibrationStatus0.Adc_UnitSelfTestStatus) && (E_OK == ADCIF_stCalibrationStatus1.Adc_UnitSelfTestStatus ))
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdcCalib", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  
+/*
+  STEP 3
+  1. Write variable ADCIF_CalibrationStatus0.
+*/
+  testStep("STEP", "Modify the ADC Calibration Status 0 variable --> Variable is modified with 0x0.");
+  debugger_writeVariable("uint8", "ADCIF_stCalibrationStatus0,,app.elf", "2", "0");
+  ExpectedTestResult(debugger_result, "0", "Variable is modified with 0x0");
+/*
+  STEP 4
+  1. Write variable ADCIF_CalibrationStatus1.
+*/
+  testStep("STEP", "Modify the ADC Calibration Status 1 variable --> Variable is modified with 0x1.");
+  debugger_writeVariable("uint8", "ADCIF_stCalibrationStatus1,,app.elf", "2", "1");
+  ExpectedTestResult(debugger_result, "1", "Variable is modified with 0x1");
+/*
+  STEP 5
+  1. Set breakpoint.
+*/
+   testStep("STEP", "Run until return of the function, and read the test result --> Variable is set to 0x2.");
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdcCalib", "13"); // ATM_cfg.c - 214 - return u8TestResult;
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   debugger_readLocalVariable("*pu8TestResult"); // =NOK (2)
+  ExpectedTestResult(debugger_result, "2", "Variable is set to 0x2");
+  
+    //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+
+  
+}
+
+testcase Sw_Int_AdcIf_pseCheckAdcCalib_04()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseRawAdcService", "The autotest shall read the calibration status provided by the AdcIf_Calib runnable(OK or NOK) and will output the result.");
+  AddRequirementInfo("ARCH_SW_pclEvtAdcCalibration", "This is the ADC calib autotest. It consists of checking that the ADC calibration is OK.");
+  //***************************************************************************************
+  
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start -----------------------------------*/
+
+/*
+  STEP 1
+  1. Set breakpoint.
+*/  
+  testCaseComment("Action: ARCH_SW_AdcIf_pseCheckAdcCalib, ARCH_SW_pclEvtAdcCalibration");
+   testStep("STEP", "Set a breakpoint in function ADC_cbk_CheckAdcCalib at the RTE call for the autotest to check ADC callibration --> BP is reached."); //   ATM_cfg.c - 212 -Rte_Call_pclCheckAdcCalib_AutotestCallback(&u8TestResult);
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_CheckAdcCalib", "2");
+   debugger_reset();
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+/*
+  STEP 2
+  1. Set breakpoint.
+*/     
+   testStep("STEP", "Set a breakpoint in function AdcIf_Autotest_CheckAdcCalib at the if statement --> BP is reached."); //  AdcIf_autotest.c - 164 - if ((E_OK == ADCIF_stCalibrationStatus0.Adc_UnitSelfTestStatus) && (E_OK == ADCIF_stCalibrationStatus1.Adc_UnitSelfTestStatus ))
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdcCalib", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  
+/*
+  STEP 3
+  1. Write variable ADCIF_CalibrationStatus0.
+*/
+  testStep("STEP", "Modify the ADC Calibration Status 0 variable --> Variable is set to 0x1.");
+  debugger_writeVariable("uint8", "ADCIF_stCalibrationStatus0,,app.elf", "2", "1");
+  ExpectedTestResult(debugger_result, "1", "Variable is set to 0x1");
+/*
+  STEP 4
+  1. Write variable ADCIF_CalibrationStatus1.
+*/
+  testStep("STEP", "Modify the ADC Calibration Status 1 variable --> Variable is set to 0x0.");
+  debugger_writeVariable("uint8", "ADCIF_stCalibrationStatus1,,app.elf", "2", "0");
+  ExpectedTestResult(debugger_result, "0", "Variable is set to 0x0");
+/*
+  STEP 5
+  1. Set breakpoint.
+*/
+   testStep("STEP", "Run until return of the function, and read the test result --> Variable is equal to to 0x2.");
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdcCalib", "13"); // ATM_cfg.c - 214 - return u8TestResult;
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   debugger_readLocalVariable("*pu8TestResult"); // =NOK (2)
+   ExpectedTestResult(debugger_result, "2", "Variable is equal to to 0x2");
+  
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+
+}
+
+testcase Sw_Int_AdcIf_pseCheckAdc_01()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseCheckAdc, ARCH_SW_pclCheckAdc");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseCheckAdc", "The autotest shall read the low and high voltage refference for the ADC peripheral via the {AdcIf_runGetChannelValue} runnable and will compare them with thresholds stored in the NvM memory({NVP_u16ADCLowVoltageThrs}, {NVP_u16ADCHighVoltageThrs}). Comparison shall be done in mV.");
+  AddRequirementInfo("ARCH_SW_pclCheckAdc", "This is the ADC autotest. It consists of checking that the two reference voltages measured on the dedicated ADC channels do not drift.");
+  //***************************************************************************************
+  
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_AdcIf_pseCheckAdc, ARCH_SW_pclCheckAdc");
+   testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue in order to read the low and high voltage refference --> BP reached."); 
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  debugger_deleteAllBreakpoints();
+
+   testStep("STEP", "Set a breakpoint in function AdcIf_Autotest_CheckAdc at the if statement --> BP reached."); 
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdc", "18");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+
+  testStep("STEP", "Modify the NVP ADC Low Voltage Reference variable --> Variable was written with 1.");
+  debugger_writeLocalVariable("u16ADCRefLowVoltage", "1");
+  ExpectedTestResult(debugger_result, "1", "	Successfully overwritten local variableu16ADCRefLowVoltage with value 1");
+
+  testStep("STEP", "Modify the NVP ADC High Voltage Reference variable --> Variable was written with 0x12.");
+  debugger_writeLocalVariable("u16ADCRefHighVoltage", "12");  
+  ExpectedTestResult(debugger_result, "12", "	Successfully overwritten local variableu16ADCRefHighVoltage with value 12");
+  
+  testStep("STEP", "Set a breakpoint in function atm_cbk_CheckAdc in order to read autotest result --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_CheckAdc", "4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  
+/*
+  1. Evaluate test case is NOK.
+*/ 
+  testStep("STEP", "Evaluate test case result --> Variable is set to 0x2.");
+  debugger_readLocalVariable("u8TestResult"); // NOK (2)
+  ExpectedTestResult(debugger_result, "0x2", "Variable is set to 0x2");
+  
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+
+
+}
+
+testcase Sw_Int_AdcIf_pseCheckAdc_02()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseCheckAdc, ARCH_SW_pclCheckAdc");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseCheckAdc", "The autotest shall read the low and high voltage refference for the ADC peripheral via the {AdcIf_runGetChannelValue} runnable and will compare them with thresholds stored in the NvM memory({NVP_u16ADCLowVoltageThrs}, {NVP_u16ADCHighVoltageThrs}). Comparison shall be done in mV.");
+  AddRequirementInfo("ARCH_SW_pclCheckAdc", "This is the ADC autotest. It consists of checking that the two reference voltages measured on the dedicated ADC channels do not drift.");
+  //***************************************************************************************
+  
+    RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_AdcIf_pseCheckAdc, ARCH_SW_pclCheckAdc");
+  testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue in order to read the low and high voltage refference --> BP reached."); 
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  debugger_deleteAllBreakpoints();
+    
+   testStep("STEP", "Set a breakpoint in function AdcIf_Autotest_CheckAdc at the if statement --> BP reached."); 
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdc", "18");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  
+  testStep("STEP", "Modify the NVP ADC Low Voltage Reference variable --> Variable was written with F.");
+  debugger_writeLocalVariable("u16ADCRefLowVoltage", "F");
+  ExpectedTestResult(debugger_result, "F", "Variable was written with F");
+
+  testStep("STEP", "Modify the NVP ADC High Voltage Reference variable --> Variable was written with 137A.");
+  debugger_writeLocalVariable("u16ADCRefHighVoltage", "137A");
+  ExpectedTestResult(debugger_result, "137A", "Variable was written with 137A");
+  
+  testStep("STEP", "Set a breakpoint in function atm_cbk_CheckAdc in order to read autotest result --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_CheckAdc", "4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+
+  testStep("STEP", "Evaluate test case result.");
+  debugger_readLocalVariable("u8TestResult"); // NOK (2)
+  ExpectedTestResult(debugger_result, "0x2", "Variable was written with 0x2");
+  
+      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+
+}
+
+testcase Sw_Int_AdcIf_pseCheckAdc_03()
+{
+  //***********************************Test report header*********************************
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based, Interface Test");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_AdcIf_pseCheckAdc, ARCH_SW_pclCheckAdc");
+  AddRequirementInfo("ARCH_SW_AdcIf_pseCheckAdc", "The autotest shall read the low and high voltage refference for the ADC peripheral via the {AdcIf_runGetChannelValue} runnable and will compare them with thresholds stored in the NvM memory({NVP_u16ADCLowVoltageThrs}, {NVP_u16ADCHighVoltageThrs}). Comparison shall be done in mV.");
+  AddRequirementInfo("ARCH_SW_pclCheckAdc", "This is the ADC autotest. It consists of checking that the two reference voltages measured on the dedicated ADC channels do not drift.");
+  //***************************************************************************************
+  
+  RunPreTs();
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+
+  /*------------------------- Test scenario start ------------------------------*/
+/*
+  STEP 1
+  1. Set breakpoint.
+*/ 
+  testCaseComment("Action: ARCH_SW_AdcIf_pseCheckAdc, ARCH_SW_pclCheckAdc");
+    testStep("STEP", "Set a breakpoint in function AdcIf_runGetChannelValue in order to read the low and high voltage refference --> BP reached."); 
+   debugger_setRelativeFunctionBpAtLine("AdcIf_runGetChannelValue", "0");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  debugger_deleteAllBreakpoints();
+  
+   testStep("STEP", "Set a breakpoint in function AdcIf_Autotest_CheckAdc at the if statement --> BP reached."); 
+   debugger_setRelativeFunctionBpAtLine("AdcIf_Autotest_CheckAdc", "18");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  debugger_deleteAllBreakpoints();
+    
+  testStep("STEP", "Set a breakpoint in function atm_cbk_CheckAdc in order to read autotest result --> BP reached.");
+   debugger_setRelativeFunctionBpAtLine("atm_cbk_CheckAdc", "4");
+   debugger_run();
+   debugger_waitUntilBPisReached("5000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "CPU is stopped at BP");
+  
+/*
+  1. Evaluate test case is OK.
+*/ 
+  testStep("STEP", "Evaluate test case result --> Variable is set to 0x1.");
+  debugger_readLocalVariable("u8TestResult"); // OK (1)
+   ExpectedTestResult(debugger_result, "0x1", "Variable was written with 0x1");
+//      //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+
+}
+/*------------------------------------------------------------------------------
+                                TEST SEQUENCE
+------------------------------------------------------------------------------*/
+void MainTest()
+{
+  InitTestModule();
+////  Sw_Int_AdcIf_ptrrAsrGptServices_01();
+//  Sw_Int_AdcIf_ptrrAsrAdcServices_Adc_StartGroupConversion_AdcIf_runInit_01(); //NOK
+//  Sw_Int_AdcIf_ptrpEcuMIfServices_01(); // NOK
+//  Sw_Int_AdcIf_ptrpAdcIfServices_AdcIf_runInit_01();
+//  Sw_Int_AdcIf_pseStartConversion_01();
+//  Sw_Int_AdcIf_pseRawAdcService_01();
+//  Sw_Int_AdcIf_pseRawAdcService_02();
+//  Sw_Int_AdcIf_pseRawAdcService_03();
+//  Sw_Int_AdcIf_pseRawAdcService_04();
+//  Sw_Int_AdcIf_pseRawAdcService_05();
+//  Sw_Int_AdcIf_pseRawAdcService_06();
+//  Sw_Int_AdcIf_pseRawAdcService_07();
+//  Sw_Int_AdcIf_pseRawAdcService_08();
+//  Sw_Int_AdcIf_pseRawAdcService_09();
+//  Sw_Int_AdcIf_pseRawAdcService_10();
+//  Sw_Int_AdcIf_pseRawAdcService_11();
+//  Sw_Int_AdcIf_pseCheckAdcCalib_01();
+//  Sw_Int_AdcIf_pseCheckAdcCalib_02();
+//  Sw_Int_AdcIf_pseCheckAdcCalib_03();
+//  Sw_Int_AdcIf_pseCheckAdcCalib_04();
+  Sw_Int_AdcIf_pseCheckAdc_01();
+  Sw_Int_AdcIf_pseCheckAdc_02();
+  Sw_Int_AdcIf_pseCheckAdc_03();
+}

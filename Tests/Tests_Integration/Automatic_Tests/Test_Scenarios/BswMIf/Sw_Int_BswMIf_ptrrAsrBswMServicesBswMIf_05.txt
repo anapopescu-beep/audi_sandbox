@@ -1,0 +1,45 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_Cyclic_10msTimer
+ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_Cyclic_10msTimer: The BswM_RequestMode runnable shall be called in the BswM_Cyclic_10msTimer runnable in order to: - Set BswM Passenger Occupancy port to notify that pasager occupancy was detected - Set BswM Passenger Occupancy port to notify that pasager occupancy was not detected - Set BswM ECU Shutdown Port to be able to notify that SHUTDOWN state is requested - Set BswM EcuState Port to be able to notify that LOW POWER state is requested - Set BswM EcuState Port to be able to notify that RUN state is requested - Set BswM TX PDU request port to notify that TX Pdu disable is requested
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_Cyclic_10msTimer
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to change post run timer value 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_Cyclic_10msTimer in order to change Passenger Occupancy Status 
+		Expected result:  BP was set
+
+	Step 6: Change value for Passenger Occupancy Status with pasager occupancy is detected
+		Expected result:  Succesfully changed
+
+	Step 7: Set a BP in function BswM_Cyclic_10msTimer in order to call BswM_RequestMode 
+		Expected result:  BP was set
+
+	Step 8: Set a BP in function BswM_RequestMode in order to: - Set BswM Passenger Occupancy port to notify that pasager occupancy was detected - Set BswM Passenger Occupancy port to notify that pasager occupancy was not detected - Set BswM ECU Shutdown Port to be able to notify that SHUTDOWN state is requested - Set BswM EcuState Port to be able to notify that LOW POWER state is requested - Set BswM EcuState Port to be able to notify that RUN state is requested - Set BswM TX PDU request port to notify that TX Pdu disable is requested 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function BswM_Cyclic_10msTimer in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 10: Return ECU to default values

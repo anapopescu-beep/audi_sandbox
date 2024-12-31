@@ -1,0 +1,1699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?module BswM?>
+<xgen xmlns="http://www.elektrobit.com/2013/xgen" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <module name="BswM" version="1.17.1 B577598">
+        <configuration class="PreCompile">
+            <!-- only generate the contents of BswM_CfgTypes.h once, for the first variant -->
+            <?artifact type="types-h" directory="include" file="BswM_CfgTypes.h" generate="yes"?>
+
+            <parameter name="relocatable-enable">
+                <boolean-value>true</boolean-value>
+            </parameter>
+<type name="BswMPduGroupSwitchActionType">
+    <struct>
+        <member count="4" name="EnableMask" type="uint8">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member count="4" name="DisableMask" type="uint8">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="RequestInit" type="uint8">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+    </struct>
+</type>
+<type name="BswMActionListItemType">
+    <struct>
+        <member name="ArtifactIndex" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="ActionListItemType" type="uint8">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="IsAbortOnFail" type="uint8">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="ActionType" type="uint8">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+    </struct>
+</type>
+<type name="BswMRangeType">
+    <struct>
+        <member name="Head" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="Tail" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+    </struct>
+</type>
+<type name="BswMActionListType">
+    <struct>
+        <member name="ActionListItemSegment" type="BswMRangeType">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="IsTriggered" type="uint8">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+    </struct>
+</type>
+<type name="BswMRuleType">
+    <struct>
+        <member name="ID" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="LogicalExprIndex" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="TrueActionListIndex" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="FalseActionListIndex" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="RuleInitState" type="uint8">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+    </struct>
+</type>
+<type name="BswM_ConfigType">
+    <struct>
+        <member name="RuleTable" type="BswMRuleType">
+            <compiler-abstraction>
+                <ref2cfg/>
+            </compiler-abstraction>
+        </member>
+        <member name="RuleDependencyTable" type="uint16">
+            <compiler-abstraction>
+                <ref2cfg/>
+            </compiler-abstraction>
+        </member>
+        <member name="RuleDependencyListRangeTable" type="BswMRangeType">
+            <compiler-abstraction>
+                <ref2cfg/>
+            </compiler-abstraction>
+        </member>
+        <member name="ActionListTable" type="BswMActionListType">
+            <compiler-abstraction>
+                <ref2cfg/>
+            </compiler-abstraction>
+        </member>
+        <member name="ActionListItemTable" type="BswMActionListItemType">
+            <compiler-abstraction>
+                <ref2cfg/>
+            </compiler-abstraction>
+        </member>
+        <member name="PduGroupSwitchActionTable" type="BswMPduGroupSwitchActionType">
+            <compiler-abstraction>
+                <ref2cfg/>
+            </compiler-abstraction>
+        </member>
+        <member name="UInt8InitialValuesTable" type="uint8">
+            <compiler-abstraction>
+                <ref2cfg/>
+            </compiler-abstraction>
+        </member>
+        <member name="UInt16InitialValuesTable" type="uint16">
+            <compiler-abstraction>
+                <ref2cfg/>
+            </compiler-abstraction>
+        </member>
+        <member name="UInt32InitialValuesTable" type="uint32">
+            <compiler-abstraction>
+                <ref2cfg/>
+            </compiler-abstraction>
+        </member>
+        <member name="PlatformSignature" type="uint32">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="LcfgSignature" type="uint32">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="CfgSignature" type="uint32">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="PublicInfoSignature" type="uint32">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="NumRules" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="NumRulesDeferred" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member name="NumActionLists" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+    </struct>
+</type>
+
+
+        </configuration>
+        <configuration class="PostBuild">
+            <?artifact type="postbuild-h" directory="include" file="BswM_PBcfg.h" generate="yes"?>
+            <?artifact type="postbuild-c" directory="src" file="BswM_PBcfg.c" generate="yes"?>
+<type name="BswM_ConfigLayoutType">
+    <struct>
+        <member count="1" name="BswM_RootConfig" type="BswM_ConfigType">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member count="23" name="RuleTable" type="BswMRuleType">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member count="34" name="RuleDependencyTable" type="uint16">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member count="10" name="RuleDependencyListRangeTable" type="BswMRangeType">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member count="21" name="ActionListTable" type="BswMActionListType">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member count="32" name="ActionListItemTable" type="BswMActionListItemType">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member count="1" name="PduGroupSwitchActionTable" type="BswMPduGroupSwitchActionType">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+        <member count="2" name="UInt8InitialValuesTable" type="uint8">
+            <compiler-abstraction>
+                <var memory-class="TYPEDEF"/>
+            </compiler-abstraction>
+        </member>
+    </struct>
+</type>
+<type name="BswM_ConstConfigLayoutType">
+    <reference type="BswM_ConfigLayoutType">
+        <compiler-abstraction>
+            <const memory-class="TYPEDEF"/>
+        </compiler-abstraction>
+    </reference>
+</type>
+
+
+            <memory-section name="CONFIG_DATA_UNSPECIFIED">
+            <parameter name="postbuild-configuration-name.BswM_ConfigLayout">
+                <symbolic-value>BSWM_PB_CFG_NAME</symbolic-value>
+            </parameter><instance name="BswM_ConfigLayout" type="BswM_ConstConfigLayoutType">
+    <parameter name="postbuild-configuration-name">
+        <parameter reference="postbuild-configuration-name.BswM_ConfigLayout"/>
+    </parameter>
+    <compiler-abstraction>
+        <var memory-class="BSWM_CONST"/>
+    </compiler-abstraction>
+    <field>
+        <field>
+            <field>
+                <ref>
+                    <struct-field name="RuleTable"/>
+                    <array-field index="0"/>
+                </ref>
+            </field>
+            <field>
+                <ref>
+                    <struct-field name="RuleDependencyTable"/>
+                    <array-field index="0"/>
+                </ref>
+            </field>
+            <field>
+                <ref>
+                    <struct-field name="RuleDependencyListRangeTable"/>
+                    <array-field index="0"/>
+                </ref>
+            </field>
+            <field>
+                <ref>
+                    <struct-field name="ActionListTable"/>
+                    <array-field index="0"/>
+                </ref>
+            </field>
+            <field>
+                <ref>
+                    <struct-field name="ActionListItemTable"/>
+                    <array-field index="0"/>
+                </ref>
+            </field>
+            <field>
+                <ref>
+                    <struct-field name="PduGroupSwitchActionTable"/>
+                    <array-field index="0"/>
+                </ref>
+            </field>
+            <field>
+                <ref>
+                    <struct-field name="UInt8InitialValuesTable"/>
+                    <array-field index="0"/>
+                </ref>
+            </field>
+            <field>
+                <ref/>
+            </field>
+            <field>
+                <ref/>
+            </field>
+            <field>
+                <int>2147485970</int>
+            </field>
+            <field>
+                <int>3958107115</int>
+            </field>
+            <field>
+                <int>408221305</int>
+            </field>
+            <field>
+                <int>3642131911</int>
+            </field>
+            <field>
+                <int>23</int>
+            </field>
+            <field>
+                <int>17</int>
+            </field>
+            <field>
+                <int>21</int>
+            </field>
+        </field>
+    </field>
+    <field>
+        <field comment="BswM_EB_Rule_BswMRule_EnableTxPdu">
+            <field>
+                <int>20</int>
+            </field>
+            <field>
+                <int>20</int>
+            </field>
+            <field>
+                <int>19</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromWakeupState">
+            <field>
+                <int>19</int>
+            </field>
+            <field>
+                <int>12</int>
+            </field>
+            <field>
+                <int>12</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromLowPwrStateSecondCondition">
+            <field>
+                <int>18</int>
+            </field>
+            <field>
+                <int>17</int>
+            </field>
+            <field>
+                <int>18</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromLowPwrStateFirstCondition">
+            <field>
+                <int>17</int>
+            </field>
+            <field>
+                <int>16</int>
+            </field>
+            <field>
+                <int>17</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterShutdownStateFromLowPwrState">
+            <field>
+                <int>16</int>
+            </field>
+            <field>
+                <int>19</int>
+            </field>
+            <field>
+                <int>6</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterLowPwrStateFromPostRunState">
+            <field>
+                <int>15</int>
+            </field>
+            <field>
+                <int>18</int>
+            </field>
+            <field>
+                <int>16</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromPostRunStateSecondCondition">
+            <field>
+                <int>14</int>
+            </field>
+            <field>
+                <int>14</int>
+            </field>
+            <field>
+                <int>15</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromPostRunStateFirstCondition">
+            <field>
+                <int>13</int>
+            </field>
+            <field>
+                <int>13</int>
+            </field>
+            <field>
+                <int>14</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterPostRunStateFromRunState">
+            <field>
+                <int>12</int>
+            </field>
+            <field>
+                <int>15</int>
+            </field>
+            <field>
+                <int>13</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_StartComEffective">
+            <field>
+                <int>10</int>
+            </field>
+            <field>
+                <int>10</int>
+            </field>
+            <field>
+                <int>10</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_StartShutdownSequence">
+            <field>
+                <int>6</int>
+            </field>
+            <field>
+                <int>6</int>
+            </field>
+            <field>
+                <int>6</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_WakeUpExpired">
+            <field>
+                <int>5</int>
+            </field>
+            <field>
+                <int>5</int>
+            </field>
+            <field>
+                <int>5</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_WakeUpValidated">
+            <field>
+                <int>4</int>
+            </field>
+            <field>
+                <int>4</int>
+            </field>
+            <field>
+                <int>4</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_BswM_GoOffOneB">
+            <field>
+                <int>3</int>
+            </field>
+            <field>
+                <int>3</int>
+            </field>
+            <field>
+                <int>3</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_BswM_GoOffOneA">
+            <field>
+                <int>2</int>
+            </field>
+            <field>
+                <int>2</int>
+            </field>
+            <field>
+                <int>2</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_BswM_StartupTwoB">
+            <field>
+                <int>1</int>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_BswM_StartupTwoA">
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_DisableTxPdu_DcmRequest">
+            <field>
+                <int>22</int>
+            </field>
+            <field>
+                <int>22</int>
+            </field>
+            <field>
+                <int>20</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnableTxPdu_DcmRequest">
+            <field>
+                <int>21</int>
+            </field>
+            <field>
+                <int>21</int>
+            </field>
+            <field>
+                <int>19</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_PrepareJumpToFBL">
+            <field>
+                <int>11</int>
+            </field>
+            <field>
+                <int>11</int>
+            </field>
+            <field>
+                <int>11</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_PrepareSWReset">
+            <field>
+                <int>9</int>
+            </field>
+            <field>
+                <int>9</int>
+            </field>
+            <field>
+                <int>9</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_ExecuteReset">
+            <field>
+                <int>8</int>
+            </field>
+            <field>
+                <int>8</int>
+            </field>
+            <field>
+                <int>8</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_PrepareHWReset">
+            <field>
+                <int>7</int>
+            </field>
+            <field>
+                <int>7</int>
+            </field>
+            <field>
+                <int>7</int>
+            </field>
+            <field>
+                <int>65535</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+    </field>
+    <field>
+        <field comment="BswM_EB_Rule_BswMRule_BswM_StartupTwoA">
+            <int>16</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_BswM_StartupTwoB">
+            <int>15</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_BswM_GoOffOneA">
+            <int>14</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_BswM_GoOffOneB">
+            <int>13</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_WakeUpValidated">
+            <int>12</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_WakeUpExpired">
+            <int>11</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_StartComEffective">
+            <int>9</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_StartComEffective">
+            <int>9</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_WakeUpValidated">
+            <int>12</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_WakeUpExpired">
+            <int>11</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_PrepareHWReset">
+            <int>22</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_ExecuteReset">
+            <int>21</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_PrepareSWReset">
+            <int>20</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_PrepareJumpToFBL">
+            <int>19</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromPostRunStateFirstCondition">
+            <int>7</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterShutdownStateFromLowPwrState">
+            <int>4</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromLowPwrStateFirstCondition">
+            <int>3</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterPostRunStateFromRunState">
+            <int>8</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromPostRunStateFirstCondition">
+            <int>7</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromPostRunStateSecondCondition">
+            <int>6</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterLowPwrStateFromPostRunState">
+            <int>5</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterShutdownStateFromLowPwrState">
+            <int>4</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromLowPwrStateFirstCondition">
+            <int>3</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromLowPwrStateSecondCondition">
+            <int>2</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromWakeupState">
+            <int>1</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterShutdownStateFromLowPwrState">
+            <int>4</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromLowPwrStateFirstCondition">
+            <int>3</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromLowPwrStateSecondCondition">
+            <int>2</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterPostRunStateFromRunState">
+            <int>8</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnterRunStateFromPostRunStateSecondCondition">
+            <int>6</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnableTxPdu">
+            <int>0</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_StartShutdownSequence">
+            <int>10</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_EnableTxPdu_DcmRequest">
+            <int>18</int>
+        </field>
+        <field comment="BswM_EB_Rule_BswMRule_DisableTxPdu_DcmRequest">
+            <int>17</int>
+        </field>
+    </field>
+    <field>
+        <field comment="BswM_RequestPort">
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>7</int>
+            </field>
+        </field>
+        <field comment="BswmM_CanSM_RequestPort">
+            <field>
+                <int>7</int>
+            </field>
+            <field>
+                <int>8</int>
+            </field>
+        </field>
+        <field comment="BswM_EcuM_RequestPort">
+            <field>
+                <int>8</int>
+            </field>
+            <field>
+                <int>10</int>
+            </field>
+        </field>
+        <field comment="BswM_Dcm_RequestPort">
+            <field>
+                <int>10</int>
+            </field>
+            <field>
+                <int>14</int>
+            </field>
+        </field>
+        <field comment="BswM_PassangerOccupancy_RequestPort">
+            <field>
+                <int>14</int>
+            </field>
+            <field>
+                <int>17</int>
+            </field>
+        </field>
+        <field comment="BswM_EcuState_RequestPort">
+            <field>
+                <int>17</int>
+            </field>
+            <field>
+                <int>25</int>
+            </field>
+        </field>
+        <field comment="BswM_WakeupType_RequestPort">
+            <field>
+                <int>25</int>
+            </field>
+            <field>
+                <int>28</int>
+            </field>
+        </field>
+        <field comment="BswM_TxPdu_RequestPort">
+            <field>
+                <int>28</int>
+            </field>
+            <field>
+                <int>31</int>
+            </field>
+        </field>
+        <field comment="BswM_EcuShutdown_RequestPort">
+            <field>
+                <int>31</int>
+            </field>
+            <field>
+                <int>32</int>
+            </field>
+        </field>
+        <field comment="BswM_Dcm_ComM_RequestPort">
+            <field>
+                <int>32</int>
+            </field>
+            <field>
+                <int>34</int>
+            </field>
+        </field>
+    </field>
+    <field>
+        <field comment="BswMActionList_BswMRule_BswM_StartupTwoA">
+            <field>
+                <field>
+                    <int>0</int>
+                </field>
+                <field>
+                    <int>1</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_BswM_StartupTwoB">
+            <field>
+                <field>
+                    <int>1</int>
+                </field>
+                <field>
+                    <int>2</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_BswM_GoOffOneA">
+            <field>
+                <field>
+                    <int>2</int>
+                </field>
+                <field>
+                    <int>3</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_BswM_GoOffOneB">
+            <field>
+                <field>
+                    <int>3</int>
+                </field>
+                <field>
+                    <int>4</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_WakeUpValidated">
+            <field>
+                <field>
+                    <int>4</int>
+                </field>
+                <field>
+                    <int>5</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_WakeUpExpired">
+            <field>
+                <field>
+                    <int>5</int>
+                </field>
+                <field>
+                    <int>6</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_StartShutdownSequence">
+            <field>
+                <field>
+                    <int>6</int>
+                </field>
+                <field>
+                    <int>8</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_PrepareHWReset">
+            <field>
+                <field>
+                    <int>8</int>
+                </field>
+                <field>
+                    <int>10</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_ExecuteReset">
+            <field>
+                <field>
+                    <int>10</int>
+                </field>
+                <field>
+                    <int>11</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_PrepareSWReset">
+            <field>
+                <field>
+                    <int>11</int>
+                </field>
+                <field>
+                    <int>13</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_StartComEffective">
+            <field>
+                <field>
+                    <int>13</int>
+                </field>
+                <field>
+                    <int>14</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_PrepareJumpToFBL">
+            <field>
+                <field>
+                    <int>14</int>
+                </field>
+                <field>
+                    <int>16</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_OnRunFromWakeup">
+            <field>
+                <field>
+                    <int>16</int>
+                </field>
+                <field>
+                    <int>19</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_OnPostRunFromRun">
+            <field>
+                <field>
+                    <int>19</int>
+                </field>
+                <field>
+                    <int>21</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_OnRunFromPostRunPassengerDetected">
+            <field>
+                <field>
+                    <int>21</int>
+                </field>
+                <field>
+                    <int>22</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_OnRunFromPostRunBusWakeup">
+            <field>
+                <field>
+                    <int>22</int>
+                </field>
+                <field>
+                    <int>23</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_OnLowPwrFromPostRun">
+            <field>
+                <field>
+                    <int>23</int>
+                </field>
+                <field>
+                    <int>25</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_OnRunFromLowPwrPassengerDetected">
+            <field>
+                <field>
+                    <int>25</int>
+                </field>
+                <field>
+                    <int>28</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_OnRunFromLowPwrBusWakeup">
+            <field>
+                <field>
+                    <int>28</int>
+                </field>
+                <field>
+                    <int>30</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_EnableTxPdu">
+            <field>
+                <field>
+                    <int>30</int>
+                </field>
+                <field>
+                    <int>31</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field comment="BswMActionList_BswMRule_DisableTxPdu">
+            <field>
+                <field>
+                    <int>31</int>
+                </field>
+                <field>
+                    <int>32</int>
+                </field>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+    </field>
+    <field>
+        <field>
+            <field comment="BswMAction_BswM_OnStartupTwoA">
+                <int>0</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_OnStartupTwoB">
+                <int>1</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_OnGoOffOneA">
+                <int>3</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_OnWakeupExpired">
+                <int>4</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_OnWakeupValidation">
+                <int>5</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_OnWakeupExpired">
+                <int>4</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_EcuM_SelectShutdownTarget_SLEEP">
+                <int>19</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_On_Prep_Shutdown">
+                <int>6</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_EcuM_SelectShutdownTarget_RESET">
+                <int>7</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_HWResetNotification">
+                <int>11</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_ProceedReset">
+                <int>9</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_EcuM_SelectShutdownTarget_RESET">
+                <int>7</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_SWResetNotification">
+                <int>10</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_OnStartComEffective">
+                <int>8</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_PrepareJumpToFBL">
+                <int>12</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_EcuM_SelectShutdownTarget_RESET">
+                <int>7</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_ComM_EnablePdus">
+                <int>2</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>1</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_RunStateFromWakeup">
+                <int>13</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_OnRunFromSafeState">
+                <int>25</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_PostRunStateFromRun">
+                <int>14</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_ComM_DisableTxPduConfirmation">
+                <int>22</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_RunStateFromPostRunPassengerDetected">
+                <int>23</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_RunStateFromPostRunBusAvailable">
+                <int>15</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_OnSafeStateFromPostRun">
+                <int>24</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_LowPwrStateFromPostRun">
+                <int>16</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_RunStateFromLowPwr_ActiveWake">
+                <int>17</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_ComM_FullCom">
+                <int>20</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_OnRunFromSafeState">
+                <int>25</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_RunStateFromLowPwr_PassiveWake">
+                <int>18</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_BswM_OnRunFromSafeState">
+                <int>25</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_ComM_EnableTxPduConfirmation">
+                <int>21</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+        <field>
+            <field comment="BswMAction_ComM_DisableTxPduConfirmation">
+                <int>22</int>
+            </field>
+            <field comment="BSWM_ACTION">
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+    </field>
+    <field>
+        <field>
+            <field>
+                <field>
+                    <int>1</int>
+                </field>
+                <field>
+                    <int>0</int>
+                </field>
+                <field>
+                    <int>0</int>
+                </field>
+                <field>
+                    <int>64</int>
+                </field>
+            </field>
+            <field>
+                <field>
+                    <int>255</int>
+                </field>
+                <field>
+                    <int>255</int>
+                </field>
+                <field>
+                    <int>255</int>
+                </field>
+                <field>
+                    <int>255</int>
+                </field>
+            </field>
+            <field>
+                <int>0</int>
+            </field>
+        </field>
+    </field>
+    <field>
+        <field comment="Initial value of Port BswM_Dcm_RequestPort">
+            <int>5</int>
+        </field>
+        <field comment="Initial value of Port BswM_Dcm_ComM_RequestPort">
+            <int>0</int>
+        </field>
+    </field>
+</instance>
+
+
+            </memory-section>
+        </configuration>
+        <configuration class="PostBuild">
+            <?artifact type="int-h" directory="include" file="BswM_Int_Cfg.h" generate="no"?>
+            <!-- The following symbols are currently undefined and, in case
+                 of a Postbuild binary generation, will yield a generate error.
+                 This is a failsafe measure.
+            -->
+        </configuration>
+    </module>
+  <xi:include href="Base.xgen" xpointer="element(/1/1)" />
+</xgen>

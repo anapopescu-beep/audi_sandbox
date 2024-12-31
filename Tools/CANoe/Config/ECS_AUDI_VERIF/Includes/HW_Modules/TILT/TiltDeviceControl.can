@@ -1,0 +1,45 @@
+/*@!Encoding:1252*/
+includes
+{ 
+  #include "TiltDeviceControl.cin"
+}
+
+variables
+{
+  
+}
+
+void MainTest()
+{    
+  TiltDeviceControl();
+}
+
+testcase TiltDeviceControl()
+{
+  if(@sysvar::TiltDeviceControlPanel::tiltControlStatus == 1)
+  {
+    TiltDeviceSetAngle(0x00, @sysvar::TiltDeviceControlPanel::SetAngleValue_X);
+    @sysvar::TiltDeviceControlPanel::CurrentPosition_X=iTiltDeviceInstantaneousPosition;
+  }
+  else if(@sysvar::TiltDeviceControlPanel::tiltControlStatus == 2)
+  {
+    TiltDeviceSetAngle(0x01, @sysvar::TiltDeviceControlPanel::SetAngleValue_Y); 
+     @sysvar::TiltDeviceControlPanel::CurrentPosition_Y=iTiltDeviceInstantaneousPosition;
+  }
+  else if(@sysvar::TiltDeviceControlPanel::tiltControlStatus == 3)
+  {
+    TiltDeviceConfigure(0, @sysvar::TiltDeviceControlPanel::SpeedValue_X, @sysvar::TiltDeviceControlPanel::AccelValue_X);
+  }
+  else if(@sysvar::TiltDeviceControlPanel::tiltControlStatus == 4)
+  {
+    TiltDeviceConfigure(1, @sysvar::TiltDeviceControlPanel::SpeedValue_Y, @sysvar::TiltDeviceControlPanel::AccelValue_Y);
+  }
+  else if(@sysvar::TiltDeviceControlPanel::tiltControlStatus == 5)
+  {
+    TiltDeviceSetAngle(0x00, 0);
+    @sysvar::TiltDeviceControlPanel::CurrentPosition_X=iTiltDeviceInstantaneousPosition; 
+    TiltDeviceSetAngle(0x01, 0);
+    @sysvar::TiltDeviceControlPanel::CurrentPosition_Y=iTiltDeviceInstantaneousPosition; 
+  }
+}
+

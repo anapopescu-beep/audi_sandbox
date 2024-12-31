@@ -1,0 +1,338 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  float sig_eCS_SBS_Belegung_Reihe2_FA;
+  float sig_eCS_Gurtschloss_Status_Reihe2_FA;
+     
+}
+
+on message eCS_01
+{ 
+
+  sig_eCS_SBS_Belegung_Reihe2_FA = getSignal(eCS_SBS_Belegung_Reihe2_FA);  
+  sig_eCS_Gurtschloss_Status_Reihe2_FA = getSignal(eCS_Gurtschloss_Status_Reihe2_FA);  
+}
+ 
+//this will be writing into memory
+on sysvar_update DPOT::SetSeatVariantDropDown
+{
+    if (@sysvar::DPOT::SetSeatVariantDropDown == 0)
+    {
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 1;
+    }  
+    else if (@sysvar::DPOT::SetSeatVariantDropDown == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 2;
+    }  
+    else if (@sysvar::DPOT::SetSeatVariantDropDown == 2)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 3;
+    }    
+}
+
+
+//FAHRER
+on sysvar_update DPOT::ChangeBuckleRadioOption_FA
+{
+    if (@sysvar::DPOT::ChangeBuckleRadioOption_FA == 2)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 4;
+    }     
+    else if (@sysvar::DPOT::ChangeBuckleRadioOption_FA == 3)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 5;
+    } 
+}
+
+on sysvar_update DPOT::ChangeOccupancyRadioOption_FA
+{
+    if (@sysvar::DPOT::ChangeOccupancyRadioOption_FA == 2)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 6;
+    } 
+    else if (@sysvar::DPOT::ChangeOccupancyRadioOption_FA == 3)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 7;
+    } 
+}
+
+on sysvar_update DPOT::RearSeatStatusDropDown_FA
+{
+    if (@sysvar::DPOT::RearSeatStatusDropDown_FA == 0)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 8;
+    } 
+    else if (@sysvar::DPOT::RearSeatStatusDropDown_FA == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 9;
+    } 
+    else if (@sysvar::DPOT::RearSeatStatusDropDown_FA == 2)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 10;
+    } 
+    else if (@sysvar::DPOT::RearSeatStatusDropDown_FA == 3)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 11;
+    } 
+    else if (@sysvar::DPOT::RearSeatStatusDropDown_FA == 4)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 12;
+    } 
+}
+
+on sysvar_update DPOT::EnableDisableBuckleSwitch_FA
+{
+    if (@sysvar::DPOT::EnableDisableBuckleSwitch_FA == 0)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 13;
+    } 
+    else if (@sysvar::DPOT::EnableDisableBuckleSwitch_FA == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 14;
+    } 
+}
+
+on sysvar_update DPOT::EnableDisableSeatSwitch_FA
+{
+    if (@sysvar::DPOT::EnableDisableSeatSwitch_FA == 0)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 15;
+    } 
+    else if (@sysvar::DPOT::EnableDisableSeatSwitch_FA == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 16;
+    } 
+}
+
+on sysvar_update DPOT::SetResDropDown_FA
+{
+    if (@sysvar::DPOT::SetResDropDown_FA == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 17;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_FA == 2)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 18;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_FA == 3)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 19;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_FA == 4)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 20;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_FA == 5)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 21;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_FA == 6)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 22;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_FA == 7)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 23;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_FA == 8)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 24;
+    }  
+}
+
+on sysvar_update DPOT::SetResistanceButton_FA
+{
+    if (@sysvar::DPOT::SetResistanceButton_FA == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 25;
+    } 
+}
+
+on sysvar_update DPOT::ResetDigiPotButton_FA
+{
+    if (@sysvar::DPOT::ResetDigiPotButton_FA == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 26;
+    } 
+}
+
+
+
+//BEIFAHRER
+on sysvar_update DPOT::ChangeBuckleRadioOption_BF
+{
+    if (@sysvar::DPOT::ChangeBuckleRadioOption_BF == 2)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 27;
+    } 
+    else if (@sysvar::DPOT::ChangeBuckleRadioOption_BF == 3)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 28;
+    } 
+}
+
+on sysvar_update DPOT::ChangeOccupancyRadioOption_BF
+{
+    if (@sysvar::DPOT::ChangeOccupancyRadioOption_BF == 2)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 29;
+    } 
+    else if (@sysvar::DPOT::ChangeOccupancyRadioOption_BF == 3)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 30;
+    } 
+}
+
+on sysvar_update DPOT::RearSeatStatusDropDown_BF
+{
+    if (@sysvar::DPOT::RearSeatStatusDropDown_BF == 0)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 31;
+    } 
+    else if (@sysvar::DPOT::RearSeatStatusDropDown_BF == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 32;
+    } 
+    else if (@sysvar::DPOT::RearSeatStatusDropDown_BF == 2)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 33;
+    } 
+    else if (@sysvar::DPOT::RearSeatStatusDropDown_BF == 3)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 34;
+    } 
+    else if (@sysvar::DPOT::RearSeatStatusDropDown_BF == 4)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 35;
+    } 
+}
+
+on sysvar_update DPOT::EnableDisableBuckleSwitch_BF
+{
+    if (@sysvar::DPOT::EnableDisableBuckleSwitch_BF == 0)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 36;
+    } 
+    else if (@sysvar::DPOT::EnableDisableBuckleSwitch_BF == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 37;
+    } 
+}
+
+on sysvar_update DPOT::EnableDisableSeatSwitch_BF
+{
+    if (@sysvar::DPOT::EnableDisableSeatSwitch_BF == 0)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 38;
+    } 
+    else if (@sysvar::DPOT::EnableDisableSeatSwitch_BF == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 39;
+    } 
+}
+
+on sysvar_update DPOT::SetResDropDown_BF
+{
+    if (@sysvar::DPOT::SetResDropDown_BF == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 40;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_BF == 2)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 41;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_BF == 3)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 42;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_BF == 4)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 43;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_BF == 5)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 44;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_BF == 6)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 45;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_BF == 7)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 46;
+    } 
+    else if (@sysvar::DPOT::SetResDropDown_BF == 8)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 47;
+    }   
+}
+
+on sysvar_update DPOT::SetResistanceButton_BF
+{
+    if (@sysvar::DPOT::SetResistanceButton_BF == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 48;
+    } 
+}
+
+on sysvar_update DPOT::ResetDigiPotButton_BF
+{
+    if (@sysvar::DPOT::ResetDigiPotButton_BF == 1)
+    {  
+      @sysvar::DPOT::DPOTTrigger = 1;
+      @sysvar::DPOT::DPOTControlStatus = 49;
+    } 
+}

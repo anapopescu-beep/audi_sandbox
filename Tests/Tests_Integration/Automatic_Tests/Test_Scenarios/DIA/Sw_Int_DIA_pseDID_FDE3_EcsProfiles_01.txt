@@ -1,0 +1,42 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_WriteData, ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_ReadData
+ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_WriteData: Interface used to write ECS profiles configuration n * 12 bytes. (n = 2).
+ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_ReadData: Interface used to read ECS profiles configuration n * 12 bytes. (n = 2).
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_WriteData
+
+	Step 2: Send diagnostic request in order to go in Supplier Session
+
+	Step 3: Send request for press Supplier Security Access button
+
+	Step 4: Send diagnostic request in order to write ECS profiles configuration with value 0x16
+
+Action: ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_ReadData
+
+	Step 5: Send diagnostic request in order to go in Supplier Session
+
+	Step 6: Send request for press Supplier Security Access button
+
+	Step 7: Send diagnostic request in order to read ECS profiles configuration
+
+	Step 8: Set a BP in function DIA_runDidFDE3_EcsProfilesRead in order to read ECS profiles configuration 
+		Expected result:  BP was set
+
+	Step 9: Read Ecs Profile value 
+		Expected result:  Ecs Profile succesfully read
+
+Postcondition
+
+	Step 10: Return ECU to default values

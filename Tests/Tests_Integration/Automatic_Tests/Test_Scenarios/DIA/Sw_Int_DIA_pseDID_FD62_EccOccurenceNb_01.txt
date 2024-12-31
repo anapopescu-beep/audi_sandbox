@@ -1,0 +1,42 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_DIA_pseDID_FD62_EccOccurenceNb
+ARCH_SW_DIA_pseDID_FD62_EccOccurenceNb: Interface used to read the number of ECCs.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_DIA_pseDID_FD62_EccOccurenceNb
+
+	Step 2: Set a BP in function atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunPFlashMemoryCorruption function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function MIC_Autotest_RunPFlashMemoryCorruption in order to confirm the detected reset cause 
+		Expected result:  BP was set
+
+	Step 4: Modify Reset Cause value in order to detect ECC 
+		Expected result:  Reset cause value is set.
+
+	Step 5: Send diagnostic request in order to go in Supplier Session
+
+	Step 6: Send request for press Supplier Security Access button
+
+	Step 7: Send diagnostic request in order to read the number of ECCs
+
+	Step 8: Set a BP in function DIA_runDidFD62_EccOccurenceNbRead in order read the number of ECCs 
+		Expected result:  BP was set
+
+	Step 9: Read the number of ECCs value  
+		Expected result:  Nlumber of ECCs succesfully read
+
+Postcondition
+
+	Step 10: Return ECU to default values

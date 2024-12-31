@@ -1,0 +1,122 @@
+#ifndef SBC_H_
+#define SBC_H_ 1
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+H-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+*******************************************************************************
+Overview of the interfaces:
+   High level module for controlling the SBC chip. In charge of:
+      o Initialization;
+      o Shutdown;
+      o Cyclic monitor and WD refresh;
+      o Sleep;
+      o Normal mode;
+      o Low Power;
+      o Reset;
+******************************************************************************/
+/*
+ * Explanation:
+ *    Disabled for MKS keywords
+ */
+/*
+$Revision: 1.2.4.12 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/SBC/Implementation/inc/project.pj $
+*/
+/*****************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Std_Types.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+/******************************************************************************
+DEFINITION OF CONSTANTS
+******************************************************************************/
+/**
+ * \brief
+ *       Wdg test not started
+ */
+#define KU8_SBC_WDG_TEST_INIT               ((uint8)0x00)
+/**
+ * \brief
+ *       Wdg test started
+ */
+#define KU8_SBC_WDG_TEST_STARTED            ((uint8)0x01)
+/**
+ * \brief
+ *       Wdg test decision pending
+ */
+#define KU8_SBC_WDG_TEST_DECISION_PENDING    ((uint8)0x02)
+/**
+ * \brief
+ *       Wdg test done ok
+ */
+#define KU8_SBC_WDG_TEST_OK                  ((uint8)0x03)
+/**
+ * \brief
+ *       Wdg test done nok
+ */
+#define KU8_SBC_WDG_TEST_NOK                  ((uint8)0x04)
+
+/******************************************************************************
+DECLARATION OF TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF VARIABLES
+******************************************************************************/
+extern uint8 SBC_u8StatusInfoForAutotest;
+extern uint8 SBC_u8WdgStatusForAutotest;
+/******************************************************************************
+DECLARATION OF CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTIONS
+******************************************************************************/
+#define SBC_START_SEC_CODE_ASIL_A
+#include "SBC_MemMap.h"
+
+extern void SBC_Init(void);
+extern void SBC_runMainFunction(void);
+extern void SBC_GetSBCStatusInformation(uint32 *u32StatusInformation);
+
+#define SBC_STOP_SEC_CODE_ASIL_A
+#include "SBC_MemMap.h"
+
+#define SBC_START_SEC_CODE
+#include "SBC_MemMap.h"
+
+extern void SBC_Shutdown(void);
+extern void SBC_sleepTriggerWatchdog(void);
+extern void SBC_SetToNormal(void);
+extern void SBC_SetToLowPower(void);
+
+#define SBC_STOP_SEC_CODE
+#include "SBC_MemMap.h"
+
+/******************************************************************************
+DECLARATION OF FUNCTION-LIKE MACROS
+******************************************************************************/
+
+#ifdef __cplusplus
+           }
+#endif
+/******************************************************************************
+End Of File
+*****************************************************************************/
+
+#endif /* SBC_H_ */

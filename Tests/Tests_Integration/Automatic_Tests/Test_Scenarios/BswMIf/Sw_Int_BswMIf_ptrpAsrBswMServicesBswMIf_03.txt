@@ -1,0 +1,48 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_On_Prep_Shutdown
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_On_Prep_Shutdown: The BswM_On_Prep_Shutdown runnable shall be called by the Autosar BswM in case of: - Post Run timer exceed his maximum value AND buckle and SBS sensors are not available - Low Power timer exceed his maximum value AND no valid passenger occupancy or bus activity is detected.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_On_Prep_Shutdown
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to change post run timer value 
+		Expected result:  BP was set
+
+	Step 5: Change value for Post Run Timer in order to go in LPM_sleepMainLoop function 
+		Expected result:  Succesfully changed
+
+	Step 6: Set a BP in function LPM_sleepMainLoop in order to change Timer value 
+		Expected result:  BP was set
+
+	Step 7: Change value for timer 
+		Expected result:  Succesfully changed
+
+	Step 8: Set a BP in function BswM_Action_BswMAction_BswM_On_Prep_Shutdown in order to call BswM_On_Prep_Shutdown function 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function BswM_On_Prep_Shutdown  in order to check if Post Run timer exceed his maximum value AND buckle and SBS sensors are not available - Low Power timer exceed his maximum value AND no valid passenger occupancy or bus activity was detected 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function BswM_Action_BswMAction_BswM_On_Prep_Shutdown for check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 11: Return ECU to default values

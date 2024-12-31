@@ -1,0 +1,40 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_pclEvtExtWdgOutOfOrder
+ARCH_SW_pclEvtExtWdgOutOfOrder: This is the autotest to to get external WDG status.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_pclEvtExtWdgOutOfOrder
+
+	Step 2: Set a BP in function atm_cbk_runExtWDTest at the RTE Call for RunExtWDTest Autotest. 
+		Expected result:  BP is reached.
+
+	Step 3: Soft Reset the ECU 
+		Expected result:  ECU is reset
+
+	Step 4: Set a BP in function RCM_Autotest_RunExtWDTest at the return of auto test status. 
+		Expected result:  BP is reached.
+
+	Step 5: Modify the autotest result with value KU8_ATM_TEST_OK. 
+		Expected result:  BP is reached.
+
+	Step 6: Set a BP in function atm_cbk_runExtWDTest after the RTE Call for RunExtWDTest Autotest. 
+		Expected result:  BP is reached.
+
+	Step 7: Check that u8TestResult is equal to KU8_ATM_TEST_OK. 
+		Expected result:  Variable is set to 0x1.
+
+Postcondition
+
+	Step 8: Return ECU to default values

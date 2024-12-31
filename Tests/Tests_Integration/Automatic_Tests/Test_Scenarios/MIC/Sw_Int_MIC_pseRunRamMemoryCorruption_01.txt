@@ -1,0 +1,48 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_MIC_pseRunRamMemoryCorruption_MIC_Autotest_RunRamMemoryCorruption
+ARCH_SW_MIC_pseRunRamMemoryCorruption_MIC_Autotest_RunRamMemoryCorruption: The runnable shall be called to provide the result of Ram Memory Corruption Autotest. - Ram Memory Corruption Autotest check if an ECC was detected in RAM memory area. - If an ECC is detected in RAM memory area the {Test Result} will be TEST_NOK. - If an ECC is NOT detected in RAM memory area the {Test Result} will be TEST_OK.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_MIC_pseRunRamMemoryCorruption_MIC_Autotest_RunRamMemoryCorruption
+
+	Step 2: Set a BP in function atm_cbk_RunRamMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunRamMemoryCorruption function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function MIC_Autotest_RunRamMemoryCorruption in order to confirm the detected reset cause 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function atm_cbk_RunRamMemoryCorruption_MIC_Autotest in order to check the interface 
+		Expected result:  BP was set
+
+	Step 5: Read auto test result 
+		Expected result:  auto test result is OK
+
+	Step 6: Set a BP in function atm_cbk_RunRamMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunRamMemoryCorruption function 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function MIC_Autotest_RunRamMemoryCorruption in order to confirm the detected reset cause 
+		Expected result:  BP was set
+
+	Step 8: Modify Reset Cause value in order to detect ECC 
+		Expected result:  Reset cause value is set.
+
+	Step 9: Set a BP in function atm_cbk_RunRamMemoryCorruption_MIC_Autotest in order to check the interface 
+		Expected result:  BP was set
+
+	Step 10: Read auto test result 
+		Expected result:  auto test result is Not OK
+
+Postcondition
+
+	Step 11: Return ECU to default values

@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<configuration name="S32K144W" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_10 http://mcuxpresso.nxp.com/XSD/mex_configuration_10.xsd" uuid="4179bacd-df3b-49d1-b875-310026dec15f" version="10" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <common>
+      <processor>S32K144W</processor>
+      <package>S32K144W_LQFP64</package>
+      <mcu_data>$(release_id)</mcu_data>
+      <cores selected="core0">
+         <core name="Cortex-M4F" id="core0" description=""/>
+      </cores>
+      <description></description>
+   </common>
+   <preferences>
+      <validate_boot_init_only>false</validate_boot_init_only>
+      <generate_extended_information>false</generate_extended_information>
+      <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
+      <update_include_paths>true</update_include_paths>
+   </preferences>
+   <tools>
+      <pins name="Pins" version="10.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <pins_profile>
+            <processor_version>0.0.0</processor_version>
+            <power_domains/>
+         </pins_profile>
+         <functions_list>
+            <function name="BOARD_InitPins">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>core0</coreID>
+               </options>
+               <dependencies/>
+               <pins/>
+            </function>
+         </functions_list>
+      </pins>
+      <clocks name="Clocks" version="8.0" enabled="true" update_project_code="true">
+         <generated_project_files>
+            <file path="generate/include/Clock_Ip_Cfg.h" update_enabled="true"/>
+            <file path="generate/include/Clock_Ip_Cfg_Defines.h" update_enabled="true"/>
+            <file path="generate/src/Clock_Ip_Cfg.c" update_enabled="true"/>
+         </generated_project_files>
+         <clocks_profile>
+            <processor_version>0.0.0</processor_version>
+         </clocks_profile>
+         <clock_configurations>
+            <clock_configuration name="BOARD_BootClockRUN">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="PinSignal" resourceId="SOSC.EXTAL" description="&apos;External pin&apos; (Pins tool id: SOSC.EXTAL, Clocks tool id: SOSC.EXTAL) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="SOSC.EXTAL" description="&apos;External pin&apos; (Pins tool id: SOSC.EXTAL, Clocks tool id: SOSC.EXTAL) needs to have &apos;INPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId=".rtc_clkin" description="&apos;RTC_CLKIN&apos; (Pins tool id: .rtc_clkin, Clocks tool id: RTC.RTC_CLKIN) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId=".rtc_clkin" description="&apos;RTC_CLKIN&apos; (Pins tool id: .rtc_clkin, Clocks tool id: RTC.RTC_CLKIN) needs to have &apos;INPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.driver.clock" description="Clocks initialization requires the CLOCK Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <clock_sources>
+                  <clock_source id="RTC.RTC_CLK_EXT_IN.outFreq" value="32.768 kHz" locked="false" enabled="true"/>
+                  <clock_source id="SOSC.SOSC.outFreq" value="8 MHz" locked="false" enabled="true"/>
+               </clock_sources>
+               <clock_outputs>
+                  <clock_output id="ADC0_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ADC1_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="BUS_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CLKOUT0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CMP0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CORE_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CRC0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="DMA0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="DMAMUX0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EIM0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ERM0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EWM0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FIRCDIV1_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FIRCDIV2_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FIRCOUT.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLASH_CLK.outFreq" value="12 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCAN0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCAN1_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FTFM0_CLK.outFreq" value="12 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FTM0_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FTM1_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FTM2_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FTM3_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FlexIO0_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FlexIO_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPI2C0_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPIT0_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPO_128K_CLK.outFreq" value="128 kHz" locked="false" accuracy=""/>
+                  <clock_output id="LPO_1K_CLK.outFreq" value="1 kHz" locked="false" accuracy=""/>
+                  <clock_output id="LPO_32K_CLK.outFreq" value="32 kHz" locked="false" accuracy=""/>
+                  <clock_output id="LPO_CLK.outFreq" value="128 kHz" locked="false" accuracy=""/>
+                  <clock_output id="LPSPI0_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPSPI1_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPSPI2_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPTMR0_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART0_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART1_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART2_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MPU0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MSCM0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PDB0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PDB1_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PORTA_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PORTB_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PORTC_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PORTD_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PORTE_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="RTC0_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="RTC_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="RTC_CLKIN.outFreq" value="32.768 kHz" locked="false" accuracy=""/>
+                  <clock_output id="SCGCLKOUT_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SIRCDIV1_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SIRCDIV2_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SIRCOUT.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SOSCDIV1_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SOSCDIV2_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SOSCOUT.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SPLLDIV1_CLK.outFreq" value="80 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SPLLDIV2_CLK.outFreq" value="40 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SYS_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="TRACE_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+               </clock_outputs>
+               <clock_settings>
+                  <setting id="SCG_SOSCCSR_SOSCEN_CFG" value="Enabled" locked="false"/>
+                  <setting id="SCG_SPLLCSR_SPLLEN_CFG" value="Enabled" locked="false"/>
+               </clock_settings>
+               <called_from_default_init>true</called_from_default_init>
+            </clock_configuration>
+         </clock_configurations>
+      </clocks>
+      <ddr name="DDR" version="1.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <components/>
+      </ddr>
+      <dcd name="DCD" version="1.0" enabled="false" update_project_code="true" isSelfTest="false">
+         <generated_project_files/>
+         <dcdx_profile>
+            <processor_version>N/A</processor_version>
+         </dcdx_profile>
+         <dcdx_configurations/>
+      </dcd>
+      <ivt name="IVT" version="1.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <ivt_profile>
+            <processor_version>N/A</processor_version>
+         </ivt_profile>
+      </ivt>
+      <quadspi name="QuadSPI" version="1.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <quadspi_profile>
+            <processor_version>N/A</processor_version>
+         </quadspi_profile>
+      </quadspi>
+      <periphs name="Peripherals" version="10.0" enabled="true" update_project_code="true">
+         <dependencies>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.osif" description="osif not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.osif" description="Unsupported version of the osif in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.dma" description="dma not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.dma" description="Unsupported version of the dma in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.MPU" description="MPU not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.MPU" description="Unsupported version of the MPU in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+         </dependencies>
+         <generated_project_files>
+            <file path="generate/include/Dma_Ip_Cfg.h" update_enabled="true"/>
+            <file path="generate/include/Dma_Ip_Cfg_Defines.h" update_enabled="true"/>
+            <file path="generate/include/Dma_Ip_Cfg_DeviceRegistersV2.h" update_enabled="true"/>
+            <file path="generate/include/Dma_Ip_Cfg_Devices.h" update_enabled="true"/>
+            <file path="generate/include/Dma_Ip_VS_0_PBcfg.h" update_enabled="true"/>
+            <file path="generate/include/Mpu_Ip_Cfg.h" update_enabled="true"/>
+            <file path="generate/include/Mpu_Ip_Cfg_Defines.h" update_enabled="true"/>
+            <file path="generate/include/Mpu_Ip_VS_0_PBcfg.h" update_enabled="true"/>
+            <file path="generate/include/OsIf_ArchCfg.h" update_enabled="true"/>
+            <file path="generate/include/OsIf_Cfg.h" update_enabled="true"/>
+            <file path="generate/include/SoC_Ips.h" update_enabled="true"/>
+            <file path="generate/include/modules.h" update_enabled="true"/>
+            <file path="generate/src/Dma_Ip_Cfg.c" update_enabled="true"/>
+            <file path="generate/src/Dma_Ip_VS_0_PBcfg.c" update_enabled="true"/>
+            <file path="generate/src/Mpu_Ip_VS_0_PBcfg.c" update_enabled="true"/>
+            <file path="generate/src/OsIf_Cfg.c" update_enabled="true"/>
+         </generated_project_files>
+         <peripherals_profile>
+            <processor_version>0.0.0</processor_version>
+         </peripherals_profile>
+         <functional_groups>
+            <functional_group name="VS_0" uuid="a6d43dcb-893a-49cd-9d9d-0bb26ff0f05b" called_from_default_init="true" id_prefix="" core="core0">
+               <description></description>
+               <options/>
+               <dependencies/>
+               <instances>
+                  <instance name="osif_1" uuid="9d465793-2d55-49b1-b5bc-e195075542b2" type="osif" type_id="osif" mode="general" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="osif" quick_selection="dv_osif">
+                        <setting name="OsIfMulticoreSupport" value="false"/>
+                        <setting name="OsIfUserModeSupport" value="false"/>
+                        <setting name="OsIfDevErrorDetect" value="true"/>
+                        <setting name="OsIfUseSystemTimer" value="false"/>
+                        <setting name="OsIfUseCustomTimer" value="false"/>
+                        <setting name="OsIfInstanceId" value="255"/>
+                        <setting name="OsIfOperatingSystemType" value="OsIfBaremetalType"/>
+                        <setting name="OsIfCounterFreq" value="48000000"/>
+                     </config_set>
+                  </instance>
+                  <instance name="Dma_Ip_1" uuid="bd5b914c-03eb-4254-b717-2efc6447aa24" type="Dma_Ip" type_id="Dma_Ip" mode="general" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="Dma_Ip">
+                        <setting name="Name" value="Dma"/>
+                        <struct name="ConfigTimeSupport">
+                           <setting name="POST_BUILD_VARIANT_USED" value="false"/>
+                           <setting name="IMPLEMENTATION_CONFIG_VARIANT" value="VARIANT-POST-BUILD"/>
+                        </struct>
+                        <struct name="MclGeneral">
+                           <setting name="Name" value="MclGeneral"/>
+                           <setting name="MclEnableUserModeSupport" value="false"/>
+                           <struct name="MclDma">
+                              <setting name="Name" value="MclDma"/>
+                              <setting name="MclEnableDma" value="true"/>
+                              <setting name="MclEnableDmaDevErrorDetect" value="false"/>
+                           </struct>
+                        </struct>
+                        <struct name="MclConfig">
+                           <setting name="Name" value="MclConfig"/>
+                           <array name="dmaLogicInstance_ConfigType">
+                              <struct name="0">
+                                 <setting name="Name" value="dmaLogicInstance_ConfigType_0"/>
+                                 <setting name="dmaLogicInstance_IdName" value="DMA_LOGIC_INST_0"/>
+                                 <setting name="dmaLogicInstance_hwId" value="DMA_IP_HW_INST_0"/>
+                                 <setting name="dmaLogicInstance_enDebug" value="false"/>
+                                 <setting name="dmaLogicInstance_enRoundRobin" value="false"/>
+                                 <setting name="dmaLogicInstance_enHaltAfterError" value="false"/>
+                                 <setting name="dmaLogicInstance_enChLinking" value="false"/>
+                              </struct>
+                           </array>
+                           <array name="dmaLogicChannel_Type">
+                              <struct name="0">
+                                 <setting name="Name" value="dmaLogicChannel_Type_0"/>
+                                 <setting name="dmaLogicChannel_LogicName" value="DMA_LOGIC_CH_0"/>
+                                 <setting name="dmaLogicChannel_HwInstId" value="DMA_IP_HW_INST_0"/>
+                                 <setting name="dmaLogicChannel_HwChId" value="DMA_IP_HW_CH_0"/>
+                                 <setting name="dmaLogicChannel_InterruptCallback" value="NULL_PTR"/>
+                                 <setting name="dmaLogicChannel_ErrorInterruptCallback" value="NULL_PTR"/>
+                                 <setting name="dmaLogicChannel_EnableGlobalConfig" value="false"/>
+                                 <setting name="dmaLogicChannel_EnableTransferConfig" value="true"/>
+                                 <setting name="dmaLogicChannel_EnableScatterGather" value="false"/>
+                                 <struct name="dmaLogicChannel_ConfigType">
+                                    <setting name="Name" value="dmaLogicChannel_ConfigType"/>
+                                    <struct name="dmaLogicChannel_GlobalConfigType">
+                                       <setting name="Name" value="dmaLogicChannel_GlobalConfigType"/>
+                                       <struct name="dmaLogicChannelConfig_GlobalRequestType">
+                                          <setting name="Name" value="dmaLogicChannelConfig_GlobalRequestType"/>
+                                          <setting name="dmaGlobalRequest_enDmamuxTrigger" value="false"/>
+                                          <setting name="dmaGlobalRequest_enDmamuxSource" value="false"/>
+                                          <setting name="dmaGlobalRequest_Dmamux0HwRequest" value="DMA_IP_REQ_MUX0_DISABLED"/>
+                                          <setting name="dmaGlobalRequest_enDmaRequest" value="false"/>
+                                       </struct>
+                                       <struct name="dmaLogicChannelConfig_GlobalInterruptType">
+                                          <setting name="Name" value="dmaLogicChannelConfig_GlobalInterruptType"/>
+                                          <setting name="dmaGlobalInterrupt_enDmaErrorInterrupt" value="false"/>
+                                       </struct>
+                                       <struct name="dmaLogicChannelConfig_GlobalPriorityType">
+                                          <setting name="Name" value="dmaLogicChannelConfig_GlobalPriorityType"/>
+                                          <setting name="dmaGlobalPriority_LevelPriority" value="DMA_IP_LEVEL_PRIO0"/>
+                                          <setting name="dmaGlobalPriority_enPreemption" value="false"/>
+                                          <setting name="dmaGlobalPriority_disPreempt" value="false"/>
+                                       </struct>
+                                    </struct>
+                                    <struct name="dmaLogicChannel_TransferConfigType">
+                                       <setting name="Name" value="dmaLogicChannel_TransferConfigType"/>
+                                       <struct name="dmaLogicChannelConfig_TransferControlType">
+                                          <setting name="Name" value="dmaLogicChannelConfig_TransferControlType"/>
+                                          <setting name="dmaLogicChannelConfig_enStart" value="false"/>
+                                          <setting name="dmaLogicChannelConfig_enDmaMajorInterrupt" value="false"/>
+                                          <setting name="dmaLogicChannelConfig_enDmaHalfMajorInterrupt" value="false"/>
+                                          <setting name="dmaLogicChannelConfig_disDmaAutoHwReq" value="false"/>
+                                          <setting name="dmaLogicChannelConfig_bandwidthControl" value="DMA_IP_BWC_ENGINE_NO_STALL"/>
+                                          <setting name="dmaLogicChannelConfig_DestinationStoreAddressType" value=""/>
+                                       </struct>
+                                       <struct name="dmaLogicChannelConfig_TransferSourceType">
+                                          <setting name="Name" value="dmaLogicChannelConfig_TransferSourceType"/>
+                                          <setting name="dmaLogicChannelConfig_SourceSignedOffsetType" value="1"/>
+                                          <setting name="dmaLogicChannelConfig_SourceLastAddressAdjustmentType" value="-16"/>
+                                          <setting name="dmaTransferConfig_TransferSizeType" value="DMA_IP_TRANSFER_SIZE_1_BYTE"/>
+                                          <setting name="dmaLogicChannelConfig_SourceModuloType" value="0"/>
+                                       </struct>
+                                       <struct name="dmaLogicChannelConfig_TransferDestinationType">
+                                          <setting name="Name" value="dmaLogicChannelConfig_TransferDestinationType"/>
+                                          <setting name="dmaLogicChannelConfig_DestinationSignedOffsetType" value="1"/>
+                                          <setting name="dmaLogicChannelConfig_DestinationLastAddressAdjustmentType" value="-16"/>
+                                          <setting name="dmaTransferConfig_TransferSizeType" value="DMA_IP_TRANSFER_SIZE_1_BYTE"/>
+                                          <setting name="dmaLogicChannelConfig_DestinationModuloType" value="0"/>
+                                       </struct>
+                                       <struct name="dmaLogicChannelConfig_TransferMinorLoopType">
+                                          <setting name="Name" value="dmaLogicChannelConfig_TransferMinorLoopType"/>
+                                          <setting name="dmaLogicChannelConfig_enSourceOffset" value="false"/>
+                                          <setting name="dmaLogicChannelConfig_enDestinationOffset" value="false"/>
+                                          <setting name="dmaLogicChannelConfig_OffsetValueType" value="0"/>
+                                          <setting name="dmaLogicChannelConfig_enMinorLoopLinkCh" value="false"/>
+                                          <setting name="dynamic_dmaLogicChannelConfig_MinorLoopLinkChValueType" value="/Dma_Ip_1/Dma/MclConfig/dmaLogicChannel_Type_0"/>
+                                          <setting name="dmaLogicChannelConfig_MinorLoopSizeType" value="16"/>
+                                       </struct>
+                                       <struct name="dmaLogicChannelConfig_TransferMajorLoopType">
+                                          <setting name="Name" value="dmaLogicChannelConfig_TransferMajorLoopType"/>
+                                          <setting name="dmaLogicChannelConfig_enMajorLoopLinkCh" value="false"/>
+                                          <setting name="dynamic_dmaLogicChannelConfig_MajorLoopLinkChValueType" value="/Dma_Ip_1/Dma/MclConfig/dmaLogicChannel_Type_0"/>
+                                          <setting name="dmaLogicChannelConfig_MajorLoopCountType" value="1"/>
+                                       </struct>
+                                    </struct>
+                                    <struct name="dmaLogicChannel_ScatterGatherConfigType">
+                                       <setting name="Name" value="dmaLogicChannel_ScatterGatherConfigType"/>
+                                       <array name="dmaLogicChannelConfig_ScatterGatherArrayType"/>
+                                    </struct>
+                                 </struct>
+                              </struct>
+                           </array>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="MPU_1" uuid="89f73ec5-759e-421e-9cb2-7f073929e649" type="MPU" type_id="MPU" mode="Mpu" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="MPU">
+                        <setting name="Name" value="MPU"/>
+                        <struct name="General">
+                           <setting name="Name" value="General"/>
+                           <setting name="MpuDevErrorDetect" value="false"/>
+                           <setting name="MpuUserModeEnable" value="false"/>
+                        </struct>
+                        <struct name="Mpu_Configuration">
+                           <setting name="Name" value="Mpu_Configuration"/>
+                           <array name="MpuRegionConfig">
+                              <struct name="0">
+                                 <setting name="Name" value="MpuRegionConfig_0"/>
+                                 <setting name="RegionNumber" value="0"/>
+                                 <setting name="StartAddress" value="0"/>
+                                 <setting name="EndAddress" value="0xffffffff"/>
+                                 <setting name="ProcessIdentifierEnableMaster0" value="false"/>
+                                 <setting name="SupervisorModeAccessBusMaster0" value="MPU_SUPERVISOR_MODE_AS_USER_MODE"/>
+                                 <setting name="UserModeAccessBusMaster0" value="MPU_USER_MODE_RWX"/>
+                                 <setting name="ProcessIdentifierEnableMaster1" value="false"/>
+                                 <setting name="SupervisorModeAccessBusMaster1" value="MPU_SUPERVISOR_MODE_AS_USER_MODE"/>
+                                 <setting name="UserModeAccessBusMaster1" value="MPU_USER_MODE_RWX"/>
+                                 <setting name="SupervisorModeAccessBusMaster2" value="MPU_SUPERVISOR_MODE_AS_USER_MODE"/>
+                                 <setting name="UserModeAccessBusMaster2" value="MPU_USER_MODE_NONE"/>
+                                 <setting name="SupervisorModeAccessBusMaster3" value="MPU_SUPERVISOR_MODE_AS_USER_MODE"/>
+                                 <setting name="UserModeAccessBusMaster3" value="MPU_USER_MODE_RWX"/>
+                                 <setting name="ProcessIdentifier" value="0"/>
+                                 <setting name="ProcessIdentifierMask" value="0"/>
+                              </struct>
+                              <struct name="1">
+                                 <setting name="Name" value="MpuRegionConfig_1"/>
+                                 <setting name="RegionNumber" value="1"/>
+                                 <setting name="StartAddress" value="0"/>
+                                 <setting name="EndAddress" value="0xffffffff"/>
+                                 <setting name="ProcessIdentifierEnableMaster0" value="false"/>
+                                 <setting name="SupervisorModeAccessBusMaster0" value="MPU_SUPERVISOR_MODE_RWX"/>
+                                 <setting name="UserModeAccessBusMaster0" value="MPU_USER_MODE_NONE"/>
+                                 <setting name="ProcessIdentifierEnableMaster1" value="false"/>
+                                 <setting name="SupervisorModeAccessBusMaster1" value="MPU_SUPERVISOR_MODE_RWX"/>
+                                 <setting name="UserModeAccessBusMaster1" value="MPU_USER_MODE_NONE"/>
+                                 <setting name="SupervisorModeAccessBusMaster2" value="MPU_SUPERVISOR_MODE_AS_USER_MODE"/>
+                                 <setting name="UserModeAccessBusMaster2" value="MPU_USER_MODE_R"/>
+                                 <setting name="SupervisorModeAccessBusMaster3" value="MPU_SUPERVISOR_MODE_RWX"/>
+                                 <setting name="UserModeAccessBusMaster3" value="MPU_USER_MODE_NONE"/>
+                                 <setting name="ProcessIdentifier" value="0"/>
+                                 <setting name="ProcessIdentifierMask" value="0"/>
+                              </struct>
+                              <struct name="2">
+                                 <setting name="Name" value="MpuRegionConfig_2"/>
+                                 <setting name="RegionNumber" value="2"/>
+                                 <setting name="StartAddress" value="0"/>
+                                 <setting name="EndAddress" value="0xffffffff"/>
+                                 <setting name="ProcessIdentifierEnableMaster0" value="false"/>
+                                 <setting name="SupervisorModeAccessBusMaster0" value="MPU_SUPERVISOR_MODE_RWX"/>
+                                 <setting name="UserModeAccessBusMaster0" value="MPU_USER_MODE_NONE"/>
+                                 <setting name="ProcessIdentifierEnableMaster1" value="false"/>
+                                 <setting name="SupervisorModeAccessBusMaster1" value="MPU_SUPERVISOR_MODE_RWX"/>
+                                 <setting name="UserModeAccessBusMaster1" value="MPU_USER_MODE_NONE"/>
+                                 <setting name="SupervisorModeAccessBusMaster2" value="MPU_SUPERVISOR_MODE_AS_USER_MODE"/>
+                                 <setting name="UserModeAccessBusMaster2" value="MPU_USER_MODE_W"/>
+                                 <setting name="SupervisorModeAccessBusMaster3" value="MPU_SUPERVISOR_MODE_RWX"/>
+                                 <setting name="UserModeAccessBusMaster3" value="MPU_USER_MODE_NONE"/>
+                                 <setting name="ProcessIdentifier" value="0"/>
+                                 <setting name="ProcessIdentifierMask" value="0"/>
+                              </struct>
+                           </array>
+                        </struct>
+                     </config_set>
+                  </instance>
+               </instances>
+            </functional_group>
+         </functional_groups>
+         <components>
+            <component name="system" uuid="b6be5e25-450c-491b-bbae-535a9c56e6d2" type_id="system">
+               <config_set_global name="SystemModel" quick_selection="Default">
+                  <setting name="Name" value="SystemModel"/>
+                  <setting name="EcvdGenerationMethod" value="INDIVIDUAL"/>
+                  <setting name="EcvdOutputPath" value=""/>
+                  <setting name="EcvdGenerationTrigger" value="Generate Configuration"/>
+                  <setting name="SyncFunctionalGroups" value="true"/>
+                  <setting name="IgnoreComponentSuffix" value="true"/>
+                  <setting name="ComponentGenerationMethod" value="FunctionalGroups"/>
+                  <setting name="DefaultFunctionalGroup" value="VS_0"/>
+                  <struct name="PostBuildSelectable" quick_selection="Default">
+                     <setting name="Name" value="PostBuildSelectable"/>
+                     <array name="PredefinedVariants">
+                        <struct name="0">
+                           <setting name="Name" value="VS_0"/>
+                           <array name="PostBuildVariantCriterionValues"/>
+                        </struct>
+                     </array>
+                  </struct>
+                  <struct name="Criterions" quick_selection="Default">
+                     <setting name="Name" value="Criterions"/>
+                     <array name="PostBuildVariantCriterions"/>
+                  </struct>
+               </config_set_global>
+            </component>
+         </components>
+      </periphs>
+   </tools>
+</configuration>

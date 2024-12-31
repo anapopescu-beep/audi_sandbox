@@ -1,0 +1,36 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepMainLoop
+ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepMainLoop: The LPM_sleepMainLoop runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to enter in low power mode main loop.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepMainLoop
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_OnLowPwrFromPostRun in order to go in LPM_sleepMainLoop function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function LPM_sleepMainLoop in order to enter in low power mode main loop 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 7: Return ECU to default values

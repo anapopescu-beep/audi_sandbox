@@ -1,0 +1,117 @@
+/*===============================================================================*/
+/*                                                                               */
+/*                               BOOT Layers                                     */
+/*                                                                               */
+/* ----------------------------------------------------------------------------- */
+/*                                                                               */
+/*                               PROG layer                                      */
+/*                                                                               */
+/*===============================================================================*/
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                        */
+/*%%   _____________________________   %%  \file PROG_Erase.c                    */
+/*%%  |                             |  %%  \brief PROG Erase feature             */
+/*%%  |   &&&&&   &&&&&             |  %%  Module version: 2.43.0 BL3 */
+/*%%  |   &       &    &            |  %%                                        */
+/*%%  |   &&&&    &&&&&             |  %%                                        */
+/*%%  |   &       &    &            |  %%                                        */
+/*%%  |   &&&&&   &&&&&             |  %%                                        */
+/*%%  |_____________________________|  %%                                        */
+/*%%                                   %%                                        */
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                        */
+/*===============================================================================*/
+/* Copyright 2015 by Elektrobit Automotive GmbH                                  */
+/* All rights exclusively reserved for Elektrobit Automotive GmbH,               */
+/* unless expressly agreed to otherwise.                                         */
+/*===============================================================================*/
+/*=============================== FILE INCLUSION ================================*/
+/*                                                                               */
+
+#define COV_BASE 0u /* COV_START_(FILE) */
+#ifndef /*Prog*/_cov_h_
+  #define /*Prog*/_cov_h_
+  /* #include <Prog_cov.h> */
+  extern volatile unsigned char /*Prog_*/coveragedata[];
+  #define ICOV(x) /*Prog_*/coveragedata[(COV_BASE+(x))>>3u]|=1u<<((COV_BASE+(x))&7u)
+  #define BCOV(x) (ICOV(x),1)
+#endif /*Prog_cov_h_*/
+
+#include "EB_Prj.h"
+#include "PROG_Priv.h"
+#include "PROG_Hsm.h"
+#include "PROG_HsmPROG.h"
+#include "board.h"
+#include <PROG_Trace.h>                        /* Dbg related macros for EB */
+
+/*============================= PUBLIC DEFINITIONS ==============================*/
+/*                                                                               */
+/*-------------------------------------------------------------------------------*/
+/* - Public Variables                                                            */
+/*                                                                               */
+/*-------------------------------------------------------------------------------*/
+/* - Public Function Prototypes                                                  */
+
+/*-------------------------------------------------------------------------------*/
+/* - Public Callback Prototypes                                                  */
+
+/*                                                                               */
+/*===============================================================================*/
+
+/*============================ PRIVATE DEFINITIONS ==============================*/
+
+/*-------------------------------------------------------------------------------*/
+/* - Private Variables                                                           */
+/*                                                                               */
+
+/*===============================================================================*/
+
+/*-------------------------------------------------------------------------------*/
+/* - Private Macros                                                              */
+
+/*                                                                               */
+/*===============================================================================*/
+
+/*-------------------------------------------------------------------------------*/
+/* - Private Function Prototypes                                                 */
+/*                                                                               */
+
+/*===============================================================================*/
+
+/*=============================== IMPLEMENTATION ================================*/
+/*                                                                               */
+
+/*-------------------------------------------------------------------------------*/
+/* - Public Functions                                                            */
+
+#if (PROG_PRELIM_ERASING_ENABLE == STD_ON)
+/*-----------------------{PROG_PrelimErasing}------------------------------------*/
+tProgStatus PROG_PrelimErasing(tSegmentType * pstSegment)
+{
+    tProgStatus eProgStatus;
+    u8 ubLoopIndex;
+
+    ICOV(571);eProgStatus = PROG_E_OK;
+
+    for(ubLoopIndex = 0U; ((ubLoopIndex < (PROG_BLOCK_NB - 1U)) && (PROG_E_OK == eProgStatus))?BCOV(572):!BCOV(573); ubLoopIndex++)
+    {
+        eProgStatus = PROG_CheckProgrammingCounter(ubLoopIndex);
+    }
+
+    if((PROG_E_OK == eProgStatus)?BCOV(574):!BCOV(575))
+    {
+        /* Check Address */
+        (void) PROG_GetSegmentByBlockId((PROG_BLOCK_NB - 1U), &pstSegment->ubSegmentId, &pstSegment->ubSegmentNbr);
+
+        /* Construct Segment Structure (Address) */
+        pstSegment->ulStartAddress = stConfigSegment[pstSegment->ubSegmentId].ulEraseStartAddress;
+        pstSegment->ubLogicalBlockId = PROG_MAX_BLOCK_ID;
+
+        /* Construct Segment Structure (Size) */
+        pstSegment->ulSize = (stConfigSegment[pstSegment->ubSegmentId].ulEraseEndAddress
+                            - stConfigSegment[pstSegment->ubSegmentId].ulEraseStartAddress)
+                            + 1U;
+    }
+
+    return eProgStatus;
+}
+/*-----------------------{end PROG_PrelimErasing}--------------------------------*/
+#endif

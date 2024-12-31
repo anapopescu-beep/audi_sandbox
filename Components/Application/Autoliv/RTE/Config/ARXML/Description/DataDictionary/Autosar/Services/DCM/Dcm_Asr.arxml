@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd" T="2022-08-26T12:36:25+03:00">
+  <AR-PACKAGES>
+    <AR-PACKAGE T="2022-08-26T12:36:41+03:00" UUID="fa1482be-89d9-4301-b258-af546d4bc79b">
+      <SHORT-NAME>EB</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2022-08-26T12:36:41+03:00">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <ELEMENTS>
+            <SERVICE-SW-COMPONENT-TYPE T="2022-08-28T11:29:05+03:00" UUID="DCE:20eecf4e-ebe8-4917-9aff-b1dc92c7c5b5">
+              <SHORT-NAME>Dcm_</SHORT-NAME>
+              <CATEGORY>ASR_Interfaces</CATEGORY>
+              <PORTS>
+                <P-PORT-PROTOTYPE T="2022-08-28T09:58:01+03:00" UUID="47a65463-8475-42cd-8ca6-d7c3ac14aca6">
+                  <SHORT-NAME>ptrpAsrDcmServicesBswMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrDcmServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE T="2022-08-28T11:29:05+03:00" UUID="98755958-b199-47d4-ab90-30306988177c">
+                  <SHORT-NAME>ptrrAsrDcmServiceDcmIf</SHORT-NAME>
+                  <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrDcmServices</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR T="2022-08-28T11:30:06+03:00" UUID="56a21459-cba6-440a-9Dcm-0d5b62a594bd">
+                  <SHORT-NAME>Dcm_IB</SHORT-NAME>
+                  <EVENTS>
+                    <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-28T11:29:36+03:00" UUID="a19f9402-5259-4203-99db-50d12166a5f8">
+                      <SHORT-NAME>Dcm_WriteMemory</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/EB/SoftwareComponents/Dcm_/Dcm_IB/Dcm_Dsp_MemoryServices_WriteMemory_ConfirmForcedRCRRP</START-ON-EVENT-REF>
+                      <TRIGGER-IREF T="2022-08-28T11:29:36+03:00">
+                        <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/EB/SoftwareComponents/Dcm_/ptrrAsrDcmServiceDcmIf</CONTEXT-R-PORT-REF>
+                        <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrDcmServices/Dcm_WriteMemory</TARGET-TRIGGER-REF>
+                      </TRIGGER-IREF>
+                    </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                    <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-28T11:30:06+03:00" UUID="55d6970b-be7d-4c2c-9a55-ad2f3e12a314">
+                      <SHORT-NAME>trDcm_GetProgConditions</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/EB/SoftwareComponents/Dcm_/Dcm_IB/Dcm_WarmStartActions</START-ON-EVENT-REF>
+                      <TRIGGER-IREF T="2022-08-28T11:30:06+03:00">
+                        <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/EB/SoftwareComponents/Dcm_/ptrrAsrDcmServiceDcmIf</CONTEXT-R-PORT-REF>
+                        <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrDcmServices/Dcm_GetProgConditions</TARGET-TRIGGER-REF>
+                      </TRIGGER-IREF>
+                    </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                    <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-28T11:29:23+03:00" UUID="35ad07ef-85dd-427c-ac28-ffff76d56cac">
+                      <SHORT-NAME>trDcm_ReadMemory</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/EB/SoftwareComponents/Dcm_/Dcm_IB/Dcm_Dsp_MemoryServices_ReadMemory_Execute</START-ON-EVENT-REF>
+                      <TRIGGER-IREF T="2022-08-28T11:29:23+03:00">
+                        <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/EB/SoftwareComponents/Dcm_/ptrrAsrDcmServiceDcmIf</CONTEXT-R-PORT-REF>
+                        <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrDcmServices/Dcm_ReadMemory</TARGET-TRIGGER-REF>
+                      </TRIGGER-IREF>
+                    </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                    <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-28T11:29:49+03:00" UUID="88dd5bbc-de08-452b-8db3-1232614612b5">
+                      <SHORT-NAME>trDcm_SetProgConditions</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/EB/SoftwareComponents/Dcm_/Dcm_IB/Dcm_MainFunction</START-ON-EVENT-REF>
+                      <TRIGGER-IREF T="2022-08-28T11:29:49+03:00">
+                        <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/EB/SoftwareComponents/Dcm_/ptrrAsrDcmServiceDcmIf</CONTEXT-R-PORT-REF>
+                        <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrDcmServices/Dcm_SetProgConditions</TARGET-TRIGGER-REF>
+                      </TRIGGER-IREF>
+                    </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                  </EVENTS>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY T="2022-08-28T11:27:15+03:00" UUID="DCE:5997026a-3045-414f-9387-4bef60a00529">
+                      <SHORT-NAME>Dcm_Dsp_MemoryServices_ReadMemory_Execute</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Dcm_Dsp_MemoryServices_ReadMemory_Execute</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-28T11:26:53+03:00" UUID="DCE:08a38dfb-6e14-4906-b8c8-d34f7043242e">
+                      <SHORT-NAME>Dcm_Dsp_MemoryServices_WriteMemory_ConfirmForcedRCRRP</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Dcm_Dsp_MemoryServices_WriteMemory_ConfirmForcedRCRRP</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:333733a9-bef2-4553-9f5b-d42e7ce78f04">
+                      <SHORT-NAME>Dcm_Init</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Dcm_Init</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-28T11:25:52+03:00" UUID="DCE:585825ce-de36-4f6d-9f07-a3692138d672">
+                      <SHORT-NAME>Dcm_MainFunction</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Dcm_MainFunction</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY T="2022-08-28T11:25:37+03:00" UUID="DCE:b81a37b4-a8c3-4f6a-baf1-7b27bc7cc7f6">
+                      <SHORT-NAME>Dcm_WarmStartActions</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Dcm_WarmStartActions</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </SERVICE-SW-COMPONENT-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <AR-PACKAGE T="2022-08-26T12:36:48+03:00" UUID="83dbf1d3-fd69-4d31-99ba-2a110ed331f7">
+          <SHORT-NAME>TriggerInterfaces</SHORT-NAME>
+          <ELEMENTS>
+            <TRIGGER-INTERFACE T="2023-02-21T21:00:50+02:00">
+              <SHORT-NAME>itrAsrDcmServices</SHORT-NAME>
+              <TRIGGERS>
+                <TRIGGER T="2022-08-28T11:27:58+03:00" UUID="324b1122-7560-4b27-829a-d43228d578f6">
+                  <SHORT-NAME>Dcm_GetProgConditions</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="d3ab44d9-ab81-4d39-a8b8-43b63353674d">
+                  <SHORT-NAME>Dcm_Init</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-28T11:27:35+03:00" UUID="c812186f-1ab1-42ca-ba00-0a2b85861d0a">
+                  <SHORT-NAME>Dcm_ReadMemory</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-28T11:27:51+03:00" UUID="faed9375-ed33-47b8-b5ef-ddea3a9c2d8e">
+                  <SHORT-NAME>Dcm_SetProgConditions</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2022-08-28T11:27:43+03:00" UUID="deb312d9-058e-4666-a45e-812073f09f3e">
+                  <SHORT-NAME>Dcm_WriteMemory</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2023-02-21T21:00:50+02:00" UUID="1d580bc4-fbb1-412f-9418-d06e7285c718">
+                  <SHORT-NAME>Rte_DcmConfirmation</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+              </TRIGGERS>
+            </TRIGGER-INTERFACE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

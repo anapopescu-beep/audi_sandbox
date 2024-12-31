@@ -1,0 +1,52 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnStartupTwoA, ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnStartupTwoB, ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnPostRunFromRun
+ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnStartupTwoA: The BswM_RequestMode runnable shall be called in the BswM_OnStartupTwoA runnable in order to: - Request to start the process to fastened the ReadAll process
+ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnStartupTwoB: The BswM_RequestMode runnable shall be called in the BswM_OnStartupTwoB runnable in order to: - Set BswM Request Port to be able to notify that initialization phase shall continue {wait for wake-up validation}
+ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnPostRunFromRun: The BswM_RequestMode runnable shall be called in the BswM_OnPostRunFromRun runnable in order to: - Request to start the process to fastened the ReadAll process - Set BswM EcuState Port to be able to notify that POST RUN state is requested
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnStartupTwoA
+
+	Step 2: Set a BP in function BswM_OnStartupTwoA to call BswM_RequestMode function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function BswM_RequestMode in order to: - Request to start the process to fastened the ReadAll process 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_OnStartupTwoA for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnStartupTwoB
+
+	Step 5: Set a BP in function BswM_OnStartupTwoB to call BswM_RequestMode function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function BswM_RequestMode in order to: - Set BswM Request Port to be able to notify that initialization phase shall continue {wait for wake-up validation} 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_OnStartupTwoA for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnPostRunFromRun
+
+	Step 8: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 9: Set a BP in function BswM_OnPostRunFromRun in order to call BswM_RequestMode function 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function BswM_RequestMode in order to: - Request to start the process to fastened the ReadAll process - Set BswM EcuState Port to be able to notify that POST RUN state is requested
+
+	Step 11: Set a BP in function BswM_OnPostRunFromRun for check the interface 
+		Expected result:  BP was set

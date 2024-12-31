@@ -1,0 +1,187 @@
+###############################################################################
+#
+# IAR ELF Linker V8.32.3.193/W32 for ARM                  02/Sep/2022  13:37:53
+# Copyright 2007-2019 IAR Systems AB.
+#
+#    Output file  =  ../../Outputs/fbm/Out/fbm.elf
+#    Map file     =  ../../Outputs/fbm/Out/fbm.map
+#    Command line =  
+#        -f
+#        c:/Git/eCS_Platform_Git/Tools/Build_Env/Workspace/Build/Makefile/tmp/ilinkCommandLine.xcl
+#        (../../Outputs/fbm/Obj/main.o ../../Outputs/fbm/Obj/startup_iar.o
+#        ../../Outputs/fbm/Obj/vector_iar.o --config
+#        Bootmanager/BootManager_Linker.icf --map ../../Outputs/fbm/Out/fbm.map
+#        -o ../../Outputs/fbm/Out/fbm.elf --no_out_extension
+#        --no_library_search --entry Reset_Handler --text_out locale --vfe
+#        --redirect _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb)
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+__SystemLibrary = DLib
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+define block AppIntVec { section .vector };
+"P1":  place in [from 0x0 to 0x1ff] { block AppIntVec };
+define block AppFlashConfig { section .flash_config };
+"P2":  place in [from 0x400 to 0x40f] { block AppFlashConfig };
+define block AppStartup with fixed order { section .startup };
+define block AppCode
+   with fixed order { section .text, section .mcal_text, section .ostext };
+define block AppROData
+   with fixed order {
+      section .rodata, section .mcal_const_cfg, section .mcal_const };
+define block AppData_Init
+   with fixed order { section .data_init, section .mcal_data_init };
+define block AppFlsRomCode { section .fls_ram_code_text };
+"P3":  place in [from 0x500 to 0xfff] {
+          block AppStartup, block AppCode, block AppROData, block AppData_Init,
+          block AppFlsRomCode };
+define block CSTACK with size = 7936, alignment = 8 { };
+define block OSSTACK with size = 4352, alignment = 8 { section .osstack };
+"P5":  place in [from 0x2000'0000 to 0x2000'2fff] {
+          block CSTACK, block OSSTACK };
+define block AppNoInitData { section .noinit };
+"P6":  place in [from 0x2000'3f00 to 0x2000'3fff] { block AppNoInitData };
+
+No sections matched the following patterns:
+
+  section .bss                in block AppBSS
+  section .data               in block AppData
+  section .data_init          in block AppData_Init
+  section .fls_ram_code_text  in block AppFlsRomCode
+  section .mcal_bss           in block AppBSS
+  section .mcal_const         in block AppROData
+  section .mcal_const_cfg     in block AppROData
+  section .mcal_data          in block AppData
+  section .mcal_data_init     in block AppData_Init
+  section .mcal_text          in block AppCode
+  section .noinit             in block AppNoInitData
+  section .nv_calib_data      in block AppCalibrationData
+  section .nv_default_data    in block AppFlexRomData
+  section .nv_ram_data        in block AppFlexRamData
+  section .osstack            in block OSSTACK
+  section .ostext             in block AppCode
+
+
+  Section          Kind         Address    Size  Object
+  -------          ----         -------    ----  ------
+"P1":                                       0x8
+  AppIntVec                         0x0     0x8  <Block>
+    .vector        ro code          0x0     0x8  vector_iar.o [1]
+                                  - 0x8     0x8
+
+"P2":                                      0x10
+  AppFlashConfig                  0x400    0x10  <Block>
+    .flash_config  rw data        0x400    0x10  startup_iar.o [1]
+                                - 0x410    0x10
+
+"P3":                                      0xb0
+  AppStartup                      0x500    0x5c  <Block>
+    .startup       ro code        0x500    0x5c  startup_iar.o [1]
+  AppCode                         0x55c    0x44  <Block>
+    .text          ro code        0x55c    0x44  main.o [1]
+  AppROData                       0x5a0    0x10  <Block>
+    .rodata        const          0x5a0    0x10  main.o [1]
+                                - 0x5b0    0xb0
+
+"P5":                                    0x3000
+  CSTACK                    0x2000'0000  0x1f00  <Block>
+    CSTACK         uninit   0x2000'0000  0x1f00  <Block tail>
+  OSSTACK                   0x2000'1f00  0x1100  <Block>
+    OSSTACK        uninit   0x2000'1f00  0x1100  <Block tail>
+                          - 0x2000'3000  0x3000
+
+"P6":                                       0x0
+  AppNoInitData             0x2000'3f00     0x0  <Block>
+
+Unused ranges:
+
+         From           To   Size
+         ----           --   ----
+          0x8        0x1ff  0x1f8
+        0x5b0        0xfff  0xa50
+  0x2000'3f00  0x2000'3fff  0x100
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module          ro code  ro data  rw data
+    ------          -------  -------  -------
+command line/config:
+    -----------------------------------------
+    Total:
+
+C:\Git\eCS_Platform_Git\Tools\Build_Env\Workspace\Outputs\fbm\Obj: [1]
+    main.o               68       16
+    startup_iar.o        92                16
+    vector_iar.o          8
+    -----------------------------------------
+    Total:              168       16       16
+
+    Linker created                     12 288
+---------------------------------------------
+    Grand Total:        168       16   12 304
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                       Address  Size  Type      Object
+-----                       -------  ----  ----      ------
+AppCode$$Base                 0x55c         --   Gb  - Linker created -
+AppCode$$Limit                0x5a0         --   Gb  - Linker created -
+AppFlashConfig$$Base          0x400         --   Gb  - Linker created -
+AppFlashConfig$$Limit         0x410         --   Gb  - Linker created -
+AppIntVec$$Base                 0x0         --   Gb  - Linker created -
+AppIntVec$$Limit                0x8         --   Gb  - Linker created -
+AppNoInitData$$Base     0x2000'3f00         --   Gb  - Linker created -
+AppNoInitData$$Limit    0x2000'3f00         --   Gb  - Linker created -
+AppROData$$Base               0x5a0         --   Gb  - Linker created -
+AppROData$$Limit              0x5b0         --   Gb  - Linker created -
+AppStartup$$Base              0x500         --   Gb  - Linker created -
+AppStartup$$Limit             0x55c         --   Gb  - Linker created -
+CSTACK$$Base            0x2000'0000         --   Gb  - Linker created -
+CSTACK$$Limit           0x2000'1f00         --   Gb  - Linker created -
+OSSTACK$$Base           0x2000'1f00         --   Gb  - Linker created -
+OSSTACK$$Limit          0x2000'3000         --   Gb  - Linker created -
+Reset_Handler                 0x501        Code  Gb  startup_iar.o [1]
+VTABLE                          0x0        Data  Gb  vector_iar.o [1]
+_Calib_End {Abs}           0x2'2fff        Data  Gb  <internal module>
+_Calib_Start {Abs}         0x2'2000        Data  Gb  <internal module>
+_EEP_Def_End {Abs}         0x2'1fff        Data  Gb  <internal module>
+_EEP_Def_Start {Abs}       0x2'1000        Data  Gb  <internal module>
+_FlexRam_End {Abs}      0x1400'0fff        Data  Gb  <internal module>
+_FlexRam_Start {Abs}    0x1400'0000        Data  Gb  <internal module>
+_NoInitRam_End {Abs}    0x2000'3fff        Data  Gb  <internal module>
+_NoInitRam_Start {Abs}  0x2000'3f00        Data  Gb  <internal module>
+_PFlash_End {Abs}          0x8'0048        Data  Gb  <internal module>
+_PFlash_Start {Abs}        0x2'3000        Data  Gb  <internal module>
+_Ram_End {Abs}          0x1fff'ffff        Data  Gb  <internal module>
+_Ram_Start {Abs}        0x1fff'9000        Data  Gb  <internal module>
+_Stack_end {Abs}        0x2000'0000        Data  Gb  <internal module>
+_Stack_start {Abs}      0x2000'3000        Data  Gb  <internal module>
+__FlashConfig                 0x400        Data  Gb  startup_iar.o [1]
+kaucPattern                   0x5a0  0x10  Data  Gb  main.o [1]
+main                          0x55d  0x44  Code  Gb  main.o [1]
+
+
+[1] = C:\Git\eCS_Platform_Git\Tools\Build_Env\Workspace\Outputs\fbm\Obj
+
+     168 bytes of readonly  code memory
+      16 bytes of readonly  data memory
+  12 304 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

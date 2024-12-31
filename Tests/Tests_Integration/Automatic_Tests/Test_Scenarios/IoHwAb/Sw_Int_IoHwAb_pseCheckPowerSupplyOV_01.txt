@@ -1,0 +1,38 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based test, Interface Tes
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_pseCheckPowerSupplyOV, ARCH_SW_pclCheckPowerSupplyOV
+ARCH_SW_IoHwAb_pseCheckPowerSupplyOV: The auto-test shall read the {KL30 Supply Voltage} and compare it to the {NVP_u16OverKL30QualificationThrs} threshold from the NvM memory.  Comparison shall be done in mV. If the {Adc Auto-test Result} is NOK then the comparison cannot be done and the {Autotest Result} must be NOK.  If the {KL 30 Supply Voltage} is greater than {NVP_u16OverKL30QualificationThrs} then the {Autotest Result} must be NOK. If the If the {KL 30 Supply Voltage} is lower or equal than {NVP_u16OverKL30QualificationThrs} then the {Autotest Result} must be OK
+ARCH_SW_pclCheckPowerSupplyOV: This is the test function for overvoltage on the Power stage battery voltage.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_IoHwAb_pseCheckPowerSupplyOV, ARCH_SW_pclCheckPowerSupplyOV
+
+	Step 2: Set a breakpoint in function ATM_Cbk_CheckPowerSupplyOV at the RTE Call for CheckPowerSupplyOvervoltageAutotest 
+		Expected result:  BP reached
+
+	Step 3: Set a breakpoint in function IoHwAb_CheckPowerSupplyOvervoltageAutotest at the previous ADC autotest evaluation. 
+		Expected result:  BP reached
+
+	Step 4: Modify previous ADC test result with value KU8_ATM_TEST_NOT_DECIDED 
+		Expected result:  Variable was written with 0x4
+
+	Step 5: Set a breakpoint in function ATM_Cbk_CheckPowerSupplyOV in order to check if test result is NOT DECIDED 
+		Expected result:  BP reached
+
+	Step 6: Evaluate autotest result. 
+		Expected result:  Variable is equal to 0x4
+
+Postcondition
+
+	Step 7: Return ECU to default values

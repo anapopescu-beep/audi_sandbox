@@ -1,0 +1,37 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_AdcIf_pseRawAdcService, ARCH_SW_IoHwAb_pclRawAdcService, 
+ARCH_SW_AdcIf_pseRawAdcService: The runnable shall read the lsb value for the following channels: PTC sensor: PTC6 uC pin 
+ARCH_SW_IoHwAb_pclRawAdcService: The interface shall read the {Raw value} in LSB in order to compute the value in  physical units. 
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_AdcIf_pseRawAdcService, ARCH_SW_IoHwAb_pclRawAdcService
+
+	Step 2: Set a breakpoint in function IoHwAb_runGetMeasure at AdcIf_runGetChannelValue function call 
+		Expected result:  BP reached.
+
+	Step 3: Set a breakpoint in function AdcIf_runGetChannelValue at the switch statement 
+		Expected result:  BP reached.
+
+	Step 4: Modify the id of the ADC Channel to measure with the value KU8_ADC_CH_ID_PTC_TEMP. 
+		Expected result:  Value modified with 0x11
+
+	Step 5: Set a breakpoint in function IoHwAb_runGetMeasure at the case KU8_ADC_CH_ID_PTC_TEMP. 
+		Expected result:   BP was reached.
+
+	Step 6: Read the Adc Value.
+
+Postcondition
+
+	Step 7: Return ECU to default values

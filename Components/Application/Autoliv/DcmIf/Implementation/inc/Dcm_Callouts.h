@@ -1,0 +1,120 @@
+
+#ifndef _DCM_CALLOUTS_H
+#define _DCM_CALLOUTS_H 1
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+H-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+*******************************************************************************
+
+Overview of the interfaces:
+	This file implements the different services provided by the DcmIf module.
+
+******************************************************************************/
+/*
+$Revision: 1.5.1.4 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/DcmIf/Implementation/inc/project.pj $
+*/
+
+/*****************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Platform_Types.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/******************************************************************************
+DEFINITION OF CONSTANTS
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF CONSTANT DATA
+******************************************************************************/
+/**
+ *\brief
+ *     Constant used for access to write in memory.
+ */
+#define KU8_DCM_WRITE_MEMORY_ID_INDEX                     ((uint8) 0)
+/**
+ *\brief
+ *     Constant used for access to read memory.
+ */
+#define KU8_DCM_READ_MEMORY_ID_INDEX                      ((uint8) 1)
+/**
+ *\brief
+ *     Constant used for memory range.
+ */
+#define KU8_DCM_E2P_MEMORY_ID_INDEX                       ((uint8) 0)
+/**
+ *\brief
+ *     Constant used to indicate RAM shadow memory.
+ */
+#define KU8_DCM_RAM_SHADOW_MEMORY_ID_INDEX                ((uint8) 1)
+/**
+ *\brief
+ *     Constant used to access RAM memory.
+ */
+#define KU8_DCM_RAM_APPLI_MEMORY_ID_INDEX                 ((uint8) 2)
+/**
+ *\brief
+ *     Constant used to read RAM shadow memory.
+ */
+#define KU8_DCM_READ_RAM_SHADOW_MEMORY_ID_INDEX           ((uint8) 4)
+/**
+ *\brief
+ *     Constant used to read RAM memory.
+ */
+#define KU8_DCM_READ_RAM_APPLI_MEMORY_ID_INDEX            ((uint8) 5)
+/**
+ *\brief
+ *     Constant used to read RAM memory.
+ */
+#define KU8_DCM_READ_RAM_NO_INIT_MEMORY_ID_INDEX          ((uint8) 7)
+/**
+ *\brief
+ *     Constant used for memory range.
+ */
+#define KU8_DCM_E2P_MEMORY_RANGE_INDEX                    ((uint8) 0)
+/**
+ *\brief
+ *     Constant used to return NRC after an incorrect request.
+ */
+#define KU8_DCM_CONDITION_NOT_CORRECT                     ((uint8)0x19)
+
+/******************************************************************************
+DECLARATION OF FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTION-LIKE MACROS
+******************************************************************************/
+
+#ifdef __cplusplus
+}
+#endif
+/******************************************************************************
+End Of File
+*****************************************************************************/
+
+#endif /* _BSWM_CALLOUTS_H */

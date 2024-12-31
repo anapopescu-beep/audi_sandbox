@@ -1,0 +1,39 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromPostRunBusAvailable
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromPostRunBusAvailable: The BswM_OnRunFromPostRunBusAvailable runnable shall be called by the Autosar BswM in case of: - The current state of ECU is POST RUN AND Bus communication is available {reception aknowledge is received}
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnRunFromPostRunBusAvailable
+
+	Step 2: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 3: Set a BP in function BswM_OnPostRunFromRun in order to call BswM_RequestMode function 
+		Expected result:  BP was set
+
+	Step 4: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 5: Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromPostRunBusAvailable in order to call BswM_OnRunFromPostRunPassengerDetected function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function BswM_OnRunFromPostRunBusAvailable in order to check if The current state of ECU is POST RUN AND Bus communication is available 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromPostRunBusAvailable in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 8: Return ECU to default values

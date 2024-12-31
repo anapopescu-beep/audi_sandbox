@@ -1,0 +1,34 @@
+					Autoliv Electronics Document
+
+Preconditions
+
+	Step 0: Bench Initialization
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_Rcm_ptrpRcmServicesBswMIf_RCM_runConfirmResetCause
+ARCH_SW_Rcm_ptrpRcmServicesBswMIf_RCM_runConfirmResetCause: The RCM_runConfirmResetCause runnable shall be called in the BswM_OnStartComEffective runnable in order to confirm the detected reset cause
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_Rcm_ptrpRcmServicesBswMIf_RCM_runConfirmResetCause
+
+	Step 2: Set a BP in function BswM_OnStartComEffective in order to call RCM_runConfirmResetCause function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function RCM_runConfirmResetCause in order to confirm the detected reset cause 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_OnStartComEffective in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 5: Return ECU to default values

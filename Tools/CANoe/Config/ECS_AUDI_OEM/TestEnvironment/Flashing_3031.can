@@ -1,0 +1,915 @@
+/*@!Encoding:1252*/
+variables
+{
+  const long Application = 1;
+  const long Calibration = 2;
+  const long DevCert = 0xFE;
+  const long LEDdefault = 0x00A4D3FA;
+
+  const long LEDblink0 = 0x1;
+  const long LEDblink = 0x0;
+  const long LEDok = 0x0;
+  const long LEDnok = 0x1; 
+  
+  dword glbHandleFile;
+  dword glbwriteFile;
+  byte fBuffer[4096];
+  int conditionFail = 0;
+  byte securityAlgoDataBuffer[4];
+  byte fingerprint[19] = {0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30};
+  byte disableTx = 0x01;
+  byte enableTx = 0x00;
+  long datablock;
+  
+  long sent;
+  
+  long PendingTimer = 0;
+  
+  msTimer PendingTimeout;
+  
+  diagRequest * dReq;
+}
+
+
+
+on timer PendingTimeout
+{
+  if(@sysvar::Flash::firstFileStatusLED == LEDblink0)
+  {
+    @sysvar::Flash::firstFileStatusLED = LEDblink;
+  }
+  else if(@sysvar::Flash::firstFileStatusLED == LEDblink)
+  {
+    @sysvar::Flash::firstFileStatusLED = LEDblink0;
+  }
+
+  if(@sysvar::Flash::secondFileStatusLED == LEDblink0)
+  {
+    @sysvar::Flash::secondFileStatusLED = LEDblink;
+  }
+  else if(@sysvar::Flash::secondFileStatusLED == LEDblink)
+  {
+    @sysvar::Flash::secondFileStatusLED = LEDblink0;
+  }
+  
+  if(PendingTimer < 11)
+  {
+    PendingTimer++;
+    setTimer(PendingTimeout,500);
+  }
+}
+
+on diagResponse *
+{
+  dword NRCc;
+
+  // Handle the ambiguity of neg responses by treating them as '*'
+  if( diagIsNegativeResponse ( this ) )
+  {
+    NRCc = diagGetParameter( this, "NRC" );
+    if(NRCc != 0x78)
+    {
+      conditionFail = NRCc;
+    }
+  }
+}
+
+
+
+on message 0x17FE4206x
+{
+  if((this.byte(0) == 0x03) && (this.byte(1) == 0x7F)&& (this.byte(3) == 0x78))
+  {
+    setTimer(PendingTimeout, 500);
+    PendingTimer = 0;
+  }
+}
+
+int CheckErrorStep(char step[], long timeout, long NRCs, long ExtraArg)
+{
+  char buff[100];
+  int errord = 0;
+  
+  if((NRCs != 0) || (timeout != 1) || (ExtraArg != 0))
+  {
+    if(NRCs != 0)
+    {
+      snprintf(buff,elcount(buff), "\nFAIL... %s : NRC 0x%x",step,NRCs);
+    }
+    else if(timeout != 1)
+    {
+      snprintf(buff,elcount(buff), "\nFAIL... %s : Timeout",step);
+    }
+    else if(ExtraArg != 0)
+    {
+      snprintf(buff,elcount(buff), "\nFAIL... %s : NOK response - %x",step,ExtraArg);
+    }
+
+    TestStepFail(buff);
+    TestCaseFail();
+    errord = 1;
+    SetControlForeColor("Flash_panel","Console", MakeRGB(255,0,0));
+    putValueToControl("Flash_panel","Console",buff);
+    errord = 1;
+  }
+  else
+  {
+    snprintf(buff,elcount(buff), "\nPASS... %s",step);
+    TestStepPass (buff);
+    SetControlForeColor("Flash_panel","Console", MakeRGB(15,170,15));
+    putValueToControl("Flash_panel","Console",buff);
+    errord = 0;
+  }
+  conditionFail = 0;
+  return errord;
+}
+
+/* will open file and parse for length */
+long OpenFile(char path[])
+{
+  long ret = 1;
+  long size = 0;
+  glbHandleFile = openFileRead(path,1);
+  
+  if(glbHandleFile != 0)
+  {
+    fileRewind(glbHandleFile);
+  }
+  else
+  {
+    write("File NOT Opened");
+  }
+  return size;
+}
+
+void securityAlgo(byte data[])
+{
+  securityAlgoDataBuffer[0] = ((data[0] + 0x01) & 0xFF);
+  securityAlgoDataBuffer[1] = ((data[1] + 0x02) & 0xFF);
+  securityAlgoDataBuffer[2] = ((data[2] + 0x03) & 0xFF);
+  securityAlgoDataBuffer[3] = ((data[3] + 0x04) & 0xFF);
+}
+
+void securityAlgoNew(byte data[])
+{ 
+  dword temp;
+  int i, Carry;
+  temp =  data[0]*16777216 + data[1]*65536 + data[2] * 256 + data[3];
+  
+  i = 5;
+  while(i>0)
+  {
+    Carry = 0;
+    if(temp>= 0xE0D1C2B3)
+    {
+      Carry = 1;
+    }
+    
+    temp+= 0x1F2E3D4C;
+    
+    if(Carry == 1)
+    {
+      temp = (temp << 1) + ((temp & 0x80000000)?1:0);
+    }
+    temp ^=0x4D5E234B;
+    i--;
+  }
+  securityAlgoDataBuffer[0] = ((temp) & 0xFF000000)>>24;
+  securityAlgoDataBuffer[1] = ((temp) & 0xFF0000)>>16;
+  securityAlgoDataBuffer[2] = ((temp) & 0xFF00)>>8;
+  securityAlgoDataBuffer[3] = ((temp) & 0xFF);
+}
+
+void stopPerodicFrames()
+{
+
+}
+
+void startPerodicFrames()
+{
+
+}
+
+testcase RequestDownload(long Size, long block)
+{
+  long timeout;
+  long CompressionType;
+  long FlashingSize;
+  byte SizeArray[4] = {0x00,0x00,0x00,0x00};
+  
+  CompressionType = 0;
+  //get the current file compression state and memory size
+  
+  if(@sysvar::Flash_config::FirstFileCompression != 0)
+  {
+    CompressionType += 0xA0;
+  }
+  
+  if(@sysvar::Flash_config::FirstFileEncryption != 0 )
+  {
+    CompressionType += 0x0A;
+  }
+  
+  if(block == Application)
+  {
+    FlashingSize = @sysvar::Flash_config::SizeApplication;
+  }
+  else if(block == Calibration)
+  {
+    FlashingSize = @sysvar::Flash_config::SizeCalibration;
+  }
+  else if(block == DevCert)
+  {
+    FlashingSize = @sysvar::Flash_config::SizeCert;
+  }
+  
+  //Split the size in bytes
+  SizeArray[0] = (byte)FlashingSize;
+  SizeArray[1] = (byte)(FlashingSize >> 8);
+  SizeArray[2] = (byte)(FlashingSize >> 16);
+  SizeArray[3] = (byte)(FlashingSize >> 24);
+
+  //build the Request Download UDS request
+  diagResize(dReq,9);                             //UDS request size
+  diagSetPrimitiveByte(dReq, 0, 0x34);            // SID
+  diagSetPrimitiveByte(dReq, 1, CompressionType); //Data format
+  diagSetPrimitiveByte(dReq, 2, 0x42);            //Address and Length format
+  diagSetPrimitiveByte(dReq, 3, 0x00);            //Block MSB
+  diagSetPrimitiveByte(dReq, 4, block);           //Block LSB
+  diagSetPrimitiveByte(dReq, 5, SizeArray[3]);    //Size MMSB
+  diagSetPrimitiveByte(dReq, 6, SizeArray[2]);    //Size LMSB
+  diagSetPrimitiveByte(dReq, 7, SizeArray[1]);    //Size LMSB
+  diagSetPrimitiveByte(dReq, 8, SizeArray[0]);    //Size LLSB
+  
+  //send the request and wait for response
+  diagSendRequest(dReq);
+  timeout = testWaitForDiagResponse(dReq,500);
+  testWaitForTimeout(50);
+  CheckErrorStep("Request Download",timeout,conditionFail,0);
+  
+  // TODO: we should get the block size from the response, but at the moment it's hardcoded
+  if((timeout != 0) && (conditionFail == 0))
+  {
+    datablock = 4088;//(long)diagGetParameter (requestDownloadRe, "maxNumberOfBlockLength");
+  }
+}
+
+testcase UploadData(long maxsize, long block, long step)
+{
+  long ret = 1;
+  long sequence = 1;
+  long timeout;
+  long index = 0;
+  
+  //initialise data because it seems it's static and this function has a friggin memory.
+  ret = 1;
+  sequence = 1;
+  
+  //reset loading bar if its the first file
+  if(step == Application)
+  {
+    sent = 0;
+  }
+  index = 0;
+  while(ret != 0)
+  {
+    //get data
+    ret = fileGetBinaryBlock(fBuffer, maxsize, glbHandleFile);
+    
+    if(ret > 0)
+    {
+      diagResize(dReq,(ret + 2));
+      
+      //set data to dummy request
+      diagSetPrimitiveByte(dReq, 0, 0x36);
+      diagSetPrimitiveByte(dReq, 1, sequence);
+      //set the payload
+      for(index = 0; index < ret; index++)
+      {
+         diagSetPrimitiveByte(dReq, (index+2), fBuffer[index]);
+      }
+      
+      //send request
+      diagSendRequest(dReq);
+      timeout = testWaitForDiagResponse(dReq,4999);
+      sequence++;
+      sent += ret;
+      //update progress
+      if(block == 1)
+      {
+        @sysvar::Flash::LoadBar1 = sent * 100 / (@sysvar::Flash::File1Size + @sysvar::Flash::File1Size*0.05);
+      }
+      else if(block == 2)
+      {
+        @sysvar::Flash::LoadBar2 = sent * 100 / (@sysvar::Flash::File2Size + @sysvar::Flash::File2Size*0.05);
+      }
+      else
+      {
+        //do nothing. dunno. go for a walk or something. Listen to the birds and enjoy life.
+      }
+      //check completion
+      testWaitForTimeout(50);
+      CheckErrorStep("Transfer Data", timeout, conditionFail,0);
+    }
+    else
+    {
+
+    }
+  }
+  //close the file
+  fileClose(glbHandleFile);
+
+  //build the Transfer Exit UDS request
+  diagResize(dReq,1);                             //UDS request size
+  diagSetPrimitiveByte(dReq, 0, 0x37);            //
+  
+  //prepare step monitoring
+  conditionFail = 0;
+  /* Transfer Exit */
+  diagSendRequest(dReq);
+  timeout = testWaitForDiagResponse(dReq,4999);
+  testWaitForTimeout(50);
+  CheckErrorStep("Transfer Exit", timeout, conditionFail,0);
+}
+
+testcase GetSecurityAccess()
+{
+  int i;
+  long resp = 0;
+  long timeout;
+  byte seed[8];
+  int old;
+  
+  /* f) Request Seed */
+  /* reset NRC */
+  conditionFail = 0;
+  
+  if(@sysvar::Flash::SecurityAlgo == 0)
+  {
+    //build the Check BOOT version UDS request
+    diagResize(dReq,3);                  //UDS request size
+    diagSetPrimitiveByte(dReq, 0, 0x22); //SID
+    diagSetPrimitiveByte(dReq, 1, 0xF1); //SW version
+    diagSetPrimitiveByte(dReq, 2, 0xAB); //SW version
+    
+    diagSendRequest(dReq);
+    timeout = testWaitForDiagResponse(dReq,5000);
+    /* allow callback to ba called */
+    testWaitForTimeout(100);
+    
+    if(diagGetRespParameterRaw (dReq, "NRC", seed, 4) == 0)
+    {
+      //in case of NRC use old algo
+      old = 1;
+      write("use old security NRC");
+    }
+    else
+    {
+      //Get the response from the response
+      for(i=0; i<6;i++)
+      {
+        seed[i] = (byte)diagGetRespPrimitiveByte( dReq, (i+1));
+      }
+
+      // B130 last version with old algo
+      if((seed[2] == 0x58)&&(seed[3] == 0x31) && (seed[4] == 0x33)&& (seed[5] == 0x30))
+      {
+        old = 1;
+        write("use old security");
+      }
+      else
+      {
+        old = 0;
+        write("use new security");
+      }
+    }
+    /* reset NRC */
+    conditionFail = 0;
+  }
+  else if(@sysvar::Flash::SecurityAlgo == 1)
+  {
+    old = 0;
+    write("use new security");
+  }
+  else
+  {
+    old = 1;
+    write("use old security");
+  }
+  //build the Request Seed UDS request
+  diagResize(dReq,2);                  //UDS request size
+  diagSetPrimitiveByte(dReq, 0, 0x27); //SID
+  diagSetPrimitiveByte(dReq, 1, 0x11); //Request seed
+  
+  diagSendRequest(dReq);
+  timeout = testWaitForDiagResponse(dReq,5000);
+  testWaitForTimeout(50);
+  resp = CheckErrorStep("Request Seed", timeout, conditionFail,0);
+  
+  //check if previous step was ok
+  if(resp != 1)
+  {
+    //Get the seed from the response
+    for(i=0; i<4;i++)
+    {
+      seed[i] = (byte)diagGetRespPrimitiveByte( dReq, (i+2));
+    }
+
+    /* h) Apply algo */
+    if(old == 1)
+    {
+      securityAlgo(seed);
+    }
+    else
+    {
+      securityAlgoNew(seed);
+    }
+    /* i) Send 4-byte key (seed bytes + algo) */
+    //build the Send Key UDS request
+    diagResize(dReq,6);                  //UDS request size
+    diagSetPrimitiveByte(dReq, 0, 0x27); //SID
+    diagSetPrimitiveByte(dReq, 1, 0x12); //Send Key
+    diagSetPrimitiveByte(dReq, 2, securityAlgoDataBuffer[0]); //Key Byte 0
+    diagSetPrimitiveByte(dReq, 3, securityAlgoDataBuffer[1]); //Key Byte 1
+    diagSetPrimitiveByte(dReq, 4, securityAlgoDataBuffer[2]); //Key Byte 2
+    diagSetPrimitiveByte(dReq, 5, securityAlgoDataBuffer[3]); //Key Byte 3
+
+    diagSendRequest(dReq);
+    timeout = testWaitForDiagResponse(dReq,5000);
+    testWaitForTimeout(50);
+    CheckErrorStep("Security Access", timeout, conditionFail,0);
+  }
+}
+
+testcase BootloaderSwitch()
+{
+  long timeout;
+ 
+  
+  /* 2. Init procedure */
+  /* a) Switch to extended session */
+  //build the Extended Session UDS request
+  diagResize(dReq,2);                  //UDS request size
+  diagSetPrimitiveByte(dReq, 0, 0x10); // SID
+  diagSetPrimitiveByte(dReq, 1, 0x03); //Data format
+  
+  diagSendRequest(dReq);
+  timeout = testWaitForDiagResponse(dReq,4999);
+  testWaitForTimeout(50);
+  CheckErrorStep("Extended Session", timeout, conditionFail,0);
+  
+  /* b) Query of programming preconditions */
+  //build the Check Programming Preconditions UDS request
+//  diagResize(dReq,3);                  //UDS request size
+//  diagSetPrimitiveByte(dReq, 0, 0x22); //SID
+//  diagSetPrimitiveByte(dReq, 1, 0x04); //SSID
+//  diagSetPrimitiveByte(dReq, 2, 0x48); //SSID
+//  diagSendRequest(dReq);
+//  timeout = testWaitForDiagResponse(dReq,4999);
+//  testWaitForTimeout(50);
+//  CheckErrorStep("Programming Preconditions", timeout, conditionFail,0);
+//  
+  /* c) Switching off of event memory entries */
+  //build the Control DTC Settings UDS request
+//  diagResize(dReq,5);                  //UDS request size
+//  diagSetPrimitiveByte(dReq, 0, 0x85); // SID
+//  diagSetPrimitiveByte(dReq, 1, 0x02); //Data format
+//  diagSetPrimitiveByte(dReq, 2, 0xFF); //DTC control options byte 0
+//  diagSetPrimitiveByte(dReq, 3, 0xFF); //DTC control options byte 1
+//  diagSetPrimitiveByte(dReq, 4, 0xFF); //DTC control options byte 2
+//  //send the request
+//  diagSendRequest(dReq);
+//  timeout = testWaitForDiagResponse(dReq,500);
+  //CheckErrorStep("Switching off of event memory entries", timeout, conditionFail,0);
+  
+//  /* d) CommunicationControl, disable Tx */
+//  //build the Commication Control UDS request
+//  diagResize(dReq,3);                       //UDS request size
+//  diagSetPrimitiveByte(dReq, 0, 0x28);      //SID
+//  diagSetPrimitiveByte(dReq, 1, 0x01);      //SSID
+//  diagSetPrimitiveByte(dReq, 2, disableTx); //Communication type - disable
+//  //send the request
+//  diagSendRequest(dReq);
+//  timeout = testWaitForDiagResponse(dReq,500);
+//  //CheckErrorStep("CommunicationControl", timeout, conditionFail,0);
+ 
+  
+  /* e) Change to the ProgrammingSession */
+  //build the Programming Session request
+  diagResize(dReq,2);                  //UDS request size
+  diagSetPrimitiveByte(dReq, 0, 0x10); // SID
+  diagSetPrimitiveByte(dReq, 1, 0x02); //Data format
+  diagSendRequest(dReq);
+  /* required response pending 0x78 */
+  timeout = testWaitForDiagResponse(dReq,750);
+  testWaitForTimeout(50);
+  CheckErrorStep("ProgrammingSession", timeout, conditionFail,0);
+  
+  /* Stop Periodic Frames */
+  stopPerodicFrames();
+}
+
+testcase WriteFingerPrint()
+{
+  long timeout;
+  long i;
+  byte version;
+  char blyet[30];
+  char vers[3];
+  
+  /* Build the fingerprint */
+  getLocalTimeString(blyet);
+  fingerprint[0] = 21;    //year
+  fingerprint[1] = 8;    //month
+  fingerprint[2] = 2;    //day
+  fingerprint[3] = blyet[5];    //month c2
+  fingerprint[4] = blyet[6];    //month c3
+  fingerprint[5] = blyet[22];   //year c1
+  fingerprint[6] = blyet[23];   //year c2
+  fingerprint[7] = blyet[11];   //hour c1
+  fingerprint[8] = blyet[12];   //hour c2
+
+  /* Write Fingerpint */
+  //build the Write Fingerprint UDS request
+  diagResize(dReq,12);                  //UDS request size
+  diagSetPrimitiveByte(dReq, 0, 0x2E);  // SID
+  diagSetPrimitiveByte(dReq, 1, 0xF1);  //SSID
+  diagSetPrimitiveByte(dReq, 2, 0x5A);  //SSID
+  diagSetPrimitiveByte(dReq, 3, fingerprint[0]);
+  diagSetPrimitiveByte(dReq, 4, fingerprint[1]);
+  diagSetPrimitiveByte(dReq, 5, fingerprint[2]);
+  diagSetPrimitiveByte(dReq, 6, fingerprint[3]);
+  diagSetPrimitiveByte(dReq, 7, fingerprint[4]);
+  diagSetPrimitiveByte(dReq, 8, fingerprint[5]);
+  diagSetPrimitiveByte(dReq, 9, fingerprint[6]);
+  diagSetPrimitiveByte(dReq, 10,fingerprint[7]);
+  diagSetPrimitiveByte(dReq, 11,fingerprint[8]);
+
+  //send the request 
+  diagSendRequest(dReq);
+
+  timeout = testWaitForDiagResponse(dReq,500);
+  testWaitForTimeout(50);
+
+  CheckErrorStep("Write Fingerprint", timeout, conditionFail,0);
+}
+
+testcase CheckMemory(char path[], long step, long block)
+{
+  dword glbHandleChecksum;
+  long ret;
+  int writeCounter = 0;
+  byte dataChecksum[400];
+  long timeout;
+  
+  //change timeout 
+  diagSetP2Timeouts(1000,90000);
+  
+  glbHandleChecksum = openFileRead(path,1);
+  if(glbHandleChecksum != 0)
+  {
+    /* Save into buffer all data from this file */
+    ret = fileGetBinaryBlock(dataChecksum, 400, glbHandleFile);
+    
+    fileClose(glbHandleChecksum);
+     
+    diagResize(dReq,(ret + 4));
+    diagSetPrimitiveByte(dReq, 0, 0x31);
+    diagSetPrimitiveByte(dReq, 1, 0x01);
+    diagSetPrimitiveByte(dReq, 2, 0x02);
+    diagSetPrimitiveByte(dReq, 3, 0x02);
+    for(writeCounter = 0; writeCounter < ret; writeCounter++)
+    {
+       diagSetPrimitiveByte(dReq, (writeCounter+4), dataChecksum[writeCounter]);
+    }
+    conditionFail = 0;   
+    PendingTimer = 0;
+    setTimer(PendingTimeout,500);
+    diagSendRequest(dReq);
+    timeout = testWaitForDiagResponse(dReq,80000);
+    cancelTimer(PendingTimeout);
+    ret = diagGetRespPrimitiveByte(dReq, 4);
+    
+    if(block == Calibration)
+    {
+      if(ret == 0)
+      {
+        if(step == 1)
+          @sysvar::Flash::firstFileStatusLED = LEDok;
+        else if (step == 2)
+          @sysvar::Flash::secondFileStatusLED = LEDok;
+      }
+      else
+      {
+        if(step == 1)
+          @sysvar::Flash::firstFileStatusLED = LEDnok;
+        else if (step == 2)
+          @sysvar::Flash::secondFileStatusLED = LEDnok;
+      }
+    }
+    testWaitForTimeout(50);
+    CheckErrorStep("Check Memory", timeout, conditionFail,ret);
+    
+    if(step == 1)
+    {
+      @sysvar::Flash::LoadBar1 = sent * 100 / (@sysvar::Flash::File1Size + @sysvar::Flash::File1Size*0.025);
+    }
+    else if(step == 2)
+    {
+      @sysvar::Flash::LoadBar2 = sent * 100 / (@sysvar::Flash::File2Size + @sysvar::Flash::File2Size*0.025);
+    }
+    else
+    {
+      //do nothing. dunno. go for a walk or something. Listen to the birds and enjoy life.
+    }
+  }
+}
+
+testcase EraseMemory(int block)
+{
+  long timeout; 
+  long ret = 0;
+  
+  //build the Erase Memory UDS request
+  diagResize(dReq,7);                     //UDS request size
+  diagSetPrimitiveByte(dReq, 0, 0x31);    //SID
+  diagSetPrimitiveByte(dReq, 1, 0x01);    //Routine ID
+  diagSetPrimitiveByte(dReq, 2, 0xFF);    //Routine ID
+  diagSetPrimitiveByte(dReq, 3, 0x00);    //Routine ID
+  diagSetPrimitiveByte(dReq, 4, 0x02);    //Data Size
+  diagSetPrimitiveByte(dReq, 5, 0x00);    //Block MSB
+  diagSetPrimitiveByte(dReq, 6, block);   //Block LSB
+  //Send Erase memory request
+  conditionFail = 0;
+  diagSendRequest(dReq);
+  timeout = testWaitForDiagResponse(dReq,5000); 
+  testWaitForTimeout(50);
+  //get routine response
+  ret = diagGetRespPrimitiveByte(dReq, 4);
+  //check result
+  CheckErrorStep("Erase Memory", timeout, conditionFail,ret);
+}
+
+testcase CheckProgramDependencies( int step)
+{
+  long timeout;
+  long ret;
+  
+  //build the Check Programming Dependencies UDS request
+  diagResize(dReq,4);                   //UDS request size
+  diagSetPrimitiveByte(dReq, 0, 0x31);  // SID
+  diagSetPrimitiveByte(dReq, 1, 0x01);  //Routine ID
+  diagSetPrimitiveByte(dReq, 2, 0xFF);  //Routine ID
+  diagSetPrimitiveByte(dReq, 3, 0x01);  //Routine ID
+  //Send request
+  diagSendRequest(dReq);
+  timeout = testWaitForDiagResponse(dReq,500);
+  testWaitForTimeout(50);
+  //get routine response
+  ret = diagGetRespPrimitiveByte(dReq, 4);
+  //check result
+  CheckErrorStep("Check Programming Dependencies", timeout, conditionFail,ret);
+  
+  if(step == 1)
+  {
+    @sysvar::Flash::LoadBar1 = sent * 100 / (@sysvar::Flash::File1Size);
+  }
+  else if(step == 2)
+  {
+    @sysvar::Flash::LoadBar2 = sent * 100 / (@sysvar::Flash::File2Size);
+  }
+  else
+  {
+    //do nothing. dunno. go for a walk or something. Listen to the birds and enjoy life.
+  }
+}
+
+testcase Hardreset()
+{
+  long timeout;
+  
+  //change timeout 
+  diagSetP2Timeouts(1000,5000);
+  
+  //build the request
+  //build the Request Download UDS request
+  diagResize(dReq,2);                  //UDS request size
+  diagSetPrimitiveByte(dReq, 0, 0x11); //SID
+  diagSetPrimitiveByte(dReq, 1, 0x01); //Reset type
+    
+  /* hard reset */
+  diagSendRequest(dReq);
+  timeout = testWaitForDiagResponse(dReq,1500);
+  testWaitForTimeout(50);
+  CheckErrorStep("Hard reset", timeout, conditionFail,0);
+}
+
+void MainTest ()
+{
+  char filePath[2000];
+  char filePathTemp[2000];
+  char SwVersion[3];
+  byte fp[3] = {0x01,0x02,0x03};
+  long size;
+  long backupSize;
+  int FlashValid = 1;
+  int blockFlased = 0;
+  
+  @sysvar::Flash::bFlashingDone = 1;
+  
+ //hide the button
+  SetControlVisibility("Flash_panel", "ButtonStart", 0);
+  
+  //reset stuff
+  @sysvar::Flash::firstFileStatusLED = LEDdefault;
+  @sysvar::Flash::secondFileStatusLED = LEDdefault;
+  @sysvar::Flash::LoadBar1 = 0;
+  @sysvar::Flash::LoadBar2 = 0;
+  
+  
+  DeleteControlContent("Flash_panel","Console");
+  SetControlForeColor("Flash_panel","Console", MakeRGB(0,0,0));
+  putValueToControl("Flash_panel","Console","Start Flashing");
+  
+  if((@sysvar::Flash::File1Size == 0) && (@sysvar::Flash_config::checkboxFileOne == 1))
+  {
+    SetControlForeColor("Flash_panel","Console", MakeRGB(255,0,0));
+    putValueToControl("Flash_panel","Console","\nERROR... Cannot open application/signature file");
+    FlashValid = 0;
+  }
+ 
+  if((@sysvar::Flash::File2Size == 0) &&  (@sysvar::Flash_config::checkboxFileTwo == 1))
+  {
+    SetControlForeColor("Flash_panel","Console", MakeRGB(255,0,0));
+    putValueToControl("Flash_panel","Console","\nERROR... Cannot open calibration/signature file");
+    FlashValid = 0;
+  }
+  
+  //Start Flashing log
+  @sysvar::Flash::StartFlashLog = 1;
+  
+  if(((@sysvar::Flash_config::checkboxFileOne == 1) || (@sysvar::Flash_config::checkboxFileTwo == 1)) && (FlashValid != 0))
+  {
+    
+    DiagDisconnectChannel();
+    diagSetTarget("eCS");
+    DiagConnectChannel();
+    
+    testWaitForTimeout(250);
+    
+    //switch to bootloader
+    BootloaderSwitch();
+   
+    //wait for transfer
+    testWaitForTimeout(250);
+    
+    //get security access
+    GetSecurityAccess();
+    
+    //WriteFingerpint
+    WriteFingerPrint();
+    
+    //check if first file needs to be flashed
+    if(@sysvar::Flash_config::checkboxFileOne == 1)
+    {
+      sysGetVariableString("Flash_config", "app_path", filePath, elCount(filePath));
+      blockFlased = 1;
+      @sysvar::Flash::firstFileStatusLED = LEDblink0;
+      @sysvar::Flash_config::checkboxFileTwo = 0;
+    }
+    else if (@sysvar::Flash_config::checkboxFileTwo == 1)
+    {
+      sysGetVariableString("Flash_config", "secondFilePath", filePath, elCount(filePath));
+      blockFlased = 2;
+      @sysvar::Flash::secondFileStatusLED = LEDblink0;
+      backupSize= @sysvar::Flash_config::SizeApplication;
+      @sysvar::Flash_config::SizeApplication = 389104;
+    }
+    
+    //notify current step
+    SetControlForeColor("Flash_panel","Console", MakeRGB(0,0,0));
+    putValueToControl("Flash_panel","Console","\nWriting Application");
+    
+    write(filePath);
+    if(@sysvar::Flash_config::checkboxWriteApp == 1)
+    {
+      //erase memory block 1
+      EraseMemory(Application);
+      
+      //open file 
+      strncpy_off(filePathTemp, 0, filePath, elCount(filePathTemp));
+      if(@sysvar::Flash::bFilenameSwitch == 1)
+      {
+        strncpy_off(filePathTemp, strlen(filePath), "\\fbl_u.bin", elCount(filePathTemp));
+      }
+      else
+      {
+        strncpy_off(filePathTemp, strlen(filePath), "\\app.bin", elCount(filePathTemp));
+      }
+      size = OpenFile(filePathTemp);
+      
+      //request download
+      RequestDownload(@sysvar::Flash_config::SizeApplication,Application);
+      //start transfer
+      UploadData(datablock,blockFlased, Application);
+      //check memory
+      strncpy_off(filePathTemp, 0, filePath, elCount(filePathTemp));
+      if(@sysvar::Flash::bFilenameSwitch == 1)
+      {
+        strncpy_off(filePathTemp, strlen(filePath), "\\sig_fbl_u.bin", elCount(filePathTemp));
+      }
+      else
+      {
+        strncpy_off(filePathTemp, strlen(filePath), "\\sig_app.bin", elCount(filePathTemp));
+      }
+      CheckMemory(filePathTemp,blockFlased, Application);
+    }
+    
+    if(@sysvar::Flash_config::checkboxWriteCalib == 1)
+    {
+      //notify current step
+      SetControlForeColor("Flash_panel","Console", MakeRGB(0,0,0));
+      putValueToControl("Flash_panel","Console","\nWriting Calibration");
+      
+      //erase memory block 2
+      EraseMemory(Calibration);
+      
+      //open file and get length
+      strncpy_off(filePathTemp, 0, filePath, elCount(filePathTemp));
+      strncpy_off(filePathTemp, strlen(filePath), "\\calib.bin", elCount(filePathTemp));
+      size = OpenFile(filePathTemp);
+      
+      //request download
+      RequestDownload(@sysvar::Flash_config::SizeCalibration,Calibration);
+      //start transfer
+      UploadData(datablock,blockFlased, Calibration);
+      //check memory
+      strncpy_off(filePathTemp, 0, filePath, elCount(filePathTemp));
+      strncpy_off(filePathTemp, strlen(filePath), "\\sig_calib.bin", elCount(filePathTemp));
+      CheckMemory(filePathTemp,blockFlased, Calibration);
+    }
+    
+    if((@sysvar::Flash_config::checkboxFileOne == 1)&&(@sysvar::Flash_config::checkboxWriteDevCert == 1))
+    {
+      //notify current step
+      SetControlForeColor("Flash_panel","Console", MakeRGB(0,0,0));
+      putValueToControl("Flash_panel","Console","\nWriting Calibration");
+      
+      //erase memory block 2
+      EraseMemory(DevCert);
+      
+      //open file and get length
+      strncpy_off(filePathTemp, 0, filePath, elCount(filePathTemp));
+      strncpy_off(filePathTemp, strlen(filePath), "\\cert.bin", elCount(filePathTemp));
+      size = OpenFile(filePathTemp);
+      
+      //request download
+      RequestDownload(@sysvar::Flash_config::SizeCert, DevCert);
+      //start transfer
+      UploadData(datablock,blockFlased, DevCert);
+      //check memory
+      strncpy_off(filePathTemp, 0, filePath, elCount(filePathTemp));
+      strncpy_off(filePathTemp, strlen(filePath), "\\sig_cert.bin", elCount(filePathTemp));
+      CheckMemory(filePathTemp,blockFlased, DevCert);
+    }
+    
+    if ((@sysvar::Flash_config::checkboxWriteCalib == 1) || (@sysvar::Flash_config::checkboxWriteApp == 1) || (@sysvar::Flash_config::checkboxWriteDevCert == 1))
+    {
+      CheckProgramDependencies(blockFlased);
+    }
+    
+    Hardreset();
+    
+    if (@sysvar::Flash_config::checkboxFileTwo == 1)
+    {
+      @sysvar::Flash_config::SizeApplication = backupSize;
+    }
+  }
+  else
+  {
+    SetControlForeColor("Flash_panel","Console", MakeRGB(255,0,0));
+    putValueToControl("Flash_panel","Console","\nERROR... No files selected for flashing");
+  }
+    
+  StartCommunication();
+  
+  //stop flashing
+  @sysvar::Flash::StartFlashLog = 0;
+  
+  //notify current step
+  SetControlForeColor("Flash_panel","Console", MakeRGB(0,0,0));
+  putValueToControl("Flash_panel","Console","\nFinished");
+  
+  @sysvar::Flash::bFlashingDone = 0;
+  
+  //Show the button
+  SetControlVisibility("Flash_panel", "ButtonStart", 1); 
+}
+
+testcase StartCommunication()
+{
+  testWaitForTimeout(500);
+  startPerodicFrames();
+  testWaitForTimeout(500);
+}
+

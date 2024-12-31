@@ -1,0 +1,1 @@
+pyinstaller --onefile EA_automate_publish_html.py --icon=icon_EA.ico

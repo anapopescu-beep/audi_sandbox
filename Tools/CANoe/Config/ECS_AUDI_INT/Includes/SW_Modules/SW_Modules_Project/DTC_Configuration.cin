@@ -1,0 +1,72 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+
+// ADC
+  // Thresholds for ADC autotest. *********************************************************************************
+  const _iQualif_ADC_OUT_OF_ORDER                = 50;                                                    // (ms)
+  const _iDeskill_ADC_OUT_OF_ORDER               = 110;                                                   // (ms)
+  byte NVP_u16ADCLowVoltageThrsAddress [4]       = {0x14, 0x00, 0x01, 0xE8};                                    //RAM address
+  byte NVP_u16ADCHighVoltageThrsAddress [4]      = {0x14, 0x00, 0x01, 0xEA};                                    //RAM address
+	byte NVP_u16ADCLowVoltageBelowThrs [2]         = {0x00, 0x00};                                                // m(V)
+  byte NVP_u16ADCLowVoltageAbove [2]             = {0x0F, 0x00};                                                // m(V)
+	byte NVP_u16ADCHighVoltageAboveThrs [2]        = {0xFF, 0xFF};                                                // (mV)
+  byte NVP_u16ADCHighVoltageBelowThrs [2]        = {0x00, 0x10};                                                // (mV)
+  byte NVP_u16ADCHighVoltageThrsDefault [2]      = {0x79, 0x13};                                                // (mV)
+  
+  
+// Power_Supply
+  // Thresholds for Undervoltage Power autotest. *********************************************************************************
+	const _iQualif_BAT_PWR_UNDER_VOLTAGE           = 400;                                                      // (ms)
+	const _iDeskill_BAT_PWR_UNDER_VOLTAGE          = 900;                                                      // (ms)
+	const NVP_u16UnderKL30QualificationThrs        = 9;                                                        // (V)
+  const NVP_u16UnderKL30DeskillingThrs           = 9.5;                                                      // (V)
+  const int NVP_u16UnderKL30QualificationThrs_uC = ((NVP_u16UnderKL30QualificationThrs * 5) / 33.0 ) * 1000; // (mV) Scaled for FIB.
+  const SystemNominalVoltage                     = 12.5 ;                                                    // (V)
+  const SystemNominalAmps                        = 10  ;                                                     // (A)
+  
+  // Thresholds for Overvoltage Power autotest. *********************************************************************************
+  const _iQualif_BAT_PWR_OVER_VOLTAGE           = 400;                                                     // (ms)
+  const _iDeskill_BAT_PWR_OVER_VOLTAGE          = 900;                                                     // (ms)
+	const NVP_u16OverKL30QualificationThrs        = 16;                                                      // (V)
+	const NVP_u16OverKL30DeskillingThrs           = 15.5;                                                    // (V)
+  const int NVP_u16OverKL30QualificationThrs_uC = ((NVP_u16OverKL30QualificationThrs * 5) / 33.0 ) * 1000; // (mV) Scaled for FIB.
+  
+  
+// Solenoids
+  // EVENT_OPEN_CIRCUIT qualification threshold during unlock profile
+  byte NVP_u16OpenCircuitUnlockProfThrsAddress [4]          = {0x14, 0x00, 0x01, 0xFC};                         //RAM address
+  byte NVP_u16OpenCircuitUnlockProfQualificationThrs [2]    = {0x58, 0x1B};                                     // (mV)
+  
+  // EVENT_OPEN_CIRCUIT qualification threshold during test/diagnostic profile
+  byte NVP_u16OpenCircuitDiagProfThrsAddress [4]            = {0x14, 0x00, 0x01, 0xFC};                         //RAM address
+  byte NVP_u16OpenCircuitDiagProfQualificationThrs [2]      = {0xA0, 0x0F};                                     // (mV)
+  byte NVP_u16OpenCircuitDiagProfDefaultThrs [2]            = {0x2E, 0x09};                                     // (mV)
+  const _iQualif_EVENT_OPEN_CIRCUIT                         = 400;                                                            // (ms)
+	const _iDeskill_EVENT_OPEN_CIRCUIT                        = 100;                                                            // (ms) 
+  
+  // EVENT_SHORT_TO_GND qualification threshold during unlock profile
+  byte NVP_u16ShortToGNDUnlockProfThrsAddress [4]           = {0x14, 0x00, 0x01, 0xF4};                         //RAM address
+  byte NVP_u16ShortToGNDUnlockProfQualificationThrs [2]     = {0xFF, 0xFF};                                     // (mV)
+  
+  // EVENT_SHORT_TO_GND qualification threshold during test/diagnostic profile
+  byte NVP_u16ShortToGNDDiagProfThrsAddress [4]             = {0x14, 0x00, 0x01, 0xF6};                         //RAM address
+  byte NVP_u16ShortToGNDDiagProfQualificationThrs [2]       = {0xFF, 0xFF};                                     // (mV)
+  byte NVP_u16ShortToGNDDiagProfDefaultThrs [2]             = {0x00, 0x00};                                     // (mV)
+  const _iQualif_EVENT_SHORT_TO_GND                         = 400;                                              // (ms)
+	const _iDeskill_EVENT_SHORT_TO_GND                        = 100;                                              // (ms)
+  
+  // EVENT_SHORT_TO_VBAT qualification threshold during test/diagnostic profile
+  const _iQualif_EVENT_SHORT_TO_VBAT         = 400;                                                             // (ms)
+	const _iDeskill_EVENT_SHORT_TO_VBAT        = 100;                                                             // (ms)
+  
+  // EVENT_ACTUATOR_STATUS qualification threshold during test/diagnostic profile
+  const _iQualif_EVENT_ACTUATOR_STATUS       = 40;                                                              // (ms)
+	const _iDeskill_EVENT_ACTUATOR_STATUS      = 10;                                                              // (ms)  
+  
+}

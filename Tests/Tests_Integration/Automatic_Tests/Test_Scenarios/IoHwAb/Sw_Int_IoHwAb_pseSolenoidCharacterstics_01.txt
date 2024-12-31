@@ -1,0 +1,37 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_pseSolenoidCharacterstics, ARCH_SW_CIL_pclSolenoidCharacteristics
+ARCH_SW_IoHwAb_pseSolenoidCharacterstics: The runnable shall read the {Filtered Voltage Solenoid 100ms} for the selected solenoid on the {Solenoid Index} input parameter. The runnable shall read the {Current Solenoid} for the selected solenoid on the {Solenoid Index} input parameter. The runnable must compute the temperature of the solenoid.
+ARCH_SW_CIL_pclSolenoidCharacteristics: This interface read the solenoid temperature.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+	Step 2: Start MF 01 
+		Expected result:  MF started.
+
+Action: ARCH_SW_IoHwAb_pseSolenoidCharacterstics, ARCH_SW_CIL_pclSolenoidCharacteristics
+
+	Step 3: Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at Rte_Call_pclSolenoidCharacteristics_GetTemperature 
+		Expected result:  BP reached.
+
+	Step 4: Set a breakpoint in function IoHwAb_GetSolenoidTemperature 
+		Expected result:  BP reached
+
+	Step 5: Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend after Rte_Call_pclSolenoidCharacteristics_GetTemperature 
+		Expected result:  BP reached.
+
+	Step 6: Evaluate Solenoid characteristics data flow
+
+Postcondition
+
+	Step 7: Return ECU to default values

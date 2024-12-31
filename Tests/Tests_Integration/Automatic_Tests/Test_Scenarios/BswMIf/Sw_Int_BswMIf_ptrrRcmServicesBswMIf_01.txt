@@ -1,0 +1,54 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrRcmServicesBswMIf_RCM_runDetermineResetCause_BswM_OnStartComEffective, ARCH_SW_BswMIf_ptrrRcmServicesBswMIf_RCM_runConfirmResetCause_BswM_OnStartComEffective, ARCH_SW_BswMIf_ptrrRcmServicesBswMIf_RCM_runGetResetCause_BswM_OnStartupTwoB
+ARCH_SW_BswMIf_ptrrRcmServicesBswMIf_RCM_runDetermineResetCause_BswM_OnStartComEffective: The RCM_runDetermineResetCause runnable shall be called in the BswM_OnStartComEffective runnable in order to determine the current reset cause
+ARCH_SW_BswMIf_ptrrRcmServicesBswMIf_RCM_runConfirmResetCause_BswM_OnStartComEffective: The RCM_runConfirmResetCause runnable shall be called in the BswM_OnStartComEffective runnable in order to confirm the detected reset cause
+ARCH_SW_BswMIf_ptrrRcmServicesBswMIf_RCM_runGetResetCause_BswM_OnStartupTwoB: The RCM_runGetResetCause runnable shall be called in the BswM_OnStartupTwoB runnable in order to check if a valid wake up event was detected
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrRcmServicesBswMIf_RCM_runDetermineResetCause_BswM_OnStartComEffective
+
+	Step 2: Set a BP in function BswM_OnStartComEffective  in order to determine the current reset cause 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function RCM_runDetermineResetCause for check if interface work 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_OnStartComEffective for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrRcmServicesBswMIf_RCM_runConfirmResetCause_BswM_OnStartComEffective
+
+	Step 5: Set a BP in function BswM_OnStartComEffective in order to confirm the detected reset cause 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function RCM_runConfirmResetCause for check if interface work 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_OnStartComEffective for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrRcmServicesBswMIf_RCM_runGetResetCause_BswM_OnStartupTwoB
+
+	Step 8: Set a BP in function BswM_OnStartupTwoB in order to check if a valid wake up event was detected 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function RCM_runGetResetCause for check if interface work 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function BswM_OnStartupTwoA for check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 11: Return ECU to default values

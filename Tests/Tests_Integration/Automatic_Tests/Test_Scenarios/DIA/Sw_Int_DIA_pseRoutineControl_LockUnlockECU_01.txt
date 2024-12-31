@@ -1,0 +1,36 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_DIA_pseRoutineControl_LockUnlockECU_Start
+ARCH_SW_DIA_pseRoutineControl_LockUnlockECU_Start: Interface used to unlock the ECU.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_DIA_pseRoutineControl_LockUnlockECU_Start
+
+	Step 2: Set a BP in function Dcm_DcmDspRoutineCtrl_Lock_UnlockECU_Start in order to call Rte_Call_Dcm_RoutineServices_DcmDspRoutineCtrl_Lock_UnlockECU_Start function 
+		Expected result:  BP was set
+
+	Step 3: Send diagnostic request in order to go in Supplier Session
+
+	Step 4: Send request for press Supplier Security Access button
+
+	Step 5: Send diagnostic request in order to start unlock the ECU
+
+	Step 6: Set a BP in function Rte_Call_Dcm_RoutineServices_DcmDspRoutineCtrl_Lock_UnlockECU_Start in order to call DIA_runRidF781_EcuUnlockStart. 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function DIA_runRidF781_EcuUnlockStart  in order to unlock the ECU 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 8: Return ECU to default values

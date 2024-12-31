@@ -1,0 +1,77 @@
+/*@!Encoding:1252*/
+variables
+{
+  // Session Control
+  diagRequest eCS.DefaultSession_Start dDefaultSessionRequest;
+  diagRequest eCS.EcuIdentification_Read dECUIdentificationReadRequest;
+
+}
+
+
+word testFctWaitForResponse(diagRequest *req, enum bool posResponseExpected)
+{
+  long ret;
+  if (1 != (ret=testWaitForDiagResponse(req, cApplicationTimeoutMs))) {          
+    snprintf(gResultString, elcount(gResultString), "Valid response missing or received too late (Return code=%d)!", ret);
+    testStepFail("", gResultString);
+    return 0;
+  }
+  testStepPass(gTestIdStr, "Response received successfully.");
+  TestReportWriteDiagResponse (req);
+
+  fctIncrementTestStepId();
+  // Check whether the response was a positive response
+  if (-1 == (ret=diagGetLastResponseCode(req))) {
+    if (!posResponseExpected) {
+      snprintf(gResultString, elcount(gResultString), "Positive response received although negative response was expected!");
+      testStepFail("",  gResultString);
+      return 0;
+    }
+    testStepPass(gTestIdStr, "Positive Response received as expected.");
+  }
+  else if (ret > 0) {
+    if (posResponseExpected) {
+      snprintf(gResultString, elcount(gResultString), "Negative response received (NRC=0x%02x) although positive response was expected!", ret);
+      testStepFail("", gResultString);
+      return 0;
+    }
+    testStepPass("",  "Negative Response received as expected (NRC=%d).", ret);
+  }
+  return 1;
+}
+
+word testFctSendRequestAndWaitForFirstResponse(diagRequest *req, enum bool posResponseExpected, enum bool sendFunctional)
+{
+  long ret;
+
+  if (sendFunctional) {
+    ret = req.SendFunctional();
+  }
+  else {
+    ret = req.SendRequest();
+  }
+  
+  if (ret < 0) { 
+    snprintf(gResultString, elcount(gResultString), "Trigger to send the request failed (Return code=%d)!", ret);
+    testStepFail("",  gResultString);
+    return 0;
+  }
+  testStepPass("",  "Trigger to send the request succeded.");
+
+  fctIncrementTestStepId();
+ 
+  if (1 != (ret=testWaitForDiagRequestSent(req, cApplicationTimeoutMs))) { 
+    snprintf(gResultString, elcount(gResultString), "Failed to finish sending the request (Return code=%d)!", ret);
+    testStepFail("",  gResultString);
+    return 0;
+  }
+  testStepPass("",  "Request was sent successfully.");
+
+  fctIncrementTestStepId();
+
+  if (!testFctWaitForResponse(req, posResponseExpected)) 
+    return 0;
+  
+  return 1;
+}
+  

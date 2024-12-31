@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<specdocument>
+  <specobjects doctype="lim">
+    <specobject>
+      <id>lim.MemAcc.EB_INTREQ_MEMACC_0001</id>
+      <status>approved</status>
+      <source>EB integration requirement</source>
+      <version>1</version>
+      <description>
+      The EB memory stack modules NvM, Ea, Fee and MemAcc make only limited
+      use of the callback calls from their underlying modules.
+      Make sure during the integration that the NvM, Ea, Fee and MemAcc 
+      main functions are only called from the same task
+      context so that they cannot preempt each other.
+      </description>
+      <rationale> 
+      This approach enables a simple and lock free implementation
+      that results in smaller code.
+      </rationale>
+      
+    </specobject>
+  </specobjects>
+</specdocument>

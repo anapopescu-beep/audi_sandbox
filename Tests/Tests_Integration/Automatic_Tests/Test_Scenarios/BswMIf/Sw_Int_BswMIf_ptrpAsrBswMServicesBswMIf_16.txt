@@ -1,0 +1,60 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnEnableTxPdu, ARCH_SW_BswMIf_ptrpAsrOsServicesBswMIf_BswMIf_runMainFunction, ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnDisableTxPdu
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnEnableTxPdu: The BswM_OnEnableTxPdu runnable shall be called by the Autosar BswM in case of: - Bus communication is available {reception aknowledge is received}
+ARCH_SW_BswMIf_ptrpAsrOsServicesBswMIf_BswMIf_runMainFunction: The BswMIf_runMainFunction runnable shall be called when the Os task {OsTask_Alv_Autotests} is executed
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnDisableTxPdu:  The BswM_OnDisableTxPdu runnable shall be called by the Autosar BswM in case of: - Current state of ECU is RUN AND Bus communication timeout is received
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnEnableTxPdu
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Set a BP in function BswM_Action_BswMAction_ComM_EnableTxPduConfirmation in order to call BswM_OnEnableTxPdu function 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_OnEnableTxPdu in order to check if Bus communication is available {reception aknowledge is received} 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_Action_BswMAction_ComM_EnableTxPduConfirmation in order to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrpAsrOsServicesBswMIf_BswMIf_runMainFunction
+
+	Step 6: Set a BP in OsTask_Alv_Autotests in order to call BswMIf_runMainFunction function 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswMIf_runMainFunction in order to check if Os task {OsTask_Alv_Autotests} was executed 
+		Expected result:  BP was set
+
+	Step 8: Set a BP in OsTask_Alv_Autotests in order to check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnDisableTxPdu
+
+	Step 9: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 10: Set a BP in function BswM_Action_BswMAction_ComM_DisableTxPduConfirmation in order call BswM_OnDisableTxPdu function 
+		Expected result:  BP was set
+
+	Step 11: Set a BP in function BswM_OnDisableTxPdu in order to check Bus if Current state of ECU is RUN AND Bus communication timeout was received 
+		Expected result:  BP was set
+
+	Step 12: Set a BP in function BswM_Action_BswMAction_ComM_DisableTxPduConfirmation in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 13: Return ECU to default values

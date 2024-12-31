@@ -1,0 +1,390 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.1.10.14 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/RCM/Implementation/src/project.pj $
+*/
+/******************************************************************************
+
+   The RCM - is designed  to get the ECU reset reason
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Common.h"
+#include "Mcu.h"
+#include "Rte_RCM.h"
+#include "Rcm.h"
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+/**
+ * \brief
+ *      SBC group 1 used bits
+ */
+#define KU32_RCM_SBC_GR1_BITS ((uint32)0x2000000)
+/**
+ * \brief
+ *      SBC group 2 used bits
+ */
+#define KU32_RCM_SBC_GR2_BITS ((uint32)0x3C)
+/**
+ * \brief
+ *      Mcu group 1 used bits
+ */
+#define KU32_RCM_MCU_GR1_BITS ((uint32)0x0E)
+/**
+ * \brief
+ *      Mcu group 2 used bits
+ */
+#define KU32_RCM_MCU_GR2_BITS ((uint32)0xFE)
+/**
+ * \brief
+ *      Mcu group 3 used bits
+ */
+#define KU32_RCM_MCU_GR3_BITS ((uint32)0x2000)
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+#define RCM_START_SEC_VAR_INIT_32_ASIL_A
+#include "RCM_MemMap.h"
+
+/**
+ * \brief
+ *      Reset cause variable
+ * \initialization
+ *      ZERO.
+ * \range
+ *      NA.
+ */
+/* +---------------------------------------------+ */
+/* | The bits from rcm_u32ResetCause             | */
+/* +-----+---------------------------------------+ */
+/* | Bit | Reset Cause                           | */
+/* +-----+---------------------------------------+ */
+/* |  0  |  SBC_POR                              | */                     
+/* |  1  |  SBC_GPIO_WK_WU                       | */                  
+/* |  2  |  SBC_WK_WU                            | */         
+/* |  3  |  SBC_TIMER_WU                         | */            
+/* |  4  |  SBC_CAN_WU                           | */            
+/* |  5  |  MCU_LOW_VOLTAGE_DETECT_RESET         | */                        
+/* |  6  |  MCU_LOSS_OF_CLOCK_RESET              | */            
+/* |  7  |  MCU_LOSS_OF_LOCK_RESET               | */         
+/* |  8  |  MCU_WATCHDOG_RESET                   | */                  
+/* |  9  |  MCU_EXTERNAL_RESET_PIN               | */         
+/* | 10  |  MCU_POWER_ON_RESET                   | */      
+/* | 11  |  MCU_JTAG_GENERATED_RESET             | */   
+/* | 12  |  MCU_CORE_LOCKUP_RESET                | */
+/* | 13  |  MCU_SOFTWARE_RESET                   | */   
+/* | 14  |  MCU_MDM_AP_SYSTEM_RESET_REQUESTED    | */      
+/* | 15  |  MCU_STOP_ACKNOWLEDGE_ERROR_RESET     | */      
+/* | 16  |  APP_INVALID_INTERRUPT_NOTIFICATION   | */         
+/* | 17  |  APP_OS_EXCEPTION_NOTIFICATION        | */   
+/* | 18  |  APP_BATTERY_LOSS_NOTIFICATION        | */   
+/* | 19  |  APP_ECC_RAM_NOTIFICATION             | */
+/* | 20  |  APP_ECC_PFLASH_NOTIFICATION          | */
+/* | 21  |  APP_ECC_E2P_NOTIFICATION             | */
+/* | 22  |  APP_ECC_UNIDENTIFIED_NOTIFICATION    | */
+/* | 23  |  APP_MACHINE_EXCEPTION_NOTIFICATION   | */
+/* | 24  |  APP_SW_WDG_TEST_NOTIFICATION         | */
+/* | 25  |  APP_WAKE_UP_EVENT_NOTIFICATION       | */  
+/* | 26  |  APP_BLTD_RESET_NOTIFICATION          | */
+/* | 27  |  APP_STACK_OVERFLOW_NOTIFICATION      | */
+/* | 28  |  APP_RAM_DATA_CORRUPTED_NOTIFICATION  | */
+/* | 29  |  APP_DIAG_HARD_RESET_NOTIFICATION     | */
+/* | 30  |  APP_DIAG_SOFT_RESET_NOTIFICATION     | */
+/* +-----+---------------------------------------+ */
+LOCAL u32ResetCauseType rcm_u32ResetCause = KU32_ZERO;
+
+#define RCM_STOP_SEC_VAR_INIT_32_ASIL_A
+#include "RCM_MemMap.h"
+
+#define RCM_START_SEC_VAR_POWER_ON_CLEARED
+#include "RCM_MemMap.h"
+/**
+ * \brief
+ *      Reset cause reason array
+ */
+LOCAL uint32 rcm_u32ResetNotification;
+
+/**
+ * \brief
+ *      Mirror data to validate data integrity
+ */
+LOCAL uint32 rcm_u32ResetNotification_NOT;
+
+/**
+ * \brief
+ *      Os error value
+ */
+LOCAL u8OSTaskIDType rcm_u8OSErrorTask;
+
+/**
+ * \brief
+ *      Os error status
+ */
+LOCAL u8OSErrorType rcm_u8OSErrorStatus;
+
+#define RCM_STOP_SEC_VAR_POWER_ON_CLEARED
+#include "RCM_MemMap.h"
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+#define RCM_START_SEC_CODE_ASIL_A
+#include "RCM_MemMap.h"
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+* \brief
+*       The function will determine the reset reason.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       Bswm callback.
+* \dynamicaspectdescription
+*       Function is called to determine the reset cause.
+* \constrains
+*       No constraints.
+* \ddesignrequirement
+*       DSG_RCM_runDetermineResetCause
+* \archrequirement
+*       ARCH_SW_Rcm_ptrpRcmServicesBswMIf_RCM_DetermineResetCause;
+*       ARCH_SW_RCM_pclSbcWdgServices_GetSbcStatus_RCM_DetermineResetCause;
+**/
+EXPORTED void RCM_DetermineResetCause(void)
+{
+   Mcu_RawResetType u32StickySRSRegister;
+   uint32 u32SbcStatusInfo;
+
+   rcm_u32ResetCause = KU32_RESET_CAUSE_UNKNOWN;
+
+   /* -------------------------------------------------------------------- */
+   /* Start reset cause analysis                                           */
+   /* -------------------------------------------------------------------- */
+
+   /* Get the SBC status information from SBC ( for external watchdog, POR, LV...) */
+   (void)Rte_Call_pclSbcWdgServices_GetSbcStatus(&u32SbcStatusInfo);
+
+   /* Shadow register */
+   /* Mcu module clears RCM_SSRS status flags once read.(However for multiple calls of the two standard
+    * APIs (Mcu_GetResetRawValue and Mcu_GetResetReason) the return value is always the same */
+   u32StickySRSRegister = Mcu_GetResetRawValue();
+
+   /******** Resets triggered by Hardware ********/
+   /* Copy POR flags from SBC */
+   rcm_u32ResetCause |= ((u32SbcStatusInfo & KU32_RCM_SBC_GR1_BITS)>> KU8_TWENTYFIVE) | ((u32SbcStatusInfo & KU32_RCM_SBC_GR2_BITS) >> KU8_ONE);
+
+   /* Copy app resets */
+   if((~rcm_u32ResetNotification) == rcm_u32ResetNotification_NOT) 
+   {
+         rcm_u32ResetCause |= KU32_ONE<< (rcm_u32ResetNotification + KU8_SIXTEEN);
+   }
+
+   /* Copy Mcu flags */
+   rcm_u32ResetCause |= ((u32StickySRSRegister & KU32_RCM_MCU_GR1_BITS) << KU8_FOUR) |
+                        ((u32StickySRSRegister & KU32_RCM_MCU_GR2_BITS) << KU8_THREE) |
+                        ((u32StickySRSRegister & KU32_RCM_MCU_GR3_BITS) << KU8_TWO);
+
+   /* set reset notification to a invalid value */
+   rcm_u32ResetNotification = KU32_ZERO;
+   rcm_u32ResetNotification_NOT = KU32_ZERO;
+}
+
+/**
+* \brief
+*       This function will provide the reset reason to the application..
+* \outputparam
+*       Name: pu32ResetCause;
+*       Type: u32ResetCauseType;
+*       Description: This is the reset cause value.;
+*       Range: 0..KU32_MAX;
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       DIA, Bswm, Mic
+* \dynamicaspectdescription
+*       DIA_runDidFD08_ResetCauseRead, BswM_OnStartupTwoB, MIC_Autotest calles this function to get the reset reason
+* \constrains
+*       No constraints.
+* \ddesignrequirement
+*       DSG_RCM_runGetResetCause
+* \archrequirement
+*       ARCH_SW_MIC_pseResetCause_GetResetCause
+**/
+EXPORTED void RCM_GetResetCause(u32ResetCauseType * pu32ResetCause)
+{
+   if (NULL_PTR != pu32ResetCause)
+   {
+      *pu32ResetCause = rcm_u32ResetCause;
+   }
+}
+
+/**
+* \brief
+*       The function will store the reset reason in the no init ram area.
+* \inputparam
+*       Name: u32ResetCauseNotification;
+*       Type: u32ResetReasonNotificationType;
+*       Description: Reason for reset;
+*       Range: 0..KU32_MAX;
+*       Name: b8ResetCauseStatus;
+*       Type: b8ResetReasonNotificationStatusType;
+*       Description: Type of reason;
+*       Range:
+*           KU32_RESET_CAUSE_INACTIVE,
+*           KU32_RESET_CAUSE_ACTIVE;
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       OsIf, Bswm callbacks, EcuMIf, Mic.
+* \dynamicaspectdescription
+*       Function is called just before an imminent reset.
+* \constrains
+*       No constraints.
+* \ddesignrequirement
+*       DSG_RCM_runNotifyResetCause
+* \archrequirement
+*       ARCH_SW_MIC_pseResetCauseNotification_NotifyResetCause
+**/
+EXPORTED void RCM_NotifyResetCause(u32ResetReasonNotificationType u32ResetCauseNotification)
+{
+   /* Check if 2nd argument has been validated before processing*/
+   if ( KU32_MAX_RESET_NOTIFICATION > u32ResetCauseNotification)
+   {
+      rcm_u32ResetNotification = u32ResetCauseNotification;
+      rcm_u32ResetNotification_NOT = ~u32ResetCauseNotification;
+   }
+}
+
+/**
+* \brief
+*       The function will store the task id and error given by the Os.
+* \inputparam
+*       Name: u8TaskID;
+*       Type: u8OSTaskIDType;
+*       Description: This is the task id that generated the error;
+*       Range: 0..KU8_MAX;
+*       Name: u8IDOSError;
+*       Type: u8OSErrorType;
+*       Description: This is the error id;
+*       Range: 0..KU8_MAX;
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       OsIf.
+* \dynamicaspectdescription
+*       Function is called during an Os exception.
+* \constrains
+*       No constraints.
+* \ddesignrequirement
+*       DSG_RCM_runReportOSError
+* \archrequirement
+*       ARCH_SW_Rcm_pseOSErrorReport_RCM_ReportOSError
+**/
+EXPORTED void RCM_ReportOSError(u8OSTaskIDType u8TaskID, u8OSErrorType u8IDOSError)
+{
+   rcm_u8OSErrorTask = u8TaskID;
+   rcm_u8OSErrorStatus = u8IDOSError;
+}
+
+#define RCM_STOP_SEC_CODE_ASIL_A
+#include "RCM_MemMap.h"
+
+/*************************************************************************
+Evolution of the component
+
+Created by : C.Sauvage
+
+$Log: Rcm.c  $
+Revision 1.1.10.14 2023/06/20 22:29:16CEST Razvan Badiu (razvan.badiu) 
+update traceability
+Revision 1.1.10.13 2023/06/12 09:39:09EEST Mihai Motoc (mihai.motoc) 
+Doxygen comments updates
+Revision 1.1.10.12 2023/06/08 10:02:30EEST Mihai Motoc (mihai.motoc) 
+Doxygen comments updates
+Revision 1.1.10.11 2023/04/21 00:44:47EEST Razvan Badiu (razvan.badiu) 
+add wdg autotest
+Revision 1.1.10.10 2023/03/23 01:06:35EET Razvan Badiu (razvan.badiu) 
+RCM rework first draft
+Revision 1.1.10.9 2023/03/20 15:15:52EET David Puscasu (david.puscasu) 
+Add Architecture requirements on local functions
+Revision 1.1.10.8 2023/03/17 15:10:41EET Razvan Badiu (razvan.badiu) 
+fixes after review
+Revision 1.1.10.7 2023/02/28 17:30:09EET Septimiu Vintila (septimiu.vintila) 
+Memory sections changed to FuSa memory sections.
+Revision 1.1.10.6 2023/02/23 17:11:11EET Razvan Badiu (razvan.badiu) 
+add traceabilty
+Revision 1.1.10.5 2023/02/15 10:24:07EET David Puscasu (david.puscasu) 
+Code fixes after review
+Revision 1.1.10.4 2023/01/30 09:06:27EET Dan Dustinta (dan.dustinta) 
+bugfix reset cause detection
+Revision 1.1.10.3 2022/11/25 12:48:50EET Dan Dustinta (dan.dustinta) 
+update RCM
+Revision 1.1 2021/08/26 09:17:02EEST Pierre-Olivier Pilot (pierre-olivier.pilot) 
+Initial revision
+
+*************************************************************************/
+
+/* end of file */ 

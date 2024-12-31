@@ -1,0 +1,1715 @@
+/*@!Encoding:1252*/
+/*------------------------------------------------------------------------------
+                                IMPORT LIBRARY
+ ------------------------------------------------------------------------------*/
+/* To include all the libraries used by the .capl script. */
+/* WARNING: Some things such as diagnostic functions are different from project
+to project, change those according to your project requirements */
+includes
+{
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Defines.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Project_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Diagnostic_Functions.cin"
+}
+
+/*------------------------------------------------------------------------------
+                                    GLOBALS
+ ------------------------------------------------------------------------------*/
+/* To declare the constants used throurough the entire module, and global variables */
+variables
+{
+
+/*----------------------------Global Variables---------------------------------*/
+  float sEcs_HW_defekt;
+  int i=0;
+}
+
+
+/*------------------------------------------------------------------------------
+                                TEST FUNCTIONS
+------------------------------------------------------------------------------*/
+/*------------------------- Test Preconditions ------------------------------*/
+/* For operations to ensure the correct execution of the test case, such as IGN_ON,
+checking that CAN communication is present, etc.
+/* Varies from module to module, use from Helper_Functions.cin only the ones you need */
+testfunction RunPreTs()
+{
+  DisplayRequirementsInfo();
+  AddTestSetupInformation();
+  
+  PreTS_StartLogging();
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization");
+  
+  testStep("", "Delete all breakpoint from debugger.");
+  debugger_deleteAllBreakpoints();
+  
+  testStep("", "Reset the debugger.");
+  debugger_reset();
+  
+  testStep("", "Run the debugger.");
+  debugger_run();
+}
+
+/*------------------------- Test Postconditions ------------------------------*/
+/* For operations to ensure that after the test case was executed, the enviroment
+would go back to a blank state, to be ready for the next test step in queue. Call it a Cleanup phase. */
+testfunction RunPostTs()
+{
+  stopLogging("TestCaseLogASC");
+  stopLogging("TestCaseLogBLF");
+}
+testcase InitTestModule()
+{
+  ConfigureTestModuleInformation();
+  strncpy(cLogPathAndName, "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Logs\\",  elcount(cLogPathAndName));
+}
+testcase Sw_Int_DIA_pseDID_4024_SWSystemTime_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_4024_SWSystemTime");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_4024_SWSystemTime", "Interface used to read the absolute system time ( 4 bytes of data + 1 byte reserved).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_4024_SWSystemTime");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDid4024_SWSystemTimeRead", "5");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+   debugger_run();
+  
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to do SW System Time Read");
+   SendDiagnosticRequestNegativeResponse(dSWSystemTimeRead_ReadRequest, dSWSystemTimeRead_ReadResponse, TRUE);
+  
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function BswM_OnPostRunFromRun in order to call STM_runReadAbsoluteSystemTime function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+   debugger_setRelativeFunctionBpAtLine("STM_runReadAbsoluteSystemTime", "1");
+  testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function BswM_Action_BswMAction_BswM_RunStateFromPostRunBusAvailable in order to read the absolute system time --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("DIA_runDid4024_SWSystemTimeRead", "8");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function DIA_runDid4024_SWSystemTimeRead in order to check the interface --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read the system time value --> system time value is 4 bytes of data + 1 byte reserved");
+   debugger_readLocalVariable("stSystemTimeValues.u32SystemTimeInSec");
+  ExpectedTestResult(debugger_result, "0x1", "Local variable stSystemTimeValues.u32SystemTimeInSec is equal to 0x1");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD00_HWVersion_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD00_HWVersion_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD00_HWVersion_ReadData", "Interface used to read Hardware Version Number(10 bytes of data).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD00_HWVersion_WriteData", "Interface used to write Hardware Version Number(10 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+    testCaseComment("Action: ARCH_SW_DIA_pseDID_FD00_HWVersion_WriteData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFD00_HWVersionWrite", "5");
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send request for press ECUUnlock button");
+   @Platform::DIAG_ECUUnlock = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to read Measurement Frames parameters");
+   SendDiagnosticRequestNegativeResponse(dMeasurement_Frames_Configuration_ReadRequest, dMeasurement_Frames_Configuration_ReadResponse, TRUE);
+  
+  testStep("STEP", "Send diagnostic request in order to write HW Version");
+   SendDiagnosticRequestNegativeResponse(dHW_Version_WriteRequest, dHW_Version_WriteResponse, TRUE);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD00_HWVersion_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFD00_HWVersionRead", "6");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+   debugger_run();
+   
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+
+  testStep("STEP", "Send diagnostic request in order to read HW Version");
+   SendDiagnosticRequestNegativeResponse(dHWVersionReadRequest,dHWVersion_ReadResponse, TRUE);
+  
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function DIA_runDidFD00_HWVersionRead in order to read Hardware Version Number --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read the HW version --> HW version value is 10 bytes of data");
+   debugger_readVariable("uint8","NVP_au8HWPartNumber", "0");
+  ExpectedTestResult(debugger_result, "0x1", "Variable NVP_au8HWPartNumber is equal to 0x1");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD01_SWVersion_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD01_SWVersion");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD01_SWVersion", "Interface used to read the SW version");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD01_SWVersion");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFD01_SWVersionRead", "7");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+   debugger_run();
+   
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to read SW version");
+   SendDiagnosticRequestNegativeResponse(dSWVersionReadRequest,dSWVersionReadResponse, TRUE);
+  
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function DIA_runDidFD01_SWVersionRead in order to read SW version --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read the SW version --> SW version succesfully read");
+   debugger_readVariable("uint8","dia_kau8SWVersion", "0");
+  ExpectedTestResult(debugger_result, "0x45", "Variable dia_kau8SWVersion is equal to 0x45");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD03_AEETraceabilityNumber_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD03_AEETraceabilityNumber");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD03_AEETraceabilityNumber", "Interface used to read AEE Traceability Number (12 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD03_AEETraceabilityNumber");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFD03_AEETraceabilityNumberRead", "7");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+   debugger_run();
+   
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+
+  testStep("STEP", "Send diagnostic request in order to read AEE Traceability Number");
+   SendDiagnosticRequestNegativeResponse(dAEETraceabilityNumber_ReadRequest,dAEETraceabilityNumber_ReadResponse, TRUE);
+  
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function DIA_runDidFD03_AEETraceabilityNumberRead in order to read AEE Traceability Number --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read the AEE Traceability Number --> AEE Traceability Number succesfully read");
+   debugger_readVariable("uint8","NVP_au8AEE_TRACEABILITY_NUM", "0");
+  ExpectedTestResult(debugger_result, "0xff", "Variable NVP_au8AEE_TRACEABILITY_NUM is equal to 0xff");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD08_ResetCause_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD08_ResetCause");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD08_ResetCause", "Interface used to read last reset cause.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD08_ResetCause");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFD08_ResetCauseRead", "7");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+   debugger_run();
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+
+  testStep("STEP", "Send diagnostic request in order to read read reset cause");
+   SendDiagnosticRequestNegativeResponse(dResetCause_ReadRequest,dResetCause_ReadResponse, TRUE);
+  
+  debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function DIA_runDidFD08_ResetCauseRead in order to read last reset cause --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read the read last reset cause --> Last reset cause succesfully read");
+   debugger_readLocalVariable("u32WarmResetCause");
+  ExpectedTestResult(debugger_result, "0x80000", "Local variable u32WarmResetCause is equal to 0x80000");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD09_LastWarmResetParam_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD09_LastWarmResetParam");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD09_LastWarmResetParam", "Interface used to read Last Warm Reset(4 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD09_LastWarmResetParam");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFD09_LastWarmResetParamRead", "6");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+   debugger_run();
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read Last Warm Reset");
+   SendDiagnosticRequestNegativeResponse(dLast_Warm_Reset_Parameters_ReadRequest,dLast_Warm_Reset_Parameters_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFD09_LastWarmResetParamRead in order to read Last Warm Reset --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read the Last Warm Reset value --> Last Warm Reset succesfully read");
+   debugger_readLocalVariable("NVP_u32WarmResetCounter");
+  ExpectedTestResult(debugger_result, "0x4a", "Local variable NVP_u32WarmResetCounter is equal to 0x4a");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD0F_BatteryMeasure_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD0F_BatteryMeasure");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD0F_BatteryMeasure", "Interface used to read Battery Measure");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD0F_BatteryMeasure");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDid_FD0F_BatteryMeasureRead", "7");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+   debugger_run();
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read Battery Measure");
+   SendDiagnosticRequestNegativeResponse(dBattery_Measurement_ReadRequest,dBattery_Measurement_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDid_FD0F_BatteryMeasureRead in order to read Battery Measure --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read Battery Input value --> Battery Input succesfully read");
+   debugger_readLocalVariable("u16BatteryInput");
+  ExpectedTestResult(debugger_result, "0x2e17", "Local variable u16BatteryInput is equal to 0x2e17");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD10_MCUTemperature_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD10_MCUTemperature");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD10_MCUTemperature", "Interface used to read MCU Temperature Measure (2 bytes of data)");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD10_MCUTemperature");
+   debugger_setRelativeFunctionBpAtLine("DIA_run_DidFD10_MCUTemperatureRead", "4");
+    
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_MeasurementFrameConfWrite = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to read MCU Temperature Measure");
+   SendDiagnosticRequestNegativeResponse(dMCU_Temperature_ReadRequest,dMCU_Temperature_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_run_DidFD10_MCUTemperatureRead in order to call IoHwAb_runGetMeasure --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  debugger_deleteAllBreakpoints();
+  
+  debugger_setRelativeFunctionBpAtLine("IoHwAb_GetMcuTemperature", "11");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+  testStep("STEP", "Set a BP in function IoHwAb_GetMcuTemperature in order start temperature Measuremant --> BP was set");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("DIA_run_DidFD10_MCUTemperatureRead", "7");
+    testStep("", "Run the debugger.");
+   debugger_run();
+  testStep("STEP", "Set a BP in function DIA_run_DidFD10_MCUTemperatureRead in order to read MCU Temperature Measure --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Read Temperature Input value --> Temperature Input succesfully read");
+   debugger_readLocalVariable("u16MCUTemperatureInput");
+  ExpectedTestResult(debugger_result, "0x49", "Local variable u16MCUTemperatureInput is equal to 0x49");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD8B_ECUManufacturingDate_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD8B_ECUManufacturingDate");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD8B_ECUManufacturingDate", "Interface used to read ECU MANUFACTURING DATE(3 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD8B_ECUManufacturingDate");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFD8B_ECUManufacturingDateRead", "10");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+   debugger_run();
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read ECU MANUFACTURING DATE");
+   SendDiagnosticRequestNegativeResponse(dECU_Manufacturing_Date_ReadRequest, dECU_Manufacturing_Date_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFD8B_ECUManufacturingDateRead in order to read ECU MANUFACTURING DATE --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read ECU MANUFACTURING DATE value --> ECU MANUFACTURING DATE succesfully read");
+   debugger_readVariable("uint8","NVP_u8AssemblyManufacturingYear", "0");
+  ExpectedTestResult(debugger_result, "0xff", "Variable NVP_u8AssemblyManufacturingYear is equal to 0xff");
+  
+//   testStep("STEP", "Read ECU MANUFACTURING DATE value --> ECU MANUFACTURING DATE succesfully read");
+//   debugger_readVariable("uint8","NVP_u8AssemblyManufacturingMonth", "0");
+//  ExpectedTestResult(debugger_result, "0x2d9d", "Local variable u16BatteryInput is equal to 0x2d9d");
+//  
+//   testStep("STEP", "Read ECU MANUFACTURING DATE value --> ECU MANUFACTURING DATE succesfully read");
+//   debugger_readVariable("uint8","NVP_u8AssemblyManufacturingDay", "0");
+//  ExpectedTestResult(debugger_result, "0x2d9d", "Local variable u16BatteryInput is equal to 0x2d9d");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD8C_AssemblySerialNumber_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD8C_AssemblySerialNumber_WriteData, ARCH_SW_DIA_pseDID_FD8C_AssemblySerialNumber_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD8C_AssemblySerialNumber_WriteData", " Interface used to write Ecu Assembly Serial Number (20 bytes of data).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD8C_AssemblySerialNumber_ReadData", "Interface used to read Ecu Assembly Serial Number(20 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD8C_AssemblySerialNumber_WriteData");
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write Ecu Assembly Serial Number with value 0x8");
+   diagSetParameter(dSerial_Number_WriteRequest, "Serial_Number/NVP_u8AssemblySerialNumber_0", 8);
+  SendDiagnosticRequest(dSerial_Number_WriteRequest, dSerial_Number_WriteResponse);
+  TestWaitForTimeout(10000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD8C_AssemblySerialNumber_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFD8C_AssemblySerialNumberRead", "9");
+
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read Ecu Assembly Serial Number");
+   SendDiagnosticRequestNegativeResponse(dSerial_Number_ReadRequest, dSerial_Number_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFD8C_AssemblySerialNumberRead in order to read Ecu Assembly Serial Number --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read Assembly Serial Number value --> Assembly Serial Number succesfully read");
+   debugger_readVariable("uint8","NVP_au8AssemblySerialNumber,,app.elf", "0");
+  ExpectedTestResult(debugger_result, "0x08", "Local variable *NVP_au8AssemblySerialNumber is equal to 0x08");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FDE0_EcsVariant_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FDE0_EcsVariant_WriteData, ARCH_SW_DIA_pseDID_FDE0_EcsVariant_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE0_EcsVariant_WriteData", "Interface used to write the ECS variant (one byte of data).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE0_EcsVariant_ReadData", "Interface used to read the ECS variant (one byte of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE0_EcsVariant_WriteData");
+  
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write eCS Variant with value 0xD");
+   diagSetParameter(dEcsVariant_WriteRequest, "eCS_Variant/NVP_u32eCSVariant", 13);
+  SendDiagnosticRequest(dEcsVariant_WriteRequest, dEcsVariant_WriteResponse);
+  TestWaitForTimeout(1000);
+  
+  TestWaitForTimeout(5000);
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE0_EcsVariant_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFDE0_EcsVariantRead", "2");
+ 
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read the ECS variant");
+   SendDiagnosticRequestNegativeResponse(deCS_Variant_ReadRequest, deCS_Variant_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFDE0_EcsVariantRead in order to read the ECS variant --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read Assembly Serial Number value --> Assembly Serial Number succesfully read");
+   debugger_readVariable("uint32","NVP_u32eCSVariant", "0");
+  ExpectedTestResult(debugger_result, "0xd", "Variable NVP_u32eCSVariant is equal to 0xD");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FDE1_EcsParameters_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FDE1_EcsParameters_WriteData, ARCH_SW_DIA_pseDID_FDE1_EcsParameters_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE1_EcsParameters_WriteData", "Interface used to writeall eCS algorithm parameters(45 bytes of data).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE1_EcsParameters_ReadData", "Interface used to read all eCS algorithm parameters(45 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE1_EcsParameters_WriteData");
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write eCS Parameters with value 0x7");
+   diagSetParameter(deCS_Parameters_WriteRequest, "eCS_Parameters/NVP_au16Angle1_Idx_1_1", 7);
+  SendDiagnosticRequest(deCS_Parameters_WriteRequest, deCS_Parameters_WriteResponse);
+  TestWaitForTimeout(8000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE1_EcsParameters_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFDE1_EcsParametersRead", "5");
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read all eCS algorithm parameters");
+   SendDiagnosticRequestNegativeResponse(deCS_Parameters_ReadRequest, deCS_Parameters_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFDE1_EcsParametersRead in order to read all eCS algorithm parameters --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read eCS algorithm parameters value --> eCS algorithm parameters succesfully read");
+   debugger_readVariable("uint16","NVP_au16Angle1_Idx,,app.elf", "1");
+  ExpectedTestResult(debugger_result, "0x7", "Variable NVP_au16Angle1_Idx,,app.elf is equal to 0x7");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FDE2_EcsAccOffsets_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_WriteData, ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_WriteData", "Interface used to write the eCS variant used.");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_ReadData", "Interface used to read accelerometer offsets(6 bytes of data, 2 for each axis, OffsetAx, OffsetAy, OffsetAz).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_WriteData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFDE1_EcsParametersWrite", "3");
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+ 
+   testStep("STEP", "Send diagnostic request in order to write accelerometer offsets ");
+   SendDiagnosticRequestNegativeResponse(deCS_Acc_Offsets_WriteRequest, deCS_Acc_Offsets_WriteResponse, TRUE);
+    
+   testStep("STEP", "Set a BP in function DIA_runDidFDE1_EcsParametersWrite in order to write eCS variant used --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+TestWaitForTimeout(2000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE2_EcsAccOffsets_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFDE2_EcsAccOffsetsRead", "5");
+     
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read accelerometer offsets");
+   SendDiagnosticRequestNegativeResponse(deCS_Acc_Offsets_ReadRequest, deCS_Acc_Offsets_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFDE2_EcsAccOffsetsRead in order to read read accelerometer offsets --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read Offset Ax value --> Offset Ax succesfully read");
+   debugger_readVariable("uint16","NVP_s16OffsetAx", "0");
+  ExpectedTestResult(debugger_result, "0x15", "Variable NVP_s16OffsetAx is equal to 0x15");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FDE3_EcsProfiles_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_WriteData, ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_WriteData", "Interface used to write ECS profiles configuration n * 12 bytes. (n = 2).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_ReadData", "Interface used to read ECS profiles configuration n * 12 bytes. (n = 2).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+    testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_WriteData");
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write ECS profiles configuration with value 0x16");
+   diagSetParameter(deCS_Profiles_WriteRequest, "eCS_Profiles/NVP_au8EcsProfile_0_0", 22);
+  SendDiagnosticRequest(deCS_Profiles_WriteRequest, deCS_Profiles_WriteResponse);
+  TestWaitForTimeout(8000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE3_EcsProfiles_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFDE3_EcsProfilesRead", "5");
+  
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read ECS profiles configuration");
+   SendDiagnosticRequestNegativeResponse(deCS_Profiles_ReadRequest, deCS_Profiles_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFDE3_EcsProfilesRead in order to read ECS profiles configuration --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read Ecs Profile value --> Ecs Profile succesfully read");
+   debugger_readVariable("uint16","NVP_au8EcsProfile_0", "0");
+  ExpectedTestResult(debugger_result, "0x16", "Variable NVP_au8EcsProfile_0 is equal to 0x16");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FDE4_EcsSteps_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FDE4_EcsSteps_WriteData, ARCH_SW_DIA_pseDID_FDE4_EcsSteps_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE4_EcsSteps_WriteData", "nterface used to write the eCS steps definition (8 * 4 bytes).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE4_EcsSteps_ReadData", "Interface used to read ECS steps configuration n * 4 bytes. (n = 8 steps). First byte is duration MSB, second byte duration LSB, third byte is PWM order and forth byte is options.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE4_EcsSteps_WriteData");
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write the eCS steps with value 0x17");
+   diagSetParameter(deCS_Steps_WriteRequest, "eCS_Steps/NVP_au8Step_0_2", 23);
+  SendDiagnosticRequest(deCS_Steps_WriteRequest, deCS_Steps_WriteResponse);
+  TestWaitForTimeout(8000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE4_EcsSteps_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFDE4_EcsStepsRead", "5");
+
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read ECS steps configuration");
+   SendDiagnosticRequestNegativeResponse(deCS_Steps_ReadRequest, deCS_Steps_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFDE4_EcsStepsRead in order to read ECS steps configuration --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read ECS steps value --> ECS steps succesfully read");
+   debugger_readVariable("uint16","NVP_au8Step_0", "1");
+  ExpectedTestResult(debugger_result, "0x17", "	Variable NVP_au8Step_0 is equal to 0x17");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FDE5_EcsAccLowPass_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FDE5_EcsAccLowPass_WriteData, ARCH_SW_DIA_pseDID_FDE5_EcsAccLowPass_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE5_EcsAccLowPass_WriteData", "Interface used to write accelerometer lowpass filter value (x/y/z) (3 bytes of data).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE5_EcsAccLowPass_ReadData", "Interface used to read accelerometer lowpass filter value (x/y/z) (3 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE5_EcsAccLowPass_WriteData");
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write accelerometer lowpass filter with value 0x31");
+   diagSetParameter(deCS_Acc_Low_Pass_WriteRequest, "eCS_Acc_Low_Pass/NVP_u8XaxisLowPass", 49);
+  SendDiagnosticRequest(deCS_Acc_Low_Pass_WriteRequest, deCS_Acc_Low_Pass_WriteResponse);
+  TestWaitForTimeout(8000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE5_EcsAccLowPass_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFDE5_EcsAccLowPassRead", "7");
+
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read ACC Low Pass");
+   SendDiagnosticRequestNegativeResponse(deCS_Acc_Low_Pass_ReadRequest, deCS_Acc_Low_Pass_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFDE5_EcsAccLowPassRead in order to read accelerometer lowpass filter value --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read accelerometer lowpass filter value  --> Accelerometer lowpass filter value  succesfully read");
+   debugger_readVariable("uint8","NVP_u8XaxisLowPass", "0");
+  ExpectedTestResult(debugger_result, "0x31", "Variable NVP_u8XaxisLowPass is equal to 0x31");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FDE7_EcsAlgoOutputDelay_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FDE7_EcsAlgoOutputDelay_WriteData, ARCH_SW_DIA_pseDID_FDE7_EcsAlgoOutputDelay_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE7_EcsAlgoOutputDelay_WriteData", "Interface used to read algo output delay(2 bytes of data).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE7_EcsAlgoOutputDelay_ReadData", "Interface used to read algo output delay(2 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE7_EcsAlgoOutputDelay_WriteData");
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write algo output delay with value 0x2c00");
+   diagSetParameter(deCS_Algo_Output_Delay_WriteRequest, "eCS_Algo_Output_Delay/NVP_u16AlgoDelay_0", 44);
+  SendDiagnosticRequest(deCS_Algo_Output_Delay_WriteRequest, deCS_Algo_Output_Delay_WriteResponse);
+  TestWaitForTimeout(8000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE7_EcsAlgoOutputDelay_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDIDFDE7_EcsAlgoOutputDelayRead", "7");
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read algo output delay");
+   SendDiagnosticRequestNegativeResponse(deCS_Algo_Output_Delay_ReadRequest, deCS_Algo_Output_Delay_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDIDFDE7_EcsAlgoOutputDelayRead in order to read algo output delay --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read algo output delay value  --> Algo output delay  succesfully read");
+   debugger_readVariable("uint16","NVP_u16AlgoDelay", "0");
+  ExpectedTestResult(debugger_result, "0x2c00", "Variable NVP_u16AlgoDelay is equal to 0x2c00");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FDE9_EcsSensitivityLut_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FDE9_EcsSensitivityLut_WriteData, ARCH_SW_DIA_pseDID_FDE9_EcsSensitivityLut_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE9_EcsSensitivityLut_WriteData", "Interface used to write accelerometer sensitivity lut.");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDE9_EcsSensitivityLut_ReadData", "Interface used to read accelerometer sensitivity lut(10 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE9_EcsSensitivityLut_WriteData");
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write accelerometer sensitivity lut with value 0x3c");
+   diagSetParameter(deCS_Sensitivity_LuT_WriteRequest, "eCS_Sensitivity_LuT/NVP_au16SensitivityIdx_1", 60);
+  SendDiagnosticRequest(deCS_Sensitivity_LuT_WriteRequest, deCS_Sensitivity_LuT_WriteResponse);
+  TestWaitForTimeout(8000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDE9_EcsSensitivityLut_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFDE9_EcsSensitivityLutRead", "7");
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read accelerometer sensitivity lut");
+   SendDiagnosticRequestNegativeResponse(deCS_Sensitivity_LuT_ReadRequest, deCS_Sensitivity_LuT_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFDE9_EcsSensitivityLutRead in order to read accelerometer sensitivity lut --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read accelerometer sensitivity lut value  --> Accelerometer sensitivity lut succesfully read");
+   debugger_readVariable("uint16","NVP_au16SensitivityIdx", "1");
+  ExpectedTestResult(debugger_result, "0x3c", "Variable NVP_au16SensitivityIdx is equal to 0x3c");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FDEA_EcsSensitivityOpt_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_WriteData, ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_WriteData", "Interface used to write accelerometer sensitivity optimization(10 bytes of data).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_ReadData", "Interface used to read accelerometer sensitivity optimization(10 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_WriteData");
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write accelerometer sensitivity opt with value 0x3e");
+   diagSetParameter(deCS_Sensitivity_Optimization_WriteRequest, "eCS_Sensitivity_Optimization/NVP_b8SensitivityOpt", 62);
+  SendDiagnosticRequest(deCS_Sensitivity_Optimization_WriteRequest, deCS_Sensitivity_Optimization_WriteResponse);
+  TestWaitForTimeout(8000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FDEA_EcsSensitivityOpt_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFDEA_EcsSensitivityOptRead", "2");
+
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read accelerometer sensitivity opt");
+   SendDiagnosticRequestNegativeResponse(deCS_Sensitivity_Optimization_ReadRequest, deCS_Sensitivity_Optimization_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFDEA_EcsSensitivityOptRead in order to read accelerometer sensitivity opt --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read accelerometer sensitivity opt value  --> Accelerometer sensitivity opt succesfully read");
+   debugger_readVariable("uint8","NVP_b8SensitivityOpt", "0");
+  ExpectedTestResult(debugger_result, "0x3e", "Variable NVP_b8SensitivityOpt is equal to 0x3e");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FE00_AllEventStatusesRead_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FE00_AllEventStatusesRead");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FE00_AllEventStatusesRead", "Interface used to read All Event statuses. (3 bytes on every event).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FE00_AllEventStatusesRead");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFE00_AllEventStatusesRead", "6");
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read All Event statuses");
+   SendDiagnosticRequestNegativeResponse(dAll_Event_Statuses_ReadRequest, dAll_Event_Statuses_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFE00_AllEventStatusesRead in order to read All Event statuses --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+   debugger_setRelativeFunctionBpAtLine("Dem_GetEventStatus", "7"); 
+  testStep("", "Run the debugger.");
+   debugger_run();
+  testStep("STEP", "Set a BP in function Dem_GetEventStatus in order to check the interface --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FEFF_MeasurementFramesConf_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FEFF_MeasurementFramesConf_WriteData, ARCH_SW_DIA_pseDID_FEFF_MeasurementFramesConf_ReadData");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FEFF_MeasurementFramesConf_WriteData", "Interface used to write Measurement Frames parameters(5 bytes of data).");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FEFF_MeasurementFramesConf_ReadData", "Interface used to read Measurement Frames parameters(5 bytes of data).");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_DIA_pseDID_FEFF_MeasurementFramesConf_WriteData");
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+   testStep("STEP", "Send diagnostic request in order to write accelerometer sensitivity lut with value 0x46");
+   diagSetParameter(dMeasurement_Frames_Configuration_WriteRequest, "Measurement_Frames_Configuration/NVP_u8EnableDevFrame", 70);
+  SendDiagnosticRequest(dMeasurement_Frames_Configuration_WriteRequest, dMeasurement_Frames_Configuration_WriteResponse);
+  TestWaitForTimeout(8000);
+  
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FEFF_MeasurementFramesConf_ReadData");
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFEFF_MeasurementFramesConfRead", "10");
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read Measurement Frames parameters");
+   SendDiagnosticRequestNegativeResponse(dMeasurement_Frames_Configuration_ReadRequest, dMeasurement_Frames_Configuration_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFEFF_MeasurementFramesConfRead in order read Measurement Frames parameters --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read Measurement Frames parameters value  --> Measurement Frames parameters succesfully read");
+   debugger_readVariable("uint16","NVP_u8EnableDevFrame", "0");
+  ExpectedTestResult(debugger_result, "0x46", "Variable NVP_u8EnableDevFrame is equal to 0x46");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseDID_FD62_EccOccurenceNb_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseDID_FD62_EccOccurenceNb");
+  AddRequirementInfo("ARCH_SW_DIA_pseDID_FD62_EccOccurenceNb", "Interface used to read the number of ECCs.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseDID_FD62_EccOccurenceNb");
+  debugger_setRelativeFunctionBpAtLine("atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest", "2");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+   testStep("STEP", "Set a BP in function atm_cbk_RunPFlashMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunPFlashMemoryCorruption function --> BP was set");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+   debugger_setRelativeFunctionBpAtLine("MIC_Autotest_RunPFlashMemoryCorruption", "8");
+  testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function MIC_Autotest_RunPFlashMemoryCorruption in order to confirm the detected reset cause --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+   
+  testStep("STEP", "Modify Reset Cause value in order to detect ECC --> Reset cause value is set.");
+ debugger_writeLocalVariable("u32ResetCause", "200");
+  
+   debugger_setRelativeFunctionBpAtLine("DIA_runDidFD62_EccOccurenceNbRead", "13");
+  testStep("", "Run the debugger.");
+   debugger_run();
+   
+  testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(1000);
+  
+  testStep("STEP", "Send diagnostic request in order to read the number of ECCs");
+   SendDiagnosticRequestNegativeResponse(dECC_Occurence_Number_ReadRequest, dECC_Occurence_Number_ReadResponse, TRUE);
+  
+  testStep("STEP", "Set a BP in function DIA_runDidFD62_EccOccurenceNbRead in order read the number of ECCs --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Read the number of ECCs value  --> Nlumber of ECCs succesfully read");
+   debugger_readVariable("uint32","NVP_u32PFLASHECCOccurrenceNumber", "0");
+  ExpectedTestResult(debugger_result, "0x1", "	Variable NVP_u32PFLASHECCOccurrenceNumber is equal to 0x1");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseRoutineControl_ProcessModeRoutine_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseRoutineControl_ProcessMode_Start");
+  AddRequirementInfo("ARCH_SW_DIA_pseRoutineControl_ProcessMode_Start", "Interface used to start the Process Mode.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseRoutineControl_ProcessMode_Start");
+  testStep("STEP", "Set a BP in function Dcm_DcmDspRoutineProcessMode_Start in order to call Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_Start function --> BP was set"); 
+   debugger_setRelativeFunctionBpAtLine("Dcm_DcmDspRoutineProcessMode_Start", "16");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+  testStep("", "Run the debugger.");
+   debugger_run();
+  
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send request for press ECUUnlock button");
+   @Platform::DIAG_ECUUnlock = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to start the Process Mode ");
+   SendDiagnosticRequestNegativeResponse(dProcessMode_StartRequest, dProcessMode_StartResponse, TRUE);
+  testWaitForTimeout(500);
+  
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Set a BP in function Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_Start in order to call DIA_runRidF793_ProcessModeStart. --> BP was set");
+  debugger_setRelativeFunctionBpAtLine("Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_Start", "2");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Set a BP in function Dcm_DcmDspRoutineProcessMode_Start in order to start the Process Mode. --> BP was set");
+  debugger_setRelativeFunctionBpAtLine("DIA_runRidF793_ProcessModeStart", "5");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseRoutineControl_ProcessModeRoutine_02()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseRoutineControl_ProcessMode_Stop");
+  AddRequirementInfo("ARCH_SW_DIA_pseRoutineControl_ProcessMode_Stop", "Interface used to stop the Process Mode.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseRoutineControl_ProcessMode_Stop");
+  testStep("STEP", "Set a BP in function Dcm_DcmDspRoutineProcessMode_Stop in order to call Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_Stop function --> BP was set"); 
+   debugger_setRelativeFunctionBpAtLine("Dcm_DcmDspRoutineProcessMode_Stop", "16");
+  
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send request for press ECUUnlock button");
+   @Platform::DIAG_ECUUnlock = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to start the Process Mode ");
+   SendDiagnosticRequestNegativeResponse(dProcessMode_StartRequest, dProcessMode_StartResponse, TRUE);
+  testWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to stop the Process Mode ");
+   SendDiagnosticRequestNegativeResponse(dProcessMode_StopRequest, dProcessMode_StopResponse, TRUE);
+  testWaitForTimeout(500);
+
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Set a BP in function Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_Stop in order to call DIA_runRidF793_ProcessModeStop. --> BP was set");
+  debugger_setRelativeFunctionBpAtLine("Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_Stop", "2");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Set a BP in function DIA_runRidF793_ProcessModeStop  in order to stop the Process Mode. --> BP was set");
+  debugger_setRelativeFunctionBpAtLine("DIA_runRidF793_ProcessModeStop", "6");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_DIA_pseRoutineControl_ProcessModeRoutine_03()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseRoutineControl_ProcessMode_RequestRes");
+  AddRequirementInfo("ARCH_SW_DIA_pseRoutineControl_ProcessMode_RequestRes", "Interfacen used to read the Process Mode Status.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseRoutineControl_ProcessMode_RequestRes");
+ testStep("STEP", "Set a BP in function Dcm_DcmDspRoutineProcessMode_RequestResults in order to call Rte_Call_RoutineServices_DcmDspRoutineProcessMode_RequestResults function --> BP was set"); 
+   debugger_setRelativeFunctionBpAtLine("Dcm_DcmDspRoutineProcessMode_RequestResults", "17");
+  
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send request for press ECUUnlock button");
+   @Platform::DIAG_ECUUnlock = 1;
+  TestWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to start the Process Mode ");
+   SendDiagnosticRequestNegativeResponse(dProcessMode_StartRequest, dProcessMode_StartResponse, TRUE);
+  testWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to stop the Process Mode ");
+   SendDiagnosticRequestNegativeResponse(dProcessMode_StopRequest, dProcessMode_StopResponse, TRUE);
+  testWaitForTimeout(500);
+  
+  testStep("STEP", "Send diagnostic request in order to Process Mode Request Results");
+   SendDiagnosticRequestNegativeResponse(dProcessMode_RequestResultsRequest, dProcessMode_RequestResultsResponse, TRUE);
+  testWaitForTimeout(500);
+  
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Set a BP in function Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_RequestResults in order to call DIA_runRidF793_ProcessModeRequestRes. --> BP was set");
+  debugger_setRelativeFunctionBpAtLine("Rte_Call_Dcm_RoutineServices_DcmDspRoutineProcessMode_RequestResults", "7");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Set a BP in function DIA_runRidF793_ProcessModeRequestRes  in order to requuest result for Process Mode. --> BP was set");
+  debugger_setRelativeFunctionBpAtLine("DIA_runRidF793_ProcessModeRequestRes", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+testcase Sw_Int_DIA_pseRoutineControl_LockUnlockECU_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_DIA_pseRoutineControl_LockUnlockECU_Start");
+  AddRequirementInfo("ARCH_SW_DIA_pseRoutineControl_LockUnlockECU_Start", "Interface used to unlock the ECU.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+  testCaseComment("Action: ARCH_SW_DIA_pseRoutineControl_LockUnlockECU_Start");
+ testStep("STEP", "Set a BP in function Dcm_DcmDspRoutineCtrl_Lock_UnlockECU_Start in order to call Rte_Call_Dcm_RoutineServices_DcmDspRoutineCtrl_Lock_UnlockECU_Start function --> BP was set"); 
+   debugger_setRelativeFunctionBpAtLine("Dcm_DcmDspRoutineCtrl_Lock_UnlockECU_Start", "16");
+  
+   testStep("STEP", "Send diagnostic request in order to go in Supplier Session");
+   SendDiagnosticRequest(dSupplierSessionRequest, dSupplierSessionResponse);
+  TestWaitForTimeout(100);
+  
+  testStep("STEP", "Send request for press Supplier Security Access button");
+   @Platform::DIAG_Security_Control_Update = 1;
+  TestWaitForTimeout(500);
+    
+  testStep("STEP", "Send diagnostic request in order to start unlock the ECU");
+   SendDiagnosticRequestNegativeResponse(dEcuUnlock_StartRequest, dEcuUnlock_StartResponse, TRUE);
+  testWaitForTimeout(500);
+    
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+
+  testStep("STEP", "Set a BP in function Rte_Call_Dcm_RoutineServices_DcmDspRoutineCtrl_Lock_UnlockECU_Start in order to call DIA_runRidF781_EcuUnlockStart. --> BP was set");
+  debugger_setRelativeFunctionBpAtLine("Rte_Call_Dcm_RoutineServices_DcmDspRoutineCtrl_Lock_UnlockECU_Start", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  testStep("STEP", "Set a BP in function DIA_runRidF781_EcuUnlockStart  in order to unlock the ECU --> BP was set");
+  debugger_setRelativeFunctionBpAtLine("DIA_runRidF781_EcuUnlockStart", "5");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+
+void MainTest()
+{
+  InitTestModule();
+//  Sw_Int_DIA_pseDID_4024_SWSystemTime_01();
+//  Sw_Int_DIA_pseDID_FD00_HWVersion_01();  // issue wrong cdd 
+//  Sw_Int_DIA_pseDID_FD01_SWVersion_01();
+//  Sw_Int_DIA_pseDID_FD03_AEETraceabilityNumber_01();
+//  Sw_Int_DIA_pseDID_FD08_ResetCause_01();
+//  Sw_Int_DIA_pseDID_FD09_LastWarmResetParam_01();
+//  Sw_Int_DIA_pseDID_FD0F_BatteryMeasure_01();
+////  Sw_Int_DIA_pseDID_FD10_MCUTemperature_01();   //trebuie facut issue ca rte ul nu este corect 
+//  Sw_Int_DIA_pseDID_FD8B_ECUManufacturingDate_01();
+////  Sw_Int_DIA_pseDID_FD8C_AssemblySerialNumber_01(); // Aici functia de write nu scrie bine 
+//  Sw_Int_DIA_pseDID_FDE0_EcsVariant_01();
+//  Sw_Int_DIA_pseDID_FDE1_EcsParameters_01();
+////  Sw_Int_DIA_pseDID_FDE2_EcsAccOffsets_01(); //issue nedeed wrong description 
+//  Sw_Int_DIA_pseDID_FDE3_EcsProfiles_01();
+//  Sw_Int_DIA_pseDID_FDE4_EcsSteps_01();
+//  Sw_Int_DIA_pseDID_FDE5_EcsAccLowPass_01();
+//  Sw_Int_DIA_pseDID_FDE7_EcsAlgoOutputDelay_01();
+//  Sw_Int_DIA_pseDID_FDE9_EcsSensitivityLut_01();
+//  Sw_Int_DIA_pseDID_FDEA_EcsSensitivityOpt_01();
+//  Sw_Int_DIA_pseDID_FE00_AllEventStatusesRead_01();
+//  Sw_Int_DIA_pseDID_FEFF_MeasurementFramesConf_01();
+//  Sw_Int_DIA_pseDID_FD62_EccOccurenceNb_01();
+//  Sw_Int_DIA_pseRoutineControl_ProcessModeRoutine_01();
+//  Sw_Int_DIA_pseRoutineControl_ProcessModeRoutine_02();
+//  Sw_Int_DIA_pseRoutineControl_ProcessModeRoutine_03();
+//  Sw_Int_DIA_pseRoutineControl_LockUnlockECU_01(); //cdd nu e ok
+  
+}

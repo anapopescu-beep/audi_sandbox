@@ -1,0 +1,42 @@
+/*@!Encoding:1252*/
+includes
+{ 
+  #include "..\..\Nodes\TiltDeviceControlDev.cin"
+}
+
+variables
+{
+  
+}
+
+void MainTest()
+{
+  if(@sysvar::TiltDevice_Parameters::tiltControlStatus == 1)
+  {
+    TiltDeviceSetAngle(0x00, @sysvar::TiltDevice_Parameters::target_C0);
+    @sysvar::TiltDevice_Parameters::position_C0=TiltDeviceGetPosition(0x00);
+  }
+  else if(@sysvar::TiltDevice_Parameters::tiltControlStatus == 2)
+  {
+    TiltDeviceSetAngle(0x01, @sysvar::TiltDevice_Parameters::target_C1); 
+     @sysvar::TiltDevice_Parameters::position_C1=TiltDeviceGetPosition(0x01);
+  }
+  else if(@sysvar::TiltDevice_Parameters::tiltControlStatus == 3)
+  {
+    TiltDeviceConfigure(0, @sysvar::TiltDevice_Parameters::speed_C0, @sysvar::TiltDevice_Parameters::acceleration_C0);
+  }
+  else if(@sysvar::TiltDevice_Parameters::tiltControlStatus == 4)
+  {
+    TiltDeviceConfigure(1, @sysvar::TiltDevice_Parameters::speed_C1, @sysvar::TiltDevice_Parameters::acceleration_C1);
+  }
+  else if(@sysvar::TiltDevice_Parameters::tiltControlStatus == 5)
+  {
+    TiltDeviceGetPosition(0); 
+  }
+  else if(@sysvar::TiltDevice_Parameters::tiltControlStatus == 6)
+  {
+    TiltDeviceGetPosition(1); 
+  }
+@sysvar::TiltDevice_Parameters::tiltControlTrigger=0;
+}
+

@@ -1,0 +1,979 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Sw_Int_BswMIf_ptrrAsrComServicesBswMIf_01_Thu_May_04_07_50_22_2023</title>
+    <script type="text/javascript">
+      function showTimestamp(timestamp){top.LogFile.showTimestamp(timestamp);}
+    </script>
+    <script type="text/javascript">
+      var EXPANDED = '[−]';
+      var COLLAPSED = '[+]';
+      var VISIBLE = 'Visible';
+      var HIDDEN = 'Hidden';
+      var NONE = 'none';
+      var BLOCK = '';
+      function getDivId(id) { return 'div_' + id; }
+      function getLinkId(id) { return 'lnk_' + id; }
+      function getTableId(id) { return 'tbl_' + id; }
+      function getTbl2Id(id) { return 'tbl_t' + id; }
+      
+      
+      function switchText(oldText) { return oldText == COLLAPSED ? EXPANDED : COLLAPSED ; }
+      function getStyleFromText(linkText) { return linkText == COLLAPSED ? HIDDEN : VISIBLE; }
+      
+      function getElements(tagName, elementId)
+      {
+        this.elements = [];
+        var index = 0;
+        var elm = document.getElementsByTagName(tagName);
+        var len = elm.length;
+        for (var i = 0; i < len; i++) 
+        {
+          var id = elm[i].id;
+          if (id && id.indexOf(elementId) == 0)
+          {
+            this.elements[index] = elm[i];
+            index++;
+          }
+        }
+        return this.elements;
+      }
+      function matchElements(tagName, matchId)
+      {
+        this.elements = [];
+        var index = 0;
+        var elm = document.getElementsByTagName(tagName);
+        for (var i = 0; i < elm.length; i++) 
+        {
+          var id = elm[i].id;
+          var tc = id.replace(/s[0-9]+\./, "");
+          if (tc && tc == matchId)
+          {
+            this.elements[index] = elm[i];
+            index++;
+          }
+        }
+        return this.elements;  
+      }
+      function onoff(elm, style)
+      {
+        if(elm.style.display == NONE)
+        {
+          if(style == null || style == VISIBLE)
+            elm.style.display = BLOCK;
+        }
+        else
+        {
+          if(style == null || style == HIDDEN)
+            elm.style.display = NONE;
+        }
+      }
+      function switchTagStyle(tag, id, style)
+      {
+        var divs = getElements(tag, id);
+        for(var i = 0; i < divs.length; i++)
+          onoff(divs[i], style);
+      }
+      function switchRowStyle(tbl, style)
+      {
+        var rows = tbl.rows.length;
+        for(var rowIndex=0; rowIndex < rows; rowIndex++)
+        {
+          var row = tbl.rows[rowIndex];
+          if (row.id != "on")
+            onoff(row, style);
+        }
+      }
+      function switchTableRowStyle(tableId, style)
+      {
+        var tables = getElements('table', tableId);
+        for(var i = 0; i < tables.length; i++)
+          switchRowStyle(tables[i], style);
+      }
+      function switchLinkText(linkId, newText)
+      {
+        var link = getElements('a', linkId);
+        var len = link.length;
+        for(var i = 0; i < len; i++)
+        {
+          var lnk = link[i];
+          if(newText == null)
+          {
+            var oldText = lnk.text;
+            newText = switchText(oldText)
+          }
+          lnk.text = newText;
+        }
+      }
+      function switchTag(tag, id, text)
+      {
+        var style = getStyleFromText(text);
+        switchTagStyle(tag, id, style);
+      }
+      function switchTable(id)
+      {
+        switchLinkText(getTableId(id));
+        switchTableRowStyle(getTableId(id));
+      }
+      function switchDiv(id, linkText)
+      {
+        var text = switchText(linkText);
+        switchLinkText(getLinkId(id), text);
+        switchTag('div', getDivId(id), text);
+      }      
+      function switchAll(id, linkText)
+      {
+        var text = switchText(linkText);
+        switchLinkText(getLinkId(id), text);
+        switchTag('div', getDivId(id), text);
+        var style = getStyleFromText(text);
+        switchTableRowStyle(getTbl2Id(id), style);
+      }
+      function showTable(id)
+      {
+        var tableId = getTableId(id);
+        switchLinkText(tableId, EXPANDED);
+        switchTableRowStyle(tableId, VISIBLE);
+      }
+      function hideTable(id)
+      {
+        var tableId = getTableId(id);
+        switchTableRowStyle(tableId, HIDDEN);
+        switchLinkText(tableId, COLLAPSED);
+      }
+      function showDiv(id)
+      {
+        switchLinkText(getLinkId(id), EXPANDED);
+        switchTag('div', getDivId(id), EXPANDED);
+      }
+      function showTC(id)
+      {
+        var divId = getDivId(id);
+        var elms = matchElements('div', divId); 
+        if(elms != null && elms.length > 0)
+        {
+          id = elms[0].id.replace(getDivId(''), '');
+          showDiv(id);
+        }
+      }
+      
+    </script>
+    <link rel="stylesheet" type="text/css" href="extendedNavigation.css">
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <td class="UpCell">
+            <a href="Frame_Report.html">Go up</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tr>
+        <td class="TestcaseHeadingPositiveResult">
+          <big class="Heading3">2 <a name="i__-1463951200_30">Sw_Int_BswMIf_ptrrAsrComServicesBswMIf_01_Thu_May_04_07_50_22_2023</a>: Passed</big>
+        </td>
+      </tr>
+    </table>
+    <div class="Indentation" id="div_2">
+      <div class="Indentation">
+        <table class="DefaultTable">
+          <tr>
+            <td style="padding-right: 0.5em;" class="CellNoColor">Test case begin: </td>
+            <td style="padding-right: 0.5em;" class="CellNoColor">2023-05-04 07:50:22</td>
+            <td class="CellNoColor">(logging timestamp    0.738863)</td>
+          </tr>
+          <tr>
+            <td style="padding-right: 0.5em;" class="CellNoColor">Test case end: </td>
+            <td style="padding-right: 0.5em;" class="CellNoColor">2023-05-04 07:51:24</td>
+            <td class="CellNoColor" nowrap>(logging timestamp   62.474863)</td>
+          </tr>
+        </table>
+        <div class="Heading4">AUTOLIV ELECTRONICS document</div>
+        <div class="Indentation">
+          <table>
+            <tr>
+              <td class="CellNoColor">Nightly test: </td>
+              <td class="CellNoColor">No</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">Test type: </td>
+              <td class="CellNoColor">Requirement-Based</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">Regression Test: </td>
+              <td class="CellNoColor">No</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">Fault injection method used: </td>
+              <td class="CellNoColor">No</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">Resource usage evaluation: </td>
+              <td class="CellNoColor">No</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">Priority: </td>
+              <td class="CellNoColor">No</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">Safety relevant: </td>
+              <td class="CellNoColor">No</td>
+            </tr>
+          </table>
+        </div>
+        <div class="Heading4">Test equipment</div>
+        <div class="Indentation">
+          <table>
+            <tr>
+              <td class="CellNoColor">Tester Name: </td>
+              <td class="CellNoColor">VUR</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">CAN case ID: </td>
+              <td class="CellNoColor">RBE-COM-02</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">SBC Board: </td>
+              <td class="CellNoColor">-</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">Power supply ID: </td>
+              <td class="CellNoColor">RBE-PWR-07</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">Motherboard: </td>
+              <td class="CellNoColor">-</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">MCU: </td>
+              <td class="CellNoColor">-</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">DUT: </td>
+              <td class="CellNoColor">Sample_1</td>
+            </tr>
+            <tr>
+              <td class="CellNoColor">HW Info: </td>
+              <td class="CellNoColor">22/04.00</td>
+            </tr>
+          </table>
+        </div>
+        <p><table><tr><th style='color:rgb(255, 255, 255);font-style:italic;font-weight:bold;text-transform:uppercase;' bgcolor='#2e90e5'>Requirement under test</th><th style='color:rgb(4, 45, 229);font-style:italic;font-weight:bold' bgcolor='#d3e9f6'>ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_Init_BswM_OnStartupTwoA, ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_ClearIpduGroupVector_BswM_OnEnableTxPdu, ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_SetIpduGroup_BswM_OnEnableTxPdu, ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_IpduGroupControl_BswM_OnEnableTxPdu</th></tr></table></p>
+        <p><table> <tr><th style='color:rgb(255, 255, 255);font-style:italic;font-weight:bold;text-transform:uppercase;' bgcolor='#2e90e5'>Requirement</th><th style='text-transform:uppercase;color:rgb(255, 255, 255);' bgcolor='2e90e5'>Description of the requirement</th></tr></p>
+        <p><tr><td style='color:rgb(4, 45, 229);font-style:italic;font-weight:bold' bgcolor='#d3e9f6'>ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_Init_BswM_OnStartupTwoA</td><td style='color:rgb(4, 45, 229);font-style:italic;' bgcolor='#d3e9f6'>The Com_Init runnable shall be called in the BswM_OnStartupTwoA runnable in order to initialize the Com module.</td></tr></p>
+        <p><tr><td style='color:rgb(4, 45, 229);font-style:italic;font-weight:bold' bgcolor='#d3e9f6'>ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_ClearIpduGroupVector_BswM_OnEnableTxPdu</td><td style='color:rgb(4, 45, 229);font-style:italic;' bgcolor='#d3e9f6'>The Com_ClearIpduGroupVector runnable shall be called in the BswM_OnEnableTxPdu runnable in order to initialize the PDU group vector to 0</td></tr></p>
+        <p><tr><td style='color:rgb(4, 45, 229);font-style:italic;font-weight:bold' bgcolor='#d3e9f6'>ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_SetIpduGroup_BswM_OnEnableTxPdu</td><td style='color:rgb(4, 45, 229);font-style:italic;' bgcolor='#d3e9f6'>The Com_SetIpduGroup runnable shall be called in the BswM_OnEnableTxPdu runnable in order to set new states to RX and Tx Com IPDUs: - Enable frame reception - Enable frame transmission</td></tr></p>
+        <p><tr><td style='color:rgb(4, 45, 229);font-style:italic;font-weight:bold' bgcolor='#d3e9f6'>ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_IpduGroupControl_BswM_OnEnableTxPdu</td><td style='color:rgb(4, 45, 229);font-style:italic;' bgcolor='#d3e9f6'>The Com_IpduGroupControl runnable shall be called in the BswM_OnEnableTxPdu runnable in order to start both COM PDUs (after their states have been updated)</td></tr></p>
+        <p></table></p>
+        <p><A HREF='S:\Tools\CANoe\Config\ECS_AUDI_INT\Logs\Sw_Int_BswMIf_ptrrAsrComServicesBswMIf_01_Thu_May_4_07_50_22_2023.asc'>Log file: Sw_Int_BswMIf_ptrrAsrComServicesBswMIf_01_Thu_May_4_07_50_22_2023.asc </A></p>
+        <p><A HREF='S:\Tools\CANoe\Config\ECS_AUDI_INT\Logs\Sw_Int_BswMIf_ptrrAsrComServicesBswMIf_01_Thu_May_4_07_50_22_2023.blf'>Log file: Sw_Int_BswMIf_ptrrAsrComServicesBswMIf_01_Thu_May_4_07_50_22_2023.blf </A></p>
+      </div>
+      <div class="Indentation">
+        <table class="ScreenOnly">
+          <tbody>
+            <tr>
+              <td>
+                <a class="Undecorated" href="javascript:showTable('2_')">[expand test steps]</a>
+              </td>
+              <td width="2px"></td>
+              <td>
+                <a class="Undecorated" href="javascript:hideTable('2_')">[collapse test steps]</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <table class="TestGroupHeadingBackground">
+        <tr>
+          <td>
+            <big class="Heading3">Main Part of Test Case</big>
+          </td>
+        </tr>
+      </table>
+      <div class="Indentation">
+        <table class="ResultTable">
+          <tr>
+            <th class="TableHeadingCell" width="1px">Timestamp</th>
+            <th class="TableHeadingCell" width="1px">Test Step</th>
+            <th class="TableHeadingCell" width="auto">Description</th>
+            <th class="TableHeadingCell" width="1px">Result</th>
+          </tr>
+          <tr>
+            <td class="DefineCell">   0.738863</td>
+            <td class="DefaultCell"></td>
+            <td class="DefaultCell">Preconditions</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">   0.738863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Bench Initialization</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="PatternSeparator" colspan="4"></td>
+          </tr>
+          <tr class="PositiveResultBackground">
+            <td style="text-indent: 20px;" class="ResultBlockHeading" colspan="4">
+              <big class="Heading4">1. RunPreTs: Passed</big>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-indent: 20px;" class="DefineCell">   0.738863</td>
+            <td class="DefaultCell"></td>
+            <td class="DefaultCell">Preconditions</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td style="text-indent: 20px;" class="DefineCell">   0.738863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Bench Initialization</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td style="text-indent: 20px;" class="DefineCell">   0.738863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Delete all breakpoint from debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td style="text-indent: 20px;" class="DefineCell">   2.538863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Reset the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td style="text-indent: 20px;" class="DefineCell">   4.938863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="PatternSeparator" colspan="4"></td>
+          </tr>
+          <tr>
+            <td class="DefineCell">   6.038863</td>
+            <td class="DefaultCell"></td>
+            <td class="DefaultCell">Action: ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_Init_BswM_OnStartupTwoA</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">   7.338863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Reset the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">   9.038863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  10.138863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function BswM_OnStartupTwoA to call Com_Init function --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  11.030863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_177" href="javascript:switchTable('2_i__-1463951200_177')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_177">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  12.130863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  13.330863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function Com_Init in order to initialize the Com module --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  14.218863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_248" href="javascript:switchTable('2_i__-1463951200_248')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_248">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  15.218863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  16.418863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function Com_Init for check the interface --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  17.322863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_319" href="javascript:switchTable('2_i__-1463951200_319')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_319">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  17.322863</td>
+            <td class="DefaultCell"></td>
+            <td class="DefaultCell">Action: ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_ClearIpduGroupVector_BswM_OnEnableTxPdu</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  19.522863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Reset the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  21.222863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  22.322863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function BswM_OnEnableTxPdu to call Com_ClearIpduGroupVector function --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  23.222863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_411" href="javascript:switchTable('2_i__-1463951200_411')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_411">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  24.222863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  25.422863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function Com_ClearIpduGroupVector in order to initialize the PDU group vector to 0 --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  26.302863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_482" href="javascript:switchTable('2_i__-1463951200_482')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_482">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  27.302863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  28.502863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function BswM_OnEnableTxPdu for check the interface --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  29.414863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_553" href="javascript:switchTable('2_i__-1463951200_553')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_553">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  30.514863</td>
+            <td class="DefaultCell"></td>
+            <td class="DefaultCell">Action: ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_SetIpduGroup_BswM_OnEnableTxPdu</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  31.514863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Reset the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  33.214863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  34.314863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function BswM_OnEnableTxPdu to call Com_SetIpduGroup function --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  35.194863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_645" href="javascript:switchTable('2_i__-1463951200_645')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_645">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  36.194863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  37.394863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function Com_SetIpduGroup in order to set new states to RX Com IPDUs: - Enable frame reception --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  38.298863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_716" href="javascript:switchTable('2_i__-1463951200_716')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_716">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  40.998863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  42.198863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function BswM_OnEnableTxPdu in order to enable frame transmission --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  43.074863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_787" href="javascript:switchTable('2_i__-1463951200_787')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_787">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  44.174863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  45.374863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function Com_SetIpduGroup in order to set new states to Tx Com IPDUs: - Enable frame transmission --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  46.254863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_858" href="javascript:switchTable('2_i__-1463951200_858')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_858">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  47.254863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  48.454863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function BswM_OnEnableTxPdu for check the interface --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  49.346863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_929" href="javascript:switchTable('2_i__-1463951200_929')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_929">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  49.346863</td>
+            <td class="DefaultCell"></td>
+            <td class="DefaultCell">Action: ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_IpduGroupControl_BswM_OnEnableTxPdu</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  51.446863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Reset the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  53.246863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  54.346863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function BswM_OnEnableTxPdu to call Com_IpduGroupControl function --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  55.234863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_1021" href="javascript:switchTable('2_i__-1463951200_1021')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_1021">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  56.234863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  57.434863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function Com_IpduGroupControl in order to start both COM PDUs (after their states have been updated) --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  58.310863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_1092" href="javascript:switchTable('2_i__-1463951200_1092')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_1092">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  60.410863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">Run the debugger.</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  61.610863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Set a BP in function BswM_OnEnableTxPdu for check the interface --&gt; BP was set</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  62.474863</td>
+            <td class="NumberCell"></td>
+            <td class="DefaultCell">
+              <table class="NoMarginBottom">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a class="Undecorated" id="tbl_2_i__-1463951200_1163" href="javascript:switchTable('2_i__-1463951200_1163')">[−]</a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="InfoTableExpand" id="tbl_2_i__-1463951200_1163">
+                <tr>
+                  <td class="DefineCell" style="text-indent: 0px;">Expected Result</td>
+                  <td class="DefineCell">Actual Result</td>
+                </tr>
+                <tr>
+                  <td class="DefaultCell" style="text-indent: 0px;">Breakpoint is reached</td>
+                  <td class="DefaultCell">BP was reached.</td>
+                </tr>
+              </table>
+            </td>
+            <td class="PositiveResultCell">pass</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  62.474863</td>
+            <td class="DefaultCell"></td>
+            <td class="DefaultCell">Postcondition</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="DefineCell">  62.474863</td>
+            <td class="NumberCell">STEP</td>
+            <td class="DefaultCell">Return ECU to default values</td>
+            <td class="DefaultCell">-</td>
+          </tr>
+          <tr>
+            <td class="PatternSeparator" colspan="4"></td>
+          </tr>
+          <tr class="PositiveResultBackground">
+            <td style="text-indent: 20px;" class="ResultBlockHeading" colspan="4">
+              <big class="Heading4">2. RunPostTs: Passed</big>
+            </td>
+          </tr>
+          <tr>
+            <td class="PatternSeparator" colspan="4"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

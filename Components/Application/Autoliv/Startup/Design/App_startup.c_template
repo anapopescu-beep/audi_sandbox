@@ -1,0 +1,248 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.1 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/Startup/Design/project.pj $
+*/  
+/*****************************************************************************
+
+details
+   This file contains some specific C-functions called during startup code
+   These functions have to be called after SP initialization
+   These functions are specific to IAR build tool chain
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "NXP/S32K144.h"
+#include "Std_types.h"
+#include "EcuM.h"
+#include "common.h"
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+/**
+ * \brief
+ *      This variable defined in the linker script and points to first availale RAM address.
+ * \initialization 
+ *      From linker script.
+ * \range
+ *      0x1FFF8000..0x20004000.
+ */
+extern uint8 _Ram_Start;
+/**
+ * \brief
+ *      This variable defined in the linker script and points to last availale RAM address.
+ * \initialization 
+ *      From linker script.
+ * \range
+ *      0x1FFF8000..0x20004000.
+ */
+extern uint8 _Ram_End;
+/**
+ * \brief
+ *      This variable defined in the linker script and points to first availale NVM RAM address.
+ * \initialization 
+ *      From linker script.
+ * \range
+ *      0x14000000..0x1400FFFF.
+ */
+extern uint8 _FlexRam_Start;
+/**
+ * \brief
+ *      This variable defined in the linker script and points to last availale NVM RAM address.
+ * \initialization 
+ *      From linker script.
+ * \range
+ *      0x14000000..0x1400FFFF.
+ */
+extern uint8 _FlexRam_End;
+/**
+ * \brief
+ *      This variable defined in the linker script and points to first availale NVM RAM no init address.
+ * \initialization 
+ *      From linker script.
+ * \range
+ *      0x20006F00..0x20006FFF.
+ */
+extern uint8 _NoInitRam_Start;
+/**
+ * \brief
+ *      This variable defined in the linker script and points to last availale NVM RAM no init address.
+ * \initialization 
+ *      From linker script.
+ * \range
+ *      0x20006F00..0x20006FFF.
+ */
+extern uint8 _NoInitRam_End;
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+* \brief
+*       This function has to init RAM data area depending of there types (init/uninit/ etc).
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       Startup.
+* \dynamicaspectdescription
+*       Called by Startup sequence (refer to startup_iar.s).
+* \constrains
+*       Has to be called after SP initialization and before main function
+*       The Stack shall NOT be erased or we will not be able to return to startup function
+* \ddesignrequirement
+*		  DSG_RAM_InitData
+* \archrequirement
+*       ARCH_RAM_InitData
+**/
+void RAM_InitData (void)
+{ 
+   Initialize AppData segment with its initialization Flash segment;
+   while (0u != u32length)
+   {
+      *u8To = 0u;
+      u8To++;
+      u32length--;
+   }
+
+   Initialize AppData segment with its initialization Flash segment;
+   
+   while (0u != u32length)
+   {
+      *u8To = KU8_MAX;
+      u8To++;
+      u32length--;
+   }
+
+   Initialize AppData segment with its initialization Flash segment;
+   
+   while (0u != u32length)
+   {
+      *u8To = *u8From;
+      u8To++;
+      u8From++;
+      u32length--;
+   }
+
+   Initialize AppData segment with its initialization Flash segment;
+   
+   while (0u != u32length)
+   {
+      *u8To = *u8From;
+      u8To++;
+      u8From++;
+      u32length--;
+   }
+   Erase bss section;
+   while (0u != u32length)
+   {
+      *u8To = 0u;
+      u8To++;
+      u32length--;
+   }
+
+   Erase bss section;
+  
+   while (0u != u32length)
+   {
+      *u8To = 0u;
+      u8To++;
+      u32length--;
+   }
+
+   /* if Power on reset init also the no init area */
+   if(If Power on reset init also the no init area)
+   {
+      while (0u != u32length)
+      {
+         *u8To = 0u;
+         u8To++;
+         u32length--;
+      }
+   }
+}
+
+/**
+* \brief
+*       This function is the main application entry point
+*       This function will start the application
+* \exception
+*       This function has no exceptions.
+* \pre
+*       Has to be called after SP initialization and Ram init.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function is not expected to return.
+* \dynamicaspectcaller
+*       Startup.
+* \dynamicaspectdescription
+*       Called by Startup sequence (refer to startup_iar.s).
+* \constrains
+*       None.
+* \ddesignrequirement
+*		  DSG_main
+* \archrequirement
+*       ARCH_main
+**/
+int main(void)
+{
+   Enable interrupts;
+   Call EcuM_Init() function to start the application;
+    
+   return 0;
+}
+/******************************************************************************
+End Of File
+*****************************************************************************/

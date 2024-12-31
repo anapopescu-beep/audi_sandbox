@@ -1,0 +1,49 @@
+\#include <Ioc_ChCfg.h>
+/*
+ * MISRA-C:2012 Deviation List
+ *
+ * MISRAC2012-1) Deviated Rule: 5.6 (required)
+ * A typedef name shall be a unique identifier.
+ *
+ * Reason:
+ * The typedef is only used to construct a mechanism, which allows to make
+ * assertions at compile time. The defined types are never used to create objects.
+ */
+
+\#include <private/Ioc_static_asserts.h>
+
+/*===================================================================
+ * Channel Buffers Senders
+ *==================================================================*/
+/* The following OS Objects need to have write access to this file:
+#if( $comm.isSenderTrapping() )
+#* *# * Kernel
+#else
+#* *##foreach( $sender in $comm.getSenders() )
+#*    *# * $sender.getSendingApp().getName()
+#* *##end
+#end
+ */
+
+/* If one of the following asserts fails, the given type is too large to be handled by the IOC.
+ * For further information see the "IOC limits" section of the IOC documentation.
+ */
+#foreach( $dataType in $comm.getUniqueDataTypeNames() )
+#* *##if( $foreach.index == 0 )
+#*    *#/* Deviation MISRAC2012-1 <START> */
+#* *##end
+#* *#IOC_DESIZEOF_ASSERT($dataType);
+#* *##if( !$foreach.hasNext )
+#* *#/* Deviation MISRAC2012-1 <STOP> */
+#* *##end
+#end
+
+Ioc_${comm.getChannelName()}_t Ioc_${comm.getChannelName()}_Buffer[$comm.getQueueSize()];
+ioc_state_t Ioc_${comm.getChannelName()}_State_Sender;
+
+#if( $comm.isPlatformSpecificLockUsed() )
+#* *#$comm.getPlatformInterLockType() Ioc_${comm.getChannelName()}_lock;
+#end
+#if( $comm.hasInitData() )
+#* *#const $comm.getDataTypeList().get(0) $comm.getInitDataName() = $comm.getVariableInit();
+#end

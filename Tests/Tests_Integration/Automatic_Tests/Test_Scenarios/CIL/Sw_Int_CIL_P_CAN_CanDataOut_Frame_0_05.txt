@@ -1,0 +1,51 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0, ARCH_SW_CIL_P_CAN_MF_Frame
+ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0: The runnable shall write all the content of the CAN signals belonging to the eCS Dev Frame - The runnable shall read from the Application the followig data and send them on the CAN bus: - NVP_u32eCSVariant - Acceleration on X,Y,Z axis in g - eCS Algorithm Decision - Ball Position in mm - Selected Profile[for each solenoid] - Acceleration on X,Y,Z axis in m/s^2 - Selected step [for each solenoid] - Solenoid state [for each solenoid] - Solenoid confirmation status [for each solenoid] - Buckle Status [for each solenoid] - Lock Execution Counter [for each solenoid] - Unlock Execution Counter [for each solenoid] - Unlock Confirmed Execution Counter [for each solenoid] - Warm reset counter
+ARCH_SW_CIL_P_CAN_MF_Frame: - The runnable shall write all the content of the CAN signals belonging to the eCS Dev Frame - The runnable shall read from the Application the followig data and send them on the CAN bus: - NVP_u32eCSVariant - Acceleration on X,Y,Z axis in g - eCS Algorithm Decision - Ball Position in mm - Selected Profile[for each solenoid] - Acceleration on X,Y,Z axis in m/s^2 - Selected step [for each solenoid] - Solenoid state [for each solenoid] - Solenoid confirmation status [for each solenoid] - Buckle Status [for each solenoid] - Lock Execution Counter [for each solenoid] - Unlock Execution Counter [for each solenoid] - Unlock Confirmed Execution Counter [for each solenoid] - Warm reset counter
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_CIL_P_CAN_CanDataOut_Frame_0, ARCH_SW_CIL_P_CAN_MF_Frame
+
+	Step 2: Start DevKit_01 Frame 
+		Expected result:  Frame started.
+
+	Step 3: Send request for Supplier session
+
+	Step 4: Send request for  Supplier Security Access
+
+	Step 5: Send request for press ECUUnlock button
+
+	Step 6: Send request for Activate measurement frame
+
+	Step 7: Set a breakpoint in function CIL_runAppliToCAN at the execution for the current time slot 
+		Expected result:  BP reached.
+
+	Step 8: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot02 at the 2nd timeslot 
+		Expected result:  BP reached.
+
+	Step 9: Run the debugger 2 times, in order to reach the 2nd timeslot.
+
+	Step 10: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot02 after RTE Read for ball position in mm 
+		Expected result:  BP reached.
+
+	Step 11: Read Ball_Position in mm from debugger 
+		Expected result:  Variable read.
+
+	Step 12: Read value of signal Ball_Position 
+		Expected result:  Signal value read.
+
+Postcondition
+
+	Step 13: Return ECU to default values

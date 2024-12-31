@@ -1,0 +1,43 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_On_Prep_Shutdown, ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnGoOffOneA
+ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_On_Prep_Shutdown: The BswM_RequestMode runnable shall be called in the BswM_On_Prep_Shutdown runnable in order to: - Request to start the process to fastened the WriteAll process - Set BswM Request Port to be able to notify that de-initialization of modules shall be performed
+ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnGoOffOneA: The BswM_RequestMode runnable shall be called in the BswM_OnGoOffOneA runnable in order to: - Set BswM Request Port to be able to notify that the second step of de-initialization of modules shall be performed
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_On_Prep_Shutdown
+
+	Step 2: Send diagnostic request in order to do soft Reset
+
+	Step 3: Set a BP in function BswM_ProceedReset in order to call BswM_On_Prep_Shutdown 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in BswM_RequestMode function in order to: - Request to start the process to fastened the WriteAll process - Set BswM Request Port to be able to notify that de-initialization of modules shall be performed 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_CB_NfyNvMJobEnd for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrBswMServicesBswMIf_BswM_RequestMode_BswM_OnGoOffOneA
+
+	Step 6: Send diagnostic request in order to do soft Reset
+
+	Step 7: Set a BP in function BswM_OnGoOffOneA in order call BswM_RequestMode function 
+		Expected result:  BP was set
+
+	Step 8: Set a BP in BswM_RequestMode function in order to: - Set BswM Request Port to be able to notify that the second step of de-initialization of modules shall be performed 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 9: Return ECU to default values

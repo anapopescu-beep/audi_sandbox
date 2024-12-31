@@ -1,0 +1,74 @@
+1. Example Description
+    - This application demonstrates the usage of a subset of Real Time Drivers that are included in this code drop. It is not part of the production code deliverables.
+    - The application includes a Design Studio project, that uses predefined configurations for the Fls HLD and uses the its APIs to erase, write, read, compare the external flash.
+    1.1 The application software functionalities
+            - Fls_ClockSetup
+                    Initialize Qspi's Clocks
+            - Fls_PinSetup
+                    Initialize the pins which are used by application.
+            - Fls_CacheSetup
+                    Disable cache on Region 2
+            - Fls_Init
+                    Initialize the Fls driver.
+            - Fls_Erase, Fls_MainFunction, Fls_GetStatus
+                    Erase entire the flash sectors configured.
+                    Fls_Erase is used to set job erase,
+                    Fls_MainFunction to start executing erase job
+                    Fls_GetStatus checks status of erase execution.
+            - Fls_Write, Fls_MainFunction, Fls_GetStatus
+                    Write data to flash.
+            - Fls_Read, Fls_MainFunction, Fls_GetStatus
+                    Read data from flash memory.
+            - Fls_Compare, Fls_MainFunction, Fls_GetStatus
+                    Compare data from flash memory with source data.
+
+    Note:
+        - PCCRMR[R2] should be programmed as 00b (NonCacheable) as S32K148 FlexNVMs region is not cacheable
+        - For more information, please refer to the LMEM chapter in the Reference manual and "Data Cache Restrictions" chapter in the Integration Manual
+
+2. Installation steps
+    2.1 Hardware installation
+        2.1.1 Supported boards
+            - S32K148EVB-Q176 PCB 29644 RevX1 SCH RevB
+        2.1.2 Connections
+            The following Connections must be done to for this example application to work:
+            - The external flash is by default not connected to the MCU. Therefore, in order to run this example some hardware changes are required to the board
+            - Power Adapter 12V
+            - Use the externel power source: J8 - Set to position 1-2
+            - In order to run this example some Resistors (R) changes are required to the board:
+                Remove | Connect |
+                -------|---------|
+                 R212  |  R213   |
+                 R210  |  R211   |
+                 R208  |  R209   |
+                 R250  |  R244   |
+                 R260  |  R254   |
+                 R272  |  R271   |
+        2.1.3 Debugger
+            - PnE debugger on board is used. The micro-USB must be connected to J24 (USB port)
+    2.2 Software installation
+        2.2.1 Importing the S32 Design Studio project
+            - After opening S32 Design Studio, go to "File -> New -> S32DS Project From Example" select this example. Then click on "Finish".
+            - The project should now be copied into your current workspace.
+
+3. Generating, building and running the example application
+    3.1 Generating the S32 configuration
+        - Before running the example, a configuration needs to be generated.
+        - First go to Project Explorer View in S32 DS and select the current project.
+        - Select the "S32 Configuration Tool" menu then click on the desired configuration tool (Pins, Clocks, Peripherals, etc).
+        - Clicking on any one of those will generate all the components.
+        - Make the desired changes (if any) then click on the "S32 Configuration Tool -> Update Code" button.
+    3.2 Compiling the application
+        - Select the configuration to be built: Debug_FLASH by left clicking on the downward arrow corresponding to the build button in eclipse.
+        - Use Project > Build to build the project.
+        - Wait for the build action to be completed before continuing to the next step.
+        - Check the compiler console for error messages; upon completion, the *.elf binary file should be created.
+    3.2 Running the application on the board
+        - Go to Run and select Debug Configurations. There will be a debug configuration for this project:
+
+            Configuration Name                              Description
+            -------------------------------                 -----------------------
+            Fls_Example_S32K148_Debug_FLASH_PNE             Debug the FLASH configuration using S32Debugger
+
+        - Select the desired debug configuration and click on Launch. Now the perspective will change to the Debug Perspective.
+        - Use the controls to control the program flow.

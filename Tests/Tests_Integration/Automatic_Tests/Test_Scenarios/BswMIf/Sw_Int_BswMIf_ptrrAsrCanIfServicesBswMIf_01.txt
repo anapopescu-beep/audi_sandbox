@@ -1,0 +1,42 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrCanIfServicesBswMIf_CanIf_Init_BswM_OnStartupTwoA, ARCH_SW_BswMIf_ptrrCanIfServicesBswMIf_CanIf_CheckWakeup_BswM_CB_NfyNvMJobEnd
+ARCH_SW_BswMIf_ptrrCanIfServicesBswMIf_CanIf_Init_BswM_OnStartupTwoA: The CanIf_Init runnable shall be called in the BswM_OnStartupTwoA runnable in order to initialize the CAN interface.
+ARCH_SW_BswMIf_ptrrCanIfServicesBswMIf_CanIf_CheckWakeup_BswM_CB_NfyNvMJobEnd: The CanIf_CheckWakeup runnable shall be called in the BswM_CB_NfyNvMJobEnd runnable in order to check for wakeup events.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrCanIfServicesBswMIf_CanIf_Init_BswM_OnStartupTwoA
+
+	Step 2: Set a BP in function BswM_OnStartupTwoA to call CanIf_Init function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function CanIf_Init in order to initialize the CAN interface 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_OnStartupTwoA for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrCanIfServicesBswMIf_CanIf_CheckWakeup_BswM_CB_NfyNvMJobEnd
+
+	Step 5: Set a BP in function BswM_CB_NfyNvMJobEnd to call CanIf_CheckWakeup function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function CanIf_CheckWakeup in order to check for wakeup events 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_CB_NfyNvMJobEnd for check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 8: Return ECU to default values

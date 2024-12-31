@@ -1,0 +1,692 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version:
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.4 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/DcmIf/Design/project.pj $
+*/
+/*!****************************************************************************
+details
+   High level module used for memory management.
+   In charge of:
+      o Write memory
+      o Read memory
+      o Request confirmation
+      o Set/Get programming conditions
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Rte_DcmIf.h"
+#include "Dcm.h"
+#include "Dcm_Dsp_MemoryServices.h"
+#include "Dcm_Callouts.h"
+#include "Dcm_User.h"
+#include "Nvp_Cfg.h"
+#include "EcuM_BSW.h"
+#include "NvmIf.h"
+#include "Dia.h"
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+/**
+ * \brief
+ *       Define for invalid memory block.
+ */
+#define  KU8_DCMIF_BLOCK_NOT_PRESENT                        ((uint8) 0xFFU)
+
+/**
+ * \brief
+ *      Define used to indicate memory block ID.
+ */
+#define  KU32_DCMIF_MASK_BLOCK_ID                           ((uint32) 0x00FF0000)
+
+/**
+ * \brief
+ *       Define used to indicate the position of low to middle bytes.
+ */
+#define  KU32_DCMIF_K_POS_L_LOW_MIDDLE_BYTE                 ((uint32) 16)
+
+/**
+ * \brief
+ *       Define used to indicate the start memory address.
+ */
+#define  KU32_DCMIF_START_MEMORY_ADDRESS_MASK               ((uint32) 0xFFFF)
+
+/* Diagnostic Services */
+/**
+ * \brief
+ *       Define used to indicate the ECU reset diagnostic service.
+ */
+#define KU8_DCMIF_SID11_ECU_RESET                           ((uint8) 0x11)
+
+/**
+ * \brief
+ *       Define used to indicate the diagnostic session control service.
+ */
+#define KU8_DCMIF_SID10_DIAGNOSTIC_SESSION_CONTROL          ((uint8) 0x10)
+
+/**
+ * \brief
+ *       Define used to indicate the hard reset diagnostic subfunction.
+ */
+#define KU8_DCMIF_SID11_SUBF_HARD_RESET                     ((uint8) 0x01)
+
+/**
+ * \brief
+ *       Define used to indicate the default session.
+ */
+#define KU8_DCMIF_SID10_SUBF_DEFAULT_SESSION                ((uint8) 0x01)
+
+/**
+ * \brief
+ *       Diagnostic Request.
+ */
+#define KU32_DCMIF_PROG_REQUEST_FROM_APP                    ((uint32) 0x55AA55AA)
+
+/**
+ * \brief
+ *       Reset Cause DSC02.
+ */
+#define KU8_DCMIF_PROG_RESET_CAUSE_DSC02                    ((uint8) 0x02)
+
+/**
+ * \brief
+ *       Reset Cause from Programming.
+ */
+#define KU8_DCMIF_PROG_RESET_CAUSE_ER                       ((uint8) 0x00)
+
+/**
+ * \brief
+ *       Reset Cause DSC01.
+ */
+#define KU8_DCMIF_PROG_RESET_CAUSE_DSC01                    ((uint8) 0x01)
+
+/**
+ * \brief
+ *       RAM Start Address.
+ */
+#define KU32_DCMIF_ECU_UNLOCK_RAM_START_ADDR                ((uint32)0x14000000)
+
+/**
+ * \brief
+ *       Maximum memory size.
+ */
+#define  KU32_DCMIF_MAX_MEMORY_SIZE_VALUE                   ((uint32)0x00000100)
+
+/**
+ * \brief
+ *       EEPROM address.
+ */
+#define  KU32_DCMIF_EEPROM_ADDRESS                          ((uint32)0xEE000000)
+
+/**
+ * \brief
+ *       Define used to indicate EEPROM address.
+ */
+#define  KU32_DCMIF_MASK_EEPROM                             ((uint32)0xFF000000)
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+/**
+ * \brief
+ *       Typedef for shared variable between bootloader and application.
+ */
+typedef struct
+{
+   uint32 u32ProgSig;
+   uint8 u8ResponseRequired;
+   uint8 u8ResetCause;
+   uint8 u8RxPduId;
+   uint8 u8Side;
+   uint8 u8TpSize;
+} dcmif_stNoInitShareVarType;
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+LOCAL boolean dcmif_bForbidData(const uint32 u32DestAddressToBeChecked, const uint32 u32LengthToBeChecked);
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+/**
+ * \brief
+ *       This variable is used to store the read status.
+ * \initialization 
+ *       NVM_REQ_NOT_OK.
+ * \range
+ *       NVM_REQ_NOT_OK;
+ *       NVM_REQ_NV_INVALIDATED;
+ *       NVM_REQ_RESTORED_FROM_ROM;
+ *       NVM_REQ_OK;
+ *       NVM_REQ_PENDING;
+ */
+LOCAL uint8 dcmif_u8ReadBlockByAddressResult = NVM_REQ_NOT_OK;
+
+/**
+ * \brief
+ *       This variable is used to store the write status.
+ * \initialization 
+ *       NVM_REQ_NOT_OK.
+ * \range
+ *       NVM_REQ_NOT_OK;
+ *       NVM_REQ_OK;
+ *       NVM_REQ_PENDING;
+ */
+LOCAL uint8 dcmif_u8WriteBlockByAddressResult = NVM_REQ_NOT_OK;
+
+/**
+ * \brief
+ *       This variable is used to store the last memory address used.
+ * \initialization 
+ *       No initialization.
+ * \range
+ *       NA.
+ */
+LOCAL uint32 dcm_u32SavedMemoryAddress;
+
+/**
+ * \brief
+ *       This variable is used to store the size of the last memory block used.
+ * \initialization 
+ *       No initialization.
+ * \range
+ *       NA.
+ */
+LOCAL uint32 dcm_u32SavedMemorySize;
+
+/**
+ * \brief
+ *       Shared variable between bootloader and application.
+ *       Shall be stored in a NoInit area known by both software.
+ * \initialization 
+ *       No initialization.
+ * \range
+ *       NA.
+ */
+LOCAL dcmif_stNoInitShareVarType stNoInitShareVar;
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+/**
+ * \brief
+ *       The function is used to check if a memory area contains forbidden data or not.
+ * \inputparam
+ *       Name: u32DestAddressToBeChecked;
+ *       Type: uint32;
+ *       Description: Address to be checked.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: u32LengthToBeChecked;
+ *       Type: uint32;
+ *       Description: Memory block length.;
+ *       Range: NA.;
+ * \exception
+ *       This function has no exceptions.
+ * \pre
+ *       This function has no preconditions.
+ * \post
+ *       This function has no postconditions.
+ * \return
+ *       bReturnedStatus:
+ *       o  B_TRUE - Memory area is forbidden because it contains a forbidden data;
+ *       o  B_FALSE - Memory area is authorized because it does not contain any forbidden data;
+ * \dynamicaspectcaller
+ *       Dcm_WriteMemory.
+ * \dynamicaspectdescription
+ *       The function is used to check if a memory area is forbidden or not.
+ * \constraints
+ *       NA.
+ * \ddesignrequirement
+ *       DSG_dcmif_dcmif_bForbidData
+ * \archrequirement
+ *       ARCH_SW_DcmIf_ptrpAsrDcmServices_WriteMemory
+ **/
+LOCAL boolean dcmif_bForbidData(const uint32 u32DestAddressToBeChecked, const uint32 u32LengthToBeChecked)
+{
+   if(The address to be checked is from EEPROM addresses section)
+   {
+      Get the block ID from EEPROM address;
+      Get block RAM address by block ID;
+
+      /* Forbidden data : Factory lock status */
+      if(The forbidden data are not included in the area to write)
+      {
+         bReturnedStatus = B_TRUE;
+      }
+      else
+      {
+         bReturnedStatus = B_FALSE;
+      }
+   }
+   else
+   {
+      bReturnedStatus = B_FALSE;
+   }
+
+   return bReturnedStatus;
+}
+/**************************************************************************
+Private Functions
+**************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+/**
+ * \brief
+ *       Callout to write memory by address (Diagnostic request)
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType;
+ *       Description: Operation status.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: MemoryIdentifier;
+ *       Type: uint8;
+ *       Description: EEPROM Memory Block ID.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: MemoryAddress;
+ *       Type: uint32;
+ *       Description: The address of EEPROM memory block ID.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: MemorySize;
+ *       Type: uint32;
+ *       Description: The size of EEPROM memory block ID.;
+ *       Range: NA.;
+ * \outputparam
+ *       Name: MemoryData;
+ *       Type: uint8;
+ *       Description: Pointer to the data buffer that contains data to be written in EEPROM memory.;
+ *       Range: NA.;
+ * \return:
+ *       Dcm_ReturnWriteMemoryType:
+ *       o  DCM_WRITE_OK - Writing has been done;
+ *       o  DCM_WRITE_PENDING - Writing is pending, another called is requested;
+ *       o  DCM_WRITE_FAILED - The writing has failed;
+ * \constrains
+ *       NA.
+ * \dynamicaspectcaller
+ *       RTE SW layer.
+ * \dynamicaspectdescription
+ *       API called in other SW components via RTE layer.
+ * \ddesignrequirement
+ *       DSG_DCM_Dcm_WriteMemory
+ * \archrequirement
+ *       ARCH_SW_DcmIf_ptrpAsrDcmServices_WriteMemory;
+ *       ARCH_SW_DcmIf_pclNvmIfServices_WriteBlockByAddress;
+ *       ARCH_SW_DcmIf_pclNvmIfServices_GetNvmBlockStatus_Dcm_WriteMemory;
+ *       ARCH_SW_DcmIf_pclNvmIfServices_GetRamAddressByBlockId_Dcm_WriteMemory;
+ **/
+Dcm_ReturnWriteMemoryType Dcm_WriteMemory(Dcm_OpStatusType OpStatus, uint8 MemoryIdentifier, uint32 MemoryAddress, uint32 MemorySize, uint8 MemoryData, Dcm_NegativeResponseCodeType* ErrorCode)
+{
+   u8WriteMemoryResult = FAILED;
+
+   Save MemoryAddress and MemorySize - Otherwise variables are erased at each call;
+
+   if(ECU is locked)
+   {
+      Get ForbidStatus for saved MemoryAddress and MemorySize;
+
+      if(MemorySize > Mximum memory size of DcmIf module)
+      {
+         *ErrorCode = REQUEST OUT OF RANGE;
+      }
+      else
+      {
+         if(ForbidStatus == FALSE)
+         {
+            if(The saved memory address is in the EEPROM section)
+            {
+               Get block Id from Saved Memory Address;
+               Get Block Length;
+
+               if(The NVM block length is correct, MemoryAddress is a start address and BlockId is lower than the maximum value supported)
+               {
+                  if(The result of write block by address operation is not pending)
+                  {
+                     Write Block By Address;
+
+                     Get Block Status;
+
+                     if(The result of write block by address operation is pending)
+                     {
+                        Write Memory Result = PENDING;
+                     }
+                  }
+                  else
+                  {
+                     Get Block Status;
+
+                     if (The result of write block by address operation is pending)
+                     {
+                        Write Memory Result = PENDING;
+                     }
+                     else if (The result of write block by address operation is OK)
+                     {
+                        Write Memory Result = OK;
+                     }
+                     else
+                     {
+                        Write Memory Result = FAILED;
+                        *ErrorCode = GENERAL PROGRAMMING FAILURE;
+                     }
+                  }
+               }
+               else
+               {
+                  *ErrorCode = REQUEST OUT OF RANGE;
+               }
+            }
+            else if(The saved memory address is in the RAM shadow section)
+            {
+               for (Index in range (0, Saved Memory Size))
+               {
+                  SavedMemory[Index] = MemoryData[Index];
+               }
+               Write Memory Result = OK;
+            }
+            /* Write RAM */
+            else if(The saved memory address is in the RAM application section)
+            {
+               for (Index in range (0, Saved Memory Size))
+               {
+                  SavedMemory[Index] = MemoryData[Index];
+               }
+               Write Memory Result = OK;
+            }
+            else
+            {
+               *ErrorCode = REQUEST OUT OF RANGE;
+            }
+         }
+         else
+         {
+            *ErrorCode = REQUEST OUT OF RANGE;
+         }
+      }
+   }
+   else
+   {
+      *ErrorCode = CONDITIONS NOT CORRECT;
+   }
+
+   return Write Memory Result;
+}
+
+/**
+ * \brief
+ *       Callout to read memory by address (Diagnostic request).
+ * \inputparam
+ *       Name: OpStatus;
+ *       Type: Dcm_OpStatusType;
+ *       Description: Operation status.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: MemoryIdentifier;
+ *       Type: uint8;
+ *       Description: EEPROM Memory Block ID.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: MemoryAddress;
+ *       Type: uint8;
+ *       Description: The address of EEPROM memory block ID.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: MemorySize;
+ *       Type: uint32;
+ *       Description: The size of EEPROM memory block ID.;
+ *       Range: NA.;
+ * \outputparam
+ *       Name: MemoryData;
+ *       Type: uint8;
+ *       Description: Pointer to the data buffer that contains data to be read.;
+ *       Range: NA.;
+ * \return
+ *       Dcm_ReturnReadMemoryType:
+ *       o  DCM_READ_OK - Reading has been done;
+ *       o  DCM_READ_PENDING - Reading is pending, another call is request to finalize the reading;
+ *       o  DCM_READ_FAILED - Reading has failed;
+ * \constrains
+ *       NA.
+ * \dynamicaspectcaller
+ *       RTE SW layer.
+ * \dynamicaspectdescription
+ *       API called in other SW components via RTE layer.
+ * \ddesignrequirement
+ *       DSG_DCM_Dcm_ReadMemory
+ * \archrequirement
+ *       ARCH_SW_DcmIf_ptrpAsrDcmServices_ReadMemory;
+ *       ARCH_SW_DcmIf_pclNvmIfServices_ReadBlockByAddress;
+ *       ARCH_SW_DcmIf_pclNvmIfServices_GetNvmBlockStatus_Dcm_ReadMemory;
+ **/
+Dcm_ReturnReadMemoryType Dcm_ReadMemory(Dcm_OpStatusType  OpStatus, uint8 MemoryIdentifier, uint32 MemoryAddress, uint32 MemorySize, uint8 MemoryData, Dcm_NegativeResponseCodeType* ErrorCode)
+{
+   Read Memory Result = FAILED;
+
+   Save MemoryAddress and MemorySize - Otherwise variables are erased at each call;
+
+   /* Read EEPROM/FEE (Data FLASH) */
+   if(The saved memory address is in the EEPROM section)
+   {
+      Get block Id from Saved Memory Address;
+      
+      if(Block Id >= Total number of NVRAM blocks or Block Id is Zero)
+      {
+         *ErrorCode = REQUEST OUT OF RANGE;
+      }
+      else
+      {
+
+         if (The result of read block by address operation is not pending)
+         {
+            Read block by address;
+
+            Get Nvm block status;
+
+            if (The result of read block by address operation is pending)
+            {
+               Read Memory Result = PENDING;
+            }
+         }
+         else
+         {
+            Get Nvm block status;
+
+            if (The result of read block by address operation is pending)
+            {
+               Read Memory Result = PENDING;
+            }
+            else if (The result of read block by address operation is OK)
+            {
+               Read Memory Result = OK;
+            }
+            else if (The result of Read block by address operation is RESTORED FROM ROM or INVALIDATED)
+            {
+               for (Index in range (0, Saved Memory Size))
+               {
+                  MemoryData[Index] = value for BLOCK NOT PRESENT;
+               }
+               Read Memory Result = OK;
+            }
+            else
+            {
+               Read Memory Result = READ FAILED;
+            }
+         }
+      }
+   }
+
+   /* Read Program FLASH or RAM */
+   else
+   {
+      for (Index in range (0, Saved Memory Size))
+      {
+         MemoryData[Index] = ReadMemoryData[Index];
+      }
+      Read Memory Result = OK;
+   }
+
+   return Read Memory Result;
+}
+
+/**
+ * \brief
+ *       Callout used to confirm services requests.
+ * \inputparam
+ *       Name: SID;
+ *       Type: uint8;
+ *       Description: The Id of service.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: ReqType;
+ *       Type: uint8;
+ *       Description: Request type.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: SourceAddress;
+ *       Type: uint16;
+ *       Description: Address of request source.;
+ *       Range: NA.;
+ * \inputparam
+ *       Name: ConfirmationStatus;
+ *       Type: Dcm_ConfirmationStatusType (uint8);
+ *       Description: Confirmation status.;
+ *       Range: NA.;
+ * \constrains
+ *       None.
+ * \dynamicaspectcaller
+ *       This function is not called.
+ * \dynamicaspectdescription
+ *       NA.
+ * \ddesignrequirement
+ *       DSG_DCM_Rte_DcmConfirmation
+ * \archrequirement
+ *       ARCH_SW_DcmIf_ptrpAsrDcmServices_Rte_DcmConfirmation
+ **/
+void Rte_DcmConfirmation(uint8 SID, uint8 ReqType, uint16 SourceAddress,  Dcm_ConfirmationStatusType ConfirmationStatus)
+{
+   (void)SID; /* to avoid compiler warning */
+   (void)ReqType; /* to avoid compiler warning */
+   (void)SourceAddress; /* to avoid compiler warning */
+   (void)ConfirmationStatus; /* to avoid compiler warning */
+}
+
+/**
+ * \brief
+ *       Callout used to set the programming conditions.
+ * \inputparam
+ *       Name: ProgConditions;
+ *       Type: Dcm_ProgConditionsType (struct[uint16, uint8, uint8, uint8, boolean, boolean, boolean]);
+ *       Description: Programming conditions.;
+ *       Range: None;
+ * \constrains
+ *       None.
+ * \dynamicaspectcaller
+ *       RTE SW layer.
+ * \dynamicaspectdescription
+ *       API called in other SW components via RTE layer.
+ * \ddesignrequirement
+ *       DSG_DCM_Dcm_SetProgConditions
+ * \archrequirement
+ *       ARCH_SW_DcmIf_ptrpAsrDcmServices_Dcm_SetProgConditions
+ **/
+Std_ReturnType Dcm_SetProgConditions(Dcm_ProgConditionsType ProgConditions)
+{
+   if((NULL_PTR != ProgConditions) && (ProgConditions->ReprogramingRequest == TRUE))
+   {
+      Set the programming conditions;
+      Prog Sig = PROG REQUEST FROM APP;
+      Response Required = TRUE;
+      Reset Cause = PROGRAMMING RESET CAUSE;
+      RxPduId = ZERO;
+      TpSize = Boot Tp Size;
+      Side = KU8_ZERO;
+   }
+   return E_OK;
+}
+
+/**
+ * \brief
+ *       Callout used to get the programming conditions.
+ * \inputparam
+ *       Name: ProgConditions;
+ *       Type: Dcm_ProgConditionsType (struct[uint16, uint8, uint8, uint8, boolean, boolean, boolean]);
+ *       Description: Programming conditions.;
+ *       Range: NA.;
+ * \constrains
+ *       NA.
+ * \dynamicaspectcaller
+ *       RTE SW layer.
+ * \dynamicaspectdescription
+ *       API called in other SW components via RTE layer.
+ * \ddesignrequirement
+ *       DSG_DCM_GetProgConditions
+ * \archrequirement
+ *       ARCH_SW_DcmIf_pseNvpBlockData_Dcm_GetProgConditions
+ *       ARCH_SW_DcmIf_ptrpAsrDcmServices_Dcm_GetProgConditions
+ **/
+Dcm_EcuStartModeType Dcm_GetProgConditions(Dcm_ProgConditionsType ProgConditions)
+{
+   Set the return to  COLD START;
+
+   if(Programming conditions is not Null, the response required flag is TRUE and the Reset Cause is not PROGRAMMING RESET CAUSE)
+   {
+      Return = WARM START;
+      Set the the Response Required flag to FALSE;
+
+      Set the Response Required of ProgConditions to TRUE;
+
+      switch (Reset Cause)
+      {
+      case Reset cause from programming:
+         ProgConditions->Sid = SID11 ECU RESET;
+         ProgConditions->SubFncId = SID11 HARD RESET;
+         break;
+      case Reset cause from  DSC01:
+         ProgConditions->Sid = SID10 DIAGNOSTIC SESSION CONTROL;
+         ProgConditions->SubFncId = SID10 DEFAULT SESSION;
+         break;
+      default:
+         break;
+      }
+   }
+   return Return;
+}
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

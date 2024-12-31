@@ -1,0 +1,449 @@
+#ifndef ACC_CFG_H_
+#define ACC_CFG_H_ 1
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------------------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+H-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+*******************************************************************************
+
+Overview of the interfaces:
+   Accelerometer Interface configuration.
+******************************************************************************/
+/*
+ * Explanation:
+ *    Disabled for MKS keywords
+ */
+/*
+$Revision: 1.4 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/ACC/Design/project.pj $
+*/
+/*****************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Std_Types.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+/******************************************************************************
+DEFINITION OF CONSTANTS
+******************************************************************************/
+
+/* Addresses of Accelerometer Registers */
+/**
+ * \brief
+ *       Address of Status Summary and X Axis Filter Settings Register from Bank 0 of Accelerometer.
+ */
+#define KU8_ACC_REG_X_AXIS_FILTER_SET_BK_0                     ((uint8)0x0E)
+/**
+ * \brief
+ *       Address of Accelerometer and Gyroscope Y and Z Axis Filter Settings Register from Bank 0 of Accelerometer.
+ */
+#define KU8_ACC_REG_Y_Z_AXIS_FILTER_SET_BK_0                   ((uint8)0x0C)
+/**
+ * \brief
+ *       Address of Bank Selection Register from all banks of Accelerometer.
+ */
+#define KU8_ACC_REG_BANK_SELECTION                             ((uint8)0x1F)
+/**
+ * \brief
+ *       Address of Sensivity Configuration Register from Bank 6 of Accelerometer.
+ */
+#define KU8_ACC_REG_SENSIVITY_CONFIG_BK_6                      ((uint8)0x14)
+/**
+ * \brief
+ *       Address of Mode Registers - Register from Bank 0 of Accelerometer.
+ */
+#define KU8_ACC_REG_MODE_REGISTER_BK_0                         ((uint8)0x19)
+/**
+ * \brief
+ *       Address of Temperature Data - Register from all Banks of Accelerometer.
+ */
+#define KU8_ACC_REG_TEMPERATURE_1_DATA                         ((uint8)0x03)
+
+/* Addresses of Accelerometer Alarm Registers */
+/**
+ * \brief
+ *       Address of Accelerometer Alarm 0 - Register from Bank 0 of Accelerometer.
+ */
+#define KU8_ACC_REG_ACCELEROMETER_ALARM_0_BK_0                 ((uint8)0x12)
+/**
+ * \brief
+ *       Address of Accelerometer Alarm 1 - Register from Bank 0 of Accelerometer.
+ */
+#define KU8_ACC_REG_ACCELEROMETER_ALARM_1_BK_0                 ((uint8)0x13)
+/**
+ * \brief
+ *       Address of Other Alarms 0 - Register from Bank 0 of Accelerometer.
+ */
+#define KU8_ACC_REG_OTHER_ALARMS_0_BK_0                        ((uint8)0x14)
+/**
+ * \brief
+ *       Address of Other Alarms 1 - Register from Bank 0 of Accelerometer.
+ */
+#define KU8_ACC_REG_OTHER_ALARMS_1_BK_0                        ((uint8)0x15)
+
+/* Addresses of Accelerometer Safety Mechanisms Registers */
+/**
+ * \brief
+ *        Address of Safety Mechanisms Enable 0 - Register from Bank 1 of Accelerometer.
+ */
+#define KU8_ACC_REG_S_M_ENABLE_0_BK_1                          ((uint8)0x11)
+/**
+ * \brief
+ *        Address of Safety Mechanisms Enable 1 - Register from Bank 1 of Accelerometer.
+ */
+#define KU8_ACC_REG_S_M_ENABLE_1_BK_1                          ((uint8)0x12)
+/**
+ * \brief
+ *        Address of Safety Mechanisms Mask 0 - Register from Bank 1 of Accelerometer.
+ */
+#define KU8_ACC_REG_S_M_MASK_0_BK_1                            ((uint8)0x13)
+/**
+ * \brief
+ *        Address of Safety Mechanisms Mask 1 - Register from Bank 1 of Accelerometer.
+ */
+#define KU8_ACC_REG_S_M_MASK_1_BK_1                            ((uint8)0x14)
+/**
+ * \brief
+ *        Address of Safety Mechanisms Mask 3 - Register from Bank 1 of Accelerometer.
+ */
+#define KU8_ACC_REG_S_M_MASK_3_BK_1                            ((uint8)0x16)
+
+/* Change Values of Accelerometer Registers */
+/**
+ * \brief
+ *       Accelerometer Bank Selection Register Value to set Bank 0.
+ */
+#define KU16_ACC_SET_BANK_SELECTION_BK_0                       ((uint16)0x0000)
+/**
+ * \brief
+ *       Accelerometer Bank Selection Register Value to set Bank 1.
+ */
+#define KU16_ACC_SET_BANK_SELECTION_BK_1                       ((uint16)0x0001)
+/**
+ * \brief
+ *       Accelerometer Bank Selection Register Value to set Bank 6.
+ */
+#define KU16_ACC_SET_BANK_SELECTION_BK_6                       ((uint16)0x0006)
+/**
+ * \brief
+ *       Accelerometer Sensivity Configuration Register from Bank 6
+ *       Value to set FS = 4.096g and FSlr = 4.096g.
+ */
+#define KU16_ACC_SET_SENSIVITY_CONFIG_BANK_6_ACCEL_FS_SEL      ((uint16)0x0006)
+
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Enable 0 Register from Bank 1
+ *       Value to enable used Safety Mechanisms.
+ */
+/* ------------------------------------------------ */
+/* Enable | Bit | SM number |  Name                 */
+/* ------------------------------------------------ */
+/*   1    |  14 |      SM08 | en_temp_sensecheck_sm */
+/*   1    |  13 |      SM18 | en_accel_cp_sm        */
+/*   1    |  12 |      SM17 | en_vrefshield_sm      */
+/*   1    |  11 |      SM16 | en_accel_dcst_sm      */
+/*   1    |  10 |      SM14 | en_vref_sm            */
+/*   1    |   9 |      SM13 | en_vdd_sm             */
+/*   1    |   8 |      SM12 | en_dvdd_sm            */
+/*   1    |   7 |      SM11 | en_avdd_sm            */
+/*   1    |   6 |      SM10 | en_vddmaster_sm       */
+/*   0    |   4 |      SM04 | en_gyro_quad_adc_sm   */
+/* ------------------------------------------------ */
+#define KU16_ACC_SET_S_M_ENABLE_0_BK_1_USED_S_M                ((uint16)0x7FC0)
+
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Enable 1 Register from Bank 1
+ *       Value to enable used Safety Mechanisms.
+ */
+/* ------------------------------------------------ */
+/* Enable | Bit | SM number |  Name                 */
+/* ------------------------------------------------ */
+/*   0    |  12 |      SM36 | en_gyro_dcst_sm       */
+/*   1    |   8 |      SM03 | en_drivefreq_meas_sm  */
+/*   1    |   7 |      SM34 | en_bg_sm              */
+/*   1    |   6 |      SM33 | en_regcheck_sm        */
+/*   1    |   4 |      SM29 | en_ahbbus_sm          */
+/* ------------------------------------------------ */
+#define KU16_ACC_SET_S_M_ENABLE_1_BK_1_USED_S_M                ((uint16)0x01D0)
+
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Mask 0 Register from Bank 1
+ *       Value to mask unused Safety Mechanisms.
+ */
+/* ----------------------------------------------------- */
+/* Mask | Bit | SM number | Name                         */
+/* ----------------------------------------------------- */
+/*   1  |  13 |      SM04 | msk_gyro_z_quadadc_alarm     */
+/*   1  |  12 |      SM04 | msk_gyro_y_quadadc_alarm     */
+/*   1  |  11 |      SM04 | msk_gyro_x_quadadc_alarm     */
+/*   0  |  10 |      SM03 | msk_rcosc1_freqmeas_alarm    */
+/*   0  |   9 |      SM03 | msk_sys_clk_alarm            */
+/*   1  |   8 |      SM03 | msk_gyro_z_drfreqmeas_alarm  */
+/*   1  |   7 |      SM03 | msk_gyro_y_drfreqmeas_alarm  */
+/*   1  |   6 |      SM03 | msk_gyro_x_drfreqmeas_alarm  */ 
+/* ----------------------------------------------------- */
+#define KU16_ACC_SET_S_M_MASK_0_BK_1_MASKED_S_M                ((uint16)0x39C0)
+
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Mask 1 Register from Bank 1
+ *       Value to mask unused Safety Mechanisms.
+ */
+/* ----------------------------------------------------- */
+/* Mask | Bit | SM number | Name                         */
+/* ----------------------------------------------------- */
+/*   0  |  12 |      SM14 | msk_temp_vref_alarm          */
+/*   0  |  11 |      SM14 | msk_accel_vref_alarm         */
+/*   1  |  10 |      SM14 | msk_gyro_vref_alarm          */
+/*   0  |   9 |      SM13 | msk_vdd_alarm                */
+/*   0  |   8 |      SM13 | msk_vddio_alarm              */
+/*   0  |   7 |      SM12 | msk_dvddreg_alarm            */
+/*   0  |   6 |      SM11 | msk_avddreg_alarm            */ 
+/*   0  |   5 |      SM10 | msk_vddmaster_alarm          */ 
+/*   0  |   4 |      SM08 | msk_temp12_alarm             */ 
+/*   0  |   3 |      SM08 | msk_temp_dsp_alarm           */ 
+/*   1  |   2 |      SM07 | msk_gyro_z_drclk_alarm       */ 
+/*   1  |   1 |      SM07 | msk_gyro_y_drclk_alarm       */ 
+/*   1  |   0 |      SM07 | msk_gyro_x_drclk_alarm       */ 
+/* ----------------------------------------------------- */
+#define KU16_ACC_SET_S_M_MASK_1_BK_1_MASKED_S_M                ((uint16)0x0407)
+
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Mask 3 Register from Bank 1
+ *       Value to mask unused Safety Mechanisms.
+ */
+/* ----------------------------------------------------- */
+/* Mask | Bit | SM number | Name                         */
+/* ----------------------------------------------------- */
+/*   1  |  15 |      SM36 | msk_gyro_z_dcst_alarm        */
+/*   1  |  14 |      SM36 | msk_gyro_y_dcst_alarm        */
+/*   1  |  13 |      SM36 | msk_gyro_x_dcst_alarm        */
+/*   0  |   6 |      SM03 | msk_rcosc2_freqmeas_alarm    */ 
+/*   0  |   5 |      SM34 | msk_bg_alarm                 */ 
+/*   0  |   4 |      SM33 | msk_regcheck_alarm           */ 
+/*   0  |   3 |      SM26 | msk_otp_cpy_alarm            */ 
+/*   0  |   2 |      SM30 | msk_spi_clkcnt_alarm         */ 
+/*   0  |   1 |      SM30 | msk_spi_cmddecod_alarm       */ 
+/*   0  |   0 |      SM30 | msk_spi_crc_alarm            */ 
+/* ----------------------------------------------------- */
+#define KU16_ACC_SET_S_M_MASK_3_BK_1_MASKED_S_M                ((uint16)0xE000)
+
+/**
+ * \brief
+ *       Accelerometer Mode Registers Register from Bank 0
+ *       Value to activate Register Write Lock.
+ */
+#define KU16_ACC_SET_MODE_REGISTES_BK_0_REG_WRITE_LOCK         ((uint16)0x8000)
+
+/* Masks to read useful bits from Alarm Registers */
+/**
+ * \brief
+ *      Accelerometer Alarm Register 0 from Bank 0
+ *      Value to mask first group of useful bits.
+ */
+/* ----------------------------------------------- */
+/*  ACCELEROMETER ALARM REGISTER 0 - address 0x12  */
+/* ----------------------------------------------- */
+/*  Bit | SM number | Alarm Name                   */
+/* ----------------------------------------------- */
+/*   13 |      SM17 | vrefshieldz_alarm            */
+/*   12 |      SM17 | vrefshieldxy_alarm           */ 
+/* ----------------------------------------------- */
+#define KU16_ACC_ACCEL_ALARM_0_GR1_USED_BITS_MASK              ((uint16)0x3000)
+
+/**
+ * \brief
+ *      Accelerometer Alarm Register 0 from Bank 0
+ *      Value to mask second group of useful bits.
+ */
+/* ----------------------------------------------- */
+/*  ACCELEROMETER ALARM REGISTER 0 - address 0x12  */
+/* ----------------------------------------------- */
+/*  Bit | SM number | Alarm Name                   */
+/* ----------------------------------------------- */
+/*    1 |      SM18 | accel_cp_alarm               */
+/*    0 |      SM14 | accel_vref_alarm             */ 
+/* ----------------------------------------------- */
+#define KU16_ACC_ACCEL_ALARM_0_GR2_USED_BITS_MASK              ((uint16)0x0003)
+
+/**
+ * \brief
+ *      Accelerometer Alarm Register 1 from Bank 0
+ *      Value to mask useful bits.
+ */
+/* ----------------------------------------------- */
+/*  ACCELEROMETER ALARM REGISTER 1 - address 0x13  */
+/* ----------------------------------------------- */
+/*  Bit | SM number | Alarm Name                   */
+/* ----------------------------------------------- */
+/*    2 |      SM16 | accel_x_dcst_alarm           */
+/*    1 |      SM16 | accel_y_dcst_alarm           */
+/*    0 |      SM16 | accel_z_dcst_alarm           */ 
+/* ----------------------------------------------- */
+#define KU16_ACC_ACCEL_ALARM_1_USED_BITS_MASK                  ((uint16)0x0007)
+
+/**
+ * \brief
+ *      Other Alarms Register 0 from Bank 0
+ *      Value to mask useful bits.
+ */
+/* ----------------------------------------- */
+/*  OTHER ALARMS REGISTER 0 - address 0x14   */
+/* ----------------------------------------- */
+/*  Bit | SM number | Alarm Name             */
+/* ----------------------------------------- */
+/*   13 |      SM26 | otp_crc_alarm          */
+/*   12 |      SM26 | otp_reg_alarm          */
+/*   11 |      SM34 | bg_alarm               */
+/*   10 |      SM14 | cp_vref_alarm          */
+/*    9 |      SM14 | temp_vref_alarm        */
+/*    8 |      SM13 | vdd_alarm              */
+/*    7 |      SM13 | vddio_alarm            */
+/*    6 |      SM12 | dvddreg_alarm          */
+/*    5 |      SM11 | avddreg_alarm          */ 
+/*    4 |      SM10 | vddmaster_alarm        */ 
+/*    3 |      SM08 | temp12_alarm           */ 
+/*    2 |      SM08 | temp_dsp_alarm         */ 
+/*    1 |      SM03 | rcosc2_freqmeas_alarm  */ 
+/*    0 |      SM03 | rcosc1_freqmeas_alarm  */ 
+/* ----------------------------------------- */
+#define KU16_ACC_OTHER_ALARMS_0_USED_BITS_MASK                 ((uint16)0x3fff)
+
+/**
+ * \brief
+ *      Other Alarms Register 1 from Bank 0
+ *      Value to mask first group of useful bits.
+ */
+/* ---------------------------------------- */
+/*  OTHER ALARMS REGISTER 1 - address 0x15  */
+/* ---------------------------------------- */
+/*  Bit | SM number | Alarm Name            */
+/* ---------------------------------------- */
+/*   13 |      SM03 | sys_clk_alarm         */
+/*   12 |      SM26 | otp_cpy_alarm         */
+/* ---------------------------------------- */
+#define KU16_ACC_OTHER_ALARMS_1_GR1_USED_BITS_MASK             ((uint16)0x3000)
+
+/**
+ * \brief
+ *      Other Alarms Register 1 from Bank 0
+ *      Value to mask second group of useful bits.
+ */
+/* ---------------------------------------- */
+/*  OTHER ALARMS REGISTER 1 - address 0x15  */
+/* ---------------------------------------- */
+/*  Bit | SM number | Alarm Name            */
+/* ---------------------------------------- */
+/*    9 |      SM22 | reg_eccdone_warn      */ 
+/*    8 |      SM22 | reg_eccerr_alarm      */ 
+/*    7 |      SM22 | ahb_eccdone_warn      */ 
+/*    6 |      SM22 | ahb_eccerr_alarm      */ 
+/*    5 |      SM33 | regcheck_alarm        */ 
+/*    4 |      SM30 | spi_clkcnt_alarm      */ 
+/*    3 |      SM30 | spi_cmddecod_alarm    */ 
+/*    2 |      SM30 | spi_crc_alarm         */ 
+/*    1 |      SM29 | ahb_bus_alarm         */ 
+/* ---------------------------------------- */
+#define KU16_ACC_OTHER_ALARMS_1_GR2_USED_BITS_MASK             ((uint16)0x03fe)
+
+/* Masks to Change Values of Accelerometer Registers */
+/**
+ * \brief
+ *       Accelerometer Status Summary and X Axis Filter Settings Register from Bank 0
+ *       Mask to change X Axis Filter Settings.
+ */
+#define KU16_ACC_REG_X_AXIS_FILTER_SET_BK_0_MASK               ((uint16)0xC000)
+/**
+ * \brief
+ *       Accelerometer Accelerometer and Gyroscope Y and Z Axis Filter Settings
+ *       Register from Bank 0 - Mask to change Accelerometer and Gyroscope Y and Z Axis Filter.
+ */
+#define KU16_ACC_REG_Y_Z_AXIS_FILTER_SET_BK_0_MASK             ((uint16)0xF000)
+/**
+ * \brief
+ *       Accelerometer Sensivity Configuration Register from Bank 6
+ *       Mask to Accelerometer sensivity.
+ */
+#define KU16_ACC_REG_SENSIVITY_CONFIG_BK_6_MASK_ACCEL_FS_SEL   ((uint16)0xFFF8)
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Enable 0 Register from Bank 1.
+ *       Mask to change just RW bits.
+ */
+#define KU16_ACC_REG_S_M_ENABLE_0_MASK_RW_BITS                 ((uint16)0x802F)
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Enable 1 Register from Bank 1.
+ *       Mask to change just RW bits.
+ */
+#define KU16_ACC_REG_S_M_ENABLE_1_MASK_RW_BITS                 ((uint16)0xEE2F)
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Mask 0 Register from Bank 1.
+ *       Mask to change just RW bits.
+ */
+#define KU16_ACC_REG_S_M_MASK_0_MASK_RW_BITS                   ((uint16)0xC03F)
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Mask 1 Register from Bank 1.
+ *       Mask to change just RW bits.
+ */
+#define KU16_ACC_REG_S_M_MASK_1_MASK_RW_BITS                   ((uint16)0xE000)
+/**
+ * \brief
+ *       Accelerometer Safety Mechanisms Mask 3 Register from Bank 1.
+ *       Mask to change just RW bits.
+ */
+#define KU16_ACC_REG_S_M_MASK_3_MASK_RW_BITS                   ((uint16)0x1F80)
+/**
+ * \brief
+ *       Accelerometer Mode Registers Register from Bank 0
+ *       Mask to set Register Write Lock.
+ */
+#define KU16_ACC_REG_MODE_REGISTES_BK_0_MASK_REG_WRITE_LOCK    ((uint16)0x7FFF)
+
+/******************************************************************************
+DECLARATION OF TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF FUNCTION-LIKE MACROS
+******************************************************************************/
+
+#ifdef __cplusplus
+           }
+#endif
+/******************************************************************************
+End Of File
+*****************************************************************************/
+
+#endif /* ACC_CFG_H_ */

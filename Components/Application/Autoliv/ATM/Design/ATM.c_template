@@ -1,0 +1,725 @@
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.1.1.9 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/ATM/Design/project.pj $
+*/
+/*!****************************************************************************
+Overview of the component :
+   The AutoTests manager (ATM) function schedules autotests and manages
+   the reported failures. An autotest is defined as a procedure that checks
+   functions and returns status.
+   The ATM mainly calls autotests implemented in hardware management modules.
+   It is itself timed by the Scheduler or OS.
+   Autotests list also includes RAM and ROM test.
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Rte_ATM.h"
+#include "ATM_public.h"
+#include "ATM_cfg_private.h"
+#include "ATM_private.h"
+#include "Nvp_Generated_NvmDefault.h"
+#include "EIM.h"
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+/**
+ * \brief
+ *       This array contains the status of each test (RAM)
+ * \initialization 
+ *       KU8_ZERO
+ * \range
+ *       0..KU8_MAX
+ */
+LOCAL uint8 atm_au8AtStatuses[ATM_KU8_NB_OF_AUTOTEST];
+
+/**
+ * \brief
+ *       This variable represents the cyclic task counter.
+ * \initialization 
+ *       ZERO.
+ * \range
+ *       0..4.
+ */
+LOCAL uint8 atm_u8CurrentTask = KU8_ZERO;
+
+/**
+ * \brief
+ *       Indexes the "castStartupList" array during the start-up test sequence
+ *       over several execution of the main function. This array is browsed once,
+ *       after what main function will follow the cyclic list of test.
+ * \initialization 
+ *       KU8_ZERO.
+ * \range
+ *       0..KU8_MAX.
+ */
+LOCAL uint8 atm_u8StartupTestIndex = KU8_ZERO;
+
+/**
+ * \brief
+ *       Loop indexes the "castCyclicList" array over several execution of the main function,
+ *       only after the completion of the start-up test sequence.
+ * \initialization 
+ *       KU8_ZERO.
+ * \range
+ *       0..KU8_MAX.
+ */
+LOCAL uint8 atm_u8CyclicTestIndex = KU8_ZERO;
+
+/**
+ * \brief
+ *       This variable is used only during the start-up sequence
+ *       to count the period between execution step of tests
+ *       (if executed during several steps).
+ * \initialization 
+ *       KU8_ZERO.
+ * \range
+ *       0..KU16_MAX.
+ */
+LOCAL uint16 atm_u16StartupPeriodCnt = KU16_ZERO;
+
+/**
+ * \brief
+ *      This variable represents the cycle decade counter.
+ * \initialization 
+ *      KU8_ZERO.
+ * \range
+ *      0..59000.
+ */
+LOCAL uint16 atm_u16CurrentDecade = KU16_ZERO;
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+* \brief
+*        Update the associated event status accordingly with Autotest result.
+* \inputparam
+*        Name: ku8AutotestID;
+*        Type: const uint8;
+*        Description: The Id of autotest we want to set the status of;;
+*        Range: 0..KU8_MAX;
+*        Name: Dem_EventStatusType(uint8);
+*        Type: uint16;
+*        Description: The status to be set to the autotest;
+*        Range: 
+*           DEM_DEBOUNCE_STATUS_FREEZE
+*           DEM_DEBOUNCE_STATUS_RESET
+*           DEM_EVENT_STATUS_PASSED
+*           DEM_EVENT_STATUS_FAILED
+*           DEM_EVENT_STATUS_PREPASSED
+*           DEM_EVENT_STATUS_PREFAILED;
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM module (local function).
+* \dynamicaspectdescription
+*        Called in atm_executeAutoTest function.
+* \ddesignrequirement
+*        DSG_atm_SetDemEvent.
+* \archrequirement
+*        ARCH_SW_BswMIf_ptrpAtmServicesAsrOs_ATM_runMainFunction
+**/
+LOCAL inline void atm_SetDemEvent(const uint8 ku8AutotestID, Dem_EventStatusType u8EventStatus)
+{
+   switch (Autotest ID)
+   {	
+   case ADC out of order autotest:
+     Set the event status for ADC out of order autotest;
+      break;
+
+   case PFLASH memory corruption autotest:
+      Set the event status for PFLASH memory corruption autotest;
+      break;
+
+   case External watchdog out of order autotest:
+      Set the event status for external watchdog out of order autotest;
+      break;
+
+   case NVM not programmed autotest:
+      Set the event status for NVM not programmed autotest;
+      break;
+
+   case NVM memory corruption autotest:
+      Set the event status for NVM memory corruption autotest;
+      break;
+
+   case RAM memory corruption autotest:
+      Set the event status for RAM memory corruption autotest;
+      break;
+
+   case Reset cause autotest:
+      Set the event status for reset cause autotest;
+      break;
+
+   case ADC calibration autotest:
+       Set the event status for ADC calibration autotest;
+      break;
+
+   case ECU over temperature autotest:
+      Set the event status for ECU over temperature autotest;
+      break;
+
+   case Power supply undervoltage autotest:
+      Set the event status for power supply undervoltage autotest;
+      break;
+
+   case Power supply overvoltage autotest:
+       Set the event status for power supply overvoltage autotest;
+      break;
+
+   case Actuator stuck autotest:
+       Set the event status for actuator stuck autotest;
+      break;
+
+   case MCU self-test autotest:
+      Set the event status for MCU self-test autotest;
+      break;
+
+   case Actuator short to VBAT autotest:
+      Set the event status for actuator short to VBAT autotest;
+      break;
+
+   case Actuator short to GND autotest:
+      Set the event status for actuator short to GND autotest;
+      break;
+
+   case Actuator open circuit autotest:
+      Set the event status for actuator open circuit autotest;
+      break;
+
+   case ACC check alarm autotest:
+      Set the event status for ACC check alarm autotest;
+      break;
+
+   case SBC check status info autotest:
+      Set the event status for SBC check status info autotest;
+      break;
+
+   case Solenoid overvoltage autotest:
+      Set the event status for solenoid overvoltage autotest;
+      break;
+
+   case Power stage fault autotest:
+      Set the event status for power stage fault autotest;
+      break;
+
+   default:
+      Nothing to do;
+      break;
+   } /* End switch */
+}
+
+/**
+* \brief
+*        Function used to checks if an autotest execution is compliant
+*        with the ECU mode (according to its parameters), 
+*        executes it (if compliant), or ignore it (if not compliant), 
+*        update the AEC status according to the test result (if executed).
+* \inputparam
+*        Name: ku8AutotestID;
+*        Type: const uint8;
+*        Description: The Id of autotest to execute;
+*        Range: 0..KU8_MAX;
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM module (local function).
+* \dynamicaspectdescription
+*        Called in atm_PlayOneShotTests and atm_PlayCyclicTests functions.
+* \ddesignrequirement
+*        DSG_atm_executeAutoTest.
+* \archrequirement
+*        ARCH_SW_BswMIf_ptrpAtmServicesAsrOs_ATM_runMainFunction
+**/
+LOCAL inline void atm_executeAutoTest(const uint8 ku8AutotestID)
+{
+
+   if(If autotest is configured)
+   {
+      Check mode status for autotest;
+   }
+   else
+   {
+      Set Mode status to false;
+   }
+
+   Status is initialized to NOT DECIDED;
+   if(If returned Mode status is false)
+   {
+      Execute the Auto-test;
+
+      /* Manage the test result */
+      switch (Returned Auto Test Status)
+      {
+         case ATM TEST OK:
+         Store the result;
+         Update the associated Event status accordingly;
+        
+         break;
+
+         case ATM TEST NOT OK:
+          Store the result;
+          Update the associated Event status accordingly;
+         break;
+
+         case ATM TEST NOT DECIDED:
+         case ATM TEST BAD CONDITIONS:
+         Result not determined: Do not notify ERH;
+         Store the result;
+         break;
+
+         default:
+            This is an auto-test fault (returned invalid result) : do nothing;
+         break;
+      } /* End switch */
+   }
+}
+
+/**
+* \brief
+*        Function used to check if an autotest is enabled.
+* \inputparam
+*        Name: ku8AutotestID;
+*        Type: const uint8;
+*        Description: The Id of autotest we want to check;
+*        Range: 0..KU8_MAX;
+* \return
+*        If autotest is enabled, then the function return B_TRUE, else then the function return B_FALSE.
+* \dynamicaspectcaller
+*        ATM module (local function).
+* \dynamicaspectdescription
+*        Called in atm_PlayOneShotTests, atm_PlayCyclicTests functions.
+* \ddesignrequirement
+*        DSG_atm_isAutoTestEnabled.
+* \archrequirement
+*        ARCH_SW_BswMIf_ptrpAtmServicesAsrOs_ATM_runMainFunction
+**/
+LOCAL inline boolean atm_isAutoTestEnabled(const uint8 ku8AutotestID)
+{
+
+   /* Check if an auto test callback is defined */
+   if (If an auto test callback is defined)
+   {
+      /* Check if the auto test is activated */
+      if (If the auto test is activated)
+      {
+         The test is enabled;
+      }
+      else
+      {
+          Auto test is considered as successful
+          in order to avoid to disturb the ECU functioning */       
+          Update the associated Event status accordingly */
+		  The test is disabled by the configuration; 
+      }
+   }
+   else
+   {
+      The test is disabled since the call back function is not defined;
+      
+   }
+   Return Auto Test Status;
+}
+
+/**
+* \brief
+*        Function used to run one shot tests from startup tests sequential list.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM module (local function).
+* \dynamicaspectdescription
+*        Called in ATM_runMainFunction function.
+* \ddesignrequirement
+*        DSG_atm_PlayOneShotTests.
+* \archrequirement
+*        ARCH_SW_BswMIf_ptrpAtmServicesAsrOs_ATM_runMainFunction
+**/
+LOCAL inline void atm_PlayOneShotTests(void)
+{
+  
+   while (If start-up test sequence is in progress, go over the tests which are disabled)
+   {
+      Go over this disabled test;
+      
+   }
+
+   if (If start-up test sequence is in progress)
+   {
+      /* The startup test sequence is still being in progress */
+      if (If startup test sequence is still being in progres)
+      {
+         Get the attributes of current startup sequence element;
+
+         Execute the auto test function;
+        
+
+         /* According to the result of the auto test */
+         switch (Autotest result)
+         {
+            case ATM TEST OK:
+            Go to next test only when successful result has been returned;
+            Do not respect any delay before the first step of the next autotest;
+            break;
+
+            case ATM TEST NOK:
+               if (If test is ONE SHOT ABORT type)
+               {
+                  Definitively freeze the start-up test sequence; 
+               }
+               else if (If test is ONE_SHOT_DECIDED or ONE_SHOT type)
+               {
+                  Test is played only once so Go to next test;
+                  Do not respect any delay before the first step of the next autotest;
+                  
+               }
+               else /* ONE_SHOT_RETRY */
+               {
+                  Retry this test after failure + configured inter-step delay;   
+               }
+            break;
+
+            case ATM TEST BAD CONDITIONS:
+               if (If test is ONE_SHOT_DECIDED or ONE_SHOT type)
+               {
+                  Test is not retried any more so Go to next test;
+                  Do not respect any delay before the first step of the next autotest;
+
+               }
+               else /* ONE_SHOT_RETRY or ONE_SHORT_ABORT */
+               {
+                  Retry this test after failure + configured inter-step delay;
+               }
+            break;
+
+            default:  /* not decided */
+               if (If not decided)
+               {
+                  Test is played only once so Go to next test;
+                  Do not respect any delay before the first step of the next autotest;            
+               }
+               else
+               {
+				  Reload the period counter (between steps of the same test);
+               }
+            break;
+         }
+      }
+      else if (If a ONE SHOT test in the startup test sequence has resulted in a failure)
+      {
+         Do nothing as the start-up test sequence is
+         definitively frozen since a "one shot" test result is NOK;
+      }
+      else
+      {
+         Count down the delay before the current test next step;
+      }
+   }
+   else
+   {
+      Do nothing as the startup test sequence is no more in progress;
+   }
+
+   /* Synchronization test: Wait for last task time slot to allow the cyclic execution of tests */
+   if (If the startup test sequence has reached its end)
+   {
+      Allow the cyclic execution of tests for this function next execution;
+      Initialize index now used to browse the running cyclic task;
+   }
+   else
+   {
+      Do nothing as the startup sequence is not yet finished;
+   }
+}
+
+/**
+* \brief
+*        Function used to run cyclic tests.
+*        Running Auto test phase:
+*        Execute auto test only if enabled
+*        If status = OK, then go to next startup auto test at next ATM Main time slot
+*        For critical auto tests:
+*        If status = NOK and if ONE_SHOT_ABORT, then startup phase is frozen
+*        If status = NOK and if ONE_SHOT_RETRY, then retry auto test execution
+*        until OK at next ATM Main time slot
+*        For NOT critical auto tests:
+*        If status = NOK and if ONE_SHOT, then go to next startup auto test
+*                             at next ATM Main time slot.
+* \inputparam
+*        Name: kpstCyclicList;
+*        Type: const ATM_stCyclicListEltType *const (struct[uint16, uint8, uint8]);
+*        Description: Pointer to the head of the cyclic list constant to play;
+*        Range: NA.;
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        ATM module (local function).
+* \dynamicaspectdescription
+*        Called in ATM_runMainFunction function.
+* \ddesignrequirement
+*        DSG_atm_PlayCyclicTests.
+* \archrequirement
+*        ARCH_SW_BswMIf_ptrpAtmServicesAsrOs_ATM_runMainFunction
+**/
+LOCAL void atm_PlayCyclicTests(const ATM_stCyclicListEltType * const kpkstCyclicList)
+{
+   /* ID to execute in the current state */
+   uint8 u8AutotestID;
+
+   /* After the start-up sequence: run only periodic tests according their time slot allocation: */
+   /* Parse all tests, and executed the enabled ones which config match with current time slot */
+   while (Parse all tests, and execute the enabled ones which config match with current time slot)
+   {
+      /* Period and offset shall match to the current period counter */
+      if (If period and offset  match to the current period counter)
+      {
+          Get the attributes of current startup sequence element;
+         
+         /* Test if the execution is enabled */
+         if (If the execution is enabled)
+         {
+            Execute autotest;
+         }
+         else
+         {
+            Do nothing as the auto test is disabled;
+         }
+      }
+      else
+      {
+         
+         If is not the moment to run this auto test => Do nothing;
+      }
+	  Increment autotest index;
+      
+   }
+   /* Prepare indexes for next main function execution */
+   if (Prepare indexes for next main function execution)
+   {
+      Restart the whole list;
+      Consider next decade number;
+   }
+   else
+   {
+      Continue with the following task sub-list;
+   }
+}
+
+/**
+* \brief
+*        The function ATM_Init is the memory initialization function for the ATM module.
+*        The initialization value of the status of each auto test is  KU8_ATM_TEST_NOT_DECIDED.
+*        The state and cycle counters of the state machine are initialized to zero.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        BswMIf module.
+* \dynamicaspectdescription
+*        Called in BswM_OnStartComEffective function via direct call.
+* \constrains
+*        ATM_Init shall be called once before execution of ATM_MainFunction.
+*        ATM_MainFunction doesn't check if internal data are initialized.
+* \ddesignrequirement
+*        DSG_ATM_Init.
+* \archrequirement
+*        ARCH_SW_Atm_ptrpAtmServicesBswMIf_ATM_runInit
+**/
+EXPORTED void ATM_Init(void)
+{
+
+   
+   /* Initialization of all the tests statuses */
+   for (Go thru the all the tests statuses and initialize them)
+   {
+      Set autotest status to NOT DECIDED;
+   }
+   
+
+   Initialize indexes to browse lists of tests;
+   Initialize timer counters */
+
+}
+
+/*==============================================*/
+/*               ATM Scheduler                  */
+/*==============================================*/
+/**
+* \brief
+*        The function ATM_MainFunction is the main entry point executed periodically by the Scheduler or OS.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        BswMIf module.
+* \dynamicaspectdescription
+*        Called in OsTask_Alv_Autotests Rte Task via direct call.
+* \constrains
+*        ATM_AC_AutoTestManager_ATM_runInit shall be called once before this function
+* \ddesignrequirement
+*        DSG_ATM_runMainFunction.
+* \archrequirement
+*        ARCH_SW_BswMIf_ptrpAtmServicesAsrOs_ATM_runMainFunction
+*        ARCH_SW_pclInjectError
+*        ARCH_SW_ATM_pclModeManagement
+**/
+EXPORTED void ATM_runMainFunction(void)
+{
+   /* Process separately the startup auto-tests sequence,
+   and periodic test execution applicable only after the startup sequence */
+   if (If the startup autotests is still ongoing)
+   {
+      /* During ATM STARTUP phase:
+      * Startup auto tests are sequentially executed one after one,
+      * in the order defined by the startup list castStartupList,
+      * until the KU8_ATM_NB_OF_STARTUP_AUTO_TESTS.
+      * If a critical startup auto test is not successful,
+      * the ATM STARTUP phase is suspended
+      * => if ONE_SHOT_RETRY: this auto test is launched until successful result
+      * => if ONE_SHOT_ABORT: this auto test is no more launched
+      * Not critical (ONE_SHOT configured) auto test
+      * do never freeze the ATM STARTUP phase, even if failed result. */
+      Execute one shot tests;
+      Execute cyclic tests applicable in start-up phase in parallel;
+   }
+   else
+   {
+      Run cyclic tests which are applicable only if the Startup phase is finished;
+   }
+
+   /* next time slot becomes current one (Loop cycle counter)
+    * Note: Even if the start-up sequence do not use the 'atm_u8CurrentTask' variable, it is updated
+    *       all the time from the start-up to remain synchronized with the schedule table. */
+	Update atm_u8CurrentTask variable from the start-up to remain synchronized with the schedule table;
+}
+
+/**
+* \brief
+*     The function ATM_runGetTestResult allows any module to get the test result of any auto test, 
+*     identified by Auto test ID to get the last test result executed by ATM independently of AEC status.
+* \inputparam
+*     Name: u8AutoTestId;
+*     Type: u8AutoTestIdType (uint8);
+*     Description: The ID of Autotest;
+*     Range: 0..KU8_MAX;
+* \outputparam
+*     Name: u8TestResult;
+*     Type: u8TestResultType * (uint8);
+*     Description: The reported status of the Autotest;
+*     Range: 
+*        KU8_ATM_TEST_OK
+*        KU8_ATM_TEST_NOK
+*        KU8_ATM_TEST_NOT_DECIDED
+*        KU8_ATM_TEST_NON_EXISTENT
+*        KU8_ATM_TEST_BAD_CONDITIONS;
+* \return
+*     This function has no return.
+* \dynamicaspectcaller
+*     IoHwAb module and locally.
+* \dynamicaspectdescription
+*     Called in IoHwAb module in functions IoHwAb_CheckEcuOverTemperatureAutotest, IoHwAb_CheckPowerSupplyOvervoltageAutotest 
+*     and IoHwAb_CheckPowerSupplyUndervoltageAutotest through Rte_Call_pclAutotestServices_GetTestResult 
+*     and locally in function ATM_runGetCriticalAutoTestsReachedFlag.
+* \ddesignrequirement
+*     DSG_ATM_runGetTestResult
+* \archrequirement
+*     ARCH_SW_pseAutotestServices_GetTestResult
+**/
+EXPORTED void ATM_runGetTestResult (u8AutoTestIdType u8AutoTestId, u8TestResultType * u8TestResult)
+{
+   /* Check ID exists */
+   if (If ID exists)
+   {
+      This is a fault case : Nonexistent ID passed as parameter;
+   }
+   else
+   {
+      Return the last test result (OK or NOK), or NOT_DECIDED if
+      no result has been returned yet by the autotest;
+      
+   }
+}
+
+/**
+* \brief
+*     Function used to get the auto test reached flag.
+* \outputparam
+*     Name: pb8CriticalAutoTestsFlag;
+*     Type: boolean *;
+*     Description: The value of test reached flag;
+*     Range: 0..1;
+* \return
+*     This function has no return.
+* \dynamicaspectcaller
+*     FSM module.
+* \dynamicaspectdescription
+*     Called in function fsm_UpdateModeStatus_Init through Rte_Call_pclAutotestServices_GetCriticalAutoTestsReachedFlag interface.
+* \ddesignrequirement
+*     DSG_ATM_runGetCriticalAutoTestsReachedFlag
+* \archrequirement
+*     ARCH_SW_pseAutotestServices_GetCriticalAutoTestsReachedFlag
+**/
+EXPORTED void ATM_runGetCriticalAutoTestsReachedFlag (boolean * pbCriticalAutoTestsFlag)
+{
+   
+    Get the status of the last critical test;
+   /* last critical test is it run ? */
+   if ( If last critical test is it run)
+   {
+     return true;
+   }
+   else
+   {
+     return false;
+   }
+}
+
+/* end of file */

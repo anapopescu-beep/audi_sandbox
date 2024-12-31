@@ -1,0 +1,28 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_EcuMIf_ptrpEcuMIfServicesAdcIf_EcuM_DriverInitListOne
+ARCH_SW_EcuMIf_ptrpEcuMIfServicesAdcIf_EcuM_DriverInitListOne: - The AdcIf_Calib runnable shall be called in the EcuM_DriverInitListOne runnable in order to initialize AdcIf module
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_EcuMIf_ptrpEcuMIfServicesAdcIf_EcuM_DriverInitListOne
+
+	Step 2: Set a breakpoint in function EcuM_DriverInitListOne in order to go in EcuM_DefaultInitListOne function
+
+	Step 3: Set a breakpoint in function EcuM_DefaultInitListOne in order to call AdcIf_Calib runnable
+
+	Step 4: Set a breakpoint in function AdcIf_Calib in order to check if runnable was called in function EcuM_DefaultInitListOne
+
+Postcondition
+
+	Step 5: Return ECU to default values

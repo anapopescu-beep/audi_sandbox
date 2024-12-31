@@ -1,0 +1,5748 @@
+/*@!Encoding:1252*/
+includes
+{
+  #pragma library("..\Includes\AER_SA.dll")
+  #include "..\Includes\Diag_eCS_FD.cin"
+  #include "..\Includes\Diag_OBDC_SSN_eCS.cin"
+}
+
+variables
+{
+/***************************************************************
+/ eCS PANEL  
+****************************************************************/
+  diagRequest eCS.HW_Version_Write Req_HWVersion_Write;
+  diagResponse eCS.HW_Version_Write Resp_HWVersion_Write;
+  diagRequest eCS.HW_Version_Read Req_HWVersion_Read;
+  diagResponse eCS.HW_Version_Read Resp_HWVersion_Read;
+  
+  diagRequest eCS.eCS_Sensitivity_Optimization_Write Req_EcsSensitivityOpt_Write;
+  diagResponse eCS.eCS_Sensitivity_Optimization_Write Resp_EcsSensitivityOpt_Write;
+  diagRequest eCS.eCS_Sensitivity_Optimization_Read Req_EcsSensitivityOpt_Read;
+  diagResponse eCS.eCS_Sensitivity_Optimization_Read Resp_EcsSensitivityOpt_Read;
+  
+  diagRequest eCS.eCS_Sensitivity_LuT_Write Req_EcsSensitivityLut_Write;
+  diagResponse eCS.eCS_Sensitivity_LuT_Write Resp_EcsSensitivityLut_Write;
+  diagRequest eCS.eCS_Sensitivity_LuT_Read Req_EcsSensitivityLut_Read;
+  diagResponse eCS.eCS_Sensitivity_LuT_Read Resp_EcsSensitivityLut_Read;
+  
+  diagRequest eCS.eCS_Algo_Output_Delay_Write Req_EcsAlgoOutputDelay_Write;
+  diagResponse eCS.eCS_Algo_Output_Delay_Write Resp_EcsAlgoOutputDelay_Write;
+  diagRequest eCS.eCS_Algo_Output_Delay_Read Req_EcsAlgoOutputDelay_Read;
+  diagResponse eCS.eCS_Algo_Output_Delay_Read Resp_EcsAlgoOutputDelay_Read;
+  
+  diagRequest eCS.eCS_PI_Parameters_Write Req_EcsPiParam_Write;
+  diagResponse eCS.eCS_PI_Parameters_Write Resp_EcsPiParam_Write;
+  diagRequest eCS.eCS_PI_Parameters_Read Req_EcsPiParam_Read;
+  diagResponse eCS.eCS_PI_Parameters_Read Resp_EcsPiParam_Read;
+  
+  diagRequest eCS.eCS_Acc_Low_Pass_Write Req_EcsAccLowPass_Write;
+  diagResponse eCS.eCS_Acc_Low_Pass_Write Resp_EcsAccLowPass_Write;
+  diagRequest eCS.eCS_Acc_Low_Pass_Read Req_EcsAccLowPass_Read;
+  diagResponse eCS.eCS_Acc_Low_Pass_Read Resp_EcsAccLowPass_Read;
+  
+  diagRequest eCS.eCS_Steps_Write Req_EcsSteps_Write;
+  diagResponse eCS.eCS_Steps_Write Resp_EcsSteps_Write;
+  diagRequest eCS.eCS_Steps_Read Req_EcsSteps_Read;
+  diagResponse eCS.eCS_Steps_Read Resp_EcsSteps_Read;
+  
+  diagRequest eCS.AccCalibStart_Start Req_AccCalibStart;
+  diagResponse eCS.AccCalibStart_Start Resp_AccCalibStart;
+  
+  diagRequest eCS.eCS_Acc_Offsets_Write Req_EcsAccOffsets_Write;
+  diagResponse eCS.eCS_Acc_Offsets_Write Resp_EcsAccOffsets_Write;
+  diagRequest eCS.eCS_Acc_Offsets_Read Req_EcsAccOffsets_Read;
+  diagResponse eCS.eCS_Acc_Offsets_Read Resp_EcsAccOffsets_Read;
+  
+  diagRequest eCS.eCS_Profiles_Write Req_EcsProfiles_Write;
+  diagResponse eCS.eCS_Profiles_Write  Resp_EcsProfiles_Write;
+  diagRequest eCS.eCS_Profiles_Read Req_EcsProfiles_Read;
+  diagResponse eCS.eCS_Profiles_Read Resp_EcsProfiles_Read;
+  
+  diagRequest eCS.eCS_Parameters_Write Req_EcsParameters_Write;
+  diagResponse eCS.eCS_Parameters_Write  Resp_EcsParameters_Write;
+  diagRequest eCS.eCS_Parameters_Read Req_EcsParameters_Read;
+  diagResponse eCS.eCS_Parameters_Read Resp_EcsParameters_Read;
+  
+  diagRequest eCS.eCS_Variant_Write Req_EcsVariant_Write;
+  diagResponse eCS.eCS_Variant_Write Resp_EcsVariant_Write;
+  diagRequest eCS.eCS_Variant_Read Req_EcsVariant_Read;
+  diagResponse eCS.eCS_Variant_Read Resp_EcsVariant_Read;
+  
+  diagRequest eCS.ECU_Temperature_Read Req_MCUTemperature_Read;
+  diagResponse eCS.ECU_Temperature_Read Resp_MCUTemperature_Read;
+  
+  diagRequest eCS.Last_Warm_Reset_Parameters_Read Req_LastWarmResetParam_Read;
+  diagResponse eCS.Last_Warm_Reset_Parameters_Read Resp_LastWarmResetParam_Read;
+  
+  diagRequest eCS.Battery_Measurement_Read Req_BatteryMeasure_Read;
+  diagResponse eCS.Battery_Measurement_Read Resp_BatteryMeasure_Read;
+  
+  diagRequest eCS.Reset_Cause_Read Req_ResetCause_Read;
+  diagResponse eCS.Reset_Cause_Read Resp_ResetCause_Read;
+  
+  diagRequest eCS.ECC_Occurence_Number_Read Req_EccOccurenceNb_Read;
+  diagResponse eCS.ECC_Occurence_Number_Read Resp_EccOccurenceNb_Read;
+  
+  diagRequest eCS.All_Event_Statuses_Read Req_AllEventStatuses_Read;
+  diagResponse eCS.All_Event_Statuses_Read Resp_AllEventStatuses_Read;
+  
+  diagRequest eCS.ECU_Manufacturing_Date_Read Req_ECUManufacturingDate_Read;
+  diagResponse eCS.ECU_Manufacturing_Date_Read Resp_ECUManufacturingDate_Read;
+  
+  diagRequest eCS.System_Time_Read Req_SWSystemTimeRead_Read;
+  diagResponse eCS.System_Time_Read Resp_SWSystemTimeRead_Read;
+  
+  diagRequest eCS.AEE_Traceability_Number_Read Req_AEETraceabilityNumber_Read;
+  diagResponse eCS.AEE_Traceability_Number_Read Resp_AEETraceabilityNumber_Read;
+  
+  diagRequest eCS.Measurement_Frames_Configuration_Write Req_MeasurementFramesConf_Write;
+  diagResponse eCS.Measurement_Frames_Configuration_Write Resp_MeasurementFramesConf_Write;
+  diagRequest eCS.Measurement_Frames_Configuration_Read Req_MeasurementFramesConf_Read;
+  diagResponse eCS.Measurement_Frames_Configuration_Read Resp_MeasurementFramesConf_Read;
+  
+  diagRequest eCS.SW_Version_Read Req_SWVersion_Read;
+  diagResponse eCS.SW_Version_Read Resp_SWVersion_Read;
+
+  diagRequest eCS.EcuTempCalibration_Start Req_EcuTempCalibration_Start;
+  diagResponse eCS.EcuTempCalibration_Start Resp_EcuTempCalibration_Start;
+  
+ 
+  
+  
+  
+/***************************************************************
+/ DIAG PANEL  
+****************************************************************/
+  
+  diagRequest eCS.DefaultSession_Start Req_DefaultSession_Start;
+  diagRequest eCS.ProgrammingSession_Start Req_ProgrammingSession_Start;
+  diagRequest eCS.ExtendedDiagnosticSession_Start Req_ExtendedDiagnosticSession_Start;
+  diagRequest eCS.Supplier_Diagnostic_Session_Start Req_Supplier_Diagnostic_Session_Start;
+  
+  diagRequest eCS.Supplier_RequestSeed_Request Req_Supplier_Application_Request;
+  diagResponse eCS.Supplier_RequestSeed_Request Resp_Supplier_Application_Request;
+  diagRequest eCS.Supplier_SendKey_Send Req_Supplier_Application_Send;
+  diagResponse eCS.Supplier_SendKey_Send Resp_Supplier_Application_Send;
+  
+  diagRequest eCS.Programming_RequestSeed_Request Req_Programming_Bootloader_Request;
+  diagResponse eCS.Programming_RequestSeed_Request Resp_Programming_Bootloader_Request;
+  diagRequest eCS.Programming_SendKey_Send Req_Programming_Bootloader_Send;
+  diagResponse eCS.Programming_SendKey_Send Resp_Programming_Bootloader_Send;
+  
+  diagRequest eCS.LockSolenoid_Start Req_LockSolenoid_Start;
+  diagRequest eCS.LockSolenoid_Stop Req_LockSolenoid_Stop; // Unlock Solenoid
+  diagRequest eCS.EcuUnlock_Start Req_EcuUnlock_Start;
+  diagRequest eCS.EcuUnlock_Stop Req_EcuUnlock_Stop; // Lock ECU
+  diagRequest eCS.EcuUnlock_RequestResults Req_EcuUnlock_RequestResults;
+  
+  diagRequest eCS.Hard_Reset_Reset Req_Hard_Reset;
+  diagRequest eCS.Soft_Reset_Reset Req_Soft_Reset;
+  
+  diagRequest eCS.FaultMemory_Clear Req_FaultMemory_Clear; // Clear DTC 14 FF FF FF
+  
+  diagRequest eCS.TesterPresent_Send Req_TesterPresent_Send;
+  
+  diagRequest eCS.ControlDTCSetting_Off DTC_Control_OFF;
+  diagRequest eCS.ControlDTCSetting_On DTC_Control_ON;
+  
+  diagRequest eCS.EnableTxEnableRx_Control EnableTX_EnableRX;
+  diagRequest eCS.DisableTxEnableRx_Control DisableTX_EnableRX;
+  
+  msTimer TSentTesterPresent;
+  
+/****************************************************************/
+  
+  char buffer[128];
+  char buffer2[128];
+  char buffer3[128];
+ 
+  int index;
+  long value;
+  long value2;
+  long value3;
+  
+  message Airbag_01 msg_airbag_01;
+  message Airbag_02 msg_airbag_02;
+  message Airbag_eCS_01 msg_airbag_eCS_01;
+  message eCS_01 msg_eCS_01;
+  
+  double oldTimeStamp_Airbag_eCS_01 = 0;
+  double oldTimeStamp_Airbag_01 = 0;
+  double oldTimeStamp_Airbag_02 = 0;
+  double oldTimeStamp_eCS_01 = 0;
+  double oldTimeStamp_devKit = 0;
+  double oldTimeStamp_MF = 0;
+  
+  msTimer timeoutFrame;
+  
+  msTimer S1_UnlockTimeout;
+  msTimer S2_UnlockTimeout;
+  msTimer S3_UnlockTimeout;
+  msTimer S4_UnlockTimeout;
+  msTimer S5_UnlockTimeout;
+  msTimer S6_UnlockTimeout;
+  
+  int Airbag_01_counterOldValue = 0;
+  int Airbag_01_counter = 0;
+  int Airbag_02_counterOldValue = 0;
+  int Airbag_02_counter = 0;
+  int Airbag_eCS_01_counterOldValue = 0;
+  int Airbag_eCS_01_counter = 0;
+  int eCS_01_counterOldValue = 0;
+  int eCS_01_counter = 0;
+  int devKit_counterOldValue = 0;
+  int devKit_counter = 0;
+  int MF_counterOldValue = 0;
+  int MF_counter = 0;
+  char dec2hexConversionResult[8];
+  char hex2decConversionResult[8];
+  byte FDE3_PWM_byte_req[4];
+}
+
+on Start
+{
+  setTimerCyclic(timeoutFrame, 500);
+  setControlVisibility("eCS", "S1_Unlock", 0);
+  setControlVisibility("eCS", "S2_Unlock", 0);
+  setControlVisibility("eCS", "S3_Unlock", 0);
+  setControlVisibility("eCS", "S4_Unlock", 0);
+  setControlVisibility("eCS", "S5_Unlock", 0);
+  setControlVisibility("eCS", "S6_Unlock", 0);
+  
+  setControlVisibility("eCS", "S1_Lock", 0);
+  setControlVisibility("eCS", "S2_Lock", 0);
+  setControlVisibility("eCS", "S3_Lock", 0);
+  setControlVisibility("eCS", "S4_Lock", 0);
+  setControlVisibility("eCS", "S5_Lock", 0);
+  setControlVisibility("eCS", "S6_Lock", 0);
+  
+  setControlVisibility("eCS", "S1_BeltBuckled", 0);
+  setControlVisibility("eCS", "S2_BeltBuckled", 0);
+  setControlVisibility("eCS", "S3_BeltBuckled", 0);
+  setControlVisibility("eCS", "S4_BeltBuckled", 0);
+  setControlVisibility("eCS", "S5_BeltBuckled", 0);
+  setControlVisibility("eCS", "S6_BeltBuckled", 0);
+  
+  setControlVisibility("eCS", "S5_SeatOccupied", 0);
+  setControlVisibility("eCS", "S6_SeatOccupied", 0);
+  
+  setControlVisibility("eCS", "S1_Warning", 0);
+  setControlVisibility("eCS", "S2_Warning", 0);
+  setControlVisibility("eCS", "S3_Warning", 0);
+  setControlVisibility("eCS", "S4_Warning", 0);
+  setControlVisibility("eCS", "S5_Warning", 0);
+  setControlVisibility("eCS", "S6_Warning", 0);
+}
+
+on timer TSentTesterPresent
+{
+  if (@Platform::DIAG_TesterPresent)
+  {
+    Req_TesterPresent_Send.SendRequest();
+  }
+  setTimer (TSentTesterPresent, 1500);
+}
+
+void securityAlgoNew(byte data[], byte SAKey[])
+{ 
+  dword temp;
+  int i, Carry;
+  temp =  data[0]*16777216 + data[1]*65536 + data[2] * 256 + data[3];
+  
+  i = 5;
+  while(i>0)
+  {
+    Carry = 0;
+    if(temp>= 0xE0D1C2B3)
+    {
+      Carry = 1;
+    }
+    
+    temp+= 0x1F2E3D4C;
+    
+    if(Carry == 1)
+    {
+      temp = (temp << 1) + ((temp & 0x80000000)?1:0);
+    }
+    temp ^=0x4D5E234B;
+    i--;
+  }
+  SAKey[0] = ((temp) & 0xFF000000)>>24;
+  SAKey[1] = ((temp) & 0xFF0000)>>16;
+  SAKey[2] = ((temp) & 0xFF00)>>8;
+  SAKey[3] = ((temp) & 0xFF);
+}
+
+long swapBytes(int u16byte)
+{
+  return ( ( (u16byte & 0x00FF) << 8) |  ( (u16byte& 0xFF00) >> 8) );
+}
+
+
+void Set_RawValue(char is_namespace[], char value[], int step) 
+{
+  buffer2[0] = '0';
+  buffer2[1] = 'x';
+  
+  sysGetVariableString(is_namespace, value, buffer, elcount(buffer)); 
+  
+  if (strncmp(value, "sFDE3RawValue", strlen(value)) == 0)
+  {       
+    for (index = 0; index < 8; index++) 
+    {
+      if (buffer[index * 2] != '\0')
+      {
+        buffer2[2] = buffer[index * 2];
+        buffer2[3] = buffer[index * 2 + 1];
+          
+        snprintf(buffer3, elcount(buffer3), "NVP_au8EcsProfile_0_%d", index);
+        Req_EcsProfiles_Write.SetParameter(buffer3, buffer2);
+        write("sFDE3RawValue no. %d = %s", index, buffer2);
+       }
+       else 
+       {
+          break;
+       }
+      }  
+    }
+    else if (strncmp(value, "sFDE4RawValue", strlen(value)) == 0)
+    {
+      for (index = 0; index < 4; index++) 
+      {
+        if (buffer[index * 2] != '\0')
+        {
+          buffer2[2] = buffer[index * 2];
+          buffer2[3] = buffer[index * 2 + 1];
+
+          snprintf(buffer3, elcount(buffer3), "NVP_au8Step_%d_%d", step, index);
+
+          Req_EcsSteps_Write.SetParameter(buffer3, buffer2);
+         }
+         else 
+         {
+            break;
+         }
+        }
+    }
+}
+
+/**********************************************
+* START of eCS Panel
+***********************************************/
+/**********************************************
+* START of eCS Common TAB
+***********************************************/
+/* eCSVariant dropdown list - Write Button */
+on sysvar_update sysvar::eCS::FDE0_Write
+{ 
+  if (@eCS::FDE0_Write)
+  {
+    
+    @sysvar::eCS::eCSVariant = @sysvar::eCS::eCSVariant_LockVar | 
+    (@sysvar::eCS::eCSVariant_Backup << 1) |
+    (@sysvar::eCS::eCSVariant_AccelerometerPos << 2) |
+    (@sysvar::eCS::eCSVariant_SbsBuckleCircuit1 << 3)|
+    (@sysvar::eCS::eCSVariant_SbsBuckleCircuit2 << 4) | 
+    (@sysvar::eCS::eCSVariant_SbsConfig1 << 5) | 
+    (@sysvar::eCS::eCSVariant_SbsConfig2 << 6) |
+    (@sysvar::eCS::eCSVariant_BuckleConfig1 << 7) |
+    (@sysvar::eCS::eCSVariant_BuckleConfig2 << 8) |
+    (@sysvar::eCS::eCSVariant_Solenoid1Config << 9) |
+    (@sysvar::eCS::eCSVariant_Solenoid2Config << 10) |
+    (@sysvar::eCS::eCSVariant_Solenoid3Config << 11) |
+    (@sysvar::eCS::eCSVariant_Solenoid4Config << 12) |
+    (@sysvar::eCS::eCSVariant_Solenoid5Config << 13) |
+    (@sysvar::eCS::eCSVariant_Solenoid6Config << 14) |
+    (@sysvar::eCS::eCSVariant_Buckle1InvertedConfig << 15) |
+    (@sysvar::eCS::eCSVariant_Buckle2InvertedConfig << 16) |
+    (@sysvar::eCS::eCSVariant_Seat1RemovableConfig << 17) |
+    (@sysvar::eCS::eCSVariant_Seat2RemovableConfig << 18) |
+    (@sysvar::eCS::eCSVariant_SbsLastStateEnabledConfig << 19);
+    
+      switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_EcsVariant_Write.SetParameter("NVP_u32eCSVariant",@eCS::eCSVariant);
+          Req_EcsVariant_Write.SendRequest();
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_EcsVariant_Write.SetParameter("NVP_u32eCSVariant",@eCS::eCSVariant);
+          eCS_OBDC_FD_Req_EcsVariant_Write.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsVariant_Write.SetParameter("NVP_u32eCSVariant",@eCS::eCSVariant);
+          eCS_Diag_FD_Req_EcsVariant_Write.SendRequest();
+          break;
+        }
+        default:
+      {
+        break;
+      }       
+    }
+  }
+}
+on sysvar_update sysvar::eCS::FDE0_Read
+{
+  if (@eCS::FDE0_Read)
+  {
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_EcsVariant_Read.SendRequest(); 
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_EcsVariant_Write.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsVariant_Write.SendRequest();
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+//ecs
+on diagResponse eCS.eCS_Variant_Read
+{
+  byte rdata[255];
+  long leCSVariant;
+  long len;
+  int elements = 4;
+  
+  len=this.GetPrimitiveSize(); // get length of response
+  this.GetPrimitiveData(rdata, elcount(rdata)); // copy actual response from "on diagResponse *" into data array
+  
+
+  leCSVariant = diagGetParameter(this, "NVP_u32eCSVariant");
+  @sysvar::eCS::eCSVariant = leCSVariant;
+   
+  if((leCSVariant & 1) == 1)
+  {
+    @sysvar::eCS::eCSVariant_LockVar = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_LockVar = 0;
+  }
+  
+  if((leCSVariant & 2) == 2)
+  {
+    @sysvar::eCS::eCSVariant_Backup  = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Backup = 0;
+  }
+    
+  if((leCSVariant & 4) == 4)
+  {
+    @sysvar::eCS::eCSVariant_AccelerometerPos = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_AccelerometerPos = 0;
+  }
+  
+  if((leCSVariant & 8) == 8)
+  {
+  @sysvar::eCS::eCSVariant_SbsBuckleCircuit1 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsBuckleCircuit1 = 0;
+  }
+  
+  if((leCSVariant & 16) == 16)
+  {
+    @sysvar::eCS::eCSVariant_SbsBuckleCircuit2 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsBuckleCircuit2 = 0;
+  }
+  
+  if((leCSVariant & 32) == 32)
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig1 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig1 = 0;
+  }
+  
+  if((leCSVariant & 64) == 64)
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig2 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig2 = 0;
+  }
+  
+  if((leCSVariant & 128) == 128)
+  {
+   @sysvar::eCS::eCSVariant_BuckleConfig1 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_BuckleConfig1 = 0;
+  }
+
+    if((leCSVariant & 256) == 256)
+  {
+   @sysvar::eCS::eCSVariant_BuckleConfig2 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_BuckleConfig2 = 0;
+  }
+  
+      if((leCSVariant & 512) == 512)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid1Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid1Config = 0;
+  }
+  
+        if((leCSVariant & 1024) == 1024)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid2Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid2Config = 0;
+  }
+  
+  if((leCSVariant & 2048) == 2048)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid3Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid3Config = 0;
+  }
+  if((leCSVariant & 4096) == 4096)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid4Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid4Config = 0;
+  }
+  
+  if((leCSVariant & 8192) == 8192)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid5Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid5Config = 0;
+  }
+  
+  if((leCSVariant & 16384) == 16384)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid6Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid6Config = 0;
+  }
+  
+  DisplayData(rdata, len);
+}
+//Diag_eCS_FD
+on diagResponse eCS_Diag_FD.eCS_Variant_Read
+{
+  byte rdata[255];
+  long leCSVariant;
+  long len;
+  int elements = 4;
+  
+  len=this.GetPrimitiveSize(); // get length of response
+  this.GetPrimitiveData(rdata, elcount(rdata)); // copy actual response from "on diagResponse *" into data array
+  
+
+  leCSVariant = diagGetParameter(this, "NVP_u32eCSVariant");
+  @sysvar::eCS::eCSVariant = leCSVariant;
+   
+  if((leCSVariant & 1) == 1)
+  {
+    @sysvar::eCS::eCSVariant_LockVar = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_LockVar = 0;
+  }
+  
+  if((leCSVariant & 2) == 2)
+  {
+    @sysvar::eCS::eCSVariant_Backup  = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Backup = 0;
+  }
+    
+  if((leCSVariant & 4) == 4)
+  {
+    @sysvar::eCS::eCSVariant_AccelerometerPos = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_AccelerometerPos = 0;
+  }
+  
+  if((leCSVariant & 8) == 8)
+  {
+  @sysvar::eCS::eCSVariant_SbsBuckleCircuit1 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsBuckleCircuit1 = 0;
+  }
+  
+  if((leCSVariant & 16) == 16)
+  {
+    @sysvar::eCS::eCSVariant_SbsBuckleCircuit2 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsBuckleCircuit2 = 0;
+  }
+  
+  if((leCSVariant & 32) == 32)
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig1 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig1 = 0;
+  }
+  
+  if((leCSVariant & 64) == 64)
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig2 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig2 = 0;
+  }
+  
+  if((leCSVariant & 128) == 128)
+  {
+   @sysvar::eCS::eCSVariant_BuckleConfig1 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_BuckleConfig1 = 0;
+  }
+
+    if((leCSVariant & 256) == 256)
+  {
+   @sysvar::eCS::eCSVariant_BuckleConfig2 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_BuckleConfig2 = 0;
+  }
+  
+      if((leCSVariant & 512) == 512)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid1Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid1Config = 0;
+  }
+  
+        if((leCSVariant & 1024) == 1024)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid2Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid2Config = 0;
+  }
+  
+  if((leCSVariant & 2048) == 2048)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid3Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid3Config = 0;
+  }
+  if((leCSVariant & 4096) == 4096)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid4Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid4Config = 0;
+  }
+  
+  if((leCSVariant & 8192) == 8192)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid5Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid5Config = 0;
+  }
+  
+  if((leCSVariant & 16384) == 16384)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid6Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid6Config = 0;
+  }
+  
+  DisplayData(rdata, len);
+}
+
+on diagResponse eCS_OBDC_FD.eCS_Variant_Read
+{
+  byte rdata[255];
+  long leCSVariant;
+  long len;
+  int elements = 4;
+  
+  len=this.GetPrimitiveSize(); // get length of response
+  this.GetPrimitiveData(rdata, elcount(rdata)); // copy actual response from "on diagResponse *" into data array
+  
+
+  leCSVariant = diagGetParameter(this, "NVP_u32eCSVariant");
+  @sysvar::eCS::eCSVariant = leCSVariant;
+   
+  if((leCSVariant & 1) == 1)
+  {
+    @sysvar::eCS::eCSVariant_LockVar = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_LockVar = 0;
+  }
+  
+  if((leCSVariant & 2) == 2)
+  {
+    @sysvar::eCS::eCSVariant_Backup  = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Backup = 0;
+  }
+    
+  if((leCSVariant & 4) == 4)
+  {
+    @sysvar::eCS::eCSVariant_AccelerometerPos = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_AccelerometerPos = 0;
+  }
+  
+  if((leCSVariant & 8) == 8)
+  {
+  @sysvar::eCS::eCSVariant_SbsBuckleCircuit1 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsBuckleCircuit1 = 0;
+  }
+  
+  if((leCSVariant & 16) == 16)
+  {
+    @sysvar::eCS::eCSVariant_SbsBuckleCircuit2 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsBuckleCircuit2 = 0;
+  }
+  
+  if((leCSVariant & 32) == 32)
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig1 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig1 = 0;
+  }
+  
+  if((leCSVariant & 64) == 64)
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig2 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsConfig2 = 0;
+  }
+  
+  if((leCSVariant & 128) == 128)
+  {
+   @sysvar::eCS::eCSVariant_BuckleConfig1 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_BuckleConfig1 = 0;
+  }
+
+    if((leCSVariant & 256) == 256)
+  {
+   @sysvar::eCS::eCSVariant_BuckleConfig2 = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_BuckleConfig2 = 0;
+  }
+  
+      if((leCSVariant & 512) == 512)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid1Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid1Config = 0;
+  }
+  
+        if((leCSVariant & 1024) == 1024)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid2Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid2Config = 0;
+  }
+  
+  if((leCSVariant & 2048) == 2048)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid3Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid3Config = 0;
+  }
+  if((leCSVariant & 4096) == 4096)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid4Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid4Config = 0;
+  }
+  
+  if((leCSVariant & 8192) == 8192)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid5Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid5Config = 0;
+  }
+  
+  if((leCSVariant & 16384) == 16384)
+  {
+   @sysvar::eCS::eCSVariant_Solenoid6Config = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Solenoid6Config = 0;
+  }
+  if((leCSVariant & 32768) == 32768)
+  {
+   @sysvar::eCS::eCSVariant_Buckle1InvertedConfig = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Buckle1InvertedConfig = 0;
+  }
+  
+  if((leCSVariant & 65536) == 65536)
+  {
+   @sysvar::eCS::eCSVariant_Buckle2InvertedConfig = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Buckle2InvertedConfig = 0;
+  }
+  
+  if((leCSVariant & 131072) == 131072)
+  {
+   @sysvar::eCS::eCSVariant_Seat1RemovableConfig = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Seat1RemovableConfig = 0;
+  }
+  
+  if((leCSVariant & 262144) == 262144)
+  {
+   @sysvar::eCS::eCSVariant_Seat2RemovableConfig = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_Seat2RemovableConfig = 0;
+  }
+
+  if((leCSVariant & 524288) == 524288)
+  {
+   @sysvar::eCS::eCSVariant_SbsLastStateEnabledConfig = 1;
+  }
+  else
+  {
+    @sysvar::eCS::eCSVariant_SbsLastStateEnabledConfig = 0;
+  }
+  
+  DisplayData(rdata, len);
+}
+/* SwVersion Text - Read Button request */
+on sysvar sysvar::eCS::FD01_Read
+{
+  if (@eCS::FD01_Read)
+  {
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+         Req_SWVersion_Read.SendRequest(); 
+         write("Req_SWVersion_Read was called");
+          break;
+        }
+        
+        case 12:
+        {
+         eCS_OBDC_FD_Req_SWVersion_Read.SendRequest(); 
+         write(" eCS_OBDC_FD_Req_SWVersion_Read was called");
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_SWVersion_Read.SendRequest(); 
+         write("eCS_Diag_FD_Req_SWVersion_Read was called");
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+/* SwVersion Text - Read Button response */
+on diagResponse eCS.SW_Version_Read
+{
+  byte rdata[255];
+  long len;
+  int elements = 12;
+  
+  len=this.GetPrimitiveSize(); // get length of response
+  this.GetPrimitiveData(rdata, elcount(rdata)); // copy actual response from "on diagResponse *" into data array
+  
+  for (index = 0; index < elements; index++)
+  {
+    snprintf(buffer, elcount(buffer),"cau8SWVersion_%d", index);
+    buffer2[index] = diagGetParameter(this, buffer);
+  }
+  write ("SW Version = %s", buffer2);
+  sysSetVariableString(sysvar::eCS::SwVersion, buffer2);
+  
+  DisplayData(rdata, len);
+}
+
+/* START of Accelerometer Offsets */
+/* Calibrate button */
+
+
+on diagResponse eCS_OBDC_FD.SW_Version_Read
+{
+  byte rdata[255];
+  long len;
+  int elements = 12;
+  
+  len=this.GetPrimitiveSize(); // get length of response
+  this.GetPrimitiveData(rdata, elcount(rdata)); // copy actual response from "on diagResponse *" into data array
+  
+  for (index = 0; index < elements; index++)
+  {
+    snprintf(buffer, elcount(buffer),"cau8SWVersion_%d", index);
+    buffer2[index] = diagGetParameter(this, buffer);
+  }
+  write ("SW Version = %s", buffer2);
+  sysSetVariableString(sysvar::eCS::SwVersion, buffer2);
+  
+  DisplayData(rdata, len);
+}
+
+on diagResponse eCS_Diag_FD.SW_Version_Read
+{
+  byte rdata[255];
+  long len;
+  int elements = 12;
+  
+  len=this.GetPrimitiveSize(); // get length of response
+  this.GetPrimitiveData(rdata, elcount(rdata)); // copy actual response from "on diagResponse *" into data array
+  
+  for (index = 0; index < elements; index++)
+  {
+    snprintf(buffer, elcount(buffer),"cau8SWVersion_%d", index);
+    buffer2[index] = diagGetParameter(this, buffer);
+  }
+  write ("SW Version = %s", buffer2);
+  sysSetVariableString(sysvar::eCS::SwVersion, buffer2);
+  
+  DisplayData(rdata, len);
+}
+
+/* START of Accelerometer Offsets */
+/* Calibrate button */
+on sysvar_update sysvar::eCS::FD02_Write
+{
+  if (@eCS::FD02_Write)
+  {
+    Req_EcsAccOffsets_Write.SetParameter("NVP_s16OffsetAx", @eCS::stAccOffsets.xOffset);
+    Req_EcsAccOffsets_Write.SetParameter("NVP_s16OffsetAy", @eCS::stAccOffsets.yOffset);
+    Req_EcsAccOffsets_Write.SetParameter("NVP_s16OffsetAz", @eCS::stAccOffsets.zOffset);
+    
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+         Req_EcsAccOffsets_Write.SendRequest();
+         write("Req_EcsAccOffsets_Write was called");
+         break;
+        }
+        
+        case 12:
+        {
+         eCS_OBDC_FD_Req_EcsAccOffsets_Write.SendRequest();
+         write("eCS_OBDC_FD_Req_EcsAccOffsets_Write was called");
+         break;
+        }
+        
+        case 13:
+        {
+         eCS_Diag_FD_Req_EcsAccOffsets_Write.SendRequest();
+         write("eCS_Diag_FD_Req_EcsAccOffsets_Write was called");
+         break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+/* Read button request */
+on sysvar sysvar::eCS::FD02_Read
+{
+  if (@eCS::FD02_Read)
+  {
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_EcsAccOffsets_Read.SendRequest();
+          write("Req_EcsAccOffsets_Read was called");
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_EcsAccOffsets_Read.SendRequest();
+          write("eCS_OBDC_FD_Req_EcsAccOffsets_Read was called");
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsAccOffsets_Read.SendRequest();
+          write("eCS_Diag_FD_Req_EcsAccOffsets_Read was called");
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+/* Read button request */
+on sysvar sysvar::eCS::F794_Calibrate
+{
+  if (@eCS::F794_Calibrate)
+  {
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_AccCalibStart.SendRequest();
+          write("Req_AccCalibStart was called");
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_AccCalibStart.SendRequest();
+          write("eCS_OBDC_FD_Req_AccCalibStart was called");
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_AccCalibStart.SendRequest();
+          write("eCS_Diag_FD_Req_AccCalibStart was called");
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     }  
+  }
+}
+
+/* Read button response */
+on diagResponse eCS.eCS_Acc_Offsets_Read
+{
+  byte data[50];
+  int test = 0;
+  double testOffset = 0.000125;
+  double operation;
+  this.GetPrimitiveData(data, elcount(data));
+  
+  test = ((data[4] << 8) | (data[3]));
+  operation = test * testOffset; 
+  @eCS::stAccOffsets.xOffset = operation;
+  
+  test = ((data[6] << 8) | (data[5]));
+  operation = test * testOffset; 
+  @eCS::stAccOffsets.yOffset = operation;
+  
+  test = ((data[8] << 8) | (data[7]));
+  operation = test * testOffset; 
+  @eCS::stAccOffsets.zOffset = operation;
+}
+/* END of Accelerometer Offsets */
+
+on diagResponse eCS_OBDC_FD.eCS_Acc_Offsets_Read
+{
+  byte data[50];
+  int test = 0;
+  double testOffset = 0.000125;
+  double operation;
+  this.GetPrimitiveData(data, elcount(data));
+  
+  test = ((data[4] << 8) | (data[3]));
+  operation = test * testOffset; 
+  @eCS::stAccOffsets.xOffset = operation;
+  
+  test = ((data[6] << 8) | (data[5]));
+  operation = test * testOffset; 
+  @eCS::stAccOffsets.yOffset = operation;
+  
+  test = ((data[8] << 8) | (data[7]));
+  operation = test * testOffset; 
+  @eCS::stAccOffsets.zOffset = operation;
+}
+
+on diagResponse eCS_Diag_FD.eCS_Acc_Offsets_Read
+{
+  byte data[50];
+  int test = 0;
+  double testOffset = 0.000125;
+  double operation;
+  this.GetPrimitiveData(data, elcount(data));
+  
+  test = ((data[4] << 8) | (data[3]));
+  operation = test * testOffset; 
+  @eCS::stAccOffsets.xOffset = operation;
+  
+  test = ((data[6] << 8) | (data[5]));
+  operation = test * testOffset; 
+  @eCS::stAccOffsets.yOffset = operation;
+  
+  test = ((data[8] << 8) | (data[7]));
+  operation = test * testOffset; 
+  @eCS::stAccOffsets.zOffset = operation;
+}
+
+/* START of Low Pass Filter */
+/* X Axis radio buttons */
+on sysvar sysvar::eCS::stLpf.freq_x
+{
+    Req_EcsAccLowPass_Write.SetParameter("NVP_u8XaxisLowPass", @eCS::stLpf.freq_x);
+    //write("stLpf.freq_x selected");
+}
+
+/* Y Axis radio buttons */
+on sysvar sysvar::eCS::stLpf.freq_y
+{
+    Req_EcsAccLowPass_Write.SetParameter("NVP_u8YaxisLowPass", @eCS::stLpf.freq_y);
+    //write("stLpf.freq_y selected");
+}
+
+/* Z Axis radio buttons */
+on sysvar sysvar::eCS::stLpf.freq_z
+{
+    Req_EcsAccLowPass_Write.SetParameter("NVP_u8ZaxisLowPass", @eCS::stLpf.freq_z);
+    //write("stLpf.freq_z selected");
+}
+
+/* Write button */
+on sysvar sysvar::eCS::FDE5_Write
+{
+  if (@eCS::FDE5_Write)
+  {
+      switch(@Platform::tester_Config)
+      {
+        case 11:
+           Req_EcsAccLowPass_Write.SendRequest();
+           write("Req_EcsAccLowPass_Write was called");
+        {
+          break;
+        }
+        
+        case 12:
+        {
+           eCS_OBDC_FD_Req_EcsAccLowPass_Write.SendRequest();
+           write("eCS_OBDC_FD_Req_EcsAccLowPass_Write was called");
+          break;
+        }
+        
+        case 13:
+        {
+           eCS_Diag_FD_Req_EcsAccLowPass_Write.SendRequest();
+           write("eCS_Diag_FD_Req_EcsAccLowPass_Write was called");
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+    }  
+  }
+}
+
+/* Read button request */
+on sysvar sysvar::eCS::FDE5_Read
+{
+  if (@eCS::FDE5_Read)
+  {
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {       
+          Req_EcsAccLowPass_Read.SendRequest();
+          write("Req_EcsAccLowPass_Read was called");
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_EcsAccLowPass_Read.SendRequest();
+          write("eCS_OBDC_FD_Req_EcsAccLowPass_Read was called");
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsAccLowPass_Read.SendRequest();
+          write("eCS_Diag_FD_Req_EcsAccLowPass_Read was called");
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }
+     }
+  }
+}
+
+/* Read button response */
+on diagResponse eCS.eCS_Acc_Low_Pass_Read
+{
+  byte axis[3];
+  int i = 0,j = 0;
+  
+  axis[0] = diagGetParameter(this, "NVP_u8XaxisLowPass");
+  axis[1] = diagGetParameter(this, "NVP_u8YaxisLowPass");
+  axis[2] = diagGetParameter(this, "NVP_u8ZaxisLowPass");
+  
+  /* 10 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(1 == axis[i] || 7 == axis[i]  || 13 == axis[i] || 16 == axis[i] || 18 == axis[i] ||
+      22 == axis[i] || 28 == axis[i] || 34 == axis[i] || 37 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 10Hz ");
+        @eCS::stLpf.freq_x = 1;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 10Hz ");
+        @eCS::stLpf.freq_y = 1;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 10Hz ");
+        @eCS::stLpf.freq_z = 1;
+      }
+    }
+  }
+  
+   /* 46 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(2 == axis[i] || 8 == axis[i]  || 14 == axis[i] || 23 == axis[i] || 29 == axis[i] || 38 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 46Hz ");
+        @eCS::stLpf.freq_x = 2;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 46Hz ");
+        @eCS::stLpf.freq_y = 2;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 46Hz ");
+        @eCS::stLpf.freq_z = 2;
+      }
+    }
+  }
+  
+   /* 60 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(3 == axis[i] || 9 == axis[i]  || 15 == axis[i] || 17 == axis[i] || 24 == axis[i] || 30 == axis[i] ||
+      32 == axis[i] || 33 == axis[i] || 39 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 60Hz ");
+        @eCS::stLpf.freq_x = 3;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 60Hz ");
+        @eCS::stLpf.freq_y = 3;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 60Hz ");
+        @eCS::stLpf.freq_z = 3;
+      }
+    }
+  }
+  
+   /* 250 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(4 == axis[i] || 10 == axis[i]  || 19 == axis[i] || 25 == axis[i] || 31 == axis[i] || 40 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 250Hz ");
+        @eCS::stLpf.freq_x = 4;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 250Hz ");
+        @eCS::stLpf.freq_y = 4;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 250Hz ");
+        @eCS::stLpf.freq_z = 4;
+      }
+    }
+  }
+  
+   /* 300Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(5 == axis[i] || 11 == axis[i]  || 20 == axis[i] || 26 == axis[i] || 35 == axis[i] || 41 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 300Hz ");
+        @eCS::stLpf.freq_x = 5;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 300Hz ");
+        @eCS::stLpf.freq_y = 5;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 300Hz ");
+        @eCS::stLpf.freq_z = 5;
+      }
+    }
+  }
+  
+    /* 400Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(6 == axis[i] || 12 == axis[i]  || 21 == axis[i] || 27 == axis[i] || 36 == axis[i] || 42 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 400Hz ");
+        @eCS::stLpf.freq_x = 6;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 400Hz ");
+        @eCS::stLpf.freq_y = 6;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 400Hz ");
+        @eCS::stLpf.freq_z = 6;
+      }
+    }
+  }
+  
+}
+/* END of Low Pass Filter */
+
+
+/* START of Algo Input Delay */
+/* Write button */
+
+on diagResponse eCS_OBDC_FD.eCS_Acc_Low_Pass_Read
+{
+  byte axis[3];
+  int i = 0,j = 0;
+  
+  axis[0] = diagGetParameter(this, "NVP_u8XaxisLowPass");
+  axis[1] = diagGetParameter(this, "NVP_u8YaxisLowPass");
+  axis[2] = diagGetParameter(this, "NVP_u8ZaxisLowPass");
+  
+  /* 10 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(1 == axis[i] || 7 == axis[i]  || 13 == axis[i] || 16 == axis[i] || 18 == axis[i] ||
+      22 == axis[i] || 28 == axis[i] || 34 == axis[i] || 37 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 10Hz ");
+        @eCS::stLpf.freq_x = 1;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 10Hz ");
+        @eCS::stLpf.freq_y = 1;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 10Hz ");
+        @eCS::stLpf.freq_z = 1;
+      }
+    }
+  }
+  
+   /* 46 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(2 == axis[i] || 8 == axis[i]  || 14 == axis[i] || 23 == axis[i] || 29 == axis[i] || 38 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 46Hz ");
+        @eCS::stLpf.freq_x = 2;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 46Hz ");
+        @eCS::stLpf.freq_y = 2;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 46Hz ");
+        @eCS::stLpf.freq_z = 2;
+      }
+    }
+  }
+  
+   /* 60 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(3 == axis[i] || 9 == axis[i]  || 15 == axis[i] || 17 == axis[i] || 24 == axis[i] || 30 == axis[i] ||
+      32 == axis[i] || 33 == axis[i] || 39 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 60Hz ");
+        @eCS::stLpf.freq_x = 3;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 60Hz ");
+        @eCS::stLpf.freq_y = 3;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 60Hz ");
+        @eCS::stLpf.freq_z = 3;
+      }
+    }
+  }
+  
+   /* 250 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(4 == axis[i] || 10 == axis[i]  || 19 == axis[i] || 25 == axis[i] || 31 == axis[i] || 40 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 250Hz ");
+        @eCS::stLpf.freq_x = 4;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 250Hz ");
+        @eCS::stLpf.freq_y = 4;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 250Hz ");
+        @eCS::stLpf.freq_z = 4;
+      }
+    }
+  }
+  
+   /* 300Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(5 == axis[i] || 11 == axis[i]  || 20 == axis[i] || 26 == axis[i] || 35 == axis[i] || 41 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 300Hz ");
+        @eCS::stLpf.freq_x = 5;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 300Hz ");
+        @eCS::stLpf.freq_y = 5;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 300Hz ");
+        @eCS::stLpf.freq_z = 5;
+      }
+    }
+  }
+  
+    /* 400Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(6 == axis[i] || 12 == axis[i]  || 21 == axis[i] || 27 == axis[i] || 36 == axis[i] || 42 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 400Hz ");
+        @eCS::stLpf.freq_x = 6;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 400Hz ");
+        @eCS::stLpf.freq_y = 6;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 400Hz ");
+        @eCS::stLpf.freq_z = 6;
+      }
+    }
+  }
+  
+}
+/* END of Low Pass Filter */
+
+
+/* START of Algo Input Delay */
+/* Write button */
+on diagResponse eCS_Diag_FD.eCS_Acc_Low_Pass_Read
+{
+  byte axis[3];
+  int i = 0,j = 0;
+  
+  axis[0] = diagGetParameter(this, "NVP_u8XaxisLowPass");
+  axis[1] = diagGetParameter(this, "NVP_u8YaxisLowPass");
+  axis[2] = diagGetParameter(this, "NVP_u8ZaxisLowPass");
+  
+  /* 10 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(1 == axis[i] || 7 == axis[i]  || 13 == axis[i] || 16 == axis[i] || 18 == axis[i] ||
+      22 == axis[i] || 28 == axis[i] || 34 == axis[i] || 37 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 10Hz ");
+        @eCS::stLpf.freq_x = 1;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 10Hz ");
+        @eCS::stLpf.freq_y = 1;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 10Hz ");
+        @eCS::stLpf.freq_z = 1;
+      }
+    }
+  }
+  
+   /* 46 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(2 == axis[i] || 8 == axis[i]  || 14 == axis[i] || 23 == axis[i] || 29 == axis[i] || 38 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 46Hz ");
+        @eCS::stLpf.freq_x = 2;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 46Hz ");
+        @eCS::stLpf.freq_y = 2;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 46Hz ");
+        @eCS::stLpf.freq_z = 2;
+      }
+    }
+  }
+  
+   /* 60 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(3 == axis[i] || 9 == axis[i]  || 15 == axis[i] || 17 == axis[i] || 24 == axis[i] || 30 == axis[i] ||
+      32 == axis[i] || 33 == axis[i] || 39 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 60Hz ");
+        @eCS::stLpf.freq_x = 3;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 60Hz ");
+        @eCS::stLpf.freq_y = 3;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 60Hz ");
+        @eCS::stLpf.freq_z = 3;
+      }
+    }
+  }
+  
+   /* 250 Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(4 == axis[i] || 10 == axis[i]  || 19 == axis[i] || 25 == axis[i] || 31 == axis[i] || 40 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 250Hz ");
+        @eCS::stLpf.freq_x = 4;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 250Hz ");
+        @eCS::stLpf.freq_y = 4;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 250Hz ");
+        @eCS::stLpf.freq_z = 4;
+      }
+    }
+  }
+  
+   /* 300Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(5 == axis[i] || 11 == axis[i]  || 20 == axis[i] || 26 == axis[i] || 35 == axis[i] || 41 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 300Hz ");
+        @eCS::stLpf.freq_x = 5;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 300Hz ");
+        @eCS::stLpf.freq_y = 5;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 300Hz ");
+        @eCS::stLpf.freq_z = 5;
+      }
+    }
+  }
+  
+    /* 400Hz */
+  for(i = 0; i < 3; i++)
+  {
+    if(6 == axis[i] || 12 == axis[i]  || 21 == axis[i] || 27 == axis[i] || 36 == axis[i] || 42 == axis[i])
+    {
+      /* X axis */
+      if(0 == i)
+      {
+        write("X-Axis LPF cut-off Freq: 400Hz ");
+        @eCS::stLpf.freq_x = 6;
+      }
+      /* Y axis */
+      else if(1 == i)
+      {
+        write("Y-Axis LPF cut-off Freq: 400Hz ");
+        @eCS::stLpf.freq_y = 6;
+      }
+      /* Z axis */
+      else if(2 == i)
+      {
+        write("Z-Axis LPF cut-off Freq: 400Hz ");
+        @eCS::stLpf.freq_z = 6;
+      }
+    }
+  }
+  
+}
+/* END of Low Pass Filter */
+
+
+/* START of Algo Input Delay */
+/* Write button */
+on sysvar sysvar::eCS::FDE7_Write
+{
+  byte temp[2];
+  byte AlgoDelay_0, AlgoDelay_1;
+  
+  AlgoDelay_0 = @eCS::eCSAlgodelay >> 8;
+  AlgoDelay_1 = @eCS::eCSAlgodelay & 0xFF;
+  
+  
+  if (@eCS::FDE7_Write)
+  {
+    Req_EcsAlgoOutputDelay_Write.SetParameter("NVP_u16AlgoDelay_0",AlgoDelay_0);
+    Req_EcsAlgoOutputDelay_Write.SetParameter("NVP_u16AlgoDelay_1",AlgoDelay_1);
+   
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_EcsAlgoOutputDelay_Write.SendRequest();
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_EcsAlgoOutputDelay_Write.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsAlgoOutputDelay_Write.SendRequest(); 
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+/* Read button request */
+on sysvar sysvar::eCS::FDE7_Read
+{
+  if (@eCS::FDE7_Read)
+  {
+    
+    //write("Resp_EcsAlgoOutputDelay_Read was called");
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_EcsAlgoOutputDelay_Read.SendRequest();
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_EcsAlgoOutputDelay_Read.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsAlgoOutputDelay_Read.SendRequest();
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+/* Read button response */
+on diagResponse eCS.eCS_Algo_Output_Delay_Read
+{
+  long s1;
+  byte response[10];
+  
+  response[0] = diagGetParameter(this, "NVP_u16AlgoDelay_0");
+  response[1] = diagGetParameter(this, "NVP_u16AlgoDelay_1");
+  // TO DO: check swap in code 
+  /* Concat and display on panel */
+  @eCS::eCSAlgodelay = (response[1] << 8 ) + response[0];
+}
+/* END of Algo Input Delay */
+
+
+/* START of eCS Sensitivity LuT */
+/* Write button */
+
+/* Read button response */
+on diagResponse eCS_OBDC_FD.eCS_Algo_Output_Delay_Read
+{
+  long s1;
+  byte response[10];
+  
+  response[0] = diagGetParameter(this, "NVP_u16AlgoDelay_0");
+  response[1] = diagGetParameter(this, "NVP_u16AlgoDelay_1");
+  // TO DO: check swap in code 
+  /* Concat and display on panel */
+  @eCS::eCSAlgodelay = (response[1] << 8 ) + response[0];
+}
+/* END of Algo Input Delay */
+
+on diagResponse eCS_Diag_FD.eCS_Algo_Output_Delay_Read
+{
+  long s1;
+  byte response[10];
+  
+  response[0] = diagGetParameter(this, "NVP_u16AlgoDelay_0");
+  response[1] = diagGetParameter(this, "NVP_u16AlgoDelay_1");
+  // TO DO: check swap in code 
+  /* Concat and display on panel */
+  @eCS::eCSAlgodelay = (response[1] << 8 ) + response[0];
+}
+/* END of Algo Input Delay */
+
+/* START of eCS Sensitivity LuT */
+/* Write button */
+on sysvar_update sysvar::eCS::FDE9_Write
+{
+  int elements =  5;
+  
+  if (@eCS::FDE9_Write)
+  {
+    for (index = 0; index < elements; index++) 
+    {
+      snprintf(buffer, elcount(buffer), "NVP_au16SensitivityIdx_%d", index);
+      Req_EcsSensitivityLut_Write.SetParameter(buffer, @eCS::stSensitivityLuT.x[index]);
+      
+      snprintf(buffer, elcount(buffer), "NVP_au16SensitivityFact_%d", index);
+      Req_EcsSensitivityLut_Write.SetParameter(buffer, @eCS::stSensitivityLuT.y[index]);
+    }
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_EcsSensitivityLut_Write.SendRequest();
+          write("FDE9_Write was called");
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_EcsSensitivityLut_Write.SendRequest();
+          write("FDE9_Write was called");
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsSensitivityLut_Write.SendRequest();
+          write("FDE9_Write was called");
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }    
+}
+
+/* Read button request */
+on sysvar sysvar::eCS::FDE9_Read
+{
+  if (@eCS::FDE9_Read)
+  {
+    
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_EcsSensitivityLut_Read.SendRequest();
+          write("FDE9_Read was called");
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_EcsSensitivityLut_Read.SendRequest();
+          write("FDE9_Read was called");
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsSensitivityLut_Read.SendRequest();
+          write("FDE9_Read was called");
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+/* Read button response */
+on diagResponse eCS_OBDC_FD.eCS_Sensitivity_LuT_Read
+{
+  int i;
+  char buffer1[128];
+  char buffer2[128];
+  
+  for (i = 0; i < 5; i++)
+    {
+      
+      snprintf(buffer1, elcount(buffer1), "NVP_au16SensitivityIdx_%d", i);
+      @eCS::stSensitivityLuT.x[i] = diagGetParameter(this, buffer1);
+      
+      snprintf(buffer2, elcount(buffer2), "NVP_au16SensitivityFact_%d", i);
+      @eCS::stSensitivityLuT.y[i] = diagGetParameter(this, buffer2);
+    }
+}
+/* END of eCS Sensitivity LuT */
+
+on diagResponse eCS_Diag_FD.eCS_Sensitivity_LuT_Read
+{
+  int i;
+  char buffer1[128];
+  char buffer2[128];
+  
+  for (i = 0; i < 5; i++)
+    {
+      
+      snprintf(buffer1, elcount(buffer1), "NVP_au16SensitivityIdx_%d", i);
+      @eCS::stSensitivityLuT.x[i] = diagGetParameter(this, buffer1);
+      
+      snprintf(buffer2, elcount(buffer2), "NVP_au16SensitivityFact_%d", i);
+      @eCS::stSensitivityLuT.y[i] = diagGetParameter(this, buffer2);
+    }
+}
+/* END of eCS Sensitivity LuT */
+
+on diagResponse eCS.eCS_Sensitivity_LuT_Read
+{
+  int i;
+  char buffer1[128];
+  char buffer2[128];
+  
+  for (i = 0; i < 5; i++)
+    {
+      
+      snprintf(buffer1, elcount(buffer1), "NVP_au16SensitivityIdx_%d", i);
+      @eCS::stSensitivityLuT.x[i] = diagGetParameter(this, buffer1);
+      
+      snprintf(buffer2, elcount(buffer2), "NVP_au16SensitivityFact_%d", i);
+      @eCS::stSensitivityLuT.y[i] = diagGetParameter(this, buffer2);
+    }
+}
+/* END of eCS Sensitivity LuT */
+
+
+/* START of Sensitivity Option */
+/* sensitivityOpt checkbox */
+on sysvar_update sysvar::eCS::FDEA_Write
+{
+  if (@eCS::FDEA_Write)
+  {
+    if(@eCS::sensitivityOpt == 1)
+      Req_EcsSensitivityOpt_Write.SetParameter("NVP_b8SensitivityOpt", 0xAA);
+    else if(@eCS::sensitivityOpt == 0)
+      Req_EcsSensitivityOpt_Write.SetParameter("NVP_b8SensitivityOpt", 0x55);
+    
+    
+    //write("Req_EcsSensitivityOpt_Write was called");
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_EcsSensitivityOpt_Write.SendRequest();
+          break;
+        }
+        
+        case 12:
+        {
+          eCS_OBDC_FD_Req_EcsSensitivityOpt_Write.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsSensitivityOpt_Write.SendRequest();
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+/* sensitivityOpt Read button - request */
+on sysvar sysvar::eCS::FDEA_Read
+{
+ 
+  //write("FDEA_Read was called");
+  switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+          Req_EcsSensitivityOpt_Read.SendRequest();
+          break;
+        }
+        
+        case 12:
+        {
+           eCS_OBDC_FD_Req_EcsSensitivityOpt_Read.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+           eCS_Diag_FD_Req_EcsSensitivityOpt_Read.SendRequest();
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+    } 
+}
+
+/* sensitivityOpt Read button - response */
+on diagResponse eCS.eCS_Sensitivity_Optimization_Read
+{
+  int sensitivity;
+  
+  sensitivity = diagGetParameter(this, "NVP_b8SensitivityOpt");
+  if(0x55 == sensitivity)
+    @eCS::sensitivityOptStat = 0;
+  else if(0xAA == sensitivity)
+    @eCS::sensitivityOptStat = 1;
+}
+/* END of Sensitivity Option */
+
+
+on diagResponse eCS_OBDC_FD.eCS_Sensitivity_Optimization_Read
+{
+  int sensitivity;
+  
+  sensitivity = diagGetParameter(this, "NVP_b8SensitivityOpt");
+  if(0x55 == sensitivity)
+    @eCS::sensitivityOptStat = 0;
+  else if(0xAA == sensitivity)
+    @eCS::sensitivityOptStat = 1;
+}
+/* END of Sensitivity Option */
+
+on diagResponse eCS_Diag_FD.eCS_Sensitivity_Optimization_Read
+{
+  int sensitivity;
+  
+  sensitivity = diagGetParameter(this, "NVP_b8SensitivityOpt");
+  if(0x55 == sensitivity)
+    @eCS::sensitivityOptStat = 0;
+  else if(0xAA == sensitivity)
+    @eCS::sensitivityOptStat = 1;
+}
+/* END of Sensitivity Option */
+
+
+/* START of Temperature calibration */
+/* Calibrate button request - CHECK - function must write, not read the temp. Only available option for temp is MCUTemperature which should give a value for the var on the panel. */
+on sysvar sysvar::eCS::F796_Start
+{
+  if (@eCS::F796_Start) 
+  {
+    Req_EcuTempCalibration_Start.SetParameter("Environment_temperature_in_hex", @eCS::F796_Temperature_Val);
+    
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_EcuTempCalibration_Start.SendRequest();
+          write("Req_EcuTempCalibration_Start was called. Temp has been set to: %d", @eCS::F796_Temperature_Val);
+          break;
+        }
+        
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_EcuTempCalibration_Start.SendRequest();
+          write("eCS_OBDC_FD_Req_EcuTempCalibration_Start was called. Temp has been set to: %d", @eCS::F796_Temperature_Val);
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcuTempCalibration_Start.SendRequest();
+          write("eCS_Diag_FD_Req_EcuTempCalibration_Start was called. Temp has been set to: %d", @eCS::F796_Temperature_Val);
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  
+  }
+}
+/* END of Temperature calibration */
+/**********************************************
+* END of eCS Common TAB
+***********************************************/
+
+
+/**********************************************
+* Start of eCS Algo parameters TAB/ eCS Parameter
+***********************************************/
+
+/* Start of 1st and 2nd Angle LuT */
+/* Write button */
+on sysvar_update sysvar::eCS::FDE1_Write
+{ 
+  if (@eCS::FDE1_Write) 
+  { 
+    
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle1_Idx_0",@eCS::stParam.LuT_Angle1_x[0]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle1_Idx_1_1",@eCS::stParam.LuT_Angle1_x[1]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle1_Idx_2",@eCS::stParam.LuT_Angle1_x[2]);
+    
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle1_Fact_0",@eCS::stParam.LuT_Angle1_y[0]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle1_Fact_1",@eCS::stParam.LuT_Angle1_y[1]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle1_Fact_2",@eCS::stParam.LuT_Angle1_y[2]);
+    
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle2_Idx_0",@eCS::stParam.LuT_Angle2_x[0]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle2_Idx_1",@eCS::stParam.LuT_Angle2_x[1]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle2_Idx_2",@eCS::stParam.LuT_Angle2_x[2]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle2_Idx_3",@eCS::stParam.LuT_Angle2_x[3]);
+    
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle2_Fact_0",@eCS::stParam.LuT_Angle2_y[0]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle2_Fact_1",@eCS::stParam.LuT_Angle2_y[1]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle2_Fact_2",@eCS::stParam.LuT_Angle2_y[2]);
+    Req_EcsParameters_Write.SetParameter("NVP_au16Angle2_Fact_3",@eCS::stParam.LuT_Angle2_y[3]);
+    
+    Req_EcsParameters_Write.SetParameter("NVP_s16PositionLimit",@eCS::stParam.PositionLimit);
+    Req_EcsParameters_Write.SetParameter("NVP_u16eCSTriggON",@eCS::stParam.LockThrs);
+    Req_EcsParameters_Write.SetParameter("NVP_u16eCSTriggOFF",@eCS::stParam.UnlockThrs);
+    Req_EcsParameters_Write.SetParameter("NVP_s16Angle1",@eCS::stParam.Angle1);
+    
+    Req_EcsParameters_Write.SetParameter("NVP_s16Angle2",@eCS::stParam.Angle2);
+    Req_EcsParameters_Write.SetParameter("NVP_u8CrashSample",@eCS::stParam.CrashSamples);
+    Req_EcsParameters_Write.SetParameter("NVP_u16LatchTmr",@eCS::stParam.LatchTmr);
+    Req_EcsParameters_Write.SetParameter("NVP_u16CrashTmr",@eCS::stParam.CrashTmr);
+    Req_EcsParameters_Write.SetParameter("NVP_s16BallDamper",@eCS::stParam.BallDamper);
+
+    
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_EcsParameters_Write.SendRequest();
+          break;
+        }
+        
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_EcsParameters_Write.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsParameters_Write.SendRequest();
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     }
+  }
+}
+
+
+
+/* Read button request */
+on sysvar sysvar::eCS::FDE1_Read
+{
+  if (@eCS::FDE1_Read)
+  {
+    
+    //write("Req_EcsParameters_Read was called");
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_EcsParameters_Read.SendRequest();
+          break;
+        }
+        
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_EcsParameters_Read.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsParameters_Read.SendRequest();
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+
+/* Read button response */
+ on diagResponse eCS.eCS_Parameters_Read
+{
+  @eCS::stParam.LuT_Angle1_x[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Idx_0"));
+  @eCS::stParam.LuT_Angle1_x[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Idx_1_1"));
+  @eCS::stParam.LuT_Angle1_x[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Idx_2"));
+  
+  @eCS::stParam.LuT_Angle1_y[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Fact_0"));
+  @eCS::stParam.LuT_Angle1_y[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Fact_1"));
+  @eCS::stParam.LuT_Angle1_y[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Fact_2"));
+  
+  @eCS::stParam.LuT_Angle2_x[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_0"));
+  @eCS::stParam.LuT_Angle2_x[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_1"));
+  @eCS::stParam.LuT_Angle2_x[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_2"));
+  @eCS::stParam.LuT_Angle2_x[3] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_3"));
+  
+  @eCS::stParam.LuT_Angle2_y[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_0"));
+  @eCS::stParam.LuT_Angle2_y[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_1"));
+  @eCS::stParam.LuT_Angle2_y[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_2"));
+  @eCS::stParam.LuT_Angle2_y[3] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_3"));
+  
+  @eCS::stParam.PositionLimit = swapBytes(diagGetParameter(this, "NVP_s16PositionLimit"));
+  @eCS::stParam.LockThrs = swapBytes(diagGetParameter(this, "NVP_u16eCSTriggON"));
+  @eCS::stParam.UnlockThrs = swapBytes(diagGetParameter(this, "NVP_u16eCSTriggOFF"));
+  @eCS::stParam.Angle1 = swapBytes(diagGetParameter(this, "NVP_s16Angle1"));
+  @eCS::stParam.Angle2 = swapBytes(diagGetParameter(this, "NVP_s16Angle2"));
+  @eCS::stParam.CrashSamples = diagGetParameter(this, "NVP_u8CrashSample");
+  @eCS::stParam.LatchTmr = swapBytes(diagGetParameter(this, "NVP_u16LatchTmr"));
+  @eCS::stParam.CrashTmr = swapBytes(diagGetParameter(this, "NVP_u16CrashTmr"));
+  @eCS::stParam.BallDamper = swapBytes(diagGetParameter(this, "NVP_s16BallDamper"));
+}
+/**********************************************
+* END of eCS Algo parameters TAB/ eCS Parameter
+***********************************************/
+
+/* Read button response */
+ on diagResponse eCS_OBDC_FD.eCS_Parameters_Read
+{
+  @eCS::stParam.LuT_Angle1_x[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Idx_0"));
+  @eCS::stParam.LuT_Angle1_x[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Idx_1_1"));
+  @eCS::stParam.LuT_Angle1_x[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Idx_2"));
+  
+  @eCS::stParam.LuT_Angle1_y[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Fact_0"));
+  @eCS::stParam.LuT_Angle1_y[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Fact_1"));
+  @eCS::stParam.LuT_Angle1_y[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Fact_2"));
+  
+  @eCS::stParam.LuT_Angle2_x[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_0"));
+  @eCS::stParam.LuT_Angle2_x[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_1"));
+  @eCS::stParam.LuT_Angle2_x[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_2"));
+  @eCS::stParam.LuT_Angle2_x[3] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_3"));
+  
+  @eCS::stParam.LuT_Angle2_y[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_0"));
+  @eCS::stParam.LuT_Angle2_y[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_1"));
+  @eCS::stParam.LuT_Angle2_y[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_2"));
+  @eCS::stParam.LuT_Angle2_y[3] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_3"));
+  
+  @eCS::stParam.PositionLimit = swapBytes(diagGetParameter(this, "NVP_s16PositionLimit"));
+  @eCS::stParam.LockThrs = swapBytes(diagGetParameter(this, "NVP_u16eCSTriggON"));
+  @eCS::stParam.UnlockThrs = swapBytes(diagGetParameter(this, "NVP_u16eCSTriggOFF"));
+  @eCS::stParam.Angle1 = swapBytes(diagGetParameter(this, "NVP_s16Angle1"));
+  @eCS::stParam.Angle2 = swapBytes(diagGetParameter(this, "NVP_s16Angle2"));
+  @eCS::stParam.CrashSamples = diagGetParameter(this, "NVP_u8CrashSample");
+  @eCS::stParam.LatchTmr = swapBytes(diagGetParameter(this, "NVP_u16LatchTmr"));
+  @eCS::stParam.CrashTmr = swapBytes(diagGetParameter(this, "NVP_u16CrashTmr"));
+  @eCS::stParam.BallDamper = swapBytes(diagGetParameter(this, "NVP_s16BallDamper"));
+}
+/**********************************************
+* END of eCS Algo parameters TAB/ eCS Parameter
+***********************************************/
+
+/* Read button response */
+ on diagResponse eCS_Diag_FD.eCS_Parameters_Read
+{
+  @eCS::stParam.LuT_Angle1_x[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Idx_0"));
+  @eCS::stParam.LuT_Angle1_x[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Idx_1_1"));
+  @eCS::stParam.LuT_Angle1_x[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Idx_2"));
+  
+  @eCS::stParam.LuT_Angle1_y[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Fact_0"));
+  @eCS::stParam.LuT_Angle1_y[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Fact_1"));
+  @eCS::stParam.LuT_Angle1_y[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle1_Fact_2"));
+  
+  @eCS::stParam.LuT_Angle2_x[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_0"));
+  @eCS::stParam.LuT_Angle2_x[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_1"));
+  @eCS::stParam.LuT_Angle2_x[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_2"));
+  @eCS::stParam.LuT_Angle2_x[3] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Idx_3"));
+  
+  @eCS::stParam.LuT_Angle2_y[0] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_0"));
+  @eCS::stParam.LuT_Angle2_y[1] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_1"));
+  @eCS::stParam.LuT_Angle2_y[2] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_2"));
+  @eCS::stParam.LuT_Angle2_y[3] = swapBytes(diagGetParameter(this, "NVP_au16Angle2_Fact_3"));
+  
+  @eCS::stParam.PositionLimit = swapBytes(diagGetParameter(this, "NVP_s16PositionLimit"));
+  @eCS::stParam.LockThrs = swapBytes(diagGetParameter(this, "NVP_u16eCSTriggON"));
+  @eCS::stParam.UnlockThrs = swapBytes(diagGetParameter(this, "NVP_u16eCSTriggOFF"));
+  @eCS::stParam.Angle1 = swapBytes(diagGetParameter(this, "NVP_s16Angle1"));
+  @eCS::stParam.Angle2 = swapBytes(diagGetParameter(this, "NVP_s16Angle2"));
+  @eCS::stParam.CrashSamples = diagGetParameter(this, "NVP_u8CrashSample");
+  @eCS::stParam.LatchTmr = swapBytes(diagGetParameter(this, "NVP_u16LatchTmr"));
+  @eCS::stParam.CrashTmr = swapBytes(diagGetParameter(this, "NVP_u16CrashTmr"));
+  @eCS::stParam.BallDamper = swapBytes(diagGetParameter(this, "NVP_s16BallDamper"));
+}
+/**********************************************
+* END of eCS Algo parameters TAB/ eCS Parameter
+***********************************************/
+
+/**********************************************
+* START of eCS Step Definition TAB
+***********************************************/
+
+/* START of Unlock Cycle Definition */
+/* Write button */
+on sysvar_update sysvar::eCS::FDE3_Write
+{   
+  if (@eCS::FDE3_Write) 
+  {
+    if (@eCS::FDE3_Write_Raw == 0)
+    {
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_0", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_1", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_2", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_3", 1);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_4", @eCS::stUnlockProfile.Step0);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_5", @eCS::stUnlockProfile.Step1);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_6", @eCS::stUnlockProfile.Step2);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_7", @eCS::stUnlockProfile.Step3);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_8", @eCS::stUnlockProfile.Step4);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_9", @eCS::stUnlockProfile.Step5);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_10", @eCS::stUnlockProfile.Step6);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_0_11", @eCS::stUnlockProfile.Step7);
+      
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_0", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_1", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_2", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_3", 1);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_4", @eCS::stBackupProfile.Step0);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_5", @eCS::stBackupProfile.Step1);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_6", @eCS::stBackupProfile.Step2);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_7", @eCS::stBackupProfile.Step3);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_8", @eCS::stBackupProfile.Step4);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_9", @eCS::stBackupProfile.Step5);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_10", @eCS::stBackupProfile.Step6);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_1_11", @eCS::stBackupProfile.Step7);
+      
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_0", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_1", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_2", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_3", 1);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_4", @eCS::stDiagProfile.Step0);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_5", @eCS::stDiagProfile.Step1);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_6", @eCS::stDiagProfile.Step2);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_7", @eCS::stDiagProfile.Step3);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_8", @eCS::stDiagProfile.Step4);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_9", @eCS::stDiagProfile.Step5);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_10", @eCS::stDiagProfile.Step6);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_2_11", @eCS::stDiagProfile.Step7);
+      
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_0", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_1", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_2", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_3", 255);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_4", @eCS::stReservedProfile.Step0);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_5", @eCS::stReservedProfile.Step1);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_6", @eCS::stReservedProfile.Step2);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_7", @eCS::stReservedProfile.Step3);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_8", @eCS::stReservedProfile.Step4);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_9", @eCS::stReservedProfile.Step5);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_10", @eCS::stReservedProfile.Step6);
+      Req_EcsProfiles_Write.SetParameter("NVP_au8EcsProfile_3_11", @eCS::stReservedProfile.Step7);
+      
+      write("FDE3_Write was called");
+    }
+    else
+    {
+      //Set_RawValue("eCS", "sFDE3RawValue", @eCS::FDE3_Write_Raw);
+    }
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_EcsProfiles_Write.SendRequest();
+          break;
+        }
+        
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_EcsProfiles_Write.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsProfiles_Write.SendRequest();
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+/* Read button request */
+on sysvar sysvar::eCS::FDE3_Read
+{
+  
+  switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_EcsProfiles_Read.SendRequest();
+          write("Req_EcsProfiles_Read was called");
+          break;
+        }
+        
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_EcsProfiles_Read.SendRequest();
+          write("eCS_OBDC_FD_Req_EcsProfiles_Read was called");
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsProfiles_Read.SendRequest();
+          write("eCS_Diag_FD_Req_EcsProfiles_Read was called");
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+}
+
+/* Read button response */
+on diagResponse eCS.eCS_Profiles_Read
+{
+  @eCS::stUnlockProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_0_4");
+  @eCS::stUnlockProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_0_5");
+  @eCS::stUnlockProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_0_6");
+  @eCS::stUnlockProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_0_7");
+  @eCS::stUnlockProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_0_8");
+  @eCS::stUnlockProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_0_9");
+  @eCS::stUnlockProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_0_10");
+  @eCS::stUnlockProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_0_11");
+  
+  @eCS::stBackupProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_1_4");
+  @eCS::stBackupProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_1_5");
+  @eCS::stBackupProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_1_6");
+  @eCS::stBackupProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_1_7");
+  @eCS::stBackupProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_1_8");
+  @eCS::stBackupProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_1_9");
+  @eCS::stBackupProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_1_10");
+  @eCS::stBackupProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_1_11");
+  
+  @eCS::stDiagProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_2_4");
+  @eCS::stDiagProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_2_5");
+  @eCS::stDiagProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_2_6");
+  @eCS::stDiagProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_2_7");
+  @eCS::stDiagProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_2_8");
+  @eCS::stDiagProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_2_9");
+  @eCS::stDiagProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_2_10");
+  @eCS::stDiagProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_2_11");
+  
+  @eCS::stReservedProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_3_4");
+  @eCS::stReservedProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_3_5");
+  @eCS::stReservedProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_3_6");
+  @eCS::stReservedProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_3_7");
+  @eCS::stReservedProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_3_8");
+  @eCS::stReservedProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_3_9");
+  @eCS::stReservedProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_3_10");
+  @eCS::stReservedProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_3_11");
+  
+//  for (index = 0; index < 47; index++)
+//   {
+//      snprintf(buffer, elcount(buffer), "NVP_au8EcsProfile_0_%d", index);
+//      snprintf(buffer2, elcount(buffer2), "%d", diagGetParameter(this, buffer));
+//      buffer3[index * 2] = buffer2[2];
+//      buffer3[index * 2 + 1] = buffer2[3];
+//    write("%x",buffer3[index*2]);
+//    write("%x",buffer3[index*2+1]);
+//   } 
+//   sysSetVariableString(sysvar::eCS::sFDE3RawValue, buffer3);
+}
+
+
+on diagResponse eCS_OBDC_FD.eCS_Profiles_Read
+{
+  @eCS::stUnlockProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_0_4");
+  @eCS::stUnlockProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_0_5");
+  @eCS::stUnlockProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_0_6");
+  @eCS::stUnlockProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_0_7");
+  @eCS::stUnlockProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_0_8");
+  @eCS::stUnlockProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_0_9");
+  @eCS::stUnlockProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_0_10");
+  @eCS::stUnlockProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_0_11");
+  
+  @eCS::stBackupProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_1_4");
+  @eCS::stBackupProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_1_5");
+  @eCS::stBackupProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_1_6");
+  @eCS::stBackupProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_1_7");
+  @eCS::stBackupProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_1_8");
+  @eCS::stBackupProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_1_9");
+  @eCS::stBackupProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_1_10");
+  @eCS::stBackupProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_1_11");
+  
+  @eCS::stDiagProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_2_4");
+  @eCS::stDiagProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_2_5");
+  @eCS::stDiagProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_2_6");
+  @eCS::stDiagProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_2_7");
+  @eCS::stDiagProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_2_8");
+  @eCS::stDiagProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_2_9");
+  @eCS::stDiagProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_2_10");
+  @eCS::stDiagProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_2_11");
+  
+  @eCS::stReservedProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_3_4");
+  @eCS::stReservedProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_3_5");
+  @eCS::stReservedProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_3_6");
+  @eCS::stReservedProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_3_7");
+  @eCS::stReservedProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_3_8");
+  @eCS::stReservedProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_3_9");
+  @eCS::stReservedProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_3_10");
+  @eCS::stReservedProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_3_11");
+  
+//  for (index = 0; index < 47; index++)
+//   {
+//      snprintf(buffer, elcount(buffer), "NVP_au8EcsProfile_0_%d", index);
+//      snprintf(buffer2, elcount(buffer2), "%d", diagGetParameter(this, buffer));
+//      buffer3[index * 2] = buffer2[2];
+//      buffer3[index * 2 + 1] = buffer2[3];
+//    write("%x",buffer3[index*2]);
+//    write("%x",buffer3[index*2+1]);
+//   } 
+//   sysSetVariableString(sysvar::eCS::sFDE3RawValue, buffer3);
+}
+
+on diagResponse eCS_Diag_FD.eCS_Profiles_Read
+{
+  @eCS::stUnlockProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_0_4");
+  @eCS::stUnlockProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_0_5");
+  @eCS::stUnlockProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_0_6");
+  @eCS::stUnlockProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_0_7");
+  @eCS::stUnlockProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_0_8");
+  @eCS::stUnlockProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_0_9");
+  @eCS::stUnlockProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_0_10");
+  @eCS::stUnlockProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_0_11");
+  
+  @eCS::stBackupProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_1_4");
+  @eCS::stBackupProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_1_5");
+  @eCS::stBackupProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_1_6");
+  @eCS::stBackupProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_1_7");
+  @eCS::stBackupProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_1_8");
+  @eCS::stBackupProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_1_9");
+  @eCS::stBackupProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_1_10");
+  @eCS::stBackupProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_1_11");
+  
+  @eCS::stDiagProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_2_4");
+  @eCS::stDiagProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_2_5");
+  @eCS::stDiagProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_2_6");
+  @eCS::stDiagProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_2_7");
+  @eCS::stDiagProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_2_8");
+  @eCS::stDiagProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_2_9");
+  @eCS::stDiagProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_2_10");
+  @eCS::stDiagProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_2_11");
+  
+  @eCS::stReservedProfile.Step0 = diagGetParameter(this, "NVP_au8EcsProfile_3_4");
+  @eCS::stReservedProfile.Step1 = diagGetParameter(this, "NVP_au8EcsProfile_3_5");
+  @eCS::stReservedProfile.Step2 = diagGetParameter(this, "NVP_au8EcsProfile_3_6");
+  @eCS::stReservedProfile.Step3 = diagGetParameter(this, "NVP_au8EcsProfile_3_7");
+  @eCS::stReservedProfile.Step4 = diagGetParameter(this, "NVP_au8EcsProfile_3_8");
+  @eCS::stReservedProfile.Step5 = diagGetParameter(this, "NVP_au8EcsProfile_3_9");
+  @eCS::stReservedProfile.Step6 = diagGetParameter(this, "NVP_au8EcsProfile_3_10");
+  @eCS::stReservedProfile.Step7 = diagGetParameter(this, "NVP_au8EcsProfile_3_11");
+  
+//  for (index = 0; index < 47; index++)
+//   {
+//      snprintf(buffer, elcount(buffer), "NVP_au8EcsProfile_0_%d", index);
+//      snprintf(buffer2, elcount(buffer2), "%d", diagGetParameter(this, buffer));
+//      buffer3[index * 2] = buffer2[2];
+//      buffer3[index * 2 + 1] = buffer2[3];
+//    write("%x",buffer3[index*2]);
+//    write("%x",buffer3[index*2+1]);
+//   } 
+//   sysSetVariableString(sysvar::eCS::sFDE3RawValue, buffer3);
+}
+
+on sysvar_update sysvar::eCS::stStep_Display.CurrentStep
+{
+  
+  switch(@eCS::stStep_Display.CurrentStep)
+  {
+    case 0:
+    {
+      @eCS::stStep_0.Duration = @eCS::stStep_Display.Duration;
+      @eCS::stStep_0.PWM = @eCS::stStep_Display.PWM;
+      @eCS::stStep_0.ConsignType = @eCS::stStep_Display.ConsignType;
+      @eCS::stStep_0.isRamp = @eCS::stStep_Display.isRamp;
+      @eCS::stStep_0.isInfinite = @eCS::stStep_Display.isInfinite;
+      @eCS::stStep_0.isTrigger = @eCS::stStep_Display.isTrigger;
+      break;
+    }
+    case 1:
+    {
+      @eCS::stStep_1.Duration = @eCS::stStep_Display.Duration;
+      @eCS::stStep_1.PWM = @eCS::stStep_Display.PWM;
+      @eCS::stStep_1.ConsignType = @eCS::stStep_Display.ConsignType;
+      @eCS::stStep_1.isRamp = @eCS::stStep_Display.isRamp;
+      @eCS::stStep_1.isInfinite = @eCS::stStep_Display.isInfinite;
+      @eCS::stStep_1.isTrigger = @eCS::stStep_Display.isTrigger;
+      break;
+    }
+    case 2:
+    {
+      @eCS::stStep_2.Duration = @eCS::stStep_Display.Duration;
+      @eCS::stStep_2.PWM = @eCS::stStep_Display.PWM;
+      @eCS::stStep_2.ConsignType = @eCS::stStep_Display.ConsignType;
+      @eCS::stStep_2.isRamp = @eCS::stStep_Display.isRamp;
+      @eCS::stStep_2.isInfinite = @eCS::stStep_Display.isInfinite;
+      @eCS::stStep_2.isTrigger = @eCS::stStep_Display.isTrigger;
+      break;
+    }
+    case 3:
+    {
+      @eCS::stStep_3.Duration = @eCS::stStep_Display.Duration;
+      @eCS::stStep_3.PWM = @eCS::stStep_Display.PWM;
+      @eCS::stStep_3.ConsignType = @eCS::stStep_Display.ConsignType;
+      @eCS::stStep_3.isRamp = @eCS::stStep_Display.isRamp;
+      @eCS::stStep_3.isInfinite = @eCS::stStep_Display.isInfinite;
+      @eCS::stStep_3.isTrigger = @eCS::stStep_Display.isTrigger;
+      break;
+    }
+    case 4:
+    {
+      @eCS::stStep_4.Duration = @eCS::stStep_Display.Duration;
+      @eCS::stStep_4.PWM = @eCS::stStep_Display.PWM;
+      @eCS::stStep_4.ConsignType = @eCS::stStep_Display.ConsignType;
+      @eCS::stStep_4.isRamp = @eCS::stStep_Display.isRamp;
+      @eCS::stStep_4.isInfinite = @eCS::stStep_Display.isInfinite;
+      @eCS::stStep_4.isTrigger = @eCS::stStep_Display.isTrigger;
+      break;
+    }
+    case 5:
+    {
+      @eCS::stStep_5.Duration = @eCS::stStep_Display.Duration;
+      @eCS::stStep_5.PWM = @eCS::stStep_Display.PWM;
+      @eCS::stStep_5.ConsignType = @eCS::stStep_Display.ConsignType;
+      @eCS::stStep_5.isRamp = @eCS::stStep_Display.isRamp;
+      @eCS::stStep_5.isInfinite = @eCS::stStep_Display.isInfinite;
+      @eCS::stStep_5.isTrigger = @eCS::stStep_Display.isTrigger;
+      break;
+    }
+    case 6:
+    {
+      @eCS::stStep_6.Duration = @eCS::stStep_Display.Duration;
+      @eCS::stStep_6.PWM = @eCS::stStep_Display.PWM;
+      @eCS::stStep_6.ConsignType = @eCS::stStep_Display.ConsignType;
+      @eCS::stStep_6.isRamp = @eCS::stStep_Display.isRamp;
+      @eCS::stStep_6.isInfinite = @eCS::stStep_Display.isInfinite;
+      @eCS::stStep_6.isTrigger = @eCS::stStep_Display.isTrigger;
+      break;
+    }
+    case 7:
+    {
+      @eCS::stStep_7.Duration = @eCS::stStep_Display.Duration;
+      @eCS::stStep_7.PWM = @eCS::stStep_Display.PWM;
+      @eCS::stStep_7.ConsignType = @eCS::stStep_Display.ConsignType;
+      @eCS::stStep_7.isRamp = @eCS::stStep_Display.isRamp;
+      @eCS::stStep_7.isInfinite = @eCS::stStep_Display.isInfinite;
+      @eCS::stStep_7.isTrigger = @eCS::stStep_Display.isTrigger;
+      break;
+    }
+    default:
+    {
+      break;
+    }
+    write("%f",@eCS::stStep_0.PWM);
+  }
+}
+on sysvar sysvar::eCS::stStep_Display.CurrentStep
+{
+  switch(@eCS::stStep_Display.CurrentStep)
+  {
+    case 0:
+    {
+      @eCS::stStep_Display.Duration = @eCS::stStep_0.Duration;
+      @eCS::stStep_Display.PWM = @eCS::stStep_0.PWM;
+      @eCS::stStep_Display.ConsignType = @eCS::stStep_0.ConsignType;
+      @eCS::stStep_Display.isRamp = @eCS::stStep_0.isRamp;
+      @eCS::stStep_Display.isInfinite = @eCS::stStep_0.isInfinite;
+      @eCS::stStep_Display.isTrigger = @eCS::stStep_0.isTrigger;
+      break;
+    }
+    case 1:
+    {
+      @eCS::stStep_Display.Duration = @eCS::stStep_1.Duration;
+      @eCS::stStep_Display.PWM = @eCS::stStep_1.PWM;
+      @eCS::stStep_Display.ConsignType = @eCS::stStep_1.ConsignType;
+      @eCS::stStep_Display.isRamp = @eCS::stStep_1.isRamp;
+      @eCS::stStep_Display.isInfinite = @eCS::stStep_1.isInfinite;
+      @eCS::stStep_Display.isTrigger = @eCS::stStep_1.isTrigger;
+      break;
+    }
+    case 2:
+    {
+      @eCS::stStep_Display.Duration = @eCS::stStep_2.Duration;
+      @eCS::stStep_Display.PWM = @eCS::stStep_2.PWM;
+      @eCS::stStep_Display.ConsignType = @eCS::stStep_2.ConsignType;
+      @eCS::stStep_Display.isRamp = @eCS::stStep_2.isRamp;
+      @eCS::stStep_Display.isInfinite = @eCS::stStep_2.isInfinite;
+      @eCS::stStep_Display.isTrigger = @eCS::stStep_2.isTrigger;
+      break;
+    }
+    case 3:
+    {
+      @eCS::stStep_Display.Duration = @eCS::stStep_3.Duration;
+      @eCS::stStep_Display.PWM = @eCS::stStep_3.PWM;
+      @eCS::stStep_Display.ConsignType = @eCS::stStep_3.ConsignType;
+      @eCS::stStep_Display.isRamp = @eCS::stStep_3.isRamp;
+      @eCS::stStep_Display.isInfinite = @eCS::stStep_3.isInfinite;
+      @eCS::stStep_Display.isTrigger = @eCS::stStep_3.isTrigger;
+      break;
+    }
+    case 4:
+    {
+      @eCS::stStep_Display.Duration = @eCS::stStep_4.Duration;
+      @eCS::stStep_Display.PWM = @eCS::stStep_4.PWM;
+      @eCS::stStep_Display.ConsignType = @eCS::stStep_4.ConsignType;
+      @eCS::stStep_Display.isRamp = @eCS::stStep_4.isRamp;
+      @eCS::stStep_Display.isInfinite = @eCS::stStep_4.isInfinite;
+      @eCS::stStep_Display.isTrigger = @eCS::stStep_4.isTrigger;
+      break;
+    }
+    case 5:
+    {
+      @eCS::stStep_Display.Duration = @eCS::stStep_5.Duration;
+      @eCS::stStep_Display.PWM = @eCS::stStep_5.PWM;
+      @eCS::stStep_Display.ConsignType = @eCS::stStep_5.ConsignType;
+      @eCS::stStep_Display.isRamp = @eCS::stStep_5.isRamp;
+      @eCS::stStep_Display.isInfinite = @eCS::stStep_5.isInfinite;
+      @eCS::stStep_Display.isTrigger = @eCS::stStep_5.isTrigger;
+      break;
+    }
+    case 6:
+    {
+      @eCS::stStep_Display.Duration = @eCS::stStep_6.Duration;
+      @eCS::stStep_Display.PWM = @eCS::stStep_6.PWM;
+      @eCS::stStep_Display.ConsignType = @eCS::stStep_6.ConsignType;
+      @eCS::stStep_Display.isRamp = @eCS::stStep_6.isRamp;
+      @eCS::stStep_Display.isInfinite = @eCS::stStep_6.isInfinite;
+      @eCS::stStep_Display.isTrigger = @eCS::stStep_6.isTrigger;
+      break;
+    }
+    case 7:
+    {
+      @eCS::stStep_Display.Duration = @eCS::stStep_7.Duration;
+      @eCS::stStep_Display.PWM = @eCS::stStep_7.PWM;
+      @eCS::stStep_Display.ConsignType = @eCS::stStep_7.ConsignType;
+      @eCS::stStep_Display.isRamp = @eCS::stStep_7.isRamp;
+      @eCS::stStep_Display.isInfinite = @eCS::stStep_7.isInfinite;
+      @eCS::stStep_Display.isTrigger = @eCS::stStep_7.isTrigger;
+      break;
+      
+    }
+    default:
+    {
+      break;
+    }
+    write("%f",@eCS::stStep_0.PWM);
+    
+  }
+}
+
+/* START of Profile Step Definition */
+/* Write button */
+
+void decToHex(long decimal)
+{   
+  stack int i=0;
+  stack long quotient, remainder;
+  stack int k=7;
+  stack int j = 0;
+  stack char hexadecimalnum[8];
+  stack char tmpstr[4] = " ";
+  quotient = decimal;
+  for(i=0; i<8; i++)
+  {
+    hexadecimalnum[i]='0';
+  }
+
+ while (quotient != 0)
+  {
+   remainder = quotient % 16;
+   if (remainder < 10)
+     hexadecimalnum[j++] = 48 + remainder;
+   else
+    hexadecimalnum[j++] = 55 + remainder;
+    quotient = quotient / 16;
+  }
+for(i=0; i<8; i++)
+{
+ dec2hexConversionResult[i]='0';
+}
+
+for(i=0; i<8; i++)
+{
+  dec2hexConversionResult[k] = hexadecimalnum[i];
+  k--;
+}
+  
+  tmpstr[0] = '0';                                  
+  tmpstr[1] = 'x';
+  tmpstr[2] = dec2hexConversionResult[0];                       
+  tmpstr[3] = dec2hexConversionResult[1];
+  FDE3_PWM_byte_req[0] = (byte)atol(tmpstr);
+
+  tmpstr[2] = dec2hexConversionResult[2];                       
+  tmpstr[3] = dec2hexConversionResult[3];
+  FDE3_PWM_byte_req[1] = (byte)atol(tmpstr);
+
+  tmpstr[2] = dec2hexConversionResult[4];                       
+  tmpstr[3] = dec2hexConversionResult[5];
+  FDE3_PWM_byte_req[2] = (byte)atol(tmpstr);
+
+  tmpstr[2] = dec2hexConversionResult[6];                       
+  tmpstr[3] = dec2hexConversionResult[7];
+  FDE3_PWM_byte_req[3] = (byte)atol(tmpstr);
+}
+on sysvar_update eCS::FDE4_Write
+{
+  
+  byte buffer;
+  int idx;
+  stack int bufferLength = 0;
+  char buf[60];
+  char buf2[60];
+  byte buf3[60];
+  stack int duration_shift_left[8];
+  stack int duration_shift_right[8];
+  
+  long PWM_x10k[8];
+ 
+  if (@sysvar::eCS::FDE4_Write==1)
+  { 
+    if (@eCS::FDE4_Write_Raw == 0)
+    {
+      duration_shift_right[0]= @eCS::stStep_0.Duration>>8;
+      duration_shift_left[0]= (@eCS::stStep_0.Duration&0xFF);
+      PWM_x10k[0]=@eCS::stStep_0.PWM * 10000;
+      
+      duration_shift_right[1]= @eCS::stStep_1.Duration>>8;
+      duration_shift_left[1]= (@eCS::stStep_1.Duration&0xFF);
+      PWM_x10k[1]=@eCS::stStep_1.PWM * 10000;
+      
+      duration_shift_right[2]= @eCS::stStep_2.Duration>>8;
+      duration_shift_left[2]= (@eCS::stStep_2.Duration&0xFF);
+      PWM_x10k[2]=@eCS::stStep_2.PWM * 10000;
+      
+      duration_shift_right[3]= @eCS::stStep_3.Duration>>8;
+      duration_shift_left[3]= (@eCS::stStep_3.Duration&0xFF);
+      PWM_x10k[3]=@eCS::stStep_3.PWM * 10000;
+      
+      duration_shift_right[4]= @eCS::stStep_4.Duration>>8;
+      duration_shift_left[4]= (@eCS::stStep_4.Duration&0xFF);
+      PWM_x10k[4]=@eCS::stStep_4.PWM * 10000;
+      
+      duration_shift_right[5]= @eCS::stStep_5.Duration>>8;
+      duration_shift_left[5]= (@eCS::stStep_5.Duration&0xFF);
+      PWM_x10k[5]=@eCS::stStep_5.PWM * 10000;
+      
+      duration_shift_right[6]= @eCS::stStep_6.Duration>>8;
+      duration_shift_left[6]= (@eCS::stStep_6.Duration&0xFF);
+      PWM_x10k[6]=@eCS::stStep_6.PWM * 10000;
+      
+      duration_shift_right[7]= @eCS::stStep_7.Duration>>8;
+      duration_shift_left[7]= (@eCS::stStep_7.Duration&0xFF);
+      PWM_x10k[7]=@eCS::stStep_7.PWM * 10000;
+      
+
+      /* --------------------------------------------------------------- 0*/
+      /* Update Step number */
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_0_0", duration_shift_right[0]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_0_1",  duration_shift_left[0]);
+      
+      /* Update PWM value */
+      decToHex(PWM_x10k[0]);
+       Req_EcsSteps_Write.SetParameter("NVP_au8Step_0_2", FDE3_PWM_byte_req[0]);
+       Req_EcsSteps_Write.SetParameter("NVP_au8Step_0_3", FDE3_PWM_byte_req[1]);
+       Req_EcsSteps_Write.SetParameter("NVP_au8Step_0_4", FDE3_PWM_byte_req[2]);
+       Req_EcsSteps_Write.SetParameter("NVP_au8Step_0_5", FDE3_PWM_byte_req[3]);
+      buffer = (@eCS::stStep_0.isRamp << 7 ) | (@eCS::stStep_0.isInfinite << 6 ) | (@eCS::stStep_0.isTrigger << 5 ) | (@eCS::stStep_0.ConsignType);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_0_6", buffer);
+      
+      /* --------------------------------------------------------------- */
+      
+      /* ---------------------------------------------------------------1 */
+      /* Update Step number */
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_1_0", duration_shift_right[1]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_1_1",  duration_shift_left[1]);
+      /* Update PWM value */
+      decToHex(PWM_x10k[1]);
+       Req_EcsSteps_Write.SetParameter("NVP_au8Step_1_2", FDE3_PWM_byte_req[0]);
+       Req_EcsSteps_Write.SetParameter("NVP_au8Step_1_3", FDE3_PWM_byte_req[1]);
+       Req_EcsSteps_Write.SetParameter("NVP_au8Step_1_4", FDE3_PWM_byte_req[2]);
+       Req_EcsSteps_Write.SetParameter("NVP_au8Step_1_5", FDE3_PWM_byte_req[3]);
+      buffer = (@eCS::stStep_0.isRamp << 7 ) | (@eCS::stStep_0.isInfinite << 6 ) | (@eCS::stStep_0.isTrigger << 5 ) | (@eCS::stStep_0.ConsignType);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_1_6", buffer);
+      /* --------------------------------------------------------------- */
+      
+      /* ---------------------------------------------------------------2 */
+      /* Update Step number */
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_2_0", duration_shift_right[2]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_2_1",  duration_shift_left[2]); 
+      /* Update PWM value */
+      decToHex(PWM_x10k[2]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_2_2", FDE3_PWM_byte_req[0]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_2_3", FDE3_PWM_byte_req[1]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_2_4", FDE3_PWM_byte_req[2]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_2_5", FDE3_PWM_byte_req[3]);
+      buffer = (@eCS::stStep_2.isRamp << 7 ) | (@eCS::stStep_2.isInfinite << 6 ) | (@eCS::stStep_2.isTrigger << 5 ) | (@eCS::stStep_2.ConsignType);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_2_6", buffer);
+      
+      /* --------------------------------------------------------------- */
+      
+      /* ---------------------------------------------------------------3 */
+      /* Update Step number */
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_3_0", duration_shift_right[3]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_3_1",  duration_shift_left[3]);
+       /* Update PWM value */
+      decToHex(PWM_x10k[3]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_3_2", FDE3_PWM_byte_req[0]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_3_3", FDE3_PWM_byte_req[1]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_3_4", FDE3_PWM_byte_req[2]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_3_5", FDE3_PWM_byte_req[3]);
+      buffer = (@eCS::stStep_3.isRamp << 7 ) | (@eCS::stStep_3.isInfinite << 6 ) | (@eCS::stStep_3.isTrigger << 5 ) | (@eCS::stStep_3.ConsignType);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_3_6", buffer);
+      /* --------------------------------------------------------------- */
+      
+      /* ---------------------------------------------------------------4 */
+      /* Update Step number */
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_4_0", duration_shift_right[4]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_4_1",  duration_shift_left[4]);
+       /* Update PWM value */
+      decToHex(PWM_x10k[4]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_4_2", FDE3_PWM_byte_req[0]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_4_3", FDE3_PWM_byte_req[1]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_4_4", FDE3_PWM_byte_req[2]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_4_5", FDE3_PWM_byte_req[3]);
+      buffer = (@eCS::stStep_4.isRamp << 7 ) | (@eCS::stStep_4.isInfinite << 6 ) | (@eCS::stStep_4.isTrigger << 5 ) | (@eCS::stStep_4.ConsignType);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_4_6", buffer);
+      
+      /* --------------------------------------------------------------- */
+      
+      /* ---------------------------------------------------------------5 */
+      /* Update Step number */
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_5_0", duration_shift_right[5]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_5_1",  duration_shift_left[5]);
+       /* Update PWM value */
+      decToHex(PWM_x10k[5]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_5_2", FDE3_PWM_byte_req[0]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_5_3", FDE3_PWM_byte_req[1]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_5_4", FDE3_PWM_byte_req[2]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_5_5", FDE3_PWM_byte_req[3]);
+      buffer = (@eCS::stStep_5.isRamp << 7 ) | (@eCS::stStep_5.isInfinite << 6 ) | (@eCS::stStep_5.isTrigger << 5 ) | (@eCS::stStep_5.ConsignType);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_5_6", buffer);
+      /* --------------------------------------------------------------- */
+      
+       /* ---------------------------------------------------------------6 */
+      /* Update Step number */
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_6_0", duration_shift_right[6]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_6_1",  duration_shift_left[6]);
+      /* Update PWM value */
+      decToHex(PWM_x10k[6]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_6_2", FDE3_PWM_byte_req[0]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_6_3", FDE3_PWM_byte_req[1]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_6_4", FDE3_PWM_byte_req[2]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_6_5", FDE3_PWM_byte_req[3]);
+      buffer = (@eCS::stStep_6.isRamp << 7 ) | (@eCS::stStep_6.isInfinite << 6 ) | (@eCS::stStep_6.isTrigger << 5 ) | (@eCS::stStep_6.ConsignType);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_6_6", buffer);
+      
+      /* --------------------------------------------------------------- */
+      
+       /* ---------------------------------------------------------------7 */
+      /* Update Step number */
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_7_0", duration_shift_right[7]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_7_1", duration_shift_left[7]);
+       /* Update PWM value */
+      decToHex(PWM_x10k[7]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_7_2", FDE3_PWM_byte_req[0]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_7_3", FDE3_PWM_byte_req[1]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_7_4", FDE3_PWM_byte_req[2]);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_7_5", FDE3_PWM_byte_req[3]);
+      buffer = (@eCS::stStep_7.isRamp << 7 ) | (@eCS::stStep_7.isInfinite << 6 ) | (@eCS::stStep_7.isTrigger << 5 ) | (@eCS::stStep_7.ConsignType);
+      Req_EcsSteps_Write.SetParameter("NVP_au8Step_7_6", buffer);
+    write("%f",@eCS::stStep_0.PWM);
+    } 
+    else 
+    { 
+      //Set_RawValue("eCS", "sFDE4RawValue", @eCS::FDE4_Write_Raw);    
+
+
+      sysGetVariableString("eCS","sFDE4RawValue", buf, (32+1)*2);
+  
+      snprintf(buf2, (32+1)*2, "%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x", buf[0], buf[1], buf[2], buf[3],
+                                                     buf[4], buf[5], buf[6], buf[7],
+                                                     buf[8], buf[9], buf[10], buf[11],
+      buf[12], buf[13], buf[14], buf[15],
+      buf[16], buf[17], buf[18], buf[19],
+      buf[20], buf[21], buf[22], buf[23],
+      buf[24], buf[25], buf[26], buf[27],
+      buf[28], buf[29], buf[30], buf[31]);
+
+      for(idx = 0; idx<32;idx++)
+      {
+        write("%x",buf[idx]);
+        buf3[idx] = buf2[idx];
+      }
+      Req_EcsSteps_Write.SetPrimitiveData(buf3,elcount(buf3));
+    }
+    
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_EcsSteps_Write.SendRequest();
+          break;
+        }
+        
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_EcsSteps_Write.SendRequest();
+          break;
+        }
+        
+        case 13:
+        {
+          eCS_Diag_FD_Req_EcsSteps_Write.SendRequest();
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+on sysvar sysvar::eCS::FDE4_Read
+{
+  if (@eCS::FDE4_Read)
+  {
+    
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+			    Req_EcsSteps_Read.SendRequest();
+          write("Req_EcsSteps_Read was called");
+          break;
+        }
+			
+        case 12:
+        {
+    			eCS_OBDC_FD_Req_EcsSteps_Read.SendRequest();
+          write("eCS_OBDC_FD_Req_EcsSteps_Read was called");
+          break;
+        }
+        
+        case 13:
+        {
+    			eCS_Diag_FD_Req_EcsSteps_Read.SendRequest();
+          write("eCS_Diag_FD_Req_EcsSteps_Read was called");
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+     } 
+  }
+}
+
+/* Read button response */
+on diagResponse eCS.eCS_Steps_Read
+{
+  stack byte buffer[2];
+  stack byte tempPwm[4];
+  stack byte tempDuration[2];
+  stack double tempOperation = 0;
+  
+  diagGetParameterRaw(this, "NVP_au8Step_0_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_0.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_0_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_0.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_0_6",buffer,1);
+
+  @eCS::stStep_0.ConsignType = buffer[0] & 7;
+  @eCS::stStep_0.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_0.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_0.isTrigger = (buffer[0] & 32) >> 5;
+  write("%f",@eCS::stStep_0.PWM);
+  /*-----------------------------------------*/
+  
+  diagGetParameterRaw(this, "NVP_au8Step_1_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_1.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_1_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_1.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_1_6",buffer,1);
+
+
+  @eCS::stStep_1.ConsignType = buffer[0] & 7;
+  @eCS::stStep_1.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_1.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_1.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_2_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_2.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_2_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_2.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_2_6",buffer,1);
+
+
+  @eCS::stStep_2.ConsignType = buffer[0] & 7;
+  @eCS::stStep_2.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_2.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_2.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_3_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_3.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_3_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_5",buffer,1);
+  tempPwm[3] = buffer[0];
+ 
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_3.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_3_6",buffer,1);
+
+
+  @eCS::stStep_3.ConsignType = buffer[0] & 7;
+  @eCS::stStep_3.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_3.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_3.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_4_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_4.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_4_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_5",buffer,1);
+  tempPwm[3] = buffer[0];
+ 
+  diagGetParameterRaw(this, "NVP_au8Step_4_6",buffer,1);
+  
+  @eCS::stStep_4.ConsignType = buffer[0] & 7;
+  @eCS::stStep_4.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_4.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_4.isTrigger = (buffer[0] & 32) >> 5;
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_4.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_4_6",buffer,1);
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_5_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_5.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_5_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_5.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_5_6",buffer,1);
+
+  @eCS::stStep_5.ConsignType = buffer[0] & 7;
+  @eCS::stStep_5.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_5.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_5.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_6_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_6.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_6_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_6.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_6_6",buffer,1);
+
+  @eCS::stStep_6.ConsignType = buffer[0] & 7;
+  @eCS::stStep_6.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_6.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_6.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_7_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_7.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_7_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_7.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_7_6",buffer,1);
+
+  @eCS::stStep_7.ConsignType = buffer[0] & 7;
+  @eCS::stStep_7.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_7.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_7.isTrigger = (buffer[0] & 32) >> 5;
+}
+/**********************************************
+* END of eCS Step Definition TAB
+***********************************************/
+/**********************************************
+* END of eCS Panel
+***********************************************/
+
+
+/* Read button response */
+on diagResponse eCS_OBDC_FD.eCS_Steps_Read
+{
+  stack byte buffer[2];
+  stack byte tempPwm[4];
+  stack byte tempDuration[2];
+  stack double tempOperation = 0;
+  
+  diagGetParameterRaw(this, "NVP_au8Step_0_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_0.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_0_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_0.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_0_6",buffer,1);
+
+  @eCS::stStep_0.ConsignType = buffer[0] & 7;
+  @eCS::stStep_0.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_0.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_0.isTrigger = (buffer[0] & 32) >> 5;
+  write("%f",@eCS::stStep_0.PWM);
+  /*-----------------------------------------*/
+  
+  diagGetParameterRaw(this, "NVP_au8Step_1_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_1.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_1_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_1.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_1_6",buffer,1);
+
+
+  @eCS::stStep_1.ConsignType = buffer[0] & 7;
+  @eCS::stStep_1.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_1.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_1.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_2_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_2.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_2_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_2.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_2_6",buffer,1);
+
+
+  @eCS::stStep_2.ConsignType = buffer[0] & 7;
+  @eCS::stStep_2.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_2.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_2.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_3_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_3.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_3_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_5",buffer,1);
+  tempPwm[3] = buffer[0];
+ 
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_3.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_3_6",buffer,1);
+
+
+  @eCS::stStep_3.ConsignType = buffer[0] & 7;
+  @eCS::stStep_3.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_3.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_3.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_4_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_4.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_4_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_4.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_4_6",buffer,1);
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_5_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_5.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_5_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_5.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_5_6",buffer,1);
+
+  @eCS::stStep_5.ConsignType = buffer[0] & 7;
+  @eCS::stStep_5.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_5.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_5.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_6_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_6.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_6_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_6.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_6_6",buffer,1);
+
+  @eCS::stStep_6.ConsignType = buffer[0] & 7;
+  @eCS::stStep_6.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_6.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_6.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_7_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_7.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_7_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_7.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_7_6",buffer,1);
+
+  @eCS::stStep_7.ConsignType = buffer[0] & 7;
+  @eCS::stStep_7.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_7.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_7.isTrigger = (buffer[0] & 32) >> 5;
+}
+/**********************************************
+* END of eCS Step Definition TAB
+***********************************************/
+/**********************************************
+* END of eCS Panel
+***********************************************/
+
+
+/* Read button response */
+on diagResponse eCS_Diag_FD.eCS_Steps_Read
+{
+  stack byte buffer[2];
+  stack byte tempPwm[4];
+  stack byte tempDuration[2];
+  stack double tempOperation = 0;
+  
+  diagGetParameterRaw(this, "NVP_au8Step_0_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_0.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_0_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_0_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_0.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_0_6",buffer,1);
+
+  @eCS::stStep_0.ConsignType = buffer[0] & 7;
+  @eCS::stStep_0.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_0.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_0.isTrigger = (buffer[0] & 32) >> 5;
+  write("%f",@eCS::stStep_0.PWM);
+  /*-----------------------------------------*/
+  
+  diagGetParameterRaw(this, "NVP_au8Step_1_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_1.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_1_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_1_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_1.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_1_6",buffer,1);
+
+
+  @eCS::stStep_1.ConsignType = buffer[0] & 7;
+  @eCS::stStep_1.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_1.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_1.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_2_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_2.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_2_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_2_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_2.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_2_6",buffer,1);
+
+
+  @eCS::stStep_2.ConsignType = buffer[0] & 7;
+  @eCS::stStep_2.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_2.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_2.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_3_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_3.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_3_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_3_5",buffer,1);
+  tempPwm[3] = buffer[0];
+ 
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_3.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_3_6",buffer,1);
+
+
+  @eCS::stStep_3.ConsignType = buffer[0] & 7;
+  @eCS::stStep_3.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_3.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_3.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_4_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_4.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_4_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_4_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_4.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_4_6",buffer,1);
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_5_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_5.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_5_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_5_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_5.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_5_6",buffer,1);
+
+  @eCS::stStep_5.ConsignType = buffer[0] & 7;
+  @eCS::stStep_5.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_5.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_5.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_6_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_6.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_6_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_6_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_6.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_6_6",buffer,1);
+
+  @eCS::stStep_6.ConsignType = buffer[0] & 7;
+  @eCS::stStep_6.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_6.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_6.isTrigger = (buffer[0] & 32) >> 5;
+  /*-----------------------------------------*/
+  diagGetParameterRaw(this, "NVP_au8Step_7_0",buffer,1);
+  tempDuration[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_1",buffer,1);
+  tempDuration[1] = buffer[0];
+  
+  @eCS::stStep_7.Duration = (tempDuration[1] | (tempDuration[0] << 8));
+  
+  diagGetParameterRaw(this, "NVP_au8Step_7_2",buffer,1);
+  tempPwm[0] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_3",buffer,1);
+  tempPwm[1] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_4",buffer,1);
+  tempPwm[2] = buffer[0];
+  diagGetParameterRaw(this, "NVP_au8Step_7_5",buffer,1);
+  tempPwm[3] = buffer[0];
+  
+  tempOperation = ((tempPwm[0] << 24) | (tempPwm[1] << 16) | (tempPwm[2] << 8) | (tempPwm[3]));
+  @eCS::stStep_7.PWM = tempOperation /10000;
+  diagGetParameterRaw(this, "NVP_au8Step_7_6",buffer,1);
+
+  @eCS::stStep_7.ConsignType = buffer[0] & 7;
+  @eCS::stStep_7.isRamp = (buffer[0] & 128) >> 7;
+  @eCS::stStep_7.isInfinite = (buffer[0] & 64) >> 6;
+  @eCS::stStep_7.isTrigger = (buffer[0] & 32) >> 5;
+}
+/**********************************************
+* END of eCS Step Definition TAB
+***********************************************/
+/**********************************************
+* END of eCS Panel
+***********************************************/
+
+
+/**********************************************
+* START of DIAG Panel
+***********************************************/
+/**********************************************
+* START of General Diag TAB
+***********************************************/
+// START of Sesion controls
+// Default Session Start
+on sysvar sysvar::Platform::DIAG_Session_Control_Update
+{
+  if (@Platform::DIAG_Session_Control_Update)
+  {
+    switch (@Platform::DIAG_Session_Control)
+    {
+      case 1:
+          switch(@Platform::tester_Config)
+          {
+            case 11:
+            {
+    		      Req_DefaultSession_Start.SendRequest();
+              write("Req_DefaultSession_Start was called");      
+              break;
+            }
+    			
+            case 12:
+            {
+    		      eCS_OBDC_FD_Req_DefaultSession_Start.SendRequest();
+              write("eCS_OBDC_FD_Req_DefaultSession_Start was called");   	
+              break;
+            }
+            
+            case 13:
+            {
+    		      eCS_Diag_FD_Req_DefaultSession_Start.SendRequest();
+              write("eCS_Diag_FD_Req_DefaultSession_Start was called");   	
+              break;
+            }
+            
+            default:
+           {
+            break;
+           }
+          }
+         break;
+      case 2:
+          switch(@Platform::tester_Config)
+          {
+            case 11:
+            {
+    		       Req_ProgrammingSession_Start.SendRequest();
+               write("Req_ProgrammingSession_Start was called");      
+              break;
+            }
+    			
+            case 12:
+            {
+    		        eCS_OBDC_FD_Req_ProgrammingSession_Start.SendRequest();
+                write("eCS_OBDC_FD_Req_ProgrammingSession_Start was called"); 	
+              break;
+            }
+            
+            case 13:
+            {
+    		        eCS_Diag_FD_Req_ProgrammingSession_Start.SendRequest();
+                write("eCS_Diag_FD_Req_ProgrammingSession_Start was called"); 	
+              break;
+            }
+            
+            default:
+           {
+            break;
+           }
+          }
+         break;
+          
+      case 3: 
+          switch(@Platform::tester_Config)
+          {
+            case 11:
+            {
+    		        Req_ExtendedDiagnosticSession_Start.SendRequest();
+                write("Req_ExtendedDiagnosticSession_Start was called");       
+              break;
+            }
+    			
+            case 12:
+            {
+    		        eCS_OBDC_FD_Req_ExtendedDiagnosticSession_Start.SendRequest();
+                write("eCS_OBDC_FD_Req_ExtendedDiagnosticSession_Start was called"); 	
+              break;
+            }
+            
+            case 13:
+            {
+    		       eCS_Diag_FD_Req_ExtendedDiagnosticSession_Start.SendRequest();
+               write("eCS_Diag_FD_Req_ExtendedDiagnosticSession_Start was called");   	
+              break;
+            }
+            
+            default:
+           {
+            break;
+           }
+          }
+         break;
+      case 126:
+          switch(@Platform::tester_Config)
+          {
+            case 11:
+            {
+      		      Req_Supplier_Diagnostic_Session_Start.SendRequest();
+                write("Req_Supplier_Diagnostic_Session_Start was called");       
+              break;
+            }
+    			
+            case 12:
+            {
+    		        eCS_OBDC_FD_Req_Supplier_Diagnostic_Session_Start.SendRequest();
+                write("eCS_OBDC_FD_Req_Supplier_Diagnostic_Session_Start was called");    	
+              break;
+            }
+            
+            case 13:
+            {
+    		        eCS_Diag_FD_Req_Supplier_Diagnostic_Session_Start.SendRequest();
+                write("eCS_Diag_FD_Req_Supplier_Diagnostic_Session_Start was called");   	
+              break;
+            }
+            
+            default:
+           {
+            break;
+           }       
+          }
+         break;
+          
+        }
+      
+      if (@Platform::DIAG_TesterPresent)
+      {
+        
+        switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_TesterPresent_Send.SendRequest();      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_TesterPresent_Send.SendRequest();   	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_TesterPresent_Send.SendRequest();   	
+          break;
+        }
+      }
+      setTimer (TSentTesterPresent, 1500);
+      }
+  }
+}
+// END of Sesion controls
+
+// START of Security Access
+on sysvar_update sysvar::Platform::DIAG_Security_Control_Update
+{
+  if (@Platform::DIAG_Security_Control_Update)
+  {
+    if (@Platform::DIAG_Security_Control == 97)
+    {
+      
+      switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		       Req_Supplier_Application_Request.SendRequest();
+           write("Req_Supplier_Application_Request was called");    
+          break;
+        }
+			
+        case 12:
+        {
+		       eCS_OBDC_FD_Req_Supplier_Application_Request.SendRequest();
+           write("eCS_OBDC_FD_Req_Supplier_Application_Request was called"); 	
+          break;
+        }
+        
+        case 13:
+        {
+		       eCS_Diag_FD_Req_Supplier_Application_Request.SendRequest();
+           write("eCS_Diag_FD_Req_Supplier_Application_Request was called"); 	
+          break;
+        }
+        
+        default:
+          {
+           break;
+          }       
+          
+         break;
+          
+       } 
+  }
+    else if (@Platform::DIAG_Security_Control == 17)
+    {
+      Req_Programming_Bootloader_Request.SendRequest();
+      write("Req_Programming_Bootloader_Request was called");
+      switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_Programming_Bootloader_Request.SendRequest();
+          write("Req_Programming_Bootloader_Request was called");    
+          break;
+        }
+			
+        case 12:
+        {
+		       eCS_OBDC_FD_Req_Programming_Bootloader_Request.SendRequest();
+           write("eCS_OBDC_FD_Req_Programming_Bootloader_Request was called"); 	
+          break;
+        }
+        
+        case 13:
+        {
+		       eCS_Diag_FD_Req_Programming_Bootloader_Request.SendRequest();
+           write("eCS_Diag_FD_Req_Programming_Bootloader_Request was called"); 	
+          break;
+        }
+        
+        default:
+          {
+           break;
+          }       
+          
+         break;
+          
+      } 
+    }
+  }
+}
+
+// Supplier response
+on diagResponse eCS.Supplier_RequestSeed_Request
+{
+  byte seedArray[8];
+  int idx;
+  byte SAkey[8];
+  char byteChar[8];
+  char out[300];
+  char out2[300];
+  char tempOut[300];  
+
+  DiagGetParameterRaw(this, "SecuritySeed", seedArray, elcount(seedArray));
+  
+  //contsruct frame
+  getALVkey(elcount(seedArray),seedArray,SAkey);
+  
+  Req_Supplier_Application_Send.SetParameterRaw("SecurityKey", SAkey, 8);  
+  
+  Req_Supplier_Application_Send.SendRequest();
+}
+
+on diagResponse eCS_OBDC_FD.Supplier_RequestSeed_Request
+{
+  byte seedArray[8];
+  int idx;
+  byte SAkey[8];
+  char byteChar[8];
+  char out[300];
+  char out2[300];
+  char tempOut[300];  
+
+  DiagGetParameterRaw(this, "SecuritySeed", seedArray, elcount(seedArray));
+  
+  //contsruct frame
+  getALVkey(elcount(seedArray),seedArray,SAkey);
+  
+  eCS_OBDC_FD_Req_Supplier_Application_Send.SetParameterRaw("SecurityKey", SAkey, 8);  
+  
+  eCS_OBDC_FD_Req_Supplier_Application_Send.SendRequest();
+  
+}
+// END of Security Access
+
+
+on diagResponse eCS_Diag_FD.Supplier_RequestSeed_Request
+{
+  byte seedArray[8];
+  int idx;
+  byte SAkey[8];
+  char byteChar[8];
+  char out[300];
+  char out2[300];
+  char tempOut[300];  
+
+  DiagGetParameterRaw(this, "SecuritySeed", seedArray, elcount(seedArray));
+  
+  //contsruct frame
+  getALVkey(elcount(seedArray),seedArray,SAkey);
+  
+  eCS_Diag_FD_Req_Supplier_Application_Send.SetParameterRaw("SecurityKey", SAkey, 8);  
+  
+  eCS_Diag_FD_Req_Supplier_Application_Send.SendRequest();
+}
+
+
+// Programming response
+on diagResponse eCS.Programming_RequestSeed_Request
+{
+  byte seedArray[8];
+  int idx;
+  byte SAkey[8];
+  char byteChar[8];
+  char out[300];
+  char out2[300];
+  char tempOut[300];  
+
+  DiagGetParameterRaw(this, "SecuritySeed", seedArray, elcount(seedArray));
+  
+  //contsruct frame
+  securityAlgoNew(seedArray,SAkey);
+  
+  Req_Programming_Bootloader_Send.SetParameterRaw("SecurityKey", SAkey, 4);
+  
+  switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_Programming_Bootloader_Send.SendRequest();      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_Programming_Bootloader_Send.SendRequest();   	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_Programming_Bootloader_Send.SendRequest();   	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       } 
+      }
+}
+// END of Security Access
+
+
+// Programming response
+on diagResponse eCS_OBDC_FD.Programming_RequestSeed_Request
+{
+  byte seedArray[8];
+  int idx;
+  byte SAkey[8];
+  char byteChar[8];
+  char out[300];
+  char out2[300];
+  char tempOut[300];  
+
+  DiagGetParameterRaw(this, "SecuritySeed", seedArray, elcount(seedArray));
+  
+  //contsruct frame
+  securityAlgoNew(seedArray,SAkey);
+  
+  Req_Programming_Bootloader_Send.SetParameterRaw("SecurityKey", SAkey, 4);
+  
+  switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_Programming_Bootloader_Send.SendRequest();      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_Programming_Bootloader_Send.SendRequest();   	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_Programming_Bootloader_Send.SendRequest();   	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       } 
+      }
+}
+// END of Security Access
+
+// Programming response
+on diagResponse eCS_Diag_FD.Programming_RequestSeed_Request
+{
+  byte seedArray[8];
+  int idx;
+  byte SAkey[8];
+  char byteChar[8];
+  char out[300];
+  char out2[300];
+  char tempOut[300];  
+
+  DiagGetParameterRaw(this, "SecuritySeed", seedArray, elcount(seedArray));
+  
+  //contsruct frame
+  securityAlgoNew(seedArray,SAkey);
+  
+  Req_Programming_Bootloader_Send.SetParameterRaw("SecurityKey", SAkey, 4);
+  
+  switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_Programming_Bootloader_Send.SendRequest();      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_Programming_Bootloader_Send.SendRequest();   	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_Programming_Bootloader_Send.SendRequest();   	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       } 
+      }
+}
+// END of Security Access
+
+
+// START of ECU Lock/ Unlock
+on sysvar sysvar::Platform::DIAG_ECULock
+{
+  if (@Platform::DIAG_ECULock)
+  {  
+     Req_EcuUnlock_Stop.SendRequest();
+     write("Req_EcuUnlock_Stop was called");
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_EcuUnlock_Stop.SendRequest();
+          write("Req_EcuUnlock_Stop was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_EcuUnlock_Stop.SendRequest();
+          write("eCS_OBDC_FD_Req_EcuUnlock_Stop was called");    	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_EcuUnlock_Stop.SendRequest();
+          write("eCS_Diag_FD_Req_EcuUnlock_Stop was called");    	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }     
+    }
+  }
+}
+on sysvar sysvar::Platform::DIAG_ECUUnlock
+{
+  if (@Platform::DIAG_ECUUnlock)
+  {  
+     Req_EcuUnlock_Start.SendRequest();
+     write("Req_EcuUnlock_Start was called");
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_EcuUnlock_Start.SendRequest();
+          write("Req_EcuUnlock_Start was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_EcuUnlock_Start.SendRequest();
+          write("eCS_OBDC_FD_Req_EcuUnlock_Start was called");         	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_EcuUnlock_Start.SendRequest();
+          write("eCS_Diag_FD_Req_EcuUnlock_Start was called");         	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }  
+     }
+  }
+}
+
+on sysvar sysvar::Platform::DIAG_ECULockGetStatus
+{
+  if (@Platform::DIAG_ECULockGetStatus)
+  {  
+     
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_EcuUnlock_RequestResults.SendRequest();
+          write("Req_EcuUnlock_RequestResults was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_EcuUnlock_RequestResults.SendRequest();
+          write("eCS_OBDC_FD_Req_EcuUnlock_RequestResults was called");      	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_EcuUnlock_RequestResults.SendRequest();
+          write("eCS_Diag_FD_Req_EcuUnlock_RequestResults was called");      	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }  
+     }
+  }
+}
+// END of ECU Lock/ Unlock
+
+// START of Measurement Frame
+// Write button 
+on sysvar sysvar::Platform::DIAG_MeasurementFrameConfWrite
+{
+  byte bFirstMFByte;
+  byte bSecondMFByte;
+  byte bThirdMFByte;
+  
+  bFirstMFByte = 0;
+  bSecondMFByte = 0;
+  bThirdMFByte = 0;
+  
+  if (@Platform::DIAG_MeasurementFrameConfWrite)
+  {
+    if (@Platform::DIAG_MeasurementFrameBlockID1 == 1)
+    {
+      bFirstMFByte = bFirstMFByte | 1;
+    }
+
+    if (@Platform::DIAG_MeasurementFrameBlockID2 == 1)
+    {
+        bFirstMFByte = bFirstMFByte | (1 << 1);
+    }
+    if (@Platform::DIAG_MeasurementFrameBlockID3 == 1)
+    {
+        bFirstMFByte = bFirstMFByte | (1 << 2);
+    }
+    
+    Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_2", bFirstMFByte);
+    Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_1", bSecondMFByte);
+    Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_0", bThirdMFByte);
+    Req_MeasurementFramesConf_Write.SetParameter("NVP_u8MeasFrameTiming", @Platform::DIAG_MeasurementFramePeriodicity);
+    Req_MeasurementFramesConf_Write.SetParameter("NVP_u8EnableDevFrame", @Platform::DIAG_EnableDevFrame); 
+    
+    eCS_OBDC_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_2", bFirstMFByte);
+    eCS_OBDC_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_1", bSecondMFByte);
+    eCS_OBDC_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_0", bThirdMFByte);
+    eCS_OBDC_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_u8MeasFrameTiming", @Platform::DIAG_MeasurementFramePeriodicity);
+    eCS_OBDC_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_u8EnableDevFrame", @Platform::DIAG_EnableDevFrame); 
+    
+    eCS_Diag_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_2", bFirstMFByte);
+    eCS_Diag_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_1", bSecondMFByte);
+    eCS_Diag_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_0", bThirdMFByte);
+    eCS_Diag_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_u8MeasFrameTiming", @Platform::DIAG_MeasurementFramePeriodicity);
+    eCS_Diag_FD_Req_MeasurementFramesConf_Write.SetParameter("NVP_u8EnableDevFrame", @Platform::DIAG_EnableDevFrame); 
+    
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_MeasurementFramesConf_Write.SendRequest();
+          write("Req_MeasurementFramesConf_Write was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_MeasurementFramesConf_Write.SendRequest();
+          write("eCS_OBDC_FD_Req_MeasurementFramesConf_Write was called");     	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_MeasurementFramesConf_Write.SendRequest();
+          write("eCS_Diag_FD_Req_MeasurementFramesConf_Write was called");     	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }      
+     }
+  }
+}
+
+// Read Button request
+on sysvar sysvar::Platform::DIAG_MeasurementFrameConfRead
+{
+  if (@Platform::DIAG_MeasurementFrameConfRead)
+  {
+    
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_MeasurementFramesConf_Read.SendRequest();
+          write("Req_MeasurementFramesConf_Read was called");       
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_MeasurementFramesConf_Read.SendRequest();
+          write("eCS_OBDC_FD_Req_MeasurementFramesConf_Read was called");   	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_MeasurementFramesConf_Read.SendRequest();
+          write("eCS_Diag_FD_Req_MeasurementFramesConf_Read was called");   	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }
+     }
+  }
+}
+
+// Read Button response
+on diagResponse eCS.Measurement_Frames_Configuration_Read
+{
+  @Platform::DIAG_MeasurementFrameBlockID1 = diagGetParameter(this,"NVP_au8MeasFrameBlockConfig_0");
+  @Platform::DIAG_MeasurementFrameBlockID2 = diagGetParameter(this,"NVP_au8MeasFrameBlockConfig_1");
+  @Platform::DIAG_MeasurementFrameBlockID3 = diagGetParameter(this,"NVP_au8MeasFrameBlockConfig_2");
+  @Platform::DIAG_MeasurementFramePeriodicity = diagGetParameter(this,"NVP_u8MeasFrameTiming");
+  @Platform::DIAG_EnableDevFrame = diagGetParameter(this, "NVP_u8EnableDevFrame");
+  
+  write("MeasurementFramesConf_Read was called");
+}
+
+on diagResponse eCS_OBDC_FD.Measurement_Frames_Configuration_Read
+{
+  @Platform::DIAG_MeasurementFrameBlockID1 = diagGetParameter(this,"NVP_au8MeasFrameBlockConfig_0");
+  @Platform::DIAG_MeasurementFrameBlockID2 = diagGetParameter(this,"NVP_au8MeasFrameBlockConfig_1");
+  @Platform::DIAG_MeasurementFrameBlockID3 = diagGetParameter(this,"NVP_au8MeasFrameBlockConfig_2");
+  @Platform::DIAG_MeasurementFramePeriodicity = diagGetParameter(this,"NVP_u8MeasFrameTiming");
+  @Platform::DIAG_EnableDevFrame = diagGetParameter(this, "NVP_u8EnableDevFrame");
+  
+  write("MeasurementFramesConf_Read was called");
+}
+
+on diagResponse eCS_Diag_FD.Measurement_Frames_Configuration_Read
+{
+  @Platform::DIAG_MeasurementFrameBlockID1 = diagGetParameter(this,"NVP_au8MeasFrameBlockConfig_0");
+  @Platform::DIAG_MeasurementFrameBlockID2 = diagGetParameter(this,"NVP_au8MeasFrameBlockConfig_1");
+  @Platform::DIAG_MeasurementFrameBlockID3 = diagGetParameter(this,"NVP_au8MeasFrameBlockConfig_2");
+  @Platform::DIAG_MeasurementFramePeriodicity = diagGetParameter(this,"NVP_u8MeasFrameTiming");
+  @Platform::DIAG_EnableDevFrame = diagGetParameter(this, "NVP_u8EnableDevFrame");
+  
+  write("MeasurementFramesConf_Read was called");
+}
+
+
+// END of Measurement Frame
+
+// START of ECU Reset
+// ECU HW Reset
+on sysvar sysvar::Platform::DIAG_ECUResetHW
+{
+  if (@Platform::DIAG_ECUResetHW)
+  {
+   
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_Hard_Reset.SendRequest();
+          write("Req_Hard_Reset was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_Hard_Reset.SendRequest();
+          write("eCS_OBDC_FD_Req_Hard_Reset was called");   	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_Hard_Reset.SendRequest();
+          write("eCS_Diag_FD_Req_Hard_Reset was called");   	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }
+     }
+  }
+}
+
+// ECU SW Reset
+on sysvar sysvar::Platform::DIAG_ECUResetSW
+{
+  if (@Platform::DIAG_ECUResetSW)
+  {
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_Soft_Reset.SendRequest();
+          write("Req_Soft_Reset was called");       
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_Soft_Reset.SendRequest();
+          write("eCS_OBDC_FD_Req_Soft_Reset was called");   	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_Soft_Reset.SendRequest();
+          write("eCS_Diag_FD_Req_Soft_Reset was called");   	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       } 
+     }
+  }
+}
+
+// ECU Read Reset Cause
+on sysvar sysvar::Platform::DIAG_ReadResetCause
+{
+  if (@Platform::DIAG_ReadResetCause)
+  {
+    Req_ResetCause_Read.SendRequest();
+    write("Req_ResetCause_Read was called");
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_ResetCause_Read.SendRequest();
+          write("Req_ResetCause_Read was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_ResetCause_Read.SendRequest();
+          write("eCS_OBDC_FD_Req_ResetCause_Read was called");    	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_ResetCause_Read.SendRequest();
+          write("eCS_Diag_FD_Req_ResetCause_Read was called");    	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }
+      }
+  }
+}
+// END of ECU Reset
+
+// START AEC
+// Read all AECs
+on sysvar sysvar::Platform::DIAG_AECReadAll
+{
+  if (@Platform::DIAG_AECReadAll)
+  {
+    
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_AllEventStatuses_Read.SendRequest();
+          write("Req_AllEventStatuses_Read was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_AllEventStatuses_Read.SendRequest();
+          write("eCS_OBDC_FD_Req_AllEventStatuses_Read was called");    	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_AllEventStatuses_Read.SendRequest();
+          write("eCS_Diag_FD_Req_AllEventStatuses_Read was called");    	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }
+     }
+  }
+}
+
+// Clear faults
+on sysvar sysvar::Platform::DIAG_AECClearFaults
+{
+  if (@Platform::DIAG_AECClearFaults)
+  {
+    Req_FaultMemory_Clear.SendRequest();
+    write("Req_FaultMemory_Clear was called");
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_FaultMemory_Clear.SendRequest();
+          write("Req_FaultMemory_Clear was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_FaultMemory_Clear.SendRequest();
+          write("eCS_OBDC_FD_Req_FaultMemory_Clear was called");     	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_FaultMemory_Clear.SendRequest();
+          write("eCS_Diag_FD_Req_FaultMemory_Clear was called");     	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }
+     }
+  }
+}
+// END AEC
+
+// START Lock Solenoid
+// Start Routine
+on sysvar sysvar::eCS::F795_Start
+{
+  if (@eCS::F795_Start) 
+  {
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_LockSolenoid_Start.SendRequest();
+          write("Req_LockSolenoid_Start was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_LockSolenoid_Start.SendRequest();
+          write("eCS_OBDC_FD_Req_LockSolenoid_Start was called");   	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_LockSolenoid_Start.SendRequest();
+          write("eCS_Diag_FD_Req_LockSolenoid_Start was called");   	
+          break;
+        }
+        
+        default:
+       {
+        break;
+       }       
+    }
+  }
+}
+
+// Stop Routine
+on sysvar sysvar::eCS::F795_Stop
+{
+  if (@eCS::F795_Stop) 
+  {
+   
+    switch(@Platform::tester_Config)
+      {
+        case 11:
+        {
+		      Req_LockSolenoid_Stop.SendRequest();
+          write("Req_LockSolenoid_Stop was called");      
+          break;
+        }
+			
+        case 12:
+        {
+		      eCS_OBDC_FD_Req_LockSolenoid_Stop.SendRequest();
+          write("eCS_OBDC_FD_Req_LockSolenoid_Stop was called");   	
+          break;
+        }
+        
+        case 13:
+        {
+		      eCS_Diag_FD_Req_LockSolenoid_Stop.SendRequest();
+          write("eCS_Diag_FD_Req_LockSolenoid_Stop was called");   	
+          break;
+        }
+     }
+  }
+}
+// END Lock Solenoid
+
+// Print to Registration Console 
+on diagResponse *
+{
+  byte rdata[255];
+  long len;
+  
+  len=this.GetPrimitiveSize(); // get length of response
+  this.GetPrimitiveData(rdata, elcount(rdata)); // copy actual response from "on diagResponse *" into data array
+  
+  if(rdata[0] != 0x7e)
+  {
+    DisplayData(rdata, len);
+  }
+}
+
+void DisplayData(byte data[],byte size)
+{
+  byte idx2;
+  
+  putValueToControl("RegistrationConsole", "LPM_view","> ");
+  for(idx2 = 0; idx2 < size; idx2++)
+  {
+    if(data[idx2]==0)
+    {
+      putValueToControl("", "RegistrationConsole","00");
+    }
+    else if(data[idx2]<16)
+    {
+      putValueToControl("", "RegistrationConsole",data[idx2],0,1);
+     
+    }
+    else
+    {
+      putValueToControl("", "RegistrationConsole",data[idx2],0,1);
+    }
+    putValueToControl("", "RegistrationConsole"," ");
+  };
+  putValueToControl("", "RegistrationConsole","\n");
+}
+/**********************************************
+* END of General Diag TAB
+***********************************************/
+
+/**********************************************
+* END of DIAG Panel
+***********************************************/
+on sysvar_update PanelControl::closePanelDevKit
+{
+  closePanel("devKit_01");
+}
+
+on sysvar_update PanelControl::closePanelMF
+{
+  closePanel("measurementFrame");
+}
+
+on sysvar_update PanelControl::closePanelAirBag_01
+{
+  closePanel("AirBag_01");
+}
+
+on sysvar_update PanelControl::closePanelAirBag_02
+{
+  closePanel("AirBag_02");
+}
+
+on sysvar_update PanelControl::closePanelAirBag_eCS_01
+{
+  closePanel("Airbag_eCS_01");
+}
+
+on sysvar_update PanelControl::closePaneleCS_01
+{
+  closePanel("eCS_01");
+}
+
+on sysvar_update PanelControl::openPanelDevKit
+{
+  openPanel("devKit_01");
+}
+
+on sysvar_update PanelControl::openPanelMF
+{
+  openPanel("measurementFrame");
+}
+
+on sysvar_update PanelControl::openPanelAirBag_01
+{
+  openPanel("AirBag_01");
+}
+
+on sysvar_update PanelControl::openPanelAirBag_02
+{
+  openPanel("AirBag_02");
+}
+
+on sysvar_update PanelControl::openPanelAirBag_eCS_01
+{
+  openPanel("Airbag_eCS_01");
+}
+
+on sysvar_update PanelControl::openPaneleCS_01
+{
+  openPanel("eCS_01");
+}
+
+
+on sysvar_update PanelControl::openPanelSbc
+{
+  openPanel("SbcErrors");
+}
+
+
+on sysvar_update PanelControl::openPanelAcc
+{
+  openPanel("AccelerometerErrors");
+}
+
+on sysvar_update PanelControl::enableAirbag_01
+{
+  if(@sysvar::PanelControl::enableAirbag_01 == 1)
+  {
+    @sysvar::PanelControl::disableAirbag_01 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::disableAirbag_01
+{
+  if(@sysvar::PanelControl::disableAirbag_01 == 1)
+  {
+    @sysvar::PanelControl::enableAirbag_01 = 0;
+     @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::enableAirbag_02
+{
+  if(@sysvar::PanelControl::enableAirbag_02 == 1)
+  {
+    @sysvar::PanelControl::disableAirbag_02 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::disableAirbag_02
+{
+  if(@sysvar::PanelControl::disableAirbag_02 == 1)
+  {
+    @sysvar::PanelControl::enableAirbag_02 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::enableAirbag_eCS_01
+{
+  if(@sysvar::PanelControl::enableAirbag_eCS_01 == 1)
+  {
+    @sysvar::PanelControl::disableAirbag_eCS_01 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::disableAirbag_eCS_01
+{
+  if(@sysvar::PanelControl::disableAirbag_eCS_01 == 1)
+  {
+    @sysvar::PanelControl::enableAirbag_eCS_01 = 0;
+    @sysvar::PanelControl::sendCommandComControlTX = 1;
+  }
+}
+
+on sysvar_update PanelControl::openPanelSolenoidErrors
+{
+  openPanel("SolenoidErrors");
+}
+
+on timer timeoutFrame
+{
+  if(devKit_counterOldValue == devKit_counter)
+    @sysvar::PanelControl::statusDevKit = 0;
+  
+  if(MF_counterOldValue == MF_counter)
+    @sysvar::PanelControl::statusMF = 0;
+  
+  if(Airbag_01_counterOldValue == Airbag_01_counter)
+    @sysvar::PanelControl::statusAirbag_01 = 0;
+  
+  if(Airbag_02_counterOldValue == Airbag_02_counter)
+    @sysvar::PanelControl::statusAirbag_02 = 0;
+  
+  if(Airbag_eCS_01_counterOldValue == Airbag_eCS_01_counter)
+    @sysvar::PanelControl::statusAirbag_eCS_01 = 0;
+  
+  if(eCS_01_counterOldValue == eCS_01_counter)
+    @sysvar::PanelControl::statuseCS_01 = 0;
+  
+  Airbag_01_counterOldValue = Airbag_01_counter;
+  Airbag_02_counterOldValue = Airbag_02_counter;
+  Airbag_eCS_01_counterOldValue = Airbag_eCS_01_counter;
+  eCS_01_counterOldValue = eCS_01_counter;
+  devKit_counterOldValue = devKit_counter;
+  MF_counterOldValue = MF_counter;
+  
+}
+
+on timer S1_UnlockTimeout
+{
+    setControlVisibility("eCS", "S1_Unlock", 0);
+    setControlVisibility("eCS", "S1_Lock", 1);
+    setControlVisibility("eCS", "S1_Disabled", 0);
+}
+
+on timer S2_UnlockTimeout
+{
+    setControlVisibility("eCS", "S2_Unlock", 0);
+    setControlVisibility("eCS", "S2_Lock", 1);
+    setControlVisibility("eCS", "S2_Disabled", 0);
+}
+
+on timer S3_UnlockTimeout
+{
+    setControlVisibility("eCS", "S3_Unlock", 0);
+    setControlVisibility("eCS", "S3_Lock", 1);
+    setControlVisibility("eCS", "S3_Disabled", 0);
+}
+
+on timer S4_UnlockTimeout
+{
+    setControlVisibility("eCS", "S4_Unlock", 0);
+    setControlVisibility("eCS", "S4_Lock", 1);
+    setControlVisibility("eCS", "S4_Disabled", 0);
+}
+
+on timer S5_UnlockTimeout
+{
+    setControlVisibility("eCS", "S5_Unlock", 0);
+    setControlVisibility("eCS", "S5_Lock", 1);
+    setControlVisibility("eCS", "S5_Disabled", 0);
+}
+
+on timer S6_UnlockTimeout
+{
+    setControlVisibility("eCS", "S6_Unlock", 0);
+    setControlVisibility("eCS", "S6_Lock", 1);
+    setControlVisibility("eCS", "S6_Disabled", 0);
+}
+
+on message DevKit_01
+{
+  int S1_State;
+  int S2_State;
+  int S3_State;
+  int S4_State;
+  int S5_State;
+  int S6_State;
+  
+  int S1_UnlockConfirmed;
+  int S2_UnlockConfirmed;
+  int S3_UnlockConfirmed;
+  int S4_UnlockConfirmed;
+  int S5_UnlockConfirmed;
+  int S6_UnlockConfirmed;
+  
+  int S1_BuckleState;
+  int S2_BuckleState;
+  int S3_BuckleState;
+  int S4_BuckleState;
+  int S5_BuckleState;
+  int S6_BuckleState;
+  
+  int S5_SeatState;
+  int S6_SeatState;
+  
+  double newTimeStamp_devKit = 0;
+  oldTimeStamp_devKit = newTimeStamp_devKit;
+  newTimeStamp_devKit = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_devKit = newTimeStamp_devKit - oldTimeStamp_devKit;
+  @sysvar::PanelControl::statusDevKit = 1;
+  devKit_counter++;
+
+  S1_State = getSignal(DevKit_01::eCS_Solenoid_1_State);
+  S2_State = getSignal(DevKit_01::eCS_Solenoid_2_State);
+  S3_State = getSignal(DevKit_01::eCS_Solenoid_3_State);
+  S4_State = getSignal(DevKit_01::eCS_Solenoid_4_State);
+  S5_State = getSignal(DevKit_01::eCS_Solenoid_5_State);
+  S6_State = getSignal(DevKit_01::eCS_Solenoid_6_State);
+  
+  S1_BuckleState  = getSignal(DevKit_01::eCS_BuckleStatus_S1);
+  S2_BuckleState  = getSignal(DevKit_01::eCS_BuckleStatus_S2);
+  S3_BuckleState  = getSignal(DevKit_01::eCS_BuckleStatus_S3);
+  S4_BuckleState  = getSignal(DevKit_01::eCS_BuckleStatus_S4);
+  S5_BuckleState  = getSignal(eCS_01::eCS_Gurtschloss_Status_Reihe2_FA);
+  S6_BuckleState  = getSignal(eCS_01::eCS_Gurtschloss_Status_Reihe2_BF);
+  
+  S5_SeatState  = getSignal(eCS_01::eCS_SBS_Belegung_Reihe2_FA);
+  S6_SeatState  = getSignal(eCS_01::eCS_SBS_Belegung_Reihe2_BF);
+  
+  S1_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S1);
+  S2_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S2);
+  S3_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S3);
+  S4_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S4);
+  S5_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S5);
+  S6_UnlockConfirmed = getSignal(DevKit_01::eCS_UnlockConfirmation_S6);
+  
+  //Lock = 0
+  //Unlock = 1
+  //Backup = 2
+  //Disabled = 3
+  
+  if(S1_State == 0)
+  {
+    setControlVisibility("eCS", "S1_Unlock", 0);
+    setControlVisibility("eCS", "S1_Lock", 1);
+    setControlVisibility("eCS", "S1_Disabled", 0);
+  }
+  else if (S1_State == 1)
+  {
+    setControlVisibility("eCS", "S1_Unlock", 1);
+    setControlVisibility("eCS", "S1_Lock", 0);
+    setControlVisibility("eCS", "S1_Disabled", 0);
+  }
+  else if(S1_State == 2)
+  {
+    if (S1_UnlockConfirmed == 1)
+    {
+      cancelTimer(S1_UnlockTimeout);
+      setControlVisibility("eCS", "S1_Unlock", 0);
+      setControlVisibility("eCS", "S1_Lock", 1);
+      setControlVisibility("eCS", "S1_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S1_UnlockTimeout) == 0)
+      {
+          setTimer(S1_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S1_State == 3)
+  {
+    setControlVisibility("eCS", "S1_Unlock", 0);
+    setControlVisibility("eCS", "S1_Lock", 0);
+    setControlVisibility("eCS", "S1_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S2_State == 0)
+  {
+    setControlVisibility("eCS", "S2_Unlock", 0);
+    setControlVisibility("eCS", "S2_Lock", 1);
+    setControlVisibility("eCS", "S2_Disabled", 0);
+  }
+  else if (S2_State == 1)
+  {
+    setControlVisibility("eCS", "S2_Unlock", 1);
+    setControlVisibility("eCS", "S2_Lock", 0);
+    setControlVisibility("eCS", "S2_Disabled", 0);
+  }
+  else if(S2_State == 2)
+  {
+    if (S2_UnlockConfirmed == 1)
+    {
+      cancelTimer(S2_UnlockTimeout);
+      setControlVisibility("eCS", "S2_Unlock", 0);
+      setControlVisibility("eCS", "S2_Lock", 1);
+      setControlVisibility("eCS", "S2_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S2_UnlockTimeout) == 0)
+      {
+          setTimer(S2_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S2_State == 3)
+  {
+    setControlVisibility("eCS", "S2_Unlock", 0);
+    setControlVisibility("eCS", "S2_Lock", 0);
+    setControlVisibility("eCS", "S2_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S3_State == 0)
+  {
+    setControlVisibility("eCS", "S3_Unlock", 0);
+    setControlVisibility("eCS", "S3_Lock", 1);
+    setControlVisibility("eCS", "S3_Disabled", 0);
+  }
+  else if (S3_State == 1)
+  {
+    setControlVisibility("eCS", "S3_Unlock", 1);
+    setControlVisibility("eCS", "S3_Lock", 0);
+    setControlVisibility("eCS", "S3_Disabled", 0);
+  }
+  else if(S3_State == 2)
+  {
+    if (S3_UnlockConfirmed == 1)
+    {
+      cancelTimer(S3_UnlockTimeout);
+      setControlVisibility("eCS", "S3_Unlock", 0);
+      setControlVisibility("eCS", "S3_Lock", 1);
+      setControlVisibility("eCS", "S3_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S3_UnlockTimeout) == 0)
+      {
+          setTimer(S3_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S3_State == 3)
+  {
+    setControlVisibility("eCS", "S3_Unlock", 0);
+    setControlVisibility("eCS", "S3_Lock", 0);
+    setControlVisibility("eCS", "S3_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S4_State == 0)
+  {
+    setControlVisibility("eCS", "S4_Unlock", 0);
+    setControlVisibility("eCS", "S4_Lock", 1);
+    setControlVisibility("eCS", "S4_Disabled", 0);
+  }
+  else if (S4_State == 1)
+  {
+    setControlVisibility("eCS", "S4_Unlock", 1);
+    setControlVisibility("eCS", "S4_Lock", 0);
+    setControlVisibility("eCS", "S4_Disabled", 0);
+  }
+  else if(S4_State == 2)
+  {
+    if (S4_UnlockConfirmed == 1)
+    {
+      cancelTimer(S4_UnlockTimeout);
+      setControlVisibility("eCS", "S4_Unlock", 0);
+      setControlVisibility("eCS", "S4_Lock", 1);
+      setControlVisibility("eCS", "S4_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S4_UnlockTimeout) == 0)
+      {
+          setTimer(S4_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S4_State == 3)
+  {
+    setControlVisibility("eCS", "S4_Unlock", 0);
+    setControlVisibility("eCS", "S4_Lock", 0);
+    setControlVisibility("eCS", "S4_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S5_State == 0)
+  {
+    setControlVisibility("eCS", "S5_Unlock", 0);
+    setControlVisibility("eCS", "S5_Lock", 1);
+    setControlVisibility("eCS", "S5_Disabled", 0);
+  }
+  else if (S5_State == 1)
+  {
+    setControlVisibility("eCS", "S5_Unlock", 1);
+    setControlVisibility("eCS", "S5_Lock", 0);
+    setControlVisibility("eCS", "S5_Disabled", 0);
+  }
+  else if(S5_State == 2)
+  {
+    if (S5_UnlockConfirmed == 1)
+    {
+      cancelTimer(S5_UnlockTimeout);
+      setControlVisibility("eCS", "S5_Unlock", 0);
+      setControlVisibility("eCS", "S5_Lock", 1);
+      setControlVisibility("eCS", "S5_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S5_UnlockTimeout) == 0)
+      {
+      setTimer(S5_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S5_State == 3)
+  {
+    setControlVisibility("eCS", "S5_Unlock", 0);
+    setControlVisibility("eCS", "S5_Lock", 0);
+    setControlVisibility("eCS", "S5_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+   if(S6_State == 0)
+  {
+    setControlVisibility("eCS", "S6_Unlock", 0);
+    setControlVisibility("eCS", "S6_Lock", 1);
+    setControlVisibility("eCS", "S6_Disabled", 0);
+  }
+  else if (S6_State == 1)
+  {
+    setControlVisibility("eCS", "S6_Unlock", 1);
+    setControlVisibility("eCS", "S6_Lock", 0);
+    setControlVisibility("eCS", "S6_Disabled", 0);
+  }
+  else if(S6_State == 2)
+  {
+    if (S6_UnlockConfirmed == 1)
+    {
+      cancelTimer(S6_UnlockTimeout);
+      setControlVisibility("eCS", "S6_Unlock", 0);
+      setControlVisibility("eCS", "S6_Lock", 1);
+      setControlVisibility("eCS", "S6_Disabled", 0);
+    }
+    else
+    {
+      if(isTimerActive(S6_UnlockTimeout) == 0)
+      {
+          setTimer(S6_UnlockTimeout, 2000);
+      }
+    }
+  }
+  else if (S6_State == 3)
+  {
+    setControlVisibility("eCS", "S6_Unlock", 0);
+    setControlVisibility("eCS", "S6_Lock", 0);
+    setControlVisibility("eCS", "S6_Disabled", 1);
+  }
+  else
+  {
+    
+  }
+  
+  //belt buckled = 2; belt not buckled = 3
+  //seat not occupied = 2; seat occupied = 3
+  
+  if(S1_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S1_BeltBuckled", 1);
+    setControlVisibility("eCS", "S1_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S1_BeltBuckled", 0);
+    setControlVisibility("eCS", "S1_BeltNotBuckled", 1);
+  }
+    
+  if(S2_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S2_BeltBuckled", 1);
+    setControlVisibility("eCS", "S2_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S2_BeltBuckled", 0);
+    setControlVisibility("eCS", "S2_BeltNotBuckled", 1);
+  }
+    
+  if(S3_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S3_BeltBuckled", 1);
+    setControlVisibility("eCS", "S3_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S3_BeltBuckled", 0);
+    setControlVisibility("eCS", "S3_BeltNotBuckled", 1);
+  }
+    
+  if(S4_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S4_BeltBuckled", 1);
+    setControlVisibility("eCS", "S4_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S4_BeltBuckled", 0);
+    setControlVisibility("eCS", "S4_BeltNotBuckled", 1);
+  }
+    
+  if(S5_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S5_BeltBuckled", 1);
+    setControlVisibility("eCS", "S5_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S5_BeltBuckled", 0);
+    setControlVisibility("eCS", "S5_BeltNotBuckled", 1);
+  }
+    
+  if(S6_BuckleState == 3)
+  {
+    setControlVisibility("eCS", "S6_BeltBuckled", 1);
+    setControlVisibility("eCS", "S6_BeltNotBuckled", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S6_BeltBuckled", 0);
+    setControlVisibility("eCS", "S6_BeltNotBuckled", 1);
+  }
+  
+  if(S5_SeatState == 2)
+  {
+    setControlVisibility("eCS", "S5_SeatOccupied", 1);
+    setControlVisibility("eCS", "S5_SeatNotOccupied", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S5_SeatOccupied", 0);
+    setControlVisibility("eCS", "S5_SeatNotOccupied", 1);
+  }
+  
+  if(S6_SeatState == 2)
+  {
+    setControlVisibility("eCS", "S6_SeatOccupied", 1);
+    setControlVisibility("eCS", "S6_SeatNotOccupied", 0);
+  }
+  else
+  {
+    setControlVisibility("eCS", "S6_SeatOccupied", 0);
+    setControlVisibility("eCS", "S6_SeatNotOccupied", 1);
+  }
+  
+}
+
+on message eCS_Measurement_Frame
+{
+  int S1_ShortToGnd;
+  int S2_ShortToGnd;
+  int S3_ShortToGnd;
+  int S4_ShortToGnd;
+  int S5_ShortToGnd;
+  int S6_ShortToGnd;
+  
+  int S1_ShortToVCC;
+  int S2_ShortToVCC;
+  int S3_ShortToVCC;
+  int S4_ShortToVCC;
+  int S5_ShortToVCC;
+  int S6_ShortToVCC;
+
+  int S1_Overvoltage;
+  int S2_Overvoltage;
+  int S3_Overvoltage;
+  int S4_Overvoltage;
+  int S5_Overvoltage;
+  int S6_Overvoltage;
+  
+  int S1_OC;
+  int S2_OC;
+  int S3_OC;
+  int S4_OC;
+  int S5_OC;
+  int S6_OC;
+  
+  int S1_ActuatorBlocked;
+  int S2_ActuatorBlocked;
+  int S3_ActuatorBlocked;
+  int S4_ActuatorBlocked;
+  int S5_ActuatorBlocked;
+  int S6_ActuatorBlocked;
+    
+  double newTimeStamp_MF = 0;
+  oldTimeStamp_MF = newTimeStamp_MF;
+  newTimeStamp_MF = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_MF = newTimeStamp_MF - oldTimeStamp_MF;
+  @sysvar::PanelControl::statusMF = 1;
+  MF_counter++;
+  
+  S1_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_OpenCircuit);
+  S2_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_OpenCircuit);
+  S3_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_OpenCircuit);
+  S4_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_OpenCircuit);
+  S5_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_OpenCircuit);
+  S6_OC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_OpenCircuit);
+  
+  S1_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_Overvoltage);
+  S2_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_Overvoltage);
+  S3_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_Overvoltage);
+  S4_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_Overvoltage);
+  S5_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_Overvoltage);
+  S6_Overvoltage = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_Overvoltage);
+  
+  S1_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_ShortToVBAT);
+  S2_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_ShortToVBAT);
+  S3_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_ShortToVBAT);
+  S4_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_ShortToVBAT);
+  S5_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_ShortToVBAT);
+  S6_ShortToVCC = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_ShortToVBAT);
+  
+  S1_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_ShortToGND);
+  S2_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_ShortToGND);
+  S3_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_ShortToGND);
+  S4_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_ShortToGND);
+  S5_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_ShortToGND);
+  S6_ShortToGnd = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_ShortToGND);
+  
+    
+  S1_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_1_ActuatorBlocked);
+  S2_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_2_ActuatorBlocked);
+  S3_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_3_ActuatorBlocked);
+  S4_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_4_ActuatorBlocked);
+  S5_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_5_ActuatorBlocked);
+  S6_ActuatorBlocked = getSignal(eCS_Measurement_Frame::eCS_Solenoid_6_ActuatorBlocked);
+  
+  if((S1_OC == 1) ||(S1_ShortToVCC == 1) || (S1_ShortToGnd == 1) || (S1_ActuatorBlocked == 1) || (S1_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S1_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S1_Warning", 0);
+  }
+  
+    if((S2_OC == 1) ||(S2_ShortToVCC == 1) || (S2_ShortToGnd == 1) || (S2_ActuatorBlocked == 1) || (S2_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S2_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S2_Warning", 0);
+  }
+  
+    if((S3_OC == 1) ||(S3_ShortToVCC == 1) || (S3_ShortToGnd == 1) || (S3_ActuatorBlocked == 1) || (S2_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S3_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S3_Warning", 0);
+  }
+  
+    if((S4_OC == 1) ||(S4_ShortToVCC == 1) || (S4_ShortToGnd == 1) || (S4_ActuatorBlocked == 1) || (S3_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S4_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S4_Warning", 0);
+  }
+  
+    if((S5_OC == 1) ||(S5_ShortToVCC == 1) || (S5_ShortToGnd == 1) || (S5_ActuatorBlocked == 1) || (S4_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S5_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S5_Warning", 0);
+  }
+  
+    if((S6_OC == 1) ||(S6_ShortToVCC == 1) || (S6_ShortToGnd == 1) || (S6_ActuatorBlocked == 1) || (S5_Overvoltage == 1))
+  {
+      setControlVisibility("eCS", "S6_Warning", 1);
+  }
+  else
+  {
+      setControlVisibility("eCS", "S6_Warning", 0);
+  }
+  
+}
+
+on message Airbag_eCS_01
+{
+  double newTimeStamp_Airbag_eCS_01 = 0;
+  oldTimeStamp_Airbag_eCS_01 = newTimeStamp_Airbag_eCS_01;
+  newTimeStamp_Airbag_eCS_01 = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_Airbag_eCS_01 = newTimeStamp_Airbag_eCS_01 - oldTimeStamp_Airbag_eCS_01;
+  @sysvar::PanelControl::statusAirbag_eCS_01 = 1;
+  Airbag_eCS_01_counter++;
+}
+on message Airbag_01
+{
+  double newTimeStamp_Airbag01 = 0;
+  oldTimeStamp_Airbag_01 = newTimeStamp_Airbag01;
+  newTimeStamp_Airbag01 = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_Airbag_01 = newTimeStamp_Airbag01 - oldTimeStamp_Airbag_01;
+  @sysvar::PanelControl::statusAirbag_01 = 1;
+  Airbag_01_counter++;
+}
+on message Airbag_02
+{
+  double newTimeStamp_Airbag_02 = 0;
+  oldTimeStamp_Airbag_02 = newTimeStamp_Airbag_02;
+  newTimeStamp_Airbag_02 = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_Airbag_02  = newTimeStamp_Airbag_02 - oldTimeStamp_Airbag_02;
+  @sysvar::PanelControl::statusAirbag_02 = 1;
+  Airbag_02_counter++;
+}
+on message eCS_01
+{
+  double newTimeStamp_eCS_01 = 0;
+  oldTimeStamp_eCS_01 = newTimeStamp_eCS_01;
+  newTimeStamp_eCS_01 = (messageTimeNS(this)/1000000);
+  @sysvar::PanelControl::timeStamp_eCS_01 = newTimeStamp_eCS_01 - oldTimeStamp_eCS_01;
+  @sysvar::PanelControl::statuseCS_01 = 1;
+  eCS_01_counter++;
+}
+
+on sysvar_update eCS::conversionStatus
+{
+  if(@sysvar::eCS::conversionStatus==1)
+  {
+  @sysvar::eCS::eCSTestFailed=(@sysvar::eCS::eCSEnterEventStatus>>0)&0x01;
+  @sysvar::eCS::eCSTestFailedThisOpCycle=(@sysvar::eCS::eCSEnterEventStatus>>1)&0x01;
+  @sysvar::eCS::eCSPendingDTC=(@sysvar::eCS::eCSEnterEventStatus>>2)&0x01;
+  @sysvar::eCS::eCSConfirmedDTC=(@sysvar::eCS::eCSEnterEventStatus>>3)&0x01;
+  @sysvar::eCS::eCSTestNCSinceLastClear=(@sysvar::eCS::eCSEnterEventStatus>>4)&0x01;
+  @sysvar::eCS::eCSTestFailedSinceLastClear=(@sysvar::eCS::eCSEnterEventStatus>>5)&0x01;
+  @sysvar::eCS::eCSTestNCThisOPCycle=(@sysvar::eCS::eCSEnterEventStatus>>6)&0x01;
+  @sysvar::eCS::eCSWarningIndicatorReq=(@sysvar::eCS::eCSEnterEventStatus>>7)&0x01;
+  
+  }
+}
+on sysvar_update eCS::clearDiagConsole
+{
+  if (@sysvar::eCS::clearDiagConsole == 1)
+  {    
+  deleteControlContent("Diag","RegistrationConsole");
+  }
+}
+
+on sysvar_update Diag::dtc_control_button
+  {
+  if (@sysvar::Diag::dtc_control_button == 1)
+  {    
+    {
+      if(@sysvar::Diag::DTC_conrtrol_state == 0)
+      {
+        DTC_Control_OFF.SendRequest();
+        eCS_OBDC_FD_DTC_Control_OFF.SendRequest();
+        eCS_Diag_FD_DTC_Control_OFF.SendRequest();
+        @sysvar::Diag::DTC_LED_state=0;
+      }
+      else if(@sysvar::Diag::DTC_conrtrol_state == 1) 
+      {
+        DTC_Control_ON.SendRequest();
+        eCS_OBDC_FD_DTC_Control_ON.SendRequest();
+        eCS_Diag_FD_DTC_Control_ON.SendRequest();
+         @sysvar::Diag::DTC_LED_state=1;
+      }
+      else
+      {
+      }
+    } 
+  }
+}
+  
+on sysvar_update Diag::comm_control_button
+  {
+  if (@sysvar::Diag::comm_control_button == 1)
+  {    
+    {
+      if(@sysvar::Diag::communication_conrtrol_state == 0)
+      {
+        DisableTX_EnableRX.SendRequest();
+        eCS_OBDC_FD_DisableTX_EnableRX.SendRequest();
+        eCS_Diag_FD_DisableTX_EnableRX.SendRequest();
+        @sysvar::Diag::comm_LED_state=0;
+      }
+      else if(@sysvar::Diag::communication_conrtrol_state == 1) 
+      {
+        EnableTX_EnableRX.SendRequest();
+        eCS_OBDC_FD_EnableTX_EnableRX.SendRequest();
+        eCS_Diag_FD_EnableTX_EnableRX.SendRequest();
+         @sysvar::Diag::comm_LED_state=1;
+      }
+      else
+      {
+      }
+    } 
+  }
+}
+ 
+  
+
+  
+  

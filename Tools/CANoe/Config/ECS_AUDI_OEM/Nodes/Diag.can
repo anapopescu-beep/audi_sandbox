@@ -1,0 +1,351 @@
+/*@!Encoding:1252*/
+includes
+{
+  #pragma library("..\Includes\AER_SA.dll")
+}
+
+variables
+{
+  diagRequest * Parameter_Req;
+  diagResponse * Parameter_Res;
+ 
+  
+  /* This string is used to get the requested DID string from panel */
+  char diagRequestString[50];
+  
+  /* This string is used to store every DID request after ";" split
+     e.g: 0x10 0x03;0x22 0xFD 0x00
+     diagRequestsDataString[0] = "0x10 0x03"
+     diagRequestsDataString[1] = "0x22 0xFD 0x00"
+   */
+  char diagRequestsDataString[10][50];
+  
+   /* This is an array who store the length of every requested DID 
+     e.g: 0x10 0x03;0x22 0xFD 0x00
+     diagRequestSizeArray[0] = 2
+     diagRequestSizeArray[1] = 3 ... */
+  int diagRequestSizeArray[50];  
+  
+  /* This variable is used to store the number of diag requests that
+     are necessary to be made based on diagRequestSizeArray */
+  int noOfRequestsToMake = 0;
+
+  /* This variable is used to store the DID request after is 
+     converted in int from char.
+     e.g: 0x10 0x30
+     diagRequestBytes[0] = 0x10
+     diagRequestBytes[1] = 0x30
+  */
+  long diagRequestBytes[50];
+  
+  long lastDiagRequestMade[50];
+  
+  /* These variables are used as counters */
+  int i = 0,j = 0;
+  
+  /* This variable is used to store the number of requested DID's
+     and he is written every time when "Send Request" button is pressed. */
+  int diagReqSize = 0;
+  
+  /* Timer used to send diagnostic request cyclic */
+  msTimer sendRequests;
+  
+  /* Flag used to avoid to make another diagnostic request if the last response
+     wasn't received. */
+  int requestCanBeMade = 1;
+  
+  /* Flag used to assure that charToByte conversion is made only one time
+     for every DID request. */
+  int conversionFlag = 0;
+  
+  byte diagResultDataBuffer[50];
+}
+
+on preStart
+{
+  diagSetTarget("eCS"); 
+}
+
+on timer sendRequests
+{
+  /* If last response was received */
+  if(requestCanBeMade == 1)
+  {
+    /* If there still are requests to make */
+    if(j < noOfRequestsToMake)
+    {
+      /* Set diag request size */ 
+      diagResize(Parameter_Req, diagRequestSizeArray[j]);
+      
+      /* Parse every byte from DID request */
+      for(i = 0; i < diagRequestSizeArray[j]; i++)
+      {
+        if(conversionFlag == 0)
+        {
+          /* Convert resulted split array to byte array */
+          convertCharToByte(diagRequestSizeArray[j],j);
+          
+          /* Set flag to avoid to convert every for cycle */
+          conversionFlag = 1;
+        }
+      
+        /* Set diag request bytes*/
+        Parameter_Req.SetPrimitiveByte(i,diagRequestBytes[i]);
+        
+        /* Update buffer to store the current DID request service */
+        lastDiagRequestMade[i] = diagRequestBytes[i]; 
+        
+        /* Reset flag if this is the last iteration */
+        if((i+1) == diagRequestSizeArray[j])
+        {
+          conversionFlag = 0;
+        }
+      }
+      
+      /* Send request */
+      diagSendRequest(Parameter_Req);
+      
+      /* Increment counter to be able to send next request when response is received */
+      j++;
+    }
+    
+    /* Reset flag to avoid to run code inside timer until response is received */
+    requestCanBeMade = 0;
+  }
+}
+
+
+on diagResponse *
+{
+  byte seedArray[8];
+  byte SAkey[8];
+  
+  /* Set flag to be able to make next request (response received) */
+  if(j < noOfRequestsToMake)
+  {
+    requestCanBeMade = 1;
+  }
+  
+  /* Stop timer if all request were made */
+  if(j == noOfRequestsToMake)
+  {
+    cancelTimer(sendRequests);
+    
+    /* Set flag to be able to send DID when next request is made */
+    requestCanBeMade = 1;
+    
+    /* Reset flag */
+    j = 0;
+  }
+  
+  /* Parse diagnostic results */
+  for (i = 0; i < this.GetPrimitiveSize(); i++)
+  {
+    diagResultDataBuffer[i] = this.GetPrimitiveByte(i);
+  }
+  
+  /* Condition used to display last service NRC and ID to panel*/
+  if(diagResultDataBuffer[0] == 0x7F)
+  {
+    /* Get last DID request bytes */
+    for(i = 0; i < 4; i++)
+    {
+      @sysvar::Diag::failedDiagReqService[i] = lastDiagRequestMade[i];
+    }
+    
+    /* Clear buffer before to write it again at the next DId request */
+    for(i = 0; i<4; i++)
+    {
+      lastDiagRequestMade[i] = 0;
+    }
+    
+    /* Set NRC */
+    @sysvar::Diag::failedDiagReqNRC = diagResultDataBuffer[2];
+    
+    @sysvar::Diag::diagStatusLed = 0;
+    
+    write("Request: %.2X %.2X %.2X %.2X failed with %.2X NRC!!", 
+      @sysvar::Diag::failedDiagReqService[0],
+      @sysvar::Diag::failedDiagReqService[1],
+      @sysvar::Diag::failedDiagReqService[2],
+      @sysvar::Diag::failedDiagReqService[3],
+      @sysvar::Diag::failedDiagReqNRC);
+  }
+  else
+  {
+    @sysvar::Diag::diagStatusLed = 1;
+  }
+  
+  
+  /* Handle Security Access Request */
+  if(diagResultDataBuffer[0] == 0x67 && diagResultDataBuffer[1] == 0x61)
+  {
+    /* Copy received seed into buffer */
+    for(i = 0; i < 8; i++)
+    {
+      seedArray[i] = diagResultDataBuffer[i+2];
+    }
+    /* Compute received seed to SAkey */
+    getALVkey(elcount(seedArray),seedArray,SAkey);
+    
+    /* Set diagnostic size request */
+    diagResize(Parameter_Req, 10);
+    
+    /* Set diag request bytes*/
+    Parameter_Req.SetPrimitiveByte(0,0x27);
+    Parameter_Req.SetPrimitiveByte(1,0x62);
+    
+    for(i = 0; i < 8; i++)
+    {
+      Parameter_Req.SetPrimitiveByte(i + 2,SAkey[i]);
+    }
+    
+    /* Send request */
+    diagSendRequest(Parameter_Req);
+  } 
+}
+
+on sysvar_update Diag::sendDiagString
+{
+  if(@sysvar::Diag::sendDiagString)
+  {
+    /* Set no of request */
+    noOfRequestsToMake = @sysvar::Diag::noOfDiagRequested;
+    
+    /* Save get requested diagnosis string */
+    sysGetVariableString("Diag", "diagString", diagRequestString, elCount(diagRequestString));
+    
+    /* Get and store in diagRequestSizeArray every request length */
+    getEveryReqSize();
+    
+    /* Split and store in diagRequestsDataString every diag request who is need to be made */
+    split_string(diagRequestString, ";");
+    
+    /* Start cyclic timer at 300ms */
+    setTimerCyclic(sendRequests,300);
+  }
+}
+/* -------------------------------------------------------- */
+/* -- Function used to convert a string to an byte array -- */
+/* -------------------------------------------------------- */
+void convertCharToByte(int reqLength, int reqNumber)
+{
+  dword pos = 0;
+  int i = 0;
+  char temp2[100];
+  
+  /* Clear string */
+  for (i = 0; i < elCount(temp2); i++)
+  {
+    temp2[i] = 0;
+  }
+  /* Copy request into temp buffer */
+  for(i = 0 ; i < elCount(diagRequestsDataString[reqNumber]);i++)
+  {
+    temp2[i] = diagRequestsDataString[reqNumber][i];
+  }
+  
+  pos = 0;
+  /* Convert char to byte */
+  for(i = 0; i < reqLength; i++)
+  {
+    pos = strtol(temp2,pos,diagRequestBytes[i]);
+  }
+}
+
+/* ---------------------------------------------------------- */
+/* -- Function used to get every DID request length and to -- */
+/* -- store it into an array                               -- */
+/* ---------------------------------------------------------- */
+void getEveryReqSize()
+{
+  int i = 0;
+  
+  /* Modify size if the length of request exceed 50 characters */
+  int indicatorPosition[50];
+  
+  for(i = 0; i< elCount(indicatorPosition); i++)
+  {
+    /* First element */
+    if(i == 0)
+    {
+      /* Store position of first ";" */ 
+      indicatorPosition[i] = strstr(diagRequestString, ";");
+      /* Get first requested size */
+      diagRequestSizeArray[i] = (indicatorPosition[i] / 4);
+      
+    }
+    else
+    {
+      /* Store position of the next ";" based on the previous position of ";" + ";" char */
+      indicatorPosition[i] = strstr_off(diagRequestString, indicatorPosition[i - 1] + 1, ";");
+      /* Get request size */
+      diagRequestSizeArray[i] = (indicatorPosition[i] - indicatorPosition[i - 1] - 1)/4;
+    }
+  }
+}
+
+/* ----------------------------------------------------------------- */
+/* -- Function used to split entered string based on a delimiter  -- */
+/* ----------------------------------------------------------------- */
+int split_string(char string[], char delim[])
+{
+  int start_pos, end_pos;
+  int i, j;
+  int num_strings;
+  
+  start_pos = 0;
+  end_pos = 0;
+  num_strings = 0;
+  
+  while (start_pos < strlen(string))
+  {
+    j = 0;
+    end_pos = strstr_off(string, start_pos, delim);
+    if (end_pos == -1)
+    {
+      end_pos = strlen(string);
+    }
+    for (i=start_pos; i<end_pos; i++)
+    {
+      diagRequestsDataString[num_strings][j++] = string[i];
+    }
+    diagRequestsDataString[num_strings][j] = '\0';
+    num_strings++;
+    start_pos = end_pos+strlen(delim);
+  }
+  
+  return num_strings;
+}
+
+
+
+void securityAlgoNew(byte data[], byte SAKey[])
+{ 
+  dword temp;
+  int i, Carry;
+  temp =  data[0]*16777216 + data[1]*65536 + data[2] * 256 + data[3];
+  
+  i = 5;
+  while(i>0)
+  {
+    Carry = 0;
+    if(temp>= 0xE0D1C2B3)
+    {
+      Carry = 1;
+    }
+    
+    temp+= 0x1F2E3D4C;
+    
+    if(Carry == 1)
+    {
+      temp = (temp << 1) + ((temp & 0x80000000)?1:0);
+    }
+    temp ^=0x4D5E234B;
+    i--;
+  }
+  SAKey[0] = ((temp) & 0xFF000000)>>24;
+  SAKey[1] = ((temp) & 0xFF0000)>>16;
+  SAKey[2] = ((temp) & 0xFF00)>>8;
+  SAKey[3] = ((temp) & 0xFF);
+}

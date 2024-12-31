@@ -1,0 +1,72 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ActivateTask_BswM_OnStartupTwoA, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_BswM_OnStartupTwoA, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StopScheduleTable_BswM_OnStartComEffective, ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ActivateTask_BswM_OnPostRunFromRun
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ActivateTask_BswM_OnStartupTwoA: The ActivateTask runnable shall be called in the BswM_OnStartupTwoA runnable in order to activate the task dedicated to the ReadAll process fastening.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_BswM_OnStartupTwoA: The SetEvent runnable shall be called in the BswM_OnStartupTwoA runnable in order to set the task dedicated to the ReadAll process fastening.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StopScheduleTable_BswM_OnStartComEffective: The StopScheduleTable runnable shall be called in the BswM_OnStartComEffective runnable in order to stop the default schedule table to be able to start the main schedule table.
+ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ActivateTask_BswM_OnPostRunFromRun:  The ActivateTask runnable shall be called in the BswM_OnPostRunFromRun runnable in order to activate the task dedicated to the WriteAll process fastening.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ActivateTask_BswM_OnStartupTwoA
+
+	Step 2: Set a BP in function BswM_OnStartupTwoA in order to call ActivateTask function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function stopscheduletable in order to Activate the task 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_OnStartupTwoA for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_SetEvent_BswM_OnStartupTwoA
+
+	Step 5: Set a BP in function BswM_OnStartupTwoA in order to Activate the event dedicated to the ReadAll process fastening  
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function stopscheduletable in order to check if BP is reached and Activate the event dedicated to the ReadAll process fastening 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_OnStartupTwoA for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_StopScheduleTable_BswM_OnStartComEffective
+
+	Step 8: Set a BP in function BswM_OnStartComEffective in order to stop the default schedule table 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function stopscheduletable in order to check if BP is reached and stop the default schedule table 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function BswM_OnStartComEffective for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrOsServicesBswMIf_ActivateTask_BswM_OnPostRunFromRun
+
+	Step 11: Set a BP in function BswM_OnPostRunFromRun in order to Activate the task 
+		Expected result:  BP was set
+
+	Step 12: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 13: Set a BP in OS_UserActivateTask to ckeck if BP is reached in order to activate user Task 
+		Expected result:  BP was set
+
+	Step 14: Set a BP in function BswM_OnStartupTwoA for check the interface 
+		Expected result:  BP was set
+
+	Step 15: Enable comunication 
+		Expected result:  Comunication enable
+
+Postcondition
+
+	Step 16: Return ECU to default values

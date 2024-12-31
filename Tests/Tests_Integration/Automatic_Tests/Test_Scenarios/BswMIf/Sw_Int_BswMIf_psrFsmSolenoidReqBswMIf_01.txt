@@ -1,0 +1,39 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_psrFsmSolenoidReqBswMIf_BswM_OnSafeStateFromPostRun
+ARCH_SW_BswMIf_psrFsmSolenoidReqBswMIf_BswM_OnSafeStateFromPostRun: The runnable shall write the interface in order to trigger an unlock/lock for a certain solenoid
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_psrFsmSolenoidReqBswMIf_BswM_OnSafeStateFromPostRun
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_Action_BswMAction_BswM_OnSafeStateFromPostRun in order to call BswM_OnSafeStateFromPostRun  function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function BswM_OnSafeStateFromPostRun  in order to write the interface in order to trigger an unlock/lock for a certain solenoid 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function Rte_Write_BswMIf_psrFsmSolenoidReqBswMIf_ab8DiagReq for check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 8: Return ECU to default values

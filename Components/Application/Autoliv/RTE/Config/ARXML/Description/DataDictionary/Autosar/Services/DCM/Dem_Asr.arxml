@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd" T="2022-08-26T12:36:25+03:00">
+  <AR-PACKAGES>
+    <AR-PACKAGE T="2022-08-26T12:36:41+03:00" UUID="fa1482be-89d9-4301-b258-af546d4bc79b">
+      <SHORT-NAME>EB</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE T="2022-08-26T12:36:41+03:00">
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <ELEMENTS>
+            <SERVICE-SW-COMPONENT-TYPE T="2023-02-27T13:29:32+02:00" UUID="DCE:20eecf4e-ebe8-4917-9aff-b1dc92c7c5b5">
+              <SHORT-NAME>Dem_</SHORT-NAME>
+              <CATEGORY>ASR_Interfaces</CATEGORY>
+              <PORTS>
+                <P-PORT-PROTOTYPE T="2022-08-28T09:58:01+03:00" UUID="f1e9c62b-48db-4d83-89bc-42de7df4931f">
+                  <SHORT-NAME>ptrpAsrDemServicesBswMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrDemServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE T="2023-02-27T13:29:39+02:00" UUID="d65d90a9-cbff-4808-a5a4-96e7b75cc3b0">
+                  <SHORT-NAME>ptrpAsrDemServicesEcuMIf</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrDemServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE T="2022-08-28T14:11:41+03:00" UUID="eb629c7d-e8e6-4f62-bdce-6352bebccd8f">
+                  <SHORT-NAME>ptrrAsrDemServicesDemIf</SHORT-NAME>
+                  <REQUIRED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrDemServices</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR T="2022-08-28T14:12:07+03:00" UUID="56a21459-cba6-440a-9Dem-0d5b62a594bd">
+                  <SHORT-NAME>Dem_IB</SHORT-NAME>
+                  <EVENTS>
+                    <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-28T14:12:07+03:00" UUID="52d6ba99-01c3-439a-9644-054fbf0c407e">
+                      <SHORT-NAME>trDem_Callback_EventStatusChanged</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/EB/SoftwareComponents/Dem_/Dem_IB/Dem_CbFuncPtrTrigOnEvSt</START-ON-EVENT-REF>
+                      <TRIGGER-IREF T="2022-08-28T14:12:07+03:00">
+                        <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/EB/SoftwareComponents/Dem_/ptrrAsrDemServicesDemIf</CONTEXT-R-PORT-REF>
+                        <TARGET-TRIGGER-REF DEST="TRIGGER">/EB/TriggerInterfaces/itrAsrDemServices/Dem_Callback_EventStatusChanged</TARGET-TRIGGER-REF>
+                      </TRIGGER-IREF>
+                    </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                    <EXTERNAL-TRIGGER-OCCURRED-EVENT T="2022-08-28T14:11:56+03:00" UUID="8dbe6149-51cb-4d08-9d51-c74158bb6b2b">
+                      <SHORT-NAME>trModule_DemTriggerOnEventStatus</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/EB/SoftwareComponents/Dem_/Dem_IB/Dem_CbFuncPtrTrigOnEvSt</START-ON-EVENT-REF>
+                      <TRIGGER-IREF T="2022-08-28T14:11:56+03:00">
+                        <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/EB/SoftwareComponents/Dem_/ptrrAsrDemServicesDemIf</CONTEXT-R-PORT-REF>
+                      </TRIGGER-IREF>
+                    </EXTERNAL-TRIGGER-OCCURRED-EVENT>
+                  </EVENTS>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY T="2022-08-28T14:11:24+03:00" UUID="DCE:b81a37b4-a8c3-4f6a-baf1-7b27bc7cc7f6">
+                      <SHORT-NAME>Dem_CbFuncPtrTrigOnEvSt</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Dem_CbFuncPtrTrigOnEvSt_OsApplication_0</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:bbdb0f68-bbaf-46f4-b582-a1aa0ffdfc3e">
+                      <SHORT-NAME>Dem_Init</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Dem_Init</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DCE:cdcc69fb-2646-4b48-b85e-71c07544595e">
+                      <SHORT-NAME>Dem_Shutdown</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>Dem_Shutdown</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </SERVICE-SW-COMPONENT-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <AR-PACKAGE T="2022-08-26T12:36:48+03:00" UUID="83dbf1d3-fd69-4d31-99ba-2a110ed331f7">
+          <SHORT-NAME>TriggerInterfaces</SHORT-NAME>
+          <ELEMENTS>
+            <TRIGGER-INTERFACE T="2023-02-21T13:43:48+02:00">
+              <SHORT-NAME>itrAsrDemServices</SHORT-NAME>
+              <TRIGGERS>
+                <TRIGGER T="2022-08-28T14:10:39+03:00" UUID="07f27dcb-fc6c-45a2-b71e-327cf1615992">
+                  <SHORT-NAME>Dem_Callback_EventStatusChanged</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="ff929719-a5ba-4692-bc12-143b70a31a49">
+                  <SHORT-NAME>Dem_Init</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER T="2023-02-21T13:43:48+02:00" UUID="c4a94f16-b738-48b6-8e4d-b811cdb40347">
+                  <SHORT-NAME>Dem_PreInit</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+                <TRIGGER UUID="26f51048-0d79-4d7f-916e-23d5054ad277">
+                  <SHORT-NAME>Dem_Shutdown</SHORT-NAME>
+                  <TRIGGER-PERIOD>
+                    <CSE-CODE>1000</CSE-CODE>
+                    <CSE-CODE-FACTOR>0</CSE-CODE-FACTOR>
+                  </TRIGGER-PERIOD>
+                </TRIGGER>
+              </TRIGGERS>
+            </TRIGGER-INTERFACE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

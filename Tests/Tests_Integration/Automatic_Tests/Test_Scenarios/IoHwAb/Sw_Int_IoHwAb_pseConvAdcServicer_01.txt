@@ -1,0 +1,38 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_pseConvAdcService, ARCH_SW_DIA_pclConvAdcService
+ARCH_SW_IoHwAb_pseConvAdcService: The runnable shall read the {Raw value} in LSB via the AdcIf_runGetChannelValue interface for the selected {Measurement Index}
+ARCH_SW_DIA_pclConvAdcService: Interface used to get current value form solenoid in mV or ?
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_IoHwAb_pseConvAdcService, ARCH_SW_DIA_pclConvAdcService
+
+	Step 2: Set a breakpoint in function DIA_run_DidFD10_MCUTemperatureRead at Rte_Call_pclConvAdcService_getMeasure interface call 
+		Expected result:  BP reached.
+
+	Step 3: Send diagnostic request in order to go in Supplier Session
+
+	Step 4: Send request for press Supplier Security Access button
+
+	Step 5: Send diagnostic request in order to start the Temp Calibration
+
+	Step 6: Set a breakpoint in function IoHwAb_runGetMeasure. 
+		Expected result:  BP reached
+
+	Step 7: Set a breakpoint in function DIA_run_DidFD10_MCUTemperatureRead at return 
+		Expected result:  BP reached.
+
+Postcondition
+
+	Step 8: Return ECU to default values

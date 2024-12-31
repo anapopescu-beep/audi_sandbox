@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<!-- AUTOSAR AI Specification -->
+<!--
+    Document Owner: AUTOSAR
+    Document Responsibility: AUTOSAR
+    Document Identification No: 443
+    Document Classification: Standard
+    Document Version: 1.3.0
+    Document Status: Final
+    Part of Release: 4.1 (2013-03-01)
+    Revision: 1
+-->
+<!--
+    Disclaimer
+
+    This specification and the material contained in it, as released by AUTOSAR, 
+    is for the purpose of information only. AUTOSAR and the companies that have 
+    contributed to it shall not be liable for any use of the specification.
+
+    The material contained in this specification is protected by copyright and 
+    other types of Intellectual Property Rights. The commercial exploitation of 
+    the material contained in this specification requires a license to such 
+    Intellectual Property Rights.
+
+    This specification may be utilized or reproduced without any modification, in 
+    any form or by any means, for informational purposes only.
+    For any other purpose, no part of the specification may be utilized or 
+    reproduced, in any form or by any means, without permission in writing from 
+    the publisher.
+
+    The AUTOSAR specifications have been developed for automotive applications 
+    only. They have neither been developed, nor tested for non-automotive 
+    applications.
+
+    The word AUTOSAR and the AUTOSAR logo are registered trademarks.
+
+
+
+    Advice for users
+
+    AUTOSAR specifications may contain exemplary items (exemplary reference models,
+    "use cases", and/or references to exemplary technical solutions, devices, 
+    processes or software).
+
+    Any such exemplary items are contained in the specifications for illustration 
+    purposes only, and they themselves are not part of the AUTOSAR Standard. 
+    Neither their presence in such specifications, nor any later documentation of 
+    AUTOSAR conformance of products actually implementing such exemplary items, 
+    imply that intellectual property rights covering such exemplary items are 
+    licensed under the same rules as applicable to the AUTOSAR Standard.
+ -->
+  <ADMIN-DATA>
+    <LANGUAGE>EN</LANGUAGE>
+    <USED-LANGUAGES>
+      <L-10 L="EN" xml:space="default">English</L-10>
+    </USED-LANGUAGES>
+  </ADMIN-DATA>
+  <AR-PACKAGES>
+    <AR-PACKAGE UUID="25d8d45b-5a12-48f0-96c8-315f83008b1d">
+      <SHORT-NAME>AUTOSAR</SHORT-NAME>
+      <LONG-NAME>
+        <L-4 L="EN">AUTOSAR</L-4>
+      </LONG-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE UUID="df56ca92-8af3-408f-84c1-db0364fc738d">
+          <SHORT-NAME>AISpecification</SHORT-NAME>
+          <LONG-NAME>
+            <L-4 L="EN">AISpecification</L-4>
+          </LONG-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2022-08-26T21:04:17+03:00" UUID="225e7a13-ff6a-320e-ad5c-1ce6311d05c4">
+              <SHORT-NAME>Units</SHORT-NAME>
+              <CATEGORY>STANDARD</CATEGORY>
+              <REFERENCE-BASES>
+                <REFERENCE-BASE>
+                  <SHORT-LABEL>PhysicalDimensions</SHORT-LABEL>
+                  <IS-DEFAULT>false</IS-DEFAULT>
+                  <IS-GLOBAL>false</IS-GLOBAL>
+                  <BASE-IS-THIS-PACKAGE>false</BASE-IS-THIS-PACKAGE>
+                  <PACKAGE-REF DEST="AR-PACKAGE">/AUTOSAR/AISpecification/PhysicalDimensions</PACKAGE-REF>
+                </REFERENCE-BASE>
+              </REFERENCE-BASES>
+              <ELEMENTS>
+                <UNIT UUID="d0f41b3c-0ec9-358b-a050-df9822a9bf52">
+                  <SHORT-NAME>Bar</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Bar</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">pressure, no SI unit; 1 bar = 100,000 Pascal (Pa)</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>bar</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0E-5</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">LenNeg1M1TiNeg2</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT T="2022-08-26T21:04:17+03:00" UUID="DCE:956cb8a4-cc4a-4e55-ba35-d2b37161f5a5">
+                  <SHORT-NAME>Celsius</SHORT-NAME>
+                  <DISPLAY-NAME T="2022-08-26T21:04:17+03:00">Celsius</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <OFFSET-SI-TO-UNIT>0.0</OFFSET-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">T1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="e4349556-5c43-33c2-9eb8-c0bad7e8406d">
+                  <SHORT-NAME>DegCgrd</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Degree Centigrade</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">temperature, no SI unit, (degC = Kelvin - 273.15)</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>degC</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <OFFSET-SI-TO-UNIT>-273.15</OFFSET-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">T1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="79bc18c1-fc38-3314-9e25-644c65bf2da0">
+                  <SHORT-NAME>HectoPa</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Hecto Pascal</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of pressure with prefix</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <INTRODUCTION>
+                    <P>
+                      <L-1 L="EN">It is equivalent to one Newton per square meter. In everyday life, the Pascal is perhaps best known from meteorological air-pressure reports, where it occurs in the form of hecto Pascal (1 hPa = 100 Pa).</L-1>
+                    </P>
+                  </INTRODUCTION>
+                  <DISPLAY-NAME>hPa</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>0.01</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">LenNeg1M1TiNeg2</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="156f2694-202c-35fd-b46a-7ae3b284d6ea">
+                  <SHORT-NAME>Hz</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Hertz</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of frequency</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>Hz</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">TiNeg1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="554f9d94-98fb-348f-b24f-18522b46cd7d">
+                  <SHORT-NAME>Kelvin</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Kelvin</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI base unit of thermodynamic temperature</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>K</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">T1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="b6de456b-d442-3640-9d74-a5bae1f1c089">
+                  <SHORT-NAME>KiloGr</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Kilo Gram</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI base unit of mass</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>kg</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">M1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="ffe06edd-b305-3fb0-85aa-f253f04de879">
+                  <SHORT-NAME>KiloHz</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Kilo Hertz</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of frequency with prefix</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>kHz</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>0.001</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">TiNeg1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="5a797d1a-9e44-3714-9306-b2272ea15e0c">
+                  <SHORT-NAME>KiloMtr</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Kilo Meter</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI base unit of length with prefix</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>km</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>0.001</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Len1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="c1c7976b-fd7c-3cec-b0c2-e3c34b29bd2d">
+                  <SHORT-NAME>Mtr</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Meter</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI base unit of length</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>m</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Len1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="d1bedb5c-c0cb-3de9-8ad3-2ca500a5614e">
+                  <SHORT-NAME>MtrPerSec</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Meter per Second</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of velocity</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>m/s</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Len1TiNeg1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="e8be1813-4a50-3294-b59a-dcee91206caf">
+                  <SHORT-NAME>MtrPerSecCubd</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Meter per Second Cubed</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">jerk (derived from SI units), also called jolt (esp. in British English), surge or lurch, is the rate of change of acceleration; more precisely, the derivative of acceleration with respect to time, the second derivative of velocity, or the third derivative of displacement.</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>m/s^3</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Len1TiNeg3</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="548efafa-46c2-31bb-bd77-cb5164ac7cec">
+                  <SHORT-NAME>MtrPerSecSqd</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Meter per Second Squared</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of acceleration</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>m/s^2</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Len1TiNeg2</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="3080b075-3ead-3146-b87e-a57cdb6778ba">
+                  <SHORT-NAME>MtrRecpr</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Meter Reciprocal</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of wave number for electromagnetic fields or curvature as reciprocal of curve radius</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>1/m</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">LenNeg1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="10a8ed31-9ce1-3696-92b4-1a77b5b138b2">
+                  <SHORT-NAME>NoUnit</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">No Unit</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">Unit for dimensionless continuous value data types like numbers, factors and coefficients</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>-</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">NoDimension</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="24d473b3-9fa2-34e6-b8b4-7f2c190dd2ff">
+                  <SHORT-NAME>Nwt</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Newton</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of force</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>N</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Len1M1TiNeg2</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="e66e27c5-72f5-336a-ae7f-c961b4227c1f">
+                  <SHORT-NAME>NwtMtr</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Newton Meter</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of moment of force (torque = kg m^2/s^2)</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>Nm</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Len2M1TiNeg2</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="e53212c5-f992-30a5-a04c-5376b20b00f2">
+                  <SHORT-NAME>NwtMtrPerSec</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Newton Meter per Second</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of time-derivative of torque</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>Nm/s</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Len2M1TiNeg3</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="bc7d4992-2236-3bda-8b63-49517da9acfb">
+                  <SHORT-NAME>NwtPerMtr</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Newton per Meter</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">surface tension (derived from SI units)</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>N/m</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">M1TiNeg2</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="5cdc2c89-9e0d-324b-b718-0a49d9e08bf4">
+                  <SHORT-NAME>NwtSecPerMtr</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Newton Second per Meter</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">damping factor or coefficient (derived from SI units)</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>Ns/m</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">M1TiNeg1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="b6c17c66-03b0-37c0-8a5e-b01210201722">
+                  <SHORT-NAME>Pa</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Pascal</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of pressure</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <INTRODUCTION>
+                    <P>
+                      <L-1 L="EN">The Pascal (symbol: Pa) is the SI derived unit of pressure or stress (also: Young's modulus and tensile strength). It is equivalent to one Newton per square meter. In everyday life, the Pascal is perhaps best known from meteorological air-pressure reports.</L-1>
+                    </P>
+                  </INTRODUCTION>
+                  <DISPLAY-NAME>Pa</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">LenNeg1M1TiNeg2</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="9a73c740-4ace-3531-a5bc-347e543dedb0">
+                  <SHORT-NAME>Perc</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Percent</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">a percentage is a way of expressing a number as a fraction of 100 (no SI unit).</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>%</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>100.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">NoDimension</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="3456bd9e-f561-3018-a27f-7342d106f91a">
+                  <SHORT-NAME>PercPerSec</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Percent per Second</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">time-derivative of percent</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>%/s</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>100.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">TiNeg1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="92179ed3-3b4c-3651-9cc6-18e3662ba60f">
+                  <SHORT-NAME>Rad</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Radian</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of plane angle (dimensionless)</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>rad</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">NoDimension</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="b4a71dcd-b02d-3738-b5e5-4490082313f7">
+                  <SHORT-NAME>RadPerSec</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Radian per Second</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of angular velocity</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>rad/s</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">TiNeg1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="220cfb51-32a9-3bd3-bfbd-7d8e7f2bbe0e">
+                  <SHORT-NAME>RadPerSecSqd</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Radian per Second Squared</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of angular acceleration</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>rad/s^2</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">TiNeg2</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="75657cf8-bdd2-32e2-9d17-83525435690c">
+                  <SHORT-NAME>Rpm</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Rpm</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">revolutions per minute - no SI unit</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>rpm</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>0.0166666666666667</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">TiNeg1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="c0d99008-e73c-3444-897f-4d9305e47dac">
+                  <SHORT-NAME>RpmPerSec</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Revolutions per minute per Second</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">time-derivative of revolutions per minute - no SI unit</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>rpm/s</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>0.0166666666666667</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">TiNeg2</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="42125d8f-d6b7-3bd3-9e60-44f84e23037d">
+                  <SHORT-NAME>Sec</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Second</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI base unit of time</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>s</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Ti1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+                <UNIT UUID="d533a165-37d5-3a1c-b634-a139935adf3d">
+                  <SHORT-NAME>Volt</SHORT-NAME>
+                  <LONG-NAME>
+                    <L-4 L="EN">Volt</L-4>
+                  </LONG-NAME>
+                  <DESC>
+                    <L-2 L="EN">SI derived unit of electric potential difference</L-2>
+                  </DESC>
+                  <ADMIN-DATA></ADMIN-DATA>
+                  <DISPLAY-NAME>V</DISPLAY-NAME>
+                  <FACTOR-SI-TO-UNIT>1.0</FACTOR-SI-TO-UNIT>
+                  <PHYSICAL-DIMENSION-REF DEST="PHYSICAL-DIMENSION" BASE="PhysicalDimensions">Len2M1TiNeg3INeg1</PHYSICAL-DIMENSION-REF>
+                </UNIT>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

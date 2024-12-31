@@ -1,0 +1,33 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runInit, ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runDeInit
+ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runInit: The AdcIf_runInit runnable shall be called during the initialization in the BswM_OnStartupTwoA runnable.
+ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runDeInit: The AdcIf_runDeInit runnable shall be called during the de-initialization in the BswM_OnGoOffOneA runnable
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runInit
+
+Action: ARCH_SW_AdcIf_ptrpEcuMIfServices
+
+	Step 2: Set a breakpoint in function BswM_OnStartupTwoA at AdcIf_runInit function call 
+		Expected result:  BP is reached.
+
+Action: ARCH_SW_AdcIf_ptrpAdcIfServices_AdcIf_runDeInit
+
+	Step 3: Set a breakpoint in function BswM_OnGoOffOneA at AdcIf_runDeInit function call 
+		Expected result:  BP is reached.
+
+Postcondition
+
+	Step 4: Return ECU to default values

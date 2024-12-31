@@ -1,0 +1,60 @@
+//post by Jim(iron-man?) https://www.ibm.com/developerworks/community/forums/html/topic?id=77777777-0000-0000-0000-000014305335#77777777-0000-0000-0000-000014587301
+
+Skip selectedItems = getSelectedItems ()
+Item I = null
+
+for I in selectedItems do
+{
+    if(isDeleted(I) || null I) {continue}
+        if (type (I) == "Formal")
+        {
+                Module m = read(fullName(I),true)
+                load view "eCS_View_AllAttributes"
+                //delete column 0//dont know why this was here to delete the first column after loading the view.
+                {
+                        // override some default message box functions, so they will only print the data but 
+                        // not pause execution. Write to a log file here! 
+                         
+                        bool confirm (string s) { print "Confirmed: " s "\n"; return true }
+                        void ack (string s) {print "Acknowledge: " s "\n" }
+                        void acknowledge (string s) {print "Acknowledge: " s "\n"  }
+                        void infobox (string s) {print "Info: " s "\n" }
+                        void info (string s) {print "Info: " s "\n" }
+                         
+                        DB theDiag = null
+                         
+                        // Now override block and show, to only do realize
+                        void show  (DB x) { realize x; theDiag = x }
+                        void block (DB x) { realize x; theDiag = x }
+                         
+                        if (null current Module) {
+                                print "You need to have a current Module set for the export."
+                                halt
+                        }
+                         
+                        // we need braces, since -D will be executed at top level and we will get name
+                        // clashes for variable defined in word.dxl and the other includes of it.
+                        {
+                                // now include the word.dxl -> this will pop up the dialog, but not halt execution
+                                // due to the overrides above
+                                #include <standard/export/office/excel.dxl> //for the standard excel exporter
+                         
+                                // here we can change the dialog options. See itfui2.inc and word.dxl for all 
+                                // the options
+                               // set(exportHeadingsToggle, false)   // turn off export of headings
+                               //set(exportWarnUnregOLE,false)   //turn off ole warning
+                                                                           
+                                // now manually launch the export button callback
+                                doExcel theDiag //for the standard excel exporter
+                                                         
+                                // get rid of the dialog
+                                if (!null theDiag) destroy theDiag
+                                                                // close DOORS
+                                //exit_
+                        }
+                }
+                close(m)
+                                
+        }
+}
+

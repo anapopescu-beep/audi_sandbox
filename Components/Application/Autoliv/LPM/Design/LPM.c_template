@@ -1,0 +1,445 @@
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.4 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/LPM/Design/project.pj $
+*/
+/******************************************************************************
+
+   This module handles the Ecu in low power states
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "LPM.h"
+#include "MyMcuArchClock.h"
+#include "SBC.h"
+#include "NXP\S32K144.h"
+#include "Adc.h"
+#include "Dio.h"
+#include "DioIf.h"
+#include "Mcu.h"
+#include "Port.h"
+#include "BswM.h"
+#include "BswM_Callouts.h"
+#include "EcuM.h"
+#include "Rte_LPM.h"
+#ifndef QAC
+#include "T1_AppInterface.h"
+#endif
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+/**
+ *\brief
+ *     Macro used to wakeup state none
+ */
+#define KU8_LPM_WAKEUP_NONE               ((uint8)0u)
+
+/**
+ *\brief
+ *     Macro used to wakeup state can wakeup
+ */
+#define KU8_LPM_WAKEUP_CAN                ((uint8)1u)
+
+/**
+ *\brief
+ *     Macro used to wakeup state seat presence
+ */
+#define KU8_LPM_WAKEUP_SEAT_PRESENCE      ((uint8)2u)
+
+/**
+ *\brief
+ *     Macro used to count the sleep timeout
+ */
+#define KU32_LPM_SLEEP_TIMEOUT            (NVP_u32TLowPower)
+
+/**
+ *\brief
+ *     Macro used to disable the os timer - set timer enable bit to 0
+ */
+#define KU8_LPM_LPIT_DISABLE              ((uint8)0x0Eu)
+
+/**
+ *\brief
+ *     Macro used to define the LPMTR prescaler value - set the prescaler value
+ */
+#define KU8_LPM_LPTMR_PRESCALE            ((uint8)0x05u)
+
+/**
+ *\brief
+ *     Macro used to define the LPTMR interrupt - set the enable interrupt bit
+ */
+#define KU8_LPM_LPMTR_ENABLE_INTERRUPT    ((uint8)0x40u)
+
+/**
+ *\brief
+ *     Macro used to define the sleep cyclic wakeup value - sets the timer trigger value
+ */
+#define KU16_LPM_LPTMR_SLEEP_TIMEOUT      ((uint16)0x1F4u)
+
+/**
+ *\brief
+ *     Macro used to define the port interrupt enable  - sets the interrupt register
+ */
+#define KU8_LPM_PORT_PIN_INTERRUPT        ((uint8)0x0Au)
+
+/**
+ *\brief
+ *     Macro used to define the port pullup enable value - sets the pull register
+ */
+#define KU8_LPM_PORT_PULLUP_ENABLE        ((uint8)0x03u)
+
+/**
+ *\brief
+ *     Macro used to define the port mux value - sets the mux register
+ */
+#define KU16_LPM_PORT_MUX_500             ((uint16)0x500u)
+
+/**
+ *\brief
+ *     Macro used to define the port mux value - sets the mux register
+ */
+#define KU16_LPM_PORT_MUX_400             ((uint16)0x400u)
+
+/**
+ *\brief
+ *     Macro used to define the port mux value - sets the mux register
+ */
+#define KU16_LPM_PORT_MUX_300             ((uint16)0x300u)
+
+/**
+ *\brief
+ *     Macro used to define the port mux value - sets the mux register to GPIO
+ */
+#define KU16_LPM_PORT_MUX_100             ((uint16)0x100u)
+
+/**
+ *\brief
+ *     Macro used to define the delay for the second channel read
+ */
+#define KU16_LPM_READ_DELAY               ((uint16)700)
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+/**
+ *\brief
+ *     This variable is used to store the wakeup reason
+ */
+LOCAL volatile uint8 lpm_u8Wakeup = KU8_ZERO;
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+/**
+* \brief
+*       Function used to change the ecu mode to a low power state.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       Bswm Callback.
+* \dynamicaspectdescription
+*       This function is called when sleep mode is requested.
+* \constrains
+*       No constraints.
+* \ddesignrequirement
+*       DSG_LPM_sleepInit
+* \archrequirement
+*       ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepInit
+*       ARCH_SW_LPM_pclAdcIfSerrvices_AdcIf_StopConversion
+*       ARCH_SW_LPM_pclAdcIfSerrvices_AdcIf_WaitForConversion
+*       ARCH_SW_LPM_pclSbcServices_SBC_SetToLowPower
+*       ARCH_SW_LPM_pclSbcServices_SBC_sleepTriggerWatchdog
+*/
+void LPM_sleepInit(void)
+{
+   lpm_u8Wakeup = KU8_LPM_WAKEUP_NONE;
+
+   Stop adc timer refresh;
+
+   Stop scheduler;
+   
+   Disable outputs;
+
+   Wait for adc sampling to finish;
+
+   Trigger Wdg;
+
+   Enable periodic wakeup;
+  
+   (void)Mcu_InitClock(McuConf_McuClockSettingConfig_McuClockSettingConfig_1);
+   (void)Mcu_InitClock(McuConf_McuClockSettingConfig_McuClockSettingConfig_2);
+
+   Mcu_SetMode(McuConf_McuModeSettingConf_McuModeSettingConf_VLPR);
+
+   Enable CAN wakeup;
+
+   Set SBC to Stop mode for low power;
+
+   ACC pins;
+
+   SBC pins;
+
+}
+
+/**
+* \brief
+*       Function used to execute actions during the low power mode.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       LPM_sleepInit must be called before this function.
+* \post
+*       LPM_sleepRestore must be called after this function.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       Bswm Callback.
+* \dynamicaspectdescription
+*       Function called to execute sleep mode.
+* \constrains
+*       No constraints.
+* \ddesignrequirement
+*		DSG_LPM_sleepMainLoop
+* \archrequirement
+*       ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepMainLoop
+*       ARCH_SW_LPM_pclLowPowerwakeUp_IoHwAb_HandleSeatVariants
+*       ARCH_SW_LPM_pclSbcServices_SBC_sleepTriggerWatchdog
+*       ARCH_SW_LPM_pclHandleSeatCurrentCircuit_IoHwAb_HandleSeatCurrentCircuit
+*/
+void LPM_sleepMainLoop(void)
+{
+   uint32 u32Timer;
+   uint16 au16buffer[KU8_TWO];
+   boolean bAdcWakeup;
+   Std_ReturnType u8Ret;
+
+   bAdcWakeup = B_FALSE;
+   u32Timer = 0u;
+   LPTMR0->CSR = KU8_LPM_LPMTR_ENABLE_INTERRUPT;
+   LPTMR0->CSR |= 0x1u;
+   do{
+	  SuspendAllInterrupts();
+
+      Sleep mode;
+
+      Restart timer;
+
+      u32Timer++;
+
+      Dio_WriteChannel(DioConf_DioChannel_Dio_Wake_Cyclic_Power, STD_HIGH);
+	   
+      SBC pins - enable;
+
+	  ResumeAllInterrupts();
+	   
+	  Rte_Call_pclSbcServices_SBC_sleepTriggerWatchdog();
+      SBC pins - disable;
+     
+	  Mcu_SetMode(McuConf_McuModeSettingConf_McuModeSettingConf_RUN);
+
+	  (void)Mcu_InitClock(McuConf_McuClockSettingConfig_McuClockSettingConfig_2);
+      
+	  Adc_StartGroupConversion(AdcGroup_2);
+      do{
+		   u8Ret = Adc_ReadGroup(AdcGroup_2, au16buffer);
+	   }while(E_NOT_OK == u8Ret);
+     
+      Dio_WriteChannel(DioConf_DioChannel_Dio_Wake_Cyclic_Power, STD_LOW);
+      Mcu_SetMode(McuConf_McuModeSettingConf_McuModeSettingConf_VLPR);
+      Rte_Call_pclLowPowerWakeUp_DetectSeatOccupancy(au16buffer[0u],au16buffer[1u], B_FALSE, &bAdcWakeup);
+      if(B_TRUE == bAdcWakeup)
+      {
+         lpm_u8Wakeup = KU8_LPM_WAKEUP_SEAT_PRESENCE;
+      }
+
+   }while((KU8_LPM_WAKEUP_NONE == lpm_u8Wakeup)&&(u32Timer <= KU32_LPM_SLEEP_TIMEOUT));
+
+   Stop timer;
+
+   Mcu_SetMode(McuConf_McuModeSettingConf_McuModeSettingConf_RUN);
+
+   Disable CAN wakeup interrupt;
+}
+
+/**
+* \brief
+*       Function used to exit ecu from a low power mode to a normal mode.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function must be called after LPM_sleepMainLoop.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       Bswm Callback.
+* \dynamicaspectdescription
+*       Function is called when low power mode is exited.
+* \constrains
+*       No constraints.
+* \ddesignrequirement
+*		DSG_LPM_sleepRestore
+* \archrequirement
+*       ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepRestore 
+*       ARCH_SW_LPM_pclAdcIfSerrvices_AdcIf_StartConversion
+*       ARCH_SW_LPM_pclAccRestartInit_ACC_RestartInitialization
+*       ARCH_SW_LPM_pclSbcServices_SBC_SetToNormal
+*/
+void LPM_sleepRestore(void)
+{
+   SBC pins - enable;
+
+   Rte_Call_pclSbcServices_SBC_SetToNormal();
+
+   MyMcuArchClock_Init();
+
+   Restore pins, ACC pins;
+
+   Enable outputs;
+
+   if(KU8_LPM_WAKEUP_SEAT_PRESENCE == lpm_u8Wakeup)
+   {
+      BswM_RequestMode(KU8_BSWM_PASSANGER_OCCUPANCY_REQUEST_PORT, BSWM_PASSANGER_OCCUPANCY_DETECTED);
+      BswM_RequestMode(KU8_BSWM_REQ_WAKEUP_TYPE_REQUEST_PORT, BSWM_ACTIVE_WAKEUP_REQ);
+   }
+   else if (KU8_LPM_WAKEUP_CAN == lpm_u8Wakeup)
+   {
+      BswM_RequestMode(KU8_BSWM_REQ_WAKEUP_TYPE_REQUEST_PORT, BSWM_PASSIVE_WAKEUP_REQ);
+      EcuM_SetWakeupEvent(EcuM_ECUM_WKSOURCE_CAN);
+      EcuM_ValidateWakeupEvent(EcuM_ECUM_WKSOURCE_CAN);
+   }
+   else
+   {
+      BswM_RequestMode(KU8_BSWM_REQ_WAKEUP_TYPE_REQUEST_PORT, BSWM_NO_WAKEUP_REQ);
+      /* go to shutdown */
+   }
+
+   Add a bit of a delay for the acc to power on;
+
+   while(0u != LPTMR0->CSR)
+   {
+      ;
+   }
+   Reinit acc init state;
+   
+   Restore os timer;
+
+   Restart adc timer;
+}
+
+/**
+* \brief
+*       Interrupt used for cyclic sleep wakeup.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       Os module.
+* \dynamicaspectdescription
+*       Function is called when timer expires.
+* \constrains
+*       No constraints.
+* \ddesignrequirement
+*		DSG_LPTMR_ISR
+* \archrequirement
+*       ARCH_SW_LPM_ptrpLpmServicesAsrOs_LPTMR_ISR 
+*/
+ISR(LPTMR_ISR)
+{
+
+   LPTMR0->CSR |= LPTMR_CSR_TCF_MASK;
+   LPTMR0->CSR = 0u;
+
+
+}
+
+/**
+* \brief
+*       Interrupt used for can wakeup.
+* \exception
+*       This function has no exceptions.
+* \pre
+*       This function has no preconditions.
+* \post
+*       This function has no postconditions.
+* \return
+*       This function has no return.
+* \dynamicaspectcaller
+*       Os module.
+* \dynamicaspectdescription
+*       Function is called when a pin toggles its value.
+* \constrains
+*       No constraints.
+* \ddesignrequirement
+*		DSG_PORTD_ISR
+* \archrequirement
+*       ARCH_SW_LPM_ptrpLpmServicesAsrOs_PORTD_ISR 
+*/
+ISR(PORTD_ISR)
+{
+
+   PORTD->ISFR = KU16_MAX;
+   lpm_u8Wakeup = KU8_LPM_WAKEUP_CAN;
+
+}
+
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

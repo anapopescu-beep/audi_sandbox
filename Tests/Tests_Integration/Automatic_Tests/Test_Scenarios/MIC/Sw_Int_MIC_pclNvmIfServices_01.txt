@@ -1,0 +1,33 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_MIC_pclNvmIfServices_SetRamBlockStatus
+ARCH_SW_MIC_pclNvmIfServices_SetRamBlockStatus: The NvmIfServices_SetRamBlockStatus interface will set a flag, flag used to notify that the ECC Counters Block has to be recorded in the EEPROM during the shutdown. (The writhing procces will be done in NvM_WriteAll();)
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_MIC_pclNvmIfServices_SetRamBlockStatus
+
+	Step 2: Set a BP in function MIC_Autotest_RunRamMemoryCorruption in order to change value of reset cause 
+		Expected result:  BP was set
+
+	Step 3: Modify Reset Cause value in order to detect ECC 
+		Expected result:  Reset cause value is set.
+
+	Step 4: Set a BP in function MIC_Autotest_RunRamMemoryCorruption in order to call NvmIf_SetRamBlockStatus function 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function NvmIf_SetRamBlockStatus in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 6: Return ECU to default values

@@ -1,0 +1,48 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_MIC_pseRunEepromMemoryCorruption_MIC_Autotest_RunEepromMemoryCorruption
+ARCH_SW_MIC_pseRunEepromMemoryCorruption_MIC_Autotest_RunEepromMemoryCorruption: The runnable shall be called to provide the result of Eeprom Memory Corruption Autotest. - Eeprom Memory Corruption Autotest will check if an ECC was detected in Eeprom memory area. - If an ECC is detected in Eeprom memory area the {Test Result} will be TEST_NOK. - If an ECC is NOT detected in Eeprom memory area the {Test Result} will be TEST_OK.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_MIC_pseRunEepromMemoryCorruption_MIC_Autotest_RunEepromMemoryCorruption
+
+	Step 2: Set a BP in function atm_cbk_RunEepromMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunEepromMemoryCorruption function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function MIC_Autotest_RunEepromMemoryCorruption in order to confirm the detected reset cause 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function atm_cbk_RunEepromMemoryCorruption_MIC_Autotest in order to check the interface 
+		Expected result:  BP was set
+
+	Step 5: Read auto test result 
+		Expected result:  auto test result is OK
+
+	Step 6: Set a BP in function atm_cbk_RunEepromMemoryCorruption_MIC_Autotest in order to call MIC_Autotest_RunEepromMemoryCorruption function 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function MIC_Autotest_RunEepromMemoryCorruption in order to confirm the detected reset cause 
+		Expected result:  BP was set
+
+	Step 8: Modify Reset Cause value in order to detect ECC 
+		Expected result:  Reset cause value is set.
+
+	Step 9: Set a BP in function atm_cbk_RunEepromMemoryCorruption_MIC_Autotest in order to check the interface 
+		Expected result:  BP was set
+
+	Step 10: Read auto test result 
+		Expected result:  auto test result is Not OK
+
+Postcondition
+
+	Step 11: Return ECU to default values

@@ -1,0 +1,40 @@
+					Autoliv Electronics Document
+
+Preconditions
+
+	Step 0: Bench Initialization
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_ACC_pseAccTemperatureSpiData, ARCH_SW_IoHwAb_pclAccSpiData
+ARCH_SW_ACC_pseAccTemperatureSpiData: The runnable shall communicate the raw register value for the temperature that is read from the TDK accelerometer from the SPI bus.
+ARCH_SW_IoHwAb_pclAccSpiData: The interface shall read the {Raw Accelerometer Temperature} from the SPI bus according to the TDK accelerometer data-sheet
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_ACC_pseAccTemperatureSpiData
+
+	Step 2: Set a breakpoint in function IoHwAb_GetAccelerometerTemperature at the called Rte_Call_pclAccSpiData_GetTemperatureData interface 
+		Expected result:  BP reached.
+
+	Step 3: Set a breakpoint in function ACC_GetAccelerometerTemperature 
+		Expected result:  BP reached.
+
+Action: ARCH_SW_IoHwAb_pclAccSpiData
+
+	Step 4: Set a breakpoint in function IoHwAb_GetAccelerometerTemperature after the Rte_Call_pclAccSpiData_GetTemperatureData call 
+		Expected result:  BP reached.
+
+	Step 5: Check dataflow from ACC to IoHwAb
+
+Postcondition
+
+	Step 6: Return ECU to default values

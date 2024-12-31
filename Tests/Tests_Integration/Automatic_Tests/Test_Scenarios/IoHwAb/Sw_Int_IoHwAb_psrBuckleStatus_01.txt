@@ -1,0 +1,35 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_psrBuckleStatus, ARCH_SW_CIL_prrBuckleStatus
+ARCH_SW_IoHwAb_psrBuckleStatus: The runnable shall the voltage level of the {Wake channel 1} and {Wake channel 2} via the input parameters. The runnable shall set the {Buckle Status Seat 1} and {Buckle Status Seat 2} depending on the resistance values computed from the input parameters.
+ARCH_SW_CIL_prrBuckleStatus: Interface used to read the buckle sensor status for the second row.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_IoHwAb_psrBuckleStatus, ARCH_SW_CIL_prrBuckleStatus
+
+	Step 2: Set a breakpoint in function IoHwAb_DetectSeatOccupancy at Rte_Write_psrBuckleStatus_au8BuckleStatus 
+		Expected result:  BP reached.
+
+	Step 3: Write Local au8RteBelt with value 2 
+		Expected result:  Variable overwritten with 2.
+
+	Step 4: Set a breakpoint in function CIL_runAppliToCAN at the execution of the current time slot
+
+	Step 5: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot01 after getting the status for all buckles.
+
+	Step 6: Evaluate buckle state data flow
+
+Postcondition
+
+	Step 7: Return ECU to default values

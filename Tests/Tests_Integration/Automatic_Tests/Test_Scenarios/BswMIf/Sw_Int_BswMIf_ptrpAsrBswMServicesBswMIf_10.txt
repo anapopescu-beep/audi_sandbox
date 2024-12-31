@@ -1,0 +1,33 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnWakeupValidation
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnWakeupValidation: The BswM_OnWakeupValidation runnable shall be called by the Autosar BswM in case of: - Wakeup event is validated
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnWakeupValidation
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Set a BP in function BswM_Action_BswMAction_BswM_OnWakeupValidation in order call BswM_OnWakeupValidation function 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to check Wakeup event was validated 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_Action_BswMAction_BswM_OnWakeupValidation in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 6: Return ECU to default values

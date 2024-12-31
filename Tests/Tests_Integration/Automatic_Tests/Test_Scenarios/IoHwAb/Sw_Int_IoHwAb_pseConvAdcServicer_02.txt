@@ -1,0 +1,35 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_pseConvAdcService, ARCH_SW_CIL_pclConvAdcService
+ARCH_SW_IoHwAb_pseConvAdcService: The runnable shall read the {Raw value} in LSB via the AdcIf_runGetChannelValue interface for the selected {Measurement Index}
+ARCH_SW_CIL_pclConvAdcService: Interface is used to read physical measurements in SI units - Interface will be used to read the voltage (mV) on each solenoid - Interface will be used to read the current (mA) on each solenoid
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+	Step 2: Start MF 01 
+		Expected result:  MF Started
+
+Action: ARCH_SW_IoHwAb_pseConvAdcService, ARCH_SW_CIL_pclConvAdcService
+
+	Step 3: Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend at Rte_Call for runGetMeasure. 
+		Expected result:  BP reached
+
+	Step 4: Set a breakpoint in function IoHwAb_runGetMeasure 
+		Expected result:  BP reached
+
+	Step 5: Set a breakpoint in function cil_Update_07Cx_Block01_InfosToSend 
+		Expected result:  BP reached
+
+Postcondition
+
+	Step 6: Return ECU to default values

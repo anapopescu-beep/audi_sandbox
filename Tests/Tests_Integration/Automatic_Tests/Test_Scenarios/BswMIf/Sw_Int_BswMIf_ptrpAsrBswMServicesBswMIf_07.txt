@@ -1,0 +1,32 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_ProceedReset
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_ProceedReset: The BswM_ProceedReset runnable shall be called by the Autosar BswM in case of: - SW Reset diagnosis request is made - HW Reset diagnosis request is made - FBL Reset diagnosis request is made
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_ProceedReset
+
+	Step 2: Send diagnostic request in order to do soft Reset
+
+	Step 3: Set a BP in function BswM_Action_BswMAction_BswM_ProceedReset in order to call BswM_ProceedReset function 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function BswM_ProceedReset in order to check if SW Reset diagnosis request was made 
+		Expected result:  BP was set
+
+	Step 5: Set a BP in function BswM_Action_BswMAction_BswM_ProceedReset in order to check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 6: Return ECU to default values

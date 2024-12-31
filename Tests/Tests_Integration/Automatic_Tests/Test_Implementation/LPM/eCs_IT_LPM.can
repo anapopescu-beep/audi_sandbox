@@ -1,0 +1,288 @@
+/*@!Encoding:1252*/
+/*------------------------------------------------------------------------------
+                                IMPORT LIBRARY
+ ------------------------------------------------------------------------------*/
+/* To include all the libraries used by the .capl script. */
+/* WARNING: Some things such as diagnostic functions are different from project
+to project, change those according to your project requirements */
+includes
+{
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Defines.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Debugger_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Project_Functions.cin"
+  #include "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Includes\\Diagnostic_Functions.cin"
+}
+
+/*------------------------------------------------------------------------------
+                                    GLOBALS
+ ------------------------------------------------------------------------------*/
+/* To declare the constants used throurough the entire module, and global variables */
+variables
+{
+
+/*----------------------------Global Variables---------------------------------*/
+  float sEcs_HW_defekt;
+ 
+}
+
+
+/*------------------------------------------------------------------------------
+                                TEST FUNCTIONS
+------------------------------------------------------------------------------*/
+/*------------------------- Test Preconditions ------------------------------*/
+/* For operations to ensure the correct execution of the test case, such as IGN_ON,
+checking that CAN communication is present, etc.
+/* Varies from module to module, use from Helper_Functions.cin only the ones you need */
+testfunction RunPreTs()
+{
+  DisplayRequirementsInfo();
+  AddTestSetupInformation();
+  
+  PreTS_StartLogging();
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization");
+  
+  testStep("", "Delete all breakpoint from debugger.");
+  debugger_deleteAllBreakpoints();
+  
+  testStep("", "Reset the debugger.");
+  debugger_reset();
+  
+  testStep("", "Run the debugger.");
+  debugger_run();
+}
+
+/*------------------------- Test Postconditions ------------------------------*/
+/* For operations to ensure that after the test case was executed, the enviroment
+would go back to a blank state, to be ready for the next test step in queue. Call it a Cleanup phase. */
+testfunction RunPostTs()
+{
+  stopLogging("TestCaseLogASC");
+  stopLogging("TestCaseLogBLF");
+}
+testcase InitTestModule()
+{
+  ConfigureTestModuleInformation();
+  strncpy(cLogPathAndName, "S:\\Tools\\CANoe\\Config\\ECS_AUDI_INT\\Logs\\",  elcount(cLogPathAndName));
+}
+/*------------------------------------------------------------------------------
+                                TEST EXECUTION
+------------------------------------------------------------------------------*/
+testcase Sw_Int_LPM_ptrpLpmServicesBswMIf_01()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepInit");
+  AddRequirementInfo("ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepInit", "The LPM_sleepInit runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to initialize LPM module");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepInit");  
+  testStep("STEP", "Enable comunication --> Comunication enable");
+   TestSetMsgEvent(Airbag_01);
+   TestSetMsgEvent(Airbag_02);
+   TestSetMsgEvent(Airbag_eCS_01);
+  TestWaitForTimeout(12000);
+  
+  debugger_setRelativeFunctionBpAtLine("BswM_Cyclic_10msTimer", "5");
+   testStep("", "Run the debugger."); 
+  debugger_run();
+    
+  testStep("STEP", "Disable comunication --> Comunication disable");
+  TestDisableMsg(Airbag_01);
+  TestDisableMsg(Airbag_02);
+  TestDisableMsg(Airbag_eCS_01);
+  TestWaitForTimeout(6000);
+  testStep("STEP", "Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  debugger_deleteAllBreakpoints();
+  
+  debugger_writeVariable("uint8","bswmif_u16TPostRunTimer,,app.elf", "1", "17EC");
+  TestWaitForTimeout(2000);
+   
+  debugger_setRelativeFunctionBpAtLine("BswM_OnLowPwrFromPostRun", "8");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function BswM_OnLowPwrFromPostRun in order to go in LPM_sleepInit function --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("LPM_sleepInit", "1");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function LPM_sleepInit in order to initialize LPM module --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("BswM_OnLowPwrFromPostRun", "14");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  testStep("STEP", "Set a BP in function BswM_OnLowPwrFromPostRun in order to check the interface --> BP was set");
+   debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_LPM_ptrpLpmServicesBswMIf_02()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepMainLoop");
+  AddRequirementInfo("ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepMainLoop", "The LPM_sleepMainLoop runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to enter in low power mode main loop.");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepMainLoop");  
+  testStep("STEP", "Enable comunication --> Comunication enable");
+   TestSetMsgEvent(Airbag_01);
+   TestSetMsgEvent(Airbag_02);
+   TestSetMsgEvent(Airbag_eCS_01);
+  TestWaitForTimeout(10000);
+  
+  debugger_setRelativeFunctionBpAtLine("BswM_Cyclic_10msTimer", "5");
+  testStep("", "Reset the debugger.");
+   debugger_reset();
+   testStep("", "Run the debugger."); 
+  debugger_run();
+    
+  testStep("STEP", "Disable comunication --> Comunication disable");
+  TestDisableMsg(Airbag_01);
+  TestDisableMsg(Airbag_02);
+  TestDisableMsg(Airbag_eCS_01);
+  TestWaitForTimeout(5000);
+  testStep("STEP", "Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  debugger_deleteAllBreakpoints();
+  
+  debugger_writeVariable("uint8","bswmif_u16TPostRunTimer,,app.elf", "1", "17EC");
+  TestWaitForTimeout(2000);
+   
+  debugger_setRelativeFunctionBpAtLine("BswM_OnLowPwrFromPostRun", "14");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function BswM_OnLowPwrFromPostRun in order to go in LPM_sleepMainLoop function --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("LPM_sleepMainLoop", "6");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function LPM_sleepMainLoop in order to enter in low power mode main loop --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+    
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+testcase Sw_Int_LPM_ptrpLpmServicesBswMIf_03()
+{
+   /*-------------------------Test specific report info------------------------------*/
+  
+  testReportAddMiscInfoBlock("AUTOLIV ELECTRONICS document");
+  TestReportAddMiscInfo("Nightly test", "No");
+  TestReportAddMiscInfo("Test type", "Requirement-Based");
+  TestReportAddMiscInfo("Regression Test", "No");
+  TestReportAddMiscInfo("Fault injection method used", "No");
+  TestReportAddMiscInfo("Resource usage evaluation", "No");
+  TestReportAddMiscInfo("Priority", "No");
+  TestReportAddMiscInfo("Safety relevant", "No");
+  
+  AddRequirementInfo("Requirement under test", "ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepRestore");
+  AddRequirementInfo("ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepRestore", "The LPM_sleepRestore runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to restore previous state and set rules to go back in RUN STATE");
+//***************************************************************************************
+  
+  testCaseComment("Preconditions");
+  testStep("STEP", "Bench Initialization"); // If the first parameter of testStep() is "Step", the arguments will be written in the specification file and "Step" argument will be numbered by 1 for each iteration.
+  RunPreTs();
+//   /*------------------------- Test scenario start ------------------------------*/
+   testCaseComment("Action: ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepMainLoop");  
+   testStep("STEP", "Enable comunication --> Comunication enable");
+   TestSetMsgEvent(Airbag_01);
+  TestSetMsgEvent(Airbag_02);
+  TestSetMsgEvent(Airbag_eCS_01);
+   TestWaitForTimeout(10000);
+  
+  debugger_setRelativeFunctionBpAtLine("BswM_Cyclic_10msTimer", "5");
+   testStep("", "Reset the debugger.");
+  debugger_reset(); 
+  testStep("", "Run the debugger.");
+  debugger_run();
+    
+  testStep("STEP", "Disable comunication --> Comunication disable");
+  TestDisableMsg(Airbag_01);
+  TestDisableMsg(Airbag_02);
+  TestDisableMsg(Airbag_eCS_01);
+  TestWaitForTimeout(5000);
+  testStep("STEP", "Set a BP in function BswM_Cyclic_10msTimer in order to go in  BswM_OnLowPwrFromPostRun function --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  debugger_deleteAllBreakpoints();
+  
+  debugger_writeVariable("uint8","bswmif_u16TPostRunTimer,,app.elf", "1", "17EC");
+  TestWaitForTimeout(2000);
+   
+  debugger_setRelativeFunctionBpAtLine("BswM_OnLowPwrFromPostRun", "17");
+   testStep("", "Run the debugger.");
+  debugger_run();
+  
+  testStep("STEP", "Enable comunication --> Comunication enable");
+   TestSetMsgEvent(Airbag_01);
+   TestSetMsgEvent(Airbag_02);
+   TestSetMsgEvent(Airbag_eCS_01);
+  TestWaitForTimeout(11000);
+  
+   testStep("STEP", "Set a BP in function BswM_OnLowPwrFromPostRun in order to go in LPM_sleepRestore function --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+  ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+  
+  debugger_setRelativeFunctionBpAtLine("LPM_sleepRestore", "0");
+   testStep("", "Run the debugger.");
+  debugger_run();
+   testStep("STEP", "Set a BP in function LPM_sleepRestore in order to restore previous state and set rules to go back in RUN STATE --> BP was set");
+  debugger_waitUntilBPisReached("2000");
+   ExpectedTestResult(debugger_result, W8_UNTIL_BP_SUCCESSFUL, "Breakpoint is reached");
+   
+  //====================================================
+  testCaseComment("Postcondition");
+  testStep("STEP", "Return ECU to default values");
+  RunPostTs();
+}
+void MainTest()
+{
+  InitTestModule();
+ Sw_Int_LPM_ptrpLpmServicesBswMIf_01();
+ Sw_Int_LPM_ptrpLpmServicesBswMIf_02();
+ Sw_Int_LPM_ptrpLpmServicesBswMIf_03();
+}

@@ -1,0 +1,220 @@
+<?xml version='1.0'?>
+<datamodel version="3.0"
+           xmlns="http://www.tresos.de/_projects/DataModel2/08/root.xsd"
+           xmlns:a="http://www.tresos.de/_projects/DataModel2/08/attribute.xsd"
+           xmlns:v="http://www.tresos.de/_projects/DataModel2/06/schema.xsd"
+           xmlns:d="http://www.tresos.de/_projects/DataModel2/06/data.xsd">
+
+  <d:ctr type="AUTOSAR" factory="autosar" 
+         xmlns:ad="http://www.tresos.de/_projects/DataModel2/08/admindata.xsd" 
+         xmlns:cd="http://www.tresos.de/_projects/DataModel2/08/customdata.xsd" 
+         xmlns:f="http://www.tresos.de/_projects/DataModel2/08/formulaexpr.xsd" 
+         xmlns:icc="http://www.tresos.de/_projects/DataModel2/08/implconfigclass.xsd" 
+         xmlns:mt="http://www.tresos.de/_projects/DataModel2/11/multitest.xsd"  
+         xmlns:variant="http://www.tresos.de/_projects/DataModel2/11/variant.xsd">
+    <d:lst type="TOP-LEVEL-PACKAGES">
+      <d:ctr name="Cal" type="AR-PACKAGE">
+        <d:lst type="ELEMENTS">
+          <d:chc name="Cal" type="AR-ELEMENT" value="MODULE-CONFIGURATION">
+            <d:ctr type="MODULE-CONFIGURATION">
+              <a:a name="DEF" value="ASPath:/TS_TxDxM1I2R0/Cal"/>
+              <d:var name="IMPLEMENTATION_CONFIG_VARIANT" type="ENUMERATION" 
+                     value="VariantPreCompile">
+                <a:a name="IMPORTER_INFO" value="@DEF"/>
+              </d:var>
+              <d:ctr name="CalAsymPublicKeyExtract" type="IDENTIFIABLE">
+                <d:var name="CalAsymPublicKeyExtractMaxCtxBufByteSize" 
+                       type="INTEGER" value="100">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalAsymPublicKeyExtractMaxKeySize" type="INTEGER" 
+                       value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalAsymPublicKeyExtractConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalCompress" type="IDENTIFIABLE">
+                <d:var name="CalCompressMaxCtxBufByteSize" type="INTEGER" 
+                       value="100">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalCompressConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalDecompress" type="IDENTIFIABLE">
+                <d:var name="CalDecompressMaxCtxBufByteSize" type="INTEGER" 
+                       value="20480"/>
+                <d:lst name="CalDecompressConfig" type="MAP">
+                  <d:ctr name="CalDecompressConfig_0" type="IDENTIFIABLE">
+                    <d:var name="CalDecompressInitConfiguration" type="STRING" 
+                           value="CplLzssDecompressConfig_0"/>
+                    <d:var name="CalDecompressPrimitiveName" type="STRING" 
+                           value="LZSSDecompress"/>
+                  </d:ctr>
+                </d:lst>
+              </d:ctr>
+              <d:ctr name="CalGeneral" type="IDENTIFIABLE">
+                <d:var name="CalMaxAlignScalarType" type="STRING" value="uint32"/>
+                <d:var name="CalVersionInfoApi" type="BOOLEAN" value="false">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+              <d:ctr name="CalHash" type="IDENTIFIABLE">
+                <d:var name="CalHashMaxCtxBufByteSize" type="INTEGER" 
+                       value="316">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalHashConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalKeyDerive" type="IDENTIFIABLE">
+                <d:var name="CalKeyDeriveMaxCtxBufByteSize" type="INTEGER" 
+                       value="100">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalKeyDeriveMaxKeySize" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalKeyDeriveConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalKeyExchangeCalcPubVal" type="IDENTIFIABLE">
+                <d:var name="CalKeyExchangeCalcPubValMaxBaseTypeSize" 
+                       type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalKeyExchangeCalcPubValMaxCtxBufByteSize" 
+                       type="INTEGER" value="100">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalKeyExchangeCalcPubValMaxPrivateTypeSize" 
+                       type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalKeyExchangeCalcPubValConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalKeyExchangeCalcSecret" type="IDENTIFIABLE">
+                <d:var name="CalKeyExchangeCalcSecretMaxBaseTypeSize" 
+                       type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalKeyExchangeCalcSecretMaxCtxBufByteSize" 
+                       type="INTEGER" value="100">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalKeyExchangeCalcSecretMaxPrivateTypeSize" 
+                       type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalKeyExchangeCalcSecretConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalMacGenerate" type="IDENTIFIABLE">
+                <d:var name="CalMacGenerateMaxCtxBufByteSize" type="INTEGER" 
+                       value="404">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalMacGenerateMaxKeySize" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalMacGenerateConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalMacVerify" type="IDENTIFIABLE">
+                <d:var name="CalMacVerifyMaxCtxBufByteSize" type="INTEGER" 
+                       value="404">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalMacVerifyMaxKeySize" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalMacVerifyConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalRandomGenerate" type="IDENTIFIABLE">
+                <d:lst name="CalRandomGenerateConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalRandomSeed" type="IDENTIFIABLE">
+                <d:var name="CalRandomMaxCtxBufByteSize" type="INTEGER" 
+                       value="24">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalRandomSeedConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalSignatureVerify" type="IDENTIFIABLE">
+                <d:var name="CalSignatureVerifyMaxCtxBufByteSize" 
+                       type="INTEGER" value="100">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalSignatureVerifyMaxKeySize" type="INTEGER" 
+                       value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalSignatureVerifyConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalSymBlockDecrypt" type="IDENTIFIABLE">
+                <d:var name="CalSymBlockDecryptMaxCtxBufByteSize" 
+                       type="INTEGER" value="348">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalSymBlockDecryptMaxKeySize" type="INTEGER" 
+                       value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalSymBlockDecryptConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalSymBlockEncrypt" type="IDENTIFIABLE">
+                <d:var name="CalSymBlockEncryptMaxCtxBufByteSize" 
+                       type="INTEGER" value="348">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalSymBlockEncryptMaxKeySize" type="INTEGER" 
+                       value="16">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalSymBlockEncryptConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalSymDecrypt" type="IDENTIFIABLE">
+                <d:var name="CalSymDecryptMaxCtxBufByteSize" type="INTEGER" 
+                       value="428">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalSymDecryptMaxKeySize" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalSymDecryptConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CalSymKeyExtract" type="IDENTIFIABLE">
+                <d:var name="CalSymKeyExtractMaxCtxBufByteSize" type="INTEGER" 
+                       value="72">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="CalSymKeyExtractMaxKeySize" type="INTEGER" 
+                       value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:lst name="CalSymKeyExtractConfig" type="MAP"/>
+              </d:ctr>
+              <d:ctr name="CommonPublishedInformation" type="IDENTIFIABLE">
+                <d:var name="ArMajorVersion" type="INTEGER" value="1"/>
+                <d:var name="ArMinorVersion" type="INTEGER" value="2"/>
+                <d:var name="ArPatchVersion" type="INTEGER" value="0"/>
+                <d:var name="SwMajorVersion" type="INTEGER" value="1"/>
+                <d:var name="SwMinorVersion" type="INTEGER" value="2"/>
+                <d:var name="SwPatchVersion" type="INTEGER" value="2"/>
+                <d:var name="ModuleId" type="INTEGER" value="206">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="VendorId" type="INTEGER" value="1">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="VendorApiInfix" type="STRING" value="">
+                  <a:a name="ENABLE" value="false"/>
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+                <d:var name="Release" type="STRING" value="BLP-3.X_ACG-8_CORTEXM_S32K14X">
+                  <a:a name="IMPORTER_INFO" value="@DEF"/>
+                </d:var>
+              </d:ctr>
+            </d:ctr>
+          </d:chc>
+        </d:lst>
+      </d:ctr>
+    </d:lst>
+  </d:ctr>
+
+</datamodel>

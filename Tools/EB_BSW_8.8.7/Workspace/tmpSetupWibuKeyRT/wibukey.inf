@@ -1,0 +1,85 @@
+; WIBUKEY.INF - installation file of WIBU-KEY Driver Install Disk.
+; Copyright (c) 2003-2005 by WIBU-SYSTEMS AG, Germany, http://www.wibu.com
+; Windows XP/2003 Sever (64 Bit) installation information for WIBU-KEY software protection system
+;
+; *** last change: 2005Nov16 (as)
+; *** Version 5.20 Build 4
+;
+
+[Version]
+Signature = $CHICAGO$
+Class = WIBUKEY		; the same as Unknown but this class must be inserted in the registry before called here
+ClassGUID = {00090000-0000-1200-8002-0000C06B5161}
+Provider = "WIBU-SYSTEMS AG"
+
+[Manufacturer]
+"WIBU-SYSTEMS AG" = WIBU,ntamd64
+
+; This section creates the new class WIBUKEY.
+[ClassInstall32]
+AddReg = Wibukey.AddClass
+
+[Wibukey.AddClass]
+HKLM,%RegPath%,,FLG_ADDREG_OVERWRITEONLY,"WIBU-KEY Software Protection"
+HKLM,%RegPath%,"Class",FLG_ADDREG_TYPE_SZ,"WIBUKEY"
+HKLM,%RegPath%,"Icon",FLG_ADDREG_TYPE_SZ,"-19"
+
+; This part identifies which kind of WIBU-BOX is plugged in
+[WIBU.ntamd64]
+%USB\VID_064F&PID_0BD7.DeviceDesc% = WBxUInst, USB\VID_064F&PID_0BD7
+%USB\VID_064F&PID_0BD8.DeviceDesc% = WBxUInst, USB\VID_064F&PID_0BD8
+%USB\VID_064F&PID_0BD9.DeviceDesc% = WBxUInst, USB\VID_064F&PID_0BD9
+
+;********************************
+;***** WIBU-BOX/U on WXP
+;********************************
+[WBxUInst]
+CopyFiles=WibuKey.Files,WibuKey.SysFiles
+
+;***** Registry entries
+[WBxUInst.Services]
+AddService = WibuKey,,WibukeyService1_64
+AddService = Wibukey2_64,2,WibukeyService2_64
+
+;**********************************************************************
+;***** Common sections for all variants of installation on all systems
+;**********************************************************************
+[WibuKey.Files]
+WkWin64.dll
+
+[WibuKey.SysFiles]
+WibuKey64.sys
+WibuKey2_64.sys
+
+[WibukeyService1_64]
+ServiceType = 1           ; 1 = SERVICE_KERNEL_DRIVER	
+StartType = 2             ; 2 = SERVICE_AUTO_START
+ErrorControl = 1          ; 1 = SERVICE_ERROR_NORMAL
+ServiceBinary = %10%\system32\drivers\WibuKey64.sys  ; Specifies the path to the binary for the service
+
+[WibukeyService2_64]
+ServiceType = 1           ; 1 = SERVICE_KERNEL_DRIVER	
+StartType = 3             ; 3 = SERVICE_DEMAND_START
+ErrorControl = 1          ; 1 = SERVICE_ERROR_NORMAL
+ServiceBinary = %10%\system32\drivers\wibukey2_64.sys  ; Specifies the path to the binary for the service
+
+;***** Common declarations
+[SourceDisksNames]
+1="WIBU-KEY Driver Install Disk",,
+
+[SourceDisksFiles]
+;######### WibuKe64.cp_=1
+WkWin64.dl_=1
+WibuKey64.sy_=1
+WibuKey2_64.sy_=1
+
+[DestinationDirs]
+DefaultDestDir=12 ; Windows system\drivers directory
+WibuKey.SysFilesWXP=10,system32\drivers
+
+[Strings]
+USB\VID_064F&PID_0BD7.DeviceDesc = "WIBU-BOX/U"
+USB\VID_064F&PID_0BD8.DeviceDesc = "WIBU-BOX/RU"
+USB\VID_064F&PID_0BD9.DeviceDesc = "SecuriKey"
+RegPath = "SYSTEM\CurrentControlSet\Control\Class\{00090000-0000-1200-8002-0000C06B5161}"
+

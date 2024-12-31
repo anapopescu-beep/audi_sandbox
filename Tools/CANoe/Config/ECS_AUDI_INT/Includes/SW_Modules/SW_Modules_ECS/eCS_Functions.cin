@@ -1,0 +1,386 @@
+/*@!Encoding:1252*/
+//eCS Project Funtions 
+includes
+{    
+  
+}
+
+variables
+{
+  
+  
+  //RC   
+  diagRequest AccCalibStart dAccCalibStartRequest;
+  diagResponse AccCalibStart dAccCalibStartResponse;
+ 
+  enum CheckDiagnosticAEC_Status_Return_Type {returnTime, returnStatus};
+
+}
+
+/// <AEC_Fault Management>
+// Function that checks that the specified AEC/ DTC event ID and status are as expected.
+// The function is able to return the AEC/ DTC even status or event qualification time.
+// If specified AEC/ DTC event is not found with expected status, the current found status is returned.
+// "bAEC"                  = AEC/ DTC event to be evaluated.
+// "bExpectedStatuse"      = AEC/ DTC event to be checked by function.
+// "fMaxTime"              = Maximum time that the function will check for specified event status.
+// "iAECOption"            = Option to select the function return type, either event status, or qualification time.
+// Example: ReturnDiagnosticAECStatus(bERR_WARM_RESET, bAEC_AbsentFailed, 400, returnTime) // ReturnDiagnosticAECStatus(bERR_WARM_RESET, bAEC_AbsentFailed, 460, returnStatus))
+// Result: Function will check if : 
+//                  AEC/ DTC event ID "bERR_WARM_RESET" (ID 0x03 in Core_Functions_Configuration.cin)
+//                                         -  is found with status -
+//                  "bAEC_AbsentFailed" (STATUS 0x14 in Core_Functions_Configuration.cin)
+//                         - check will be performed for a maximum of fMaxTime of 400ms 
+//                         - returned type will be "returnTime" or the max time spent by the function to find the evaluated AEC/ DTC status
+// In the cases that function:
+//  - "iAECOption" is entered incorrectly --> testStepFail and return -1
+//  - Does not find specified AEC --> testStepFail and return 
+//  - AEC/ DTC event found, but with another status than expected --> testStepFail and return of found AEC/ DTC event status as well as max elapsed time that the function checked
+int64 ReturnDiagnosticAECStatus (byte bAEC, byte bExpectedStatus, float fMaxTime, int iAECOption)
+{
+  stack byte AEC_Status[2];
+  stack int iIndex;
+  stack int iFoundAEC = 0;
+  stack int iFoundExpectedStatus = 0;
+  stack int iFLoops = 0;  
+  stack byte bFoundStatus;
+  stack float fStartTime = timeNow()/100;
+  stack float fTimeSinceStart = timeNow()/100;
+  
+  if(iAECOption != returnTime && iAECOption != returnStatus)
+        {
+         testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "", "Invalid input for return type, expected returnTime or returnStatus");
+         return -1;  
+        }   
+  
+  GetSecurityAccess("supplier");
+  
+  while((fTimeSinceStart - fStartTime) <= fMaxTime - AECDiagResponseWait)
+  {
+    
+    Req_AllEventStatuses_Read.SendRequest();
+    testWaitForDiagResponse(Req_AllEventStatuses_Read, AECDiagResponseWait);
+    diagGetLastResponse(Req_AllEventStatuses_Read, Resp_AllEventStatuses_Read);
+    diagGetPrimitiveData(Resp_AllEventStatuses_Read, All_AEC_Bytes, elcount(All_AEC_Bytes));
+    
+    iFLoops++;
+  
+  for(iIndex = 3; iIndex < elcount(All_AEC_Bytes); iIndex++)    
+    {    
+    
+    if(All_AEC_Bytes[iIndex+1] == bAEC)
+      {
+        
+      iFoundAEC = 1;
+                       
+        if( All_AEC_Bytes[iIndex+2] == bExpectedStatus)
+        {
+          iFoundExpectedStatus = 1;
+          testStep(@sysvar::CORE::sysLevelOfDetailStep, "", "AEC ID [0x%02X] found with expected status : [0x%02X]. Elapsed time : ~ %i ms", bAEC, bExpectedStatus, (AECDiagResponseWait*iFLoops)); 
+          bFoundStatus = All_AEC_Bytes[iIndex+2];
+          return bFoundStatus;
+        }
+        
+        else
+        {
+          bFoundStatus = All_AEC_Bytes[iIndex+2];
+        }
+  
+      }  
+    
+    iIndex +=2;    
+    
+    }
+
+    fTimeSinceStart = timeNow() / 100;
+    
+  }
+  
+       if(iFoundAEC == 0)    
+        {
+       testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "", "AEC ID [0x%02X] was not found. Check AEC ID parameter: ", bAEC);
+       return -1; 
+        }
+  
+          
+  if(iFoundExpectedStatus == 0)
+  { 
+   testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "", "AEC ID [0x%02X] was not found with expected status : [0x%02X]. Current status is : [0x%02X]. Elapsed time : ~ %i ms", bAEC, bExpectedStatus, bFoundStatus, (AECDiagResponseWait*iFLoops));
+  }
+  
+  if (iAECOption == returnTime)
+        {
+          return (AECDiagResponseWait*iFLoops);
+        }
+         
+        else if(iAECOption == returnStatus)
+          
+        {
+          return bFoundStatus;
+        }
+          
+     return 0;      
+}
+
+
+/// <ECU_Calibration>
+// Used to start Acceleromter Calibration routine.
+// Offsetes current tilt angles position back to 0
+void AccelCalibration ()
+{
+   GetSecurityAccess("supplier");    
+   SendDiagnosticRequest(dAccCalibStartRequest, dAccCalibStartResponse);
+   EvalManStepEqual("Calibration started: ",dAccCalibStartResponse, "0x71 0x01 0xF7 0x94 0xFF");
+}
+
+/// <Measurement_Frame>
+// Used to activate or reactivate and configure Measurement Frame
+// "iMF_timing"                       = holds periodicity of MF (Timing resolution 1 lsb = 5ms, 2 lsb = 10ms etc.)
+// "iEnableDevFrames"                 = Enable or Disable Dev Frames (0 - Frame disabled, 1 - Frame enabled)
+// Ex: ActivateMeasurementFrame(6, 1) = MF enabled with a timing of 6*5ms = 30ms, Dev Frames enabled (Dev Frames require pwr off/on to be enabled/ disabled)
+// Ex: ActivateMeasurementFrame(0, 0) = MF disabled, Dev Frames disabled (Dev Frames require pwr off/on to be enabled/ disabled)
+void ActivateMeasurementFrame(int iMeasurementFramePeriodicity, int iEnableDevFrames)
+{
+  
+  stack byte bFirstMFByte = 0;
+  stack byte bSecondMFByte = 0;
+  stack byte bThirdMFByte = 0;
+  
+  if (@Platform::DIAG_MeasurementFrameBlockID1 == 1)
+    {
+      bFirstMFByte = bFirstMFByte | 1;
+    }
+
+  if (@Platform::DIAG_MeasurementFrameBlockID2 == 1)
+    {
+        bFirstMFByte = bFirstMFByte | (1 << 1);
+    }
+  if (@Platform::DIAG_MeasurementFrameBlockID3 == 1)
+    {
+        bFirstMFByte = bFirstMFByte | (1 << 2);
+    }
+  
+  GetSecurityAccess("supplier");
+  SetECUMode("unlock");
+  Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_2", bFirstMFByte);
+  Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_1", bSecondMFByte);
+  Req_MeasurementFramesConf_Write.SetParameter("NVP_au8MeasFrameBlockConfig_0", bThirdMFByte);
+  Req_MeasurementFramesConf_Write.SetParameter("NVP_u8MeasFrameTiming", iMeasurementFramePeriodicity);
+  Req_MeasurementFramesConf_Write.SetParameter("NVP_u8EnableDevFrame", iEnableDevFrames);  
+  Req_MeasurementFramesConf_Write.SendRequest();
+  
+  CheckPositiveResponse("Check positive response for activation of Measurement frame.", Req_MeasurementFramesConf_Write, Resp_MeasurementFramesConf_Write);
+  SetECUMode("lock");
+}
+
+/// <Solenoid_Control>
+void SetSolenoidState (char state[])
+{
+  toLower(state, state, elcount(state));
+  if(strncmp(state, "unlocked", strlen(state)) == 0)
+  {  
+   GetSecurityAccess("supplier");    
+   SendDiagnosticRequest(Req_LockSolenoid_Stop, Resp_LockSolenoid_Stop);
+   CheckPositiveResponse("Solenoid is set to UNLOCKED state", Req_LockSolenoid_Stop, Resp_LockSolenoid_Stop);
+  }
+  else
+  {
+    if(strncmp(state, "locked", strlen(state)) == 0)
+    {      
+    GetSecurityAccess("supplier");            
+    SendDiagnosticRequest(Req_LockSolenoid_Start, Resp_LockSolenoid_Start);
+    CheckPositiveResponse("Solenoid is set to LOCKED state", Req_LockSolenoid_Start, Resp_LockSolenoid_Start); 
+    }
+    else
+    {
+      testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "Error", "Invalid parameter for SolenoidActivation function: %s", state);
+    }
+  }
+}
+
+/// <ECU_Calibration>
+//Function that aquires the acceleration values of X, Y and Z axis signals (1G = 9.80665m/s2) and calculates ECU tilt angles
+//Calling GetECUAngle() funtion will display in the Write Window the current tilt angles of the ECU on X and Y axis
+void GetECUAngle()
+{
+  float sigValZ;
+  float sigValY;
+  float sigValX;
+  float angleX, angleY;  
+    
+  sigValZ = getSignal(TDK_4g_AZ);
+  testStep("STEP","Signal value for AZ axis is: %0.4f",sigValZ);
+  
+  sigValY = getSignal(TDK_4g_AY);
+  testStep("STEP","Signal value for AY axis is: %0.4f",sigValY);
+  
+  sigValX = getSignal(TDK_4g_AX);
+  testStep("STEP","Signal value for AX axis is: %0.4f",sigValX);
+  
+  angleX = (arctan(sigValX / (sqrt ((sigValY * sigValY) + (sigValZ * sigValZ))))) * (180/ 3.1415);
+  
+  angleY = (arctan(sigValY / (sqrt ((sigValX * sigValX) + (sigValZ * sigValZ))))) * (180/ 3.1415);
+  
+  @sysvar::TiltAngle::sysX_AxisDisplay = angleX;
+  @sysvar::TiltAngle::sysY_AxisDisplay = angleY;
+  
+  testStep("Step4","sysX_AxisDisplay is: %0.2f°",sigValX);
+  testStep("Step5","sysY_AxisDisplay is: %0.2f°",sigValY);
+ 
+  Write("X Axis Angle value is: %0.1f°",angleX );
+  Write("Y Axis Angle value is: %0.1f°",angleY );
+}
+
+
+/// <Rear_Seat_Status>
+// Set seat occupancy status and buckle status for rear seat 
+// Values for function arguments ar defined as constants in ECS_Functions_Configuration.cin
+//  -> iSide = iLeft / iRight
+//  -> iSeatsOption = iNotAvailable / iNonRemovableSeats / iRemovableSeats
+//  -> iSeatStatus = iShortToGround / iSeatRemoved / iImplausible / iSeatOccupiedBeltNotPlugged / iSeatNotOccupied / iSeatOccupiedBeltPlugged
+// Examples: SetRearSeatStatus(iLeft, iNonRemovableSeats, iShortToGround)
+//           SetRearSeatStatus(iRight, iRemovableSeats, iImplausible)
+//           SetRearSeatStatus(iLeft, iNotAvailable, iSeatOccupiedBeltPlugged)
+// Not all combinations between iSeatsOption and iSeatStatus are compatible (eg SetRearSeatStatus(iLeft, iNotAvailable, iShortToGround) will return an error)
+//void SetRearSeatStatus(int iSide, int iSeatsOption, int iSeatStatus)
+//{
+//  stack char sErrorMessage[300];
+//  stack int iSensorConfiguration;
+//  
+//  //Input parameter check
+//  if(iSide != iLeft && iSide != iRight)
+//  {
+//    snprintf(sErrorMessage, elcount(sErrorMessage), "INVALID ARGUMENT iSide = %d ! iSide shall be iLeft or iRight.", iSide);
+//    testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "SetRearSeatStatus() function call", sErrorMessage);
+//  }
+//  
+//  if(iSeatsOption != iNotAvailable && iSeatsOption != iNonRemovableSeats && iSeatsOption != iRemovableSeats)
+//  {
+//    snprintf(sErrorMessage, elcount(sErrorMessage), "INVALID ARGUMENT iSeatsOption = %d ! iSeatsOption shall be iShortToGround, iNotAvailable, iNonRemovableSeats or iRemovableSeats.", iSeatsOption);
+//    testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "SetRearSeatStatus() function call", sErrorMessage);
+//  }
+//  
+//  if(iSeatStatus != iShortToGround && iSeatStatus != iSeatRemoved && iSeatStatus != iImplausible && iSeatStatus != iSeatOccupiedBeltNotPlugged && iSeatStatus != iSeatNotOccupied && iSeatStatus != iSeatOccupiedBeltPlugged )
+//  {
+//    snprintf(sErrorMessage, elcount(sErrorMessage), "INVALID ARGUMENT iSeatStatus = %d ! iSeatStatus shall be iShortToGround, iSeatRemoved, iImplausible, iSeatOccupiedBeltNotPlugged, iSeatNotOccupied or iSeatOccupiedBeltPlugged.", iSeatStatus);
+//    testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "SetRearSeatStatus() function call", sErrorMessage);
+//  }
+//  
+//  SetDigitalPotentiometertSide(iSide);
+//  
+//  if(iSeatsOption == iRemovableSeats || iSeatsOption == iNonRemovableSeats)
+//    {
+//      //SetConfig(Variant1);
+//      iSensorConfiguration = iVariant1;
+//    }
+//    
+//  if(iSeatsOption == iNotAvailable)
+//    {
+//      //SetConfig(Variant2);
+//      iSensorConfiguration = iVariant2;
+//    }  
+//  
+//  switch(iSeatStatus)
+//  {
+//    case -1: //iShortToGround
+//      switch(iSensorConfiguration)
+//      {
+//        case 1: //iVariant1
+//          if(iSeatsOption == iRemovableSeats)
+//          {
+//            snprintf(sErrorMessage, elcount(sErrorMessage), "INVALID ARGUMENT! Cannot set status iShortToGround on rear seat occupancy sensor configuration Variant 1 with Seats Option = iRemovableSeats");
+//            testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "SetRearSeatStatus() function call", sErrorMessage);
+//          }
+//          if(iSeatsOption == iNonRemovableSeats)
+//          {
+//            SetDigitalResistance(iVariant1_ShortToGND); //0 ohms
+//            testWaitForTimeout(200);
+//          }           
+//          break;
+//        case 2: //iVariant2
+//          snprintf(sErrorMessage, elcount(sErrorMessage), "INVALID ARGUMENT! Cannot set status iShortToGround on rear seat occupancy sensor configuration Variant 2");
+//          testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "SetRearSeatStatus() function call", sErrorMessage);
+//          break; 
+//      }
+//      break;
+//      
+//    case 0: //iSeatRemoved
+//      switch(iSensorConfiguration)
+//      {
+//        case 1: //iVariant1
+//           if(iSeatsOption == iNonRemovableSeats)
+//           {
+//             snprintf(sErrorMessage, elcount(sErrorMessage), "INVALID ARGUMENT! Cannot set status iSeatRemoved on Sensor Configuration Variant 1 with Seats Option = iNonRemovableSeats");
+//             testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "SetRearSeatStatus() function call", sErrorMessage);
+//           }
+//           if(iSeatsOption == iRemovableSeats)
+//           {
+//             SetDigitalResistance(iVariant1_SeatRemoved); //0 ohms
+//             testWaitForTimeout(200);
+//           }           
+//           break;
+//        case 2: //iVariant2
+//          snprintf(sErrorMessage, elcount(sErrorMessage), "INVALID ARGUMENT! Cannot set status iSeatRemoved on rear seat occupancy sensor configuration Variant 2");
+//          testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "SetRearSeatStatus() function call", sErrorMessage);
+//          break;          
+//      }
+//      break;
+//      
+//    case 1: //iImplausible
+//      switch(iSensorConfiguration)
+//      {
+//        case 1: //iVariant1
+//          SetDigitalResistance(iVariant1_Implausibile); //200 ohms
+//          testWaitForTimeout(200);
+//          break;
+//        case 2: //iVariant2
+//          snprintf(sErrorMessage, elcount(sErrorMessage), "INVALID ARGUMENT! Cannot set status iImplausible on rear seat occupancy sensor configuration Variant 2");
+//          testStepFail(@sysvar::CORE::sysLevelOfDetailFail, "SetRearSeatStatus() function call", sErrorMessage);
+//          break; //error!
+//      }
+//      break;
+//      
+//    case 2: //iSeatOccupiedBeltNotPlugged
+//      switch(iSensorConfiguration)
+//      {
+//        case 1: //iVariant1
+//          SetDigitalResistance(iVariant1_SeatOccupiedBeltNotPlugged); //100 ohms
+//          testWaitForTimeout(200);
+//          break;          
+//        case 2: //iVariant2
+//          SetDigitalResistance(iVariant2_SeatOccupiedBeltNotPlugged); //0 ohms
+//          testWaitForTimeout(200);
+//          break;
+//      }   
+//      break;
+//    
+//      
+//    case 3: //iSeatNotOccupied
+//      switch(iSensorConfiguration)
+//      {
+//        case 1: //iVariant1:
+//          SetDigitalResistance(iVariant1_SeatNotOccupied); //400 ohms
+//          testWaitForTimeout(200);
+//          break;          
+//        case 2: //iVariant2
+//          SetDigitalResistance(iVariant2_SeatNotOccupied); //500 ohms 
+//          testWaitForTimeout(200);
+//          break;
+//      }
+//      break;
+//    
+//    case 4: //iSeatOccupiedBeltPlugged
+//      switch(iSensorConfiguration)
+//      {
+//        case 1: //iVariant1
+//          SetDigitalResistance(iVariant1_SeatOccupiedBeltPlugged); //1000 ohms
+//          testWaitForTimeout(200);
+//          break;          
+//        case 2: //iVariant2
+//          SetDigitalResistance(iVariant2_SeatOccupiedBeltPlugged); //2500 ohms
+//          testWaitForTimeout(200);
+//          break;
+//      }
+//      break;
+//  }
+//}

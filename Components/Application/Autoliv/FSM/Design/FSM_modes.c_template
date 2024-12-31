@@ -1,0 +1,1303 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version:
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+******************************************************************************/
+/*
+$Revision: 1.7 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/FSM/Design/project.pj $
+*/
+
+/*!****************************************************************************
+
+details
+   The purpose of this module is to handle the internal and external condition of
+   solenoid inhibition.
+
+******************************************************************************/
+
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "FSM.h"
+#include "Rte_FSM.h"
+#include "Nvp_Cfg.h"
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+/**
+ * \brief
+ *      Used to disable modes
+ */
+#define KU8_FSM_MODE_STATUS_OFF                       (KU8_FALSE)
+
+/**
+ * \brief
+ *      Used to enable modes
+ */
+#define KU8_FSM_MODE_STATUS_ON                        (KU8_TRUE)
+
+/**
+ * \brief
+ *      Used to determine the number of Dem events that are present in au8SporadicHwErrorDemEventCfg
+ */
+#define KU8_FSM_SPORADIC_HW_ERROR_DEM_EVENT_NB        (KU8_SIX)
+
+/**
+ * \brief
+ *      Used to determine the number of Dem events that are present in au8PermanentHwErrorDemEventCfg
+ */
+#define KU8_FSM_PERMANENT_HW_ERROR_DEM_EVENT_NB       (KU8_TWELVE)
+
+/**
+ * \brief
+ *      Used to determine the number of Dem events that are present in auSolenoidDisableDemEventCfg
+ */
+#define KU8_FSM_SOLENOID_ABORTION_DEM_EVENT_NB        (KU8_EIGHTEEN)
+
+/**
+ * \brief
+ *      Used to determine the number of Dem events that are present in fsm_kau8SolenoidInhibionEvtList
+ */
+#define KU8_FSM_SOLENOID_INHIBITION_DEM_EVENT_NB      ((uint8) 0x04)
+
+/**
+ * \brief
+ *      Used to determine if all the modules passed the initialization phase
+ */
+#define KU8_FSM_INIT_WAIT_READY                       ((uint8) 25)
+
+/**
+ * \brief
+ *      Used to indicate the number of functions from the schedule list
+ */
+#define KU8_FSM_SCHADULE_NB_OF_FCNS                   ((uint8) 0x09)
+
+/**
+ * \brief
+ *       Main timing (1ms) scheduler manager parameters macros,
+ *       to be used in sorting function calls
+ */
+#define  KST_FSM_PERIODIC_1_MS                        (uint16) 1, (uint8) 0
+
+/**
+ * \brief
+ *       Decade value used to offset function call execution with 0 cycle
+ */
+#define  KU8_FSM_IN_DECADE_0                          ((uint8) 0)
+
+/**
+ * \brief
+ *       Decade value used to offset function call execution with 1 cycle
+ */
+#define  KU8_FSM_IN_DECADE_1                          ((uint8) 1)
+
+/**
+ * \brief
+ *       Decade value used to offset function call execution with 2 cycle
+ */
+#define  KU8_FSM_IN_DECADE_2                          ((uint8) 2)
+
+/**
+ * \brief
+ *       Decade value used to offset function call execution with 3 cycle
+ */
+#define  KU8_FSM_IN_DECADE_3                          ((uint8) 3)
+
+/**
+ * \brief
+ *       Decade value used to offset function call execution with 4 cycle
+ */
+#define  KU8_FSM_IN_DECADE_4                          ((uint8) 4)
+
+/**
+ * \brief
+ *       Decade value used to offset function call execution with 5 cycle
+ */
+#define  KU8_FSM_IN_DECADE_5                          ((uint8) 5)
+
+/**
+ * \brief
+ *       Decade value used to offset function call execution with 6 cycle
+ */
+#define  KU8_FSM_IN_DECADE_6                          ((uint8) 6)
+
+/**
+ * \brief
+ *      Mask for mode status initialized status flag
+ */
+#define KU8_FSM_MASK_NVM_BLOCK_RESTORED               ((uint8) 0x02)
+
+/**
+ * \brief
+ *      Used to detect no modes enabled
+ */
+#define KU64_FSM_MASK_NO_MODE                         ((uint64) 0x00)
+
+/**
+ * \brief
+ *      Used to as initial value
+ */
+#define KU64_FSM_MASK_INITIAL_VALUE                   (KU64_CRITICAL_AUTOTESTS_IN_PROGRESS | KU64_NVM_BLOCK_RESTORE_IN_PROGRESS | KU64_INIT_PHASE_IN_PROGRESS | KU64_ECU_BATTERY_UNSTABLE)
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/**
+ * \brief
+ *       Data structure used to configure control the periodicity of function
+ *       calls.
+ */
+typedef struct fsm_SchedulerFunction_Type {
+   const uint16 ku16Period;               // Rate at which the task should tick
+   const uint8 ku8Offset;                 // Offset added to the period
+   void (*pfFunctionCallback)(void);      // Function to call for task's tick
+} fsm_SchadulerFunction_Type;
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+/**
+ * \brief
+ *       Mask used to enable modes
+ */
+#define KU64_FSM_SET_MODE_MASK_ON(mask) \
+   U64_BIT_SET   (fsm_u64ModesStatus, (mask)); \
+   U64_BIT_CLEAR (fsm_u64ModesStatusComplement, (mask))
+
+/**
+ * \brief
+ *      Mask used to disable modes
+ */
+#define KU64_FSM_SET_MODE_MASK_OFF(mask) \
+   U64_BIT_CLEAR (fsm_u64ModesStatus, (mask)); \
+   U64_BIT_SET   (fsm_u64ModesStatusComplement, (mask))
+
+/**
+ * \brief
+ *       Main timing (2ms) scheduler manager parameters macros,
+ *       to be used in sorting function calls order
+ */
+#define  KST_FSM_PERIODIC_2_MS(decade)          (uint16) 2, (decade)
+
+/**
+ * \brief
+ *       Main timing (5ms) scheduler manager parameters macros,
+ *       to be used in sorting function calls order
+ */
+#define  KST_FSM_PERIODIC_5_MS(decade)          (uint16) 5, (decade)
+
+/**
+ * \brief
+ *       Main timing (10ms) scheduler manager parameters macros,
+ *       to be used in sorting function calls order
+ */
+#define  KST_FSM_PERIODIC_10_MS(decade)         (uint16) 10, (decade)
+
+/**
+ * \brief
+ *       Main timing (100ms) scheduler manager parameters macros,
+ *       to be used in sorting function calls order
+ */
+#define  KST_FSM_PERIODIC_100_MS(decade)        (uint16) 100, (decade)
+
+/**
+ * \brief
+ *       Main timing (1s) scheduler manager parameters macros,
+ *       to be used in sorting function calls order
+ */
+#define  KST_FSM_PERIODIC_1_S(decade)           (uint16) 1000, (decade)
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+LOCAL_INLINE void fsm_UpdateModeStatus_SolenoidAbortionErrorPresentConditions(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_SolenoidInhibitionErrorPresentConditions(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_SolenoidEnabledConditions(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_SolenoidUnlockConfirmation(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_NvmBlockRestore(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_Init(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_EcuBatteryUnstableInhibition(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_SporadicHwError(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_PermanentHwError(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_CanInhibit(void);
+LOCAL_INLINE void fsm_UpdateModeStatus_BuckleStatus(void);
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+
+
+/**
+ * \brief
+ *      To detect if the modes have been initialized.
+ * \initialization
+ *      KU8_FALSE (uint8 0x55).
+ * \range
+ *      KU8_FALSE or KU8_TRUE.
+ */
+LOCAL uint8 fsm_u8ModesHasBeenInitialized = KU8_FALSE;
+
+/**
+ * \brief
+ *      To detect if the modes have been initialized.
+ * \initialization
+ *      KU8_FALSE (uint8 0x55).
+ * \range
+ *      KU8_FALSE or KU8_TRUE.
+ */
+LOCAL uint8 fsm_u8InitializationFinished = KU8_FALSE;
+
+/**
+ * \brief
+ *      To count the number of samples of measurements under the UV threshold.
+ * \initialization
+ *      KU8_ZERO
+ * \range
+ *      0..255
+ */
+LOCAL uint8 fsm_u8BatteryUnstableCnt = KU8_ZERO;
+
+
+
+/**
+ * \brief
+ *       Variable use to store the counter value of callback number of function
+ *       FSM_runUpdateModeStatus.
+ * \initialization
+ *       KU16_ZERO (uint16 0).
+ * \range
+ *       0..KU16_MAX.
+ */
+LOCAL uint16 fsm_u16CurrentDecade = KU16_ZERO;
+
+
+
+
+
+/**
+ * \brief
+ *      Used to store FSM modes status.
+ * \initialization
+ *      KU64_ZERO (uint64 0x0000000000000000).
+ * \range
+ *      0..KU64_MAX
+ */
+LOCAL uint64 fsm_u64ModesStatus = KU64_ZERO;
+
+/**
+ * \brief
+ *      Used to store FSM modes status complement.
+ * \initialization
+ *      Complement of KU64_ZERO (uint64 0xFFFFFFFFFFFFFFFF).
+ * \range
+ *      0..KU64_MAX
+ */
+LOCAL uint64 fsm_u64ModesStatusComplement = U64_COMPLEMENT(KU64_ZERO);
+
+
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+
+/**
+ * \brief
+ *       Configuration array that holds what Dem events will set the sporadic HW error mask.
+ * \initialization
+ *       DemConf_DemEventParameter_EVENT_CANSM_E_BUS_OFF          ( 1)
+ *       DemConf_DemEventParameter_EVENT_ECU_OVER_TEMPERATURE     ( 9)
+ *       DemConf_DemEventParameter_EVENT_POWER_SUPPLY_OV          (12)
+ *       DemConf_DemEventParameter_EVENT_POWER_SUPPLY_UV          (13)
+ *       DemConf_DemEventParameter_EVENT_SPI_E_HW_ERROR           (20);
+ */
+LOCAL const uint8 fsm_kau8SporadicHwErrorDemEventCfg[KU8_FSM_SPORADIC_HW_ERROR_DEM_EVENT_NB] =
+{
+   DemConf_DemEventParameter_EVENT_CANSM_E_BUS_OFF,
+   DemConf_DemEventParameter_EVENT_ECU_OVER_TEMPERATURE,
+   DemConf_DemEventParameter_EVENT_POWER_SUPPLY_OV,
+   DemConf_DemEventParameter_EVENT_POWER_SUPPLY_UV,
+   DemConf_DemEventParameter_EVENT_SPI_E_HW_ERROR,
+   DemConf_DemEventParameter_EVENT_NVM_NOT_PRG
+};
+
+/**
+ * \brief
+ *       Configuration array that holds what Dem events will set the permanent HW error mask.
+ * \initialization
+ *       DemConf_DemEventParameter_EVENT_ADC_OUT_OF_ORDER         ( 2)
+ *       DemConf_DemEventParameter_EVENT_WARM_RESET               ( 3)
+ *       DemConf_DemEventParameter_EVENT_PFLASH_MEM_CORRUPT       ( 4)
+ *       DemConf_DemEventParameter_EVENT_EXT_WDG_OUT_OF_ORDER     ( 5)
+ *       DemConf_DemEventParameter_EVENT_RAM_MEM_CORRUPT          ( 7)
+ *       DemConf_DemEventParameter_EVENT_ADC_CALIB                ( 8)
+ *       DemConf_DemEventParameter_EVENT_DFLASH_MEM_CORRUPT       (10)
+ *       DemConf_DemEventParameter_EVENT_SBC_STATUS_FAILURE       (11)
+ *       DemConf_DemEventParameter_EVENT_MCU_SELFTEST             (15)
+ *       DemConf_DemEventParameter_EVENT_ACC_STATUS_FAILURE       (19);
+ */
+LOCAL const uint8 fsm_kau8PermanentHwErrorDemEventCfg[KU8_FSM_PERMANENT_HW_ERROR_DEM_EVENT_NB] =
+{
+   DemConf_DemEventParameter_EVENT_ADC_OUT_OF_ORDER,
+   DemConf_DemEventParameter_EVENT_WARM_RESET,
+   DemConf_DemEventParameter_EVENT_PFLASH_MEM_CORRUPT,
+   DemConf_DemEventParameter_EVENT_EXT_WDG_OUT_OF_ORDER,
+   DemConf_DemEventParameter_EVENT_RAM_MEM_CORRUPT,
+   DemConf_DemEventParameter_EVENT_ADC_CALIB,
+   DemConf_DemEventParameter_EVENT_DFLASH_MEM_CORRUPT,
+   DemConf_DemEventParameter_EVENT_SBC_STATUS_FAILURE,
+   DemConf_DemEventParameter_EVENT_MCU_SELFTEST,
+   DemConf_DemEventParameter_EVENT_ACC_STATUS_FAILURE,
+   DemConf_DemEventParameter_EVENT_POWER_STAGE_FAILIURE,
+   DemConf_DemEventParameter_EVENT_MCU_CRC_REGISTERS
+};
+
+/**
+ * \brief
+ *       Configuration array that holds what Dem events will set the solenoid disable error mask.
+ * \initialization
+ *       DemConf_DemEventParameter_EVENT_CANSM_E_BUS_OFF          ( 1)
+ *       DemConf_DemEventParameter_EVENT_ADC_OUT_OF_ORDER         ( 2)
+ *       DemConf_DemEventParameter_EVENT_WARM_RESET               ( 3)
+ *       DemConf_DemEventParameter_EVENT_PFLASH_MEM_CORRUPT       ( 4)
+ *       DemConf_DemEventParameter_EVENT_EXT_WDG_OUT_OF_ORDER     ( 5)
+ *       DemConf_DemEventParameter_EVENT_RAM_MEM_CORRUPT          ( 7)
+ *       DemConf_DemEventParameter_EVENT_ADC_CALIB                ( 8)
+ *       DemConf_DemEventParameter_EVENT_ECU_OVER_TEMPERATURE     ( 9)
+ *       DemConf_DemEventParameter_EVENT_DFLASH_MEM_CORRUPT       (10)
+ *       DemConf_DemEventParameter_EVENT_SBC_STATUS_FAILURE       (11)
+ *       DemConf_DemEventParameter_EVENT_MCU_SELFTEST             (15)
+ *       DemConf_DemEventParameter_EVENT_ACTUATOR_SHORT_TO_VBAT   (18)
+ *       DemConf_DemEventParameter_EVENT_ACC_STATUS_FAILURE       (19)
+ *       DemConf_DemEventParameter_EVENT_POWER_SUPPLY_OV          (12)
+ *       DemConf_DemEventParameter_EVENT_POWER_SUPPLY_UV          (13)
+ *       DemConf_DemEventParameter_EVENT_SPI_E_HW_ERROR           (20);
+ */
+LOCAL const uint8 fsm_kau8SolenoidAbortionEvtList[KU8_FSM_SOLENOID_ABORTION_DEM_EVENT_NB] =
+{
+   DemConf_DemEventParameter_EVENT_CANSM_E_BUS_OFF,
+   DemConf_DemEventParameter_EVENT_ADC_OUT_OF_ORDER,
+   DemConf_DemEventParameter_EVENT_WARM_RESET,
+   DemConf_DemEventParameter_EVENT_PFLASH_MEM_CORRUPT,
+   DemConf_DemEventParameter_EVENT_EXT_WDG_OUT_OF_ORDER,
+   DemConf_DemEventParameter_EVENT_RAM_MEM_CORRUPT,
+   DemConf_DemEventParameter_EVENT_ADC_CALIB,
+   DemConf_DemEventParameter_EVENT_ECU_OVER_TEMPERATURE,
+   DemConf_DemEventParameter_EVENT_DFLASH_MEM_CORRUPT,
+   DemConf_DemEventParameter_EVENT_SBC_STATUS_FAILURE,
+   DemConf_DemEventParameter_EVENT_MCU_SELFTEST,
+   DemConf_DemEventParameter_EVENT_ACTUATOR_SHORT_TO_VBAT,
+   DemConf_DemEventParameter_EVENT_ACC_STATUS_FAILURE,
+   DemConf_DemEventParameter_EVENT_POWER_SUPPLY_OV,
+   DemConf_DemEventParameter_EVENT_POWER_SUPPLY_UV,
+   DemConf_DemEventParameter_EVENT_SPI_E_HW_ERROR,
+   DemConf_DemEventParameter_EVENT_NVM_NOT_PRG,
+   DemConf_DemEventParameter_EVENT_MCU_CRC_REGISTERS
+};
+
+/**
+ * \brief
+       Configuration array that holds what Dem events will Abort the solenoids
+       functionality until the error disappears and set the solenoid error
+       present mask.
+ * \initialization
+ *     DemConf_DemEventParameter_EVENT_ACTUATOR_STATUS          (14)
+ *     DemConf_DemEventParameter_EVENT_ACTUATOR_OPEN_CIRCUIT    (16)
+ *     DemConf_DemEventParameter_EVENT_ACTUATOR_SHORT_TO_GND    (17)
+ *     DemConf_DemEventParameter_EVENT_SOLENOID_OVERVOLTAGE     (21);
+ */
+LOCAL const uint8 fsm_kau8SolenoidInhibionEvtList[KU8_FSM_SOLENOID_INHIBITION_DEM_EVENT_NB] =
+{
+      DemConf_DemEventParameter_EVENT_ACTUATOR_STATUS,
+      DemConf_DemEventParameter_EVENT_ACTUATOR_OPEN_CIRCUIT,
+      DemConf_DemEventParameter_EVENT_ACTUATOR_SHORT_TO_GND,
+      DemConf_DemEventParameter_EVENT_SOLENOID_OVERVOLTAGE
+};
+
+
+/**
+ * \brief
+ *       Configuration array that holds bit masks for all solenoids .
+ * \initialization
+ *       KU64_SOLENOID_X_CONFIGURED
+ *       where X - the solenoid number.
+ */
+LOCAL const uint64 fsm_kau64SolenoidConfiguredBitMask[KU8_MAX_SOLENOID_NB] =
+{
+      KU64_SOLENOID_1_CONFIGURED, KU64_SOLENOID_2_CONFIGURED, KU64_SOLENOID_3_CONFIGURED,
+      KU64_SOLENOID_4_CONFIGURED, KU64_SOLENOID_5_CONFIGURED, KU64_SOLENOID_6_CONFIGURED
+};
+
+/**
+ * \brief
+ *    Array of structures which defines the scheduler properties.
+ *    The period parameters represents the number of ticks before execute
+ *    the function: 1 tick = 1 call of FSM_runUpdateModeStatus (1ms).
+ */
+LOCAL const fsm_SchadulerFunction_Type fsm_kastScheduler[KU8_FSM_SCHADULE_NB_OF_FCNS] =
+{  /*    Periodicity     |       Offset        |            Function call                                         */
+   {KST_FSM_PERIODIC_10_MS(KU8_FSM_IN_DECADE_0),   &fsm_UpdateModeStatus_Init                                     },
+   {KST_FSM_PERIODIC_10_MS(KU8_FSM_IN_DECADE_1),   &fsm_UpdateModeStatus_SporadicHwError                          },
+   {KST_FSM_PERIODIC_10_MS(KU8_FSM_IN_DECADE_2),   &fsm_UpdateModeStatus_PermanentHwError                         },
+   {KST_FSM_PERIODIC_2_MS(KU8_FSM_IN_DECADE_0),    &fsm_UpdateModeStatus_SolenoidUnlockConfirmation               },
+   {KST_FSM_PERIODIC_10_MS(KU8_FSM_IN_DECADE_3),   &fsm_UpdateModeStatus_CanInhibit                               },
+   {KST_FSM_PERIODIC_1_MS,                         &fsm_UpdateModeStatus_SolenoidAbortionErrorPresentConditions   },
+   {KST_FSM_PERIODIC_1_MS,                         &fsm_UpdateModeStatus_SolenoidInhibitionErrorPresentConditions },
+   {KST_FSM_PERIODIC_10_MS(KU8_FSM_IN_DECADE_3),   &fsm_UpdateModeStatus_BuckleStatus                             },
+   {KST_FSM_PERIODIC_1_MS,                         &fsm_UpdateModeStatus_EcuBatteryUnstableInhibition             },
+};
+
+
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+
+/**
+* \brief
+*        The function is used to update Solenoid Abortion error bits from
+*        the mode status variable based on an event list.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_SolenoidAbortionErrorPresentConditions
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_pclDemServices
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_SolenoidAbortionErrorPresentConditions(void)
+{
+   for (Each abortion event from the list)
+   {
+      Read and merge all abortion events statuses;
+   }
+   
+   if (An event error is detected)
+   {
+      if(Solenoid 1 is enabled)
+      {
+         Set the abortion flag for solenoid 1;
+      }
+      if(Solenoid 2 is enabled)
+      {
+         Set the abortion flag for solenoid 2;
+      }
+      if(Solenoid 3 is enabled)
+      {
+         Set the abortion flag for solenoid 3;
+      }
+      if(Solenoid 4 is enabled)
+      {
+         Set the abortion flag for solenoid 4;
+      }
+      if(Solenoid 5 is enabled)
+      {
+         Set the abortion flag for solenoid 5;
+      }
+      if(Solenoid 6 is enabled)
+      {
+         Set the abortion flag for solenoid 6;
+      }
+   }
+   else
+   {
+      Clear the abortion flag for all soelnoids;
+   }
+}
+
+/**
+* \brief
+*        The function is used to update Solenoid Inhibition error bits from
+*        the mode status variable based on an event list.
+* \exception
+*        This function has no exceptions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        Called based on a schedule list from FSM_runUpdateModeStatus.
+* \constrains
+*        Called every 1 ms.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_SolenoidInhibitionErrorPresentConditions
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_pclDemServices
+*        ARCH_SW_FSM_prrSolenoidOpenCircuitStatus
+*        ARCH_SW_FSM_prrSolenoidShortToGndStatus
+*        ARCH_SW_FSM_prrSolenoidOverVoltageStatus
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_SolenoidInhibitionErrorPresentConditions(void)
+{
+   for (Each inhibition event from the list)
+   {
+      Read and merge all inhibition events statuses;
+   }
+
+   if (An event error is detected)
+   {
+      Read the Open Circuit status for each solenoid;
+      Read the Short to Ground status for each solenoid;
+      Read the Over Voltage status for each solenoid;
+      
+      if(Solenoid 1 is enabled)
+      {
+         if((Open Circuti error is detected) OR
+            (Short to Ground is detected) OR
+            (Over Voltage is detected) OR
+            (Solenoid is stuck))
+         {
+            Set the inhibition flag for solenoid 1;
+         }
+         else
+         {
+            Clear the inhibition flag for solenoid 1;
+         }
+      }
+      if(Solenoid 2 is enabled)
+      {
+         if((Open Circuti error is detected) OR
+            (Short to Ground is detected) OR
+            (Over Voltage is detected) OR
+            (Solenoid is stuck))
+         {
+            Set the inhibition flag for solenoid 2;
+         }
+         else
+         {
+            Clear the inhibition flag for solenoid 2;
+         }
+      }
+      if(Solenoid 3 is enabled)
+      {
+         if((Open Circuti error is detected) OR
+            (Short to Ground is detected) OR
+            (Over Voltage is detected) OR
+            (Solenoid is stuck))
+         {
+            Set the inhibition flag for solenoid 3;
+         }
+         else
+         {
+            Clear the inhibition flag for solenoid 3;
+         }
+      }
+      if(Solenoid 4 is enabled)
+      {
+         if((Open Circuti error is detected) OR
+            (Short to Ground is detected) OR
+            (Over Voltage is detected) OR
+            (Solenoid is stuck))
+         {
+            Set the inhibition flag for solenoid 4;
+         }
+         else
+         {
+            Clear the inhibition flag for solenoid 4;
+         }
+      }
+      if(Solenoid 5 is enabled)
+      {
+         if((Open Circuti error is detected) OR
+            (Short to Ground is detected) OR
+            (Over Voltage is detected) OR
+            (Solenoid is stuck))
+         {
+            Set the inhibition flag for solenoid 5;
+         }
+         else
+         {
+            Clear the inhibition flag for solenoid 5;
+         }
+      }
+      if(Solenoid 6 is enabled)
+      {
+         if((Open Circuti error is detected) OR
+            (Short to Ground is detected) OR
+            (Over Voltage is detected) OR
+            (Solenoid is stuck))
+         {
+            Set the inhibition flag for solenoid 6;
+         }
+         else
+         {
+            Clear the inhibition flag for solenoid 6;
+         }
+      }
+   }
+   else
+   {
+      Clear the abortion flag for all soelnoids;
+   }
+}
+
+/**
+* \brief
+*        The function is used to set/clear mode mask bits for all solenoids
+*        based on the NVP variant configuration (not used/used).
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_SolenoidEnabledConditions
+* \archrequirement
+*        ARCH_SW_Fsm_ptrpFsmServicesBswMIf_FSM_ModesInit
+*        ARCH_SW_FSM_pseModeManagement_SolenoidDisabled
+*/
+LOCAL void fsm_UpdateModeStatus_SolenoidEnabledConditions(void)
+{
+   Check the configuration status of each solenoid;
+
+   for(Each solenoid)
+   {
+      /* Check if solenoid is enabled in NVP Variant */
+      if(The solenoid is enabled in NVP Variant)
+      {
+         Set the coresponding bit of the solenoid to logical '1' in modeStatus variable;
+      }
+      else
+      {
+         Set the coresponding bit of the solenoid to logical '0' in modeStatus variable;
+      }
+   }
+}
+
+/**
+* \brief
+*        The function is used to disable all solenoids if any hardware error
+*        is detected and to provide confirmation for each disabled solenoid.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_SolenoidUnlockConfirmation
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_prrSolenoidConfirmation
+*        ARCH_SW_FSM_pseModeManagement_SolenoidUnlockConfirmation
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_SolenoidUnlockConfirmation(void)
+{
+
+   Read the status of each solenoid unlock confirmation;
+
+   if ((The solenoid 1 UNLOCK was CONFIRMED) AND (Solenoid 1 is enabled))
+   {
+      Set SOLENOID_1_UNLOCK_CONFIRMED flag of variable modeStatus;
+   }
+   else
+   {
+      Clear SOLENOID_1_UNLOCK_CONFIRMED flag of variable modeStatus;;
+   }
+
+   if ((The solenoid 2 UNLOCK was CONFIRMED) AND (Solenoid 2 is enabled))
+   {
+      Set SOLENOID_2_UNLOCK_CONFIRMED flag of variable modeStatus;
+   }
+   else
+   {
+      Clear SOLENOID_2_UNLOCK_CONFIRMED flag of variable modeStatus;;
+   }
+
+   if ((The solenoid 3 UNLOCK was CONFIRMED) AND (Solenoid 3 is enabled))
+   {
+      Set SOLENOID_3_UNLOCK_CONFIRMED flag of variable modeStatus;
+   }
+   else
+   {
+      Clear SOLENOID_3_UNLOCK_CONFIRMED flag of variable modeStatus;;
+   }
+
+   if ((The solenoid 4 UNLOCK was CONFIRMED) AND (Solenoid 4 is enabled))
+   {
+      Set SOLENOID_4_UNLOCK_CONFIRMED flag of variable modeStatus;
+   }
+   else
+   {
+      Clear SOLENOID_4_UNLOCK_CONFIRMED flag of variable modeStatus;;
+   }
+
+   if ((The solenoid 5 UNLOCK was CONFIRMED) AND (Solenoid 5 is enabled))
+   {
+      Set SOLENOID_5_UNLOCK_CONFIRMED flag of variable modeStatus;
+   }
+   else
+   {
+      Clear SOLENOID_5_UNLOCK_CONFIRMED flag of variable modeStatus;;
+   }
+
+   if ((The solenoid 6 UNLOCK was CONFIRMED) AND (Solenoid 6 is enabled))
+   {
+      Set SOLENOID_6_UNLOCK_CONFIRMED flag of variable modeStatus;
+   }
+   else
+   {
+      Clear SOLENOID_6_UNLOCK_CONFIRMED flag of variable modeStatus;
+   }
+}
+
+/**
+* \brief
+*        The function used to restore NVM Blocks.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \constraints
+*        None
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_NvmBlockRestore
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_prrBswMIfServices
+*        ARCH_SW_FSM_pseModeManagement_NvmBlockRestore
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_NvmBlockRestore(void)
+{
+   Read the status of NvmBlock restore action;
+
+   if (NvmBlock was restored)
+   {
+     Clear modeStatus bit of NVM_BLOCK_RESTORE_IN_PROGRESS;
+     Set the flag NVM_BLOCK_RESTORE_IN_PROGRESS in variable InitializationFinished;
+   }
+   else
+   {
+      Set modeStatus bit of NVM_BLOCK_RESTORE_IN_PROGRESS;
+   }
+}
+
+/**
+* \brief
+*        The function is used to determine if a sporadic hardware error
+*        is present.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_SporadicHwError
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_pclDemServices
+*        ARCH_SW_FSM_pseModeManagement_EcuSporadicError
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_SporadicHwError(void)
+{
+
+   for (Each solenoid Sporadinc Hardware error event from list)
+   {
+      Call the GetEventStatus for each event;
+      Merge the events results in one variablel;
+   }
+
+   if (The merge events status is FAIL)
+   {
+      Set the ECU_SPORADIC_ERROR bit in modeStatus;
+   }
+   else
+   {
+      Clear the ECU_SPORADIC_ERROR bit in modeStatus;
+   }
+}
+
+/**
+* \brief
+*        The function is used to determine if a permanent hardware
+*        error is present.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_PermanentHwError
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_pclDemServices
+*        ARCH_SW_FSM_pseModeManagement_EcuPermanentHwError
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_PermanentHwError(void)
+{
+
+   for (Each solenoid Permanent Hardware error event from list)
+   {
+      Call the GetEventStatus for each event;
+      Merge the events results in one variablel;
+   }
+
+   if (The merge events status is FAIL)
+   {
+      Set the ECU_PERMANENT_HW_ERROR bit in modeStatus;
+   }
+}
+
+/**
+* \brief
+*        The function is used to determine if a Crash is reported
+*        via CAN message.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_CanInhibit
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_prrCrashStatus
+*        ARCH_SW_FSM_pseModeManagement_CanInhibStatus
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_CanInhibit(void)
+{
+
+   Read the Crash status from can signal;
+
+   /* Kept as a switch for future function functionality reasons */
+   switch(CrashStatus)
+   {
+      case CM_AB_Crash_Int_Cx0_kein_Crash:
+         Clear the ECU_CAN_INHIB_STATUS bit in modeStatus;
+      break;
+
+      case CM_AB_Crash_Int_Cx1_Crash_Intensitaet_1:;
+      case CM_AB_Crash_Int_Cx2_Crash_Intensitaet_2_nur_Stellgliedtest_MLB_B8:;
+      case CM_AB_Crash_Int_Cx3_Crash_Intensitaet_2_nur_D4_C7_Colorado_NF_PAG_Crash_im_MLB_B8:;
+      case CM_AB_Crash_Int_Cx4_Crash_Intensitaet_3_alt_VW_AUDI_Stellgliedtest_MLB_B8:;
+      case CM_AB_Crash_Int_Cx5_Crash_Intensitaet_3_alt_PAG:;
+      case CM_AB_Crash_Int_Cx7_Crash_Intensitaet_3:;
+      default:
+         Set the ECU_CAN_INHIB_STATUS bit in modeStatus;
+      break;
+   }
+}
+
+/**
+* \brief
+*        The function is used to determine if a buckle is latched.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_BuckleStatus
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_Fsm_prrCILData_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_pseModeManagement_BuckleStatus
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_BuckleStatus(void)
+{
+   Read the buckle status of solenoids;
+
+   if(The buckle status of solenoid 1 is LATCHED)
+   {
+      Set the SOLENOID_1_BUCKLE_LATCHED bit in modeStatus;
+   }
+   else
+   {
+      Clear the SOLENOID_1_BUCKLE_LATCHED bit in modeStatus;
+   }
+
+   if(The buckle status of solenoid 2 is LATCHED)
+   {
+      Set the SOLENOID_2_BUCKLE_LATCHED bit in modeStatus;
+   }
+   else
+   {
+      Clear the SOLENOID_2_BUCKLE_LATCHED bit in modeStatus;
+   }
+
+   if(The buckle status of solenoid 3 is LATCHED)
+   {
+      Set the SOLENOID_3_BUCKLE_LATCHED bit in modeStatus;
+   }
+   else
+   {
+      Clear the SOLENOID_3_BUCKLE_LATCHED bit in modeStatus;
+   }
+
+   if(The buckle status of solenoid 4 is LATCHED)
+   {
+      Set the SOLENOID_4_BUCKLE_LATCHED bit in modeStatus;
+   }
+   else
+   {
+      Clear the SOLENOID_4_BUCKLE_LATCHED bit in modeStatus;
+   }
+
+   if(The buckle status of solenoid 5 is LATCHED)
+   {
+      Set the SOLENOID_5_BUCKLE_LATCHED bit in modeStatus;
+   }
+   else
+   {
+      Clear the SOLENOID_5_BUCKLE_LATCHED bit in modeStatus;
+   }
+
+   if(The buckle status of solenoid 6 is LATCHED)
+   {
+      Set the SOLENOID_6_BUCKLE_LATCHED bit in modeStatus;
+   }
+   else
+   {
+      Clear the SOLENOID_6_BUCKLE_LATCHED bit in modeStatus;
+   }
+}
+
+/**
+* \brief
+*        The function is used to initialize mode statuses.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_Init
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_pclAutotestServices
+*        ARCH_SW_FSM_prrACCServices
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_Init(void)
+{
+   Get result of the last critical autotest from the list;
+
+   for(Each solenoid)
+   {
+      Get the configuration status of solenoid;
+
+      if(Solenoid is configured)
+      {
+         Set the coresponding bit to logical '1' for the current solenoid
+         in solenoidUsed variable;
+      }
+   }
+
+   if(Critical autotes are finished )
+   {
+      Clear the CRITICAL_AUTOTESTS_IN_PROGRESS bit in modeStatus;
+
+      Read the Accelerometer initialization state machine;
+     
+      if((Accelerometer was initialized) AND (All enabled solenoids were initialized))
+      {
+         Clear the INIT_PHASE_IN_PROGRESS bit in modeStatus;
+         Mark the initialization phase as finished;
+      }
+      else
+      {
+         Set the flag MASK_MODE_STATUS_INITIALIEZED in variable InitializationFinished;		  
+      }
+   }
+   else
+   {
+      Set the CRITICAL_AUTOTESTS_IN_PROGRESS bit in modeStatus;
+      Set the flag MASK_MODE_STATUS_INITIALIEZED in variable InitializationFinished;
+   }
+}
+
+/**
+* \brief
+*        The function is used to inhibit BOOST/ON_OFF_PWR until KL30>9V.
+* \dynamicaspectcaller
+*        FSM_runUpdateModeStatus
+* \dynamicaspectdescription
+*        The function is used to update mode statuses.
+* \ddesignrequirement
+*        DSG_fsm_UpdateModeStatus_EcuBatteryUnstableInhibition
+* \archrequirement
+*        ARCH_SW_FSM_pclConvAdcService
+*/
+LOCAL_INLINE void fsm_UpdateModeStatus_EcuBatteryUnstableInhibition(void)
+{
+
+   Read Under Voltage event;
+   if(The event was completed sice the ECU initialized)
+   {
+      
+      if (If the event faild)
+      {
+         Set the BATTERY_UNSTABLE bit in modemask variable; 
+      }
+      else
+      {
+         Clear the BATTERY_UNSTABLE bit in modemask variable; 
+      }
+   }
+   else
+   {
+      Read the battary voltage;
+
+      if((The voltage is above the Unstable threshold) AND (The counter value did not reached the Disqualification value))
+      {
+         Increment the Battery unstable counter;
+
+         if(The counter reached the Disqualification value)
+         {
+            Set the BATTERY_UNSTABLE bit in modemask variable;
+         }
+      }
+   }
+}
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+
+/**
+* \brief
+*        The function is used to initialize contexts for modes.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        This function has no preconditions.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        BswM_OnStartComEffective
+* \dynamicaspectdescription
+*        This service is a callout used to start RTE and to initialize
+*        all functions that need RTE features.
+* \ddesignrequirement
+*        DSG_FSM_ModesInit
+* \archrequirement
+*        ARCH_SW_Fsm_ptrpFsmServicesBswMIf_FSM_ModesInit
+*/
+EXPORTED void FSM_ModesInit(void)
+{
+   Set Modes Initialized to TRUE;
+   Initialize modeStatus variable;
+   Initialize complement of the modeStatus;
+
+   fsm_UpdateModeStatus_SolenoidEnabledConditions();
+}
+
+/**
+* \brief
+*        The function is used to update mode statuses.
+* \exception
+*        This function has no exceptions.
+* \pre
+*        fsm_b8modesHAsBeenInitialized variable has to be TRUE.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        OsTask_Alv_eCS_App
+* \dynamicaspectdescription
+*        OsTask_Alv_eCS_App
+* \constrains
+*        Called every 1 ms.
+* \ddesignrequirement
+*        DSG_FSM_runUpdateModeStatus
+* \archrequirement
+*        ARCH_SW_FSM_ptrpAsrOsServices_FSM_runUpdateModeStatus
+*        ARCH_SW_FSM_pseModeManagement_NvmBlockRestore
+*        ARCH_SW_FSM_pseModeManagement_SolenoidDisabled
+*        ARCH_SW_FSM_pseModeManagement_CanInhibStatus
+*        ARCH_SW_FSM_pseModeManagement_SolenoidUnlockConfirmation
+*        ARCH_SW_FSM_pseModeManagement_EcuPermanentHwError
+*        ARCH_SW_FSM_pseModeManagement_EcuSporadicError
+*        ARCH_SW_FSM_pseModeManagement_BuckleStatus
+*/
+EXPORTED void FSM_runUpdateModeStatus(void)
+{
+   
+   if (The function FSM_ModesInit has been executed)
+   {
+      if(The NVM block has not been restored)
+      {
+         fsm_UpdateModeStatus_NvmBlockRestore();
+      }
+
+      for(Each function from scheduler list)
+      {
+         if(The periodiciti and decade of the function is equal with the current decade)
+         {
+            Execute the coresponding function;
+         }
+      }
+      Increment the current decade;
+   }
+}
+
+/**
+* \brief
+*       The function is used to check mode statuses.
+* \inputparam
+*       Name: u64ModesToCheck;
+*       Type: uint64;
+*       Description: Mask value which corresponds to flag which will be checked;
+*       Range: 0..KU64_MAX;
+* \outputparam
+*       Name: pu8ModeStatus;
+*       Type: uint8 *;
+*       Description: return the result based on flag status checked with variable
+*       u32ModesToCheck;
+*       Range: 
+*           KU8_ZERO
+*           FSM_KU8_MODE_STATUS_OFF
+*           FSM_KU8_MODE_STATUS_ON;
+* \exception
+*        This function has no exceptions.
+* \pre
+*        fsm_b8ModesHasBeenInitialized variable has to be TRUE.
+* \post
+*        This function has no postconditions.
+* \return
+*        This function has no return.
+* \dynamicaspectcaller
+*        FSM_manageSolenoidCounters;
+*        fsm_CheckStartupSelfTest;
+*        fsm_RunSolenoidStateManagement;
+*        cil_ManagePeriodicData_TimeSlot02;
+*        cil_ManagePeriodicData_TimeSlot03;
+*        cil_ManagePeriodicData_TimeSlot04;
+*        atm_executeAutoTest;
+*        CIL_runAppliToCAN;
+*        eCS_runMainFunctionIf;
+*        SAD_checkActuatorState;
+*        SAD_CheckSolenoidOpenCircuitAutotest;
+*        SAD_CheckSolenoidShortToGNDAutotest;
+*        SAD_CheckSolenoidShortToVBATAutotest;
+*        sad_ControlStepExecution;
+*        SAD_Init;
+*        SAD_runMainFunction;
+* \dynamicaspectdescription
+*        API called from multiple modules in order to check different flags statuses.
+* \constrains
+*        None.
+* \ddesignrequirement
+*        DSG_FSM_runCheckModeStatus
+* \archrequirement
+*        ARCH_SW_FSM_pseModeManagement_CriticalAutotests
+*/
+EXPORTED void FSM_runCheckModeStatus(uint64 u64ModesToCheck, uint8 *pu8ModeStatus)
+{
+   if (The function FSM_ModesInit has been executed)
+   {
+      if (ModeStatus is corrupted)
+      {
+      Reset modeStatus and the complement variable;
+
+         Set output variable to ZERO;
+      }
+      else
+      {
+         if ((At least one flag is checked) AND
+            (The checked flag from modeStatus is set))
+         {
+            Set output variable value to KU8_TRUE;
+         }
+         else
+         {
+            Set output variable value to KU8_FALSE;
+         }
+      }
+   }
+   else
+   {
+      Set output variable value to KU8_ZERO;
+   }
+}
+

@@ -1,0 +1,13 @@
+\#include <Ioc_ChCfg.h>
+
+/*===================================================================
+ * Channel Buffers Receivers
+ *==================================================================*/
+/* The following OS Objects need to have write access to this file:
+#foreach( $receiver in $comm.getReceivers() )
+#* *# * $receiver.getReceivingApp().getName()
+#end
+ */
+#if( $comm.isQueued() )
+#* *#ioc_state_t Ioc_$comm.getChannelName()_State_Receiver;
+#end

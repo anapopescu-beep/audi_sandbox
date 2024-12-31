@@ -1,0 +1,235 @@
+
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+*******************************************************************************
+C-File Template Version: 
+******************************************************************************/
+/*
+$Revision: 1.2.1.3.1.17 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Application/Autoliv/DioIf/Implementation/src/project.pj $
+*/
+/*!****************************************************************************
+
+Overview of the interfaces:
+   This file defines the information (interfaces, definitions and data) provided
+   by the module DioIf, part of the component DioIf.
+
+******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+******************************************************************************/
+#include "Rte_DioIf.h"
+#include "common.h"
+#include "DioIf_Cfg.h"
+#include "Dio.h"
+#include "DioIf.h"
+
+/******************************************************************************
+MODULE DEFINES
+******************************************************************************/
+
+/******************************************************************************
+MODULE TYPES
+******************************************************************************/
+
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+******************************************************************************/
+
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+******************************************************************************/
+
+/******************************************************************************
+DEFINITION OF APIs
+******************************************************************************/
+#define DioIf_START_SEC_CODE_ASIL_A
+#include "DioIf_MemMap.h"
+
+/**
+* \brief
+*       Function used to read a specific DIO Channel.
+* \inputparam
+*       Name: u8ChannelID;
+*       Type: u8DioIfChannelType;
+*       Description: The ID of DIO Channel to be readed;
+*       Range:
+*           DioConf_DioChannel_Dio_EN_CS1
+*           DioConf_DioChannel_Dio_EN_CS2
+*           DioConf_DioChannel_Dio_EN_CS3
+*           DioConf_DioChannel_Dio_EN_CS4
+*           DioConf_DioChannel_Dio_EN_CS5
+*           DioConf_DioChannel_Dio_EN_CS6
+*           DioConf_DioChannel_Dio_Sleep_Off
+*           DioConf_DioChannel_Dio_ON_OFF_Power
+*           DioConf_DioChannel_Dio_BOOST
+*           DioConf_DioChannel_Dio_Wake_Cyclic_Power;
+* \outputparam
+*       Name: u8Level;
+*       Type: u8DioIfLvlType *;
+*       Description: The Level of DIO Channel;
+*       Range: 
+*           DIOIF_STD_LOW or DIOIF_STD_HIGH 
+*			where: DIOIF_STD_LOW means 0 and DIOIF_STD_HIGH means 1;
+* \pre
+*       DIO Pheripheral must be initialised.
+* \return
+*       This function must not have any return.
+* \dynamicaspectcaller
+*       IoHwAb, SAD SW Components.
+* \dynamicaspectdescription
+*       Called to read if DIO channel has been activated.
+* \ddesignrequirement
+*		  DSG_DioIf_runReadChannel
+* \archrequirement   
+*       ARCH_SW_DioIf_psrDioIfServices_DioIf_runReadChannel
+*       ARCH_SW_DioIf_ptrrAsrDioServicesDioIf_Dio_ReadChannel
+*/
+void DioIf_runReadChannel (u8DioIfChannelType u8ChannelID, u8DioIfLvlType * u8Level)
+{
+    /* Check if channel ID is in the correct range */
+    if ( u8ChannelID < DIOIF_CH_MAX )
+    {
+        *u8Level = Dio_ReadChannel(kau8DioMapping[u8ChannelID]);
+    }
+}
+
+/**
+* \brief
+*       Function used to set a specific DIO Channel.
+* \inputparam
+*       Name: u8ChannelID;
+*       Type: u8DioIfChannelType;
+*       Description: The ID of DIO Channel to be setted;
+*       Range:
+*           DioConf_DioChannel_Dio_EN_CS1
+*           DioConf_DioChannel_Dio_EN_CS2
+*           DioConf_DioChannel_Dio_EN_CS3
+*           DioConf_DioChannel_Dio_EN_CS4
+*           DioConf_DioChannel_Dio_EN_CS5
+*           DioConf_DioChannel_Dio_EN_CS6
+*           DioConf_DioChannel_Dio_Sleep_Off
+*           DioConf_DioChannel_Dio_ON_OFF_Power
+*           DioConf_DioChannel_Dio_BOOST
+*           DioConf_DioChannel_Dio_Wake_Cyclic_Power;
+* \inputparam
+*       Name: u8Level;
+*       Type: u8DioIfLvlType;
+*       Description: The Level of DIO Channel to be setted;
+*       Range: 
+*           DIOIF_STD_LOW or DIOIF_STD_HIGH
+*           where: DIOIF_STD_LOW means 0 and DIOIF_STD_HIGH means 1;
+* \pre
+*       DIO Pheripheral must be initialised.
+* \return
+*       This function must not have any return.
+* \dynamicaspectcaller
+*       IoHwAb, SAD SW Components.
+* \dynamicaspectdescription
+*       Called to set a specific DIO channel value.
+* \ddesignrequirement
+*		  DSG_DioIf_runWriteChannel
+* \archrequirement
+*       ARCH_SW_DioIf_psrDioIfServices_DioIf_runWriteChannel
+*       ARCH_SW_DioIf_ptrrAsrDioServices_Dio_WriteChannel_DioIf_runWriteChannel
+*/
+void DioIf_runWriteChannel (u8DioIfChannelType u8ChannelID, u8DioIfLvlType u8Level)
+{
+    /* Check if channel ID is in the correct range */
+    if ( u8ChannelID < DIOIF_CH_MAX )
+    {
+        Dio_WriteChannel(kau8DioMapping[u8ChannelID], u8Level);
+    }
+}
+
+/**
+* \brief
+*       Initialisation function used to call DIO pheripheral in order to configure specific ports.
+* \pre
+*       DIO and Port Pheripherals must be initialised.
+* \return
+*       This function must not have any return.
+* \dynamicaspectcaller
+*       EcuM SW Component.
+* \dynamicaspectdescription
+*       Called in EcuM Init list one in order to enable initialisation of Port pheripheral Channels.
+* \ddesignrequirement
+*		  DSG_DioIf_Init
+* \archrequirement
+*       ARCH_SW_DioIf_ptrpEcuMIfServicesDioIf_DioIf_Init
+*       ARCH_SW_DioIf_ptrrAsrDioServices_Dio_WriteChannel_DioIf_Init
+*/
+void DioIf_Init (void)
+{
+   Dio_WriteChannel(DioConf_DioChannel_Dio_Sleep_Off, STD_LOW);
+   Dio_WriteChannel(DioConf_DioChannel_Dio_ON_OFF_Power, STD_LOW);
+   Dio_WriteChannel(DioConf_DioChannel_Dio_BOOST, STD_LOW);
+   Dio_WriteChannel(DioConf_DioChannel_Dio_Wake_Cyclic_Power, STD_LOW);
+   Dio_WriteChannel(DioConf_DioChannel_Dio_Wake_Sw2, STD_HIGH);
+   Dio_WriteChannel(DioConf_DioChannel_Dio_Wake_Sw1, STD_HIGH);
+}
+
+/**
+* \brief
+*       Function used to enable or disable the current sources of every solenoids.
+* \inputparam
+*       Name: u8ChannelID;
+*       Type: u8DioIfChannelType;
+*       Description: The ID of DIO Channel to be setted;
+*       Range: DioConf_DioChannel_Dio_EN_CS1;
+* \pre
+*       DIO and Port Pheripherals must be initialised.
+* \return
+*       This function not have any return.
+* \dynamicaspectcaller
+*       LPM and ACC modules.
+* \dynamicaspectdescription
+*       Called in LPM_sleepInit in order to disable the solenoids 
+*       and in acc_Init in order to enable the solenoids at startup or after entering in normal moder.
+* \ddesignrequirement
+*		  DioIf_SetSolenoidCurrentSourcesState
+* \archrequirement
+*       ARCH_SW_DioIf_ptrrAsrDioServices_Dio_WriteChannel_DioIf_Init
+*/
+void DioIf_SetSolenoidCurrentSourcesState(uint8 u8PinLevel)
+{
+    Dio_WriteChannel(DioConf_DioChannel_Dio_EN_CS1, u8PinLevel);
+    Dio_WriteChannel(DioConf_DioChannel_Dio_EN_CS2, u8PinLevel);
+    Dio_WriteChannel(DioConf_DioChannel_Dio_EN_CS3, u8PinLevel);
+    Dio_WriteChannel(DioConf_DioChannel_Dio_EN_CS4, u8PinLevel);
+    Dio_WriteChannel(DioConf_DioChannel_Dio_EN_CS5, u8PinLevel);
+    Dio_WriteChannel(DioConf_DioChannel_Dio_EN_CS6, u8PinLevel);
+}
+
+#define DioIf_STOP_SEC_CODE_ASIL_A
+#include "DioIf_MemMap.h"
+
+/******************************************************************************
+End Of File
+*****************************************************************************/

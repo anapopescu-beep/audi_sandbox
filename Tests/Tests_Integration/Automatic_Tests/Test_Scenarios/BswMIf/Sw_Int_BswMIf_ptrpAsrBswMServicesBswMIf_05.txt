@@ -1,0 +1,39 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnLowPwrFromPostRun
+ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnLowPwrFromPostRun: The BswM_OnLowPwrFromPostRun runnable shall be called by the Autosar BswM in case of: - Low Power state is requested {current state of ECU is POST RUN State}.
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrpAsrBswMServicesBswMIf_BswM_OnLowPwrFromPostRun
+
+	Step 2: Enable comunication 
+		Expected result:  Comunication enable
+
+	Step 3: Disable comunication 
+		Expected result:  Comunication disable
+
+	Step 4: Set a BP in function BswM_Cyclic_10msTimer in order to change post run timer value 
+		Expected result:  BP was set
+
+	Step 5: Change value for Post Run Timer in order to go in BswM_Action_BswMAction_BswM_LowPwrStateFromPostRun function 
+		Expected result:  Succesfully changed
+
+	Step 6: Set a BP in function BswM_Action_BswMAction_BswM_LowPwrStateFromPostRun in order to call BswM_OnLowPwrFromPostRun function 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_OnLowPwrFromPostRun in order to check if Low Power state was requested {current state of ECU is POST RUN State} 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 8: Return ECU to default values

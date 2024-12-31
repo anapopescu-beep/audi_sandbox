@@ -1,0 +1,105 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; \file            T1_UserCfg.inv
+;;
+;; \brief           Contains T1 configuration parameters which might get changed after
+;;                  a successful T1-TARGET-SW integration.
+;;
+;; \author GLIWA
+;;
+;; \version 3.5.1.0 r56120
+;;
+;; \copyright       GLIWA embedded systems GmbH & Co. KG, Weilheim i.OB. All rights reserved
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#system all:
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Files
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Relative file paths are based on the directory ABOVE T1_projGen.bat
+-includeHeader=..\src\T1_AppInterface.h         ; name and path for in-lining T1_AppInterface.h into T1 project file
+-configHeader=..\src\T1_config.h                ; name and path of T1_config.h being generated
+-configGenC=..\src\T1_configGen.c               ; name and path of T1_configGen.c being generated
+-bidHeader=..\src\T1_bid.h                      ; name and path of generated header file containing T1 Build ID (which is then excluded from T1_config.h)
+; -runnableHeader=..\src\T1_runnables.h         ; name and path of generated header file containing runnable IDs (and wrappers if supported by OS-script)
+-projectFile=..\T1_project.t1p                  ; name and path of T1 project file being generated
+-symbolFile=..\..\..\..\..\Release\Application\app.elf            ; name and path of symbol-file
+; -t1LibAnnotationsFile=..\T1_annotations.t1a   ; name and path of generated Annotation file (optional).
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Project Information
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-projectName=AUDI eCS                           ; project name meaningful to customer
+-licInfo1=POT1924                               ; project and license information for GLIWA
+-licInfo2=LicID1141                             ; project and license information for GLIWA
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Miscellaneous Configurations
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-storeTimingInformation=false                   ; store timing information in T1 project file (e.g. for being used in T1.diff) [true/false]
+; -targetExcludeFromTraceByName=Task_Excluded_Core0 ; exclude task from tracing. Only allowed for the group of tasks at the lowest used priority level! ( using macro T1_TRACE_TASK) [optional]
+; -targetExcludeFromTraceByName=Task_Excluded_Core1 ; exclude task from tracing. Only allowed for the group of tasks at the lowest used priority level! ( using macro T1_TRACE_TASK) [optional]
+-staticRunnableID=1023                          ; define the value of the static runnable ID [0..1023]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Allocate Application Features for all Cores
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-allocateAF=TRACE_STARTUP,     "Capture Startup Trace",    false
+-allocateAF=ALLOW_TRIGGER,     "Allow on Target Trigger",  true
+-allocateAF=ALLOW_TRACEDATA,   "Allow T1 Trace Data",      false
+-allocateAF=CHECK_INTEGRATION, "Trace the stopwatch T1_SW_CHECK_INTEGRATION_CORE_ALL", false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Allocate Delays for all Cores
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-allocateDL=CHECK_INTEGRATION, "Check Integration"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Allocate User Events for all Cores
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-allocateUE=T1_UE_T1_CONT_ERR_CORE0,        "T1.cont error callback for core 0"
+
+-allocateUE=T1_UE_CPU_LOAD_CALLBACK_CORE0,  "T1.cont CPU load callback for core 0"
+
+-allocateUE=T1_UE_T1_ERR_CORE_ALL, "T1_errorCount Increase"
+-keyValueMapUE=T1_UE_T1_ERR_CORE_ALL, 0x00, "Core0 Error"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Allocate User Data Events for all Cores
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-allocateUDE=CHECK_INTEGRATION_SYNCTIMER, "Check Integration Sync Timer Ticks"
+-allocateUDE=PRINTF,                      "printf string"
+-allocateUDE=16BitDataTrace,              "16 bit Data tracing"
+-allocateUDE=32BitDataTrace,              "32 bit Data tracing"
+-allocateUDE=BinaryTrace,                 "Binary Data tracing"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Allocate User Stopwatches for all Cores
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-allocateUserSW=CHECK_INTEGRATION, "Check Integration", GET
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Configurations for Core 0
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#system 0:
+-systemName=Core0                               ; any system name being displayed in T1.base menu in T1-HOST-SW
+-systemComment=Core0                            ; any system comment
+-osBasicSchedFrameName=OsTask_Alv_ComHwAbs   ; basicSchedulingFrameEvent: OS-name of periodic task containing the main control or calculations of the system
+-osBackgroundTaskName=OsTask_AppIdle             ; task to be excluded from T1.cont and T1.scope CPU-load calculation [OS-name] [optional]
+-traceBufferEntries=3000                        ; trace buffer entries
+; -flexAnalysisCapacity=2000                    ; maximum allowed number of T1.flex exception handler calls between two T1_Handler calls.
+-cpuLoadThreshold=85                            ; CPU-load threshold for T1.cont CPU-load callback [0..99]
+-numberOfConstraints=2                          ; number of T1.cont constraints
+
+; Allocate Delays for Core 0
+; -allocateDL=RUNNABLE_0, "Runnable 0 Core 0", 100us
+
+; Allocate User Events for Core 0
+; -allocateUE=BSF, "Basic Scheduling Frame Core 0"
+
+; Allocate User Stopwatches for Core 0
+; -allocateUserSW=CORE_LOOP_RUNNABLE_0, "Core Loop in Runnable 0 Core 0", CET
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; EOF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

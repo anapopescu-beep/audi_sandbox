@@ -1,0 +1,42 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  msTimer liveUpdateTimer;
+  int stopTimerReq = 0;
+
+}
+
+on timer liveUpdateTimer
+{
+  if(stopTimerReq == 1)
+  {
+    stopTimerReq = 0;
+    cancelTimer(liveUpdateTimer);
+  }
+  
+  /* Trigger test case */
+  if(@sysvar::PowerSupply::triggerCanBeMade != 1)
+    @sysvar::PowerSupply::sysTrigger = 1;
+}
+
+on sysvar_update sysvar::PowerSupply::sysPowerButton
+{
+  if(@sysvar::PowerSupply::sysPowerButton == 1)
+  {
+    setTimerCyclic(liveUpdateTimer, 1500);
+  } 
+  else if(@sysvar::PowerSupply::sysPowerButton == 0)
+  {
+    stopTimerReq = 1; 
+  }
+}
+
+on sysvar_update sysvar::PowerSupply::sysSetCurrentAndVoltageButton
+{
+   @sysvar::PowerSupply::parametersUpdateRequested = 1;
+}

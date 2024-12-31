@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 autosar_4-2-2.xsd">
+<AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>AUTOLIV</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>SoftwareComponents</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE T="2015-09-29T16:42:13+02:00">
+              <SHORT-NAME>LPM</SHORT-NAME>
+              <ELEMENTS>
+                <APPLICATION-SW-COMPONENT-TYPE T="2023-06-20T08:59:22+03:00">
+                  <SHORT-NAME>LPM</SHORT-NAME>
+                  <CATEGORY>SWC</CATEGORY>
+                  <PORTS>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:32:34+02:00" UUID="579b35ed-9953-4b9b-ac0a-18942926192e">
+                      <SHORT-NAME>pclAccRestartInit</SHORT-NAME>
+                      <DESC T="2023-02-21T19:06:02+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_LPM_pclAccRestartInit_ACC_RestartInitialization&#xD;
+&#xD;
+# Description&#xD;
+-  The ACC_RestartInitialization runnable shall be called in the LPM_sleepRestore runnable in order to initialize ACC module from sleep&#xD;
+	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- ACC_RestartInitialization&#xD;
+&#xD;
+#Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-18T09:18:49+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-18T09:18:49+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:32:27.989+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-18T09:18:49+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_18.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-02-09T15:47:43+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/ACC_DataDictionary/ClientServerInterfaces/icsAccRestartInit/RestartInitialization</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/ACC_DataDictionary/ClientServerInterfaces/icsAccRestartInit</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:32:42+02:00" UUID="1680c771-85ac-488a-aa8a-09e542be1cd2">
+                      <SHORT-NAME>pclAdcIfServices</SHORT-NAME>
+                      <DESC T="2023-02-21T19:07:41+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&amp;#xD;&#xD;
+ARCH_SW_LPM_pclAdcIfSerrvices_AdcIf_StartConversion&#xD;
+&#xD;
+# Description&#xD;
+-  The AdcIf_StartConversion runnable shall be called in the LPM_sleepRestore runnable in order to start AdcIf timer&#xD;
+	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- AdcIf_StartConversion&#xD;
+&#xD;
+#Traceability&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_LPM_pclAdcIfSerrvices_AdcIf_StopConversion&#xD;
+&#xD;
+# Description&#xD;
+-  AdcIf_StopConversion runnable shall be called in the LPM_sleepInit runnable in order to stop AdcIf timer	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- AdcIf_StoptConversion&#xD;
+&#xD;
+#Traceability&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_LPM_pclAdcIfSerrvices_AdcIf_WaitForConversion&#xD;
+&#xD;
+# Description&#xD;
+-  AdcIf_WaitForConversion runnable shall be called in the LPM_sleepInit runnable in order to wait for the last Adc timer trigger&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- AdcIf_WaaitForConversion&#xD;
+&#xD;
+#Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-18T09:20:15+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-18T09:20:15+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:32:35.562+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-18T09:20:15+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_18.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsAdcIfServices/StartConversion</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsAdcIfServices/StopConversion</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsAdcIfServices/WaitForConversion</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsAdcIfServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-20T22:42:20+03:00" UUID="4fa0abb6-9686-4991-9138-3fb59e4a08d6">
+                      <SHORT-NAME>pclHandleSeatCurrentCircuit</SHORT-NAME>
+                      <DESC T="2023-06-20T22:44:01+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_LPM_pclHandleSeatCurrentCircuit_IoHwAb_HandleSeatCurrentCircuit&#xD;
+&#xD;
+# Description&#xD;
+-  The IoHwAb_HandleSeatCurrentCircuit runnable shall be called in the LPM_sleepMainLoop runnable in order to control the seat/belt detection circuit&#xD;
+	&#xD;
+# Data Flow&#xD;
+##Inputs&#xD;
+	{Adc value for first input}&#xD;
+	{Adc value for second input}&#xD;
+	{reset circuit state}&#xD;
+##Outputs&#xD;
+	{Valid values state}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- LPM_sleepMainLoop&#xD;
+&#xD;
+#Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:57:57+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-18T09:20:44+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-06-20T22:41:34.244+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:57:57+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-18T09:20:44+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_18.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-06-20T13:52:17+03:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsHandleSeatCurrentCircuit/IoHwAb_HandleSeatCurrentCircuit</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsHandleSeatCurrentCircuit</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-02-23T08:32:49+02:00" UUID="ea7201eb-f12c-4f1b-9579-170df028634c">
+                      <SHORT-NAME>pclLowPowerWakeUp</SHORT-NAME>
+                      <DESC T="2023-06-20T22:41:30+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_LPM_pclLowPowerwakeUp_IoHwAb_HandleSeatVariants&#xD;
+&#xD;
+# Description&#xD;
+-  The IoHwAb_HandleSeatVariants runnable shall be called in the LPM_sleepMainLoop runnable in order to detect seat/belt status wakeup conditions&#xD;
+	&#xD;
+# Data Flow&#xD;
+##Inputs&#xD;
+	{Adc value for first input}&#xD;
+	{Adc value for second input}&#xD;
+##Outputs&#xD;
+	{Wakeup status}&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- LPM_sleepMainLoop&#xD;
+&#xD;
+#Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-18T09:19:19+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-18T09:19:19+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:32:43.884+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-18T09:19:19+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_18.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC>
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsLowPowerWakeUp/HandleSeatVariants</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/IoHwAb_DataDictionary/ClientServerInterfaces/icsLowPowerWakeUp</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <R-PORT-PROTOTYPE T="2023-06-20T22:32:05+03:00" UUID="cfe34fc1-8629-4997-8c28-c29b76b7cf9d">
+                      <SHORT-NAME>pclSbcServices</SHORT-NAME>
+                      <DESC T="2023-06-20T22:39:31+03:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_LPM_pclSbcServices_SBC_SetToLowPower&#xD;
+&#xD;
+# Description&#xD;
+-  The SBC_SetToLowPower runnable shall be called in the LPM_sleepInit runnable in order to set the SBC to low power mode&#xD;
+	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- LPM_sleepInit&#xD;
+&#xD;
+#Traceability&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_LPM_pclSbcServices_SBC_sleepTriggerWatchdog&#xD;
+&#xD;
+# Description&#xD;
+-  The SBC_sleepTriggerWatchdog runnable shall be called in the LPM_sleepInit runnable in order to trigger the external watchdog&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- LPM_sleepInit&#xD;
+	- LPM_sleepMainLoop&#xD;
+&#xD;
+#Traceability&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_LPM_pclSbcServices_SBC_SetToNormal&#xD;
+&#xD;
+# Description&#xD;
+-  The SBC_SetToNormal runnable shall be called in the LPM_sleepRestore runnable in order to set the SBC in normal mode&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+	- LPM_sleepRestore&#xD;
+&#xD;
+#Traceability</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-06-21T16:58:17+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-18T09:21:17+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R2.0</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>razvan.badiu</ISSUED-BY>
+                            <DATE>2023-06-20T22:17:42.288+03:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">update for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">functionality updated</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-06-21T16:58:17+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[GBR_21.06.2023] reviewed for R2.0</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-18T09:21:17+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_18.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <REQUIRED-COM-SPECS>
+                        <CLIENT-COM-SPEC T="2023-02-22T11:10:31+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_sleepTriggerWatchdog</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-02-22T11:10:31+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_SetToLowPower</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                        <CLIENT-COM-SPEC T="2023-02-22T11:10:31+02:00">
+                          <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices/SBC_SetToNormal</OPERATION-REF>
+                        </CLIENT-COM-SPEC>
+                      </REQUIRED-COM-SPECS>
+                      <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/AUTOLIV/SBC_DataDictionnary/ClientServerInterfaces/icsSbcServices</REQUIRED-INTERFACE-TREF>
+                    </R-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-23T08:32:12+02:00" UUID="4abd2fef-a032-4239-ab7b-97186a234815">
+                      <SHORT-NAME>ptrpLpmServicesAsrOs</SHORT-NAME>
+                      <DESC T="2023-02-21T18:47:59+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_LPM_ptrpLpmServicesAsrOs_LPTMR_ISR&#xD;
+&#xD;
+# Description&#xD;
+-  The LPTMR_ISR runnable shall be called in the Os services runnable upon a hardware event in the LPTMR timer&#xD;
+	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- LPTMR_ISR&#xD;
+&#xD;
+#Traceability&#xD;
+&#xD;
+---------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_LPM_ptrpLpmServicesAsrOs_PORTD_ISR&#xD;
+&#xD;
+# Description&#xD;
+-  The PORTD_ISR runnable shall be called in the Os services runnable upon a hardware event in the Port D module&#xD;
+	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- PORTD_ISR&#xD;
+&#xD;
+#Traceability&#xD;
+</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-18T15:10:06+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-18T15:10:06+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:32:06.013+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-18T15:10:06+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_18.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/EB/TriggerInterfaces/itrAsrOsServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                    <P-PORT-PROTOTYPE T="2023-02-23T08:32:25+02:00" UUID="a23ad6db-28c2-48a0-92db-408cf87cd3ed">
+                      <SHORT-NAME>ptrpLpmServicesBswMIf</SHORT-NAME>
+                      <DESC T="2023-02-22T15:22:44+02:00">
+                        <L-2 L="FOR-ALL"># Architecture Element ID&#xD;
+ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepInit&#xD;
+&#xD;
+# Description&#xD;
+-  The LPM_sleepInit runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to initialize LPM module&#xD;
+	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- LPM_sleepInit &#xD;
+&#xD;
+#Traceability&#xD;
+DOM_eCS_TF_P_200, DOM_eCS_TF_P_265, DOM_eCS_TF_P_205, DOM_eCS_TF_P_268&#xD;
+---------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepMainLoop &#xD;
+&#xD;
+# Description&#xD;
+-  The LPM_sleepMainLoop runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to enter in low power&#xD;
+   mode main loop.&#xD;
+	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- LPM_sleepMainLoop &#xD;
+&#xD;
+#Traceability&#xD;
+DOM_eCS_TF_P_200, DOM_eCS_TF_P_269, DOM_eCS_TF_P_208, DOM_eCS_TF_P_271, DOM_eCS_TF_P_214, DOM_eCS_TF_P_317&#xD;
+---------------------------------------------------------------------------------------------------------------------------------------------&#xD;
+&#xD;
+# Architecture Element ID&#xD;
+ARCH_SW_LPM_ptrpLpmServicesBswMIf_LPM_sleepRestore &#xD;
+&#xD;
+# Description&#xD;
+-  The LPM_sleepRestore runnable shall be called in the BswM_OnLowPwrFromPostRun runnable in order to restore previous state &#xD;
+    and set rules to go back in RUN STATE&#xD;
+	&#xD;
+# Data Flow&#xD;
+&#xD;
+# Linked Runnable&#xD;
+- LPM_sleepRestore &#xD;
+&#xD;
+#Traceability&#xD;
+DOM_eCS_TF_P_200, DOM_eCS_TF_P_214, DOM_eCS_TF_P_317, DOM_eCS_TF_P_216</L-2>
+                      </DESC>
+                      <ADMIN-DATA T="2023-07-18T11:29:44+03:00">
+                        <LANGUAGE>FOR-ALL</LANGUAGE>
+                        <DOC-REVISIONS>
+                          <DOC-REVISION T="2023-07-18T11:29:44+03:00">
+                            <REVISION-LABEL>eCS_SBE_AUDI_MCC_R1.1_04</REVISION-LABEL>
+                            <REVISION-LABEL-P-1></REVISION-LABEL-P-1>
+                            <REVISION-LABEL-P-2></REVISION-LABEL-P-2>
+                            <STATE>_Approved</STATE>
+                            <ISSUED-BY>dan.dustinta</ISSUED-BY>
+                            <DATE>2023-02-23T08:32:14.633+02:00</DATE>
+                            <MODIFICATIONS>
+                              <MODIFICATION>
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[DDU_23.02.2023]: reviewed for R1.1</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                              <MODIFICATION T="2023-07-18T11:29:44+03:00">
+                                <CHANGE>
+                                  <L-2 L="FOR-ALL">[CAL_18.07.2023] reviewed by IT team, set to Approved</L-2>
+                                </CHANGE>
+                                <REASON>
+                                  <L-2 L="FOR-ALL">no findings</L-2>
+                                </REASON>
+                              </MODIFICATION>
+                            </MODIFICATIONS>
+                          </DOC-REVISION>
+                        </DOC-REVISIONS>
+                      </ADMIN-DATA>
+                      <PROVIDED-INTERFACE-TREF DEST="TRIGGER-INTERFACE">/AUTOLIV/LPM_DataDictionary/TriggerInterfaces/itrLpmServices</PROVIDED-INTERFACE-TREF>
+                    </P-PORT-PROTOTYPE>
+                  </PORTS>
+                </APPLICATION-SW-COMPONENT-TYPE>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

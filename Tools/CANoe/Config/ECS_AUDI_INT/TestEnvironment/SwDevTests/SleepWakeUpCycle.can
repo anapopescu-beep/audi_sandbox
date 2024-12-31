@@ -1,0 +1,136 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  int globalFrameMonitoringEnable = 0;
+  int globalFrameReceived = 1;
+}
+
+on message eCS_01
+{
+  if(globalFrameMonitoringEnable == 0)
+  {
+    // frame received
+    globalFrameReceived = 0;
+    
+    // disable monitoring
+    globalFrameMonitoringEnable = 1;
+  }
+}
+
+void MainTest ()
+{
+  // increase time in sleep incrementally with fixed RUN time of 2750ms
+  // IncrementalSleep();
+  
+  // increase time in sleep and RUN incrementally
+  IncrementalSleepWakeUp();
+}
+
+testcase IncrementalSleep()
+{
+  int loopIdx = 0;
+  char printbuf1[500];
+  
+  // increase time spent in sleep starting from 2750ms, up to 65535*500ms+2750ms
+  for(loopIdx = 0; loopIdx < 65535; loopIdx++)
+  {
+      globalFrameMonitoringEnable = 1;
+      
+      // stop frames
+      TestDisableMsg(Airbag_01);
+      TestDisableMsg(Airbag_02);
+      TestDisableMsg(Airbag_eCS_01);
+    
+      // stay in sleep for configured time
+      TestWaitForTimeout(2750+(loopIdx*500));
+      
+      // enable frames
+      testEnableMsg(Airbag_01);
+      testEnableMsg(Airbag_02);
+      testEnableMsg(Airbag_eCS_01);
+      
+      // initial wait
+      TestWaitForTimeout(750);
+      
+      // enable conditions for checking if the eCS_01 frame was received on the bus
+      globalFrameMonitoringEnable = 0;
+      globalFrameReceived = 1;
+      
+      // wait for frame to appear on the bus
+      TestWaitForTimeout(2000);
+    
+      snprintf(printbuf1,elcount(printbuf1),"Communication disabled for: %d",(2750+(loopIdx*500)));
+      if(globalFrameReceived != 0)
+      {
+        // frame was not detected, fail and stop test
+        // print how long the ECU will stay in sleep
+        testStepFail("STEP", printbuf1);
+        break;
+      }
+      else
+      {
+        // print how long the ECU will stay in sleep, step passed
+        testStep("STEP", printbuf1);
+      }
+  }
+}
+
+testcase IncrementalSleepWakeUp()
+{
+  int loopIdx = 0;
+  char printbuf1[500];
+  char printbuf2[500];
+  
+  // increase time spent in sleep starting from 2750ms, up to 65535*500ms+2750ms
+  for(loopIdx = 0; loopIdx < 65535; loopIdx++)
+  {
+      globalFrameMonitoringEnable = 1;
+      
+      // stop frames
+      TestDisableMsg(Airbag_01);
+      TestDisableMsg(Airbag_02);
+      TestDisableMsg(Airbag_eCS_01);
+    
+      // stay in sleep for configured time
+      TestWaitForTimeout(2750+(loopIdx*500));
+      
+      // enable frames
+      testEnableMsg(Airbag_01);
+      testEnableMsg(Airbag_02);
+      testEnableMsg(Airbag_eCS_01);
+      
+      // initial wait
+      TestWaitForTimeout(750+(loopIdx*500));
+      
+      // enable conditions for checking if the eCS_01 frame was received on the bus
+      globalFrameMonitoringEnable = 0;
+      globalFrameReceived = 1;
+      
+      // wait for frame to appear on the bus
+      TestWaitForTimeout(2000);
+    
+      snprintf(printbuf1,elcount(printbuf1),"Communication disabled for: %d",(2750+(loopIdx*500)));
+      snprintf(printbuf2,elcount(printbuf2),"Communication enabled for: %d",(2750+(loopIdx*500)));
+      if(globalFrameReceived != 0)
+      {
+        // frame was not detected, fail and stop test
+        // print how long the ECU stayed in sleep
+        testStepFail("STEP", printbuf1);
+        // print how long the ECU stayed in run
+        testStepFail("STEP", printbuf2);
+        break;
+      }
+      else
+      {
+        // print how long the ECU stayed in sleep, step passed
+        testStep("STEP", printbuf1);
+        // print how long the ECU stayed in run, step passed
+        testStep("STEP", printbuf2);
+      }
+  }
+}

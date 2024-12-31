@@ -1,0 +1,72 @@
+					Autoliv Electronics Document
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_Init_BswM_OnStartupTwoA, ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_ClearIpduGroupVector_BswM_OnEnableTxPdu, ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_SetIpduGroup_BswM_OnEnableTxPdu, ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_IpduGroupControl_BswM_OnEnableTxPdu
+ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_Init_BswM_OnStartupTwoA: The Com_Init runnable shall be called in the BswM_OnStartupTwoA runnable in order to initialize the Com module.
+ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_ClearIpduGroupVector_BswM_OnEnableTxPdu: The Com_ClearIpduGroupVector runnable shall be called in the BswM_OnEnableTxPdu runnable in order to initialize the PDU group vector to 0
+ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_SetIpduGroup_BswM_OnEnableTxPdu: The Com_SetIpduGroup runnable shall be called in the BswM_OnEnableTxPdu runnable in order to set new states to RX and Tx Com IPDUs: - Enable frame reception - Enable frame transmission
+ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_IpduGroupControl_BswM_OnEnableTxPdu: The Com_IpduGroupControl runnable shall be called in the BswM_OnEnableTxPdu runnable in order to start both COM PDUs (after their states have been updated)
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_Init_BswM_OnStartupTwoA
+
+	Step 2: Set a BP in function BswM_OnStartupTwoA to call Com_Init function 
+		Expected result:  BP was set
+
+	Step 3: Set a BP in function Com_Init in order to initialize the Com module 
+		Expected result:  BP was set
+
+	Step 4: Set a BP in function Com_Init for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_ClearIpduGroupVector_BswM_OnEnableTxPdu
+
+	Step 5: Set a BP in function BswM_OnEnableTxPdu to call Com_ClearIpduGroupVector function 
+		Expected result:  BP was set
+
+	Step 6: Set a BP in function Com_ClearIpduGroupVector in order to initialize the PDU group vector to 0 
+		Expected result:  BP was set
+
+	Step 7: Set a BP in function BswM_OnEnableTxPdu for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_SetIpduGroup_BswM_OnEnableTxPdu
+
+	Step 8: Set a BP in function BswM_OnEnableTxPdu to call Com_SetIpduGroup function 
+		Expected result:  BP was set
+
+	Step 9: Set a BP in function Com_SetIpduGroup in order to set new states to RX Com IPDUs: - Enable frame reception 
+		Expected result:  BP was set
+
+	Step 10: Set a BP in function BswM_OnEnableTxPdu in order to enable frame transmission 
+		Expected result:  BP was set
+
+	Step 11: Set a BP in function Com_SetIpduGroup in order to set new states to Tx Com IPDUs: - Enable frame transmission 
+		Expected result:  BP was set
+
+	Step 12: Set a BP in function BswM_OnEnableTxPdu for check the interface 
+		Expected result:  BP was set
+
+Action: ARCH_SW_BswMIf_ptrrComServicesBswMIf_Com_IpduGroupControl_BswM_OnEnableTxPdu
+
+	Step 13: Set a BP in function BswM_OnEnableTxPdu to call Com_IpduGroupControl function 
+		Expected result:  BP was set
+
+	Step 14: Set a BP in function Com_IpduGroupControl in order to start both COM PDUs (after their states have been updated) 
+		Expected result:  BP was set
+
+	Step 15: Set a BP in function BswM_OnEnableTxPdu for check the interface 
+		Expected result:  BP was set
+
+Postcondition
+
+	Step 16: Return ECU to default values

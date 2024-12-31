@@ -1,0 +1,38 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_Reihe2_BF_XIX_Grundumfang_XIX_eCS
+ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_Reihe2_BF_XIX_Grundumfang_XIX_eCS: - Interface used to read if and on demand selt-test has been requested for each solenoid - The on demand self-test for seat BF Reihe 2 will trigger the unlock/lock for solenoids 6
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_CIL_RP_IF_AB_eCS_Aktuatortest_Reihe2_BF_XIX_Grundumfang_XIX_eCS
+
+	Step 2: Set a breakpoint in function CIL_runCANToAppli in order to call interface used to read if and on demand selt-test has been requested for solenoid 6. 
+		Expected result:  BP reached
+
+	Step 3: Set a breakpoint in function Rte_COMCbk_SGis_AB_Gurtschloss_Reihe2_BF1_1312R in order where check Rte State 
+		Expected result:  BP reached
+
+	Step 4: Set a breakpoint in function Rte_COMCbk_SGis_AB_Gurtschloss_Reihe2_BF1_1312R in order to read Internal Buffer 
+		Expected result:  BP reached
+
+	Step 5: Read the Internal Buffer value
+
+	Step 6: Set a breakpoint in function CIL_runCANToAppli in order to check ODST for Solenoid 6. 
+		Expected result:  BP reached
+
+	Step 7: Read the Buckle Status Tx value for solenoid 6
+
+Postcondition
+
+	Step 8: Return ECU to default values

@@ -1,0 +1,28 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DisableWakeupSources
+ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DisableWakeupSources: - The EcuM_DisableWakeupSources runnable shall be called by the Autosar EcuM to disable wakeup sources
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_EcuMIf_ptrpAsrEcuMServicesEcuMIf_EcuM_DisableWakeupSources
+
+	Step 2: Set a breakpoint in function EcuM_GoPoll in order to call EcuM_WakeupRestart function 
+
+	Step 3: Set a breakpoint in function EcuM_WakeupRestart in order to call EcuM_DisableWakeupSources function 
+
+	Step 4: Set a breakpoint in function EcuM_DisableWakeupSources in order to check the interface
+
+Postcondition
+
+	Step 5: Return ECU to default values

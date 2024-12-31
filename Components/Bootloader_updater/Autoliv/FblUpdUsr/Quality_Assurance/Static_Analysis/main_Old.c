@@ -1,0 +1,271 @@
+/******************************************************************************
+
+AUTOLIV ELECTRONIC document.
+
+-------------------------------------
+
+Copyright Autoliv Inc. All rights reserved.
+
+ *******************************************************************************
+C-File Template Version:
+Template version: AEM_PROCESS_1.25.00
+Last template change: AEM_PROCESS_1.00.00
+Template release date: 2022-09
+ ******************************************************************************/
+/*
+$Revision: 1.1 $
+$ProjectName: e:/MKSProjects/SBE/eCS/AUDI_MCC/Phase_01/View_Development/Components/Bootloader_updater/Autoliv/FblUpdUsr/Quality_Assurance/Static_Analysis/project.pj $
+ */
+/*!****************************************************************************
+@details
+    This file contains the implementation of main function.
+ ******************************************************************************/
+/******************************************************************************
+EXTERNAL DEPENDENCIES
+ ******************************************************************************/
+#include "Port.h"   /* Module enable defines and standard config pointer names */
+#include "Mcu.h"
+#include "Spi.h"
+#include "StdRegMacros.h"
+#include "fbl_inc.h"
+#include "Bootloader.h"
+#include <Reg_eSys_FLASHC.h>
+#include <SBC.h>
+#include "common.h"
+/******************************************************************************
+MODULE DEFINES
+ ******************************************************************************/
+#define FBLUSR_KU16_EIGHT           ((uint16) 0x8)
+
+#define FBLUSR_BTLD_UPDT_ADDR       ((uint32) 0x7CFF0)
+
+#define FBLUSR_KU8_255_VAL          ((uint8) 255)
+
+#define FBLUSR_NO_INIT_START_ADDR   ((uint32)0x20003F00)
+/******************************************************************************
+MODULE TYPES
+ ******************************************************************************/
+/******************************************************************************
+DECLARATION OF LOCAL FUNCTIONS
+ ******************************************************************************/
+ramfunc LOCAL void FblUpdUsr_EraseMemoryFunction(uint32 u32address);
+ramfunc LOCAL void FblUpdUsr_WriteMemoryFunction(void);
+LOCAL void FblUpdUsr_TriggerWD(void);
+/******************************************************************************
+DEFINITION OF LOCAL VARIABLES
+ ******************************************************************************/
+/******************************************************************************
+DEFINITION OF EXPORTED VARIABLES
+ ******************************************************************************/
+/******************************************************************************
+DEFINITION OF LOCAL CONSTANT DATA
+ ******************************************************************************/
+/******************************************************************************
+DEFINITION OF EXPORTED CONSTANT DATA
+ ******************************************************************************/
+/******************************************************************************
+MODULE FUNCTION-LIKE MACROS
+ ******************************************************************************/
+/******************************************************************************
+DEFINITION OF LOCAL FUNCTION
+ ******************************************************************************/
+/******************************************************************************
+DEFINITION OF APIs
+ ******************************************************************************/
+/**
+ *\brief
+ *      Function used to erase the flash memory.
+ *\inputparam
+ *      Name: address;
+ *      Type: uint32;
+ *      Description: the register address;
+ *\dynamicaspectcaller
+ *     FblUpdUsr module.
+ *\dynamicaspectdescription
+ *      Called locally in main function via direct call.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_FblUpdUsr_FblUpdUsr_EraseMemoryFunction
+ *\archrequirement
+ *      None.
+ **/
+ramfunc LOCAL void FblUpdUsr_EraseMemoryFunction(uint32 u32address)
+{
+	/* erase */
+	/* wait if operation in progress */
+	while((KU8_ZERO == ((REG_READ8(FLASH_FSTAT_ADDR32)) & FLASH_FSTAT_CCIF_U8)))
+		{
+        /* wait */
+		}
+
+	REG_WRITE8(FLASH_FSTAT_ADDR32, FLASH_FSTAT_ACCERR_U8 | FLASH_FSTAT_FPVIOL_U8);
+
+	REG_WRITE8(FLASH_FCCOB0_ADDR32, KU8_NINE); /* Erase command (0x09) */
+	REG_WRITE8(FLASH_FCCOB1_ADDR32, (uint8)((u32address & KU32_MASK_BYTE_HIGH_MIDDLE) >> KU8_SIXTEEN)); /* Flash address [23:16] */
+	REG_WRITE8(FLASH_FCCOB2_ADDR32, (uint8)((u32address & KU32_MASK_BYTE_LOW_MIDDLE)>> KU8_EIGHT)); /* Flash address [15:08] */
+	REG_WRITE8(FLASH_FCCOB3_ADDR32, (uint8)(u32address & KU32_MASK_BYTE_LOW)); /* Flash address [7:0] */
+
+	REG_WRITE8(FLASH_FSTAT_ADDR32, FLASH_FSTAT_CCIF_U8); /* initiate the erase execution */
+	/* wait until the erase operation is done */
+	while((KU8_ZERO == ((REG_READ8(FLASH_FSTAT_ADDR32)) & FLASH_FSTAT_CCIF_U8)))
+	{
+    /* wait */
+	}
+
+}
+
+/**
+ *\brief
+ *      Function used to write the flash memory.
+ *\dynamicaspectcaller
+ *      FblUpdUsr module.
+ *\dynamicaspectdescription
+ *      Called locally in main function via direct call.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_FblUpdUsr_FblUpdUsr_WriteMemoryFunction
+ *\archrequirement
+ *      None.
+ **/
+ramfunc LOCAL void FblUpdUsr_WriteMemoryFunction(void)
+{
+	LOCAL uint32 u32address = _BLOCK0_ADDRESS;
+	uint16 i;
+	for(i = KU16_ZERO; i < _BLOCK0_ADDRESS; i += FBLUSR_KU16_EIGHT)
+	{
+		/* wait if operation in progress */
+		while((KU8_ZERO == ((REG_READ8(FLASH_FSTAT_ADDR32)) & FLASH_FSTAT_CCIF_U8)))
+		{
+	    /* wait */
+		}
+
+		REG_WRITE8(FLASH_FSTAT_ADDR32, FLASH_FSTAT_ACCERR_U8 | FLASH_FSTAT_FPVIOL_U8);
+
+		/* program phrase at address 0x007A_0000 */
+		REG_WRITE8(FLASH_FCCOB0_ADDR32, KU8_SEVEN); /* Program Phrase command (0x07) */
+		REG_WRITE8(FLASH_FCCOB1_ADDR32, (uint8)((u32address & KU32_MASK_BYTE_HIGH_MIDDLE) >> KU8_SIXTEEN)); /* Flash address [23:16] */
+		REG_WRITE8(FLASH_FCCOB2_ADDR32, (uint8)((u32address & KU32_MASK_BYTE_LOW_MIDDLE) >> KU8_EIGHT)); /* Flash address [15:08] */
+		REG_WRITE8(FLASH_FCCOB3_ADDR32, (uint8)(u32address & KU32_MASK_BYTE_LOW)); /* Flash address [7:0] */
+
+
+		REG_WRITE8(FLASH_FCCOB7_ADDR32, Blk0[u32address - (uint32)(_BLOCK0_ADDRESS)]);
+		REG_WRITE8(FLASH_FCCOB6_ADDR32, Blk0[u32address - (uint32)(_BLOCK0_ADDRESS) + (uint32)KU8_ONE]);
+		REG_WRITE8(FLASH_FCCOB5_ADDR32, Blk0[u32address - (uint32)(_BLOCK0_ADDRESS) + (uint32)KU8_TWO]);
+		REG_WRITE8(FLASH_FCCOB4_ADDR32, Blk0[u32address - (uint32)(_BLOCK0_ADDRESS) + (uint32)KU8_THREE]);
+		REG_WRITE8(FLASH_FCCOBB_ADDR32, Blk0[u32address - (uint32)(_BLOCK0_ADDRESS) + (uint32)KU8_FOUR]);
+		REG_WRITE8(FLASH_FCCOBA_ADDR32, Blk0[u32address - (uint32)(_BLOCK0_ADDRESS) + (uint32)KU8_FIVE]);
+		REG_WRITE8(FLASH_FCCOB9_ADDR32, Blk0[u32address - (uint32)(_BLOCK0_ADDRESS) + (uint32)KU8_SIX]);
+		REG_WRITE8(FLASH_FCCOB8_ADDR32, Blk0[u32address - (uint32)(_BLOCK0_ADDRESS) + (uint32)KU8_SEVEN]);
+
+		REG_WRITE8(FLASH_FSTAT_ADDR32, FLASH_FSTAT_CCIF_U8);
+		while((KU8_ZERO == ((REG_READ8(FLASH_FSTAT_ADDR32)) & FLASH_FSTAT_CCIF_U8)))
+		{
+	    /* wait */
+		}//wait for done
+
+		u32address += (uint32)KU8_EIGHT;
+	}
+}
+
+/**
+ *\brief
+ *      Function used to trigger watchdog.
+ *\dynamicaspectcaller
+ *      FblUpdUsr module.
+ *\dynamicaspectdescription
+ *      Called locally in main function via direct call.
+ *\constrains
+ *      None.
+ *\ddesignrequirement
+ *		DSG_FblUpdUsr_FblUpdUsr_TriggerWD
+ *\archrequirement
+ *      None.
+ **/
+LOCAL void FblUpdUsr_TriggerWD(void)
+{
+	uint8 i;
+	for(i = KU8_ZERO; i < KU8_FOUR; i++)
+	{
+		SBC_runMainFunction();
+		Spi_MainFunction_Handling();
+	}
+}
+
+/**
+ *\brief
+ *      Function used to start the execution (activation of PLL clock,
+ *      initialization of port, start up bootloader updater activity).
+ *\param
+ *      None.
+ *\return
+ *      None.
+ *\dynamicaspectcaller
+ *      None.
+ *\dynamicaspectdescription
+ *      None.
+ *\constrains
+ *      None.
+ **/
+int main(void)
+{
+	uint8 i;
+	uint32* u32pointer;
+	/* Initialization of EB Stack */
+	Mcu_Init(NULL_PTR);
+
+	/* Ignore return value (always E_NOT_OK). ERAY Pll is not supported for TC22
+	 * but the function tries to configure it anyway with 0 values. */
+	(void)Mcu_InitClock(McuConf_McuClockSettingConfig_McuClockSettingConfig_0);
+
+	/* Wait until the PLL is locked */
+	while (MCU_PLL_LOCKED != Mcu_GetPllStatus())
+	{
+		;
+	}
+
+	/* Activate the PLL Clock */
+	Mcu_DistributePllClock();
+
+	/* Initialization of Port */
+	Port_Init(NULL_PTR);
+	/* Initialization of Spi */
+	Spi_Init(NULL_PTR);
+	SBC_Init();
+
+	FblUpdUsr_TriggerWD();
+
+	/* Invalidate bootloader */
+	FblUpdUsr_EraseMemoryFunction(_BLOCK0_LENGTH);
+	for(i = KU8_ZERO; i< KU8_BIT_31; i++)
+	{
+		FblUpdUsr_TriggerWD();
+		FblUpdUsr_EraseMemoryFunction(((uint32)i+KU32_ONE) * (uint32)(_BLOCK0_ADDRESS));
+		FblUpdUsr_TriggerWD();
+		FblUpdUsr_WriteMemoryFunction();
+	}
+	FblUpdUsr_TriggerWD();
+
+	/* Invalidate Bootloader Updater */
+	FblUpdUsr_EraseMemoryFunction(FBLUSR_BTLD_UPDT_ADDR);
+	FblUpdUsr_TriggerWD();
+
+	/* Erase no init area */
+	u32pointer = (uint32*)FBLUSR_NO_INIT_START_ADDR;
+
+	for(i = KU8_ZERO; i < FBLUSR_KU8_255_VAL; i++)
+	{
+		*u32pointer = KU32_MIN;
+		u32pointer++;
+	}
+
+	SBC_Reset();
+
+	Mcu_PerformReset();
+
+	return 0;
+}
+/******************************************************************************
+End Of File
+ *****************************************************************************/

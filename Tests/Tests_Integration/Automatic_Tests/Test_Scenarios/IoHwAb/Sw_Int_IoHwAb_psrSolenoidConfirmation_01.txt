@@ -1,0 +1,34 @@
+					Autoliv Electronics Document
+--------------------------------------------------------------------------
+Nightly test: No
+Test type: Requirement-Based, Interface Test
+Regression Test: No
+Fault injection method used: No
+Resource usage evaluation: No
+Priority: No
+Safety relevant: No
+Requirement under test: ARCH_SW_IoHwAb_psrSolenoidConfirmation
+ARCH_SW_IoHwAb_psrSolenoidConfirmation: The runnable shall read the {Current Executed Profile} for each solenoid(can be NONE/UNLOCK/BACKUP) - The runnable shall read the {Unfiltered Voltage Solenoid} for each solenoid in mV - The runnable shall compute the {Unlock detection timeout Threshold} from the step definition of the first cycle (it will add the duration for each step that is not infinite) - If a voltage spike greater than 8V is detected in the first 6ms since the profile was launched the maximum and minimum voltage values during this period will be saved - If a voltage greater than the minimum voltage value +2V is detected than the unlock has been confirmed - If the unlock has not been confirmed until the {Unlock detection timeout Threshold} has been reached then the status will be not determined
+--------------------------------------------------------------------------
+
+Preconditions
+
+	Step 1: Bench Initialization
+
+Action: ARCH_SW_IoHwAb_psrSolenoidConfirmation
+
+	Step 2: Set a breakpoint in function IoHwAb_DetectSeatOccupancy 
+		Expected result:  BP reached
+
+	Step 3: Write Local au8RteBelt with value 2 
+		Expected result:  Variable overwritten with 2.
+
+	Step 4: Set a breakpoint in function CIL_runAppliToCAN at the execution of the current time slot
+
+	Step 5: Set a breakpoint in function cil_ManagePeriodicData_TimeSlot01 after getting the status for all buckles.
+
+	Step 6: Evaluate Solenoid state data flow
+
+Postcondition
+
+	Step 7: Return ECU to default values

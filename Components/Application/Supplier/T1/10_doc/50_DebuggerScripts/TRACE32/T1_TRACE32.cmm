@@ -1,0 +1,98 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   File:           T1_TRACE32.cmm
+;
+;   Description:    Script to read T1 trace buffer and write it to text files, for
+;                   using with TRACE32.
+;
+;   Author:         Hwanjoon Kang
+;
+;   Copyright:      GLIWA embedded systems GmbH & Co. KG
+;                   Weilheim i.OB.
+;                   All rights reserved
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+menu.rp
+(
+    add
+    toolbar
+    (
+        toolitem "Write All Core T1 data to files"
+        [
+     XXXXXXx
+   XXXyyyyXXXx
+  XXyyYYYYyyXXx
+ XXyYYYYYYYYyXX
+ XyXXXXXxYXXYyXx
+XXyYYXXxYXXXxyXX
+XyYYYXXxYYXXxYyX
+XyYYYXXxYYXXxYyX
+XyYYYXXxYYXXxYyX
+XyYYYXXxYYXXxYyX
+XXyYYXXxYYXXxyXX
+ XyYYXXxYXXXXyXx
+ XXyYYxxYYYxxXX
+  XXyyYYYYyyXXx
+   XXXyyyyXXXx
+     XXXXXXx
+        ]
+        (
+            &nOfCores=v.value(T1_nOfCores)
+            &coreId=0
+            &coreId=FORMAT.Decimal(1.,&coreId)
+            while (&coreId<&nOfCores)
+            (
+                &i=0
+                &i=FORMAT.DecimalUZ(3.,&i)
+                &fileTraceBuffer="C:\tmp\T1scopeDebugger_&i"+"_core&coreId.txt"
+                while (OS.FILE(&fileTraceBuffer))
+                (
+                    &i=&i+1
+                    &i=FORMAT.DecimalUZ(3.,&i)
+                    &fileTraceBuffer="C:\tmp\T1scopeDebugger_&i"+"_core&coreId.txt"
+                )
+                ; Background T1.cont
+                &T1_scopeConstsX="T1_scopeConsts&coreId"
+                &T1_scopeGlobalsX="T1_scopeGlobals&coreId"
+                if symbol.count(T1_scopeConsts&coreId)==0
+                (
+                    ; Foreground T1.cont
+                    &T1_scopeConstsX="T1_scopeFgConsts&coreId._"
+                    &T1_scopeGlobalsX="T1_scopeFgGlobals&coreId._"
+                )
+                &pTraceBuffer=v.value(&T1_scopeConstsX.pTraceBuffer)
+                &pTraceBufferWr=v.value(&T1_scopeConstsX.pTraceBuffer + &T1_scopeGlobalsX.tB._.wrIdx)
+                &pTraceBufferLast=v.value(&T1_scopeConstsX.pTraceBuffer + &T1_scopeConstsX.bufferEntriesMinusOne)
+                &nOfTraceEntries=v.value(&T1_scopeConstsX.bufferEntries)
+                ; Replace T1_traceBuffer&coreId with a new symbol, whose address is &pTraceBuffer
+                ; because the original T1_traceBuffer&coreId may have additional data at the
+                ; start that we do not want to expose with this script.
+                ; At the moment, use T1_traceBuffer as a new symbol, because T1-HOST-SW already recognizes it as a valid symbol to interpret.
+                symbol.create.var T1_traceBuffer D:&pTraceBuffer T1_traceEntry_t[&nOfTraceEntries]
+                symbol.create.done
+
+                prt.open &fileTraceBuffer
+                wp.v.v %hex.on %decimal.off %index.off T1_sid+&coreId
+                wp.v.v %hex.off %decimal.on %index.off (((((unsigned char *)&T1_scopePluginStruct)[1] - 3) * 65536) + (((unsigned char *)&T1_scopePluginStruct)[2] * 256) + ((unsigned char *)&T1_scopePluginStruct)[3])
+                prt.print "wp.v.v &T1_scopeGlobalsX.pTraceBufferWr_"
+                prt.print "  &T1_scopeGlobalsX.pTraceBufferWr_ = &pTraceBufferWr"
+                wp.v.v %hex.on %decimal.off %index.off &T1_traceBuffer[0]
+                wp.v.v %hex.on %decimal.off %index.off &T1_traceBuffer[1]
+                prt.print "wp.v.v &T1_scopeGlobalsX.pTraceBufferLast_"
+                prt.print "  &T1_scopeGlobalsX.pTraceBufferLast_ = &pTraceBufferLast"
+                wp.v.v %hex.on %decimal.off %index.off %fixed %tree.open T1_traceBuffer
+                prt.close
+
+                symbol.foreach "symbol.delete" T1_traceBuffer
+                &coreId=&coreId+1.
+                &coreId=FORMAT.Decimal(1.,&coreId)
+            )
+
+            print "T1_TRACE32.cmm: FINISHED TRACE DOWNLOAD"
+            print "See C:\tmp for results"
+        )
+    )
+)
+
+ENDDO
